@@ -1,7 +1,7 @@
 ---
-title: "Personal Blog"
+title: "June Choe"
 description: |
-  Welcome to the website. I hope you enjoy it!
+  This new website is under construction!
 site: distill::distill_website
 ---
 
@@ -12,4 +12,15 @@ knitr::opts_chunk$set(echo = FALSE)
 # https://rstudio.github.io/distill/website.html
 
 ```
+
+# This Site is Under Construction
+
+```{r, fig.align='center', out.width='120%'}
+knitr::include_graphics('static/img/catsconstruction.jpeg')
+```
+
+
+I've started the process of migrating over to **distill** on September 17.
+
+You can find me at my old website <https://yjunechoe.netlify.app/> while ~~my cramped hands~~ the kittens are hard at work!
 
