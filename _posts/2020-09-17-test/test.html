@@ -1,0 +1,1929 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+  <!--radix_placeholder_meta_tags-->
+  <title>test</title>
+
+  <meta property="description" itemprop="description" content="A short description of the post."/>
+
+
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2020-09-17"/>
+  <meta property="article:created" itemprop="dateCreated" content="2020-09-17"/>
+  <meta name="article:author" content="Unknown"/>
+
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="test"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:description" content="A short description of the post."/>
+  <meta property="og:locale" content="en_US"/>
+
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary"/>
+  <meta property="twitter:title" content="test"/>
+  <meta property="twitter:description" content="A short description of the post."/>
+
+  <!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["test"]},{"type":"character","attributes":{},"value":["A short description of the post.\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["Unknown"]}]}]},{"type":"character","attributes":{},"value":["09-17-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["nocor.png","ranef_1.png","ranef_2.png","test_files/figure-html5/_check_model-1.png","test_files/figure-html5/all_plot-1.png","test_files/figure-html5/bad_fit-1.png","test_files/figure-html5/bivariate_dist-1.png","test_files/figure-html5/corr_plot-1.png","test_files/figure-html5/data_ellipse-1.png","test_files/figure-html5/item_corr_plot-1.png","test_files/figure-html5/no_subj_corr_plot-1.png","test_files/figure-html5/parameter_ellipse-1.png","test_files/figure-html5/ranef_item_plot-1.png","test_files/figure-html5/ranef_subj_plot-1.png","test_files/figure-html5/sim_plot-1.png","test_files/figure-html5/sim_plot_multi-1.png","test_files/figure-html5/unnamed-chunk-10-1.png","test_files/figure-html5/unnamed-chunk-11-1.png","test_files/figure-html5/unnamed-chunk-12-1.png","test_files/figure-html5/unnamed-chunk-5-1.png","test_files/figure-html5/unnamed-chunk-7-1.png","test_files/figure-html5/unnamed-chunk-8-1.png","test_files/figure-html5/wrapup-1.png"]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+  <style type="text/css">
+
+  body {
+    background-color: white;
+  }
+
+  .pandoc-table {
+    width: 100%;
+  }
+
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .shaded-content {
+    background: white;
+  }
+
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  d-article {
+    padding-bottom: 30px;
+  }
+
+  d-appendix {
+    padding-top: 30px;
+  }
+
+  d-article>p>img {
+    width: 100%;
+  }
+
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  /* CSS for table of contents */
+
+  .d-toc {
+    color: rgba(0,0,0,0.8);
+    font-size: 0.8em;
+    line-height: 1em;
+  }
+
+  .d-toc-header {
+    font-size: 0.6rem;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 1.3em;
+  }
+
+  .d-toc a {
+    border-bottom: none;
+  }
+
+  .d-toc ul {
+    padding-left: 0;
+  }
+
+  .d-toc li>ul {
+    padding-top: 0.8em;
+    padding-left: 16px;
+    margin-bottom: 0.6em;
+  }
+
+  .d-toc ul,
+  .d-toc li {
+    list-style-type: none;
+  }
+
+  .d-toc li {
+    margin-bottom: 0.9em;
+  }
+
+  .d-toc-separator {
+    margin-top: 20px;
+    margin-bottom: 2em;
+  }
+
+  .d-article-with-toc {
+    border-top: none;
+    padding-top: 0;
+  }
+
+
+
+  /* Tweak code blocks (note that this CSS is repeated above in an injection
+     into the d-code shadow dom) */
+
+  d-code {
+    overflow-x: auto !important;
+  }
+
+  pre.d-code code.d-code {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+
+  pre.text-output {
+
+    font-size: 12px;
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  @media(min-width: 768px) {
+
+  d-code {
+    overflow-x: visible !important;
+  }
+
+  pre.d-code code.d-code  {
+      padding-left: 18px;
+      font-size: 14px;
+  }
+  pre.text-output {
+    font-size: 14px;
+  }
+  }
+
+  /* Figure */
+
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+
+  .figure img {
+    width: 100%;
+  }
+
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+
+
+
+  /* Tweak 1000px media break to show more text */
+
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+
+    .grid {
+      grid-column-gap: 16px;
+    }
+
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+
+
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+
+  /* Social footer */
+
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+
+  .disqus-comments {
+    margin-right: 30px;
+  }
+
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+
+  #disqus_thread {
+    margin-top: 30px;
+  }
+
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+
+
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+
+
+  .sidebar-section.custom {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .custom p {
+    margin-bottom: 0.5em;
+  }
+
+
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  </style>
+
+  <script type="application/javascript">
+
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+
+  // show body when load is complete
+  function on_load_complete() {
+
+    // set body to visible
+    document.body.style.visibility = 'visible';
+
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+
+  function init_distill() {
+
+    init_common();
+
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+
+    // create d-bibliography
+    var bibliography = $('<d-bibliography></d-bibliography>');
+    $('#distill-bibliography').wrap(bibliography);
+
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+    // replace citations with <d-cite>
+    $('.citation').each(function(i, val) {
+      appendix = true;
+      var cites = $(this).attr('data-cites').split(" ");
+      var dt_cite = $('<d-cite></d-cite>');
+      dt_cite.attr('key', cites.join());
+      $(this).replaceWith(dt_cite);
+    });
+    // remove refs
+    $('#refs').remove();
+
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-toc a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+    // replace code blocks with d-code
+    $('pre>code').each(function(i, val) {
+      var code = $(this);
+      var pre = code.parent();
+      var clz = "";
+      var language = pre.attr('class');
+      if (language) {
+        // map unknown languages to "clike" (without this they just dissapear)
+        if ($.inArray(language, ["bash", "clike", "css", "go", "html",
+                                 "javascript", "js", "julia", "lua", "markdown",
+                                 "markup", "mathml", "python", "svg", "xml"]) == -1)
+          language = "clike";
+        language = ' language="' + language + '"';
+        var dt_code = $('<d-code block' + language + clz + '></d-code>');
+        dt_code.text(code.text());
+        pre.replaceWith(dt_code);
+      } else {
+        code.addClass('text-output').unwrap().changeElementType('pre');
+      }
+    });
+
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+
+      // capture layout
+      var layout = $(this).attr('data-layout');
+
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('d-code, pre.text-output, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+
+
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+
+    // load distill framework
+    load_distill_framework();
+
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+
+      // table of contents
+      if (have_authors) // adjust border if we are in authors
+        $('.d-toc').parent().addClass('d-article-with-toc');
+
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+
+      // inject pre code styles (can't do this with a global stylesheet b/c a shadow root is used)
+      $('d-code').each(function(i, val) {
+        var style = document.createElement('style');
+        style.innerHTML = 'pre code { padding-left: 10px; font-size: 12px; border-left: 2px solid rgba(0,0,0,0.1); } ' +
+                          '@media(min-width: 768px) { pre code { padding-left: 18px; font-size: 14px; } }';
+        if (this.shadowRoot)
+          this.shadowRoot.appendChild(style);
+      });
+
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+
+      // clear polling timer
+      clearInterval(tid);
+
+      // show body now that everything is ready
+      on_load_complete();
+    }
+
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+
+  }
+
+  function init_downlevel() {
+
+    init_common();
+
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+
+    // remove toc
+    $('.d-toc-header').remove();
+    $('.d-toc').remove();
+    $('.d-toc-separator').remove();
+
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+
+
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+
+    $('body').addClass('downlevel');
+
+    on_load_complete();
+  }
+
+
+  function init_common() {
+
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+
+      }
+    });
+
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.distill-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+      });
+    }
+
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+
+  </script>
+
+  <!--/radix_placeholder_distill-->
+  <script src="test_files/header-attrs-2.3/header-attrs.js"></script>
+  <script src="test_files/jquery-1.11.3/jquery.min.js"></script>
+  <script src="test_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="test_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="test_files/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"test","description":"A short description of the post.","authors":[{"author":"Unknown","authorURL":"#","affiliation":"&nbsp;","affiliationURL":"#"}],"publishedDate":"2020-09-17T00:00:00.000-04:00","citationText":"Unknown, 2020"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>test</h1>
+<p><p>A short description of the post.</p></p>
+</div>
+
+<div class="d-byline">
+  Unknown  
+  
+<br/>09-17-2020
+</div>
+
+<div class="d-article">
+<h2 id="what-is-corr-in-the-output-of-mixed-effects-models"><strong>What is <code>Corr</code> in the output of mixed-effects models?</strong></h2>
+<p>When fitting mixed effects regression models, especially those that try to keep it “maximal” (as per <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3881361/">Barr, Levy, Scheepers, &amp; Tily 2013</a>), the random effects in the output of the model sometimes displays a column named <code>Corr</code> where some rows have numbers that range from <code>-1</code> to <code>1</code>.</p>
+<p><img src="ranef_1.png" /></p>
+<p>It’s easy to guess that <code>Corr</code> stands for <strong>correlation</strong> and that the numbers in the column are <strong>correlation coefficients</strong>. If there are multiple predictors and the random effects structure includes more than one of those terms (e.g., <code>(1 + Effect_1 * Effect_2 | Subject)</code>), we even get another clue for this from the way that the <code>Corr</code> column spreads out in the shape of a right triangle, much like in a <strong>correlation matrix</strong>.</p>
+<p><img src="ranef_2.png" /></p>
+<p>Despite the fact that we’re bound to have encountered this at some point when working with or reading about mixed effects models, I’ve found that there aren’t many beginner-friendly material explaining what they are - there are 1 paragraph StackExchange answers and dense statistics papers, but not much in between in terms of comprehensiveness.</p>
+<p>So here are my compiled notes on correlation parameters in linear mixed effects models that I’ve made for myself (with a basic knowledge of LMEMs) that I hope others may find useful.</p>
+<h1 id="before-we-get-started"><strong>Before we get started</strong></h1>
+<h3 id="our-toy-data-and-model"><strong>Our toy data and model</strong></h3>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<p>For the purposes of this discussion, I have created a toy experiment data (the code used to generate it is attached at the bottom).</p>
+<p>The dataset <code>toydata</code> has 1,920 rows with the following columns:</p>
+<ul>
+<li><code>Subject</code>: The subject ID, which ranges from 1 to 80</li>
+<li><code>Item</code>: The item ID, which ranges from 1 to 24</li>
+<li><code>Condition</code>: The experimental condition, which is either <code>Control</code> or <code>Treatment</code></li>
+<li><code>Response</code>: A continuous response variable</li>
+</ul>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>
+# A tibble: 1,920 x 4
+   Subject Item  Condition Response
+   &lt;fct&gt;   &lt;fct&gt; &lt;fct&gt;        &lt;dbl&gt;
+ 1 1       1     Control       226.
+ 2 1       2     Treatment     300.
+ 3 1       3     Control       239.
+ 4 1       4     Treatment     262.
+ 5 1       5     Control       241.
+ 6 1       6     Treatment     264.
+ 7 1       7     Control       237.
+ 8 1       8     Treatment     230.
+ 9 1       9     Control       229.
+10 1       10    Treatment     283.
+# ... with 1,910 more rows</code></pre>
+</div>
+<p>Imagine <code>toydata</code> to be the results from a very simple experiment. In this imaginary experiment, there are 80 subjects and each subject is tested on 24 items, resulting in a total of 1,920 trials/observations. This is a within-partipant design, so each participant sees 12 of the items in the Control condition and the other 12 in the Treatment condition.</p>
+<p>Let’s say that with our toy data, <strong>we want to know whether Condition has an effect on Response</strong>. Our goal by using mixed-effects modeling is to isolate the effect of Condition on Response (fixed effect), while controlling for by-item and by-subject variations (random effects). So let’s fit a simple linear mixed-effects model with the maximal random effects structure, with random intercepts and slopes for Condition by Subject and Item:</p>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<p>We can really quickly check model assumptions with the very convenient <code>check_model()</code> function from the <code>{performance}</code> package:</p>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="test_files/figure-html5/_check_model-1.png" width="624" /></p>
+</div>
+<p>Everything looks okay, so let’s look at the model output:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>
+Linear mixed model fit by maximum likelihood . t-tests use
+  Satterthwaite&#39;s method [lmerModLmerTest]
+Formula: 
+Response ~ Condition + (1 + Condition | Subject) + (1 + Condition |  
+    Item)
+   Data: toydata
+Control: lmerControl(&quot;bobyqa&quot;)
+
+     AIC      BIC   logLik deviance df.resid 
+   13267    13317    -6624    13249     1911 
+
+Scaled residuals: 
+   Min     1Q Median     3Q    Max 
+-3.176 -0.627 -0.065  0.576  4.864 
+
+Random effects:
+ Groups   Name               Variance Std.Dev. Corr
+ Subject  (Intercept)        637.1    25.24        
+          ConditionTreatment 108.1    10.40    0.85
+ Item     (Intercept)         44.4     6.66        
+          ConditionTreatment 308.2    17.56    0.14
+ Residual                     37.4     6.11        
+Number of obs: 1920, groups:  Subject, 80; Item, 24
+
+Fixed effects:
+                   Estimate Std. Error     df t value Pr(&gt;|t|)    
+(Intercept)          209.64       3.14 100.84    66.8  &lt; 2e-16 ***
+ConditionTreatment    35.88       3.78  28.52     9.5  2.5e-10 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Correlation of Fixed Effects:
+            (Intr)
+CndtnTrtmnt 0.291 </code></pre>
+</div>
+<p>The high t-statistic and low p-value of <code>ConditionTreatment</code> in the fixed effects output suggests that our data is extremely unlikely given the null hypothesis that Condition has no effect on Response (and the sign of the estimate further suggests a positive effect of the Treatment condition on Response compared to the Control condition). Therefore, this is strong evidence in support of our hypothesis that Condition indeed has an effect on Response.</p>
+<p>Here’s a nicer-looking summary table made with <code>tab_model()</code> from the <code>{sjPlot}</code> package. I will keep using this format from this point on. Not only is this nicer to look at, the notations used here (like <span class="math inline">\(\tau_{00}\)</span> and <span class="math inline">\(\rho_{01}\)</span>) are from Barr et al. (2013), so it’s easier to connect the pieces IMO.</p>
+<div class="layout-chunk" data-layout="l-body">
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+Response
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+209.64
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+203.49 – 215.80
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Condition [Treatment]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+35.88
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+28.48 – 43.28
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001
+</td>
+</tr>
+<tr>
+<td colspan="4" style="font-weight:bold; text-align:left; padding-top:.8em;">
+Random Effects
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+σ<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+37.37
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>00</sub> <sub>Subject</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+637.14
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>00</sub> <sub>Item</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+44.39
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>11</sub> <sub>Subject.ConditionTreatment</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+108.10
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>11</sub> <sub>Item.ConditionTreatment</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+308.21
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+ρ<sub>01</sub> <sub>Subject</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.85
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+ρ<sub>01</sub> <sub>Item</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.14
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+ICC
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.97
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+N <sub>Subject</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+80
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+N <sub>Item</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+24
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+1920
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.216 / 0.975
+</td>
+</tr>
+</table>
+</div>
+<p>Okay so our finding is great and all but we’re more interested in the random effects here so let’s look at that.</p>
+<p> </p>
+<h3 id="the-random-effects-a-review"><strong>The random effects (a review)</strong></h3>
+<p>We can isolate the random effects from the model using <code>VarCorr()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>
+ Groups   Name               Std.Dev. Corr
+ Subject  (Intercept)        25.24        
+          ConditionTreatment 10.40    0.85
+ Item     (Intercept)         6.66        
+          ConditionTreatment 17.56    0.14
+ Residual                     6.11        </code></pre>
+</div>
+<p>Let’s ignore the <code>Corr</code> column for a moment and talk about <code>Std.Dev</code> first.</p>
+<p>The <code>Std.Dev.</code> values for the Subject random effects group suggest that the variation in the subject intercepts are fitted with a larger standard deviation of 25.24 and that the variation in subject slopes for Condition are fitted with a smaller standard deviation of 10.4.</p>
+<p>Let’s plot the by-subject variation:</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="test_files/figure-html5/ranef_subj_plot-1.png" width="624" /></p>
+</div>
+<p>We see a clear variation in the intercepts, and a subtler variation in the slopes. This is overall pretty consistent with the stand deviation values for subject random effects that we found earlier.</p>
+<p>Let’s plot the by-item variation as well:</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="test_files/figure-html5/ranef_item_plot-1.png" width="624" /></p>
+</div>
+<p>Here, we see the opposite: a clear variation in the slopes, and a subtler variation in the intercepts. Again, this is overall pretty consistent given the item random effects output: a larger standard deviation for the item slopes and a smaller standard deviation for item intercepts, as we found earlier.</p>
+<p>Now that we reviewed <code>Std.Dev.</code>, let’s talk about <code>Corr</code>, which is our main focus here.</p>
+<p> </p>
+<h1 id="the-correlation-parameter"><strong>The Correlation Parameter</strong></h1>
+<p>Looking at the <code>Corr</code> column now, we see two numbers: 0.85 within the Subject random effects group and 0.14 within the Item random effects group.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>
+ Groups   Name               Std.Dev. Corr
+ Subject  (Intercept)        25.24        
+          ConditionTreatment 10.40    0.85
+ Item     (Intercept)         6.66        
+          ConditionTreatment 17.56    0.14
+ Residual                     6.11        </code></pre>
+</div>
+<p>As you might have guessed, they have something to do with <strong>the correlation between random effects</strong> (intercept and slope) within each group (subject and item).</p>
+<p>But if we extract the subject random effects, for example, and measure the correlation between subject intercepts and subject slopes, we get a slightly different number:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>
+[1] 0.88</code></pre>
+</div>
+<p>In fact, we get slightly different values for the <em>standard deviation</em> of the subject random intercepts and slopes as well:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>
+  (Intercept) ConditionTreatment
+1        25.3              10.18</code></pre>
+</div>
+<p>So it looks like what the model isn’t just taking the random effects in our <code>toydata</code> dataset and calculating their variations and correlations. So then what IS it doing?</p>
+<p> </p>
+<h3 id="how-the-model-estimates-random-effects"><strong>How the model estimates random effects</strong></h3>
+<p>What we have to keep in mind when doing mixed effects modeling is that the model is <strong>FITTING</strong> the random effects in the data, rather than just <strong>DESCRIBING</strong> them. More specifically, <strong>the model is ESTIMATING <em>population</em> parameters that generated the <em>sample</em> of random effects that are seen in the data</strong>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>And in fact that’s exactly what we want to do. We don’t care about how individual subjects or items behave in our experiment, in the sense that we don’t care how fast John Doe presses a button, for example. We don’t want to predict John Doe’s behavior, but we do want to estimate, using data from John Doe, Jane Doe, Average Joe, and other participants from our experiment, the overall distribution of people’s idiosyncratic tendencies so that we can statistically control for them to get a better estimate for our fixed effects that we care about.</p>
+<p>Take the random intercepts by subject for example. The model estimated the distribution of subject intercepts to follow a normal distribution with a standard deviation of 25.24, which is a an estimate for the <strong>Population</strong>. The variation in subject intercepts in the data itself that we manually calculated above (25.3) is the <strong>Sample</strong> standard deviation. Of course, if the sample follows a normal distribution and if we also assume the population to be normally distributed, the sample variance should be the best estimate for the population variance. And in fact they do end up being very close but there are some differences, in part due to noise, but also because the model is doing some other calculations to fit the data.</p>
+<p>So the numbers in the <code>Std.Dev.</code> colum are <strong>the model’s FIT for the VARIATION within each random effect</strong></p>
+<p>With this, we now have a better understanding of the numbers in the <code>Corr</code> column: they are <strong>the model’s FIT for the CORRELATION between random effects</strong></p>
+<p>To go more in depth with our discussion, let’s plot the intercepts by slopes for our 80 subjects:</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="test_files/figure-html5/corr_plot-1.png" width="624" /></p>
+</div>
+<p>Recall that when we manually calculated the correlation between subject intercepts and subject slopes within our sample of 80 subjects in the data, we got 0.88. That is in fact what is shown by the plot above.</p>
+<p>And as we discussed earlier, the numbers in the <code>Std.Dev.</code> column are the model’s fit for the variation within each random effect. So the model is saying that the variation for subject intercepts follows a normal distribution with mean = 0 and standard deviation = 25.24. Likewise, the model is saying that the variation for subject slopes follows a normal distribution with mean = 0 and standard deviation = 10.4.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>So the model estimates these two distributions - one for subject slopes and one for subject intercepts - to capture the overall distribution of subject random effects.</p>
+<p>This is illustrated below, where the normal curve at the top is the distribution of subject intercepts estimated by the model, and the normal curve to the right is the distribution of subject slopes estimated by the model. For every subject, their intercepts and slopes are assumed to be generated from these two parameters:</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="test_files/figure-html5/all_plot-1.png" width="624" /></p>
+</div>
+<p>But is specifying each distribution for intercept and item <em>enough</em> to capture the overall distribution of subject random effects?</p>
+<p>One way to test this is to work backwards and generate some observations from the model’s parameters. The idea here is this: if the two normal distributions (one for subject intercept and one for subject slope) can sufficiently capture the distribution of the subject random effects, then sampling from them should yield a distribution that is in the shape of the actual distribution in our data.</p>
+<p>Let’s draw 80 samples of subject intercepts and subject slopes from their respective distributions and then plot them together. Here’s one result:</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="test_files/figure-html5/sim_plot-1.png" width="624" /></p>
+</div>
+<p>These points are consistent with what the two distributions predict - there are more points towards the center (the means of the distributions) and less points towards the corners (the tails of the distributions).</p>
+<p>But <strong>this doesn’t look like the actual distribution of our subject random effects</strong>.</p>
+<p>We can repeat this sampling procedure many times, but none of them look close to the distribution of the subject random effects in our data:</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="test_files/figure-html5/sim_plot_multi-1.png" width="624" /></p>
+</div>
+<p> </p>
+<h3 id="so-what-are-we-missing-here"><strong>So what are we missing here?</strong></h3>
+<p>Well, what’s missing here is the <strong>correlation</strong> between the intercepts and slopes that I conveniently left out to demonstrate that just specifying the individual distributions for subject intercepts and subject slopes <strong>poorly captures</strong> the actual distribution of subject random effects in our data.</p>
+<p>In more technical terms, <strong>treating the two random effects as independently sampled from their respective distributions fails to fit the data well because the two random effects are highly correlated. They should instead be treated as being jointly sampled from a bivariate distribution</strong></p>
+<p>And that’s exactly what adding the <strong>correlation parameter</strong> does. Let’s break this down.</p>
+<p>When we say that two variables are <strong>independently sampled</strong> from two distributions (as we just did above), then their <strong>joint distribution</strong> looks something like this, where most of the data is expected to fall within the grey shaded ellipse:</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="test_files/figure-html5/parameter_ellipse-1.png" width="624" /></p>
+</div>
+<p>This is clearly a bad fit for the distribution of our subject random effects…</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="test_files/figure-html5/bad_fit-1.png" width="624" /></p>
+</div>
+<p>… because the distribution of the subject random effects actually takes the shape of a <em>tilted</em> ellipse instead (dotted outline):</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="test_files/figure-html5/data_ellipse-1.png" width="624" /></p>
+</div>
+<p>In fact, we cannot generate any distribution of a tilted shape with just two independent distributions for each variable. We need to factor in <strong>covariation</strong> to capture the correlation between variables. Barr et al. (2013) illustrates this clearly in <a href="http://talklab.psy.gla.ac.uk/simgen/rsonly.html">the supplementary materials to their paper</a>. You can see from the plot below (originally Figure 1 on the linked page) that without the correlation parameter, you can only capture distributions that are symmetrical with respect to the axes (the darker ellipses). However, once you add in a correlation parameter (<span class="math inline">\(\rho\)</span>), you can capture distributions that are in the “tilted” shape (the lighter ellipses) like the distribution of our highly correlated subject intercepts and subject slopes.</p>
+<p><img src="nocor.png" /></p>
+<p> </p>
+<h3 id="putting-it-all-together"><strong>Putting it all together</strong></h3>
+<p>Here’s the output of <code>model</code> again:</p>
+<div class="layout-chunk" data-layout="l-body">
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+Response
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+209.64
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+203.49 – 215.80
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Condition [Treatment]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+35.88
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+28.48 – 43.28
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001
+</td>
+</tr>
+<tr>
+<td colspan="4" style="font-weight:bold; text-align:left; padding-top:.8em;">
+Random Effects
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+σ<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+37.37
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>00</sub> <sub>Subject</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+637.14
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>00</sub> <sub>Item</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+44.39
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>11</sub> <sub>Subject.ConditionTreatment</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+108.10
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>11</sub> <sub>Item.ConditionTreatment</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+308.21
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+ρ<sub>01</sub> <sub>Subject</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.85
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+ρ<sub>01</sub> <sub>Item</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.14
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+ICC
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.97
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+N <sub>Subject</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+80
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+N <sub>Item</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+24
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+1920
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.216 / 0.975
+</td>
+</tr>
+</table>
+</div>
+<p>And let’s keep focusing on the subject random effects for now.</p>
+<p>There are <strong>three parameters</strong> that the model estimated to capture the <strong>by-subject variation</strong>:</p>
+<ol type="1">
+<li><p><strong>The variation (<code>Std.Dev.</code>) for subject intercept</strong></p></li>
+<li><p><strong>The variation (<code>Std.Dev.</code>) for subject slope</strong></p></li>
+<li><p><strong>The correlation (<code>Corr</code>) between subject intercept and subject slope</strong>.</p></li>
+</ol>
+<p>With these three parameters, the model is defining a <strong>bivariate normal distribution</strong>, from which subject intercepts (<span class="math inline">\(S_{0s}\)</span>) and subject slopes (<span class="math inline">\(S_{1s}\)</span>) are sampled from (Equation 3 from Barr et al., 2013):</p>
+<p> </p>
+<p><span class="math display">\[(S_{0s}, S_{1s})\ \sim\ N(0,\begin{bmatrix}\tau_{00}^2 &amp; \rho\ \tau_{00}^2 \tau_{11}^2 \\ \rho\ \tau_{00}^2 \tau_{11}^2 &amp; \tau_{11}^2 \end{bmatrix})\]</span></p>
+<p> </p>
+<p>For the <strong>variance-covariance matrix</strong>, we can substitute the standard deviation for the subject intercept <span class="math inline">\(\tau_{00}^2\)</span> with 25.24, the standard deviation for the subject slope <span class="math inline">\(\tau_{11}\)</span> with 10.4, and the correlation <span class="math inline">\(\rho\)</span> with 0.85 to get the following:</p>
+<p> </p>
+<p><span class="math display">\[(S_{0s}, S_{1s})\ \sim\ N(0,\begin{bmatrix}25.24^2 &amp; 0.85\ \times\ 25.24\ \times\ 10.4 \\ 0.85\  \times\ 25.24\ \times\ 10.4 &amp; 10.4^2 \end{bmatrix})\]</span></p>
+<p> </p>
+<p>If subject intercepts and subject slopes are jointly sampled from the above distribution, most observations should fall within this grey area:</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="test_files/figure-html5/bivariate_dist-1.png" width="624" /></p>
+</div>
+<p>Let’s again repeatedly sample from this new bivariate distribution (which you can do with <code>mvrnorm()</code> from the <code>{MASS}</code> package) to check:</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="test_files/figure-html5/wrapup-1.png" width="624" /></p>
+</div>
+<p>Like we expected, this new distribution generates observations of subject slopes and subject intercepts that are highly correlated. But more importantly, <strong>the distribution of subject random effects in our data looks like it could be one of these samples,</strong> meaning that this bivariate normal distribution <strong>fits our data well</strong>.</p>
+<p>Good thing that we had the model estimate this parameter by specifying the random effects structure for subjects as <code>(1 + Condition | Subject)</code> in our model formula!</p>
+<p> </p>
+<h3 id="what-if-we-leave-out-this-correlation-parameter-would-it-significantly-worsen-model-fit"><strong>What if we leave out this correlation parameter? Would it significantly worsen model fit?</strong></h3>
+<p>We can check by building another model without the correlation term between the subject random effects and comparing it with our original model.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>The <code>no_subj_cor_model</code> below is a <em>depleted</em> model without the correlation parameter between the random intercepts and random slopes by subject. You can see that the subject group is missing a value in the <code>Corr</code> column.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<div class="layout-chunk" data-layout="l-body">
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+Response
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+209.64
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+203.44 – 215.84
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Condition [Treatment]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+35.88
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+28.43 – 43.33
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001
+</td>
+</tr>
+<tr>
+<td colspan="4" style="font-weight:bold; text-align:left; padding-top:.8em;">
+Random Effects
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+σ<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+37.34
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>00</sub> <sub>Subject</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+649.20
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>00</sub> <sub>Subject.1</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+110.96
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>00</sub> <sub>Item</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+44.56
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>11</sub> <sub>Item.ConditionTreatment</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+311.76
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+ρ<sub>01</sub> <sub>Item</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.14
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+ICC
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.96
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+N <sub>Subject</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+80
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+N <sub>Item</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+24
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+1920
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.263 / 0.970
+</td>
+</tr>
+</table>
+</div>
+<p>Now let’s perform a likelihood ratio test using <code>anova()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>
+Data: toydata
+Models:
+no_subj_cor_model: Response ~ Condition + (1 + model.matrix(model)[, 2] || Subject) + 
+no_subj_cor_model:     (1 + Condition | Item)
+model: Response ~ Condition + (1 + Condition | Subject) + (1 + Condition | 
+model:     Item)
+                  npar   AIC   BIC logLik deviance Chisq Df
+no_subj_cor_model    8 13352 13396  -6668    13336         
+model                9 13267 13317  -6624    13249  87.2  1
+                  Pr(&gt;Chisq)    
+no_subj_cor_model               
+model                 &lt;2e-16 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<p>The first thing to notice is that <code>no_subj_cor_model</code> has one less <code>Df</code>, or <strong>degrees of freedom</strong>, than <code>model</code>. This is because every correlation between random effects is an <strong>additional parameter</strong> that the model is estimating. So removing the correlation between random effects for <code>no_subj_cor_model</code> leaves it with 8 parameters, one less than the original, full model. There’s a good discussion of what parameters are specified by different <code>lmer()</code> formulas in <a href="https://stats.stackexchange.com/a/13173">this StackExchange thread</a>.</p>
+<p>After performing this sanity check, the next thing to note is the very low number in <code>Pr(&gt;Chisq)</code>, telling us that the models are significantly different from one another. This might come off as weird if you’re only used to performing ANOVA comparisons to check whether a predictor is significant or not. In fact, there are no obvious differences between the output of <code>no_subj_cor_model</code> and the output of our original model other than the presence/absence of the correlation between subject random effects.</p>
+<p><strong>But clearly something major is going on behind the curtains</strong>, so we turn to the last term(s) of interest - <code>AIC</code> and <code>BIC</code>, which are scores for model fit. The numbers are hard to interpret on their own, but useful when comparing models. Here, both the <code>AIC</code> and the <code>BIC</code> of <code>no_subj_cor_model</code> are higher than <code>model</code>, suggesting that <strong><code>no_subj_cor_model</code> has a worse fit, and a statistically significant one at that.</strong></p>
+<p>More specifically, we know that the only meaningful difference between <code>no_subj_cor_model</code> and <code>model</code> is the correlation parameter for the subject random effects, so <strong><code>no_subj_cor_model</code> must be capturing the subject random effects relativelty poorly under its assumption that subject intercepts and subject slopes do not correlate with one another (i.e., that they are independent</strong>).</p>
+<p>So let’s look at the random effects calculated by <code>no_subj_cor_model</code> and its poor attempt at fitting their distribution.</p>
+<p>First, let’s plot the subject intercepts by subject slopes like we did for our original model:</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="test_files/figure-html5/no_subj_corr_plot-1.png" width="624" /></p>
+</div>
+<p>You might notice that the <code>no_subj_cor_model</code> calculates subject random effects that are very similar to those calculated by our original mode. Here’s a side-by-side comparison of the subject random effects from <code>model</code> and <code>no_subj_cor_model</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="test_files/figure-html5/unnamed-chunk-5-1.png" width="624" /></p>
+</div>
+<p>This illustrates a very important point. <strong>Removing the correlation parameter does not change the calculation of the random effects</strong> (barring any serious convergence failures, of course). This shouldn’t be surprising because random effects, like fixed effects, speak to <strong>FACTS (in the frequentist sense) about how the data that we observe is generated</strong>. It is literally the case here since I included these random effects explicitly in making <code>toydata</code>. But more importantly, <strong>the idea that there are random variations generated from underlying population-level parameters is an assumption that we are making when we use mixed-effects moels</strong>.</p>
+<p>The only meaningful difference between the two models here, then, is in their <strong>fit</strong> - e.g., how well the model captures the distribution of the subject random effects. We actually went over this above - we saw that our original model fits subject random effects using <strong>a bivariate normal distribution</strong> assuming a correlation, while <code>no_subj_cor_model</code> should be fitting subject random effects using <strong>two univariate normal distributions</strong>, assuming no (i.e., <em>zero</em>) correlation.</p>
+<p>Here’s a visual comparison of model fit, with the plot for <code>model</code> at the top and the plot for <code>no_subj_cor_model</code> at the bottom:</p>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="test_files/figure-html5/unnamed-chunk-7-1.png" width="624" /></p>
+</div>
+<p> </p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="test_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
+</div>
+<p>Where the term <span class="math inline">\(\rho = 0\)</span> in the plot for <code>no_subj_cor_model</code> indicates that the subject intercepts and subject slopes are generated from this bivariate distribution:</p>
+<p> </p>
+<p><span class="math display">\[(S_{0s}, S_{1s})\ \sim\ N(0,\begin{bmatrix} \tau_{00}^2 &amp; 0 \\ 0 &amp; \tau_{11}^2 \end{bmatrix})\]</span></p>
+<p> </p>
+<p>Which is the same as independetly sampling from these two univariate normal distributions:</p>
+<p> </p>
+<p><span class="math display">\[S_{0s} \sim N(0, \tau_{00})\]</span></p>
+<p><span class="math display">\[S_{1s} \sim N(0, \tau_{11})\]</span></p>
+<p> </p>
+<p>Now, looking at the plots, <code>no_subj_cor_model</code> (bottom) clearly fits the distribution of the subject random effects poorly compared to our original model <code>model</code> (top), and that appears to be the driving the significant decrease in fit that we found from the likelihood ratio test earlier. It seems to be the case that the inclusion of the correlation parameter between subject random intercepts is necessary to fit the data well.</p>
+<p> </p>
+<h3 id="are-correlation-parameters-always-necessary"><strong>Are correlation parameters always necessary?</strong></h3>
+<p>The question of how “maximal” our models should be is very tricky, and especially so when it concerns the inclusion/exclusion of correlation parameters (see discussions <a href="https://vasishth-statistics.blogspot.com/2014/08/an-adverse-consequence-of-fitting.html">here</a> and <a href="https://vasishth-statistics.blogspot.com/2014/11/should-we-fit-maximal-linear-mixed.html">here</a>). For example, <a href="https://arxiv.org/pdf/1506.04967.pdf">Bates, Kliegl, Vasishth, &amp; Baayen (2015)</a> and <a href="https://doi.org/10.1016/j.jml.2017.01.001">Matuschek, Kliegl, Vasishth, &amp; Baayen (2017)</a> have called for <strong>parsimonious models</strong> with stricter criteria for including terms in the model, beyond whether they cause the model to fail to converge.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<p>I’ll demonstrate one case here where it doesn’t seem like including a correlation parameter particularly improves model fit.</p>
+<p>Let’s repeat the model comparison process above, except this time taking out the correlation parameter for <em>item</em>.</p>
+<p>For context, here is the random effects output of <code>model</code> again:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>
+ Groups   Name               Std.Dev. Corr
+ Subject  (Intercept)        25.24        
+          ConditionTreatment 10.40    0.85
+ Item     (Intercept)         6.66        
+          ConditionTreatment 17.56    0.14
+ Residual                     6.11        </code></pre>
+</div>
+<p>Again, there are <strong>three parameters</strong> that the model estimated to capture the <strong>by-item variation</strong>:</p>
+<ol type="1">
+<li><p><strong>The variation (<code>Std.Dev.</code>) for item intercept</strong></p></li>
+<li><p><strong>The variation (<code>Std.Dev.</code>) for item slope</strong></p></li>
+<li><p><strong>The correlation (<code>Corr</code>) between item intercept and item slope</strong>.</p></li>
+</ol>
+<p>And here is what the distribution of item random effects from <code>model</code> look like:</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="test_files/figure-html5/item_corr_plot-1.png" width="624" /></p>
+</div>
+<p>Our model fitted a bivariate normal distribution with the standard deviation of item intercepts = 6.66, the standard deviation of item slopes = 10.4, and correlation = 0.14.</p>
+<p>We can again visualize the fit of <code>model</code> to the distribution of the item random effects:</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="test_files/figure-html5/unnamed-chunk-10-1.png" width="624" /></p>
+</div>
+<p>The model estimates a low correlation of 0.14, which is reflected in the small tilt of the ellipse. It looks like the model is capturing the distribution of the item random effects pretty well. But is the correlation parameter really <em>that</em> necessary here?</p>
+<p>Let’s make another depleted model, <code>no_item_cor_model</code>, with the correlation between item random effects removed:</p>
+<div class="layout-chunk" data-layout="l-body">
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+Response
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+209.64
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+203.49 – 215.80
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Condition [Treatment]
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+35.88
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+28.45 – 43.31
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001
+</td>
+</tr>
+<tr>
+<td colspan="4" style="font-weight:bold; text-align:left; padding-top:.8em;">
+Random Effects
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+σ<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+37.37
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>00</sub> <sub>Subject</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+636.98
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>00</sub> <sub>Item</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+44.55
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>00</sub> <sub>Item.1</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+310.22
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>11</sub> <sub>Subject.ConditionTreatment</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+108.08
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+ρ<sub>01</sub> <sub>Subject</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.85
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+ICC
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.96
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+N <sub>Subject</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+80
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+N <sub>Item</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+24
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+1920
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.244 / 0.972
+</td>
+</tr>
+</table>
+</div>
+<p>Again, the output of the depleted model printed here does not differ that much from the output of <code>model</code>. We can see also get a sense of this by visualizing the fit of ‘no_item_cor_model’ to the distribution of item random effects:</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="test_files/figure-html5/unnamed-chunk-11-1.png" width="624" /></p>
+</div>
+<p>We can see this even more clearly with a side-by-side comparison of model fit by <code>model</code> (blue) and <code>no_item_cor_model</code> (red):</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="test_files/figure-html5/unnamed-chunk-12-1.png" width="624" /></p>
+</div>
+<p>Doesn’t seem like there are big differences here, but we have to run some statistics to be sure. So let’s perform another log likelihood ratio test:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>
+Data: toydata
+Models:
+no_item_cor_model: Response ~ Condition + (1 + Condition | Subject) + (1 + model.matrix(model)[, 
+no_item_cor_model:     2] || Item)
+model: Response ~ Condition + (1 + Condition | Subject) + (1 + Condition | 
+model:     Item)
+                  npar   AIC   BIC logLik deviance Chisq Df
+no_item_cor_model    8 13265 13310  -6625    13249         
+model                9 13267 13317  -6624    13249  0.47  1
+                  Pr(&gt;Chisq)
+no_item_cor_model           
+model                   0.49</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<p>First, for sanity check, we see that <code>no_item_cor_model</code> has one less <code>Df</code> than <code>model</code>, which is what we’d expect if <code>no_item_cor_model</code> indeed lacks the correlation parameter for item random effects. Next, we see that the value of <code>Pr(&gt;Chisq)</code> is very high, at 0.49, suggesting that the models are not significantly different. This is corroborated by the very small differences between the models’ <code>AIC</code> and <code>BIC</code> values. These small differences are probably reducible to the fact that <code>AIC</code> and <code>BIC</code> penalize more number of parameters (as a way of balancing model fit with model complexity). In fact, the differences in <code>AIC</code> between the models is approximately 2, which is exactly <a href="https://stats.stackexchange.com/a/121684">what you’d expect if you added a redundant parameter with no additional explanatory power to the model</a>.</p>
+<p> </p>
+<p>In sum, we see that when modeling our dataset <code>toydata</code>, estimating a correlation parameter between subject random effects improves model fit, while estimating a correlation parameter between item random effects doesn’t as much.</p>
+<p> </p>
+<h3 id="conclusion-and-implications-for-model-building"><strong>Conclusion and implications for model building</strong></h3>
+<p>My main goal here was to simply go over what the correlation parameter in mixed-effects models is, so the question of whether we should be including certain correlation parameter(s) in our models are beyond the scope of this discussion (and should be handled on a case-by-case basis). It’s also something that I’m in the process of learning, so I don’t have a good answer to it yet. But my personal view (which may change later with more knowledge and experience) is to <strong>keep correlation parameters in the model unless they make the model fail to converge</strong>. So in the case of the correlation parameter for item random effects in <code>model</code> that we discussed above, I’d personally keep that in since we didn’t run into any convergence issues fitting the maximal model. In general, if there’s no meaningful difference either way, I err towards leaving the correlation parameter in there. In other words, I try to <strong>keep the model as maximal as possible without overparameterizing it</strong> (Barr et al., 2013).</p>
+<p>I don’t think that the spirit of this message is really controversial, and the more challenging part of this is putting it into practice. We not only need to balance model fit with model complexity, but we also often need to navigate conflicts between important considerations from statistical theory and from whatever domain our research is in (linguistics, psychology, etc.).</p>
+<p>To resolve this, a lot of people have streamlined different methods of reducing the complexity of the random effects structure in a statistically motivated way. One such example is using <strong>Principal Components Analysis</strong> (PCA) (suggested in Bates et al., 2015). In Section 3 of their paper, Bates and colleagues outline a procedure for <strong>iterative model reduction</strong> which involves PCA (now available as <code>rePCA()</code> in the <code>lme4</code> package) to determine how many random effect terms are sufficient to capture the variance in the random effects. This is still <a href="https://rpubs.com/danmirman/repsychling_test1">not a perfect solution</a>, of course, but it’s a good next step for putting this knowledge into practice. <del>Or you can just do <em>fancy</em> Bayesian analyses and avoid all these problems, so I hear</del></p>
+<p>Anyways, that’s it for my notes. Here’s the code that generated <code>toydata</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>This distinction is also reflected in the fact that the notation for random effect standard deviation is tau (<span class="math inline">\(\tau\)</span>), which is a Greek symbol. In statistics, Greek symbols (like <span class="math inline">\(\beta\)</span>, which we may be more familiar with) refers to population-level paramters.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>But what if the distribution of random effects has a mean that is not equal to zero? Well that just shifts the fixed effects estimate, so the distribution of random effects can be fully characterized by just its variance/standard deviation. This is also why you should never remove a term from fixed effects without removing it from random effects like in <code>Response ~ 1 + (1 + Condiiton | Subject)</code> without a good reason, because the model will <em>assume</em> the fixed effect of <code>Condition</code> to be <em>zero</em>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>Removing a correlation term in <code>lmer()</code> turns out to be actually sort of tricky if you don’t explicitly numerically code your factors - sometimes just using the double bar syntax (<code>||</code>) doesn’t always work. I won’t go into the details of how to do that here, but there are good discussions of doing this using <code>model.matrix()</code> in <a href="https://rpubs.com/Reinhold/22193">this Rpubs post</a> and Section 5.4 (also Appendix E) of <a href="https://arxiv.org/pdf/1903.10766.pdf">Frossard and Renaud (2019)</a>. I could have done numeric coding with something like <code>mutate(data, Condition = as.integer(Condition == "Treatment"))</code>, but I wanted to try this way out for myself<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>Here, <span class="math inline">\(\tau_{00\ Subject.1}\)</span> is actually the same as the <span class="math inline">\(\tau_{00\ Subject.ConditionTreatment}\)</span> term from the maximal model, <code>model</code>. I don’t know how to suppress this name change after dropping a correlation term - if you do, please let me know!<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>The (simplified) argument here is that having the model estimate superfluous variance components can make it more difficult for the model to detect an effect if it actually exists - i.e., can lead to a loss of power<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>
