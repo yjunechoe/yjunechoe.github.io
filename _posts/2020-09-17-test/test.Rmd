@@ -158,7 +158,7 @@ model <- lmer(Response ~ Condition + (1+Condition|Subject) + (1+Condition|Item),
 
 We can really quickly check model assumptions with the very convenient `check_model()` function from the `{performance}` package:
 
-```{r check_model, error=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
+```{r model_check, error=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
 performance::check_model(model)
 ```
 

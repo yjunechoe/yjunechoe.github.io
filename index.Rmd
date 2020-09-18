@@ -1,7 +1,6 @@
 ---
 title: "June Choe"
-description: |
-  This new website is under construction!
+description:
 site: distill::distill_website
 ---
 
