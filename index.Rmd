@@ -1,25 +1,7 @@
 ---
 title: "June Choe"
-description:
 site: distill::distill_website
+listing: posts
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
-
-# Learn more about creating websites with Distill at:
-# https://rstudio.github.io/distill/website.html
-
-```
-
-# This Site is Under Construction
-
-```{r, fig.align='center', out.width='120%'}
-knitr::include_graphics('static/img/catsconstruction.jpeg')
-```
-
-
-I've started the process of migrating over to **distill** on September 17.
-
-You can find me at my old website <https://yjunechoe.netlify.app/> while ~~my cramped hands~~ the kittens are hard at work!
 

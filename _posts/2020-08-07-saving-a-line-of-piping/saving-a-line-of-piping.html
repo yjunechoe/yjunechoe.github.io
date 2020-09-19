@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+  <!--radix_placeholder_meta_tags-->
+  <title>Saving a line of piping</title>
+
+  <meta property="description" itemprop="description" content="Some notes on lesser known functions/functionalities that combine common chain of {dplyr} verbs."/>
+
+
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2020-08-07"/>
+  <meta property="article:created" itemprop="dateCreated" content="2020-08-07"/>
+  <meta name="article:author" content="June Choe"/>
+
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="Saving a line of piping"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:description" content="Some notes on lesser known functions/functionalities that combine common chain of {dplyr} verbs."/>
+  <meta property="og:image" content="yjunechoe.github.io/preview.png"/>
+  <meta property="og:image:width" content="877"/>
+  <meta property="og:image:height" content="372"/>
+  <meta property="og:locale" content="en_US"/>
+
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:title" content="Saving a line of piping"/>
+  <meta property="twitter:description" content="Some notes on lesser known functions/functionalities that combine common chain of {dplyr} verbs."/>
+  <meta property="twitter:image" content="yjunechoe.github.io/preview.png"/>
+  <meta property="twitter:image:width" content="877"/>
+  <meta property="twitter:image:height" content="372"/>
+
+  <!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","preview","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Saving a line of piping"]},{"type":"character","attributes":{},"value":["Some notes on lesser known functions/functionalities that combine common chain of {dplyr} verbs.\n"]},{"type":"character","attributes":{},"value":["data wrangling","dplyr"]},{"type":"character","attributes":{},"value":["yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]}]}]},{"type":"character","attributes":{},"value":["preview.png"]},{"type":"character","attributes":{},"value":["08-07-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["preview.png","saving-a-line-of-piping_files/bowser-1.9.3/bowser.min.js","saving-a-line-of-piping_files/core-js-2.5.3/LICENSE","saving-a-line-of-piping_files/core-js-2.5.3/package.json","saving-a-line-of-piping_files/core-js-2.5.3/shim.min.js","saving-a-line-of-piping_files/distill-2.2.21/template.v2.js","saving-a-line-of-piping_files/header-attrs-2.3/header-attrs.js","saving-a-line-of-piping_files/htmlwidgets-1.5.1/htmlwidgets.js","saving-a-line-of-piping_files/jquery-1.11.3/jquery.min.js","saving-a-line-of-piping_files/react-16.12.0/AUTHORS","saving-a-line-of-piping_files/react-16.12.0/LICENSE.txt","saving-a-line-of-piping_files/react-16.12.0/react-dom.min.js","saving-a-line-of-piping_files/react-16.12.0/react.min.js","saving-a-line-of-piping_files/reactable-binding-0.2.0/reactable.js","saving-a-line-of-piping_files/reactwidget-1.0.0/react-tools.js","saving-a-line-of-piping_files/reactwidget-1.0.0/react-tools.js.map","saving-a-line-of-piping_files/webcomponents-2.0.0/webcomponents.js"]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+  <style type="text/css">
+
+  body {
+    background-color: white;
+  }
+
+  .pandoc-table {
+    width: 100%;
+  }
+
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .shaded-content {
+    background: white;
+  }
+
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  d-article {
+    padding-bottom: 30px;
+  }
+
+  d-appendix {
+    padding-top: 30px;
+  }
+
+  d-article>p>img {
+    width: 100%;
+  }
+
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  /* CSS for table of contents */
+
+  .d-toc {
+    color: rgba(0,0,0,0.8);
+    font-size: 0.8em;
+    line-height: 1em;
+  }
+
+  .d-toc-header {
+    font-size: 0.6rem;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 1.3em;
+  }
+
+  .d-toc a {
+    border-bottom: none;
+  }
+
+  .d-toc ul {
+    padding-left: 0;
+  }
+
+  .d-toc li>ul {
+    padding-top: 0.8em;
+    padding-left: 16px;
+    margin-bottom: 0.6em;
+  }
+
+  .d-toc ul,
+  .d-toc li {
+    list-style-type: none;
+  }
+
+  .d-toc li {
+    margin-bottom: 0.9em;
+  }
+
+  .d-toc-separator {
+    margin-top: 20px;
+    margin-bottom: 2em;
+  }
+
+  .d-article-with-toc {
+    border-top: none;
+    padding-top: 0;
+  }
+
+
+
+  /* Tweak code blocks (note that this CSS is repeated above in an injection
+     into the d-code shadow dom) */
+
+  d-code {
+    overflow-x: auto !important;
+  }
+
+  pre.d-code code.d-code {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+
+  pre.text-output {
+
+    font-size: 12px;
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  @media(min-width: 768px) {
+
+  d-code {
+    overflow-x: visible !important;
+  }
+
+  pre.d-code code.d-code  {
+      padding-left: 18px;
+      font-size: 14px;
+  }
+  pre.text-output {
+    font-size: 14px;
+  }
+  }
+
+  /* Figure */
+
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+
+  .figure img {
+    width: 100%;
+  }
+
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+
+
+
+  /* Tweak 1000px media break to show more text */
+
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+
+    .grid {
+      grid-column-gap: 16px;
+    }
+
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+
+
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+
+  /* Social footer */
+
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+
+  .disqus-comments {
+    margin-right: 30px;
+  }
+
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+
+  #disqus_thread {
+    margin-top: 30px;
+  }
+
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+
+
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+
+
+  .sidebar-section.custom {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .custom p {
+    margin-bottom: 0.5em;
+  }
+
+
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  </style>
+
+  <script type="application/javascript">
+
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+
+  // show body when load is complete
+  function on_load_complete() {
+
+    // set body to visible
+    document.body.style.visibility = 'visible';
+
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+
+  function init_distill() {
+
+    init_common();
+
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+
+    // create d-bibliography
+    var bibliography = $('<d-bibliography></d-bibliography>');
+    $('#distill-bibliography').wrap(bibliography);
+
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+    // replace citations with <d-cite>
+    $('.citation').each(function(i, val) {
+      appendix = true;
+      var cites = $(this).attr('data-cites').split(" ");
+      var dt_cite = $('<d-cite></d-cite>');
+      dt_cite.attr('key', cites.join());
+      $(this).replaceWith(dt_cite);
+    });
+    // remove refs
+    $('#refs').remove();
+
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-toc a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+    // replace code blocks with d-code
+    $('pre>code').each(function(i, val) {
+      var code = $(this);
+      var pre = code.parent();
+      var clz = "";
+      var language = pre.attr('class');
+      if (language) {
+        // map unknown languages to "clike" (without this they just dissapear)
+        if ($.inArray(language, ["bash", "clike", "css", "go", "html",
+                                 "javascript", "js", "julia", "lua", "markdown",
+                                 "markup", "mathml", "python", "svg", "xml"]) == -1)
+          language = "clike";
+        language = ' language="' + language + '"';
+        var dt_code = $('<d-code block' + language + clz + '></d-code>');
+        dt_code.text(code.text());
+        pre.replaceWith(dt_code);
+      } else {
+        code.addClass('text-output').unwrap().changeElementType('pre');
+      }
+    });
+
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+
+      // capture layout
+      var layout = $(this).attr('data-layout');
+
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('d-code, pre.text-output, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+
+
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+
+    // load distill framework
+    load_distill_framework();
+
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+
+      // table of contents
+      if (have_authors) // adjust border if we are in authors
+        $('.d-toc').parent().addClass('d-article-with-toc');
+
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+
+      // inject pre code styles (can't do this with a global stylesheet b/c a shadow root is used)
+      $('d-code').each(function(i, val) {
+        var style = document.createElement('style');
+        style.innerHTML = 'pre code { padding-left: 10px; font-size: 12px; border-left: 2px solid rgba(0,0,0,0.1); } ' +
+                          '@media(min-width: 768px) { pre code { padding-left: 18px; font-size: 14px; } }';
+        if (this.shadowRoot)
+          this.shadowRoot.appendChild(style);
+      });
+
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+
+      // clear polling timer
+      clearInterval(tid);
+
+      // show body now that everything is ready
+      on_load_complete();
+    }
+
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+
+  }
+
+  function init_downlevel() {
+
+    init_common();
+
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+
+    // remove toc
+    $('.d-toc-header').remove();
+    $('.d-toc').remove();
+    $('.d-toc-separator').remove();
+
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+
+
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+
+    $('body').addClass('downlevel');
+
+    on_load_complete();
+  }
+
+
+  function init_common() {
+
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+
+      }
+    });
+
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.distill-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+      });
+    }
+
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+
+  </script>
+
+  <!--/radix_placeholder_distill-->
+  <script src="saving-a-line-of-piping_files/header-attrs-2.3/header-attrs.js"></script>
+  <script src="saving-a-line-of-piping_files/core-js-2.5.3/shim.min.js"></script>
+  <script src="saving-a-line-of-piping_files/react-16.12.0/react.min.js"></script>
+  <script src="saving-a-line-of-piping_files/react-16.12.0/react-dom.min.js"></script>
+  <script src="saving-a-line-of-piping_files/reactwidget-1.0.0/react-tools.js"></script>
+  <script src="saving-a-line-of-piping_files/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+  <script src="saving-a-line-of-piping_files/reactable-binding-0.2.0/reactable.js"></script>
+  <script src="saving-a-line-of-piping_files/jquery-1.11.3/jquery.min.js"></script>
+  <script src="saving-a-line-of-piping_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="saving-a-line-of-piping_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="saving-a-line-of-piping_files/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Saving a line of piping","description":"Some notes on lesser known functions/functionalities that combine common chain of {dplyr} verbs.","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/"}],"publishedDate":"2020-08-07T00:00:00.000-04:00","citationText":"Choe, 2020"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Saving a line of piping</h1>
+<p><p>Some notes on lesser known functions/functionalities that combine common chain of {dplyr} verbs.</p></p>
+</div>
+
+<div class="d-byline">
+  June Choe  (University of Pennsylvania Linguistics)<a href="https://live-sas-www-ling.pantheon.sas.upenn.edu/" class="uri">https://live-sas-www-ling.pantheon.sas.upenn.edu/</a>
+  
+<br/>08-07-2020
+</div>
+
+<div class="d-article">
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<p>Using a cleaned up version of <code>penguins</code> data from <code>{palmerpenguins}</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+data(&quot;penguins&quot;, package = &quot;palmerpenguins&quot;)
+
+penguins &lt;- na.omit(penguins)</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div id="htmlwidget-c11750f6962ef8c9cb17" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-c11750f6962ef8c9cb17">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"species":["Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap"],"island":["Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream"],"bill_length_mm":[39.1,39.5,40.3,36.7,39.3,38.9,39.2,41.1,38.6,34.6,36.6,38.7,42.5,34.4,46,37.8,37.7,35.9,38.2,38.8,35.3,40.6,40.5,37.9,40.5,39.5,37.2,39.5,40.9,36.4,39.2,38.8,42.2,37.6,39.8,36.5,40.8,36,44.1,37,39.6,41.1,36,42.3,39.6,40.1,35,42,34.5,41.4,39,40.6,36.5,37.6,35.7,41.3,37.6,41.1,36.4,41.6,35.5,41.1,35.9,41.8,33.5,39.7,39.6,45.8,35.5,42.8,40.9,37.2,36.2,42.1,34.6,42.9,36.7,35.1,37.3,41.3,36.3,36.9,38.3,38.9,35.7,41.1,34,39.6,36.2,40.8,38.1,40.3,33.1,43.2,35,41,37.7,37.8,37.9,39.7,38.6,38.2,38.1,43.2,38.1,45.6,39.7,42.2,39.6,42.7,38.6,37.3,35.7,41.1,36.2,37.7,40.2,41.4,35.2,40.6,38.8,41.5,39,44.1,38.5,43.1,36.8,37.5,38.1,41.1,35.6,40.2,37,39.7,40.2,40.6,32.1,40.7,37.3,39,39.2,36.6,36,37.8,36,41.5,46.1,50,48.7,50,47.6,46.5,45.4,46.7,43.3,46.8,40.9,49,45.5,48.4,45.8,49.3,42,49.2,46.2,48.7,50.2,45.1,46.5,46.3,42.9,46.1,47.8,48.2,50,47.3,42.8,45.1,59.6,49.1,48.4,42.6,44.4,44,48.7,42.7,49.6,45.3,49.6,50.5,43.6,45.5,50.5,44.9,45.2,46.6,48.5,45.1,50.1,46.5,45,43.8,45.5,43.2,50.4,45.3,46.2,45.7,54.3,45.8,49.8,49.5,43.5,50.7,47.7,46.4,48.2,46.5,46.4,48.6,47.5,51.1,45.2,45.2,49.1,52.5,47.4,50,44.9,50.8,43.4,51.3,47.5,52.1,47.5,52.2,45.5,49.5,44.5,50.8,49.4,46.9,48.4,51.1,48.5,55.9,47.2,49.1,46.8,41.7,53.4,43.3,48.1,50.5,49.8,43.5,51.5,46.2,55.1,48.8,47.2,46.8,50.4,45.2,49.9,46.5,50,51.3,45.4,52.7,45.2,46.1,51.3,46,51.3,46.6,51.7,47,52,45.9,50.5,50.3,58,46.4,49.2,42.4,48.5,43.2,50.6,46.7,52,50.5,49.5,46.4,52.8,40.9,54.2,42.5,51,49.7,47.5,47.6,52,46.9,53.5,49,46.2,50.9,45.5,50.9,50.8,50.1,49,51.5,49.8,48.1,51.4,45.7,50.7,42.5,52.2,45.2,49.3,50.2,45.6,51.9,46.8,45.7,55.8,43.5,49.6,50.8,50.2],"bill_depth_mm":[18.7,17.4,18,19.3,20.6,17.8,19.6,17.6,21.2,21.1,17.8,19,20.7,18.4,21.5,18.3,18.7,19.2,18.1,17.2,18.9,18.6,17.9,18.6,18.9,16.7,18.1,17.8,18.9,17,21.1,20,18.5,19.3,19.1,18,18.4,18.5,19.7,16.9,18.8,19,17.9,21.2,17.7,18.9,17.9,19.5,18.1,18.6,17.5,18.8,16.6,19.1,16.9,21.1,17,18.2,17.1,18,16.2,19.1,16.6,19.4,19,18.4,17.2,18.9,17.5,18.5,16.8,19.4,16.1,19.1,17.2,17.6,18.8,19.4,17.8,20.3,19.5,18.6,19.2,18.8,18,18.1,17.1,18.1,17.3,18.9,18.6,18.5,16.1,18.5,17.9,20,16,20,18.6,18.9,17.2,20,17,19,16.5,20.3,17.7,19.5,20.7,18.3,17,20.5,17,18.6,17.2,19.8,17,18.5,15.9,19,17.6,18.3,17.1,18,17.9,19.2,18.5,18.5,17.6,17.5,17.5,20.1,16.5,17.9,17.1,17.2,15.5,17,16.8,18.7,18.6,18.4,17.8,18.1,17.1,18.5,13.2,16.3,14.1,15.2,14.5,13.5,14.6,15.3,13.4,15.4,13.7,16.1,13.7,14.6,14.6,15.7,13.5,15.2,14.5,15.1,14.3,14.5,14.5,15.8,13.1,15.1,15,14.3,15.3,15.3,14.2,14.5,17,14.8,16.3,13.7,17.3,13.6,15.7,13.7,16,13.7,15,15.9,13.9,13.9,15.9,13.3,15.8,14.2,14.1,14.4,15,14.4,15.4,13.9,15,14.5,15.3,13.8,14.9,13.9,15.7,14.2,16.8,16.2,14.2,15,15,15.6,15.6,14.8,15,16,14.2,16.3,13.8,16.4,14.5,15.6,14.6,15.9,13.8,17.3,14.4,14.2,14,17,15,17.1,14.5,16.1,14.7,15.7,15.8,14.6,14.4,16.5,15,17,15.5,15,16.1,14.7,15.8,14,15.1,15.2,15.9,15.2,16.3,14.1,16,16.2,13.7,14.3,15.7,14.8,16.1,17.9,19.5,19.2,18.7,19.8,17.8,18.2,18.2,18.9,19.9,17.8,20.3,17.3,18.1,17.1,19.6,20,17.8,18.6,18.2,17.3,17.5,16.6,19.4,17.9,19,18.4,19,17.8,20,16.6,20.8,16.7,18.8,18.6,16.8,18.3,20.7,16.6,19.9,19.5,17.5,19.1,17,17.9,18.5,17.9,19.6,18.7,17.3,16.4,19,17.3,19.7,17.3,18.8,16.6,19.9,18.8,19.4,19.5,16.5,17,19.8,18.1,18.2,19,18.7],"flipper_length_mm":[181,186,195,193,190,181,195,182,191,198,185,195,197,184,194,174,180,189,185,180,187,183,187,172,180,178,178,188,184,195,196,190,180,181,184,182,195,186,196,185,190,182,190,191,186,188,190,200,187,191,186,193,181,194,185,195,185,192,184,192,195,188,190,198,190,190,196,197,190,195,191,184,187,195,189,196,187,193,191,194,190,189,189,190,202,205,185,186,187,208,190,196,178,192,192,203,183,190,193,184,199,190,181,197,198,191,193,197,191,196,188,199,189,189,187,198,176,202,186,199,191,195,191,210,190,197,193,199,187,190,191,200,185,193,193,187,188,190,192,185,190,184,195,193,187,201,211,230,210,218,215,210,211,219,209,215,214,216,214,213,210,217,210,221,209,222,218,215,213,215,215,215,215,210,220,222,209,207,230,220,220,213,219,208,208,208,225,210,216,222,217,210,225,213,215,210,220,210,225,217,220,208,220,208,224,208,221,214,231,219,230,229,220,223,216,221,221,217,216,230,209,220,215,223,212,221,212,224,212,228,218,218,212,230,218,228,212,224,214,226,216,222,203,225,219,228,215,228,215,210,219,208,209,216,229,213,230,217,230,222,214,215,222,212,213,192,196,193,188,197,198,178,197,195,198,193,194,185,201,190,201,197,181,190,195,181,191,187,193,195,197,200,200,191,205,187,201,187,203,195,199,195,210,192,205,210,187,196,196,196,201,190,212,187,198,199,201,193,203,187,197,191,203,202,194,206,189,195,207,202,193,210,198],"body_mass_g":[3750,3800,3250,3450,3650,3625,4675,3200,3800,4400,3700,3450,4500,3325,4200,3400,3600,3800,3950,3800,3800,3550,3200,3150,3950,3250,3900,3300,3900,3325,4150,3950,3550,3300,4650,3150,3900,3100,4400,3000,4600,3425,3450,4150,3500,4300,3450,4050,2900,3700,3550,3800,2850,3750,3150,4400,3600,4050,2850,3950,3350,4100,3050,4450,3600,3900,3550,4150,3700,4250,3700,3900,3550,4000,3200,4700,3800,4200,3350,3550,3800,3500,3950,3600,3550,4300,3400,4450,3300,4300,3700,4350,2900,4100,3725,4725,3075,4250,2925,3550,3750,3900,3175,4775,3825,4600,3200,4275,3900,4075,2900,3775,3350,3325,3150,3500,3450,3875,3050,4000,3275,4300,3050,4000,3325,3500,3500,4475,3425,3900,3175,3975,3400,4250,3400,3475,3050,3725,3000,3650,4250,3475,3450,3750,3700,4000,4500,5700,4450,5700,5400,4550,4800,5200,4400,5150,4650,5550,4650,5850,4200,5850,4150,6300,4800,5350,5700,5000,4400,5050,5000,5100,5650,4600,5550,5250,4700,5050,6050,5150,5400,4950,5250,4350,5350,3950,5700,4300,4750,5550,4900,4200,5400,5100,5300,4850,5300,4400,5000,4900,5050,4300,5000,4450,5550,4200,5300,4400,5650,4700,5700,5800,4700,5550,4750,5000,5100,5200,4700,5800,4600,6000,4750,5950,4625,5450,4725,5350,4750,5600,4600,5300,4875,5550,4950,5400,4750,5650,4850,5200,4925,4875,4625,5250,4850,5600,4975,5500,5500,4700,5500,4575,5500,5000,5950,4650,5500,4375,5850,6000,4925,4850,5750,5200,5400,3500,3900,3650,3525,3725,3950,3250,3750,4150,3700,3800,3775,3700,4050,3575,4050,3300,3700,3450,4400,3600,3400,2900,3800,3300,4150,3400,3800,3700,4550,3200,4300,3350,4100,3600,3900,3850,4800,2700,4500,3950,3650,3550,3500,3675,4450,3400,4300,3250,3675,3325,3950,3600,4050,3350,3450,3250,4050,3800,3525,3950,3650,3650,4000,3400,3775,4100,3775],"sex":["male","female","female","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","male","female","male","female","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","male","female","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","male","female","male","male","female","female","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","male","female","male","female","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","male","female","male","female","female","male","female","male","male","female","female","male","female","male","female","male","female","male","male","female","male","female","female","male","female","male","male","female"],"year":[2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009]},"columns":[{"accessor":"species","name":"species","type":"factor"},{"accessor":"island","name":"island","type":"factor"},{"accessor":"bill_length_mm","name":"bill_length_mm","type":"numeric"},{"accessor":"bill_depth_mm","name":"bill_depth_mm","type":"numeric"},{"accessor":"flipper_length_mm","name":"flipper_length_mm","type":"numeric"},{"accessor":"body_mass_g","name":"body_mass_g","type":"numeric"},{"accessor":"sex","name":"sex","type":"factor"},{"accessor":"year","name":"year","type":"numeric"}],"sortable":false,"defaultPageSize":5,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"nowrap":true,"dataKey":"b650b7a1a5c792f49c2b2303a0449c36"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+<h2 id="rename-inside-select">1. <code>rename()</code> inside <code>select()</code></h2>
+<p>You can rename a column inside <code>select()</code> by assigning a new name on the left hand side:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+##### Long Form #####
+# penguins %&gt;% 
+#   select(species, island) %&gt;% 
+#   rename(penguin_species = species)
+
+penguins %&gt;% 
+  select(penguin_species = species,
+         island)</code></pre>
+<pre><code>
+  # A tibble: 333 x 2
+     penguin_species island   
+     &lt;fct&gt;           &lt;fct&gt;    
+   1 Adelie          Torgersen
+   2 Adelie          Torgersen
+   3 Adelie          Torgersen
+   4 Adelie          Torgersen
+   5 Adelie          Torgersen
+   6 Adelie          Torgersen
+   7 Adelie          Torgersen
+   8 Adelie          Torgersen
+   9 Adelie          Torgersen
+  10 Adelie          Torgersen
+  # ... with 323 more rows</code></pre>
+</div>
+<p>This also works with <code>{tidyselect}</code> helpers like <code>starts_with()</code>, <code>ends_with()</code>, <code>contains()</code>, and <code>matches()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+##### Long Form #####
+# penguins %&gt;% 
+#   select(species, island) %&gt;% 
+#   rename(penguin_species = species,
+#          weight = body_weight_g)
+
+penguins %&gt;% 
+  select(penguin_species = species,
+         island,
+         weight = contains(&quot;mass&quot;))</code></pre>
+<pre><code>
+  # A tibble: 333 x 3
+     penguin_species island    weight
+     &lt;fct&gt;           &lt;fct&gt;      &lt;int&gt;
+   1 Adelie          Torgersen   3750
+   2 Adelie          Torgersen   3800
+   3 Adelie          Torgersen   3250
+   4 Adelie          Torgersen   3450
+   5 Adelie          Torgersen   3650
+   6 Adelie          Torgersen   3625
+   7 Adelie          Torgersen   4675
+   8 Adelie          Torgersen   3200
+   9 Adelie          Torgersen   3800
+  10 Adelie          Torgersen   4400
+  # ... with 323 more rows</code></pre>
+</div>
+<h2 id="rename-inside-count">2. <code>rename()</code> inside <code>count()</code></h2>
+<p>You can rename the new column of counts (<code>n</code> by default) using the <code>name</code> argument:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+##### Long Form #####
+# penguins %&gt;% 
+#   count(species) %&gt;% 
+#   rename(total = n)
+
+penguins %&gt;% 
+  count(species, name = &quot;total&quot;)</code></pre>
+<pre><code>
+  # A tibble: 3 x 2
+    species   total
+    &lt;fct&gt;     &lt;int&gt;
+  1 Adelie      146
+  2 Chinstrap    68
+  3 Gentoo      119</code></pre>
+</div>
+<p>You can also rename the column(s) that are selected for counting in the same way as shown in the <code>select()</code> examples above:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+##### Long Form #####
+# penguins %&gt;% 
+#   count(species) %&gt;% 
+#   rename(total = n,
+#          penguin_species = species)
+
+penguins %&gt;% 
+  count(penguin_species = species, name = &quot;total&quot;)</code></pre>
+<pre><code>
+  # A tibble: 3 x 2
+    penguin_species total
+    &lt;fct&gt;           &lt;int&gt;
+  1 Adelie            146
+  2 Chinstrap          68
+  3 Gentoo            119</code></pre>
+</div>
+<p>Note that the new name passed into the <code>name</code> argument must be quoted, but the new name for selected column needs not to be unquoted:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+identical(
+  # Method 1: new column name UNQUOTED
+  penguins %&gt;% 
+  count(penguin_species = species, name = &quot;total&quot;),
+  # Method 2: new column name QUOTED
+ penguins %&gt;% 
+  count(&quot;penguin_species&quot; = species, name = &quot;total&quot;) 
+)</code></pre>
+<pre><code>
+  [1] TRUE</code></pre>
+</div>
+<p>I prefer to unquote the new column names to keep it consistent with the recommended style for <code>rename()</code></p>
+<p>This feature of <code>select()</code> may seem weird and hackish (and I guess it sort of is in this demonstration) but it’s explicitly documented <a href="https://tidyselect.r-lib.org/articles/syntax.html#renaming-variables-1">here</a> if you want to read more on it.</p>
+<h2 id="mutate-inside-count">3. <code>mutate()</code> inside <code>count()</code></h2>
+<p>You can also create a new column to count by inside <code>count()</code>. This works very similarly to the above, but I think it’s worth its own mention.</p>
+<p>It’s pretty simple - you just do what you’d do for <code>mutate()</code> inside <code>count()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+##### Long Form #####
+# penguins %&gt;% 
+#   mutate(long_beak = bill_length_mm &gt; 50) %&gt;% 
+#   count(long_beak)
+
+penguins %&gt;% 
+  count(long_beak = bill_length_mm &gt; 50)</code></pre>
+<pre><code>
+  # A tibble: 2 x 2
+    long_beak     n
+    &lt;lgl&gt;     &lt;int&gt;
+  1 FALSE       281
+  2 TRUE         52</code></pre>
+</div>
+<p>And of course, this also works when specifying <em>multiple</em> variables to count by:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+##### Long Form #####
+# penguins %&gt;% 
+#   mutate(long_beak = bill_length_mm &gt; 50,
+#          is_adelie = species == &quot;Adelie&quot;) %&gt;% 
+#   count(is_adelie, long_beak)
+
+penguins %&gt;% 
+  count(long_beak = bill_length_mm &gt; 50,
+        is_adelie = species == &quot;Adelie&quot;)</code></pre>
+<pre><code>
+  # A tibble: 3 x 3
+    long_beak is_adelie     n
+    &lt;lgl&gt;     &lt;lgl&gt;     &lt;int&gt;
+  1 FALSE     FALSE       135
+  2 FALSE     TRUE        146
+  3 TRUE      FALSE        52</code></pre>
+</div>
+<h2 id="transmute-select">4. <code>transmute()</code> + <code>select()</code></h2>
+<p><code>transmute()</code> is a function that mutates columns and returns only those columns:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+##### Long Form #####
+# penguins %&gt;% 
+#   mutate(body_mass_kg = body_mass_g/1000) %&gt;% 
+#   select(body_mass_kg)
+
+penguins %&gt;% 
+  transmute(body_mass_kg = body_mass_g/1000)</code></pre>
+<pre><code>
+  # A tibble: 333 x 1
+     body_mass_kg
+            &lt;dbl&gt;
+   1         3.75
+   2         3.8 
+   3         3.25
+   4         3.45
+   5         3.65
+   6         3.62
+   7         4.68
+   8         3.2 
+   9         3.8 
+  10         4.4 
+  # ... with 323 more rows</code></pre>
+</div>
+<p>I’ve rarely used <code>transmute()</code> in the past because I thought it could only return <em>modified</em> columns, which would be very limiting (like in the above example, what good is a single column of penguin body mass in kilograms?)</p>
+<p>But actually you can just name the columns you want to include in <code>transmute()</code> like you would in <code>select()</code> to carry over columns that you aren’t modifying. And of course, you can “rename” them as you do it<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+##### Long Form #####
+# penguins %&gt;% 
+#   mutate(body_mass_kg = body_mass_g/1000) %&gt;% 
+#   select(species, island, body_mass_kg) %&gt;% 
+#   rename(penguin_species = species)
+
+penguins %&gt;% 
+  transmute(penguin_species = species,
+            island,
+            body_mass_kg = body_mass_g/1000)</code></pre>
+<pre><code>
+  # A tibble: 333 x 3
+     penguin_species island    body_mass_kg
+     &lt;fct&gt;           &lt;fct&gt;            &lt;dbl&gt;
+   1 Adelie          Torgersen         3.75
+   2 Adelie          Torgersen         3.8 
+   3 Adelie          Torgersen         3.25
+   4 Adelie          Torgersen         3.45
+   5 Adelie          Torgersen         3.65
+   6 Adelie          Torgersen         3.62
+   7 Adelie          Torgersen         4.68
+   8 Adelie          Torgersen         3.2 
+   9 Adelie          Torgersen         3.8 
+  10 Adelie          Torgersen         4.4 
+  # ... with 323 more rows</code></pre>
+</div>
+<h2 id="ungroup-inside-summarize">5. <code>ungroup()</code> inside <code>summarize()</code></h2>
+<p>I always found using <code>ungroup()</code> after <code>summarize()</code> to be <em>extremely</em> ugly, but I found myself using it a lot to remove left-over groupings after a <code>summarize</code> call:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+penguins %&gt;% 
+  group_by(island, species) %&gt;% 
+  summarize(mean_mass = mean(body_mass_g, na.rm = TRUE)) %&gt;% 
+  ungroup()</code></pre>
+<pre><code>
+  # A tibble: 5 x 3
+    island    species   mean_mass
+    &lt;fct&gt;     &lt;fct&gt;         &lt;dbl&gt;
+  1 Biscoe    Adelie        3710.
+  2 Biscoe    Gentoo        5092.
+  3 Dream     Adelie        3701.
+  4 Dream     Chinstrap     3733.
+  5 Torgersen Adelie        3709.</code></pre>
+</div>
+<p>… because <code>summarize()</code> only drops the last grouping variable by defaut, meaning that the output is still grouped by the <code>island</code> variable if <code>ungroup()</code> isn’t called:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+# Without ungroup()
+penguins %&gt;% 
+  group_by(island, species) %&gt;% 
+  summarize(mean_mass = mean(body_mass_g, na.rm = TRUE)) %&gt;% 
+  group_vars()</code></pre>
+<pre><code>
+  [1] &quot;island&quot;</code></pre>
+<pre class="r"><code>
+# With ungroup()
+penguins %&gt;% 
+  group_by(island, species) %&gt;% 
+  summarize(mean_mass = mean(body_mass_g, na.rm = TRUE)) %&gt;% 
+  ungroup() %&gt;% 
+  group_vars()</code></pre>
+<pre><code>
+  character(0)</code></pre>
+</div>
+<p>Since <code>{dplyr}</code> 1.0.0, you can simply set the <code>.groups</code> argument inside <code>summarize()</code> to <code>'drop'</code> to achieve the same:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+penguins %&gt;% 
+  group_by(island, species) %&gt;% 
+  summarize(mean_mass = mean(body_mass_g, na.rm = TRUE), .groups = &#39;drop&#39;)</code></pre>
+<pre><code>
+  # A tibble: 5 x 3
+    island    species   mean_mass
+    &lt;fct&gt;     &lt;fct&gt;         &lt;dbl&gt;
+  1 Biscoe    Adelie        3710.
+  2 Biscoe    Gentoo        5092.
+  3 Dream     Adelie        3701.
+  4 Dream     Chinstrap     3733.
+  5 Torgersen Adelie        3709.</code></pre>
+</div>
+<p>But <code>ungroup()</code> still remains relevant as you can now selectively remove grouping variables:</p>
+<h2 id="arrange-other-features-inside-slice">6. <code>arrange()</code> + other features inside <code>slice()</code></h2>
+<p>In past versions of <code>{dplyr}</code>, if you wanted to grab the top n rows sorted by a column, you’d use <code>top_n()</code>, which provides a simpler way of doing <code>slice()</code> + <code>arrange()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+##### Long Form #####
+# penguins %&gt;% 
+#   arrange(desc(body_mass_g)) %&gt;% 
+#   slice(1:5)
+
+penguins %&gt;% 
+  top_n(5, wt = body_mass_g)</code></pre>
+<pre><code>
+  # A tibble: 6 x 8
+    species island bill_length_mm bill_depth_mm flipper_length_~ body_mass_g sex  
+    &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt; &lt;fct&gt;
+  1 Gentoo  Biscoe           49.2          15.2              221        6300 male 
+  2 Gentoo  Biscoe           59.6          17                230        6050 male 
+  3 Gentoo  Biscoe           51.1          16.3              220        6000 male 
+  4 Gentoo  Biscoe           45.2          16.4              223        5950 male 
+  5 Gentoo  Biscoe           49.8          15.9              229        5950 male 
+  6 Gentoo  Biscoe           48.8          16.2              222        6000 male 
+  # ... with 1 more variable: year &lt;int&gt;</code></pre>
+</div>
+<p>But the recent <code>{dplyr}</code> 1.0.0 augmented <code>slice()</code> with variants like <code>slice_min()</code> and <code>slice_max()</code> that now supresede <code>top_n()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+##### Pre-1.0.0 #####
+# penguins %&gt;% 
+#   top_n(5, wt = body_mass_g)
+
+penguins %&gt;% 
+  slice_max(order_by = body_mass_g, n = 5)</code></pre>
+<pre><code>
+  # A tibble: 6 x 8
+    species island bill_length_mm bill_depth_mm flipper_length_~ body_mass_g sex  
+    &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt; &lt;fct&gt;
+  1 Gentoo  Biscoe           49.2          15.2              221        6300 male 
+  2 Gentoo  Biscoe           59.6          17                230        6050 male 
+  3 Gentoo  Biscoe           51.1          16.3              220        6000 male 
+  4 Gentoo  Biscoe           48.8          16.2              222        6000 male 
+  5 Gentoo  Biscoe           45.2          16.4              223        5950 male 
+  6 Gentoo  Biscoe           49.8          15.9              229        5950 male 
+  # ... with 1 more variable: year &lt;int&gt;</code></pre>
+</div>
+<p>Note that the order of arguments is different for <code>slice_min/max()</code> - the first argument after piping is where you specify the variable for ordering rather than the number of rows to return, like in <code>top_n()</code>.</p>
+<p>This is because <code>slice_min/max()</code> gives you an option to either specify a certain number of rows <code>n</code> or a proportion of rows <code>prop</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+penguins %&gt;% 
+  slice_max(body_mass_g, prop = .01)</code></pre>
+<pre><code>
+  # A tibble: 4 x 8
+    species island bill_length_mm bill_depth_mm flipper_length_~ body_mass_g sex  
+    &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt; &lt;fct&gt;
+  1 Gentoo  Biscoe           49.2          15.2              221        6300 male 
+  2 Gentoo  Biscoe           59.6          17                230        6050 male 
+  3 Gentoo  Biscoe           51.1          16.3              220        6000 male 
+  4 Gentoo  Biscoe           48.8          16.2              222        6000 male 
+  # ... with 1 more variable: year &lt;int&gt;</code></pre>
+</div>
+<p>And actually, the most significant change with the new <code>slice_*()</code> functions is from adding appropriate behavior for <strong>grouped dataframes</strong>.</p>
+<p>So for example, this example below returns the top 5% of penguins by weight for each species:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+penguins %&gt;% 
+  group_by(species) %&gt;% 
+  slice_max(body_mass_g, prop = .05)</code></pre>
+<pre><code>
+  # A tibble: 16 x 8
+  # Groups:   species [3]
+     species island bill_length_mm bill_depth_mm flipper_length_~ body_mass_g
+     &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt;
+   1 Adelie  Biscoe           43.2          19                197        4775
+   2 Adelie  Biscoe           41            20                203        4725
+   3 Adelie  Torge~           42.9          17.6              196        4700
+   4 Adelie  Torge~           39.2          19.6              195        4675
+   5 Adelie  Dream            39.8          19.1              184        4650
+   6 Adelie  Dream            39.6          18.8              190        4600
+   7 Adelie  Biscoe           45.6          20.3              191        4600
+   8 Chinst~ Dream            52            20.7              210        4800
+   9 Chinst~ Dream            52.8          20                205        4550
+  10 Chinst~ Dream            53.5          19.9              205        4500
+  11 Gentoo  Biscoe           49.2          15.2              221        6300
+  12 Gentoo  Biscoe           59.6          17                230        6050
+  13 Gentoo  Biscoe           51.1          16.3              220        6000
+  14 Gentoo  Biscoe           48.8          16.2              222        6000
+  15 Gentoo  Biscoe           45.2          16.4              223        5950
+  16 Gentoo  Biscoe           49.8          15.9              229        5950
+  # ... with 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
+</div>
+<p>But note that <code>slice_*()</code> functions do not modify groups in the result if the input is a grouped dataframe, so you need to explicitly add a call to <code>ungroup()</code> if you want to drop groups after slicing.</p>
+<h2 id="count-and-sum-by-group-with-add_count">7. count and sum by group with <code>add_count()</code></h2>
+<p>Saving my favorite lesser-known <code>{dplyr}</code> function for last!</p>
+<p><code>add_count()</code> adds a column with the counts of each group (or combination of groups):</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+##### Long Form #####
+# penguins %&gt;% 
+#   group_by(species) %&gt;% 
+#   mutate(count_by_species = n()) %&gt;% 
+#   ungroup()
+
+penguins %&gt;% 
+  add_count(species, name = &quot;count_by_species&quot;) %&gt;% 
+  # cutting down some columns to show the new column
+  select(-contains(&quot;mm&quot;))</code></pre>
+<pre><code>
+  # A tibble: 333 x 6
+     species island    body_mass_g sex     year count_by_species
+     &lt;fct&gt;   &lt;fct&gt;           &lt;int&gt; &lt;fct&gt;  &lt;int&gt;            &lt;int&gt;
+   1 Adelie  Torgersen        3750 male    2007              146
+   2 Adelie  Torgersen        3800 female  2007              146
+   3 Adelie  Torgersen        3250 female  2007              146
+   4 Adelie  Torgersen        3450 female  2007              146
+   5 Adelie  Torgersen        3650 male    2007              146
+   6 Adelie  Torgersen        3625 female  2007              146
+   7 Adelie  Torgersen        4675 male    2007              146
+   8 Adelie  Torgersen        3200 female  2007              146
+   9 Adelie  Torgersen        3800 male    2007              146
+  10 Adelie  Torgersen        4400 male    2007              146
+  # ... with 323 more rows</code></pre>
+</div>
+<p>You can use the <code>wt</code> to effectively get sums by group (perhaps hackish but very very useful):</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+##### Long Form #####
+# penguins %&gt;% 
+#   group_by(species) %&gt;% 
+#   mutate(total_weight_by_species = sum(body_mass_g)) %&gt;% 
+#   ungroup()
+  
+
+penguins %&gt;% 
+  add_count(species, wt = body_mass_g, name = &quot;total_weight_by_species&quot;) %&gt;% 
+    # cutting down some columns to show the new column
+  select(-contains(&quot;mm&quot;))</code></pre>
+<pre><code>
+  # A tibble: 333 x 6
+     species island    body_mass_g sex     year total_weight_by_species
+     &lt;fct&gt;   &lt;fct&gt;           &lt;int&gt; &lt;fct&gt;  &lt;int&gt;                   &lt;int&gt;
+   1 Adelie  Torgersen        3750 male    2007                  541100
+   2 Adelie  Torgersen        3800 female  2007                  541100
+   3 Adelie  Torgersen        3250 female  2007                  541100
+   4 Adelie  Torgersen        3450 female  2007                  541100
+   5 Adelie  Torgersen        3650 male    2007                  541100
+   6 Adelie  Torgersen        3625 female  2007                  541100
+   7 Adelie  Torgersen        4675 male    2007                  541100
+   8 Adelie  Torgersen        3200 female  2007                  541100
+   9 Adelie  Torgersen        3800 male    2007                  541100
+  10 Adelie  Torgersen        4400 male    2007                  541100
+  # ... with 323 more rows</code></pre>
+</div>
+<p>Also check out its more primitive version <code>add_tally()</code>.</p>
+<p>By default, <code>add_tally()</code> adds a count of rows, which you can already do with <code>mutate(n = n())</code>, but it shines when you make use of its <code>wt</code> argument:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+penguins %&gt;% 
+  add_count(species, wt = body_mass_g, name = &quot;total_weight_by_species&quot;) %&gt;% 
+  add_tally(wt = body_mass_g, name = &quot;total_weight_of_all_species&quot;) %&gt;% 
+  select(1:2, last_col(0):last_col(1))</code></pre>
+<pre><code>
+  # A tibble: 333 x 4
+     species island    total_weight_of_all_species total_weight_by_species
+     &lt;fct&gt;   &lt;fct&gt;                           &lt;int&gt;                   &lt;int&gt;
+   1 Adelie  Torgersen                     1400950                  541100
+   2 Adelie  Torgersen                     1400950                  541100
+   3 Adelie  Torgersen                     1400950                  541100
+   4 Adelie  Torgersen                     1400950                  541100
+   5 Adelie  Torgersen                     1400950                  541100
+   6 Adelie  Torgersen                     1400950                  541100
+   7 Adelie  Torgersen                     1400950                  541100
+   8 Adelie  Torgersen                     1400950                  541100
+   9 Adelie  Torgersen                     1400950                  541100
+  10 Adelie  Torgersen                     1400950                  541100
+  # ... with 323 more rows</code></pre>
+</div>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>What happens under the hood is actually copying of a sort, so this is probably not the best approach if you care about efficiency. As a case in point, you can’t use <code>{tidyselect}</code> helpers in <code>transmute</code> because you’re creating a new dataframe<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>

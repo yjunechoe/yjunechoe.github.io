@@ -1,34 +1,67 @@
 [
   {
-    "path": "posts/2020-09-17-err/",
-    "title": "err",
-    "description": "A short description of the post.",
+    "path": "posts/2020-08-07-saving-a-line-of-piping/",
+    "title": "Saving a line of piping",
+    "description": "Some notes on lesser known functions/functionalities that combine common chain of {dplyr} verbs.",
     "author": [
       {
-        "name": "Unknown",
+        "name": "June Choe",
         "url": {}
       }
     ],
-    "date": "2020-09-17",
-    "categories": [],
-    "preview": {},
-    "last_modified": "2020-09-17T22:45:38-04:00",
-    "input_file": {}
+    "date": "2020-08-07",
+    "categories": [
+      "data wrangling",
+      "dplyr"
+    ],
+    "preview": "posts/2020-08-07-saving-a-line-of-piping/preview.png",
+    "last_modified": "2020-09-18T22:57:24-04:00",
+    "input_file": {},
+    "preview_width": 877,
+    "preview_height": 372
   },
   {
-    "path": "posts/2020-09-17-test/",
-    "title": "test",
-    "description": "A short description of the post.",
+    "path": "posts/2020-06-30-treemap-with-ggplot/",
+    "title": "Plotting treemaps with {treemap} and {ggplot2}",
+    "description": "Using underlying plot data for maximum customization",
     "author": [
       {
-        "name": "Unknown",
+        "name": "June Choe",
         "url": {}
       }
     ],
-    "date": "2020-09-17",
-    "categories": [],
-    "preview": "posts/2020-09-17-test/test_files/figure-html5/_check_model-1.png",
-    "last_modified": "2020-09-17T22:38:23-04:00",
-    "input_file": {}
+    "date": "2020-06-30",
+    "categories": [
+      "data visualization",
+      "treemap",
+      "ggplot2"
+    ],
+    "preview": "posts/2020-06-30-treemap-with-ggplot/2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-12-1.png",
+    "last_modified": "2020-09-18T23:34:50-04:00",
+    "input_file": {},
+    "preview_width": 1920,
+    "preview_height": 768
+  },
+  {
+    "path": "posts/2020-06-25-indexing-tip-for-spacyr/",
+    "title": "Indexing tip for {spacyr}",
+    "description": "Speeding up the analysis of dependency relations.",
+    "author": [
+      {
+        "name": "June Choe",
+        "url": {}
+      }
+    ],
+    "date": "2020-06-25",
+    "categories": [
+      "data wrangling",
+      "NLP",
+      "spacyr"
+    ],
+    "preview": "posts/2020-06-25-indexing-tip-for-spacyr/preview.png",
+    "last_modified": "2020-09-18T23:24:39-04:00",
+    "input_file": {},
+    "preview_width": 1920,
+    "preview_height": 686
   }
 ]

@@ -1,0 +1,2651 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+  <!--radix_placeholder_meta_tags-->
+  <title>Indexing tip for {spacyr}</title>
+
+  <meta property="description" itemprop="description" content="Speeding up the analysis of dependency relations."/>
+
+
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2020-06-25"/>
+  <meta property="article:created" itemprop="dateCreated" content="2020-06-25"/>
+  <meta name="article:author" content="June Choe"/>
+
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="Indexing tip for {spacyr}"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:description" content="Speeding up the analysis of dependency relations."/>
+  <meta property="og:image" content="yjunechoe.github.io/preview.png"/>
+  <meta property="og:image:width" content="1920"/>
+  <meta property="og:image:height" content="686"/>
+  <meta property="og:locale" content="en_US"/>
+
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:title" content="Indexing tip for {spacyr}"/>
+  <meta property="twitter:description" content="Speeding up the analysis of dependency relations."/>
+  <meta property="twitter:image" content="yjunechoe.github.io/preview.png"/>
+  <meta property="twitter:image:width" content="1920"/>
+  <meta property="twitter:image:height" content="686"/>
+
+  <!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","preview","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Indexing tip for {spacyr}"]},{"type":"character","attributes":{},"value":["Speeding up the analysis of dependency relations.\n"]},{"type":"character","attributes":{},"value":["data wrangling","NLP","spacyr"]},{"type":"character","attributes":{},"value":["yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]}]}]},{"type":"character","attributes":{},"value":["preview.png"]},{"type":"character","attributes":{},"value":["06-25-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["2020-06-25-indexing-tip-for-spacyr_files/bowser-1.9.3/bowser.min.js","2020-06-25-indexing-tip-for-spacyr_files/distill-2.2.21/template.v2.js","2020-06-25-indexing-tip-for-spacyr_files/figure-html5/unnamed-chunk-4-1.png","2020-06-25-indexing-tip-for-spacyr_files/header-attrs-2.3/header-attrs.js","2020-06-25-indexing-tip-for-spacyr_files/jquery-1.11.3/jquery.min.js","2020-06-25-indexing-tip-for-spacyr_files/webcomponents-2.0.0/webcomponents.js","preview.png"]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+  <style type="text/css">
+
+  body {
+    background-color: white;
+  }
+
+  .pandoc-table {
+    width: 100%;
+  }
+
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .shaded-content {
+    background: white;
+  }
+
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  d-article {
+    padding-bottom: 30px;
+  }
+
+  d-appendix {
+    padding-top: 30px;
+  }
+
+  d-article>p>img {
+    width: 100%;
+  }
+
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  /* CSS for table of contents */
+
+  .d-toc {
+    color: rgba(0,0,0,0.8);
+    font-size: 0.8em;
+    line-height: 1em;
+  }
+
+  .d-toc-header {
+    font-size: 0.6rem;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 1.3em;
+  }
+
+  .d-toc a {
+    border-bottom: none;
+  }
+
+  .d-toc ul {
+    padding-left: 0;
+  }
+
+  .d-toc li>ul {
+    padding-top: 0.8em;
+    padding-left: 16px;
+    margin-bottom: 0.6em;
+  }
+
+  .d-toc ul,
+  .d-toc li {
+    list-style-type: none;
+  }
+
+  .d-toc li {
+    margin-bottom: 0.9em;
+  }
+
+  .d-toc-separator {
+    margin-top: 20px;
+    margin-bottom: 2em;
+  }
+
+  .d-article-with-toc {
+    border-top: none;
+    padding-top: 0;
+  }
+
+
+
+  /* Tweak code blocks (note that this CSS is repeated above in an injection
+     into the d-code shadow dom) */
+
+  d-code {
+    overflow-x: auto !important;
+  }
+
+  pre.d-code code.d-code {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+
+  pre.text-output {
+
+    font-size: 12px;
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  @media(min-width: 768px) {
+
+  d-code {
+    overflow-x: visible !important;
+  }
+
+  pre.d-code code.d-code  {
+      padding-left: 18px;
+      font-size: 14px;
+  }
+  pre.text-output {
+    font-size: 14px;
+  }
+  }
+
+  /* Figure */
+
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+
+  .figure img {
+    width: 100%;
+  }
+
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+
+
+
+  /* Tweak 1000px media break to show more text */
+
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+
+    .grid {
+      grid-column-gap: 16px;
+    }
+
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+
+
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+
+  /* Social footer */
+
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+
+  .disqus-comments {
+    margin-right: 30px;
+  }
+
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+
+  #disqus_thread {
+    margin-top: 30px;
+  }
+
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+
+
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+
+
+  .sidebar-section.custom {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .custom p {
+    margin-bottom: 0.5em;
+  }
+
+
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  </style>
+
+  <script type="application/javascript">
+
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+
+  // show body when load is complete
+  function on_load_complete() {
+
+    // set body to visible
+    document.body.style.visibility = 'visible';
+
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+
+  function init_distill() {
+
+    init_common();
+
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+
+    // create d-bibliography
+    var bibliography = $('<d-bibliography></d-bibliography>');
+    $('#distill-bibliography').wrap(bibliography);
+
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+    // replace citations with <d-cite>
+    $('.citation').each(function(i, val) {
+      appendix = true;
+      var cites = $(this).attr('data-cites').split(" ");
+      var dt_cite = $('<d-cite></d-cite>');
+      dt_cite.attr('key', cites.join());
+      $(this).replaceWith(dt_cite);
+    });
+    // remove refs
+    $('#refs').remove();
+
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-toc a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+    // replace code blocks with d-code
+    $('pre>code').each(function(i, val) {
+      var code = $(this);
+      var pre = code.parent();
+      var clz = "";
+      var language = pre.attr('class');
+      if (language) {
+        // map unknown languages to "clike" (without this they just dissapear)
+        if ($.inArray(language, ["bash", "clike", "css", "go", "html",
+                                 "javascript", "js", "julia", "lua", "markdown",
+                                 "markup", "mathml", "python", "svg", "xml"]) == -1)
+          language = "clike";
+        language = ' language="' + language + '"';
+        var dt_code = $('<d-code block' + language + clz + '></d-code>');
+        dt_code.text(code.text());
+        pre.replaceWith(dt_code);
+      } else {
+        code.addClass('text-output').unwrap().changeElementType('pre');
+      }
+    });
+
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+
+      // capture layout
+      var layout = $(this).attr('data-layout');
+
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('d-code, pre.text-output, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+
+
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+
+    // load distill framework
+    load_distill_framework();
+
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+
+      // table of contents
+      if (have_authors) // adjust border if we are in authors
+        $('.d-toc').parent().addClass('d-article-with-toc');
+
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+
+      // inject pre code styles (can't do this with a global stylesheet b/c a shadow root is used)
+      $('d-code').each(function(i, val) {
+        var style = document.createElement('style');
+        style.innerHTML = 'pre code { padding-left: 10px; font-size: 12px; border-left: 2px solid rgba(0,0,0,0.1); } ' +
+                          '@media(min-width: 768px) { pre code { padding-left: 18px; font-size: 14px; } }';
+        if (this.shadowRoot)
+          this.shadowRoot.appendChild(style);
+      });
+
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+
+      // clear polling timer
+      clearInterval(tid);
+
+      // show body now that everything is ready
+      on_load_complete();
+    }
+
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+
+  }
+
+  function init_downlevel() {
+
+    init_common();
+
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+
+    // remove toc
+    $('.d-toc-header').remove();
+    $('.d-toc').remove();
+    $('.d-toc-separator').remove();
+
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+
+
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+
+    $('body').addClass('downlevel');
+
+    on_load_complete();
+  }
+
+
+  function init_common() {
+
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+
+      }
+    });
+
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.distill-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+      });
+    }
+
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+
+  </script>
+
+  <!--/radix_placeholder_distill-->
+  <script src="2020-06-25-indexing-tip-for-spacyr_files/header-attrs-2.3/header-attrs.js"></script>
+  <script src="2020-06-25-indexing-tip-for-spacyr_files/jquery-1.11.3/jquery.min.js"></script>
+  <script src="2020-06-25-indexing-tip-for-spacyr_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="2020-06-25-indexing-tip-for-spacyr_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="2020-06-25-indexing-tip-for-spacyr_files/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Indexing tip for {spacyr}","description":"Speeding up the analysis of dependency relations.","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/"}],"publishedDate":"2020-06-25T00:00:00.000-04:00","citationText":"Choe, 2020"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Indexing tip for {spacyr}</h1>
+<p><p>Speeding up the analysis of dependency relations.</p></p>
+</div>
+
+<div class="d-byline">
+  June Choe  (University of Pennsylvania Linguistics)<a href="https://live-sas-www-ling.pantheon.sas.upenn.edu/" class="uri">https://live-sas-www-ling.pantheon.sas.upenn.edu/</a>
+  
+<br/>06-25-2020
+</div>
+
+<div class="d-article">
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<p>The <code>{spacyr}</code> package is an R wrapper for Python’s spaCy package, powered by <code>{reticulate}</code>. Although it’s been around for over 3 years, it doesn’t seem to have really been picked up by R users.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> I actually think this makes sense since what makes spaCy so great is its object-oriented approach to NLP (which Python is good at). But perhaps more importantly, a good portion of data wrangling in spaCy is reducible to operating on vectors of such tokens, and I think that comes pretty naturally for R users with a functional programming background.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> So my guess is that since spaCy is accessible to R users, <code>{spacyr}</code> isn’t that widely used.</p>
+<p>But with that said, I like to make my workflow as R-centered as possible and I think there’s still value in <code>{spacyr}</code> at least for very simple, exploratory analysis of text. The results being returned in a <strong>tidy format</strong> is a huge plus, and it doesn’t seem to sacrifice much speed.</p>
+<p>There’s a good guide to using <code>{spacyr}</code> in the <a href="https://cran.r-project.org/web/packages/spacyr/vignettes/using_spacyr.html">CRAN vignette</a> which covers pretty much everything you need to know if you’re already familiar with spaCy (and if you aren’t, there’s a great <a href="http://datacamp-community-prod.s3.amazonaws.com/29aa28bf-570a-4965-8f54-d6a541ae4e06">cheatsheet from DataCamp</a>).</p>
+<p>Everything I just said above was just a whole lot of background information. What I really want to do here to contribute to the discussion around <code>{spacyr}</code> by sharing a tip for analyzing dependency relations from the output of <code>spacy_parse()</code>, which is <code>{spacyr}</code>’s main function that combines both the model-loading and text-processing stages of spaCy.</p>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<p>For illustration, I’ll be using the 8 State of the Union addresses by President Barack Obama from 2009-2016, which comes from the <code>{sotu}</code> package.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+library(sotu)
+doc &lt;- tail(sotu::sotu_text, 8)
+
+# First 100 characters of each speech
+strtrim(doc, 100)</code></pre>
+<pre><code>
+  [1] &quot;Madam Speaker, Mr. Vice President, Members of Congress, the First Lady of the United States--she&#39;s a&quot;
+  [2] &quot;Madam Speaker, Vice President Biden, Members of Congress, distinguished guests, and fellow Americans&quot;
+  [3] &quot;Mr. Speaker, Mr. Vice President, Members of Congress, distinguished guests, and fellow Americans: To&quot;
+  [4] &quot;Mr. Speaker, Mr. Vice President, Members of Congress, distinguished guests, and fellow Americans: La&quot;
+  [5] &quot;Please, everybody, have a seat. Mr. Speaker, Mr. Vice President, Members of Congress, fellow America&quot;
+  [6] &quot;The President. Mr. Speaker, Mr. Vice President, Members of Congress, my fellow Americans: Today in A&quot;
+  [7] &quot;The President. Mr. Speaker, Mr. Vice President, Members of Congress, my fellow Americans: We are 15 &quot;
+  [8] &quot;Thank you. Mr. Speaker, Mr. Vice President, Members of Congress, my fellow Americans: Tonight marks &quot;</code></pre>
+</div>
+<p>We can pass this document to <code>spacy_parse()</code> to get back a dataframe of tokens and their attributes in tidy format, where each row (observation) is a token.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+parsed &lt;- spacy_parse(doc, dep = TRUE, entity = FALSE)
+
+head(parsed, 10)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+doc_id
+</th>
+<th style="text-align:right;">
+sentence_id
+</th>
+<th style="text-align:right;">
+token_id
+</th>
+<th style="text-align:left;">
+token
+</th>
+<th style="text-align:left;">
+lemma
+</th>
+<th style="text-align:left;">
+pos
+</th>
+<th style="text-align:right;">
+head_token_id
+</th>
+<th style="text-align:left;">
+dep_rel
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+text1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+Madam
+</td>
+<td style="text-align:left;">
+Madam
+</td>
+<td style="text-align:left;">
+PROPN
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+compound
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Speaker
+</td>
+<td style="text-align:left;">
+Speaker
+</td>
+<td style="text-align:left;">
+PROPN
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+ROOT
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+,
+</td>
+<td style="text-align:left;">
+,
+</td>
+<td style="text-align:left;">
+PUNCT
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+punct
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+Mr. 
+</td>
+<td style="text-align:left;">
+Mr. 
+</td>
+<td style="text-align:left;">
+PROPN
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+compound
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+Vice
+</td>
+<td style="text-align:left;">
+Vice
+</td>
+<td style="text-align:left;">
+PROPN
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+compound
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+President
+</td>
+<td style="text-align:left;">
+President
+</td>
+<td style="text-align:left;">
+PROPN
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+appos
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+,
+</td>
+<td style="text-align:left;">
+,
+</td>
+<td style="text-align:left;">
+PUNCT
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+punct
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:left;">
+Members
+</td>
+<td style="text-align:left;">
+Members
+</td>
+<td style="text-align:left;">
+PROPN
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+appos
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:left;">
+of
+</td>
+<td style="text-align:left;">
+of
+</td>
+<td style="text-align:left;">
+ADP
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:left;">
+prep
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+Congress
+</td>
+<td style="text-align:left;">
+Congress
+</td>
+<td style="text-align:left;">
+PROPN
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:left;">
+pobj
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>This output format is great for plotting in R with the familiar packages. For example, we can make a bar plot of top adjectives used by Obama in his SOTU addresses with minimal changes to the output.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+# Load tidytext package for stopwords
+library(tidytext)
+
+parsed %&gt;%
+  filter(pos == &quot;ADJ&quot;,
+         str_detect(lemma, &quot;^[:alpha:].*[:alpha:]$&quot;),
+         !lemma %in% tidytext::stop_words$word) %&gt;%
+  count(lemma) %&gt;% 
+  mutate(lemma = fct_reorder(str_to_title(lemma), n)) %&gt;%
+  top_n(15) %&gt;% 
+  ggplot(aes(lemma, n)) +
+  geom_col() +
+  coord_flip() +
+  labs(title = &quot;Top 15 Adjectives from President Obama&#39;s SOTU Addresses&quot;,
+       x = &quot;Adjective&quot;, y = &quot;Count&quot;) +
+  theme_classic()</code></pre>
+<p><img src="2020-06-25-indexing-tip-for-spacyr_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
+</div>
+<h2 id="the-challenge"><strong>The Challenge</strong></h2>
+<p>But what if we want to dig a little deeper in our analysis of adjectives? <strong>What if, for example, we were interested in the adjectives that were used to describe “America”</strong></p>
+<p>Because we set <code>dep = TRUE</code> when we called <code>spacy_parse()</code> earlier, we have information about dependencies in the <code>dep_rel</code> column and the <code>head_token_id</code> column. To be more precise, <code>dep_rel</code> is the <code>.dep_</code> attribute from spaCy and <code>head_token_id</code> is the <strong>row index</strong> of the head token (<code>.head</code> attribute from spaCy) that is unique to the <code>spacy_parse()</code> output.</p>
+<p>For example, let’s look at the the 298th sentence from Obama’s third SOTU address:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+example_sentence &lt;- parsed %&gt;% 
+  filter(doc_id == &quot;text3&quot;, sentence_id == 298) %&gt;% 
+  pull(token) %&gt;% 
+  str_c(collapse = &quot; &quot;) %&gt;% 
+  str_remove_all(&quot; (?=[:punct:])&quot;)
+
+example_sentence</code></pre>
+<pre><code>
+  [1] &quot;Now, we&#39;ve made great strides over the last 2 years in using technology and getting rid of waste.&quot;</code></pre>
+</div>
+<p>And here’s a visualization of the dependency parse made with displaCy. Sadly, displaCy is not a part of <code>{spacyr}</code>, so I’m just calling Python here using <code>{reticulate}</code>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="python bg-warning"><code>
+######## Python Code ########
+import spacy
+from spacy import displacy
+nlp = spacy.load(&#39;en_core_web_sm&#39;)
+example_parsed = nlp(r.example_sentence)</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="python"><code>
+displacy.render(example_parsed, style = &quot;dep&quot;)</code></pre>
+</div>
+<style>
+  .superbigimage{
+      overflow-x:scroll;
+      white-space: nowrap;
+  }
+  .superbigimage img{
+     max-width: none;
+  }
+</style>
+<div class="superbigimage">
+<div class="layout-chunk" data-layout="l-body">
+<p>‘<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="en" id="e76dba9978114efa932a2e3a62c17bac-0" class="displacy" width="3375" height="487.0" direction="ltr" style="max-width: none; height: 487.0px; color: #000000; background: #ffffff; font-family: Arial; direction: ltr"><text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0"><tspan class="displacy-word" fill="currentColor" x="50">Now,</tspan><tspan class="displacy-tag" dy="2em" fill="currentColor" x="50">ADV</tspan></text><text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0"><tspan class="displacy-word" fill="currentColor" x="225">we</tspan><tspan class="displacy-tag" dy="2em" fill="currentColor" x="225">PRON</tspan></text><text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0"><tspan class="displacy-word" fill="currentColor" x="400">'ve</tspan><tspan class="displacy-tag" dy="2em" fill="currentColor" x="400">AUX</tspan></text><text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0"><tspan class="displacy-word" fill="currentColor" x="575">made</tspan><tspan class="displacy-tag" dy="2em" fill="currentColor" x="575">VERB</tspan></text><text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0"><tspan class="displacy-word" fill="currentColor" x="750">great</tspan><tspan class="displacy-tag" dy="2em" fill="currentColor" x="750">ADJ</tspan></text><text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0"><tspan class="displacy-word" fill="currentColor" x="925">strides</tspan><tspan class="displacy-tag" dy="2em" fill="currentColor" x="925">NOUN</tspan></text><text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0"><tspan class="displacy-word" fill="currentColor" x="1100">over</tspan><tspan class="displacy-tag" dy="2em" fill="currentColor" x="1100">ADP</tspan></text><text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0"><tspan class="displacy-word" fill="currentColor" x="1275">the</tspan><tspan class="displacy-tag" dy="2em" fill="currentColor" x="1275">DET</tspan></text><text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0"><tspan class="displacy-word" fill="currentColor" x="1450">last</tspan><tspan class="displacy-tag" dy="2em" fill="currentColor" x="1450">ADJ</tspan></text><text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0"><tspan class="displacy-word" fill="currentColor" x="1625">2</tspan><tspan class="displacy-tag" dy="2em" fill="currentColor" x="1625">NUM</tspan></text><text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0"><tspan class="displacy-word" fill="currentColor" x="1800">years</tspan><tspan class="displacy-tag" dy="2em" fill="currentColor" x="1800">NOUN</tspan></text><text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0"><tspan class="displacy-word" fill="currentColor" x="1975">in</tspan><tspan class="displacy-tag" dy="2em" fill="currentColor" x="1975">ADP</tspan></text><text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0"><tspan class="displacy-word" fill="currentColor" x="2150">using</tspan><tspan class="displacy-tag" dy="2em" fill="currentColor" x="2150">VERB</tspan></text><text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0"><tspan class="displacy-word" fill="currentColor" x="2325">technology</tspan><tspan class="displacy-tag" dy="2em" fill="currentColor" x="2325">NOUN</tspan></text><text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0"><tspan class="displacy-word" fill="currentColor" x="2500">and</tspan><tspan class="displacy-tag" dy="2em" fill="currentColor" x="2500">CCONJ</tspan></text><text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0"><tspan class="displacy-word" fill="currentColor" x="2675">getting</tspan><tspan class="displacy-tag" dy="2em" fill="currentColor" x="2675">VERB</tspan></text><text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0"><tspan class="displacy-word" fill="currentColor" x="2850">rid</tspan><tspan class="displacy-tag" dy="2em" fill="currentColor" x="2850">VERB</tspan></text><text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0"><tspan class="displacy-word" fill="currentColor" x="3025">of</tspan><tspan class="displacy-tag" dy="2em" fill="currentColor" x="3025">ADP</tspan></text><text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0"><tspan class="displacy-word" fill="currentColor" x="3200">waste.</tspan><tspan class="displacy-tag" dy="2em" fill="currentColor" x="3200">NOUN</tspan></text><g class="displacy-arrow"><path class="displacy-arc" id="arrow-e76dba9978114efa932a2e3a62c17bac-0-0" stroke-width="2px" d="M70,352.0 C70,89.5 570.0,89.5 570.0,352.0" fill="none" stroke="currentColor"/><text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px"><textPath xlink:href="#arrow-e76dba9978114efa932a2e3a62c17bac-0-0" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">advmod</textPath></text><path class="displacy-arrowhead" d="M70,354.0 L62,342.0 78,342.0" fill="currentColor"/></g><g class="displacy-arrow"><path class="displacy-arc" id="arrow-e76dba9978114efa932a2e3a62c17bac-0-1" stroke-width="2px" d="M245,352.0 C245,177.0 565.0,177.0 565.0,352.0" fill="none" stroke="currentColor"/><text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px"><textPath xlink:href="#arrow-e76dba9978114efa932a2e3a62c17bac-0-1" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">nsubj</textPath></text><path class="displacy-arrowhead" d="M245,354.0 L237,342.0 253,342.0" fill="currentColor"/></g><g class="displacy-arrow"><path class="displacy-arc" id="arrow-e76dba9978114efa932a2e3a62c17bac-0-2" stroke-width="2px" d="M420,352.0 C420,264.5 560.0,264.5 560.0,352.0" fill="none" stroke="currentColor"/><text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px"><textPath xlink:href="#arrow-e76dba9978114efa932a2e3a62c17bac-0-2" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">aux</textPath></text><path class="displacy-arrowhead" d="M420,354.0 L412,342.0 428,342.0" fill="currentColor"/></g><g class="displacy-arrow"><path class="displacy-arc" id="arrow-e76dba9978114efa932a2e3a62c17bac-0-3" stroke-width="2px" d="M770,352.0 C770,264.5 910.0,264.5 910.0,352.0" fill="none" stroke="currentColor"/><text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px"><textPath xlink:href="#arrow-e76dba9978114efa932a2e3a62c17bac-0-3" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">amod</textPath></text><path class="displacy-arrowhead" d="M770,354.0 L762,342.0 778,342.0" fill="currentColor"/></g><g class="displacy-arrow"><path class="displacy-arc" id="arrow-e76dba9978114efa932a2e3a62c17bac-0-4" stroke-width="2px" d="M595,352.0 C595,177.0 915.0,177.0 915.0,352.0" fill="none" stroke="currentColor"/><text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px"><textPath xlink:href="#arrow-e76dba9978114efa932a2e3a62c17bac-0-4" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">dobj</textPath></text><path class="displacy-arrowhead" d="M915.0,354.0 L923.0,342.0 907.0,342.0" fill="currentColor"/></g><g class="displacy-arrow"><path class="displacy-arc" id="arrow-e76dba9978114efa932a2e3a62c17bac-0-5" stroke-width="2px" d="M595,352.0 C595,89.5 1095.0,89.5 1095.0,352.0" fill="none" stroke="currentColor"/><text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px"><textPath xlink:href="#arrow-e76dba9978114efa932a2e3a62c17bac-0-5" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">prep</textPath></text><path class="displacy-arrowhead" d="M1095.0,354.0 L1103.0,342.0 1087.0,342.0" fill="currentColor"/></g><g class="displacy-arrow"><path class="displacy-arc" id="arrow-e76dba9978114efa932a2e3a62c17bac-0-6" stroke-width="2px" d="M1295,352.0 C1295,89.5 1795.0,89.5 1795.0,352.0" fill="none" stroke="currentColor"/><text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px"><textPath xlink:href="#arrow-e76dba9978114efa932a2e3a62c17bac-0-6" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">det</textPath></text><path class="displacy-arrowhead" d="M1295,354.0 L1287,342.0 1303,342.0" fill="currentColor"/></g><g class="displacy-arrow"><path class="displacy-arc" id="arrow-e76dba9978114efa932a2e3a62c17bac-0-7" stroke-width="2px" d="M1470,352.0 C1470,177.0 1790.0,177.0 1790.0,352.0" fill="none" stroke="currentColor"/><text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px"><textPath xlink:href="#arrow-e76dba9978114efa932a2e3a62c17bac-0-7" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">amod</textPath></text><path class="displacy-arrowhead" d="M1470,354.0 L1462,342.0 1478,342.0" fill="currentColor"/></g><g class="displacy-arrow"><path class="displacy-arc" id="arrow-e76dba9978114efa932a2e3a62c17bac-0-8" stroke-width="2px" d="M1645,352.0 C1645,264.5 1785.0,264.5 1785.0,352.0" fill="none" stroke="currentColor"/><text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px"><textPath xlink:href="#arrow-e76dba9978114efa932a2e3a62c17bac-0-8" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">nummod</textPath></text><path class="displacy-arrowhead" d="M1645,354.0 L1637,342.0 1653,342.0" fill="currentColor"/></g><g class="displacy-arrow"><path class="displacy-arc" id="arrow-e76dba9978114efa932a2e3a62c17bac-0-9" stroke-width="2px" d="M1120,352.0 C1120,2.0 1800.0,2.0 1800.0,352.0" fill="none" stroke="currentColor"/><text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px"><textPath xlink:href="#arrow-e76dba9978114efa932a2e3a62c17bac-0-9" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">pobj</textPath></text><path class="displacy-arrowhead" d="M1800.0,354.0 L1808.0,342.0 1792.0,342.0" fill="currentColor"/></g><g class="displacy-arrow"><path class="displacy-arc" id="arrow-e76dba9978114efa932a2e3a62c17bac-0-10" stroke-width="2px" d="M1820,352.0 C1820,264.5 1960.0,264.5 1960.0,352.0" fill="none" stroke="currentColor"/><text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px"><textPath xlink:href="#arrow-e76dba9978114efa932a2e3a62c17bac-0-10" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">prep</textPath></text><path class="displacy-arrowhead" d="M1960.0,354.0 L1968.0,342.0 1952.0,342.0" fill="currentColor"/></g><g class="displacy-arrow"><path class="displacy-arc" id="arrow-e76dba9978114efa932a2e3a62c17bac-0-11" stroke-width="2px" d="M1995,352.0 C1995,264.5 2135.0,264.5 2135.0,352.0" fill="none" stroke="currentColor"/><text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px"><textPath xlink:href="#arrow-e76dba9978114efa932a2e3a62c17bac-0-11" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">pcomp</textPath></text><path class="displacy-arrowhead" d="M2135.0,354.0 L2143.0,342.0 2127.0,342.0" fill="currentColor"/></g><g class="displacy-arrow"><path class="displacy-arc" id="arrow-e76dba9978114efa932a2e3a62c17bac-0-12" stroke-width="2px" d="M2170,352.0 C2170,264.5 2310.0,264.5 2310.0,352.0" fill="none" stroke="currentColor"/><text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px"><textPath xlink:href="#arrow-e76dba9978114efa932a2e3a62c17bac-0-12" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">dobj</textPath></text><path class="displacy-arrowhead" d="M2310.0,354.0 L2318.0,342.0 2302.0,342.0" fill="currentColor"/></g><g class="displacy-arrow"><path class="displacy-arc" id="arrow-e76dba9978114efa932a2e3a62c17bac-0-13" stroke-width="2px" d="M2170,352.0 C2170,177.0 2490.0,177.0 2490.0,352.0" fill="none" stroke="currentColor"/><text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px"><textPath xlink:href="#arrow-e76dba9978114efa932a2e3a62c17bac-0-13" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">cc</textPath></text><path class="displacy-arrowhead" d="M2490.0,354.0 L2498.0,342.0 2482.0,342.0" fill="currentColor"/></g><g class="displacy-arrow"><path class="displacy-arc" id="arrow-e76dba9978114efa932a2e3a62c17bac-0-14" stroke-width="2px" d="M2695,352.0 C2695,264.5 2835.0,264.5 2835.0,352.0" fill="none" stroke="currentColor"/><text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px"><textPath xlink:href="#arrow-e76dba9978114efa932a2e3a62c17bac-0-14" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">auxpass</textPath></text><path class="displacy-arrowhead" d="M2695,354.0 L2687,342.0 2703,342.0" fill="currentColor"/></g><g class="displacy-arrow"><path class="displacy-arc" id="arrow-e76dba9978114efa932a2e3a62c17bac-0-15" stroke-width="2px" d="M2170,352.0 C2170,2.0 2850.0,2.0 2850.0,352.0" fill="none" stroke="currentColor"/><text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px"><textPath xlink:href="#arrow-e76dba9978114efa932a2e3a62c17bac-0-15" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">conj</textPath></text><path class="displacy-arrowhead" d="M2850.0,354.0 L2858.0,342.0 2842.0,342.0" fill="currentColor"/></g><g class="displacy-arrow"><path class="displacy-arc" id="arrow-e76dba9978114efa932a2e3a62c17bac-0-16" stroke-width="2px" d="M2870,352.0 C2870,264.5 3010.0,264.5 3010.0,352.0" fill="none" stroke="currentColor"/><text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px"><textPath xlink:href="#arrow-e76dba9978114efa932a2e3a62c17bac-0-16" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">prep</textPath></text><path class="displacy-arrowhead" d="M3010.0,354.0 L3018.0,342.0 3002.0,342.0" fill="currentColor"/></g><g class="displacy-arrow"><path class="displacy-arc" id="arrow-e76dba9978114efa932a2e3a62c17bac-0-17" stroke-width="2px" d="M3045,352.0 C3045,264.5 3185.0,264.5 3185.0,352.0" fill="none" stroke="currentColor"/><text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px"><textPath xlink:href="#arrow-e76dba9978114efa932a2e3a62c17bac-0-17" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">pobj</textPath></text><path class="displacy-arrowhead" d="M3185.0,354.0 L3193.0,342.0 3177.0,342.0" fill="currentColor"/></g></svg>’</p>
+</div>
+</div>
+<p> </p>
+<p>Basically, the task here is to find words like “competitive” in the example sentence above where <strong>the token is an adjective and its head is the word “America”</strong>, but it turns out harder than it seems.</p>
+<p>The output of <code>spacy_parse</code> is set up such that every sentence stands on their own. More specifically speaking, the indices stored in <code>token_id</code> and <code>head_token_id</code> are <strong>local indices</strong> relative to each sentence.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> So while there are a total of 62791 tokens in <code>parsed</code>, the max <code>token_id</code> is 99, which is the index of the last token in the longest sentence.</p>
+<p>A strictly tidyverse approach (which has become a sort of a tunnel-vision for me) would be to split <code>parsed</code> by sentence and map a filter function to each sentence. There are two ways of going about this and both are pretty slow.</p>
+<p>The first way is to explicitly split the dataframe into a list of dataframes at the sentence level then map the filter function, using <code>group_split()</code> then <code>map_df()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+tic &lt;- Sys.time()
+
+parsed %&gt;%
+    group_split(doc_id, sentence_id, .drop = FALSE) %&gt;%
+    map_df(~filter(., pos == &quot;ADJ&quot;, slice(.x, head_token_id)$lemma == &quot;America&quot;))</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+doc_id
+</th>
+<th style="text-align:right;">
+sentence_id
+</th>
+<th style="text-align:right;">
+token_id
+</th>
+<th style="text-align:left;">
+token
+</th>
+<th style="text-align:left;">
+lemma
+</th>
+<th style="text-align:left;">
+pos
+</th>
+<th style="text-align:right;">
+head_token_id
+</th>
+<th style="text-align:left;">
+dep_rel
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+text3
+</td>
+<td style="text-align:right;">
+302
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:left;">
+competitive
+</td>
+<td style="text-align:left;">
+competitive
+</td>
+<td style="text-align:left;">
+ADJ
+</td>
+<td style="text-align:right;">
+34
+</td>
+<td style="text-align:left;">
+amod
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text4
+</td>
+<td style="text-align:right;">
+231
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:left;">
+rural
+</td>
+<td style="text-align:left;">
+rural
+</td>
+<td style="text-align:left;">
+ADJ
+</td>
+<td style="text-align:right;">
+34
+</td>
+<td style="text-align:left;">
+amod
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text5
+</td>
+<td style="text-align:right;">
+245
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+stronger
+</td>
+<td style="text-align:left;">
+strong
+</td>
+<td style="text-align:left;">
+ADJ
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+amod
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text6
+</td>
+<td style="text-align:right;">
+340
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:left;">
+strong
+</td>
+<td style="text-align:left;">
+strong
+</td>
+<td style="text-align:left;">
+ADJ
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:left;">
+amod
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text7
+</td>
+<td style="text-align:right;">
+317
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:left;">
+liberal
+</td>
+<td style="text-align:left;">
+liberal
+</td>
+<td style="text-align:left;">
+ADJ
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:left;">
+amod
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text7
+</td>
+<td style="text-align:right;">
+317
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:left;">
+conservative
+</td>
+<td style="text-align:left;">
+conservative
+</td>
+<td style="text-align:left;">
+ADJ
+</td>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:left;">
+amod
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>
+Sys.time() - tic</code></pre>
+<pre><code>
+  Time difference of 11.61741 secs</code></pre>
+</div>
+<p>The second way is to implicitly declare a grouping by sentence and then map the filter function, using <code>group_by()</code> then <code>group_map()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+tic &lt;- Sys.time()
+
+parsed %&gt;%
+  group_by(doc_id, sentence_id) %&gt;%
+  group_map(~filter(., pos == &quot;ADJ&quot;, slice(.x, head_token_id)$lemma == &quot;America&quot;), .keep = TRUE) %&gt;%
+  bind_rows()</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+doc_id
+</th>
+<th style="text-align:right;">
+sentence_id
+</th>
+<th style="text-align:right;">
+token_id
+</th>
+<th style="text-align:left;">
+token
+</th>
+<th style="text-align:left;">
+lemma
+</th>
+<th style="text-align:left;">
+pos
+</th>
+<th style="text-align:right;">
+head_token_id
+</th>
+<th style="text-align:left;">
+dep_rel
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+text3
+</td>
+<td style="text-align:right;">
+302
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:left;">
+competitive
+</td>
+<td style="text-align:left;">
+competitive
+</td>
+<td style="text-align:left;">
+ADJ
+</td>
+<td style="text-align:right;">
+34
+</td>
+<td style="text-align:left;">
+amod
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text4
+</td>
+<td style="text-align:right;">
+231
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:left;">
+rural
+</td>
+<td style="text-align:left;">
+rural
+</td>
+<td style="text-align:left;">
+ADJ
+</td>
+<td style="text-align:right;">
+34
+</td>
+<td style="text-align:left;">
+amod
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text5
+</td>
+<td style="text-align:right;">
+245
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+stronger
+</td>
+<td style="text-align:left;">
+strong
+</td>
+<td style="text-align:left;">
+ADJ
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+amod
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text6
+</td>
+<td style="text-align:right;">
+340
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:left;">
+strong
+</td>
+<td style="text-align:left;">
+strong
+</td>
+<td style="text-align:left;">
+ADJ
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:left;">
+amod
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text7
+</td>
+<td style="text-align:right;">
+317
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:left;">
+liberal
+</td>
+<td style="text-align:left;">
+liberal
+</td>
+<td style="text-align:left;">
+ADJ
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:left;">
+amod
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text7
+</td>
+<td style="text-align:right;">
+317
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:left;">
+conservative
+</td>
+<td style="text-align:left;">
+conservative
+</td>
+<td style="text-align:left;">
+ADJ
+</td>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:left;">
+amod
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>
+Sys.time() - tic</code></pre>
+<pre><code>
+  Time difference of 10.5651 secs</code></pre>
+</div>
+<p>Both ways give us the result we want, but it’s significantly slower than what we could quickly and easily do in Python.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="python bg-warning"><code>
+######## Python Code ########
+doc = nlp(&#39; &#39;.join(r.doc))
+
+import time
+tic = time.time()
+
+[token.text for token in doc if token.pos_ == &quot;ADJ&quot; and token.head.lemma_ == &quot;America&quot;]</code></pre>
+<pre><code>
+  [&#39;competitive&#39;, &#39;rural&#39;, &#39;stronger&#39;, &#39;strong&#39;, &#39;liberal&#39;, &#39;conservative&#39;]</code></pre>
+<pre class="python bg-warning"><code>
+time.time() - tic</code></pre>
+<pre><code>
+  0.05588889122009277</code></pre>
+</div>
+<h2 id="a-work-around"><strong>A Work-around</strong></h2>
+<p>What would really help here is if we had <strong>global indices</strong> for tokens and head tokens, so that we can directly index a head from a token without going through the trouble of figuring out how sentences are organized in the dataframe.</p>
+<p>So here’s my take on doing this:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+# Calculate global indices from local indices
+global_index &lt;- parsed %&gt;% 
+  group_by(doc_id, sentence_id) %&gt;% 
+  # add token counts for each sentence
+  add_count() %&gt;% 
+  ungroup() %&gt;% 
+  select(doc_id, sentence_id, n) %&gt;% 
+  distinct() %&gt;%
+  # take the cumulative sum and shift 1 to the right (fill first index with 0)
+  mutate(n = c(0, cumsum(n)[1:n()-1]))
+
+# Clean the output
+parsed2 &lt;- parsed %&gt;% 
+  inner_join(global_index, by = c(&quot;doc_id&quot;, &quot;sentence_id&quot;)) %&gt;% 
+  mutate(token_id_global = token_id + n,
+         head_token_id_global = head_token_id + n) %&gt;% 
+  relocate(token_id_global, .after = token_id) %&gt;% 
+  relocate(head_token_id_global, .after = head_token_id) %&gt;% 
+  select(-n)</code></pre>
+</div>
+<p>This adds two colums - <code>token_id_global</code> and <code>head_token_id_global</code> - that stores indices that range over the entire dataframe. Here’s a sample of the new dataframe to demonstrate:</p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<pre class="r"><code>
+sample_n(parsed2, 10)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+doc_id
+</th>
+<th style="text-align:right;">
+sentence_id
+</th>
+<th style="text-align:right;">
+token_id
+</th>
+<th style="text-align:right;">
+token_id_global
+</th>
+<th style="text-align:left;">
+token
+</th>
+<th style="text-align:left;">
+lemma
+</th>
+<th style="text-align:left;">
+pos
+</th>
+<th style="text-align:right;">
+head_token_id
+</th>
+<th style="text-align:right;">
+head_token_id_global
+</th>
+<th style="text-align:left;">
+dep_rel
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+text5
+</td>
+<td style="text-align:right;">
+222
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+36346
+</td>
+<td style="text-align:left;">
+have
+</td>
+<td style="text-align:left;">
+have
+</td>
+<td style="text-align:left;">
+AUX
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+36347
+</td>
+<td style="text-align:left;">
+aux
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text3
+</td>
+<td style="text-align:right;">
+161
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+18422
+</td>
+<td style="text-align:left;">
+and
+</td>
+<td style="text-align:left;">
+and
+</td>
+<td style="text-align:left;">
+CCONJ
+</td>
+<td style="text-align:right;">
+31
+</td>
+<td style="text-align:right;">
+18421
+</td>
+<td style="text-align:left;">
+cc
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text7
+</td>
+<td style="text-align:right;">
+318
+</td>
+<td style="text-align:right;">
+40
+</td>
+<td style="text-align:right;">
+54115
+</td>
+<td style="text-align:left;">
+because
+</td>
+<td style="text-align:left;">
+because
+</td>
+<td style="text-align:left;">
+SCONJ
+</td>
+<td style="text-align:right;">
+42
+</td>
+<td style="text-align:right;">
+54117
+</td>
+<td style="text-align:left;">
+mark
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text3
+</td>
+<td style="text-align:right;">
+38
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+16200
+</td>
+<td style="text-align:left;">
+at
+</td>
+<td style="text-align:left;">
+at
+</td>
+<td style="text-align:left;">
+ADP
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+16198
+</td>
+<td style="text-align:left;">
+prep
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text3
+</td>
+<td style="text-align:right;">
+186
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+18969
+</td>
+<td style="text-align:left;">
+time
+</td>
+<td style="text-align:left;">
+time
+</td>
+<td style="text-align:left;">
+NOUN
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+18968
+</td>
+<td style="text-align:left;">
+dobj
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text1
+</td>
+<td style="text-align:right;">
+218
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+4984
+</td>
+<td style="text-align:left;">
+,
+</td>
+<td style="text-align:left;">
+,
+</td>
+<td style="text-align:left;">
+PUNCT
+</td>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:right;">
+4988
+</td>
+<td style="text-align:left;">
+punct
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text3
+</td>
+<td style="text-align:right;">
+53
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+16470
+</td>
+<td style="text-align:left;">
+and
+</td>
+<td style="text-align:left;">
+and
+</td>
+<td style="text-align:left;">
+CCONJ
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+16469
+</td>
+<td style="text-align:left;">
+cc
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text4
+</td>
+<td style="text-align:right;">
+256
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+28261
+</td>
+<td style="text-align:left;">
+’ve
+</td>
+<td style="text-align:left;">
+have
+</td>
+<td style="text-align:left;">
+AUX
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+28262
+</td>
+<td style="text-align:left;">
+aux
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text4
+</td>
+<td style="text-align:right;">
+196
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+27082
+</td>
+<td style="text-align:left;">
+chemicals
+</td>
+<td style="text-align:left;">
+chemical
+</td>
+<td style="text-align:left;">
+NOUN
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+27080
+</td>
+<td style="text-align:left;">
+dobj
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text4
+</td>
+<td style="text-align:right;">
+196
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+27078
+</td>
+<td style="text-align:left;">
+lands
+</td>
+<td style="text-align:left;">
+land
+</td>
+<td style="text-align:left;">
+NOUN
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+27076
+</td>
+<td style="text-align:left;">
+pobj
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>And since this process isn’t destructive, we actually don’t need to assign the output to a new object. This is great because we can flexibly incorporate it into the pipeline workflow.</p>
+<p>Here is my solution wrapped in a function:<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+add_global_index &lt;- function(spacy_parsed) {
+  
+  global_index &lt;- spacy_parsed %&gt;% 
+    group_by(doc_id, sentence_id) %&gt;% 
+    add_count() %&gt;% 
+    ungroup() %&gt;% 
+    select(doc_id, sentence_id, n) %&gt;% 
+    distinct() %&gt;%
+    mutate(n = c(0, cumsum(n)[1:n()-1]))
+  
+  spacy_parsed %&gt;% 
+    inner_join(global_index, by = c(&quot;doc_id&quot;, &quot;sentence_id&quot;)) %&gt;% 
+    mutate(token_id_global = token_id + n,
+           head_token_id_global = head_token_id + n) %&gt;% 
+    relocate(token_id_global, .after = token_id) %&gt;% 
+    relocate(head_token_id_global, .after = head_token_id) %&gt;% 
+    select(-n)
+  
+}</code></pre>
+</div>
+<p>In action:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+# Find adjectives describing &quot;America&quot;
+parsed %&gt;% 
+  add_global_index() %&gt;% 
+  filter(pos == &quot;ADJ&quot;, slice(., head_token_id_global)$lemma == &quot;America&quot;)</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+doc_id
+</th>
+<th style="text-align:right;">
+sentence_id
+</th>
+<th style="text-align:right;">
+token_id
+</th>
+<th style="text-align:right;">
+token_id_global
+</th>
+<th style="text-align:left;">
+token
+</th>
+<th style="text-align:left;">
+lemma
+</th>
+<th style="text-align:left;">
+pos
+</th>
+<th style="text-align:right;">
+head_token_id
+</th>
+<th style="text-align:right;">
+head_token_id_global
+</th>
+<th style="text-align:left;">
+dep_rel
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+text3
+</td>
+<td style="text-align:right;">
+302
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:right;">
+21359
+</td>
+<td style="text-align:left;">
+competitive
+</td>
+<td style="text-align:left;">
+competitive
+</td>
+<td style="text-align:left;">
+ADJ
+</td>
+<td style="text-align:right;">
+34
+</td>
+<td style="text-align:right;">
+21360
+</td>
+<td style="text-align:left;">
+amod
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text4
+</td>
+<td style="text-align:right;">
+231
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:right;">
+27772
+</td>
+<td style="text-align:left;">
+rural
+</td>
+<td style="text-align:left;">
+rural
+</td>
+<td style="text-align:left;">
+ADJ
+</td>
+<td style="text-align:right;">
+34
+</td>
+<td style="text-align:right;">
+27773
+</td>
+<td style="text-align:left;">
+amod
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text5
+</td>
+<td style="text-align:right;">
+245
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+36825
+</td>
+<td style="text-align:left;">
+stronger
+</td>
+<td style="text-align:left;">
+strong
+</td>
+<td style="text-align:left;">
+ADJ
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+36826
+</td>
+<td style="text-align:left;">
+amod
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text6
+</td>
+<td style="text-align:right;">
+340
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+46582
+</td>
+<td style="text-align:left;">
+strong
+</td>
+<td style="text-align:left;">
+strong
+</td>
+<td style="text-align:left;">
+ADJ
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:right;">
+46585
+</td>
+<td style="text-align:left;">
+amod
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text7
+</td>
+<td style="text-align:right;">
+317
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+54054
+</td>
+<td style="text-align:left;">
+liberal
+</td>
+<td style="text-align:left;">
+liberal
+</td>
+<td style="text-align:left;">
+ADJ
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+54055
+</td>
+<td style="text-align:left;">
+amod
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text7
+</td>
+<td style="text-align:right;">
+317
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+54058
+</td>
+<td style="text-align:left;">
+conservative
+</td>
+<td style="text-align:left;">
+conservative
+</td>
+<td style="text-align:left;">
+ADJ
+</td>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:right;">
+54059
+</td>
+<td style="text-align:left;">
+amod
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+# Find adjectives describing &quot;America&quot; inside a prepositional phrase
+parsed %&gt;% 
+  add_global_index() %&gt;% 
+  filter(pos == &quot;ADJ&quot;, slice(., head_token_id_global)$lemma == &quot;America&quot;,
+         slice(., slice(., head_token_id_global)$head_token_id_global)$dep_rel == &quot;prep&quot;)</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+doc_id
+</th>
+<th style="text-align:right;">
+sentence_id
+</th>
+<th style="text-align:right;">
+token_id
+</th>
+<th style="text-align:right;">
+token_id_global
+</th>
+<th style="text-align:left;">
+token
+</th>
+<th style="text-align:left;">
+lemma
+</th>
+<th style="text-align:left;">
+pos
+</th>
+<th style="text-align:right;">
+head_token_id
+</th>
+<th style="text-align:right;">
+head_token_id_global
+</th>
+<th style="text-align:left;">
+dep_rel
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+text3
+</td>
+<td style="text-align:right;">
+302
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:right;">
+21359
+</td>
+<td style="text-align:left;">
+competitive
+</td>
+<td style="text-align:left;">
+competitive
+</td>
+<td style="text-align:left;">
+ADJ
+</td>
+<td style="text-align:right;">
+34
+</td>
+<td style="text-align:right;">
+21360
+</td>
+<td style="text-align:left;">
+amod
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+text4
+</td>
+<td style="text-align:right;">
+231
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:right;">
+27772
+</td>
+<td style="text-align:left;">
+rural
+</td>
+<td style="text-align:left;">
+rural
+</td>
+<td style="text-align:left;">
+ADJ
+</td>
+<td style="text-align:right;">
+34
+</td>
+<td style="text-align:right;">
+27773
+</td>
+<td style="text-align:left;">
+amod
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Performance:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+test &lt;- function(){
+  parsed %&gt;% 
+    add_global_index() %&gt;% 
+    filter(pos == &quot;ADJ&quot;, slice(., head_token_id_global)$lemma == &quot;America&quot;)
+}
+
+print(microbenchmark::microbenchmark(test(), unit = &quot;s&quot;))</code></pre>
+<pre><code>
+  Unit: seconds
+     expr       min        lq      mean    median        uq       max neval
+   test() 0.1077916 0.1178053 0.1300126 0.1250831 0.1323096 0.3214572   100</code></pre>
+</div>
+<p>Much better!</p>
+<p> </p>
+<h3 id="session-info">Session Info</h3>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>
+  R version 4.0.2 (2020-06-22)
+  Platform: x86_64-w64-mingw32/x64 (64-bit)
+  Running under: Windows 10 x64 (build 18363)
+  
+  Matrix products: default
+  
+  locale:
+  [1] LC_COLLATE=English_United States.1252 
+  [2] LC_CTYPE=English_United States.1252   
+  [3] LC_MONETARY=English_United States.1252
+  [4] LC_NUMERIC=C                          
+  [5] LC_TIME=English_United States.1252    
+  
+  attached base packages:
+  [1] stats     graphics  grDevices utils     datasets  methods   base     
+  
+  other attached packages:
+   [1] tidytext_0.2.5  sotu_1.0.2      reticulate_1.16 stringr_1.4.0  
+   [5] spacyr_1.2.1    forcats_0.5.0   ggplot2_3.3.2   purrr_0.3.4    
+   [9] dplyr_1.0.2     printr_0.1     
+  
+  loaded via a namespace (and not attached):
+   [1] Rcpp_1.0.5           highr_0.8            pillar_1.4.4        
+   [4] compiler_4.0.2       tokenizers_0.2.1     tools_4.0.2         
+   [7] digest_0.6.25        jsonlite_1.7.0       evaluate_0.14       
+  [10] lifecycle_0.2.0      tibble_3.0.3         gtable_0.3.0        
+  [13] lattice_0.20-41      pkgconfig_2.0.3      rlang_0.4.7         
+  [16] Matrix_1.2-18        microbenchmark_1.4-7 distill_0.8         
+  [19] yaml_2.2.1           mvtnorm_1.1-1        xfun_0.15           
+  [22] janeaustenr_0.1.5    withr_2.2.0          knitr_1.29          
+  [25] generics_0.0.2       vctrs_0.3.2          grid_4.0.2          
+  [28] tidyselect_1.1.0     glue_1.4.1           data.table_1.13.0   
+  [31] R6_2.4.1             survival_3.1-12      rmarkdown_2.3       
+  [34] multcomp_1.4-13      TH.data_1.0-10       farver_2.0.3        
+  [37] magrittr_1.5         codetools_0.2-16     MASS_7.3-51.6       
+  [40] splines_4.0.2        SnowballC_0.7.0      scales_1.1.1        
+  [43] ellipsis_0.3.1       fortunes_1.5-4       htmltools_0.5.0     
+  [46] colorspace_1.4-1     labeling_0.3         sandwich_2.5-1      
+  [49] stringi_1.4.6        munsell_0.5.0        crayon_1.3.4        
+  [52] zoo_1.8-8</code></pre>
+</div>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>There are less than 30 posts about it on StackOverflow, for example.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>I personally found it very easy to pick up vector comprehension in Python after working with <code>purrr::map</code>, for example.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>The argument <code>entity = FALSE</code> is the same as <code>disable = ['ner']</code> in <code>spacy.load()</code> in Python. I did this to save computation time.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>This format is shared across other NLP packages in R based on spacCy, like <code>{cleanNLP}</code><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>This would need to be tweaked a bit if you want to use it for the output of <code>{cleanNLP}</code> because the column for the local index of token heads, <code>tid_source</code>, is 0 when the token is the ROOT, as opposed to its own token index, which is the case in <code>{spacyr}</code>. You could add something like <code>mutate(tid_source = ifelse(tid_source == 0, tid, tid_source)</code> to the beginning of the pipeline to address this.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>

@@ -1,0 +1,316 @@
+---
+title: "Saving a line of piping"
+description: |
+  Some notes on lesser known functions/functionalities that combine common chain of {dplyr} verbs.
+categories:
+  - data wrangling
+  - dplyr
+base_url: yjunechoe.github.io
+author:
+  - name: June Choe
+    affiliation: University of Pennsylvania Linguistics
+    affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+preview: preview.png
+date: 08-07-2020
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+```{r opts}
+knitr::opts_chunk$set(
+  comment = " ",
+  echo = TRUE,
+  message = TRUE,
+  warning = TRUE,
+  R.options = list(width = 80)
+)
+```
+
+```{r, message = FALSE, echo = FALSE}
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+options(dplyr.summarise.inform = FALSE)
+```
+
+Using a cleaned up version of `penguins` data from `{palmerpenguins}`:
+
+```{r}
+data("penguins", package = "palmerpenguins")
+
+penguins <- na.omit(penguins)
+```
+
+```{r, layout="l-body-outset", echo = FALSE}
+reactable::reactable(penguins, defaultPageSize = 5,
+                     wrap = FALSE, bordered = TRUE, sortable = FALSE)
+```
+
+## 1. `rename()` inside `select()`
+
+You can rename a column inside `select()` by assigning a new name on the left hand side:
+
+```{r}
+##### Long Form #####
+# penguins %>% 
+#   select(species, island) %>% 
+#   rename(penguin_species = species)
+
+penguins %>% 
+  select(penguin_species = species,
+         island)
+```
+
+This also works with `{tidyselect}` helpers like `starts_with()`, `ends_with()`, `contains()`, and `matches()`:
+
+```{r}
+##### Long Form #####
+# penguins %>% 
+#   select(species, island) %>% 
+#   rename(penguin_species = species,
+#          weight = body_weight_g)
+
+penguins %>% 
+  select(penguin_species = species,
+         island,
+         weight = contains("mass"))
+```
+
+
+## 2. `rename()` inside `count()`
+
+You can rename the new column of counts (`n` by default) using the `name` argument:
+
+```{r}
+##### Long Form #####
+# penguins %>% 
+#   count(species) %>% 
+#   rename(total = n)
+
+penguins %>% 
+  count(species, name = "total")
+```
+
+You can also rename the column(s) that are selected for counting in the same way as shown in the `select()` examples above:
+
+```{r}
+##### Long Form #####
+# penguins %>% 
+#   count(species) %>% 
+#   rename(total = n,
+#          penguin_species = species)
+
+penguins %>% 
+  count(penguin_species = species, name = "total")
+```
+
+Note that the new name passed into the `name` argument must be quoted, but the new name for selected column needs not to be unquoted:
+
+```{r}
+identical(
+  # Method 1: new column name UNQUOTED
+  penguins %>% 
+  count(penguin_species = species, name = "total"),
+  # Method 2: new column name QUOTED
+ penguins %>% 
+  count("penguin_species" = species, name = "total") 
+)
+```
+
+I prefer to unquote the new column names to keep it consistent with the recommended style for `rename()`
+
+This feature of `select()` may seem weird and hackish (and I guess it sort of is in this demonstration) but it's explicitly documented [here](https://tidyselect.r-lib.org/articles/syntax.html#renaming-variables-1) if you want to read more on it.
+
+## 3. `mutate()` inside `count()`
+
+You can also create a new column to count by inside `count()`. This works very similarly to the above, but I think it's worth its own mention.
+
+It's pretty simple - you just do what you'd do for `mutate()` inside `count()`:
+
+```{r}
+##### Long Form #####
+# penguins %>% 
+#   mutate(long_beak = bill_length_mm > 50) %>% 
+#   count(long_beak)
+
+penguins %>% 
+  count(long_beak = bill_length_mm > 50)
+```
+
+And of course, this also works when specifying _multiple_ variables to count by:
+
+```{r}
+##### Long Form #####
+# penguins %>% 
+#   mutate(long_beak = bill_length_mm > 50,
+#          is_adelie = species == "Adelie") %>% 
+#   count(is_adelie, long_beak)
+
+penguins %>% 
+  count(long_beak = bill_length_mm > 50,
+        is_adelie = species == "Adelie")
+```
+
+## 4. `transmute()` + `select()`
+
+`transmute()` is a function that mutates columns and returns only those columns:
+
+```{r}
+##### Long Form #####
+# penguins %>% 
+#   mutate(body_mass_kg = body_mass_g/1000) %>% 
+#   select(body_mass_kg)
+
+penguins %>% 
+  transmute(body_mass_kg = body_mass_g/1000)
+```
+
+I've rarely used `transmute()` in the past because I thought it could only return _modified_ columns, which would be very limiting (like in the above example, what good is a single column of penguin body mass in kilograms?)
+
+But actually you can just name the columns you want to include in `transmute()` like you would in `select()` to carry over columns that you aren't modifying. And of course, you can "rename" them as you do it^[What happens under the hood is actually copying of a sort, so this is probably not the best approach if you care about efficiency. As a case in point, you can't use `{tidyselect}` helpers in `transmute` because you're creating a new dataframe]:
+
+```{r}
+##### Long Form #####
+# penguins %>% 
+#   mutate(body_mass_kg = body_mass_g/1000) %>% 
+#   select(species, island, body_mass_kg) %>% 
+#   rename(penguin_species = species)
+
+penguins %>% 
+  transmute(penguin_species = species,
+            island,
+            body_mass_kg = body_mass_g/1000)
+```
+
+
+## 5. `ungroup()` inside `summarize()`
+
+I always found using `ungroup()` after `summarize()` to be _extremely_ ugly, but I found myself using it a lot to remove left-over groupings after a `summarize` call:
+
+```{r}
+penguins %>% 
+  group_by(island, species) %>% 
+  summarize(mean_mass = mean(body_mass_g, na.rm = TRUE)) %>% 
+  ungroup()
+```
+
+... because `summarize()` only drops the last grouping variable by defaut, meaning that the output is still grouped by the `island` variable if `ungroup()` isn't called:
+
+```{r}
+# Without ungroup()
+penguins %>% 
+  group_by(island, species) %>% 
+  summarize(mean_mass = mean(body_mass_g, na.rm = TRUE)) %>% 
+  group_vars()
+
+# With ungroup()
+penguins %>% 
+  group_by(island, species) %>% 
+  summarize(mean_mass = mean(body_mass_g, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  group_vars()
+```
+
+Since `{dplyr}` 1.0.0, you can simply set the `.groups` argument inside `summarize()` to `'drop'` to achieve the same:
+
+```{r}
+penguins %>% 
+  group_by(island, species) %>% 
+  summarize(mean_mass = mean(body_mass_g, na.rm = TRUE), .groups = 'drop')
+```
+
+But `ungroup()` still remains relevant as you can now selectively remove grouping variables: 
+
+
+## 6. `arrange()` + other features inside `slice()`
+
+In past versions of `{dplyr}`, if you wanted to grab the top n rows sorted by a column, you'd use `top_n()`, which provides a simpler way of doing `slice()` + `arrange()`:
+
+```{r}
+##### Long Form #####
+# penguins %>% 
+#   arrange(desc(body_mass_g)) %>% 
+#   slice(1:5)
+
+penguins %>% 
+  top_n(5, wt = body_mass_g)
+```
+
+But the recent `{dplyr}` 1.0.0 augmented `slice()` with variants like `slice_min()` and `slice_max()` that now supresede `top_n()`:
+
+```{r}
+##### Pre-1.0.0 #####
+# penguins %>% 
+#   top_n(5, wt = body_mass_g)
+
+penguins %>% 
+  slice_max(order_by = body_mass_g, n = 5)
+```
+
+Note that the order of arguments is different for `slice_min/max()` - the first argument after piping is where you specify the variable for ordering rather than the number of rows to return, like in `top_n()`.
+
+This is because `slice_min/max()` gives you an option to either specify a certain number of rows `n` or a proportion of rows `prop`:
+
+```{r}
+penguins %>% 
+  slice_max(body_mass_g, prop = .01)
+```
+
+And actually, the most significant change with the new `slice_*()` functions is from adding appropriate behavior for **grouped dataframes**.
+
+So for example, this example below returns the top 5% of penguins by weight for each species:
+
+```{r}
+penguins %>% 
+  group_by(species) %>% 
+  slice_max(body_mass_g, prop = .05)
+```
+
+But note that `slice_*()` functions do not modify groups in the result if the input is a grouped dataframe, so you need to explicitly add a call to `ungroup()` if you want to drop groups after slicing.
+
+## 7. count and sum by group with `add_count()`
+
+Saving my favorite lesser-known `{dplyr}` function for last!
+
+`add_count()` adds a column with the counts of each group (or combination of groups):
+
+```{r}
+##### Long Form #####
+# penguins %>% 
+#   group_by(species) %>% 
+#   mutate(count_by_species = n()) %>% 
+#   ungroup()
+
+penguins %>% 
+  add_count(species, name = "count_by_species") %>% 
+  # cutting down some columns to show the new column
+  select(-contains("mm"))
+```
+
+You can use the `wt` to effectively get sums by group (perhaps hackish but very very useful):
+
+```{r}
+##### Long Form #####
+# penguins %>% 
+#   group_by(species) %>% 
+#   mutate(total_weight_by_species = sum(body_mass_g)) %>% 
+#   ungroup()
+  
+
+penguins %>% 
+  add_count(species, wt = body_mass_g, name = "total_weight_by_species") %>% 
+    # cutting down some columns to show the new column
+  select(-contains("mm"))
+```
+
+Also check out its more primitive version `add_tally()`.
+
+By default, `add_tally()` adds a count of rows, which you can already do with `mutate(n = n())`, but it shines when you make use of its `wt` argument:
+
+```{r}
+penguins %>% 
+  add_count(species, wt = body_mass_g, name = "total_weight_by_species") %>% 
+  add_tally(wt = body_mass_g, name = "total_weight_of_all_species") %>% 
+  select(1:2, last_col(0):last_col(1))
+```

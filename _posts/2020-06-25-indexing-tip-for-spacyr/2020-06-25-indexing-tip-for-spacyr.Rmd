@@ -1,0 +1,299 @@
+---
+title: "Indexing tip for {spacyr}"
+description: |
+  Speeding up the analysis of dependency relations.
+categories:
+  - data wrangling
+  - NLP
+  - spacyr
+base_url: yjunechoe.github.io
+author:
+  - name: June Choe
+    affiliation: University of Pennsylvania Linguistics
+    affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+preview: preview.png
+date: 06-25-2020
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+```{r opts}
+knitr::opts_chunk$set(
+  comment = " ",
+  echo = TRUE,
+  message = TRUE,
+  warning = TRUE,
+  R.options = list(width = 80)
+)
+```
+
+The `{spacyr}` package is an R wrapper for Python's spaCy package, powered by `{reticulate}`. Although it's been around for over 3 years, it doesn't seem to have really been picked up by R users.^[There are less than 30 posts about it on StackOverflow, for example.] I actually think this makes sense since what makes spaCy so great is its object-oriented approach to NLP (which Python is good at). But perhaps more importantly, a good portion of data wrangling in spaCy is reducible to operating on vectors of such tokens, and I think that comes pretty naturally for R users with a functional programming background.^[I personally found it very easy to pick up vector comprehension in Python after working with `purrr::map`, for example.] So my guess is that since spaCy is accessible to R users, `{spacyr}` isn't that widely used.
+
+But with that said, I like to make my workflow as R-centered as possible and I think there's still value in `{spacyr}` at least for very simple, exploratory analysis of text. The results being returned in a **tidy format** is a huge plus, and it doesn't seem to sacrifice much speed.
+
+There's a good guide to using `{spacyr}` in the [CRAN vignette](https://cran.r-project.org/web/packages/spacyr/vignettes/using_spacyr.html) which covers pretty much everything you need to know if you're already familiar with spaCy (and if you aren't, there's a great [cheatsheet from DataCamp](http://datacamp-community-prod.s3.amazonaws.com/29aa28bf-570a-4965-8f54-d6a541ae4e06)).
+
+Everything I just said above was just a whole lot of background information. What I really want to do here to contribute to the discussion around `{spacyr}` by sharing a tip for analyzing dependency relations from the output of `spacy_parse()`, which is `{spacyr}`'s main function that combines both the model-loading and text-processing stages of spaCy.
+
+
+```{r, message=FALSE, echo=FALSE}
+library(printr)
+library(dplyr)
+library(purrr)
+library(ggplot2)
+library(forcats)
+library(spacyr)
+library(stringr)
+library(reticulate)
+use_python("C:/ProgramData/Anaconda3/python")
+```
+
+For illustration, I'll be using the 8 State of the Union addresses by President Barack Obama from 2009-2016, which comes from the `{sotu}` package.
+
+```{r, message=FALSE}
+library(sotu)
+doc <- tail(sotu::sotu_text, 8)
+
+# First 100 characters of each speech
+strtrim(doc, 100)
+```
+
+We can pass this document to `spacy_parse()` to get back a dataframe of tokens and their attributes in tidy format, where each row (observation) is a token.^[The argument `entity = FALSE` is the same as `disable = ['ner']` in `spacy.load()` in Python. I did this to save computation time.]
+
+```{r, message=FALSE}
+parsed <- spacy_parse(doc, dep = TRUE, entity = FALSE)
+
+head(parsed, 10)
+```
+
+This output format is great for plotting in R with the familiar packages. For example, we can make a bar plot of top adjectives used by Obama in his SOTU addresses with minimal changes to the output. 
+
+```{r, message=FALSE}
+# Load tidytext package for stopwords
+library(tidytext)
+
+parsed %>%
+  filter(pos == "ADJ",
+         str_detect(lemma, "^[:alpha:].*[:alpha:]$"),
+         !lemma %in% tidytext::stop_words$word) %>%
+  count(lemma) %>% 
+  mutate(lemma = fct_reorder(str_to_title(lemma), n)) %>%
+  top_n(15) %>% 
+  ggplot(aes(lemma, n)) +
+  geom_col() +
+  coord_flip() +
+  labs(title = "Top 15 Adjectives from President Obama's SOTU Addresses",
+       x = "Adjective", y = "Count") +
+  theme_classic()
+```
+
+## **The Challenge**
+
+But what if we want to dig a little deeper in our analysis of adjectives? **What if, for example, we were interested in the adjectives that were used to describe "America"**
+
+Because we set `dep = TRUE` when we called `spacy_parse()` earlier, we have information about dependencies in the `dep_rel` column and the `head_token_id` column. To be more precise, `dep_rel` is the `.dep_` attribute from spaCy and `head_token_id` is the **row index** of the head token (`.head` attribute from spaCy) that is unique to the `spacy_parse()` output.
+
+For example, let's look at the the 298th sentence from Obama's third SOTU address:
+
+```{r}
+example_sentence <- parsed %>% 
+  filter(doc_id == "text3", sentence_id == 298) %>% 
+  pull(token) %>% 
+  str_c(collapse = " ") %>% 
+  str_remove_all(" (?=[:punct:])")
+
+example_sentence
+```
+
+And here's a visualization of the dependency parse made with displaCy. Sadly, displaCy is not a part of `{spacyr}`, so I'm just calling Python here using `{reticulate}`.
+
+```{python, class.source = 'bg-warning', message = FALSE}
+######## Python Code ########
+import spacy
+from spacy import displacy
+nlp = spacy.load('en_core_web_sm')
+example_parsed = nlp(r.example_sentence)
+```
+
+```{python, eval = FALSE}
+displacy.render(example_parsed, style = "dep")
+```
+
+<style>
+  .superbigimage{
+      overflow-x:scroll;
+      white-space: nowrap;
+  }
+  .superbigimage img{
+     max-width: none;
+  }
+</style>
+
+<div class="superbigimage">
+```{python, results = 'asis', echo = FALSE}
+displacy.render(example_parsed, style = "dep")
+```
+</div>
+
+&nbsp;
+
+Basically, the task here is to find words like "competitive" in the example sentence above where **the token is an adjective and its head is the word "America"**, but it turns out harder than it seems.
+
+The output of `spacy_parse` is set up such that every sentence stands on their own. More specifically speaking, the indices stored in `token_id` and `head_token_id` are **local indices** relative to each sentence.^[This format is shared across other NLP packages in R based on spacCy, like `{cleanNLP}`] So while there are a total of `r nrow(parsed)` tokens in `parsed`, the max `token_id` is `r max(parsed$token_id)`, which is the index of the last token in the longest sentence.
+
+A strictly tidyverse approach (which has become a sort of a tunnel-vision for me) would be to split `parsed` by sentence and map a filter function to each sentence. There are two ways of going about this and both are pretty slow.
+
+The first way is to explicitly split the dataframe into a list of dataframes at the sentence level then map the filter function, using `group_split()` then `map_df()`:
+
+```{r}
+tic <- Sys.time()
+
+parsed %>%
+    group_split(doc_id, sentence_id, .drop = FALSE) %>%
+    map_df(~filter(., pos == "ADJ", slice(.x, head_token_id)$lemma == "America"))
+
+Sys.time() - tic
+```
+
+The second way is to implicitly declare a grouping by sentence and then map the filter function, using `group_by()` then `group_map()`:
+
+```{r}
+tic <- Sys.time()
+
+parsed %>%
+  group_by(doc_id, sentence_id) %>%
+  group_map(~filter(., pos == "ADJ", slice(.x, head_token_id)$lemma == "America"), .keep = TRUE) %>%
+  bind_rows()
+
+Sys.time() - tic
+```
+
+Both ways give us the result we want, but it's significantly slower than what we could quickly and easily do in Python.
+
+```{python, class.source = 'bg-warning'}
+######## Python Code ########
+doc = nlp(' '.join(r.doc))
+
+import time
+tic = time.time()
+
+[token.text for token in doc if token.pos_ == "ADJ" and token.head.lemma_ == "America"]
+
+time.time() - tic
+```
+
+
+## **A Work-around**
+
+What would really help here is if we had **global indices** for tokens and head tokens, so that we can directly index a head from a token without going through the trouble of figuring out how sentences are organized in the dataframe.
+
+So here's my take on doing this:
+
+```{r}
+# Calculate global indices from local indices
+global_index <- parsed %>% 
+  group_by(doc_id, sentence_id) %>% 
+  # add token counts for each sentence
+  add_count() %>% 
+  ungroup() %>% 
+  select(doc_id, sentence_id, n) %>% 
+  distinct() %>%
+  # take the cumulative sum and shift 1 to the right (fill first index with 0)
+  mutate(n = c(0, cumsum(n)[1:n()-1]))
+
+# Clean the output
+parsed2 <- parsed %>% 
+  inner_join(global_index, by = c("doc_id", "sentence_id")) %>% 
+  mutate(token_id_global = token_id + n,
+         head_token_id_global = head_token_id + n) %>% 
+  relocate(token_id_global, .after = token_id) %>% 
+  relocate(head_token_id_global, .after = head_token_id) %>% 
+  select(-n)
+```
+
+This adds two colums - `token_id_global` and `head_token_id_global` - that stores indices that range over the entire dataframe. Here's a sample of the new dataframe to demonstrate:
+
+```{r, width = 1000, layout="l-body-outset"}
+sample_n(parsed2, 10)
+```
+
+And since this process isn't destructive, we actually don't need to assign the output to a new object. This is great because we can flexibly incorporate it into the pipeline workflow.
+
+Here is my solution wrapped in a function:^[This would need to be tweaked a bit if you want to use it for the output of `{cleanNLP}` because the column for the local index of token heads, `tid_source`, is 0 when the token is the ROOT, as opposed to its own token index, which is the case in `{spacyr}`. You could add something like `mutate(tid_source = ifelse(tid_source == 0, tid, tid_source)` to the beginning of the pipeline to address this.]
+
+```{r}
+add_global_index <- function(spacy_parsed) {
+  
+  global_index <- spacy_parsed %>% 
+    group_by(doc_id, sentence_id) %>% 
+    add_count() %>% 
+    ungroup() %>% 
+    select(doc_id, sentence_id, n) %>% 
+    distinct() %>%
+    mutate(n = c(0, cumsum(n)[1:n()-1]))
+  
+  spacy_parsed %>% 
+    inner_join(global_index, by = c("doc_id", "sentence_id")) %>% 
+    mutate(token_id_global = token_id + n,
+           head_token_id_global = head_token_id + n) %>% 
+    relocate(token_id_global, .after = token_id) %>% 
+    relocate(head_token_id_global, .after = head_token_id) %>% 
+    select(-n)
+  
+}
+```
+
+In action:
+
+```{r, eval = FALSE}
+# Find adjectives describing "America"
+parsed %>% 
+  add_global_index() %>% 
+  filter(pos == "ADJ", slice(., head_token_id_global)$lemma == "America")
+```
+
+```{r, echo = FALSE, layout="l-body-outset"}
+# Find adjectives describing "America"
+parsed %>% 
+  add_global_index() %>% 
+  filter(pos == "ADJ", slice(., head_token_id_global)$lemma == "America")
+```
+
+```{r, eval = FALSE}
+# Find adjectives describing "America" inside a prepositional phrase
+parsed %>% 
+  add_global_index() %>% 
+  filter(pos == "ADJ", slice(., head_token_id_global)$lemma == "America",
+         slice(., slice(., head_token_id_global)$head_token_id_global)$dep_rel == "prep")
+```
+
+```{r, echo = FALSE, layout="l-body-outset"}
+# Find adjectives describing "America" inside a prepositional phrase
+parsed %>% 
+  add_global_index() %>% 
+  filter(pos == "ADJ", slice(., head_token_id_global)$lemma == "America",
+         slice(., slice(., head_token_id_global)$head_token_id_global)$dep_rel == "prep")
+```
+
+Performance:
+
+```{r, message=FALSE}
+test <- function(){
+  parsed %>% 
+    add_global_index() %>% 
+    filter(pos == "ADJ", slice(., head_token_id_global)$lemma == "America")
+}
+
+print(microbenchmark::microbenchmark(test(), unit = "s"))
+```
+
+Much better!
+
+&nbsp;
+
+### Session Info
+
+```{r, echo = FALSE}
+sessionInfo()
+```

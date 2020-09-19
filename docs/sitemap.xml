@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" version="1.0">
+  <url>
+    <loc>yjunechoe.github.io/about.html</loc>
+    <lastmod>2020-09-18T20:23:36-04:00</lastmod>
+  </url>
+  <url>
+    <loc>yjunechoe.github.io/</loc>
+    <lastmod>2020-09-18T23:08:28-04:00</lastmod>
+  </url>
+  <url>
+    <loc>yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/</loc>
+    <lastmod>2020-09-18T22:57:24-04:00</lastmod>
+  </url>
+  <url>
+    <loc>yjunechoe.github.io/posts/2020-06-30-treemap-with-ggplot/</loc>
+    <lastmod>2020-09-18T23:34:50-04:00</lastmod>
+  </url>
+  <url>
+    <loc>yjunechoe.github.io/posts/2020-06-25-indexing-tip-for-spacyr/</loc>
+    <lastmod>2020-09-18T23:24:39-04:00</lastmod>
+  </url>
+</urlset>
