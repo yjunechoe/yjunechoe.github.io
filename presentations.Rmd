@@ -8,7 +8,6 @@ p {
 }
 ```
 
-
 ## 2020
 
 * **June Choe**, Jennifer Cole, and Masaya Yoshida. *Prosodic Focus Strengthens Semantic Persistence*. [Poster](static/poster/AMLAP2020.pdf) presented at The 26th Architectures and Mechanisms for Language Processing (AMLaP), 3-5 September 2020. Potsdam, Germany. [Abstract](static/abstract/AMLAP_2020_Abstract.pdf) [Video](https://osf.io/fjkp9/) [Slides](static/slides/AMLAP_2020_Slides.pdf)

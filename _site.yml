@@ -28,3 +28,4 @@ output:
     css: styles.css
     toc: true
     fig_caption: true
+exclude: ['etc']

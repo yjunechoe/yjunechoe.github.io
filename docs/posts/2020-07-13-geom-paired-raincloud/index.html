@@ -1291,7 +1291,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <script src="../../site_libs/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
 <style type="text/css">
-/* ---------- General Styles ---------- */
+/* ---------- Global Styles ---------- */
 
 html, body, p {
   
@@ -1313,7 +1313,23 @@ h2, h3, h4, h5 {
 }
 
 
+/* custom small caps and bold styles */
+
+.sc {
+  font-variant: small-caps;
+  letter-spacing: .1em;
+  font-family: Futura Bk BT;
+}
+
+.bd {
+  font-family: Futura Hv BT;
+  letter-spacing: .05em;
+}
+
+
+
 /* ---------- Index Styles ---------- */
+
 
 /* Top & Bot bars */
 
@@ -1343,8 +1359,11 @@ table#gs_id50 {
 }
 
 
+
 /* ---------- Article Styles ---------- */
 
+
+/* Title */
 
 d-title {
   padding-bottom: 0;
@@ -1360,9 +1379,18 @@ d-title p {
 }
 
 
+/* Aside */
+
+aside {
+  width: 200px;
+}
+
+
 
 
 /* ---------- Code Styles ---------- */
+
+/* Inline Code */
 
 code {
   color: #c46586;
@@ -1370,9 +1398,9 @@ code {
   font-size: 0.8em;
 }
 
-d-code {
-  margin-bottom: 10px;
-}
+
+
+/* Output Chunk */
 
 pre.text-output {
   background-color: #F5F8F9;
@@ -1380,10 +1408,16 @@ pre.text-output {
   font-size: 0.7em;
 }
 
+/* Code Chunk */
+
 d-article pre {
   font-size: 14px;
   padding-bottom: 17px;
   margin-bottom: 2em;
+}
+
+d-code {
+  margin-bottom: 10px;
 }
 
 
