@@ -43,6 +43,20 @@
       <media:content url="yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/preview.png" medium="image" type="image/png" width="877" height="372"/>
     </item>
     <item>
+      <title>Six years of my Spotify playlists</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>yjunechoe.github.io/posts/2020-07-29-six-years-of-my-spotify-playlists</link>
+      <description>An analysis with {spotifyr}</description>
+      <category>ggplot2</category>
+      <category>gganimate</category>
+      <category>spotifyr</category>
+      <category>data wrangling</category>
+      <category>data visualization</category>
+      <guid>yjunechoe.github.io/posts/2020-07-29-six-years-of-my-spotify-playlists</guid>
+      <pubDate>Wed, 29 Jul 2020 00:00:00 +0000</pubDate>
+      <media:content url="yjunechoe.github.io/posts/2020-07-29-six-years-of-my-spotify-playlists/preview.png" medium="image" type="image/png" width="3593" height="2459"/>
+    </item>
+    <item>
       <title>Shiny tips - the first set</title>
       <dc:creator>June Choe</dc:creator>
       <link>yjunechoe.github.io/posts/2020-07-20-shiny-tips-1</link>

@@ -64,6 +64,30 @@
     "preview_height": 372
   },
   {
+    "path": "posts/2020-07-29-six-years-of-my-spotify-playlists/",
+    "title": "Six years of my Spotify playlists",
+    "description": "An analysis with {spotifyr}",
+    "author": [
+      {
+        "name": "June Choe",
+        "url": {}
+      }
+    ],
+    "date": "2020-07-29",
+    "categories": [
+      "ggplot2",
+      "gganimate",
+      "spotifyr",
+      "data wrangling",
+      "data visualization"
+    ],
+    "preview": "posts/2020-07-29-six-years-of-my-spotify-playlists/preview.png",
+    "last_modified": "2020-09-19T03:47:58-04:00",
+    "input_file": {},
+    "preview_width": 3593,
+    "preview_height": 2459
+  },
+  {
     "path": "posts/2020-07-20-shiny-tips-1/",
     "title": "Shiny tips - the first set",
     "description": "%||%, imap() + {shinybusy}, and user inputs in modalDialog()",
