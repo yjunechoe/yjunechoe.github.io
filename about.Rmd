@@ -1,9 +1,14 @@
 ---
-title: "About this blog"
-description: |
-  Some additional details about the blog
+title: "Hi there!"
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+I am a first year PhD student in Linguistics at the University of Pennsylvania, specializing in (computational) psycholinguistics. My main research interest is in modeling how people process linguistic information, both in real time and over the course of development. My recent research has looked at the interactions between different levels of linguistic representation (syntactic, semantic, prosodic) in on-line sentence processing.
+
+I received my B.A. in Linguistics from Northwestern University in the Summer of 2020. During my undergrad there, I worked with [Jennifer Cole](https://sites.northwestern.edu/cole/), [Masaya Yoshida](https://faculty.wcas.northwestern.edu/~myo507/), and [Annette D'Onofrio](https://faculty.wcas.northwestern.edu/~akd2621/) in the Linguistics department. I also worked as a research assistant in the [Language, Education, and Learning Neuroscience Lab](https://learnlab.northwestern.edu/) under [Elizabeth Norton](https://www.communication.northwestern.edu/faculty/ElizabethNorton) in the Communication Sciences and Disorders Department. I wrote my honors thesis on the role of prosodic focus in semantic reanalysis in the processing of sentences with local attachment ambiguity.
+
+Beyond linguistics research, I have interests in data visualization, science communication and [\#rstats](https://twitter.com/hashtag/rstats).
+
+
+```{r, echo = FALSE}
+knitr::include_url('static/slides/get_to_know_me/get_to_know_me.html')
 ```

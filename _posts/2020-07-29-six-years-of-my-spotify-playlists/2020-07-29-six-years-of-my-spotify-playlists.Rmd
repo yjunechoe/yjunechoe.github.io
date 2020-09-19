@@ -18,8 +18,6 @@ date: 07-29-2020
 output:
   distill::distill_article:
     self_contained: false
-classoption:
-  - twocolumn
 ---
 
 ```{r opts}

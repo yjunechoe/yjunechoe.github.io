@@ -1,4 +1,4 @@
-name: "distill"
+name: "June Choe"
 title: "June Choe"
 description: |
   Personal Blog
@@ -6,8 +6,10 @@ output_dir: "docs"
 base_url: yjunechoe.github.io
 navbar:
   right:
-    - text: "Home"
+    - text: "Blog Posts"
       href: index.html
+    - text: "Presentations"
+      href: presentations.html
     - text: "About"
       href: about.html
     - icon: fa fa-twitter

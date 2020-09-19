@@ -1,0 +1,25 @@
+---
+title: "Presentations"
+---
+
+```{css}
+p {
+  font-family: 'Century Schoolbook';
+}
+```
+
+
+## 2020
+
+* **June Choe**, Jennifer Cole, and Masaya Yoshida. *Prosodic Focus Strengthens Semantic Persistence*. [Poster](static/poster/AMLAP2020.pdf) presented at The 26th Architectures and Mechanisms for Language Processing (AMLaP), 3-5 September 2020. Potsdam, Germany. [Abstract](static/abstract/AMLAP_2020_Abstract.pdf) [Video](https://osf.io/fjkp9/) [Slides](static/slides/AMLAP_2020_Slides.pdf)
+
+* **June Choe**. *Computer-assisted snowball search for meta-analysis research*. [Poster](static/poster/Snowballer_June_Choe.pdf) presented at The 2020 Undergraduate Research & Arts Exposition. 27-28 May 2020. Northwestern University, Evanston, IL.  **2nd Place Award**. [Abstract](static/abstract/Expo_2020_Abstract.pdf)
+
+## 2019
+
+* **June Choe**. *Social Information in Sentence Processing*. Talk at The 2019 Undergraduate Research & Arts Exposition. 29 May 2019. Northwestern University, Evanston, IL. [Abstract](static/abstract/Expo_2019_Abstract.pdf)
+
+* **June Choe**, Shayne Sloggett, Masaya Yoshida and Annette D'Onofrio. *Personae in syntactic processing: Socially-specific agents bias expectations of verb transitivity*. Poster presented at The 32nd CUNY Conference on Human Sentence Processing. 29-31 March 2019. University of Colorado, Boulder, CO.
+
+* D’Onofrio, Annette, **June Choe** and Masaya Yoshida. *Personae in syntactic processing: Socially-specific agents bias expectations of verb transitivity*. Poster presented at The 93rd Annual Meeting of the Linguistics Society of America. 3-6 January 2019. New York City, NY.
+
