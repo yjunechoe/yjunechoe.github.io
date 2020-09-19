@@ -37,12 +37,11 @@ For next steps, I'd like to try out conditional formatting with custom functions
 Pretty satisfied with the result, though. Many thanks to Thomas Mock for his detailed blog posts on {gt} [(1)](https://themockup.blog/posts/2020-05-16-gt-a-grammer-of-tables/) [(2)](https://themockup.blog/posts/2020-09-04-10-table-rules-in-r/), a well as the developers of {gt} for what I think is [one of the most comprehensive vignette](https://gt.rstudio.com/reference/index.html) I've ever seen for a package.
 
 
-I had difficulty embedding an HTML table without overriding its styles so [**the table is also available on its own here**](static/html/tidytuesday_2020_38_table.html).
+I had difficulty embedding an HTML table without overriding its styles so [**the table is also available on its own here**](tidytuesday_2020_38_table.html).
 
-```{r, echo = FALSE, layout = 'l-page'}
+```{r, echo = FALSE, layout = 'l-screen'}
 knitr::include_graphics('preview.png')
 ```
-
 
 ### Code
 

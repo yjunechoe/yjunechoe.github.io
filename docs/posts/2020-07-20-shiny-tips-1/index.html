@@ -19,47 +19,47 @@
  <!--/radix_placeholder_import_source-->
 
   <!--radix_placeholder_meta_tags-->
-<title>June Choe: TidyTuesday 2020 week 38</title>
+<title>June Choe: Shiny tips - the first set</title>
 
-<meta property="description" itemprop="description" content="First time with {gt}"/>
+<meta property="description" itemprop="description" content="%||%, imap() + {shinybusy}, and user inputs in modalDialog()"/>
 
-<link rel="canonical" href="yjunechoe.github.io/posts/2020-09-14-tidytuesday-2020-week-38/"/>
+<link rel="canonical" href="yjunechoe.github.io/posts/2020-07-20-shiny-tips-1/"/>
 
 <!--  https://schema.org/Article -->
-<meta property="article:published" itemprop="datePublished" content="2020-09-14"/>
-<meta property="article:created" itemprop="dateCreated" content="2020-09-14"/>
+<meta property="article:published" itemprop="datePublished" content="2020-07-20"/>
+<meta property="article:created" itemprop="dateCreated" content="2020-07-20"/>
 <meta name="article:author" content="June Choe"/>
 
 <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-<meta property="og:title" content="June Choe: TidyTuesday 2020 week 38"/>
+<meta property="og:title" content="June Choe: Shiny tips - the first set"/>
 <meta property="og:type" content="article"/>
-<meta property="og:description" content="First time with {gt}"/>
-<meta property="og:url" content="yjunechoe.github.io/posts/2020-09-14-tidytuesday-2020-week-38/"/>
-<meta property="og:image" content="yjunechoe.github.io/posts/2020-09-14-tidytuesday-2020-week-38/preview.png"/>
-<meta property="og:image:width" content="1703"/>
-<meta property="og:image:height" content="2203"/>
+<meta property="og:description" content="%||%, imap() + {shinybusy}, and user inputs in modalDialog()"/>
+<meta property="og:url" content="yjunechoe.github.io/posts/2020-07-20-shiny-tips-1/"/>
+<meta property="og:image" content="yjunechoe.github.io/posts/2020-07-20-shiny-tips-1/preview.png"/>
+<meta property="og:image:width" content="746"/>
+<meta property="og:image:height" content="133"/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:site_name" content="June Choe"/>
 
 <!--  https://dev.twitter.com/cards/types/summary -->
 <meta property="twitter:card" content="summary_large_image"/>
-<meta property="twitter:title" content="June Choe: TidyTuesday 2020 week 38"/>
-<meta property="twitter:description" content="First time with {gt}"/>
-<meta property="twitter:url" content="yjunechoe.github.io/posts/2020-09-14-tidytuesday-2020-week-38/"/>
-<meta property="twitter:image" content="yjunechoe.github.io/posts/2020-09-14-tidytuesday-2020-week-38/preview.png"/>
-<meta property="twitter:image:width" content="1703"/>
-<meta property="twitter:image:height" content="2203"/>
+<meta property="twitter:title" content="June Choe: Shiny tips - the first set"/>
+<meta property="twitter:description" content="%||%, imap() + {shinybusy}, and user inputs in modalDialog()"/>
+<meta property="twitter:url" content="yjunechoe.github.io/posts/2020-07-20-shiny-tips-1/"/>
+<meta property="twitter:image" content="yjunechoe.github.io/posts/2020-07-20-shiny-tips-1/preview.png"/>
+<meta property="twitter:image:width" content="746"/>
+<meta property="twitter:image:height" content="133"/>
 
 <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","preview","date","output","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["TidyTuesday 2020 week 38"]},{"type":"character","attributes":{},"value":["First time with {gt}"]},{"type":"character","attributes":{},"value":["gt","data visualization","tidytuesday"]},{"type":"character","attributes":{},"value":["yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]}]}]},{"type":"character","attributes":{},"value":["preview.png"]},{"type":"character","attributes":{},"value":["09-14-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["yjunechoe.github.io/posts/2020-09-14-tidytuesday-2020-week-38/"]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","preview","author","date","output","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["Shiny tips - the first set"]},{"type":"character","attributes":{},"value":["%||%, imap() + {shinybusy}, and user inputs in modalDialog()"]},{"type":"character","attributes":{},"value":["shiny"]},{"type":"character","attributes":{},"value":["yjunechoe.github.io"]},{"type":"character","attributes":{},"value":["preview.png"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]}]}]},{"type":"character","attributes":{},"value":["07-20-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["yjunechoe.github.io/posts/2020-07-20-shiny-tips-1/"]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["2020-09-14-tidytuesday-2020-week-38_files/bowser-1.9.3/bowser.min.js","2020-09-14-tidytuesday-2020-week-38_files/distill-2.2.21/template.v2.js","2020-09-14-tidytuesday-2020-week-38_files/header-attrs-2.3/header-attrs.js","2020-09-14-tidytuesday-2020-week-38_files/jquery-1.11.3/jquery.min.js","2020-09-14-tidytuesday-2020-week-38_files/webcomponents-2.0.0/webcomponents.js","preview.png","tidytuesday_2020_38_table.html"]}
+  {"type":"character","attributes":{},"value":["2020-07-20-shiny-tips-1_files/bowser-1.9.3/bowser.min.js","2020-07-20-shiny-tips-1_files/distill-2.2.21/template.v2.js","2020-07-20-shiny-tips-1_files/header-attrs-2.3/header-attrs.js","2020-07-20-shiny-tips-1_files/jquery-1.11.3/jquery.min.js","2020-07-20-shiny-tips-1_files/webcomponents-2.0.0/webcomponents.js","preview.png"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 
@@ -1428,7 +1428,7 @@ d-article pre {
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"TidyTuesday 2020 week 38","description":"First time with {gt}","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/"}],"publishedDate":"2020-09-14T00:00:00.000-04:00","citationText":"Choe, 2020"}
+{"title":"Shiny tips - the first set","description":"%||%, imap() + {shinybusy}, and user inputs in modalDialog()","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/"}],"publishedDate":"2020-07-20T00:00:00.000-04:00","citationText":"Choe, 2020"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -1456,128 +1456,136 @@ d-article pre {
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>TidyTuesday 2020 week 38</h1>
-<p><p>First time with {gt}</p></p>
+<h1>Shiny tips - the first set</h1>
+<p><p>%||%, imap() + {shinybusy}, and user inputs in modalDialog()</p></p>
 </div>
 
 <div class="d-byline">
   June Choe  (University of Pennsylvania Linguistics)<a href="https://live-sas-www-ling.pantheon.sas.upenn.edu/" class="uri">https://live-sas-www-ling.pantheon.sas.upenn.edu/</a>
   
-<br/>09-14-2020
+<br/>07-20-2020
 </div>
 
 <div class="d-article">
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
-<p>For <a href="https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-09-15">this week’s TidyTuesday</a>, I decided to try my hands on {gt}.</p>
-<p>Because it was my first attempt at making a {gt} table, I just spent most of the time trying out different designs, with less time spent on trying to make anything super compelling or useful.</p>
-<p>For next steps, I’d like to try out conditional formatting with custom functions and to learn the full details of <code>tab_style()</code> so that I can target specific set of cells to change themes like font that you can’t set with <code>tab_options()</code>. Also I’m totally lost on how to save the table into pdf or png in a nicely formatted way, so I hope to figure that out soon.</p>
-<p>Pretty satisfied with the result, though. Many thanks to Thomas Mock for his detailed blog posts on {gt} <a href="https://themockup.blog/posts/2020-05-16-gt-a-grammer-of-tables/">(1)</a> <a href="https://themockup.blog/posts/2020-09-04-10-table-rules-in-r/">(2)</a>, a well as the developers of {gt} for what I think is <a href="https://gt.rstudio.com/reference/index.html">one of the most comprehensive vignette</a> I’ve ever seen for a package.</p>
-<p>I had difficulty embedding an HTML table without overriding its styles so <a href="tidytuesday_2020_38_table.html"><strong>the table is also available on its own here</strong></a>.</p>
-<div class="layout-chunk" data-layout="l-screen">
-<p><img src="preview.png" width="852" /></p>
-</div>
-<h3 id="code">Code</h3>
+<p>When I was an RA in the <a href="https://learnlab.northwestern.edu/">LEARN lab</a> - a child language development lab at Northwestern - I worked on a shiny app that automates snowball search for meta-analysis research (<a href="../../../static/poster/Snowballer_June_Choe.pdf">relevant research poster</a>). Long story short, I worked on it for a couple months, got it working, then stopped working on it for another couple months, and had the chance to revisit it just recently.</p>
+<p>When I picked the project back up, I realized that my old code was poorly commented, somewhat inefficient, and even hackish at times. So I decided to re-write it from scratch. In this second time around, I learned a lot of useful functions/tricks that really helped streamline my code and I thought I’d document my three favorite ones here for future reference.</p>
+<h3 id="from-rlang">1. <code>%||%</code> from <code>{rlang}</code></h3>
+<p>Basically, <code>%||%</code> is an infix operator that returns the left-hand side when it is not <code>Null</code> and the right-hand side when it is <code>Null</code>. It’s from the <code>{rlang}</code> package but you can also define the function yourself:</p>
 <div class="layout-chunk" data-layout="l-body">
 <pre class="r"><code>
-library(tidyverse)
-library(gt)
-
-kids &lt;- tidytuesdayR::tt_load(&quot;2020-09-15&quot;)$kids
-
-
-# TABLE DATA
-
-state_regions &lt;- setNames(c(as.character(state.region), &quot;Northeast&quot;), c(state.name, &quot;District of Columbia&quot;))
-
-kids_tbl_data &lt;- kids %&gt;% 
-  filter(variable == &quot;PK12ed&quot;) %&gt;%
-  mutate(region = state_regions[state]) %&gt;% 
-  select(region, state, year, inf_adj_perchild) %&gt;% 
-  pivot_wider(names_from = year, values_from = inf_adj_perchild) %&gt;%
-  mutate(Trend = NA) 
-
-
-# SPARKLINE
-
-plotter &lt;- function(data){
-  data %&gt;% 
-    tibble(
-      year = 1997:2016,
-      value = data
-    ) %&gt;% 
-    ggplot(aes(year, value)) +
-    geom_line(size = 10, show.legend = FALSE) +
-    theme_void() +
-    scale_y_continuous(expand = c(0, 0))
+&quot;%||%&quot; &lt;- function(lhs, rhs) {
+  if (is.null(lhs)) rhs else lhs
 }
 
-spark_plots &lt;- kids_tbl_data %&gt;% 
-  group_split(state) %&gt;% 
-  map(~ flatten_dbl(select(.x, where(is.numeric)))) %&gt;% 
-  map(plotter)
+a &lt;- 10
+b &lt;- NULL
 
-
-# TABLE
-
-kids_tbl &lt;- kids_tbl_data %&gt;% 
-  gt(
-    groupname_col = &#39;region&#39;,
-    rowname_col = &#39;state&#39;
-  ) %&gt;% 
-  fmt_number(
-    columns = 3:22
-  ) %&gt;% 
-  summary_rows(
-    groups = TRUE,
-    columns = 3:22,
-    fns = list(Average = ~mean(.))
-  ) %&gt;% 
-  text_transform(
-    locations = cells_body(vars(Trend)),
-    fn = function(x){
-      map(spark_plots, ggplot_image, height = px(15), aspect_ratio = 4)
-    }
-  ) %&gt;%
-  tab_header(
-    title = md(&quot;**State-by-State Spending on Primary and Secondary Education over 20 years**&quot;),
-    subtitle = md(&quot;*$1000s per child adjusted for inflation*&quot;)
-  ) %&gt;% 
-  tab_source_note(
-    md(&quot;**By**: @yjunechoe&lt;br&gt;
-        **Inspiration**: @thomas_mock&lt;br&gt;
-        **Data**: Urban Institute | {tidykids} by Joshua Rosenberg&quot;)
-  ) %&gt;% 
-  tab_style(
-    style = list(
-      cell_text(font = &quot;Futura MdCn BT&quot;)
-    ),
-    locations = list(
-      cells_title(groups = &quot;title&quot;)
-    )
-  ) %&gt;%
-  tab_options(
-    table.width = 50,
-    heading.align = &quot;left&quot;,
-    heading.title.font.size = 72,
-    heading.subtitle.font.size = 32,
-    row_group.font.size = 42,
-    row_group.font.weight = &#39;bold&#39;,
-    row_group.border.top.color = &quot;black&quot;,
-    row_group.border.bottom.color = &quot;black&quot;,
-    table.border.top.color = &quot;black&quot;,
-    heading.border.bottom.color = &quot;white&quot;,
-    heading.border.bottom.width = px(10),
-    table.font.names = &quot;Roboto&quot;,
-    column_labels.font.size = 20,
-    column_labels.border.bottom.color = &quot;black&quot;,
-    column_labels.border.bottom.width= px(3),
-    summary_row.border.color = &quot;black&quot;, 
-    summary_row.background.color = &quot;#c0c5ce&quot;,
-    table.border.bottom.color = &quot;black&quot;
-  )</code></pre>
+a %||% b</code></pre>
+<pre><code>
+  [1] 10</code></pre>
+<pre class="r"><code>
+b %||% a</code></pre>
+<pre><code>
+  [1] 10</code></pre>
+<pre class="r"><code>
+# note how the output is different when b is no longer null
+b &lt;- 11
+b %||% a</code></pre>
+<pre><code>
+  [1] 11</code></pre>
 </div>
+<p>I found this operator to be extremely useful when displaying empty tables as placeholders when using <code>DT::datatable()</code>. It allows me to communicate to the user where a table is expected to appear rather than just not showing anything at all when no data is loaded (which is what happens by default).</p>
+<p>For example, if you want to show an empty column with an empty row when the data (here, the reactive variable <code>mydf</code>) is null, you might do the following:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+mydf_display &lt;- renderDataTable({
+  datatable(mydf() %||% tibble(` ` = NA))
+})</code></pre>
+</div>
+<p>Another use-case for <code>%||%</code> is when I’m trying a sequence of function calls until one one of them succeeds and returns a non-null value. For example, say I want to scrape some information online and I have API wrappers for different websites that potentially have that information. I can chain them together using <code>%||%</code> like so:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+myinfo &lt;- 
+  scrape_website1() %||%
+  scrape_website2() %||%
+  scrape_website3()</code></pre>
+</div>
+<p>This is much neater than nested if…else statements!</p>
+<h3 id="purrrimap-and-shinybusy">2. <code>purrr::imap()</code> and <code>{shinybusy}</code></h3>
+<p>Using my shiny app involves a lot of waiting (querying online databases), so I looked into ways to show a progress bar similar to the family of <code>*Modal()</code> functions from <code>{shiny}</code>. The extension package <code>{shinybusy}</code> (<a href="https://dreamrs.github.io/shinybusy/index.html">project site</a>) offers a very satisfying solution to this problem.</p>
+<p>Basically, you initialize a progress bar with <code>show_modal_progress_*()</code> and increment its value inside whatever operation you’re doing. Here’s a pseudo code demonstrating how it works:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+initialize a progress bar
+
+create a new_list of same size to store output
+
+for index in seq_along(list):
+  new_list[index] &lt;- calculations(list[index])
+  increment progress bar by index
+  
+remove progress bar
+
+return new_list</code></pre>
+</div>
+<p>But in my case, my “do stuff” part didn’t involve a big wall of code because I packed it into a single function in a separate file that I source at the beginning. This, coupled with my general aversion to for-loops, drove me to <code>imap()</code> and its variants from <code>{purrr}</code>. <code>imap()</code> is like <code>map()</code> except it also keeps track of the index of the element that you’re operating on (to put it another way, it’s like <code>map2()</code> where <code>.y</code> is the index).</p>
+<p>Now, you don’t need an explicit for-loop to increment and the above code can be reduced to this:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+initialize a progress bar
+
+new_list &lt;- imap(list,
+                 ~{
+                   calculations(.x)
+                   increment progress bar by .y
+                 })
+  
+remove progress bar
+
+return new_list</code></pre>
+</div>
+<p>In my opinion, this is much cleaner! For a more concrete example, here’s a template using actual code:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+my_data &lt;- eventReactive(input$my_button, {
+  
+  # initialize a progress bar
+  show_modal_progress_line()
+  
+  # do operation on elements of vector
+  result &lt;- imap(my_reactive_var(),
+                 ~{
+                   update_modal_progress(value = .y / length(my_reactive_var()))
+                   my_operation_on_element(.x)
+                 })
+  
+  # remove progress bar
+  remove_modal_progress()
+  
+  # return output
+  return(result)
+  
+})</code></pre>
+</div>
+<h3 id="user-inputs-inside-modaldialog">3. User inputs inside <code>modalDialog()</code></h3>
+<p>In <code>{shiny}</code>, you can show the user a pop-up message box by first laying out the content of the message in <code>modalDialog()</code> and then rendering it with <code>showModal()</code>. In the first version of my app, I used this to show simple messages like warnings, but did you know that you can include any <code>*Input</code> widgets too?</p>
+<p>For example, this code renders a pop-up box for a file upload in response to a button click:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+observeEvent(input$MyButton, {
+  showModal(modalDialogue(
+    title = &quot;Upload File Here&quot;,
+    fileInput(inputID = &quot;UploadedFile&quot;, label = &quot;Upload&quot;)
+  ))
+})</code></pre>
+</div>
+<p>And you can access whatever is uploaded using <code>input$UploadedFile</code> like you would if the file upload widget was in the <code>ui</code> side of the app!</p>
+<p>This took me a bit to get used to because you are defining the modal in the <code>server</code> side where the content of the modal looks like the <code>ui</code> side but can be accessed back at the <code>server</code> side. But this was life-changing and it opened up a lot of potential for my GUI to be less cluttered. Using this neat trick, I was able to move a large feature into a modal that would only be available upon a click of a button (it was a feature designed for a rare case scenario so I thought I’d save the user from having to see the entire interface for that if they don’t ask for it).</p>
+<h3 id="ending-note">Ending note</h3>
+<p>The more I learn and use shiny, the less I feel like I know. I’m actually enjoying this stage of my progress because every new thing just absolutely wows me (and I hope to continue sharing what I learn - hence this being the “first set”). And very much looking forward to <a href="https://mastering-shiny.org/">Hadley Wickham’s new book on shiny</a>!</p>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

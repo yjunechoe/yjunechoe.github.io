@@ -16,7 +16,7 @@
       "tidytuesday"
     ],
     "preview": "posts/2020-09-14-tidytuesday-2020-week-38/preview.png",
-    "last_modified": "2020-09-19T02:29:08-04:00",
+    "last_modified": "2020-09-19T02:35:24-04:00",
     "input_file": {},
     "preview_width": 1703,
     "preview_height": 2203
@@ -62,6 +62,47 @@
     "input_file": {},
     "preview_width": 877,
     "preview_height": 372
+  },
+  {
+    "path": "posts/2020-07-20-shiny-tips-1/",
+    "title": "Shiny tips - the first set",
+    "description": "%||%, imap() + {shinybusy}, and user inputs in modalDialog()",
+    "author": [
+      {
+        "name": "June Choe",
+        "url": {}
+      }
+    ],
+    "date": "2020-07-20",
+    "categories": [
+      "shiny"
+    ],
+    "preview": "posts/2020-07-20-shiny-tips-1/preview.png",
+    "last_modified": "2020-09-19T03:12:40-04:00",
+    "input_file": {},
+    "preview_width": 746,
+    "preview_height": 133
+  },
+  {
+    "path": "posts/2020-07-13-geom-paired-raincloud/",
+    "title": "geom_paired_raincloud()",
+    "description": "A {ggplot2} geom for visualizing change in distribution between two conditions.",
+    "author": [
+      {
+        "name": "June Choe",
+        "url": {}
+      }
+    ],
+    "date": "2020-07-13",
+    "categories": [
+      "data visualization",
+      "ggplot2"
+    ],
+    "preview": "posts/2020-07-13-geom-paired-raincloud/preview.png",
+    "last_modified": "2020-09-19T02:58:21-04:00",
+    "input_file": {},
+    "preview_width": 7086,
+    "preview_height": 4251
   },
   {
     "path": "posts/2020-06-30-treemap-with-ggplot/",

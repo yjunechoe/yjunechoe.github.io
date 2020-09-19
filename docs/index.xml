@@ -43,6 +43,27 @@
       <media:content url="yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/preview.png" medium="image" type="image/png" width="877" height="372"/>
     </item>
     <item>
+      <title>Shiny tips - the first set</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>yjunechoe.github.io/posts/2020-07-20-shiny-tips-1</link>
+      <description>%||%, imap() + {shinybusy}, and user inputs in modalDialog()</description>
+      <category>shiny</category>
+      <guid>yjunechoe.github.io/posts/2020-07-20-shiny-tips-1</guid>
+      <pubDate>Mon, 20 Jul 2020 00:00:00 +0000</pubDate>
+      <media:content url="yjunechoe.github.io/posts/2020-07-20-shiny-tips-1/preview.png" medium="image" type="image/png" width="746" height="133"/>
+    </item>
+    <item>
+      <title>geom_paired_raincloud()</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>yjunechoe.github.io/posts/2020-07-13-geom-paired-raincloud</link>
+      <description>A {ggplot2} geom for visualizing change in distribution between two conditions.</description>
+      <category>data visualization</category>
+      <category>ggplot2</category>
+      <guid>yjunechoe.github.io/posts/2020-07-13-geom-paired-raincloud</guid>
+      <pubDate>Mon, 13 Jul 2020 00:00:00 +0000</pubDate>
+      <media:content url="yjunechoe.github.io/posts/2020-07-13-geom-paired-raincloud/preview.png" medium="image" type="image/png" width="7086" height="4251"/>
+    </item>
+    <item>
       <title>Plotting treemaps with {treemap} and {ggplot2}</title>
       <dc:creator>June Choe</dc:creator>
       <link>yjunechoe.github.io/posts/2020-06-30-treemap-with-ggplot</link>
