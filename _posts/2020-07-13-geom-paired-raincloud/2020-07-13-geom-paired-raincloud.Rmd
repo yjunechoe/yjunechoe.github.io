@@ -87,11 +87,6 @@ ggplot(plants, aes(Timepoint, Height, fill = Timepoint)) +
 
 We can add individual points and lines onto this plot in a similar way, except you need to use a 2-length vector for `position_dodge()`.
 
-<aside>
-**NOTE**: you need to make sure that the data is arranged by the variable you're using for the `group` aesthetic (in this case, `Plant`) before being passed into `ggplot()` for `position_nudge()` in the other geoms to work properly (sorry it's a bit hacky):
-</aside>
-
-
 ```{r, warning = FALSE}
 plants %>% 
   # arrange by individual plant
@@ -105,6 +100,10 @@ plants %>%
   geom_line(aes(group = Plant),
             position = position_nudge(c(.05, -.05)))
 ```
+
+<aside>
+**NOTE**: you need to make sure that the data is arranged by the variable you're using for the `group` aesthetic (in this case, `Plant`) before being passed into `ggplot()` for `position_nudge()` in the other geoms to work properly (sorry it's a bit hacky):
+</aside>
 
 `geom_paired_raincloud` works as long as the grouping is of length two (i.e., as long as you're comparing distribution between two levels).
 
@@ -176,7 +175,25 @@ But I think `geom_paired_raincloud()` works great if you have the right data. He
 knitr::include_graphics('preview.png')
 ```
 
+The above plot is a combination of `geom_paired_raincloud()`, `geom_point()`, `geom_line()`, and `geom_boxplot()`. I like that you can employ all these aesthetics at once without making the plot too overwhelming. I've included the important part of the code here and the full code is available at the [github repo for this research project](https://github.com/yjunechoe/Semantic-Persistence).
 
+```{r, eval = FALSE}
+rainplot_data %>% 
+  ggplot(aes(x = Cond, y = z_RT, fill = Cond)) +
+  geom_paired_raincloud(alpha = .5) +
+  geom_point(aes(group = Item),
+             position = position_nudge(c(.15, -.15)),
+             alpha = .5, shape = 16) +
+  geom_line(aes(group = Item),
+            position = position_nudge(c(.13, -.13)),
+            linetype = 3) +
+  geom_boxplot(position = position_nudge(c(.07, -.07)),
+               alpha = .5, width = .04, outlier.shape = " ") +
+  facet_wrap(~Type, scales = "free_x") +
+  ...
+```
 
-
+<aside>
+Notice how I use `position_nudge()` to make sure that the points, lines, and boxplots are side-by-side and not overlapping with each other.
+</aside>
 

@@ -1527,9 +1527,6 @@ ggplot(plants, aes(Timepoint, Height, fill = Timepoint)) +
 <p><img src="2020-07-13-geom-paired-raincloud_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
 </div>
 <p>We can add individual points and lines onto this plot in a similar way, except you need to use a 2-length vector for <code>position_dodge()</code>.</p>
-<aside>
-<strong>NOTE</strong>: you need to make sure that the data is arranged by the variable you’re using for the <code>group</code> aesthetic (in this case, <code>Plant</code>) before being passed into <code>ggplot()</code> for <code>position_nudge()</code> in the other geoms to work properly (sorry it’s a bit hacky):
-</aside>
 <div class="layout-chunk" data-layout="l-body">
 <pre class="r"><code>
 plants %&gt;% 
@@ -1545,6 +1542,9 @@ plants %&gt;%
             position = position_nudge(c(.05, -.05)))</code></pre>
 <p><img src="2020-07-13-geom-paired-raincloud_files/figure-html5/unnamed-chunk-5-1.png" width="624" /></p>
 </div>
+<aside>
+<strong>NOTE</strong>: you need to make sure that the data is arranged by the variable you’re using for the <code>group</code> aesthetic (in this case, <code>Plant</code>) before being passed into <code>ggplot()</code> for <code>position_nudge()</code> in the other geoms to work properly (sorry it’s a bit hacky):
+</aside>
 <p><code>geom_paired_raincloud</code> works as long as the grouping is of length two (i.e., as long as you’re comparing distribution between two levels).</p>
 <p>Let’s modify the <code>plants</code> dataset to include another species of plant:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -1625,6 +1625,26 @@ plants3 %&gt;%
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="preview.png" width="3543" /></p>
 </div>
+<p>The above plot is a combination of <code>geom_paired_raincloud()</code>, <code>geom_point()</code>, <code>geom_line()</code>, and <code>geom_boxplot()</code>. I like that you can employ all these aesthetics at once without making the plot too overwhelming. I’ve included the important part of the code here and the full code is available at the <a href="https://github.com/yjunechoe/Semantic-Persistence">github repo for this research project</a>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+rainplot_data %&gt;% 
+  ggplot(aes(x = Cond, y = z_RT, fill = Cond)) +
+  geom_paired_raincloud(alpha = .5) +
+  geom_point(aes(group = Item),
+             position = position_nudge(c(.15, -.15)),
+             alpha = .5, shape = 16) +
+  geom_line(aes(group = Item),
+            position = position_nudge(c(.13, -.13)),
+            linetype = 3) +
+  geom_boxplot(position = position_nudge(c(.07, -.07)),
+               alpha = .5, width = .04, outlier.shape = &quot; &quot;) +
+  facet_wrap(~Type, scales = &quot;free_x&quot;) +
+  ...</code></pre>
+</div>
+<aside>
+Notice how I use <code>position_nudge()</code> to make sure that the points, lines, and boxplots are side-by-side and not overlapping with each other.
+</aside>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
