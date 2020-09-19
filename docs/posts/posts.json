@@ -43,6 +43,27 @@
     "preview_height": 617
   },
   {
+    "path": "posts/2020-09-06-fonts-for-graphs/",
+    "title": "Fonts for graphs",
+    "description": "A small collection of my favorite fonts for data visualization",
+    "author": [
+      {
+        "name": "June Choe",
+        "url": {}
+      }
+    ],
+    "date": "2020-09-06",
+    "categories": [
+      "data visualization",
+      "typography"
+    ],
+    "preview": "posts/2020-09-06-fonts-for-graphs/preview.png",
+    "last_modified": "2020-09-19T04:15:15-04:00",
+    "input_file": {},
+    "preview_width": 1144,
+    "preview_height": 675
+  },
+  {
     "path": "posts/2020-08-07-saving-a-line-of-piping/",
     "title": "Saving a line of piping",
     "description": "Some notes on lesser known functions/functionalities that combine common chain of {dplyr} verbs.",
