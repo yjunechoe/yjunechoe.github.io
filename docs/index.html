@@ -1272,7 +1272,7 @@
   <script src="site_libs/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
   <style type="text/css">
-  /* General Styles */
+  /* ---------- General Styles ---------- */
 
   html, body, p {
     
@@ -1285,6 +1285,19 @@
     
   }
 
+  h1 {
+    font-family: 'Futura';
+  }
+
+  h2, h3, h4, h5 {
+    font-family: 'Futura Hv BT';
+  }
+
+
+  /* ---------- Index Styles ---------- */
+
+  /* Top & Bot bars */
+
   .distill-site-nav {
     background-color: #262c2f;
   }
@@ -1293,7 +1306,26 @@
     color: white;
   }
 
-  /* Title Section */
+
+  /* Google Search */
+
+  table#gs_id50 {
+    margin-bottom: 0;
+    border-bottom: none;
+  }
+
+  .gsc-control-cse {
+    margin-bottom: 0;
+  }
+
+  .gsc-search-button-v2 {
+    border-color: #272c34;
+    background-color: #404f67;
+  }
+
+
+  /* ---------- Article Styles ---------- */
+
 
   d-title {
     padding-bottom: 0;
@@ -1309,19 +1341,9 @@
   }
 
 
-  /* Header Styles */
-
-  h1 {
-    font-family: 'Futura';
-  }
-
-  h2, h3, h4, h5 {
-    font-family: 'Futura Hv BT';
-  }
 
 
-
-  /* Code Styles */
+  /* ---------- Code Styles ---------- */
 
   code {
     color: #c46586;
@@ -1773,23 +1795,30 @@ function init_posts_list() {
 <p>Speeding up the analysis of dependency relations.</p>
 </div>
 </a>
+<a href="posts/2020-06-07-correlation-parameter-mem/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["statistics","mixed-effects models"]}</script>
+<div class="metadata">
+<div class="publishedDate">June 7, 2020</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2020-06-07-correlation-parameter-mem/correlation-parameter-mem_files/figure-html5/_check_model-1.png"/>
+</div>
+<div class="description">
+<h2>The Correlation Parameter in Mixed Effects Models</h2>
+<p>Notes on the Corr term in {lme4} output</p>
+</div>
+</a>
 </div>
 <div class="posts-sidebar">
 <div><div class="sidebar-section custom">
   <h3>About</h3>
-  This blog explores reproducible finance with the 
-  <a href="https://www.r-project.org/">R</a> 
-  statistical computing environment.
+  This is June's Personal Blog
 </div>
 
 <div class="sidebar-section custom">
   <h3>Search</h3>
-  <form action="https://duckduckgo.com/">
-    <input type="text" name="q" placeholder="Search...">
-    <input type="hidden" name="sites" 
-      value="yjunechoe.github.io"> <!-- Replace with your blog URL -->
-    <!--<button type="submit">Search</button>-->
-  </form>
+  <script async src="https://cse.google.com/cse.js?cx=5004f2335f01c9f8e"></script>
+  <div class="gcse-search"></div>
 </div></div>
 <div class="sidebar-section categories">
 <h3>Categories</h3>
@@ -1811,11 +1840,19 @@ function init_posts_list() {
 <span class="category-count">(1)</span>
 </li>
 <li>
+<a href="#mixed-effects_models">mixed-effects models</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
 <a href="#NLP">NLP</a>
 <span class="category-count">(1)</span>
 </li>
 <li>
 <a href="#spacyr">spacyr</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#statistics">statistics</a>
 <span class="category-count">(1)</span>
 </li>
 <li>

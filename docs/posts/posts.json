@@ -63,5 +63,26 @@
     "input_file": {},
     "preview_width": 1920,
     "preview_height": 686
+  },
+  {
+    "path": "posts/2020-06-07-correlation-parameter-mem/",
+    "title": "The Correlation Parameter in Mixed Effects Models",
+    "description": "Notes on the Corr term in {lme4} output",
+    "author": [
+      {
+        "name": "June Choe",
+        "url": {}
+      }
+    ],
+    "date": "2020-06-07",
+    "categories": [
+      "statistics",
+      "mixed-effects models"
+    ],
+    "preview": "posts/2020-06-07-correlation-parameter-mem/correlation-parameter-mem_files/figure-html5/_check_model-1.png",
+    "last_modified": "2020-09-19T01:38:43-04:00",
+    "input_file": {},
+    "preview_width": 1248,
+    "preview_height": 768
   }
 ]

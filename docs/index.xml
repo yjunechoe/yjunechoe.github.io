@@ -43,5 +43,16 @@
       <pubDate>Thu, 25 Jun 2020 00:00:00 +0000</pubDate>
       <media:content url="yjunechoe.github.io/posts/2020-06-25-indexing-tip-for-spacyr/preview.png" medium="image" type="image/png" width="1920" height="686"/>
     </item>
+    <item>
+      <title>The Correlation Parameter in Mixed Effects Models</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>yjunechoe.github.io/posts/2020-06-07-correlation-parameter-mem</link>
+      <description>Notes on the Corr term in {lme4} output</description>
+      <category>statistics</category>
+      <category>mixed-effects models</category>
+      <guid>yjunechoe.github.io/posts/2020-06-07-correlation-parameter-mem</guid>
+      <pubDate>Sun, 07 Jun 2020 00:00:00 +0000</pubDate>
+      <media:content url="yjunechoe.github.io/posts/2020-06-07-correlation-parameter-mem/correlation-parameter-mem_files/figure-html5/_check_model-1.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
   </channel>
 </rss>
