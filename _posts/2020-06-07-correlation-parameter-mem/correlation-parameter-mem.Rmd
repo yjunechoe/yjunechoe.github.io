@@ -10,6 +10,7 @@ author:
   - name: June Choe
     affiliation: University of Pennsylvania Linguistics
     affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+preview: preview.png
 date: 06-07-2020
 output:
   distill::distill_article:
@@ -475,7 +476,7 @@ subj_intercepts_plot + plot_spacer() + (ranef_subj_plot +  geom_ellipse(aes(x0=0
 
 ... because the distribution of the subject random effects actually takes the shape of a *tilted* ellipse instead (dotted outline):
 
-```{r data_ellipse, echo=FALSE, message=FALSE, warning=FALSE, preview = TRUE}
+```{r data_ellipse, echo=FALSE, message=FALSE, warning=FALSE}
 subj_intercepts_plot + plot_spacer() + (ranef_subj_plot +  geom_ellipse(aes(x0=0, y0=0,
                    a = attr(summary(model)$varcor$Subject, 'stddev')[1]*2,
                    b = attr(summary(model)$varcor$Subject, 'stddev')[2]*2,

@@ -7,7 +7,30 @@
     <description>Personal Blog
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Fri, 07 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 14 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>TidyTuesday 2020 week 38</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>yjunechoe.github.io/posts/2020-09-14-tidytuesday-2020-week-38</link>
+      <description>First time with {gt}</description>
+      <category>gt</category>
+      <category>data visualization</category>
+      <category>tidytuesday</category>
+      <guid>yjunechoe.github.io/posts/2020-09-14-tidytuesday-2020-week-38</guid>
+      <pubDate>Mon, 14 Sep 2020 00:00:00 +0000</pubDate>
+      <media:content url="yjunechoe.github.io/posts/2020-09-14-tidytuesday-2020-week-38/preview.png" medium="image" type="image/png" width="1703" height="2203"/>
+    </item>
+    <item>
+      <title>Embedding videos in {reactable} tables</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>yjunechoe.github.io/posts/2020-09-12-videos-in-reactable</link>
+      <description>Pushing the limits of expandable row details</description>
+      <category>reactable</category>
+      <category>data visualization</category>
+      <guid>yjunechoe.github.io/posts/2020-09-12-videos-in-reactable</guid>
+      <pubDate>Sat, 12 Sep 2020 00:00:00 +0000</pubDate>
+      <media:content url="yjunechoe.github.io/posts/2020-09-12-videos-in-reactable/preview.png" medium="image" type="image/png" width="808" height="617"/>
+    </item>
     <item>
       <title>Saving a line of piping</title>
       <dc:creator>June Choe</dc:creator>
@@ -52,7 +75,7 @@
       <category>mixed-effects models</category>
       <guid>yjunechoe.github.io/posts/2020-06-07-correlation-parameter-mem</guid>
       <pubDate>Sun, 07 Jun 2020 00:00:00 +0000</pubDate>
-      <media:content url="yjunechoe.github.io/posts/2020-06-07-correlation-parameter-mem/correlation-parameter-mem_files/figure-html5/_check_model-1.png" medium="image" type="image/png" width="1248" height="768"/>
+      <media:content url="yjunechoe.github.io/posts/2020-06-07-correlation-parameter-mem/preview.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
   </channel>
 </rss>

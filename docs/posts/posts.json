@@ -1,5 +1,48 @@
 [
   {
+    "path": "posts/2020-09-14-tidytuesday-2020-week-38/",
+    "title": "TidyTuesday 2020 week 38",
+    "description": "First time with {gt}",
+    "author": [
+      {
+        "name": "June Choe",
+        "url": {}
+      }
+    ],
+    "date": "2020-09-14",
+    "categories": [
+      "gt",
+      "data visualization",
+      "tidytuesday"
+    ],
+    "preview": "posts/2020-09-14-tidytuesday-2020-week-38/preview.png",
+    "last_modified": "2020-09-19T02:29:08-04:00",
+    "input_file": {},
+    "preview_width": 1703,
+    "preview_height": 2203
+  },
+  {
+    "path": "posts/2020-09-12-videos-in-reactable/",
+    "title": "Embedding videos in {reactable} tables",
+    "description": "Pushing the limits of expandable row details",
+    "author": [
+      {
+        "name": "June Choe",
+        "url": {}
+      }
+    ],
+    "date": "2020-09-12",
+    "categories": [
+      "reactable",
+      "data visualization"
+    ],
+    "preview": "posts/2020-09-12-videos-in-reactable/preview.png",
+    "last_modified": "2020-09-19T02:03:40-04:00",
+    "input_file": {},
+    "preview_width": 808,
+    "preview_height": 617
+  },
+  {
     "path": "posts/2020-08-07-saving-a-line-of-piping/",
     "title": "Saving a line of piping",
     "description": "Some notes on lesser known functions/functionalities that combine common chain of {dplyr} verbs.",
@@ -79,8 +122,8 @@
       "statistics",
       "mixed-effects models"
     ],
-    "preview": "posts/2020-06-07-correlation-parameter-mem/correlation-parameter-mem_files/figure-html5/_check_model-1.png",
-    "last_modified": "2020-09-19T01:38:43-04:00",
+    "preview": "posts/2020-06-07-correlation-parameter-mem/preview.png",
+    "last_modified": "2020-09-19T01:50:19-04:00",
     "input_file": {},
     "preview_width": 1248,
     "preview_height": 768

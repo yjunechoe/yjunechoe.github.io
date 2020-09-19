@@ -1,0 +1,110 @@
+---
+title: Embedding videos in {reactable} tables
+description: |
+  Pushing the limits of expandable row details
+categories:
+  - reactable
+  - data visualization
+base_url: yjunechoe.github.io
+author:
+  - name: June Choe
+    affiliation: University of Pennsylvania Linguistics
+    affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+preview: preview.png
+date: 09-12-2020
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+```{r opts}
+knitr::opts_chunk$set(
+  comment = " ",
+  echo = TRUE,
+  message = TRUE,
+  warning = TRUE,
+  R.options = list(width = 80)
+)
+```
+
+
+In a {reactable} table, you can have a row expand to reveal more details by supplying the `details` argument with a function returning an image, raw html, another reactable table, etc. There are many examples of this in the [package vignette](https://glin.github.io/reactable/articles/examples.html#expandable-row-details-1), and they give you a good sense of just how flexible and powerful this feature is.
+
+My first reaction to this was that it seemed like just about anything that can be displayed on a web page can be embedded in the expandable details. So what about something very unusual like... videos? Can {reactable} handle it? Are there potential usecases of this?
+
+
+## **Annotated #tidytuesday screencasts**
+
+While entertaining this idea, I remembered coming across a tweet by Alex Cookson with a link to a very detailed spreadsheet containing timestamped notes of David Robinson's live #tidytuesday screencasts.
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Anyone other <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> people find <a href="https://twitter.com/drob?ref_src=twsrc%5Etfw">@drob</a>&#39;s <a href="https://twitter.com/hashtag/TidyTuesday?src=hash&amp;ref_src=twsrc%5Etfw">#TidyTuesday</a> screencasts useful?<br><br>I made a spreadsheet with timestamps for hundreds of specific tasks he does: <a href="https://t.co/HvJbLk1chd">https://t.co/HvJbLk1chd</a><br> <br>Useful if, like me, you keep going back and ask, &quot;Where in the video did he do [this thing] again?&quot;</p>&mdash; Alex Cookson (@alexcookson) <a href="https://twitter.com/alexcookson/status/1216798492183670784?ref_src=twsrc%5Etfw">January 13, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+So I turned the spreadsheet into a {reactable} table with rows that can expand to reveal a Youtube video at the timestamp. I actually think this makes a really cool use case - it's easier here than in Google Spreadsheet to navigate around the table with pagination and search bar, and you don't need to constantly open and close Youtube videos in new windows (in fact, you can keep _multiple_ videos open across rows here!).
+
+Try it out for yourself!
+
+
+```{r reactable, echo=FALSE, message=FALSE, warning=FALSE, layout='l-body-outset'}
+library(tidyverse)
+library(htmltools)
+library(reactable)
+
+# David Robinson's (@drob) #tidytuesday screencast annotations, made by Alex Cookson (@alexcookson)
+screencasts <-
+  gsheet::gsheet2tbl("docs.google.com/spreadsheets/d/1pjj_G9ncJZPGTYPkR1BYwzA6bhJoeTfY2fJeGKSbOKM") %>% 
+  select(Screencast, Date, Timestamp = `Timestamp (sec)`, Link:Functions) %>% 
+  mutate(Link = str_extract(Link, "(?<=v=).*(?=&)"))
+
+
+###############
+## The Table ##
+###############
+
+reactable(screencasts,
+  
+  # Function to embed Youtube Video 
+  details = function(index){
+    
+    # Grab video info from hidden columns
+    link <- screencasts$Link[index]
+    time <- screencasts$Timestamp[index]
+    
+    # Div container to add grey padding around the video
+    tags$div(style = "text-align:center; padding:10px; background:grey",
+             
+             # The actual video
+             tags$iframe(
+               height = "360", width = "640", allow = "fullscreen",
+               src = glue::glue("https://www.youtube.com/embed/{link}?start={time}&autoplay=1")
+             )
+             
+    )
+    
+  },
+  
+  # Column options
+  columns = list(
+    Link = colDef(show = F),
+    Timestamp = colDef(show = F),
+    Description = colDef(width = 500)
+  ),
+  
+  # Some theme options
+  searchable = TRUE,
+  bordered = TRUE,
+  fullWidth = TRUE,
+  theme = reactableTheme(
+    style = list(fontSize = '14px'),
+    searchInputStyle = list(width = "100%")
+  ),
+  
+)
+```
+
+
+## **Code**
+
+```{r, eval=FALSE}
+<<reactable>>
+```
+

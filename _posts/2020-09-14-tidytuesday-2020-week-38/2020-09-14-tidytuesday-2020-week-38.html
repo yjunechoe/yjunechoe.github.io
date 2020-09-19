@@ -7,7 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
   <meta name="generator" content="distill" />
-  <link rel="alternate" type="application/rss+xml" href="yjunechoe.github.io/index.xml" />
 
   <style type="text/css">
   /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
@@ -20,366 +19,45 @@
  <!--/radix_placeholder_import_source-->
 
   <!--radix_placeholder_meta_tags-->
-  <title>June Choe</title>
+  <title>TidyTuesday 2020 week 38</title>
+
+  <meta property="description" itemprop="description" content="First time with {gt}"/>
 
 
-
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2020-09-14"/>
+  <meta property="article:created" itemprop="dateCreated" content="2020-09-14"/>
+  <meta name="article:author" content="June Choe"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="June Choe"/>
+  <meta property="og:title" content="TidyTuesday 2020 week 38"/>
   <meta property="og:type" content="article"/>
+  <meta property="og:description" content="First time with {gt}"/>
+  <meta property="og:image" content="yjunechoe.github.io/preview.png"/>
+  <meta property="og:image:width" content="1703"/>
+  <meta property="og:image:height" content="2203"/>
   <meta property="og:locale" content="en_US"/>
-  <meta property="og:site_name" content="June Choe"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
-  <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="June Choe"/>
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:title" content="TidyTuesday 2020 week 38"/>
+  <meta property="twitter:description" content="First time with {gt}"/>
+  <meta property="twitter:image" content="yjunechoe.github.io/preview.png"/>
+  <meta property="twitter:image:width" content="1703"/>
+  <meta property="twitter:image:height" content="2203"/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","site","listing"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["distill::distill_website"]},{"type":"character","attributes":{},"value":["posts"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","preview","date","output"]}},"value":[{"type":"character","attributes":{},"value":["TidyTuesday 2020 week 38"]},{"type":"character","attributes":{},"value":["First time with {gt}\n"]},{"type":"character","attributes":{},"value":["gt","data visualization","tidytuesday"]},{"type":"character","attributes":{},"value":["yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]}]}]},{"type":"character","attributes":{},"value":["preview.png"]},{"type":"character","attributes":{},"value":["09-14-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
-  <!--radix_placeholder_navigation_in_header-->
-
-  <script type="application/javascript">
-
-    window.headroom_prevent_pin = false;
-
-    window.document.addEventListener("DOMContentLoaded", function (event) {
-
-      // initialize headroom for banner
-      var header = $('header').get(0);
-      var headerHeight = header.offsetHeight;
-      var headroom = new Headroom(header, {
-        onPin : function() {
-          if (window.headroom_prevent_pin) {
-            window.headroom_prevent_pin = false;
-            headroom.unpin();
-          }
-        }
-      });
-      headroom.init();
-      if(window.location.hash)
-        headroom.unpin();
-      $(header).addClass('headroom--transition');
-
-      // offset scroll location for banner on hash change
-      // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
-      window.addEventListener("hashchange", function(event) {
-        window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
-      });
-
-      // responsive menu
-      $('.distill-site-header').each(function(i, val) {
-        var topnav = $(this);
-        var toggle = topnav.find('.nav-toggle');
-        toggle.on('click', function() {
-          topnav.toggleClass('responsive');
-        });
-      });
-
-      // nav dropdowns
-      $('.nav-dropbtn').click(function(e) {
-        $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
-        $(this).parent().siblings('.nav-dropdown')
-           .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
-      });
-      $("body").click(function(e){
-        $('.nav-dropdown-content').removeClass('nav-dropdown-active');
-      });
-      $(".nav-dropdown").click(function(e){
-        e.stopPropagation();
-      });
-    });
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["2020-09-14-tidytuesday-2020-week-38_files/bowser-1.9.3/bowser.min.js","2020-09-14-tidytuesday-2020-week-38_files/distill-2.2.21/template.v2.js","2020-09-14-tidytuesday-2020-week-38_files/header-attrs-2.3/header-attrs.js","2020-09-14-tidytuesday-2020-week-38_files/jquery-1.11.3/jquery.min.js","2020-09-14-tidytuesday-2020-week-38_files/webcomponents-2.0.0/webcomponents.js","preview.png"]}
   </script>
-
-  <style type="text/css">
-
-  /* Theme (user-documented overrideables for nav appearance) */
-
-  .distill-site-nav {
-    color: rgba(255, 255, 255, 0.8);
-    background-color: #455a64;
-    font-size: 15px;
-    font-weight: 300;
-  }
-
-  .distill-site-nav a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .distill-site-nav a:hover {
-    color: white;
-  }
-
-  @media print {
-    .distill-site-nav {
-      display: none;
-    }
-  }
-
-  .distill-site-header {
-
-  }
-
-  .distill-site-footer {
-
-  }
-
-
-  /* Site Header */
-
-  .distill-site-header {
-    width: 100%;
-    box-sizing: border-box;
-    z-index: 3;
-  }
-
-  .distill-site-header .nav-left {
-    display: inline-block;
-    margin-left: 8px;
-  }
-
-  @media screen and (max-width: 768px) {
-    .distill-site-header .nav-left {
-      margin-left: 0;
-    }
-  }
-
-
-  .distill-site-header .nav-right {
-    float: right;
-    margin-right: 8px;
-  }
-
-  .distill-site-header a,
-  .distill-site-header .title {
-    display: inline-block;
-    text-align: center;
-    padding: 14px 10px 14px 10px;
-  }
-
-  .distill-site-header .title {
-    font-size: 18px;
-  }
-
-  .distill-site-header .logo {
-    padding: 0;
-  }
-
-  .distill-site-header .logo img {
-    display: none;
-    max-height: 20px;
-    width: auto;
-    margin-bottom: -4px;
-  }
-
-  .distill-site-header .nav-image img {
-    max-height: 18px;
-    width: auto;
-    display: inline-block;
-    margin-bottom: -3px;
-  }
-
-
-
-  @media screen and (min-width: 1000px) {
-    .distill-site-header .logo img {
-      display: inline-block;
-    }
-    .distill-site-header .nav-left {
-      margin-left: 20px;
-    }
-    .distill-site-header .nav-right {
-      margin-right: 20px;
-    }
-    .distill-site-header .title {
-      padding-left: 12px;
-    }
-  }
-
-
-  .distill-site-header .nav-toggle {
-    display: none;
-  }
-
-  .nav-dropdown {
-    display: inline-block;
-    position: relative;
-  }
-
-  .nav-dropdown .nav-dropbtn {
-    border: none;
-    outline: none;
-    color: rgba(255, 255, 255, 0.8);
-    padding: 16px 10px;
-    background-color: transparent;
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: inherit;
-    margin: 0;
-    margin-top: 1px;
-    z-index: 2;
-  }
-
-  .nav-dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: white;
-    min-width: 200px;
-    border: 1px solid rgba(0,0,0,0.15);
-    border-radius: 4px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
-    z-index: 1;
-    margin-top: 2px;
-    white-space: nowrap;
-    padding-top: 4px;
-    padding-bottom: 4px;
-  }
-
-  .nav-dropdown-content hr {
-    margin-top: 4px;
-    margin-bottom: 4px;
-    border: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  }
-
-  .nav-dropdown-active {
-    display: block;
-  }
-
-  .nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
-    color: black;
-    padding: 6px 24px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-  }
-
-  .nav-dropdown-content .nav-dropdown-header {
-    display: block;
-    padding: 5px 24px;
-    padding-bottom: 0;
-    text-transform: uppercase;
-    font-size: 14px;
-    color: #999999;
-    white-space: nowrap;
-  }
-
-  .nav-dropdown:hover .nav-dropbtn {
-    color: white;
-  }
-
-  .nav-dropdown-content a:hover {
-    background-color: #ddd;
-    color: black;
-  }
-
-  .nav-right .nav-dropdown-content {
-    margin-left: -45%;
-    right: 0;
-  }
-
-  @media screen and (max-width: 768px) {
-    .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
-    .distill-site-header a.nav-toggle {
-      float: right;
-      display: block;
-    }
-    .distill-site-header .title {
-      margin-left: 0;
-    }
-    .distill-site-header .nav-right {
-      margin-right: 0;
-    }
-    .distill-site-header {
-      overflow: hidden;
-    }
-    .nav-right .nav-dropdown-content {
-      margin-left: 0;
-    }
-  }
-
-
-  @media screen and (max-width: 768px) {
-    .distill-site-header.responsive {position: relative;}
-    .distill-site-header.responsive a.nav-toggle {
-      position: absolute;
-      right: 0;
-      top: 0;
-    }
-    .distill-site-header.responsive a,
-    .distill-site-header.responsive .nav-dropdown {
-      display: block;
-      text-align: left;
-    }
-    .distill-site-header.responsive .nav-left,
-    .distill-site-header.responsive .nav-right {
-      width: 100%;
-    }
-    .distill-site-header.responsive .nav-dropdown {float: none;}
-    .distill-site-header.responsive .nav-dropdown-content {position: relative;}
-    .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
-      display: block;
-      width: 100%;
-      text-align: left;
-    }
-  }
-
-  /* Site Footer */
-
-  .distill-site-footer {
-    width: 100%;
-    overflow: hidden;
-    box-sizing: border-box;
-    z-index: 3;
-    margin-top: 30px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    text-align: center;
-  }
-
-  /* Headroom */
-
-  d-title {
-    padding-top: 6rem;
-  }
-
-  @media print {
-    d-title {
-      padding-top: 4rem;
-    }
-  }
-
-  .headroom {
-    z-index: 1000;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-  }
-
-  .headroom--transition {
-    transition: all .4s ease-in-out;
-  }
-
-  .headroom--unpinned {
-    top: -100px;
-  }
-
-  .headroom--pinned {
-    top: 0;
-  }
-
-  </style>
-
-  <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
-  <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
-  <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
+  <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
   <!--radix_placeholder_distill-->
 
@@ -1265,655 +943,155 @@
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.3/header-attrs.js"></script>
-  <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
-  <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
-  <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
-  <script src="site_libs/distill-2.2.21/template.v2.js"></script>
+  <script src="2020-09-14-tidytuesday-2020-week-38_files/header-attrs-2.3/header-attrs.js"></script>
+  <script src="2020-09-14-tidytuesday-2020-week-38_files/jquery-1.11.3/jquery.min.js"></script>
+  <script src="2020-09-14-tidytuesday-2020-week-38_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="2020-09-14-tidytuesday-2020-week-38_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="2020-09-14-tidytuesday-2020-week-38_files/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
-  <style type="text/css">
-  /* ---------- General Styles ---------- */
-
-  html, body, p {
-    
-    font-family: 'Futura Bk BT';
-    font-weight: 200;
-    line-height: 1.5; 
-    font-size: 1.0em;
-    color: #333333;
-    font-style: normal;
-    
-  }
-
-  h1 {
-    font-family: 'Futura';
-  }
-
-  h2, h3, h4, h5 {
-    font-family: 'Futura Hv BT';
-  }
-
-
-  /* ---------- Index Styles ---------- */
-
-  /* Top & Bot bars */
-
-  .distill-site-nav {
-    background-color: #262c2f;
-  }
-
-  .distill-site-footer p {
-    color: white;
-  }
-
-
-  /* Google Search */
-
-  table#gs_id50 {
-    margin-bottom: 0;
-    border-bottom: none;
-  }
-
-  .gsc-control-cse {
-    margin-bottom: 0;
-  }
-
-  .gsc-search-button-v2 {
-    border-color: #272c34;
-    background-color: #404f67;
-  }
-
-
-  /* ---------- Article Styles ---------- */
-
-
-  d-title {
-    padding-bottom: 0;
-  }
-
-  d-title h1 {
-    font-family: 'Lora';
-    line-height: 1.3;
-  }
-
-  d-title p {
-    font-family: 'Futura Lt BT';
-  }
-
-
-
-
-  /* ---------- Code Styles ---------- */
-
-  code {
-    color: #c46586;
-    font-family: 'Fira Mono';
-    font-size: 0.8em;
-  }
-
-  d-code {
-    margin-bottom: 10px;
-  }
-
-  pre.text-output {
-    background-color: #F5F8F9;
-    font-family: 'IBM Plex Mono Regular';
-    font-size: 0.7em;
-  }
-
-  d-article pre {
-    font-size: 14px;
-    padding-bottom: 17px;
-    margin-bottom: 2em;
-  }
-
-
-
-  /* ---------- ADD-ONS ---------- */
-
-
-  /* html widgets */
-
-  .html-widget {
-    margin-top: 1.0em;
-    margin-bottom: 1.0em;
-  }
-
-  /* {reactable} */
-
-  .ReactTable {
-    font-size: 14px;
-    font-family: 'Roboto Medium';
-    background-color: #fbfbfb;
-  }
-
-  /* {xaringanExtra} */
-
-  .panelset {
-    margin-top: 10px;
-    --panel-tabs-border-bottom: black;
-    --panel-tab-font-family: 'Montserrat SemiBold';
-    --panel-tab-hover-background: #ddd;
-    --panel-tab-text-decoration: none;
-    border-bottom: 2px solid black;
-    margin-bottom: 30px;
-  }
-  </style>
   <!--/radix_placeholder_site_in_header-->
 
-  <link rel="stylesheet" href="styles.css" type="text/css"/>
 
 </head>
 
-<body class="layout-listing">
+<body>
 
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"June Choe","authors":[]}
+{"title":"TidyTuesday 2020 week 38","description":"First time with {gt}","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/"}],"publishedDate":"2020-09-14T00:00:00.000-04:00","citationText":"Choe, 2020"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
 <!--radix_placeholder_navigation_before_body-->
-<header class="header header--fixed" role="banner">
-<nav class="distill-site-nav distill-site-header">
-<div class="nav-left">
-<a href="index.html" class="title">June Choe</a>
-</div>
-<div class="nav-right">
-<a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="https://twitter.com/yjunechoe">
-<i class="fa fa-twitter" aria-hidden="true"></i>
-</a>
-<a href="https://github.com/yjunechoe">
-<i class="fa fa-github" aria-hidden="true"></i>
-</a>
-<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
-</div>
-</nav>
-</header>
 <!--/radix_placeholder_navigation_before_body-->
 <!--radix_placeholder_site_before_body-->
 <!--/radix_placeholder_site_before_body-->
-<!--radix_placeholder_article_listing-->
-
-<style type="text/css">
-
-/* Styles for listing layout (hide title) */
-.layout-listing d-title, .layout-listing .d-title {
-  display: none;
-}
-
-/* Styles for posts lists (not auto-injected) */
-
-
-.posts-with-sidebar {
-  padding-left: 45px;
-  padding-right: 45px;
-}
-
-.posts-list .description h2,
-.posts-list .description p {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
-}
-
-.posts-list .description h2 {
-  font-weight: 700;
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-.posts-list h2.post-tag {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  padding-bottom: 12px;
-}
-.posts-list {
-  margin-top: 60px;
-  margin-bottom: 24px;
-}
-
-.posts-list .post-preview {
-  text-decoration: none;
-  overflow: hidden;
-  display: block;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 24px 0;
-}
-
-.post-preview-last {
-  border-bottom: none !important;
-}
-
-.posts-list .posts-list-caption {
-  grid-column: screen;
-  font-weight: 400;
-}
-
-.posts-list .post-preview h2 {
-  margin: 0 0 6px 0;
-  line-height: 1.2em;
-  font-style: normal;
-  font-size: 24px;
-}
-
-.posts-list .post-preview p {
-  margin: 0 0 12px 0;
-  line-height: 1.4em;
-  font-size: 16px;
-}
-
-.posts-list .post-preview .thumbnail {
-  box-sizing: border-box;
-  margin-bottom: 24px;
-  position: relative;
-  max-width: 500px;
-}
-.posts-list .post-preview img {
-  width: 100%;
-  display: block;
-}
-
-.posts-list .metadata {
-  font-size: 12px;
-  line-height: 1.4em;
-  margin-bottom: 18px;
-}
-
-.posts-list .metadata > * {
-  display: inline-block;
-}
-
-.posts-list .metadata .publishedDate {
-  margin-right: 1em;
-}
-
-.posts-list .metadata .tags {
-  margin-top: 1em;
-}
-
-.posts-list .tags .tag {
-  color: rgba(0,0,0,0.67);
-  padding: 0.3em 0.5em;
-  margin: 0;
-  font-size: 80%;
-  border: 1px solid rgba(0,0,0,0.4);
-  border-radius: 3px;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-
-.posts-list img {
-  opacity: 1;
-}
-
-.posts-list img[data-src] {
-  opacity: 0;
-}
-
-.posts-more {
-  clear: both;
-}
-
-
-.posts-sidebar {
-  font-size: 16px;
-}
-
-.posts-sidebar h3 {
-  font-size: 16px;
-  margin-top: 0;
-  margin-bottom: 0.5em;
-  font-weight: 400;
-  text-transform: uppercase;
-}
-
-.sidebar-section {
-  margin-bottom: 30px;
-}
-
-.categories ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-.categories li {
-  color: rgba(0, 0, 0, 0.8);
-  margin-bottom: 0;
-}
-
-.categories li>a {
-  border-bottom: none;
-}
-
-.categories li>a:hover {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-}
-
-.categories .active {
-  font-weight: 600;
-}
-
-.categories .category-count {
-  color: rgba(0, 0, 0, 0.4);
-}
-
-
-@media(min-width: 768px) {
-  .posts-list .post-preview h2 {
-    font-size: 26px;
-  }
-  .posts-list .post-preview .thumbnail {
-    float: right;
-    width: 35%;
-    margin-bottom: 0;
-  }
-  .posts-list .post-preview .description {
-    float: left;
-    width: 45%;
-  }
-  .posts-list .post-preview .metadata {
-    float: left;
-    width: 15%;
-    margin-top: 8px;
-  }
-  .posts-list .post-preview p {
-    margin: 0 0 12px 0;
-    line-height: 1.5em;
-    font-size: 16px;
-  }
-  .posts-with-sidebar .posts-list {
-    float: left;
-    width: 72%;
-  }
-  .posts-with-sidebar .posts-sidebar {
-    float: right;
-    width: 20%;
-    margin-top: 60px;
-    padding-top: 24px;
-    padding-bottom: 24px;
-  }
-}
-
-.downlevel .posts-list .post-preview {
-  color: inherit;
-}
-
-</style>
-
-<script type="application/javascript">
-
-function init_posts_list() {
-
-  function load_image(img) {
-    var src = $(img).attr('data-src');
-    if (src) {
-      $(img).attr('src', src);
-      $(img).load(function() {
-        img.removeAttribute('data-src');
-      });
-    }
-  }
-
-  function set_posts_visible(posts, visible) {
-    if (visible) {
-
-      // show bottom border by default
-      $(posts).removeClass('post-preview-last');
-
-      // apply limits if need be
-      var max_posts = 25;
-      var apply_limits = $('.posts-container').hasClass('posts-apply-limit');
-      if (apply_limits && posts.length > max_posts) {
-        posts = $(posts).slice(0, max_posts);
-      } else {
-        $('.posts-more a').addClass('hidden');
-      }
-
-      // apply last style
-      $(posts.slice(-1)[0]).addClass('post-preview-last');
-
-      $(posts).removeClass('hidden');
-      $(posts).find('img[data-src]').each(function(i, img) {
-        load_image(img);
-      });
-    } else {
-      $(posts).addClass('hidden');
-    }
-  }
-
-  function apply_hash_filter() {
-
-    // clear active state
-    $('.categories .active').removeClass('active');
-
-    // mark all posts invisible to start
-    set_posts_visible($('.posts-list').children('a'), false);
-
-    // if we have a hash filter
-    if (window.location.hash) {
-
-      // mark posts that match the category visible
-      var page_category = window.location.hash.replace("#", "");
-      var posts = $('.post-metadata').map(function(idx, script) {
-        var metadata = $.parseJSON($(script).html());
-        var post = null;
-        $.each(metadata.categories, function(idx, category) {
-          category = category.replace(/ /g,"_");
-          if (category == page_category) {
-            post = $(script).parent().get();
-            return false;
-          }
-        });
-        return post;
-      });
-      set_posts_visible(posts, true);
-
-      // mark the hash active
-      $('.categories li>a[href="' + window.location.hash + '"]').addClass('active');
-
-    } else {
-
-      // no hash filter, make all posts visible (subject to max display)
-      set_posts_visible($('.posts-list').children(), true);
-
-    }
-  }
-
-  // more articles
-  function apply_post_limits(apply) {
-    if (apply) {
-      $('.posts-container').addClass('posts-apply-limit');
-      $('.posts-more a').removeClass('hidden');
-    } else {
-      $('.posts-container').removeClass('posts-apply-limit');
-      $('.posts-more a').addClass('hidden');
-    }
-  }
-
-  // hash filter handling
-  apply_hash_filter();
-  $(window).on('hashchange',function() {
-    apply_post_limits(true);
-    apply_hash_filter();
-  });
-
-  // more articles link
-  $('.posts-more a').click(function(e) {
-    e.preventDefault();
-    apply_post_limits(false);
-    apply_hash_filter();
-    return false;
-  });
-
-}
-
-</script>
-
-
-
-<div class="posts-container posts-with-sidebar posts-apply-limit l-screen-inset">
-<div class="posts-list">
-<h1 class="posts-list-caption">June Choe</h1>
-<a href="posts/2020-09-14-tidytuesday-2020-week-38/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":["gt","data visualization","tidytuesday"]}</script>
-<div class="metadata">
-<div class="publishedDate">Sept. 14, 2020</div>
-</div>
-<div class="thumbnail">
-<img data-src="posts/2020-09-14-tidytuesday-2020-week-38/preview.png"/>
-</div>
-<div class="description">
-<h2>TidyTuesday 2020 week 38</h2>
-<p>First time with {gt}</p>
-</div>
-</a>
-<a href="posts/2020-09-12-videos-in-reactable/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":["reactable","data visualization"]}</script>
-<div class="metadata">
-<div class="publishedDate">Sept. 12, 2020</div>
-</div>
-<div class="thumbnail">
-<img data-src="posts/2020-09-12-videos-in-reactable/preview.png"/>
-</div>
-<div class="description">
-<h2>Embedding videos in {reactable} tables</h2>
-<p>Pushing the limits of expandable row details</p>
-</div>
-</a>
-<a href="posts/2020-08-07-saving-a-line-of-piping/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":["data wrangling","dplyr"]}</script>
-<div class="metadata">
-<div class="publishedDate">Aug. 7, 2020</div>
-</div>
-<div class="thumbnail">
-<img data-src="posts/2020-08-07-saving-a-line-of-piping/preview.png"/>
-</div>
-<div class="description">
-<h2>Saving a line of piping</h2>
-<p>Some notes on lesser known functions/functionalities that combine common chain of {dplyr} verbs.</p>
-</div>
-</a>
-<a href="posts/2020-06-30-treemap-with-ggplot/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":["data visualization","treemap","ggplot2"]}</script>
-<div class="metadata">
-<div class="publishedDate">June 30, 2020</div>
-</div>
-<div class="thumbnail">
-<img data-src="posts/2020-06-30-treemap-with-ggplot/2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-12-1.png"/>
-</div>
-<div class="description">
-<h2>Plotting treemaps with {treemap} and {ggplot2}</h2>
-<p>Using underlying plot data for maximum customization</p>
-</div>
-</a>
-<a href="posts/2020-06-25-indexing-tip-for-spacyr/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":["data wrangling","NLP","spacyr"]}</script>
-<div class="metadata">
-<div class="publishedDate">June 25, 2020</div>
-</div>
-<div class="thumbnail">
-<img data-src="posts/2020-06-25-indexing-tip-for-spacyr/preview.png"/>
-</div>
-<div class="description">
-<h2>Indexing tip for {spacyr}</h2>
-<p>Speeding up the analysis of dependency relations.</p>
-</div>
-</a>
-<a href="posts/2020-06-07-correlation-parameter-mem/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":["statistics","mixed-effects models"]}</script>
-<div class="metadata">
-<div class="publishedDate">June 7, 2020</div>
-</div>
-<div class="thumbnail">
-<img data-src="posts/2020-06-07-correlation-parameter-mem/preview.png"/>
-</div>
-<div class="description">
-<h2>The Correlation Parameter in Mixed Effects Models</h2>
-<p>Notes on the Corr term in {lme4} output</p>
-</div>
-</a>
-</div>
-<div class="posts-sidebar">
-<div><div class="sidebar-section custom">
-  <h3>About</h3>
-  This is June's Personal Blog
-</div>
-
-<div class="sidebar-section custom">
-  <h3>Search</h3>
-  <script async src="https://cse.google.com/cse.js?cx=5004f2335f01c9f8e"></script>
-  <div class="gcse-search"></div>
-</div></div>
-<div class="sidebar-section categories">
-<h3>Categories</h3>
-<ul>
-<li>
-<a href="#data_visualization">data visualization</a>
-<span class="category-count">(3)</span>
-</li>
-<li>
-<a href="#data_wrangling">data wrangling</a>
-<span class="category-count">(2)</span>
-</li>
-<li>
-<a href="#dplyr">dplyr</a>
-<span class="category-count">(1)</span>
-</li>
-<li>
-<a href="#ggplot2">ggplot2</a>
-<span class="category-count">(1)</span>
-</li>
-<li>
-<a href="#gt">gt</a>
-<span class="category-count">(1)</span>
-</li>
-<li>
-<a href="#mixed-effects_models">mixed-effects models</a>
-<span class="category-count">(1)</span>
-</li>
-<li>
-<a href="#NLP">NLP</a>
-<span class="category-count">(1)</span>
-</li>
-<li>
-<a href="#reactable">reactable</a>
-<span class="category-count">(1)</span>
-</li>
-<li>
-<a href="#spacyr">spacyr</a>
-<span class="category-count">(1)</span>
-</li>
-<li>
-<a href="#statistics">statistics</a>
-<span class="category-count">(1)</span>
-</li>
-<li>
-<a href="#tidytuesday">tidytuesday</a>
-<span class="category-count">(1)</span>
-</li>
-<li>
-<a href="#treemap">treemap</a>
-<span class="category-count">(1)</span>
-</li>
-</ul>
-</div>
-</div>
-<div class="posts-more">
-<a href="#">More articles &raquo;</a>
-</div>
-</div>
-<!--/radix_placeholder_article_listing-->
 
 <div class="d-title">
-<h1>June Choe</h1>
-
+<h1>TidyTuesday 2020 week 38</h1>
+<p><p>First time with {gt}</p></p>
 </div>
 
+<div class="d-byline">
+  June Choe  (University of Pennsylvania Linguistics)<a href="https://live-sas-www-ling.pantheon.sas.upenn.edu/" class="uri">https://live-sas-www-ling.pantheon.sas.upenn.edu/</a>
+  
+<br/>09-14-2020
+</div>
 
 <div class="d-article">
+<div class="layout-chunk" data-layout="l-body">
 
+</div>
+<p>For <a href="https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-09-15">this week’s TidyTuesday</a>, I decided to try my hands on {gt}.</p>
+<p>Because it was my first attempt at making a {gt} table, I just spent most of the time trying out different designs, with less time spent on trying to make anything super compelling or useful.</p>
+<p>For next steps, I’d like to try out conditional formatting with custom functions and to learn the full details of <code>tab_style()</code> so that I can target specific set of cells to change themes like font that you can’t set with <code>tab_options()</code>. Also I’m totally lost on how to save the table into pdf or png in a nicely formatted way, so I hope to figure that out soon.</p>
+<p>Pretty satisfied with the result, though. Many thanks to Thomas Mock for his detailed blog posts on {gt} <a href="https://themockup.blog/posts/2020-05-16-gt-a-grammer-of-tables/">(1)</a> <a href="https://themockup.blog/posts/2020-09-04-10-table-rules-in-r/">(2)</a>, a well as the developers of {gt} for what I think is <a href="https://gt.rstudio.com/reference/index.html">one of the most comprehensive vignette</a> I’ve ever seen for a package.</p>
+<p>I had difficulty embedding an HTML table without overriding its styles so <a href="static/html/tidytuesday_2020_38_table.html"><strong>the table is also available on its own here</strong></a>.</p>
+<div class="layout-chunk" data-layout="l-page">
+<p><img src="preview.png" width="852" /></p>
+</div>
+<p> </p>
+<h3 id="code">Code</h3>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+library(tidyverse)
+library(gt)
+
+kids &lt;- tidytuesdayR::tt_load(&quot;2020-09-15&quot;)$kids
+
+
+# TABLE DATA
+
+state_regions &lt;- setNames(c(as.character(state.region), &quot;Northeast&quot;), c(state.name, &quot;District of Columbia&quot;))
+
+kids_tbl_data &lt;- kids %&gt;% 
+  filter(variable == &quot;PK12ed&quot;) %&gt;%
+  mutate(region = state_regions[state]) %&gt;% 
+  select(region, state, year, inf_adj_perchild) %&gt;% 
+  pivot_wider(names_from = year, values_from = inf_adj_perchild) %&gt;%
+  mutate(Trend = NA) 
+
+
+# SPARKLINE
+
+plotter &lt;- function(data){
+  data %&gt;% 
+    tibble(
+      year = 1997:2016,
+      value = data
+    ) %&gt;% 
+    ggplot(aes(year, value)) +
+    geom_line(size = 10, show.legend = FALSE) +
+    theme_void() +
+    scale_y_continuous(expand = c(0, 0))
+}
+
+spark_plots &lt;- kids_tbl_data %&gt;% 
+  group_split(state) %&gt;% 
+  map(~ flatten_dbl(select(.x, where(is.numeric)))) %&gt;% 
+  map(plotter)
+
+
+# TABLE
+
+kids_tbl &lt;- kids_tbl_data %&gt;% 
+  gt(
+    groupname_col = &#39;region&#39;,
+    rowname_col = &#39;state&#39;
+  ) %&gt;% 
+  fmt_number(
+    columns = 3:22
+  ) %&gt;% 
+  summary_rows(
+    groups = TRUE,
+    columns = 3:22,
+    fns = list(Average = ~mean(.))
+  ) %&gt;% 
+  text_transform(
+    locations = cells_body(vars(Trend)),
+    fn = function(x){
+      map(spark_plots, ggplot_image, height = px(15), aspect_ratio = 4)
+    }
+  ) %&gt;%
+  tab_header(
+    title = md(&quot;**State-by-State Spending on Primary and Secondary Education over 20 years**&quot;),
+    subtitle = md(&quot;*$1000s per child adjusted for inflation*&quot;)
+  ) %&gt;% 
+  tab_source_note(
+    md(&quot;**By**: @yjunechoe&lt;br&gt;
+        **Inspiration**: @thomas_mock&lt;br&gt;
+        **Data**: Urban Institute | {tidykids} by Joshua Rosenberg&quot;)
+  ) %&gt;% 
+  tab_style(
+    style = list(
+      cell_text(font = &quot;Futura MdCn BT&quot;)
+    ),
+    locations = list(
+      cells_title(groups = &quot;title&quot;)
+    )
+  ) %&gt;%
+  tab_options(
+    table.width = 50,
+    heading.align = &quot;left&quot;,
+    heading.title.font.size = 72,
+    heading.subtitle.font.size = 32,
+    row_group.font.size = 42,
+    row_group.font.weight = &#39;bold&#39;,
+    row_group.border.top.color = &quot;black&quot;,
+    row_group.border.bottom.color = &quot;black&quot;,
+    table.border.top.color = &quot;black&quot;,
+    heading.border.bottom.color = &quot;white&quot;,
+    heading.border.bottom.width = px(10),
+    table.font.names = &quot;Roboto&quot;,
+    column_labels.font.size = 20,
+    column_labels.border.bottom.color = &quot;black&quot;,
+    column_labels.border.bottom.width= px(3),
+    summary_row.border.color = &quot;black&quot;, 
+    summary_row.background.color = &quot;#c0c5ce&quot;,
+    table.border.bottom.color = &quot;black&quot;
+  )</code></pre>
+</div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
@@ -1928,11 +1106,7 @@ function init_posts_list() {
 <div class="appendix-bottom"></div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
-<div class="distill-site-nav distill-site-footer">
-<p>© Copyright 2020 June Choe</p>
-</div>
 <!--/radix_placeholder_navigation_after_body-->
-
 
 </body>
 
