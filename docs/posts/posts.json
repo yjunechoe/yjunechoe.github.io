@@ -1,5 +1,27 @@
 [
   {
+    "path": "posts/2020-09-20-plot-makeover-1/",
+    "title": "Plot Makeover #1",
+    "description": "Flattening a faceted grid for horizontal comparisons",
+    "author": [
+      {
+        "name": "June Choe",
+        "url": {}
+      }
+    ],
+    "date": "2020-09-20",
+    "categories": [
+      "plot makeover",
+      "data visualization",
+      "ggplot2"
+    ],
+    "preview": "posts/2020-09-20-plot-makeover-1/plot-makeover-1_files/figure-html5/unnamed-chunk-7-1.png",
+    "last_modified": "2020-09-20T03:28:50-04:00",
+    "input_file": {},
+    "preview_width": 1248,
+    "preview_height": 768
+  },
+  {
     "path": "posts/2020-09-14-tidytuesday-2020-week-38/",
     "title": "TidyTuesday 2020 week 38",
     "description": "First time with {gt}",

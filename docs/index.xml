@@ -7,7 +7,19 @@
     <description>Personal Blog
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Mon, 14 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 20 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Plot Makeover #1</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>yjunechoe.github.io/posts/2020-09-20-plot-makeover-1</link>
+      <description>Flattening a faceted grid for horizontal comparisons</description>
+      <category>plot makeover</category>
+      <category>data visualization</category>
+      <category>ggplot2</category>
+      <guid>yjunechoe.github.io/posts/2020-09-20-plot-makeover-1</guid>
+      <pubDate>Sun, 20 Sep 2020 00:00:00 +0000</pubDate>
+      <media:content url="yjunechoe.github.io/posts/2020-09-20-plot-makeover-1/plot-makeover-1_files/figure-html5/unnamed-chunk-7-1.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
     <item>
       <title>TidyTuesday 2020 week 38</title>
       <dc:creator>June Choe</dc:creator>

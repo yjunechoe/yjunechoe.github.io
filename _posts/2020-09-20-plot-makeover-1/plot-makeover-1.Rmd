@@ -1,0 +1,241 @@
+---
+title: "Plot Makeover #1"
+description: |
+  Flattening a faceted grid for horizontal comparisons
+categories:
+  - plot makeover
+  - data visualization
+  - ggplot2
+base_url: yjunechoe.github.io
+author:
+  - name: June Choe
+    affiliation: University of Pennsylvania Linguistics
+    affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+date: 09-20-2020
+output:
+  distill::distill_article:
+    toc: true
+    self_contained: false
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r opts}
+knitr::opts_chunk$set(
+  comment = " ",
+  echo = TRUE,
+  message = TRUE,
+  warning = TRUE,
+  R.options = list(width = 80)
+)
+```
+
+
+```{r, echo = FALSE, message = FALSE}
+library(extrafont)
+```
+
+_This is the first installment of **plot makeover** where I take a plot in the wild and make very opinionated modifications to it._
+
+## Before
+
+Our plot-in-the-wild comes from the recent [AMLAP 2020](https://amlap2020.github.io/) conference, where I presented my [thesis research](https://osf.io/fjkp9/) and had the opportunity to talk with and listen to expert psycholinguists around the world. The plot that I'll be looking at here is <span class="sc">Figure 3</span> from the [abstract](https://amlap2020.github.io/a/272.pdf) of a work by E. Matthew Husband and Nikole Patson.
+
+```{r fig.cap="Plot from Husband and Patson (2020)", echo = FALSE, out.width = 500, out.extra="class=external", fig.align='center'}
+knitr::include_graphics("plot.png")
+```
+
+What we have is a a grid of 12 bar plots with error bars, grouped at three levels and mapped in the following way:
+
+- First level is mapped to <span class="sc">row grid</span>.
+
+- Second level is mapped to <span class="sc">row column</span>.
+
+- Third level is mapped to <span class="sc">x-axis</span>.
+
+To get a better sense of what they did, and to make data for my new plot, I have recreated the original plot below:
+
+**1. Data**
+
+```{r, message = FALSE}
+library(tidyverse)
+df <- crossing(level_1 = fct_inorder(c("Within", "Between")),
+               level_2 = fct_inorder(c("Some", "Number", "Or")),
+               level_3 = factor(c("Strong", "Weak")))
+df$barheight <- c(.63, .35, .72, .55, .61, .15, .60, .55, .52, .63, .17, .16)
+
+df
+```
+
+**2. Plot**
+
+```{r, fig.width = 5, fig.height = 8, fig.align='center'}
+df %>% 
+  ggplot(aes(level_3, barheight)) +
+  geom_col(
+    aes(fill = level_3),
+    show.legend = FALSE
+  ) +
+  geom_errorbar(
+    aes(ymin = barheight - .05, ymax = barheight + .05),
+    width = .1) +
+  facet_grid(level_2 ~ level_1) +
+  theme_bw() +
+  scale_fill_manual(values = c('grey30', 'grey70')) +
+  ylim(0, 1) +
+  labs(
+    y = "Proportion of Strong Responses",
+    x = "Prime Type") +
+  theme_bw()
+
+```
+
+<aside>
+The original plot for comparison:
+```{r, echo=FALSE}
+knitr::include_graphics("plot.png")
+```
+</aside>
+
+## My Plan
+
+**Major Changes**:
+
+- Flatten the grid in some way so that everything is laid out left-to-right and you can make comparisons horizontally.
+
+- Cap the y axis to make it clear that the values (proportions) can only lie between 0 and 1.
+
+- Make strip (facet) labels larger and more readable.
+
+
+**Minor Changes**
+
+- Remove grid lines
+
+- Remove boxes around strip labels
+
+- Increase space between axis and axis titles.
+
+- Minimize the ink that the bars are taking up (possibly by removing bars entirely).
+
+- Increase letter spacing (probably by changing font)
+
+
+## After
+
+I actually couldn't settle on one final product^[I ran the first plot by a friend who has a degree in design, and she recommended several changed that eventually ended up being the second plot], so here are two plots that incorporate the changed that I wanted to make.
+
+The first is a point-line plot:
+
+```{r, layout = 'l-body-outset'}
+dodge <- position_dodge(width = .5)
+
+df %>% 
+  mutate(level_3 = as.numeric(level_3)) %>% 
+  ggplot(aes(x = level_3, y = barheight, group = level_1)) +
+  geom_point(position = dodge) + 
+  geom_errorbar(
+    aes(ymin = barheight - .05, ymax = barheight + .05),
+    width = .2,
+    position = dodge
+  ) +
+  geom_line(
+    aes(linetype = level_1),
+    position = dodge
+  ) +
+  facet_wrap(~ level_2) +
+  scale_x_continuous(
+    breaks = 1:2,
+    labels = levels(df$level_3),
+    expand = expansion(.2),
+  ) +
+  ylim(0, 1) +
+  lemon::coord_capped_cart(left = "both") +
+  guides(linetype = guide_legend(direction = "horizontal",
+                                 title.position = 'top',
+                                 title.hjust = .5,
+                                 title.theme = element_text(size = 10, face = "plain"),
+                                 label.theme = element_text(size = 8))
+  ) +
+  labs(
+    y = "Strong Responses",
+    x = "Prime Type",
+    linetype = "Category"
+  ) +
+  ggthemes::theme_clean(
+    base_size = 12,
+    base_family = "Futura"
+  ) +
+  theme(
+    text = element_text(family = "Montserrat"),
+    legend.position = c(.17, .85),
+    legend.background = element_rect(color = 'black', size = unit(.5, 'mm')),
+    strip.text = element_text(size = 13),
+    plot.margin = margin(.5, .5, .5, .5, 'cm'),
+    axis.title.x = element_text(vjust = -3),
+    axis.title.y = element_text(vjust = 5),
+    plot.background = element_blank(),
+    panel.grid.major.y = element_blank()
+    
+  )
+```
+
+<br>
+The second is a good ol' bar plot:
+
+```{r, layout = 'l-body-outset', preview = TRUE}
+dodge <- position_dodge(width = .5)
+
+df %>% 
+  mutate(level_3 = as.numeric(level_3)) %>% 
+  ggplot(aes(x = level_3, y = barheight, group = level_1)) +
+  geom_col(position = dodge, width = .5, color = 'white', aes(fill = level_1)) +
+  scale_fill_manual(values = c("grey30", "grey60")) +
+  geom_errorbar(
+    aes(ymin = barheight - .05, ymax = barheight + .05),
+    width = .2,
+    position = dodge
+  ) +
+  facet_wrap(~ level_2) +
+  scale_x_continuous(
+    breaks = 1:2,
+    labels = levels(df$level_3),
+    expand = expansion(.2),
+  ) +
+  ylim(0, 1) +
+  lemon::coord_capped_cart(left = "both") +
+  guides(fill = guide_legend(direction = "horizontal",
+                             title = NULL,
+                             keywidth = 1, keyheight = 1,
+                             title.theme = element_text(size = 10, face = "plain"),
+                             label.theme = element_text(size = 8))
+  ) +
+  labs(
+    y = "Strong Responses",
+    x = "Prime Type"
+  ) +
+  ggthemes::theme_clean(
+    base_size = 12,
+    base_family = "Futura"
+  ) +
+  theme(
+    text = element_text(family = "Montserrat"),
+    legend.position = c(.17, .85),
+    legend.background = element_blank(),
+    strip.text = element_text(size = 13),
+    plot.margin = margin(.5, .5, .5, .5, 'cm'),
+    axis.ticks.x = element_blank(),
+    axis.title.x = element_text(vjust = -3),
+    axis.title.y = element_text(vjust = 5),
+    plot.background = element_blank(),
+    panel.grid.major.y = element_blank()
+    
+  )
+```
+
+## Session Info
+
+```{r, echo = FALSE}
+sessionInfo()
+```
+
