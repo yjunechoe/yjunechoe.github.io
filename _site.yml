@@ -29,3 +29,5 @@ output:
     toc: true
     fig_caption: true
 exclude: ['etc']
+favicon: static/img/icon.png
+google_analytics: "UA-178413324-1"
