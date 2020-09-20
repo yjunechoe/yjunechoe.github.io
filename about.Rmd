@@ -9,6 +9,6 @@ I received my B.A. in Linguistics from Northwestern University in the Summer of 
 Beyond linguistics research, I have interests in data visualization, science communication and [\#rstats](https://twitter.com/hashtag/rstats).
 
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, include = FALSE}
 knitr::include_url('static/slides/get_to_know_me/get_to_know_me.html')
 ```

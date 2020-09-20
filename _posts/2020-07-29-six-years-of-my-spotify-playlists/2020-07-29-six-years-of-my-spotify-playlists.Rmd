@@ -1,7 +1,7 @@
 ---
 title: Six years of my Spotify playlists
 description: |
-  An analysis with {spotifyr}
+  An analysis of acoustic features with {spotifyr}
 categories:
   - ggplot2
   - gganimate
@@ -17,6 +17,7 @@ author:
 date: 07-29-2020
 output:
   distill::distill_article:
+    toc: true
     self_contained: false
 ---
 
@@ -29,6 +30,8 @@ knitr::opts_chunk$set(
   R.options = list(width = 80)
 )
 ```
+
+## Background
 
 One of my longest running habits is making monthly playlists. At the start of every month, I create a new playlist for that month and add songs that I like. Some songs are carried over from the previous month's playlist and others are songs that I newly discover, but they're all representative of the songs that I'm "into" for that month.
 
@@ -137,7 +140,7 @@ Some observations on the variation in audio features among my top 100 playlists:
 - There's also a trend of _decreasing overall variability_ in the audio features of my top 100 songs. Perhaps this means that I'm narrowing in on my true music taste? Or maybe that I'm going through a phase in music taste? It's kind of hard to tell but interesting nonetheless.
 
 
-### Conclusion
+## Conclusion
 
 I didn't really dig too deeply into the acoustic profile of the songs I listen to in this post, and I doubt that Spotify's list of audio features are comprehensive enough to describe my music taste, but this was a cool exercise!
 

@@ -1,7 +1,7 @@
 ---
 title: TidyTuesday 2020 week 38
 description: |
-  First time with {gt}
+  Visualizing two decades of primary and secondary education spending with {gt}
 categories:
   - gt
   - data visualization
@@ -15,6 +15,7 @@ preview: preview.png
 date: 09-14-2020
 output:
   distill::distill_article:
+    toc: true
     self_contained: false
 ---
 
@@ -28,22 +29,33 @@ knitr::opts_chunk$set(
 )
 ```
 
-For [this week's TidyTuesday](https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-09-15), I decided to try my hands on {gt}. 
+## Visualization
 
-Because it was my first attempt at making a {gt} table, I just spent most of the time trying out different designs, with less time spent on trying to make anything super compelling or useful.
-
-For next steps, I'd like to try out conditional formatting with custom functions and to learn the full details of `tab_style()` so that I can target specific set of cells to change themes like font that you can't set with `tab_options()`. Also I'm totally lost on how to save the table into pdf or png in a nicely formatted way, so I hope to figure that out soon.
-
-Pretty satisfied with the result, though. Many thanks to Thomas Mock for his detailed blog posts on {gt} [(1)](https://themockup.blog/posts/2020-05-16-gt-a-grammer-of-tables/) [(2)](https://themockup.blog/posts/2020-09-04-10-table-rules-in-r/), a well as the developers of {gt} for what I think is [one of the most comprehensive vignette](https://gt.rstudio.com/reference/index.html) I've ever seen for a package.
-
-
-I had difficulty embedding an HTML table without overriding its styles so [**the table is also available on its own here**](tidytuesday_2020_38_table.html).
+_I had difficulty embedding an HTML table without overriding its styles so [**the table is also available on its own here**](tidytuesday_2020_38_table.html)._
 
 ```{r, echo = FALSE, layout = 'l-screen'}
 knitr::include_graphics('preview.png')
 ```
 
-### Code
+### Things I learned^[Many thanks to Thomas Mock's blog posts on {gt} [(1)](https://themockup.blog/posts/2020-05-16-gt-a-grammer-of-tables/) [(2)](https://themockup.blog/posts/2020-09-04-10-table-rules-in-r/), a well as to the developers of {gt} for what I think is [one of the most comprehensive vignette](https://gt.rstudio.com/reference/index.html) I've ever seen for a package!]
+
+- Basics of working with tables and {gt}
+
+- Putting different font styles together in a nice way
+
+### Things to improve
+
+- Summarize the data a bit more so the table isn't huge
+
+- Add conditional formatting (learn how `tab_style()` and `tab_options()` work)
+
+- Figure out how to save {gt} tables into pdf or png
+
+- Figure out how to include an html table without overriding css styles
+
+## Code
+
+Also available on [github](https://github.com/yjunechoe/tidytuesday/blob/master/Scripts/tidytuesday_2020-38.R)
 
 ```{r, eval=FALSE}
 library(tidyverse)

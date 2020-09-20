@@ -15,8 +15,8 @@
       "data visualization",
       "ggplot2"
     ],
-    "preview": "posts/2020-09-20-plot-makeover-1/plot-makeover-1_files/figure-html5/unnamed-chunk-7-1.png",
-    "last_modified": "2020-09-20T03:28:50-04:00",
+    "preview": "posts/2020-09-20-plot-makeover-1/plot-makeover-1_files/figure-html5/after_bar_plot-1.png",
+    "last_modified": "2020-09-20T14:20:12-04:00",
     "input_file": {},
     "preview_width": 1248,
     "preview_height": 768
@@ -24,7 +24,7 @@
   {
     "path": "posts/2020-09-14-tidytuesday-2020-week-38/",
     "title": "TidyTuesday 2020 week 38",
-    "description": "First time with {gt}",
+    "description": "Visualizing two decades of primary and secondary education spending with {gt}",
     "author": [
       {
         "name": "June Choe",
@@ -38,7 +38,7 @@
       "tidytuesday"
     ],
     "preview": "posts/2020-09-14-tidytuesday-2020-week-38/preview.png",
-    "last_modified": "2020-09-19T02:35:24-04:00",
+    "last_modified": "2020-09-20T15:16:45-04:00",
     "input_file": {},
     "preview_width": 1703,
     "preview_height": 2203
@@ -86,6 +86,28 @@
     "preview_height": 675
   },
   {
+    "path": "posts/2020-08-17-tidytuesday-2020-week-33/",
+    "title": "TidyTuesday 2020 Week 33",
+    "description": "An animation of the main characters in Avatar",
+    "author": [
+      {
+        "name": "June Choe",
+        "url": {}
+      }
+    ],
+    "date": "2020-08-17",
+    "categories": [
+      "tidytuesday",
+      "gganimate",
+      "ggplot2"
+    ],
+    "preview": "posts/2020-08-17-tidytuesday-2020-week-33/preview.png",
+    "last_modified": "2020-09-20T15:23:59-04:00",
+    "input_file": {},
+    "preview_width": 1289,
+    "preview_height": 964
+  },
+  {
     "path": "posts/2020-08-07-saving-a-line-of-piping/",
     "title": "Saving a line of piping",
     "description": "Some notes on lesser known functions/functionalities that combine common chain of {dplyr} verbs.",
@@ -107,9 +129,31 @@
     "preview_height": 372
   },
   {
+    "path": "posts/2020-08-04-tidytuesday-2020-week-32/",
+    "title": "TidyTuesday 2020 Week 32",
+    "description": "A dumbbell chart visualization of energy production trends among European countries",
+    "author": [
+      {
+        "name": "June Choe",
+        "url": {}
+      }
+    ],
+    "date": "2020-08-04",
+    "categories": [
+      "tidytuesday",
+      "data visualization",
+      "ggplot2"
+    ],
+    "preview": "posts/2020-08-04-tidytuesday-2020-week-32/preview.png",
+    "last_modified": "2020-09-20T15:17:12-04:00",
+    "input_file": {},
+    "preview_width": 1444,
+    "preview_height": 805
+  },
+  {
     "path": "posts/2020-07-29-six-years-of-my-spotify-playlists/",
     "title": "Six years of my Spotify playlists",
-    "description": "An analysis with {spotifyr}",
+    "description": "An analysis of acoustic features with {spotifyr}",
     "author": [
       {
         "name": "June Choe",
@@ -125,7 +169,7 @@
       "data visualization"
     ],
     "preview": "posts/2020-07-29-six-years-of-my-spotify-playlists/preview.png",
-    "last_modified": "2020-09-19T03:47:58-04:00",
+    "last_modified": "2020-09-20T15:25:26-04:00",
     "input_file": {},
     "preview_width": 3593,
     "preview_height": 2459

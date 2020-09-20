@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" version="1.0">
   <url>
     <loc>yjunechoe.github.io/about.html</loc>
-    <lastmod>2020-09-19T06:44:04-04:00</lastmod>
+    <lastmod>2020-09-20T14:26:24-04:00</lastmod>
   </url>
   <url>
     <loc>yjunechoe.github.io/</loc>
@@ -10,15 +10,15 @@
   </url>
   <url>
     <loc>yjunechoe.github.io/presentations.html</loc>
-    <lastmod>2020-09-19T19:34:53-04:00</lastmod>
+    <lastmod>2020-09-20T14:32:03-04:00</lastmod>
   </url>
   <url>
     <loc>yjunechoe.github.io/posts/2020-09-20-plot-makeover-1/</loc>
-    <lastmod>2020-09-20T03:28:50-04:00</lastmod>
+    <lastmod>2020-09-20T14:20:12-04:00</lastmod>
   </url>
   <url>
     <loc>yjunechoe.github.io/posts/2020-09-14-tidytuesday-2020-week-38/</loc>
-    <lastmod>2020-09-19T02:35:24-04:00</lastmod>
+    <lastmod>2020-09-20T15:16:45-04:00</lastmod>
   </url>
   <url>
     <loc>yjunechoe.github.io/posts/2020-09-12-videos-in-reactable/</loc>
@@ -29,12 +29,20 @@
     <lastmod>2020-09-19T04:15:15-04:00</lastmod>
   </url>
   <url>
+    <loc>yjunechoe.github.io/posts/2020-08-17-tidytuesday-2020-week-33/</loc>
+    <lastmod>2020-09-20T15:23:59-04:00</lastmod>
+  </url>
+  <url>
     <loc>yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/</loc>
     <lastmod>2020-09-18T22:57:24-04:00</lastmod>
   </url>
   <url>
+    <loc>yjunechoe.github.io/posts/2020-08-04-tidytuesday-2020-week-32/</loc>
+    <lastmod>2020-09-20T15:17:12-04:00</lastmod>
+  </url>
+  <url>
     <loc>yjunechoe.github.io/posts/2020-07-29-six-years-of-my-spotify-playlists/</loc>
-    <lastmod>2020-09-19T03:47:58-04:00</lastmod>
+    <lastmod>2020-09-20T15:25:26-04:00</lastmod>
   </url>
   <url>
     <loc>yjunechoe.github.io/posts/2020-07-20-shiny-tips-1/</loc>

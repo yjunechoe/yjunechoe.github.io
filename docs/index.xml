@@ -18,13 +18,13 @@
       <category>ggplot2</category>
       <guid>yjunechoe.github.io/posts/2020-09-20-plot-makeover-1</guid>
       <pubDate>Sun, 20 Sep 2020 00:00:00 +0000</pubDate>
-      <media:content url="yjunechoe.github.io/posts/2020-09-20-plot-makeover-1/plot-makeover-1_files/figure-html5/unnamed-chunk-7-1.png" medium="image" type="image/png" width="1248" height="768"/>
+      <media:content url="yjunechoe.github.io/posts/2020-09-20-plot-makeover-1/plot-makeover-1_files/figure-html5/after_bar_plot-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
       <title>TidyTuesday 2020 week 38</title>
       <dc:creator>June Choe</dc:creator>
       <link>yjunechoe.github.io/posts/2020-09-14-tidytuesday-2020-week-38</link>
-      <description>First time with {gt}</description>
+      <description>Visualizing two decades of primary and secondary education spending with {gt}</description>
       <category>gt</category>
       <category>data visualization</category>
       <category>tidytuesday</category>
@@ -55,6 +55,18 @@
       <media:content url="yjunechoe.github.io/posts/2020-09-06-fonts-for-graphs/preview.png" medium="image" type="image/png" width="1144" height="675"/>
     </item>
     <item>
+      <title>TidyTuesday 2020 Week 33</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>yjunechoe.github.io/posts/2020-08-17-tidytuesday-2020-week-33</link>
+      <description>An animation of the main characters in Avatar</description>
+      <category>tidytuesday</category>
+      <category>gganimate</category>
+      <category>ggplot2</category>
+      <guid>yjunechoe.github.io/posts/2020-08-17-tidytuesday-2020-week-33</guid>
+      <pubDate>Mon, 17 Aug 2020 00:00:00 +0000</pubDate>
+      <media:content url="yjunechoe.github.io/posts/2020-08-17-tidytuesday-2020-week-33/preview.png" medium="image" type="image/png" width="1289" height="964"/>
+    </item>
+    <item>
       <title>Saving a line of piping</title>
       <dc:creator>June Choe</dc:creator>
       <link>yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping</link>
@@ -66,10 +78,22 @@
       <media:content url="yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/preview.png" medium="image" type="image/png" width="877" height="372"/>
     </item>
     <item>
+      <title>TidyTuesday 2020 Week 32</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>yjunechoe.github.io/posts/2020-08-04-tidytuesday-2020-week-32</link>
+      <description>A dumbbell chart visualization of energy production trends among European countries</description>
+      <category>tidytuesday</category>
+      <category>data visualization</category>
+      <category>ggplot2</category>
+      <guid>yjunechoe.github.io/posts/2020-08-04-tidytuesday-2020-week-32</guid>
+      <pubDate>Tue, 04 Aug 2020 00:00:00 +0000</pubDate>
+      <media:content url="yjunechoe.github.io/posts/2020-08-04-tidytuesday-2020-week-32/preview.png" medium="image" type="image/png" width="1444" height="805"/>
+    </item>
+    <item>
       <title>Six years of my Spotify playlists</title>
       <dc:creator>June Choe</dc:creator>
       <link>yjunechoe.github.io/posts/2020-07-29-six-years-of-my-spotify-playlists</link>
-      <description>An analysis with {spotifyr}</description>
+      <description>An analysis of acoustic features with {spotifyr}</description>
       <category>ggplot2</category>
       <category>gganimate</category>
       <category>spotifyr</category>

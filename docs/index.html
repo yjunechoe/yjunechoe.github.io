@@ -19,6 +19,68 @@
  <!--radix_placeholder_import_source-->
  <!--/radix_placeholder_import_source-->
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; } /* Alert */
+code span.an { color: #008000; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #0000ff; } /* ControlFlow */
+code span.ch { color: #008080; } /* Char */
+code span.cn { color: #585cf6; } /* Constant */
+code span.co { color: #4c886b; } /* Comment */
+code span.cv { color: #008000; } /* CommentVar */
+code span.do { color: #008000; } /* Documentation */
+code span.dv { color: #0000cd; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cd; } /* Float */
+code span.im { } /* Import */
+code span.in { color: #008000; } /* Information */
+code span.kw { color: #0000ff; } /* Keyword */
+code span.op { color: #687687; } /* Operator */
+code span.ot { color: #ff4000; } /* Other */
+code span.pp { color: #ff4000; } /* Preprocessor */
+code span.sc { color: #008080; } /* SpecialChar */
+code span.ss { color: #008080; } /* SpecialString */
+code span.st { color: #036a07; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #008080; } /* VerbatimString */
+code span.wa { color: #008000; font-weight: bold; } /* Warning */
+</style>
 
   <!--radix_placeholder_meta_tags-->
   <title>June Choe: Blog Posts</title>
@@ -1370,6 +1432,13 @@
       $(this).children().unwrap();
     });
 
+    // remove code block used to force  highlighting css
+    $('.distill-force-highlighting-css').parent().remove();
+
+    // remove empty line numbers inserted by pandoc when using a
+    // custom syntax highlighting theme
+    $('code.sourceCode a:empty').remove();
+
     // load distill framework
     load_distill_framework();
 
@@ -1625,7 +1694,7 @@
   <script src="site_libs/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
   <style type="text/css">
-  /* ---------- General Styles ---------- */
+  /* ---------- Global Styles ---------- */
 
   html, body, p {
     
@@ -1647,7 +1716,27 @@
   }
 
 
-  /* ---------- Index Styles ---------- */
+  /* Small caps */
+
+  .sc {
+    font-variant: small-caps;
+    letter-spacing: 0.1em;
+    font-family: Futura Bk BT;
+  }
+
+  /* Override bold style (Danger Zone) */
+
+  p strong {
+      font-family: 'Futura Hv BT';
+      font-weight: normal;
+      font-size: 0.9em;
+      letter-spacing: 0.05em;
+  }
+
+
+
+  /* ---------- Index Page Styles ---------- */
+
 
   /* Top & Bot bars */
 
@@ -1677,8 +1766,30 @@
   }
 
 
+  /* Post published date medatada */
+  .posts-list .metadata .publishedDate{
+    font-family: 'Roboto Mono Medium';
+  }
+
+
+  /* Post list caption */
+  .posts-list .posts-list-caption{
+    font-family: 'Fira Mono Medium';
+    border-bottom: 5px solid #f3f3f3;
+    padding-bottom: 2rem;
+  }
+
+
+  /* Sidebar Categories */
+  .posts-sidebar {
+    font-family: 'Fira Mono';
+  }
+
+
   /* ---------- Article Styles ---------- */
 
+
+  /* Title */
 
   d-title {
     padding-bottom: 0;
@@ -1694,19 +1805,37 @@
   }
 
 
+  /* General */
+
+  d-article h3 {
+    margin-top: 1em;
+  }
+
+
+
+  /* Aside */
+
+  aside {
+    width: 200px;
+  }
+
+
 
 
   /* ---------- Code Styles ---------- */
+
+  /* Inline Code */
 
   code {
     color: #c46586;
     font-family: 'Fira Mono';
     font-size: 0.8em;
+    letter-spacing: 0.03em;
   }
 
-  d-code {
-    margin-bottom: 10px;
-  }
+
+
+  /* Output Chunk */
 
   pre.text-output {
     background-color: #F5F8F9;
@@ -1714,10 +1843,16 @@
     font-size: 0.7em;
   }
 
+  /* Code Chunk */
+
   d-article pre {
     font-size: 14px;
     padding-bottom: 17px;
     margin-bottom: 2em;
+  }
+
+  d-code {
+    margin-bottom: 10px;
   }
 
 
@@ -1965,7 +2100,7 @@
   }
   .posts-list .post-preview .thumbnail {
     float: right;
-    width: 35%;
+    width: 30%;
     margin-bottom: 0;
   }
   .posts-list .post-preview .description {
@@ -1974,7 +2109,7 @@
   }
   .posts-list .post-preview .metadata {
     float: left;
-    width: 15%;
+    width: 20%;
     margin-top: 8px;
   }
   .posts-list .post-preview p {
@@ -1984,7 +2119,7 @@
   }
   .posts-with-sidebar .posts-list {
     float: left;
-    width: 72%;
+    width: 75%;
   }
   .posts-with-sidebar .posts-sidebar {
     float: right;
@@ -2144,7 +2279,7 @@ function init_posts_list() {
 </div>
 </div>
 <div class="thumbnail">
-<img data-src="posts/2020-09-20-plot-makeover-1/plot-makeover-1_files/figure-html5/unnamed-chunk-7-1.png"/>
+<img src="posts/2020-09-20-plot-makeover-1/plot-makeover-1_files/figure-html5/after_bar_plot-1.png"/>
 </div>
 <div class="description">
 <h2>Plot Makeover #1</h2>
@@ -2166,7 +2301,7 @@ function init_posts_list() {
 </div>
 <div class="description">
 <h2>TidyTuesday 2020 week 38</h2>
-<p>First time with {gt}</p>
+<p>Visualizing two decades of primary and secondary education spending with {gt}</p>
 </div>
 </a>
 <a href="posts/2020-09-12-videos-in-reactable/" class="post-preview">
@@ -2203,6 +2338,24 @@ function init_posts_list() {
 <p>A small collection of my favorite fonts for data visualization</p>
 </div>
 </a>
+<a href="posts/2020-08-17-tidytuesday-2020-week-33/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["tidytuesday","gganimate","ggplot2"]}</script>
+<div class="metadata">
+<div class="publishedDate">Aug. 17, 2020</div>
+<div class="dt-tags">
+<div class="dt-tag">tidytuesday</div>
+<div class="dt-tag">gganimate</div>
+<div class="dt-tag">ggplot2</div>
+</div>
+</div>
+<div class="thumbnail">
+<img src="posts/2020-08-17-tidytuesday-2020-week-33/preview.png"/>
+</div>
+<div class="description">
+<h2>TidyTuesday 2020 Week 33</h2>
+<p>An animation of the main characters in Avatar</p>
+</div>
+</a>
 <a href="posts/2020-08-07-saving-a-line-of-piping/" class="post-preview">
 <script class="post-metadata" type="text/json">{"categories":["data wrangling","dplyr"]}</script>
 <div class="metadata">
@@ -2213,11 +2366,29 @@ function init_posts_list() {
 </div>
 </div>
 <div class="thumbnail">
-<img src="posts/2020-08-07-saving-a-line-of-piping/preview.png"/>
+<img data-src="posts/2020-08-07-saving-a-line-of-piping/preview.png"/>
 </div>
 <div class="description">
 <h2>Saving a line of piping</h2>
 <p>Some notes on lesser known functions/functionalities that combine common chain of {dplyr} verbs.</p>
+</div>
+</a>
+<a href="posts/2020-08-04-tidytuesday-2020-week-32/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["tidytuesday","data visualization","ggplot2"]}</script>
+<div class="metadata">
+<div class="publishedDate">Aug. 4, 2020</div>
+<div class="dt-tags">
+<div class="dt-tag">tidytuesday</div>
+<div class="dt-tag">data visualization</div>
+<div class="dt-tag">ggplot2</div>
+</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2020-08-04-tidytuesday-2020-week-32/preview.png"/>
+</div>
+<div class="description">
+<h2>TidyTuesday 2020 Week 32</h2>
+<p>A dumbbell chart visualization of energy production trends among European countries</p>
 </div>
 </a>
 <a href="posts/2020-07-29-six-years-of-my-spotify-playlists/" class="post-preview">
@@ -2233,11 +2404,11 @@ function init_posts_list() {
 </div>
 </div>
 <div class="thumbnail">
-<img src="posts/2020-07-29-six-years-of-my-spotify-playlists/preview.png"/>
+<img data-src="posts/2020-07-29-six-years-of-my-spotify-playlists/preview.png"/>
 </div>
 <div class="description">
 <h2>Six years of my Spotify playlists</h2>
-<p>An analysis with {spotifyr}</p>
+<p>An analysis of acoustic features with {spotifyr}</p>
 </div>
 </a>
 <a href="posts/2020-07-20-shiny-tips-1/" class="post-preview">
@@ -2330,8 +2501,8 @@ function init_posts_list() {
 <div class="posts-sidebar">
 <div><div class="sidebar-section custom">
   <h3>About Me</h3>
-  I am a (computational) psycholinguist interested in modeling how people process linguistic information, ambiguous signals in particular.
-  In my spare time, I enjoy blogging and learning about data visualization, science commucation, and #rstats.
+  I am a (computational) psycholinguist interested in modeling how people parse linguistic information, ambiguous signals in particular.
+  In my spare time, I enjoy blogging about data visualization, science commucation, and #rstats.
 </div>
 
 <div class="sidebar-section custom">
@@ -2343,12 +2514,12 @@ function init_posts_list() {
 <h3>Categories</h3>
 <ul>
 <li>
-<a href="index.html">ALL ARTICLES</a>
-<span class="category-count">(10)</span>
+<a href="#category:Articles">Articles</a>
+<span class="category-count">(13)</span>
 </li>
 <li>
 <a href="#category:data_visualization">data visualization</a>
-<span class="category-count">(6)</span>
+<span class="category-count">(8)</span>
 </li>
 <li>
 <a href="#category:data_wrangling">data wrangling</a>
@@ -2360,11 +2531,11 @@ function init_posts_list() {
 </li>
 <li>
 <a href="#category:gganimate">gganimate</a>
-<span class="category-count">(1)</span>
+<span class="category-count">(2)</span>
 </li>
 <li>
 <a href="#category:ggplot2">ggplot2</a>
-<span class="category-count">(3)</span>
+<span class="category-count">(6)</span>
 </li>
 <li>
 <a href="#category:gt">gt</a>
@@ -2376,6 +2547,10 @@ function init_posts_list() {
 </li>
 <li>
 <a href="#category:NLP">NLP</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:plot_makeover">plot makeover</a>
 <span class="category-count">(1)</span>
 </li>
 <li>
@@ -2400,7 +2575,7 @@ function init_posts_list() {
 </li>
 <li>
 <a href="#category:tidytuesday">tidytuesday</a>
-<span class="category-count">(1)</span>
+<span class="category-count">(3)</span>
 </li>
 <li>
 <a href="#category:treemap">treemap</a>
@@ -2428,7 +2603,7 @@ function init_posts_list() {
 
 
 <div class="d-article">
-
+<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

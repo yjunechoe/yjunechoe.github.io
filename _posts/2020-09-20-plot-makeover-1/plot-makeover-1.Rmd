@@ -18,6 +18,7 @@ output:
     self_contained: false
 editor_options: 
   chunk_output_type: console
+bibliography: biblio.bib
 ---
 
 ```{r opts}
@@ -39,21 +40,21 @@ _This is the first installment of **plot makeover** where I take a plot in the w
 
 ## Before
 
-Our plot-in-the-wild comes from the recent [AMLAP 2020](https://amlap2020.github.io/) conference, where I presented my [thesis research](https://osf.io/fjkp9/) and had the opportunity to talk with and listen to expert psycholinguists around the world. The plot that I'll be looking at here is <span class="sc">Figure 3</span> from the [abstract](https://amlap2020.github.io/a/272.pdf) of a work by E. Matthew Husband and Nikole Patson.
+Our plot-in-the-wild comes from the recent [AMLAP 2020](https://amlap2020.github.io/) conference, where I presented my [thesis research](https://osf.io/fjkp9/) and had the opportunity to talk with and listen to expert psycholinguists around the world. The plot that I'll be looking at here is <span class="sc">Figure 3</span> from the [abstract](https://amlap2020.github.io/a/272.pdf) of a work by E. Matthew Husband and Nikole Patson[@HusbandEtAl2020AMLaP].
 
 ```{r fig.cap="Plot from Husband and Patson (2020)", echo = FALSE, out.width = 500, out.extra="class=external", fig.align='center'}
 knitr::include_graphics("plot.png")
 ```
 
-What we have is a a grid of 12 bar plots with error bars, grouped at three levels and mapped in the following way:
+What we have is a a grid of 6 pairs of bar plots with error bars, grouped at three levels which are mapped in the following way:
 
-- First level is mapped to <span class="sc">row grid</span>.
+- First level is mapped to the <span class="sc">grid column</span>.
 
-- Second level is mapped to <span class="sc">row column</span>.
+- Second level is mapped to the <span class="sc">grid row</span>.
 
-- Third level is mapped to <span class="sc">x-axis</span>.
+- Third level is mapped to tge <span class="sc">x-axis</span>.
 
-To get a better sense of what they did, and to make data for my new plot, I have recreated the original plot below:
+To get a better sense of what they did, and to make data for my new plot, I have recreated the original plot below:^[But note that this is likely **not** how the original plot was generated: the authors were likely feeding ggplot2 with the raw data (involving 1s and 0s in this case), but here I am just grabbing the summary statistic that was mapped to the bar aesthetic (hence my decision to name the y variable `barheight`).]
 
 **1. Data**
 
@@ -66,6 +67,10 @@ df$barheight <- c(.63, .35, .72, .55, .61, .15, .60, .55, .52, .63, .17, .16)
 
 df
 ```
+
+<aside>
+The numbers for `barheight` were eyeballed from looking at the original plot, of course.
+</aside>
 
 **2. Plot**
 
@@ -81,7 +86,7 @@ df %>%
     width = .1) +
   facet_grid(level_2 ~ level_1) +
   theme_bw() +
-  scale_fill_manual(values = c('grey30', 'grey70')) +
+  scale_fill_manual(values = c('grey40', 'grey80')) +
   ylim(0, 1) +
   labs(
     y = "Proportion of Strong Responses",
@@ -123,11 +128,12 @@ knitr::include_graphics("plot.png")
 
 ## After
 
-I actually couldn't settle on one final product^[I ran the first plot by a friend who has a degree in design, and she recommended several changed that eventually ended up being the second plot], so here are two plots that incorporate the changed that I wanted to make.
+I actually couldn't settle on one final product,^[I ran the first plot by a friend who has a degree in design, and she recommended several changes that eventually ended up being the second plot. Some major pointers were removing border lines from the legend, removing x-axis tick marks, and applying color/shade.] so here are two plots that incorporate the changes that I wanted to make. I think that both look great and you may prefer one style over the other depending on what relationships/comparisons you want your graph to emphasize.
 
-The first is a point-line plot:
 
-```{r, layout = 'l-body-outset'}
+### Point-line plot
+
+```{r after_pointplot, layout = 'l-body-outset'}
 dodge <- position_dodge(width = .5)
 
 df %>% 
@@ -155,23 +161,20 @@ df %>%
                                  title.position = 'top',
                                  title.hjust = .5,
                                  title.theme = element_text(size = 10, face = "plain"),
-                                 label.theme = element_text(size = 8))
+                                 label.theme = element_text(size = 8, family = "Montserrat"))
   ) +
   labs(
     y = "Strong Responses",
     x = "Prime Type",
     linetype = "Category"
   ) +
-  ggthemes::theme_clean(
-    base_size = 12,
-    base_family = "Futura"
-  ) +
+  ggthemes::theme_clean() +
   theme(
     text = element_text(family = "Montserrat"),
     legend.position = c(.17, .85),
     legend.background = element_rect(color = 'black', size = unit(.5, 'mm')),
     strip.text = element_text(size = 13),
-    plot.margin = margin(.5, .5, .5, .5, 'cm'),
+    plot.margin = margin(5, 5, 5, 5, 'mm'),
     axis.title.x = element_text(vjust = -3),
     axis.title.y = element_text(vjust = 5),
     plot.background = element_blank(),
@@ -180,10 +183,9 @@ df %>%
   )
 ```
 
-<br>
-The second is a good ol' bar plot:
+### Bar plot
 
-```{r, layout = 'l-body-outset', preview = TRUE}
+```{r after_bar_code, eval=FALSE}
 dodge <- position_dodge(width = .5)
 
 df %>% 
@@ -204,38 +206,33 @@ df %>%
   ) +
   ylim(0, 1) +
   lemon::coord_capped_cart(left = "both") +
-  guides(fill = guide_legend(direction = "horizontal",
-                             title = NULL,
-                             keywidth = 1, keyheight = 1,
-                             title.theme = element_text(size = 10, face = "plain"),
-                             label.theme = element_text(size = 8))
-  ) +
   labs(
     y = "Strong Responses",
-    x = "Prime Type"
+    x = "Prime Type",
+    fill = NULL
   ) +
-  ggthemes::theme_clean(
-    base_size = 12,
-    base_family = "Futura"
-  ) +
+  ggthemes::theme_clean(base_size=14) +
   theme(
     text = element_text(family = "Montserrat"),
+    legend.text = element_text(size = 10),
+    legend.key.size = unit(5, 'mm'),
+    legend.direction = "horizontal",
     legend.position = c(.17, .85),
     legend.background = element_blank(),
-    strip.text = element_text(size = 13),
-    plot.margin = margin(.5, .5, .5, .5, 'cm'),
+    strip.text = element_text(size = 14),
     axis.ticks.x = element_blank(),
     axis.title.x = element_text(vjust = -3),
     axis.title.y = element_text(vjust = 5),
+    panel.grid.major.y = element_blank(),
     plot.background = element_blank(),
-    panel.grid.major.y = element_blank()
-    
+    plot.margin = margin(5, 5, 5, 5, 'mm')
   )
 ```
 
-## Session Info
+<aside>
+In this second version, I removed `guides()` and distributed its arguments across `labs()` and `theme()`. I kinda like this layout of having a fat `theme()` and it's not too hard to read if you group and sort the arguments.
+</aside>
 
-```{r, echo = FALSE}
-sessionInfo()
+```{r after_bar_plot, echo=FALSE, layout = 'l-body-outset', preview = TRUE}
+<<after_bar_code>>
 ```
-
