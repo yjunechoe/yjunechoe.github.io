@@ -14,6 +14,7 @@ preview: preview.png
 date: 08-07-2020
 output:
   distill::distill_article:
+    toc: true
     self_contained: false
 ---
 
@@ -111,10 +112,10 @@ Note that the new name passed into the `name` argument must be quoted, but the n
 identical(
   # Method 1: new column name UNQUOTED
   penguins %>% 
-  count(penguin_species = species, name = "total"),
+    count(penguin_species = species, name = "total"),
   # Method 2: new column name QUOTED
- penguins %>% 
-  count("penguin_species" = species, name = "total") 
+  penguins %>% 
+    count("penguin_species" = species, name = "total") 
 )
 ```
 
@@ -220,7 +221,7 @@ penguins %>%
   summarize(mean_mass = mean(body_mass_g, na.rm = TRUE), .groups = 'drop')
 ```
 
-But `ungroup()` still remains relevant as you can now selectively remove grouping variables: 
+But `ungroup()` still remains relevant as you can now selectively remove grouping variables in {dplyr} 1.0.0.
 
 
 ## 6. `arrange()` + other features inside `slice()`

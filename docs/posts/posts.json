@@ -2,7 +2,7 @@
   {
     "path": "posts/2020-09-20-plot-makeover-1/",
     "title": "Plot Makeover #1",
-    "description": "Flattening a faceted grid for horizontal comparisons",
+    "description": "Flattening a faceted grid for strictly horizontal comparisons",
     "author": [
       {
         "name": "June Choe",
@@ -16,7 +16,7 @@
       "ggplot2"
     ],
     "preview": "posts/2020-09-20-plot-makeover-1/plot-makeover-1_files/figure-html5/after_bar_plot-1.png",
-    "last_modified": "2020-09-20T14:20:12-04:00",
+    "last_modified": "2020-09-20T16:49:05-04:00",
     "input_file": {},
     "preview_width": 1248,
     "preview_height": 768
@@ -123,7 +123,7 @@
       "dplyr"
     ],
     "preview": "posts/2020-08-07-saving-a-line-of-piping/preview.png",
-    "last_modified": "2020-09-18T22:57:24-04:00",
+    "last_modified": "2020-09-20T16:41:32-04:00",
     "input_file": {},
     "preview_width": 877,
     "preview_height": 372

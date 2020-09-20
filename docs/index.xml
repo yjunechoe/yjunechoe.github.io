@@ -12,7 +12,7 @@
       <title>Plot Makeover #1</title>
       <dc:creator>June Choe</dc:creator>
       <link>yjunechoe.github.io/posts/2020-09-20-plot-makeover-1</link>
-      <description>Flattening a faceted grid for horizontal comparisons</description>
+      <description>Flattening a faceted grid for strictly horizontal comparisons</description>
       <category>plot makeover</category>
       <category>data visualization</category>
       <category>ggplot2</category>

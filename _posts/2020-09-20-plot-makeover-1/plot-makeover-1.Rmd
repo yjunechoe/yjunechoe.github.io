@@ -1,7 +1,7 @@
 ---
 title: "Plot Makeover #1"
 description: |
-  Flattening a faceted grid for horizontal comparisons
+  Flattening a faceted grid for strictly horizontal comparisons
 categories:
   - plot makeover
   - data visualization
@@ -46,19 +46,19 @@ Our plot-in-the-wild comes from the recent [AMLAP 2020](https://amlap2020.github
 knitr::include_graphics("plot.png")
 ```
 
-What we have is a a grid of 6 pairs of bar plots with error bars, grouped at three levels which are mapped in the following way:
+What we have is a 2-by-3 grid of 6 pairs of bar plots with error bars, grouped at three levels which are mapped in the following way:
 
 - First level is mapped to the <span class="sc">grid column</span>.
 
 - Second level is mapped to the <span class="sc">grid row</span>.
 
-- Third level is mapped to tge <span class="sc">x-axis</span>.
+- Third level is mapped to the <span class="sc">x-axis</span>.
 
 To get a better sense of what they did, and to make data for my new plot, I have recreated the original plot below:^[But note that this is likely **not** how the original plot was generated: the authors were likely feeding ggplot2 with the raw data (involving 1s and 0s in this case), but here I am just grabbing the summary statistic that was mapped to the bar aesthetic (hence my decision to name the y variable `barheight`).]
 
 **1. Data**
 
-```{r, message = FALSE}
+```{r original, eval = FALSE}
 library(tidyverse)
 df <- crossing(level_1 = fct_inorder(c("Within", "Between")),
                level_2 = fct_inorder(c("Some", "Number", "Or")),
@@ -71,6 +71,10 @@ df
 <aside>
 The numbers for `barheight` were eyeballed from looking at the original plot, of course.
 </aside>
+
+```{r original, echo = FALSE, message = FALSE}
+```
+
 
 **2. Plot**
 
@@ -110,18 +114,15 @@ knitr::include_graphics("plot.png")
 
 - Cap the y axis to make it clear that the values (proportions) can only lie between 0 and 1.
 
-- Make strip (facet) labels larger and more readable.
-
-
-**Minor Changes**
+**Minor Changes**:
 
 - Remove grid lines
 
-- Remove boxes around strip labels
-
 - Increase space between axis and axis titles.
 
-- Minimize the ink that the bars are taking up (possibly by removing bars entirely).
+- Remove boxes around strip labels
+
+- Make strip (facet) labels larger and more readable.
 
 - Increase letter spacing (probably by changing font)
 
