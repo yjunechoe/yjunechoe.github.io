@@ -59,7 +59,7 @@
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["correlation-parameter-mem_files/bowser-1.9.3/bowser.min.js","correlation-parameter-mem_files/distill-2.2.21/template.v2.js","correlation-parameter-mem_files/figure-html5/_check_model-1.png","correlation-parameter-mem_files/figure-html5/all_plot-1.png","correlation-parameter-mem_files/figure-html5/bad_fit-1.png","correlation-parameter-mem_files/figure-html5/bivariate_dist-1.png","correlation-parameter-mem_files/figure-html5/corr_plot-1.png","correlation-parameter-mem_files/figure-html5/corr_plot_copy-1.png","correlation-parameter-mem_files/figure-html5/data_ellipse-1.png","correlation-parameter-mem_files/figure-html5/item_corr_plot-1.png","correlation-parameter-mem_files/figure-html5/no_subj_corr_plot-1.png","correlation-parameter-mem_files/figure-html5/parameter_ellipse-1.png","correlation-parameter-mem_files/figure-html5/ranef_item_plot-1.png","correlation-parameter-mem_files/figure-html5/ranef_subj_plot-1.png","correlation-parameter-mem_files/figure-html5/sim_plot-1.png","correlation-parameter-mem_files/figure-html5/sim_plot_multi-1.png","correlation-parameter-mem_files/figure-html5/unnamed-chunk-10-1.png","correlation-parameter-mem_files/figure-html5/unnamed-chunk-11-1.png","correlation-parameter-mem_files/figure-html5/unnamed-chunk-12-1.png","correlation-parameter-mem_files/figure-html5/unnamed-chunk-13-1.png","correlation-parameter-mem_files/figure-html5/unnamed-chunk-5-1.png","correlation-parameter-mem_files/figure-html5/unnamed-chunk-6-1.png","correlation-parameter-mem_files/figure-html5/unnamed-chunk-7-1.png","correlation-parameter-mem_files/figure-html5/unnamed-chunk-8-1.png","correlation-parameter-mem_files/figure-html5/unnamed-chunk-9-1.png","correlation-parameter-mem_files/figure-html5/wrapup-1.png","correlation-parameter-mem_files/header-attrs-2.3/header-attrs.js","correlation-parameter-mem_files/jquery-1.11.3/jquery.min.js","correlation-parameter-mem_files/webcomponents-2.0.0/webcomponents.js","nocor.png","preview.png","ranef_1.png","ranef_2.png"]}
+  {"type":"character","attributes":{},"value":["check_model.png","correlation-parameter-mem_files/bowser-1.9.3/bowser.min.js","correlation-parameter-mem_files/distill-2.2.21/template.v2.js","correlation-parameter-mem_files/figure-html5/_check_model-1.png","correlation-parameter-mem_files/figure-html5/all_plot-1.png","correlation-parameter-mem_files/figure-html5/bad_fit-1.png","correlation-parameter-mem_files/figure-html5/bivariate_dist-1.png","correlation-parameter-mem_files/figure-html5/corr_plot-1.png","correlation-parameter-mem_files/figure-html5/corr_plot_copy-1.png","correlation-parameter-mem_files/figure-html5/data_ellipse-1.png","correlation-parameter-mem_files/figure-html5/item_corr_plot-1.png","correlation-parameter-mem_files/figure-html5/no_subj_corr_plot-1.png","correlation-parameter-mem_files/figure-html5/parameter_ellipse-1.png","correlation-parameter-mem_files/figure-html5/ranef_item_plot-1.png","correlation-parameter-mem_files/figure-html5/ranef_subj_plot-1.png","correlation-parameter-mem_files/figure-html5/sim_plot-1.png","correlation-parameter-mem_files/figure-html5/sim_plot_multi-1.png","correlation-parameter-mem_files/figure-html5/unnamed-chunk-10-1.png","correlation-parameter-mem_files/figure-html5/unnamed-chunk-11-1.png","correlation-parameter-mem_files/figure-html5/unnamed-chunk-12-1.png","correlation-parameter-mem_files/figure-html5/unnamed-chunk-13-1.png","correlation-parameter-mem_files/figure-html5/unnamed-chunk-5-1.png","correlation-parameter-mem_files/figure-html5/unnamed-chunk-6-1.png","correlation-parameter-mem_files/figure-html5/unnamed-chunk-7-1.png","correlation-parameter-mem_files/figure-html5/unnamed-chunk-8-1.png","correlation-parameter-mem_files/figure-html5/unnamed-chunk-9-1.png","correlation-parameter-mem_files/figure-html5/wrapup-1.png","correlation-parameter-mem_files/header-attrs-2.3/header-attrs.js","correlation-parameter-mem_files/jquery-1.11.3/jquery.min.js","correlation-parameter-mem_files/webcomponents-2.0.0/webcomponents.js","nocor.png","preview.png","ranef_1.png","ranef_2.png"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 
@@ -1291,7 +1291,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <script src="../../site_libs/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
 <style type="text/css">
-/* ---------- General Styles ---------- */
+/* ---------- Global Styles ---------- */
 
 html, body, p {
   
@@ -1312,21 +1312,28 @@ h2, h3, h4, h5 {
   font-family: 'Futura Hv BT';
 }
 
-/* custom small caps and bold */
+
+/* Small caps */
 
 .sc {
   font-variant: small-caps;
-  letter-spacing: .1em;
+  letter-spacing: 0.1em;
   font-family: Futura Bk BT;
 }
 
-.bd {
-  font-family: Futura Hv BT;
-  letter-spacing: .05em;
+/* Override bold style (Danger Zone) */
+
+p strong {
+    font-family: 'Futura Hv BT';
+    font-weight: normal;
+    font-size: 0.9em;
+    letter-spacing: 0.05em;
 }
 
 
-/* ---------- Index Styles ---------- */
+
+/* ---------- Index Page Styles ---------- */
+
 
 /* Top & Bot bars */
 
@@ -1356,8 +1363,30 @@ table#gs_id50 {
 }
 
 
+/* Post published date medatada */
+.posts-list .metadata .publishedDate{
+  font-family: 'Roboto Mono Medium';
+}
+
+
+/* Post list caption */
+.posts-list .posts-list-caption{
+  font-family: 'Fira Mono Medium';
+  border-bottom: 5px solid #f3f3f3;
+  padding-bottom: 2rem;
+}
+
+
+/* Sidebar Categories */
+.posts-sidebar {
+  font-family: 'Fira Mono';
+}
+
+
 /* ---------- Article Styles ---------- */
 
+
+/* Title */
 
 d-title {
   padding-bottom: 0;
@@ -1373,19 +1402,29 @@ d-title p {
 }
 
 
+/* Aside */
+
+aside {
+  width: 200px;
+}
+
+
 
 
 /* ---------- Code Styles ---------- */
+
+/* Inline Code */
 
 code {
   color: #c46586;
   font-family: 'Fira Mono';
   font-size: 0.8em;
+  letter-spacing: 0.03em;
 }
 
-d-code {
-  margin-bottom: 10px;
-}
+
+
+/* Output Chunk */
 
 pre.text-output {
   background-color: #F5F8F9;
@@ -1393,10 +1432,16 @@ pre.text-output {
   font-size: 0.7em;
 }
 
+/* Code Chunk */
+
 d-article pre {
   font-size: 14px;
   padding-bottom: 17px;
   margin-bottom: 2em;
+}
+
+d-code {
+  margin-bottom: 10px;
 }
 
 
@@ -1491,7 +1536,7 @@ d-article pre {
 <p><img src="ranef_2.png" /></p>
 <p>Despite the fact that we’re bound to have encountered this at some point when working with or reading about mixed effects models, I’ve found that there aren’t many beginner-friendly material explaining what they are - there are one-paragraph StackExchange answers and dense statistics papers, but not much in between in terms of comprehensiveness.</p>
 <p>So here are my compiled notes on correlation parameters in linear mixed effects models that I’ve made for myself (with a basic knowledge of LMEMs).</p>
-<h1 id="before-we-get-started"><strong>Before we get started</strong></h1>
+<h2 id="before-we-get-started"><strong>Before we get started</strong></h2>
 <h3 id="our-toy-data-and-model"><strong>Our toy data and model</strong></h3>
 <div class="layout-chunk" data-layout="l-body">
 
@@ -1538,9 +1583,7 @@ model &lt;- lmer(Response ~ Condition + (1+Condition|Subject) + (1+Condition|Ite
 <pre class="r"><code>
 performance::check_model(model)</code></pre>
 </div>
-<div class="layout-chunk" data-layout="l-body">
-<p><img src="correlation-parameter-mem_files/figure-html5/_check_model-1.png" width="624" /></p>
-</div>
+<p><img src="check_model.png" /></p>
 <p>Everything looks okay, so let’s look at the model output:</p>
 <div class="layout-chunk" data-layout="l-body">
 <pre class="r"><code>

@@ -1271,7 +1271,7 @@
   <script src="site_libs/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
   <style type="text/css">
-  /* ---------- General Styles ---------- */
+  /* ---------- Global Styles ---------- */
 
   html, body, p {
     
@@ -1292,21 +1292,28 @@
     font-family: 'Futura Hv BT';
   }
 
-  /* custom small caps and bold */
+
+  /* Small caps */
 
   .sc {
     font-variant: small-caps;
-    letter-spacing: .1em;
+    letter-spacing: 0.1em;
     font-family: Futura Bk BT;
   }
 
-  .bd {
-    font-family: Futura Hv BT;
-    letter-spacing: .05em;
+  /* Override bold style (Danger Zone) */
+
+  p strong {
+      font-family: 'Futura Hv BT';
+      font-weight: normal;
+      font-size: 0.9em;
+      letter-spacing: 0.05em;
   }
 
 
-  /* ---------- Index Styles ---------- */
+
+  /* ---------- Index Page Styles ---------- */
+
 
   /* Top & Bot bars */
 
@@ -1336,8 +1343,30 @@
   }
 
 
+  /* Post published date medatada */
+  .posts-list .metadata .publishedDate{
+    font-family: 'Roboto Mono Medium';
+  }
+
+
+  /* Post list caption */
+  .posts-list .posts-list-caption{
+    font-family: 'Fira Mono Medium';
+    border-bottom: 5px solid #f3f3f3;
+    padding-bottom: 2rem;
+  }
+
+
+  /* Sidebar Categories */
+  .posts-sidebar {
+    font-family: 'Fira Mono';
+  }
+
+
   /* ---------- Article Styles ---------- */
 
+
+  /* Title */
 
   d-title {
     padding-bottom: 0;
@@ -1353,19 +1382,29 @@
   }
 
 
+  /* Aside */
+
+  aside {
+    width: 200px;
+  }
+
+
 
 
   /* ---------- Code Styles ---------- */
+
+  /* Inline Code */
 
   code {
     color: #c46586;
     font-family: 'Fira Mono';
     font-size: 0.8em;
+    letter-spacing: 0.03em;
   }
 
-  d-code {
-    margin-bottom: 10px;
-  }
+
+
+  /* Output Chunk */
 
   pre.text-output {
     background-color: #F5F8F9;
@@ -1373,10 +1412,16 @@
     font-size: 0.7em;
   }
 
+  /* Code Chunk */
+
   d-article pre {
     font-size: 14px;
     padding-bottom: 17px;
     margin-bottom: 2em;
+  }
+
+  d-code {
+    margin-bottom: 10px;
   }
 
 

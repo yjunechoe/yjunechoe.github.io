@@ -41,7 +41,7 @@ Despite the fact that we're bound to have encountered this at some point when wo
 
 So here are my compiled notes on correlation parameters in linear mixed effects models that I've made for myself (with a basic knowledge of LMEMs).
 
-# **Before we get started**
+## **Before we get started**
 
 ### **Our toy data and model**
 
@@ -178,12 +178,7 @@ And let's really quickly check model assumptions:
 performance::check_model(model)
 ```
 
-```{r _check_model, echo=FALSE, results=FALSE, message=F, warning=F}
-library(performance)
-summ <- summary(model)
-capture.output(x <- check_model(model))
-x
-```
+![](check_model.png)
 
 Everything looks okay, so let's look at the model output:
 
