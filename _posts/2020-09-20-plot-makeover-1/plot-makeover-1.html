@@ -1012,13 +1012,13 @@ Figure 1: Plot from Husband and Patson (2020)
 </p>
 </div>
 </div>
-<p>What we have is a 2-by-3 grid of 6 pairs of bar plots with error bars, grouped at three levels which are mapped in the following way:</p>
+<p>What we have is 6 pairs of barplots with error bars, laid out in a 2-by-3 grid. The total of 12 bars are grouped at three levels which are mapped in the following way:</p>
 <ul>
 <li><p>First level is mapped to the <span class="sc">grid column</span>.</p></li>
 <li><p>Second level is mapped to the <span class="sc">grid row</span>.</p></li>
 <li><p>Third level is mapped to the <span class="sc">x-axis</span>.</p></li>
 </ul>
-<p>To get a better sense of what they did, and to make data for my new plot, I have recreated the original plot below:<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>To get a better sense of what they did, and to make data for the plot makeover, I have recreated the original plot below:<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <p><strong>1. Data</strong></p>
 <div class="layout-chunk" data-layout="l-body">
 <pre class="r"><code>
@@ -1094,7 +1094,7 @@ The original plot for comparison:
 <li><p>Increase letter spacing (probably by changing font)</p></li>
 </ul>
 <h2 id="after">After</h2>
-<p>I actually couldn’t settle on one final product,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> so here are two plots that incorporate the changes that I wanted to make. I think that both look great and you may prefer one style over the other depending on what relationships/comparisons you want your graph to emphasize.</p>
+<p>I actually couldn’t settle on one final product<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> so here are two plots that incorporate the changes that I wanted to make. I think that both look nice and you may prefer one style over the other depending on what relationships/comparisons you want your graph to emphasize.</p>
 <h3 id="point-line-plot">Point-line plot</h3>
 <div class="layout-chunk" data-layout="l-body-outset">
 <pre class="r"><code>
@@ -1193,7 +1193,7 @@ df %&gt;%
   )</code></pre>
 </div>
 <aside>
-In this second version, I removed <code>guides()</code> and distributed its arguments across <code>labs()</code> and <code>theme()</code>. I kinda like this layout of having a fat <code>theme()</code> and it’s not too hard to read if you group and sort the arguments.
+In this second version, I removed <code>guides()</code> and distributed its arguments across <code>labs()</code> and <code>theme()</code>. I kinda like this layout of having a fat <code>theme()</code>. It’s also not too hard to read if you group and sort the arguments.
 </aside>
 <div class="layout-chunk" data-layout="l-body-outset">
 <p><img src="plot-makeover-1_files/figure-html5/after_bar_plot-1.png" width="624" data-distill-preview=1 /></p>
