@@ -37,9 +37,10 @@ _I had difficulty embedding an HTML table without overriding its styles so [**th
 knitr::include_graphics('preview.png')
 ```
 
-### Things I learned^[Many thanks to Thomas Mock's blog posts on {gt} [(1)](https://themockup.blog/posts/2020-05-16-gt-a-grammer-of-tables/) [(2)](https://themockup.blog/posts/2020-09-04-10-table-rules-in-r/), a well as to the developers of {gt} for what I think is [one of the most comprehensive vignette](https://gt.rstudio.com/reference/index.html) I've ever seen for a package!]
+### Things I learned
 
-- Basics of working with tables and {gt}
+- Basics of working with tables and {gt}^[Many thanks to Thomas Mock's blog posts on {gt} [(1)](https://themockup.blog/posts/2020-05-16-gt-a-grammer-of-tables/) [(2)](https://themockup.blog/posts/2020-09-04-10-table-rules-in-r/), a well as to the developers of {gt} for what I think is [one of the most comprehensive vignette](https://gt.rstudio.com/reference/index.html) I've ever seen for a package!]
+
 
 - Putting different font styles together in a nice way
 
