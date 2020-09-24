@@ -56,7 +56,7 @@ knitr::include_graphics('preview.png')
 
 ## Code
 
-Also available on [github](https://github.com/yjunechoe/tidytuesday/blob/master/Scripts/tidytuesday_2020-38.R)
+Also available on [github](https://github.com/yjunechoe/tidytuesday/blob/master/Scripts/tidytuesday_2020_38.R)
 
 ```{r, eval=FALSE}
 library(tidyverse)

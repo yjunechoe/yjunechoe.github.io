@@ -1,5 +1,27 @@
 [
   {
+    "path": "posts/2020-09-23-tidytuesday-2020-week-39/",
+    "title": "TidyTuesday 2020 week 39",
+    "description": "Stacked area plot of the heights of Himalayan peaks attempted over the last century",
+    "author": [
+      {
+        "name": "June Choe",
+        "url": {}
+      }
+    ],
+    "date": "2020-09-23",
+    "categories": [
+      "ggplot2",
+      "data visualization",
+      "tidytuesday"
+    ],
+    "preview": "posts/2020-09-23-tidytuesday-2020-week-39/preview.png",
+    "last_modified": "2020-09-23T20:40:30-04:00",
+    "input_file": {},
+    "preview_width": 7086,
+    "preview_height": 4251
+  },
+  {
     "path": "posts/2020-09-20-plot-makeover-1/",
     "title": "Plot Makeover #1",
     "description": "Flattening a faceted grid for strictly horizontal comparisons",
@@ -38,7 +60,7 @@
       "tidytuesday"
     ],
     "preview": "posts/2020-09-14-tidytuesday-2020-week-38/preview.png",
-    "last_modified": "2020-09-21T12:39:00-04:00",
+    "last_modified": "2020-09-23T20:40:53-04:00",
     "input_file": {},
     "preview_width": 1703,
     "preview_height": 2203
@@ -59,7 +81,7 @@
       "data visualization"
     ],
     "preview": "posts/2020-09-12-videos-in-reactable/preview.png",
-    "last_modified": "2020-09-19T02:03:40-04:00",
+    "last_modified": "2020-09-23T20:21:18-04:00",
     "input_file": {},
     "preview_width": 808,
     "preview_height": 617

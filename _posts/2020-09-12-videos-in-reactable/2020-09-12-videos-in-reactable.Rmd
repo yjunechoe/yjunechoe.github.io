@@ -44,7 +44,7 @@ So I turned the spreadsheet into a {reactable} table with rows that can expand t
 Try it out for yourself!
 
 
-```{r reactable, echo=FALSE, message=FALSE, warning=FALSE, layout='l-body-outset'}
+```{r reactable, echo=FALSE, message=FALSE, warning=FALSE, layout='l-page'}
 library(tidyverse)
 library(htmltools)
 library(reactable)
