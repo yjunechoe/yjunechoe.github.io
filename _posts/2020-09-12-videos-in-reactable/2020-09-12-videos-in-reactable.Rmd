@@ -74,7 +74,7 @@ reactable(screencasts,
              
              # The actual video
              tags$iframe(
-               height = "360", width = "640", allow = "fullscreen",
+               height = "640", width = "640", allow = "fullscreen",
                src = glue::glue("https://www.youtube.com/embed/{link}?start={time}&autoplay=1")
              )
              

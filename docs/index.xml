@@ -12,7 +12,19 @@
       <link>yjunechoe.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Wed, 23 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 27 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Demystifying stat_ layers in {ggplot2}</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2</link>
+      <description>The motivation behind stat, the distinction between stat and geom, and a case study of stat_summary()</description>
+      <category>data visualization</category>
+      <category>ggplot2</category>
+      <category>tutorial</category>
+      <guid>yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2</guid>
+      <pubDate>Sun, 27 Sep 2020 00:00:00 +0000</pubDate>
+      <media:content url="yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/preview.png" medium="image" type="image/png" width="240" height="278"/>
+    </item>
     <item>
       <title>TidyTuesday 2020 week 39</title>
       <dc:creator>June Choe</dc:creator>

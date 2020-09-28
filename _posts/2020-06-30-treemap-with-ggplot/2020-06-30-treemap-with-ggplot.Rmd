@@ -239,7 +239,7 @@ For example, let's say I wanted to isolate and emphasize the _secondary types_ t
 
 I can do this by using `geom_text_repel()` for a subset of the labels while keeping the same `geom_fit_text()` setting for the rest of the labels.
 
-```{r, warning = FALSE, fig.width = 10, preview = TRUE}
+```{r, warning = FALSE, fig.width = 10, layout = 'l-page', preview = TRUE}
 tm_plot_data %>% 
   ggplot(aes(xmin = x0, ymin = y0, xmax = x1, ymax = y1)) + 
   geom_rect(aes(fill = color, size = primary_group),

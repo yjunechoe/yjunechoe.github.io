@@ -1,0 +1,592 @@
+---
+title: "Demystifying stat_ layers in {ggplot2}"
+description: |
+  The motivation behind stat, the distinction between stat and geom, and a case study of stat_summary()
+categories:
+  - data visualization
+  - ggplot2
+  - tutorial
+base_url: yjunechoe.github.io
+author:
+  - name: June Choe
+    affiliation: University of Pennsylvania Linguistics
+    affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+preview: preview.png
+date: 09-27-2020
+output:
+  distill::distill_article:
+    toc: true
+    self_contained: false
+---
+
+```{r opts}
+knitr::opts_chunk$set(
+  comment = " ",
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  R.options = list(width = 80)
+)
+
+library(tidyverse)
+library(extrafont)
+library(knitr)
+
+theme_set(theme_classic(base_size = 14, base_family = "Montserrat"))
+theme_update(
+  plot.title.position = "plot",
+  axis.title.x = element_text(vjust = -1),
+  axis.title.y = element_text(vjust = 2)
+)
+
+set.seed(123)
+```
+
+## Introduction
+
+_(Feel free to skip the intro section if you want to get to the point!)_
+
+A powerful concept in the Grammar of Graphics is that variables are mapped onto [aesthetics]{.sc}. In `{ggplot2}`, a class of objects called [geom]{.sc} implements this idea. For example, `geom_point(mapping = aes(x = mass, y = height))` would give you a plot of *points* (i.e. a scatter plot), where the x-axis represents the `mass` variable and the y axis represents the `height` variable.
+
+Because `geom_*()`s^[Just to clarify on notation, I'm using the star symbol * here to say that I'm referencing all the functions that start with `geom_` like `geom_bar()` and `geom_point()`. This is called the Kleene star and it's used a lot in regex, if you aren't familiar.] are so powerful and because aesthetic mappings are easily understandable at an abstract level, you rarely have to think about what happens to the data you feed it. Take this simple histogram for example:
+
+```{r, warning = FALSE, message = FALSE}
+data("penguins", package = "palmerpenguins")
+
+ggplot(data = penguins, mapping = aes(x = body_mass_g)) +
+  geom_histogram()
+```
+
+What's going on here? You might say that the `body_mass_g` variable is represented in the x-axis. Sure, that's not wrong. But a fuller explanation would require you to talk about these extra steps under the hood:
+
+1.  The variable mapped to x is divided into discrete bins
+
+2.  A count of observations within each bin is calculated
+
+3.  That new variable is then represented in the y axis
+
+4.  Finally, the provided x variable and the internally calculated y variable is represented by bars that have certain position and height
+
+I don't mean to say here that you are *a total fool* if you can't give a paragraph-long explanation of `geom_histogram()`. Rather, my intention here is to emphasize that **the data-to-aesthetic mapping in GEOM objects is not neutral**, although it can often feel very natural, intuitive, and objective (and you should thank the devs for that!). Just think about the many ways in which you can change any of the internal steps above, especially steps 1[^1] and 2[^2], while still having the output _look_ like a histogram.
+
+[^1]: You could have bins of that are not of equal size. Or, you could have bins that bleed into each other to create a [rolling window](https://www.quora.com/What-does-the-term-rolling-window-mean-in-econometrics#:~:text=%E2%80%9CRolling%20window%E2%80%9D%20simply%20means%20that,full%20data%20set%20or%20series.) summary.
+
+[^2]: You could calculate the sum of raw values that are in each bin, or calculate proportions instead of counts
+
+This important point rarely crosses our mind, in part because of what we have gotten drilled into our heads when we first started learning ggplot. As beginners we've likely experienced the frustration of having all the data we need to plot something, but ggplot _just won't work_. You could imagine a beginner today who's getting frustrated because `geom_point(aes(x = mass, y = height))` throws an error with the following data.
+
+```{r, echo = FALSE}
+tribble(
+  ~variable, ~subject1, ~subject2, ~subject3,
+  "mass", 75, 70, 55,
+  "height", 154, 172, 144
+)
+```
+
+And what would ~~StackOverflow~~ you tell this beginner? You'd probably tell them to put the data in a **tidy format**[^3] first.
+
+[^3]: If you aren't familiar already, "tidy" is a specific [term of art](https://r4ds.had.co.nz/tidy-data.html)
+
+```{r, echo = FALSE}
+tribble(
+  ~subject, ~mass, ~height,
+  1, 75, 154,
+  2, 70, 172,
+  3, 55, 144
+)
+```
+
+Now, that's something you can tell a beginner for a quick and easy fix. But if you still simply think "the thing that makes ggplot work = tidy data", it's important that you **unlearn this mantra** in order to fully understand the motivation behind [stat]{.sc}.
+
+
+## When and why should I use STAT?
+
+You could be using ggplot every day and never even touch any of the two-dozen native `stat_*()` functions. In fact, _because_ you've only used `geom_*()`s, you may find `stat_*()`s to be the esoteric and mysterious remnants of the past that only [the developers]{.sc} continue to use to maintain law and order in the depths of source code hell.
+
+<aside>
+The rhetorical strategy I deploy here is also known in the literature as "subtweeting myself"
+</aside>
+
+If that describes you, you might wonder why you even need to know about all these `stat_*()` functions.
+
+```{r, echo=F, fig.align='center', out.width="400px"}
+include_graphics("https://media.giphy.com/media/cFgb5p5e1My3K/giphy.gif")
+```
+
+Well, the main motivation for [stat]{.sc} is simply this:
+
+> **"_Even though the data is tidy it may not represent the values you want to display_"**[^4]
+
+[^4]: This quote is adapted from Thomas Lin Pedersen's [ggplot2 workshop video](https://www.youtube.com/watch?v=h29g21z0a68)
+
+The histogram discussion in the previous section was a good example to this point, but here I'll introduce another example that I think will hit the point home.
+
+Suppose you have a data `simple_data` that looks like this:
+
+```{r}
+simple_data <- tibble(group = factor(rep(c("A", "B"), each = 15)),
+                      subject = 1:30,
+                      score = c(rnorm(15, 40, 20), rnorm(15, 60, 10)))
+```
+
+```{r, echo = FALSE}
+rmarkdown::paged_table(simple_data)
+```
+
+
+And suppose that you want to draw a bar plot where each bar represents `group` and the height of the bars corresponds to the mean of `score` for each group.
+
+If you're stuck in the mindset of "the data that I feed in to `ggplot()` is exactly what gets mapped, so I need to tidy it first and make sure it contains all the aesthetics that each geom needs", you would need to transform the data before piping it in like this:
+
+```{r simple_data_bar, eval=FALSE}
+simple_data %>%
+  group_by(group) %>% 
+  summarize(
+    mean_score = mean(score),
+    .groups = 'drop' # Remember to ungroup!
+  ) %>% 
+  ggplot(aes(x = group, y = mean_score)) +
+  geom_col()
+```
+
+<aside>
+It's a good practice to always **ungroup your dataframe** before passing into ggplot, as having grouped data can lead to unintended behaviors that are hard to debug.
+</aside>
+
+```{r simple_data_bar, echo=FALSE}
+```
+
+Where the data passed in looks like this:
+
+```{r, echo = F}
+simple_data %>%
+  group_by(group) %>% 
+  summarize(
+    mean_score = mean(score),
+    .groups = 'drop'
+  )
+```
+
+
+Ok, not really a problem there. But what if we want to add in error bars too? Error bars also plot a summary statistic (the standard error), so we'd need make another summary of the data to pipe into `ggplot()`.
+
+Let's first plot the error bar by itself, we're again passing in a transformed data
+
+```{r}
+simple_data %>% 
+  group_by(group) %>% 
+  summarize(
+    mean_score = mean(score),
+    se = sqrt(var(score)/length(score)),
+    .groups = 'drop'
+  ) %>% 
+  mutate(
+    lower = mean_score - se,
+    upper = mean_score + se
+  ) %>% 
+  ggplot(aes(x = group, y = mean_score, ymin = lower, ymax = upper)) +
+  geom_errorbar()
+```
+
+Where the transformed data looks like this:
+
+```{r, echo=F}
+simple_data %>% 
+  group_by(group) %>% 
+  summarize(
+    mean_score = mean(score),
+    se = sqrt(var(score)/length(score)),
+    .groups = 'drop'
+  ) %>% 
+  mutate(
+    lower = mean_score - se,
+    upper = mean_score + se
+  )
+```
+
+
+Ok, now let's try combining the two. One way to do this is to save the data paseed in for the bar plot and the data passed in for the errorbar plot as two separate variables, and then call each in their respective geoms:
+
+```{r}
+simple_data_bar <- simple_data %>%
+  group_by(group) %>% 
+  summarize(
+    mean_score = mean(score),
+    .groups = 'drop'
+  )
+  
+simple_data_errorbar <- simple_data %>% 
+  group_by(group) %>% 
+  summarize(
+    mean_score = mean(score),
+    se = sqrt(var(score)/length(score)),
+    .groups = 'drop'
+  ) %>% 
+  mutate(
+    lower = mean_score - se,
+    upper = mean_score + se
+  )
+
+ggplot() +
+  geom_col(
+    aes(x = group, y = mean_score),
+    data = simple_data_bar
+  ) +
+  geom_errorbar(
+    aes(x = group, y = mean_score, ymin = lower, ymax = upper),
+    data = simple_data_errorbar
+  )
+```
+
+```{r, echo=F, fig.align='center', out.width="400px"}
+include_graphics("https://media.giphy.com/media/aNtt9T8SqGNK8/giphy.gif")
+```
+
+Yeah... that code is a mouthful. The above approach is not **parsimonious** because we keep repeating similar processes in different places.^[Yes, you can still cut down on the code somewhat, but will it even get as succinct as what I show below with `stat_summary()`?] If you, like myself, don't like how this looks, then let this be a lesson that **this is the consequence of thinking that you must always prepare a tidy data containing values that can be DIRECTLY mapped to geometric objects**.
+
+And on a more theoretical note, `simple_data_bar` and `simple_data_errorbar` aren't even really "tidy" in the original sense of the term. We need to remind ourselves here that tidy data is about the organization of **observations in the data**. Under this definition, values like bar height and the top and bottom of whiskers are hardly _observations_  themselves. Rather, they're abstractions or summaries of the actual observations in our data `simple_data` which, if you notice, we _didn't even use_ to make our final plot above!
+
+```{r, echo = F, out.extra="class=external", fig.align='center', fig.cap="Tidy data is about the organization of observations."}
+include_graphics("https://d33wubrfki0l68.cloudfront.net/6f1ddb544fc5c69a2478e444ab8112fb0eea23f8/91adc/images/tidy-1.png")
+```
+
+So not only is it inefficient to create a transformed dataframe that suits the needs of each geom, this method isn't even championing the principles of tidy data like we thought.^[There's actually one more argument against transforming data before piping it into ggplot. When you choose the variables to plot, say `cyl` and `mpg` in the `mtcars` dataset, do you call `select(cyl, mpg)` before piping `mtcars` into ggplot? No? Well then why would you transform your data beforehand if you can just have that be handled internally instead? It's the same logic!]
+
+What we should do instead is to _take advantage_ of the fact that our original data `simple_data` is the **common denominator** of `simple_data_bar` and `simple_data_errorbar`!
+
+Wouldn't it be nice if you could just pass in the origin data containing all observations (`simple_data`) and have each layer internally transform the data in appropriate ways to suit the needs of the geom for that layer? 
+
+Oh, so you mean something like this?
+
+```{r}
+simple_data %>% 
+  ggplot(aes(group, score)) +
+  stat_summary(geom = "bar") +
+  stat_summary(geom = "errorbar")
+```
+
+```{r, echo=F, fig.align='center', out.width="400px"}
+include_graphics("https://media.giphy.com/media/xT0xeJpnrWC4XWblEk/giphy.gif")
+```
+
+### Interim Summary #1
+
+In this section, I built up a tedious walkthrough of making a barplot with error bars using only `geom_*()`s just to show that two lines of `stat_summary()` with a single argument can achieve the same without even touching the data through any form of pre-processing.
+
+So that was a taste of how powerful `stat_*()`s can be, but how do they work and how can you use them in practice?
+
+## Understanding STAT with stat_summary()
+
+Let's analyze `stat_summary()` as a case study to understand how `stat_*()`s work more generally. I think that `stat_summary()` is a good choice because it's a more primitive version of many other `stat_*()`s and is likely to be the one that you'd end up using the most for visualizations in data science.
+
+Before we start, let's create a toy data to work with. Let's call this data `height_df` because it contains data about a `group` and the `height` of individuals in that group.
+
+```{r}
+height_df <- tibble(group = "A",
+                    height = rnorm(30, 170, 10))
+```
+
+
+```{r, echo=F}
+rmarkdown::paged_table(height_df)
+```
+
+
+We can visualize the data with a familiar geom, say `geom_point()`:
+
+```{r}
+height_df %>% 
+  ggplot(aes(x = group, y = height)) +
+  geom_point()
+```
+
+As a first step in our investigation, let's just replace our familiar `geom_point()` with the scary-looking `stat_summary()` and see what happens:
+
+```{r}
+height_df %>% 
+  ggplot(aes(x = group, y = height)) +
+  stat_summary()
+```
+
+Instead of points, we now see a point and a line through that point. And before you get confused, this is actually one geom, called [pointrange]{.sc}, not two separate geoms.^[If you're still skeptical, save the plot object to a variable like `plot` and call `plot$layers` to confirm that `geom_pointrange` was used to draw the plot.] Now that that's cleared up, we might ask: **what data is being represented by the pointrange?**
+
+Answering this question requires us to zoom out a little bit and ask: what _variables_ does pointrange map _as a geom_? By looking at the documentation with `?geom_pointrange` we can see that `geom_pointrange()` **requires** the following aesthetics:
+
+- [x]{.sc} _or_ [y]{.sc}
+
+- [ymin]{.sc} _or_ [xmin]{.sc}
+
+- [ymax]{.sc} _or_ [xmax]{.sc}
+
+
+So now let's look back at our arguments in `aes()`. We said that `group` is mapped to `x` and that `height` is mapped to `y`. But we never said anything about `ymin/xmin` or `ymax/xmax` anywhere. So how is `stat_summary()` drawing a pointrange if we didn't give it the required aesthetic mappings?
+
+Well, a good guess is that `stat_summary()` is **transforming the data to calculate the necessary values to be mapped to pointrange**. Here's one reason for that guess - I've been suppressing message throughout this post but if you run the above code with `stat_summary()` yourself, you'd actually get this message: 
+
+```{r, echo = FALSE, message = TRUE, fig.show='hide'}
+height_df %>% 
+  ggplot(aes(x = group, y = height)) +
+  stat_summary()
+```
+
+Huh, a [summary function]{.sc}? That sounds promising. Maybe that's the key to our mystery!
+
+First, we see from the documentation of `stat_summary()` that this `mean_se()` thing is the default value for the `fun.data` argument.
+
+Next, let's call it in the console to see what it is:
+
+```{r}
+mean_se
+```
+
+Ok, so it's a function that takes some argument `x` and a second argument `mult` with the default value `1`.
+
+Let's go over what it does by breaking down the function body line by line:
+
+1. Remove `NA` values
+2. Calculate variable `se` which is the standard error of the values in `x` using the equation $SE = \sqrt{\frac{1}{N-1}\sum_{i=1}^N(x_i-\bar{x})^2}$
+3. Calculate the variable `mean`^[I personally don't agree with this naming choice since `mean` is also the name of the base function] which is the mean of `x`
+4. Create a new dataframe with one row, with columns `y`, `ymin`, and `ymax`, where `y` is the mean od `x`, `ymin` is one standard error below the mean, and `ymax` is one standard error above the mean.^[The function `new_data_frame()` is from `{vctrs}`. That last line of code in the function body is doing the same thing as `data.frame(y = mean, ymin = mean - se, ymax = mean + se)`, but there's less room for error the way it's done in the source code.]
+
+A cool thing about this is that although `mean_se()` seems to be exclusively used for internal operations, it's actually available in the global environment from loading `{ggplot2}`. So let's pass `height_df` to `mean_se()` and see what we get back!
+
+```{r, error = TRUE}
+mean_se(height_df)
+```
+
+```{r, echo=F, fig.align='center', out.width="400px"}
+include_graphics("https://media.giphy.com/media/3ELtfmA4Apkju/giphy.gif")
+```
+
+Uhhh what?
+
+Do you see what happened just now? This is actually really important: `stat_summary()` summarizes **one dimension** of the data.^[If you read the documentation, the very first line starts with "_`stat_summary()` operates on unique x **or** y_ ..." (emphasis mine)] `mean_se()` threw an error when we passed it our whole data because it was expecting just a **vector** of the variable to be summarized.
+
+<aside>
+Whenever you're trying out a new `stat_*()` function, make sure to check what variables/object types the statistical transformation is being applied to!
+</aside>
+
+
+Ok now that we've went over that little mishap, let's give `mean_se()` the vector it wants.
+
+```{r}
+mean_se(height_df$height)
+```
+
+And look at that, these look like they're the same values that were being represented by the mid-point and the end-points of the pointrange plot that we drew with `stat_summary()` above!
+
+You know how else we can check that this is the case? With this neat function called `layer_data()`.
+
+We can pull the data that was used to draw the pointrange by passing our plot object to `layer_data()` and setting the second argument to `1`^[This second argument specifies which layer to return. Here, the pointrange layer is the first and only layer in the plot so I actually could have left this argument out.]:
+
+```{r}
+pointrange_plot <- height_df %>% 
+  ggplot(aes(x = group, y = height)) +
+  stat_summary()
+
+layer_data(pointrange_plot, 1)
+```
+
+Would ya look at that! There's a lot of stuff in there, but it looks like the values for `y`, `ymin`, and `ymax` used for the actual plot match up with the values we calculated with `mean_se()` above!
+
+We've solved our mystery of how the pointrange was drawn when we didn't provide all the required mappings!
+
+```{r, echo=F, fig.align='center', out.width="400px"}
+include_graphics("https://media.giphy.com/media/srg19CG0cKMuI/giphy.gif")
+```
+
+### Interim Summary #2
+
+To summarize this section (ha!), `stat_summary()` works in the following order:
+
+1. The data that is passed into `ggplot()` is inherited if one is not provided
+
+2. The function passed into the `fun.data` argument applies transformations to (a part of) that data (defaults to `mean_se()`)
+
+3. The result is passed into the geom provided in the `geom` argument (defaults to [pointrange]{.sc}).
+
+4. If the data contains all the required mapppings for the geom, the geom will be plotted.
+
+And to make things extra clear & to make `stat_summary()` less mysterious, we can explicitly spell out the two arguments `fun.data` and `geom` that we went over in this section.
+
+Look, it's the same plot!
+
+```{r explicit_args, eval = FALSE}
+height_df %>% 
+  ggplot(aes(x = group, y = height)) +
+  stat_summary(
+    geom = "pointrange",
+    fun.data = mean_se
+  )
+```
+
+<aside>
+You could also do `fun.data = "mean_se"` but I prefer the unquoted version because it make it extra clear that `mean_se` is a function, not a special parameter. It also keeps things consistent because if you want to pass in a custom function, they cannot be quoted.
+</aside>
+
+```{r explicit_args, echo=F}
+```
+
+## Putting STAT to use
+
+Now we have arrived at the fun part.
+
+Here, I will demonstrate a few ways of modifying `stat_summary()` to suit particular visualization needs.
+
+For this section, I will use a modified version of the `penguins` data that I loaded all the way up in the intro section (I'm just removing `NA` values here, nothing fancy).
+
+```{r}
+my_penguins <- na.omit(penguins)
+```
+
+**At no point in this section will I be modifying the data being piped into `ggplot()`.** That is the beauty and power of [stat]{.sc}.
+
+### 1. Error bars showing 95% confidence interval
+
+Here, we're plotting the mean `body_mass_g` of penguins for each `sex`, with error bars that show the 95% confidence interval (a range of approx 1.96 standard errors from the mean).
+
+```{r pointline, eval = F}
+my_penguins %>% 
+  ggplot(aes(sex, body_mass_g)) +
+  stat_summary(
+    fun.data = ~mean_se(., mult = 1.96), # Increase `mult` value for bigger interval!
+    geom = "errorbar",
+  )
+```
+
+<aside>
+As of {ggplot2} 3.3.0, you can use {rlang}-style anonymous functions. If you aren't familiar, `~mean_se(., mult = 1.96)` is the same as `function(x) {mean_se(x, mult = 1.96)}`
+</aside>
+
+```{r pointline, echo = F}
+```
+
+
+The transformed data used for the [errorbar]{.sc} geom inside `stat_summary()`:
+
+```{r}
+mean_se(my_penguins$body_mass_g, mult = 1.96)
+```
+
+
+### 2. A color-coded bar plot of medians
+
+Here, we're plotting the median `bill_length_mm` for each penguins `species` and coloring the groups with median `bill_length_mm` under `40` in `pink`.
+
+```{r colorbar, eval = FALSE}
+calc_median_and_color <- function(x, threshold = 40) {
+  tibble(y = median(x)) %>% 
+    mutate(fill = ifelse(y < threshold, "pink", "grey35"))
+}
+
+my_penguins %>% 
+  ggplot(aes(species, bill_length_mm)) +
+  stat_summary(
+    fun.data = calc_median_and_color,
+    geom = "bar"
+  )
+```
+
+<aside>
+Calculating summaries by group is automatically handled internally when you provide grouping variables (here, the `species` variable that's mapped to `x`), so you don't have to worry about that in your custom function.
+</aside>
+
+```{r colorbar, echo = FALSE}
+```
+
+The transformed data used for the [bar]{.sc} geom inside `stat_summary()`:
+
+```{r colorbar_data, eval=F}
+group_split(my_penguins, species) %>%
+  map(~ pull(., bill_length_mm)) %>% 
+  map_dfr(calc_median_and_color)
+```
+
+<aside>
+This mimics the internal process of `stat_summary()`. Run each line incrementally see to what they do!
+</aside>
+
+```{r colorbar_data, echo=F}
+```
+
+Note how you can calculate _non-required_ aesthetics in your custom functions (e.g., `fill`) and they also be used to make the geom!
+
+### 3. Pointrange plot with changing size
+
+Here, we're plotting `bill_depth_mm` of penguins inhabiting different `island`s, with the size of each pointrange changing with the number of observations
+
+
+```{r pointrange_custom, eval=F}
+my_penguins %>% 
+  ggplot(aes(species, bill_depth_mm)) +
+  stat_summary(
+    fun.data = function(x) {
+      
+      scaled_size <- length(x)/nrow(my_penguins)
+      
+      mean_se(x) %>% 
+        mutate(size = scaled_size)
+    }
+  )
+```
+
+<aside>
+If you don't want to declare a new function in the environment just for one plot, you can just pass in an anonymous function to the `fun.data` argument. And of course, if it's long, you should wrap it in `function(x){}`.
+</aside>
+
+```{r pointrange_custom, echo = FALSE}
+```
+
+<aside>
+Looking back, this is actually a cool plot because you can see how lower number of samples (smaller size) contributes to increased uncertainty (longer range) in the pointrange.
+</aside>
+
+The transformed data used for the [pointrange]{.sc} geom inside `stat_summary()`:
+
+```{r pointbar_custom_data}
+group_split(my_penguins, species) %>%
+  map(~ pull(., bill_depth_mm)) %>% 
+  map_dfr(
+    function(x) {
+      
+      scaled_size <- length(x)/nrow(my_penguins)
+      
+      mean_se(x) %>% 
+        mutate(size = scaled_size)
+    }
+  )
+```
+
+
+## Conclusion
+
+Here are the main ideas from this post:
+
+- Even though the data is tidy, it may not represent the values you want to display
+
+- The solution is not to transform your _already-tidy_ data so that it contains those values
+
+- Instead, you should pass in your original tidy data into `ggplot()` as is and allow `stat_*()` functions to apply transformations internally
+
+- These `stat_*()` functions can be customized for both their geoms and their transformation functions, and works similarly to `geom_*()` functions in other regards
+
+- If you want to pass in your own _custom function_, make sure to check the documentation of that particular `stat_*()` function to check the variable/data type it requires.
+
+- If you want to use a _different geom_, make sure that your transformation function calculates all the required aesthetics for that geom
+
+
+And a final note on [stat]{.sc}s and [geom]{.sc}s:
+
+Although I have talked about the limitations of `geom_*()`s to demonstrate the usefulness of `stat_*()`s, both have their place. It's about knowing when to use which; it's not a question of either-or. In fact, they require each other - just like how `stat_summary()` had a `geom` argument, `geom_*()`s also have a `stat` argument. At a higher level, `stat_*()`s and `geom_*()`s are simply convenient instantiations of the `layer()` function that builds up the layers of ggplot.
+
+Hadley explains the false dichotomy:
+
+> Unfortunately, due to an early design mistake I called these either stat_() or geom\_(). A better decision would have been to call them layer\_() functions: that's a more accurate description because **every layer involves a stat and a geom**.^[https://cran.r-project.org/web/packages/ggplot2/vignettes/extending-ggplot2.html]
+
+&nbsp;
+
+Thanks for reading! Best of luck on your ggplot journey!
+
+```{r, echo=F, fig.align='center', out.width="400px"}
+include_graphics("https://media.giphy.com/media/14cDsqOkks6O8U/giphy.gif")
+```

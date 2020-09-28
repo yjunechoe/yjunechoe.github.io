@@ -1700,8 +1700,8 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     
     font-family: 'Futura Bk BT';
     font-weight: 200;
-    line-height: 1.5; 
-    font-size: 1.0em;
+    line-height: 1.55; 
+    font-size: 1em;
     color: #333333;
     font-style: normal;
     
@@ -1826,6 +1826,11 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   }
 
 
+  /* Block Quotes */
+  blockquote p {
+    margin-bottom: 0;
+  }
+
 
 
   /* ---------- Code Styles ---------- */
@@ -1866,12 +1871,20 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   /* ---------- ADD-ONS ---------- */
 
 
+  /* {rmarkdown} */
+
+  .pagedtable-wrapper {
+    margin-bottom: 20px;
+  }
+
+
   /* html widgets */
 
   .html-widget {
     margin-top: 1.0em;
     margin-bottom: 1.0em;
   }
+
 
   /* {reactable} */
 
@@ -1880,6 +1893,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     font-family: 'Roboto Medium';
     background-color: #fbfbfb;
   }
+
 
   /* {xaringanExtra} */
 
@@ -2274,6 +2288,24 @@ function init_posts_list() {
 <div class="posts-container posts-with-sidebar posts-apply-limit l-screen-inset">
 <div class="posts-list">
 <h1 class="posts-list-caption" data-caption="Blog Posts">Blog Posts</h1>
+<a href="posts/2020-09-26-demystifying-stat-layers-ggplot2/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["data visualization","ggplot2","tutorial"]}</script>
+<div class="metadata">
+<div class="publishedDate">Sept. 27, 2020</div>
+<div class="dt-tags">
+<div class="dt-tag">data visualization</div>
+<div class="dt-tag">ggplot2</div>
+<div class="dt-tag">tutorial</div>
+</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2020-09-26-demystifying-stat-layers-ggplot2/preview.png"/>
+</div>
+<div class="description">
+<h2>Demystifying stat_ layers in {ggplot2}</h2>
+<p>The motivation behind stat, the distinction between stat and geom, and a case study of stat_summary()</p>
+</div>
+</a>
 <a href="posts/2020-09-23-tidytuesday-2020-week-39/" class="post-preview">
 <script class="post-metadata" type="text/json">{"categories":["ggplot2","data visualization","tidytuesday"]}</script>
 <div class="metadata">
@@ -2533,7 +2565,7 @@ function init_posts_list() {
 <ul>
 <li>
 <a href="#index">ALL ARTICLES</a>
-<span class="category-count">(14)</span>
+<span class="category-count">(15)</span>
 </li>
 <li>
 <a href="#category:data_visualization">data visualization</a>

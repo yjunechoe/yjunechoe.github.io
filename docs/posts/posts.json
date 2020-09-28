@@ -1,5 +1,27 @@
 [
   {
+    "path": "posts/2020-09-26-demystifying-stat-layers-ggplot2/",
+    "title": "Demystifying stat_ layers in {ggplot2}",
+    "description": "The motivation behind stat, the distinction between stat and geom, and a case study of stat_summary()",
+    "author": [
+      {
+        "name": "June Choe",
+        "url": {}
+      }
+    ],
+    "date": "2020-09-27",
+    "categories": [
+      "data visualization",
+      "ggplot2",
+      "tutorial"
+    ],
+    "preview": "posts/2020-09-26-demystifying-stat-layers-ggplot2/preview.png",
+    "last_modified": "2020-09-27T20:13:20-04:00",
+    "input_file": "demystifying-stat-layers-ggplot2.utf8.md",
+    "preview_width": 240,
+    "preview_height": 278
+  },
+  {
     "path": "posts/2020-09-23-tidytuesday-2020-week-39/",
     "title": "TidyTuesday 2020 week 39",
     "description": "Stacked area plot of the heights of Himalayan peaks attempted over the last century",
@@ -81,7 +103,7 @@
       "data visualization"
     ],
     "preview": "posts/2020-09-12-videos-in-reactable/preview.png",
-    "last_modified": "2020-09-23T20:21:18-04:00",
+    "last_modified": "2020-09-27T01:45:12-04:00",
     "input_file": {},
     "preview_width": 808,
     "preview_height": 617
@@ -254,7 +276,7 @@
       "ggplot2"
     ],
     "preview": "posts/2020-06-30-treemap-with-ggplot/2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-12-1.png",
-    "last_modified": "2020-09-19T21:20:43-04:00",
+    "last_modified": "2020-09-26T12:03:07-04:00",
     "input_file": {},
     "preview_width": 1920,
     "preview_height": 768

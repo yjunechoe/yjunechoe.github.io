@@ -1,0 +1,2112 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+  <!--radix_placeholder_meta_tags-->
+<title>June Choe: Demystifying stat_ layers in {ggplot2}</title>
+
+<meta property="description" itemprop="description" content="The motivation behind stat, the distinction between stat and geom, and a case study of stat_summary()"/>
+
+<link rel="canonical" href="yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/"/>
+<link rel="icon" type="image/png" href="../../static/img/icon.png"/>
+
+<!--  https://schema.org/Article -->
+<meta property="article:published" itemprop="datePublished" content="2020-09-27"/>
+<meta property="article:created" itemprop="dateCreated" content="2020-09-27"/>
+<meta name="article:author" content="June Choe"/>
+
+<!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+<meta property="og:title" content="June Choe: Demystifying stat_ layers in {ggplot2}"/>
+<meta property="og:type" content="article"/>
+<meta property="og:description" content="The motivation behind stat, the distinction between stat and geom, and a case study of stat_summary()"/>
+<meta property="og:url" content="yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/"/>
+<meta property="og:image" content="yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/preview.png"/>
+<meta property="og:image:width" content="240"/>
+<meta property="og:image:height" content="278"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:site_name" content="June Choe"/>
+
+<!--  https://dev.twitter.com/cards/types/summary -->
+<meta property="twitter:card" content="summary_large_image"/>
+<meta property="twitter:title" content="June Choe: Demystifying stat_ layers in {ggplot2}"/>
+<meta property="twitter:description" content="The motivation behind stat, the distinction between stat and geom, and a case study of stat_summary()"/>
+<meta property="twitter:url" content="yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/"/>
+<meta property="twitter:image" content="yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/preview.png"/>
+<meta property="twitter:image:width" content="240"/>
+<meta property="twitter:image:height" content="278"/>
+
+<!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+<script type="text/json" id="radix-rmarkdown-metadata">
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","preview","date","output","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["Demystifying stat_ layers in {ggplot2}"]},{"type":"character","attributes":{},"value":["The motivation behind stat, the distinction between stat and geom, and a case study of stat_summary()"]},{"type":"character","attributes":{},"value":["data visualization","ggplot2","tutorial"]},{"type":"character","attributes":{},"value":["yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]}]}]},{"type":"character","attributes":{},"value":["preview.png"]},{"type":"character","attributes":{},"value":["09-27-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/"]}]}
+</script>
+<!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["demystifying-stat-layers-ggplot2_files/bowser-1.9.3/bowser.min.js","demystifying-stat-layers-ggplot2_files/distill-2.2.21/template.v2.js","demystifying-stat-layers-ggplot2_files/figure-html5/colorbar-1.png","demystifying-stat-layers-ggplot2_files/figure-html5/explicit_args-1.png","demystifying-stat-layers-ggplot2_files/figure-html5/pointline-1.png","demystifying-stat-layers-ggplot2_files/figure-html5/pointrange_custom-1.png","demystifying-stat-layers-ggplot2_files/figure-html5/simple_data_bar-1.png","demystifying-stat-layers-ggplot2_files/figure-html5/unnamed-chunk-1-1.png","demystifying-stat-layers-ggplot2_files/figure-html5/unnamed-chunk-10-1.png","demystifying-stat-layers-ggplot2_files/figure-html5/unnamed-chunk-11-1.png","demystifying-stat-layers-ggplot2_files/figure-html5/unnamed-chunk-13-1.png","demystifying-stat-layers-ggplot2_files/figure-html5/unnamed-chunk-15-1.png","demystifying-stat-layers-ggplot2_files/figure-html5/unnamed-chunk-16-1.png","demystifying-stat-layers-ggplot2_files/figure-html5/unnamed-chunk-17-1.png","demystifying-stat-layers-ggplot2_files/figure-html5/unnamed-chunk-18-1.png","demystifying-stat-layers-ggplot2_files/figure-html5/unnamed-chunk-19-1.png","demystifying-stat-layers-ggplot2_files/figure-html5/unnamed-chunk-28-1.png","demystifying-stat-layers-ggplot2_files/figure-html5/unnamed-chunk-5-1.png","demystifying-stat-layers-ggplot2_files/figure-html5/unnamed-chunk-6-1.png","demystifying-stat-layers-ggplot2_files/figure-html5/unnamed-chunk-7-1.png","demystifying-stat-layers-ggplot2_files/figure-html5/unnamed-chunk-8-1.png","demystifying-stat-layers-ggplot2_files/figure-html5/unnamed-chunk-9-1.png","demystifying-stat-layers-ggplot2_files/header-attrs-2.3/header-attrs.js","demystifying-stat-layers-ggplot2_files/jquery-1.11.3/jquery.min.js","demystifying-stat-layers-ggplot2_files/pagedtable-1.1/css/pagedtable.css","demystifying-stat-layers-ggplot2_files/pagedtable-1.1/js/pagedtable.js","demystifying-stat-layers-ggplot2_files/webcomponents-2.0.0/webcomponents.js","preview.png"]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+
+<script type="application/javascript">
+
+  window.headroom_prevent_pin = false;
+
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+
+    // initialize headroom for banner
+    var header = $('header').get(0);
+    var headerHeight = header.offsetHeight;
+    var headroom = new Headroom(header, {
+      onPin : function() {
+        if (window.headroom_prevent_pin) {
+          window.headroom_prevent_pin = false;
+          headroom.unpin();
+        }
+      }
+    });
+    headroom.init();
+    if(window.location.hash)
+      headroom.unpin();
+    $(header).addClass('headroom--transition');
+
+    // offset scroll location for banner on hash change
+    // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
+    window.addEventListener("hashchange", function(event) {
+      window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
+    });
+
+    // responsive menu
+    $('.distill-site-header').each(function(i, val) {
+      var topnav = $(this);
+      var toggle = topnav.find('.nav-toggle');
+      toggle.on('click', function() {
+        topnav.toggleClass('responsive');
+      });
+    });
+
+    // nav dropdowns
+    $('.nav-dropbtn').click(function(e) {
+      $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
+      $(this).parent().siblings('.nav-dropdown')
+         .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
+    });
+    $("body").click(function(e){
+      $('.nav-dropdown-content').removeClass('nav-dropdown-active');
+    });
+    $(".nav-dropdown").click(function(e){
+      e.stopPropagation();
+    });
+  });
+</script>
+
+<style type="text/css">
+
+/* Theme (user-documented overrideables for nav appearance) */
+
+.distill-site-nav {
+  color: rgba(255, 255, 255, 0.8);
+  background-color: #455a64;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.distill-site-nav a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.distill-site-nav a:hover {
+  color: white;
+}
+
+@media print {
+  .distill-site-nav {
+    display: none;
+  }
+}
+
+.distill-site-header {
+
+}
+
+.distill-site-footer {
+
+}
+
+
+/* Site Header */
+
+.distill-site-header {
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 3;
+}
+
+.distill-site-header .nav-left {
+  display: inline-block;
+  margin-left: 8px;
+}
+
+@media screen and (max-width: 768px) {
+  .distill-site-header .nav-left {
+    margin-left: 0;
+  }
+}
+
+
+.distill-site-header .nav-right {
+  float: right;
+  margin-right: 8px;
+}
+
+.distill-site-header a,
+.distill-site-header .title {
+  display: inline-block;
+  text-align: center;
+  padding: 14px 10px 14px 10px;
+}
+
+.distill-site-header .title {
+  font-size: 18px;
+}
+
+.distill-site-header .logo {
+  padding: 0;
+}
+
+.distill-site-header .logo img {
+  display: none;
+  max-height: 20px;
+  width: auto;
+  margin-bottom: -4px;
+}
+
+.distill-site-header .nav-image img {
+  max-height: 18px;
+  width: auto;
+  display: inline-block;
+  margin-bottom: -3px;
+}
+
+
+
+@media screen and (min-width: 1000px) {
+  .distill-site-header .logo img {
+    display: inline-block;
+  }
+  .distill-site-header .nav-left {
+    margin-left: 20px;
+  }
+  .distill-site-header .nav-right {
+    margin-right: 20px;
+  }
+  .distill-site-header .title {
+    padding-left: 12px;
+  }
+}
+
+
+.distill-site-header .nav-toggle {
+  display: none;
+}
+
+.nav-dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.nav-dropdown .nav-dropbtn {
+  border: none;
+  outline: none;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 16px 10px;
+  background-color: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  margin: 0;
+  margin-top: 1px;
+  z-index: 2;
+}
+
+.nav-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 200px;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 4px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+  z-index: 1;
+  margin-top: 2px;
+  white-space: nowrap;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.nav-dropdown-content hr {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.nav-dropdown-active {
+  display: block;
+}
+
+.nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
+  color: black;
+  padding: 6px 24px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.nav-dropdown-content .nav-dropdown-header {
+  display: block;
+  padding: 5px 24px;
+  padding-bottom: 0;
+  text-transform: uppercase;
+  font-size: 14px;
+  color: #999999;
+  white-space: nowrap;
+}
+
+.nav-dropdown:hover .nav-dropbtn {
+  color: white;
+}
+
+.nav-dropdown-content a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.nav-right .nav-dropdown-content {
+  margin-left: -45%;
+  right: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
+  .distill-site-header a.nav-toggle {
+    float: right;
+    display: block;
+  }
+  .distill-site-header .title {
+    margin-left: 0;
+  }
+  .distill-site-header .nav-right {
+    margin-right: 0;
+  }
+  .distill-site-header {
+    overflow: hidden;
+  }
+  .nav-right .nav-dropdown-content {
+    margin-left: 0;
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .distill-site-header.responsive {position: relative;}
+  .distill-site-header.responsive a.nav-toggle {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .distill-site-header.responsive a,
+  .distill-site-header.responsive .nav-dropdown {
+    display: block;
+    text-align: left;
+  }
+  .distill-site-header.responsive .nav-left,
+  .distill-site-header.responsive .nav-right {
+    width: 100%;
+  }
+  .distill-site-header.responsive .nav-dropdown {float: none;}
+  .distill-site-header.responsive .nav-dropdown-content {position: relative;}
+  .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+}
+
+/* Site Footer */
+
+.distill-site-footer {
+  width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  z-index: 3;
+  margin-top: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  text-align: center;
+}
+
+/* Headroom */
+
+d-title {
+  padding-top: 6rem;
+}
+
+@media print {
+  d-title {
+    padding-top: 4rem;
+  }
+}
+
+.headroom {
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.headroom--transition {
+  transition: all .4s ease-in-out;
+}
+
+.headroom--unpinned {
+  top: -100px;
+}
+
+.headroom--pinned {
+  top: 0;
+}
+
+</style>
+
+<link href="../../site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
+<link href="../../site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
+<script src="../../site_libs/headroom-0.9.4/headroom.min.js"></script>
+<!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+<style type="text/css">
+
+body {
+  background-color: white;
+}
+
+.pandoc-table {
+  width: 100%;
+}
+
+.pandoc-table>caption {
+  margin-bottom: 10px;
+}
+
+.pandoc-table th:not([align]) {
+  text-align: left;
+}
+
+.pagedtable-footer {
+  font-size: 15px;
+}
+
+.html-widget {
+  margin-bottom: 2.0em;
+}
+
+.l-screen-inset {
+  padding-right: 16px;
+}
+
+.l-screen .caption {
+  margin-left: 10px;
+}
+
+.shaded {
+  background: rgb(247, 247, 247);
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.shaded .html-widget {
+  margin-bottom: 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.shaded .shaded-content {
+  background: white;
+}
+
+.text-output {
+  margin-top: 0;
+  line-height: 1.5em;
+}
+
+.hidden {
+  display: none !important;
+}
+
+d-article {
+  padding-bottom: 30px;
+}
+
+d-appendix {
+  padding-top: 30px;
+}
+
+d-article>p>img {
+  width: 100%;
+}
+
+d-article iframe {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 2.0em;
+  width: 100%;
+}
+
+figure img.external {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  padding: 18px;
+  box-sizing: border-box;
+}
+
+/* CSS for table of contents */
+
+.d-toc {
+  color: rgba(0,0,0,0.8);
+  font-size: 0.8em;
+  line-height: 1em;
+}
+
+.d-toc-header {
+  font-size: 0.6rem;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.5);
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 1.3em;
+}
+
+.d-toc a {
+  border-bottom: none;
+}
+
+.d-toc ul {
+  padding-left: 0;
+}
+
+.d-toc li>ul {
+  padding-top: 0.8em;
+  padding-left: 16px;
+  margin-bottom: 0.6em;
+}
+
+.d-toc ul,
+.d-toc li {
+  list-style-type: none;
+}
+
+.d-toc li {
+  margin-bottom: 0.9em;
+}
+
+.d-toc-separator {
+  margin-top: 20px;
+  margin-bottom: 2em;
+}
+
+.d-article-with-toc {
+  border-top: none;
+  padding-top: 0;
+}
+
+
+
+/* Tweak code blocks (note that this CSS is repeated above in an injection
+   into the d-code shadow dom) */
+
+d-code {
+  overflow-x: auto !important;
+}
+
+pre.d-code code.d-code {
+  padding-left: 10px;
+  font-size: 12px;
+  border-left: 2px solid rgba(0,0,0,0.1);
+}
+
+pre.text-output {
+
+  font-size: 12px;
+  color: black;
+  background: none;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+@media(min-width: 768px) {
+
+d-code {
+  overflow-x: visible !important;
+}
+
+pre.d-code code.d-code  {
+    padding-left: 18px;
+    font-size: 14px;
+}
+pre.text-output {
+  font-size: 14px;
+}
+}
+
+/* Figure */
+
+.figure {
+  position: relative;
+  margin-bottom: 2.5em;
+  margin-top: 1.5em;
+}
+
+.figure img {
+  width: 100%;
+}
+
+.figure .caption {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 12px;
+  line-height: 1.5em;
+}
+
+.figure img.external {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  padding: 18px;
+  box-sizing: border-box;
+}
+
+.figure .caption a {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.figure .caption b,
+.figure .caption strong, {
+  font-weight: 600;
+  color: rgba(0, 0, 0, 1.0);
+}
+
+
+
+/* Tweak 1000px media break to show more text */
+
+@media(min-width: 1000px) {
+  .base-grid,
+  distill-header,
+  d-title,
+  d-abstract,
+  d-article,
+  d-appendix,
+  distill-appendix,
+  d-byline,
+  d-footnote-list,
+  d-citation-list,
+  distill-footer {
+    grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+    grid-column-gap: 16px;
+  }
+
+  .grid {
+    grid-column-gap: 16px;
+  }
+
+  d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+  }
+  figure .caption, .figure .caption, figure figcaption {
+    font-size: 13px;
+  }
+}
+
+@media(min-width: 1180px) {
+  .base-grid,
+  distill-header,
+  d-title,
+  d-abstract,
+  d-article,
+  d-appendix,
+  distill-appendix,
+  d-byline,
+  d-footnote-list,
+  d-citation-list,
+  distill-footer {
+    grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+    grid-column-gap: 32px;
+  }
+
+  .grid {
+    grid-column-gap: 32px;
+  }
+}
+
+
+/* Get the citation styles for the appendix (not auto-injected on render since
+   we do our own rendering of the citation appendix) */
+
+d-appendix .citation-appendix,
+.d-appendix .citation-appendix {
+  font-size: 11px;
+  line-height: 15px;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  padding-left: 18px;
+  border: 1px solid rgba(0,0,0,0.1);
+  background: rgba(0, 0, 0, 0.02);
+  padding: 10px 18px;
+  border-radius: 3px;
+  color: rgba(150, 150, 150, 1);
+  overflow: hidden;
+  margin-top: -12px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+
+/* Social footer */
+
+.social_footer {
+  margin-top: 30px;
+  margin-bottom: 0;
+  color: rgba(0,0,0,0.67);
+}
+
+.disqus-comments {
+  margin-right: 30px;
+}
+
+.disqus-comment-count {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
+#disqus_thread {
+  margin-top: 30px;
+}
+
+.article-sharing a {
+  border-bottom: none;
+  margin-right: 8px;
+}
+
+.article-sharing a:hover {
+  border-bottom: none;
+}
+
+.sidebar-section.subscribe {
+  font-size: 12px;
+  line-height: 1.6em;
+}
+
+.subscribe p {
+  margin-bottom: 0.5em;
+}
+
+
+.article-footer .subscribe {
+  font-size: 15px;
+  margin-top: 45px;
+}
+
+
+.sidebar-section.custom {
+  font-size: 12px;
+  line-height: 1.6em;
+}
+
+.custom p {
+  margin-bottom: 0.5em;
+}
+
+
+/* Improve display for browsers without grid (IE/Edge <= 15) */
+
+.downlevel {
+  line-height: 1.6em;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+}
+
+.downlevel .d-title {
+  padding-top: 6rem;
+  padding-bottom: 1.5rem;
+}
+
+.downlevel .d-title h1 {
+  font-size: 50px;
+  font-weight: 700;
+  line-height: 1.1em;
+  margin: 0 0 0.5rem;
+}
+
+.downlevel .d-title p {
+  font-weight: 300;
+  font-size: 1.2rem;
+  line-height: 1.55em;
+  margin-top: 0;
+}
+
+.downlevel .d-byline {
+  padding-top: 0.8em;
+  padding-bottom: 0.8em;
+  font-size: 0.8rem;
+  line-height: 1.8em;
+}
+
+.downlevel .section-separator {
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.downlevel .d-article {
+  font-size: 1.06rem;
+  line-height: 1.7em;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+
+.downlevel .d-appendix {
+  padding-left: 0;
+  padding-right: 0;
+  max-width: none;
+  font-size: 0.8em;
+  line-height: 1.7em;
+  margin-bottom: 0;
+  color: rgba(0,0,0,0.5);
+  padding-top: 40px;
+  padding-bottom: 48px;
+}
+
+.downlevel .footnotes ol {
+  padding-left: 13px;
+}
+
+.downlevel .base-grid,
+.downlevel .distill-header,
+.downlevel .d-title,
+.downlevel .d-abstract,
+.downlevel .d-article,
+.downlevel .d-appendix,
+.downlevel .distill-appendix,
+.downlevel .d-byline,
+.downlevel .d-footnote-list,
+.downlevel .d-citation-list,
+.downlevel .distill-footer,
+.downlevel .appendix-bottom,
+.downlevel .posts-container {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+@media(min-width: 768px) {
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+  padding-left: 150px;
+  padding-right: 150px;
+  max-width: 900px;
+}
+}
+
+.downlevel pre code {
+  display: block;
+  border-left: 2px solid rgba(0, 0, 0, .1);
+  padding: 0 0 0 20px;
+  font-size: 14px;
+}
+
+.downlevel code, .downlevel pre {
+  color: black;
+  background: none;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+</style>
+
+<script type="application/javascript">
+
+function is_downlevel_browser() {
+  if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                 window.navigator.userAgent)) {
+    return true;
+  } else {
+    return window.load_distill_framework === undefined;
+  }
+}
+
+// show body when load is complete
+function on_load_complete() {
+
+  // set body to visible
+  document.body.style.visibility = 'visible';
+
+  // force redraw for leaflet widgets
+  if (window.HTMLWidgets) {
+    var maps = window.HTMLWidgets.findAll(".leaflet");
+    $.each(maps, function(i, el) {
+      var map = this.getMap();
+      map.invalidateSize();
+      map.eachLayer(function(layer) {
+        if (layer instanceof L.TileLayer)
+          layer.redraw();
+      });
+    });
+  }
+
+  // trigger 'shown' so htmlwidgets resize
+  $('d-article').trigger('shown');
+}
+
+function init_distill() {
+
+  init_common();
+
+  // create front matter
+  var front_matter = $('<d-front-matter></d-front-matter>');
+  $('#distill-front-matter').wrap(front_matter);
+
+  // create d-title
+  $('.d-title').changeElementType('d-title');
+
+  // create d-byline
+  var byline = $('<d-byline></d-byline>');
+  $('.d-byline').replaceWith(byline);
+
+  // create d-article
+  var article = $('<d-article></d-article>');
+  $('.d-article').wrap(article).children().unwrap();
+
+  // move posts container into article
+  $('.posts-container').appendTo($('d-article'));
+
+  // create d-appendix
+  $('.d-appendix').changeElementType('d-appendix');
+
+  // create d-bibliography
+  var bibliography = $('<d-bibliography></d-bibliography>');
+  $('#distill-bibliography').wrap(bibliography);
+
+  // flag indicating that we have appendix items
+  var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+  // replace citations with <d-cite>
+  $('.citation').each(function(i, val) {
+    appendix = true;
+    var cites = $(this).attr('data-cites').split(" ");
+    var dt_cite = $('<d-cite></d-cite>');
+    dt_cite.attr('key', cites.join());
+    $(this).replaceWith(dt_cite);
+  });
+  // remove refs
+  $('#refs').remove();
+
+  // replace footnotes with <d-footnote>
+  $('.footnote-ref').each(function(i, val) {
+    appendix = true;
+    var href = $(this).attr('href');
+    var id = href.replace('#', '');
+    var fn = $('#' + id);
+    var fn_p = $('#' + id + '>p');
+    fn_p.find('.footnote-back').remove();
+    var text = fn_p.html();
+    var dtfn = $('<d-footnote></d-footnote>');
+    dtfn.html(text);
+    $(this).replaceWith(dtfn);
+  });
+  // remove footnotes
+  $('.footnotes').remove();
+
+  $('h1.appendix, h2.appendix').each(function(i, val) {
+    $(this).changeElementType('h3');
+  });
+  $('h3.appendix').each(function(i, val) {
+    var id = $(this).attr('id');
+    $('.d-toc a[href="#' + id + '"]').parent().remove();
+    appendix = true;
+    $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+  });
+
+  // show d-appendix if we have appendix content
+  $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+  // replace code blocks with d-code
+  $('pre>code').each(function(i, val) {
+    var code = $(this);
+    var pre = code.parent();
+    var clz = "";
+    var language = pre.attr('class');
+    if (language) {
+      // map unknown languages to "clike" (without this they just dissapear)
+      if ($.inArray(language, ["bash", "clike", "css", "go", "html",
+                               "javascript", "js", "julia", "lua", "markdown",
+                               "markup", "mathml", "python", "svg", "xml"]) == -1)
+        language = "clike";
+      language = ' language="' + language + '"';
+      var dt_code = $('<d-code block' + language + clz + '></d-code>');
+      dt_code.text(code.text());
+      pre.replaceWith(dt_code);
+    } else {
+      code.addClass('text-output').unwrap().changeElementType('pre');
+    }
+  });
+
+  // localize layout chunks to just output
+  $('.layout-chunk').each(function(i, val) {
+
+    // capture layout
+    var layout = $(this).attr('data-layout');
+
+    // apply layout to markdown level block elements
+    var elements = $(this).children().not('d-code, pre.text-output, script');
+    elements.each(function(i, el) {
+      var layout_div = $('<div class="' + layout + '"></div>');
+      if (layout_div.hasClass('shaded')) {
+        var shaded_content = $('<div class="shaded-content"></div>');
+        $(this).wrap(shaded_content);
+        $(this).parent().wrap(layout_div);
+      } else {
+        $(this).wrap(layout_div);
+      }
+    });
+
+
+    // unwrap the layout-chunk div
+    $(this).children().unwrap();
+  });
+
+  // load distill framework
+  load_distill_framework();
+
+  // wait for window.distillRunlevel == 4 to do post processing
+  function distill_post_process() {
+
+    if (!window.distillRunlevel || window.distillRunlevel < 4)
+      return;
+
+    // hide author/affiliations entirely if we have no authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+    if (!have_authors)
+      $('d-byline').addClass('hidden');
+
+    // table of contents
+    if (have_authors) // adjust border if we are in authors
+      $('.d-toc').parent().addClass('d-article-with-toc');
+
+    // strip links that point to #
+    $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+    // hide elements of author/affiliations grid that have no value
+    function hide_byline_column(caption) {
+      $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+    }
+
+    // affiliations
+    var have_affiliations = false;
+    for (var i = 0; i<front_matter.authors.length; ++i) {
+      var author = front_matter.authors[i];
+      if (author.affiliation !== "&nbsp;") {
+        have_affiliations = true;
+        break;
+      }
+    }
+    if (!have_affiliations)
+      $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+    // published date
+    if (!front_matter.publishedDate)
+      hide_byline_column("Published");
+
+    // document object identifier
+    var doi = $('d-byline').find('h3:contains("DOI")');
+    var doi_p = doi.next().empty();
+    if (!front_matter.doi) {
+      // if we have a citation and valid citationText then link to that
+      if ($('#citation').length > 0 && front_matter.citationText) {
+        doi.html('Citation');
+        $('<a href="#citation"></a>')
+          .text(front_matter.citationText)
+          .appendTo(doi_p);
+      } else {
+        hide_byline_column("DOI");
+      }
+    } else {
+      $('<a></a>')
+         .attr('href', "https://doi.org/" + front_matter.doi)
+         .html(front_matter.doi)
+         .appendTo(doi_p);
+    }
+
+     // change plural form of authors/affiliations
+    if (front_matter.authors.length === 1) {
+      var grid = $('.authors-affiliations');
+      grid.children('h3:contains("Authors")').text('Author');
+      grid.children('h3:contains("Affiliations")').text('Affiliation');
+    }
+
+    // inject pre code styles (can't do this with a global stylesheet b/c a shadow root is used)
+    $('d-code').each(function(i, val) {
+      var style = document.createElement('style');
+      style.innerHTML = 'pre code { padding-left: 10px; font-size: 12px; border-left: 2px solid rgba(0,0,0,0.1); } ' +
+                        '@media(min-width: 768px) { pre code { padding-left: 18px; font-size: 14px; } }';
+      if (this.shadowRoot)
+        this.shadowRoot.appendChild(style);
+    });
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // clear polling timer
+    clearInterval(tid);
+
+    // show body now that everything is ready
+    on_load_complete();
+  }
+
+  var tid = setInterval(distill_post_process, 50);
+  distill_post_process();
+
+}
+
+function init_downlevel() {
+
+  init_common();
+
+   // insert hr after d-title
+  $('.d-title').after($('<hr class="section-separator"/>'));
+
+  // check if we have authors
+  var front_matter = JSON.parse($("#distill-front-matter").html());
+  var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+  // manage byline/border
+  if (!have_authors)
+    $('.d-byline').remove();
+  $('.d-byline').after($('<hr class="section-separator"/>'));
+  $('.d-byline a').remove();
+
+  // remove toc
+  $('.d-toc-header').remove();
+  $('.d-toc').remove();
+  $('.d-toc-separator').remove();
+
+  // move appendix elements
+  $('h1.appendix, h2.appendix').each(function(i, val) {
+    $(this).changeElementType('h3');
+  });
+  $('h3.appendix').each(function(i, val) {
+    $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+  });
+
+
+  // inject headers into references and footnotes
+  var refs_header = $('<h3></h3>');
+  refs_header.text('References');
+  $('#refs').prepend(refs_header);
+
+  var footnotes_header = $('<h3></h3');
+  footnotes_header.text('Footnotes');
+  $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+  // move appendix-bottom entries to the bottom
+  $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+  $('.appendix-bottom').remove();
+
+  // remove appendix if it's empty
+  if ($('.d-appendix').children().length === 0)
+    $('.d-appendix').remove();
+
+  // prepend separator above appendix
+  $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+  // trim code
+  $('pre>code').each(function(i, val) {
+    $(this).html($.trim($(this).html()));
+  });
+
+  // move posts-container right before article
+  $('.posts-container').insertBefore($('.d-article'));
+
+  $('body').addClass('downlevel');
+
+  on_load_complete();
+}
+
+
+function init_common() {
+
+  // jquery plugin to change element types
+  (function($) {
+    $.fn.changeElementType = function(newType) {
+      var attrs = {};
+
+      $.each(this[0].attributes, function(idx, attr) {
+        attrs[attr.nodeName] = attr.nodeValue;
+      });
+
+      this.replaceWith(function() {
+        return $("<" + newType + "/>", attrs).append($(this).contents());
+      });
+    };
+  })(jQuery);
+
+  // prevent underline for linked images
+  $('a > img').parent().css({'border-bottom' : 'none'});
+
+  // mark non-body figures created by knitr chunks as 100% width
+  $('.layout-chunk').each(function(i, val) {
+    var figures = $(this).find('img, .html-widget');
+    if ($(this).attr('data-layout') !== "l-body") {
+      figures.css('width', '100%');
+    } else {
+      figures.css('max-width', '100%');
+      figures.filter("[width]").each(function(i, val) {
+        var fig = $(this);
+        fig.css('width', fig.attr('width') + 'px');
+      });
+
+    }
+  });
+
+  // auto-append index.html to post-preview links in file: protocol
+  // and in rstudio ide preview
+  $('.post-preview').each(function(i, val) {
+    if (window.location.protocol === "file:")
+      $(this).attr('href', $(this).attr('href') + "index.html");
+  });
+
+  // get rid of index.html references in header
+  if (window.location.protocol !== "file:") {
+    $('.distill-site-header a[href]').each(function(i,val) {
+      $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+    });
+  }
+
+  // add class to pandoc style tables
+  $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+  $('.kable-table').children('table').addClass('pandoc-table');
+
+  // add figcaption style to table captions
+  $('caption').parent('table').addClass("figcaption");
+
+  // initialize posts list
+  if (window.init_posts_list)
+    window.init_posts_list();
+
+  // implmement disqus comment link
+  $('.disqus-comment-count').click(function() {
+    window.headroom_prevent_pin = true;
+    $('#disqus_thread').toggleClass('hidden');
+    if (!$('#disqus_thread').hasClass('hidden')) {
+      var offset = $(this).offset();
+      $(window).resize();
+      $('html, body').animate({
+        scrollTop: offset.top - 35
+      });
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (is_downlevel_browser())
+    init_downlevel();
+  else
+    window.addEventListener('WebComponentsReady', init_distill);
+});
+
+</script>
+
+<!--/radix_placeholder_distill-->
+  <script src="../../site_libs/header-attrs-2.3/header-attrs.js"></script>
+  <link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+  <script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+  <script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
+  <script src="../../site_libs/bowser-1.9.3/bowser.min.js"></script>
+  <script src="../../site_libs/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="../../site_libs/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178413324-1"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-178413324-1');
+</script>
+<style type="text/css">
+/* ---------- Global Styles ---------- */
+
+html, body, p {
+  
+  font-family: 'Futura Bk BT';
+  font-weight: 200;
+  line-height: 1.55; 
+  font-size: 1em;
+  color: #333333;
+  font-style: normal;
+  
+}
+
+h1 {
+  font-family: 'Futura';
+}
+
+h2, h3, h4, h5 {
+  font-family: 'Futura Hv BT';
+}
+
+
+/* Small caps */
+
+.sc {
+  font-variant: small-caps;
+  letter-spacing: 0.1em;
+  font-family: Futura Bk BT;
+}
+
+/* Override bold style (Danger Zone) */
+
+p strong {
+    font-family: 'Futura Hv BT';
+    font-weight: normal;
+    font-size: 0.9em;
+    letter-spacing: 0.05em;
+}
+
+
+
+/* ---------- Index Page Styles ---------- */
+
+/* Publication Date */
+
+.publishedDate {
+  font-size: 1.1em;
+}
+
+
+/* Top & Bot bars */
+
+.distill-site-nav {
+  background-color: #262c2f;
+}
+
+.distill-site-footer p {
+  color: white;
+}
+
+
+/* Google Search */
+
+table#gs_id50 {
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+.gsc-control-cse {
+  margin-bottom: 0;
+}
+
+.gsc-search-button-v2 {
+  border-color: #272c34;
+  background-color: #404f67;
+}
+
+
+/* Post published date medatada */
+.posts-list .metadata .publishedDate{
+  font-family: 'Roboto Mono Medium';
+}
+
+
+/* Post list caption */
+.posts-list .posts-list-caption{
+  font-family: 'Fira Mono Medium';
+  border-bottom: 5px solid #f3f3f3;
+  padding-bottom: 2rem;
+}
+
+
+/* Sidebar Categories */
+.posts-sidebar {
+  font-family: 'Fira Mono';
+}
+
+
+/* ---------- Article Styles ---------- */
+
+
+/* Title */
+
+d-title {
+  padding-bottom: 0;
+}
+
+d-title h1 {
+  font-family: 'Lora';
+  line-height: 1.3;
+}
+
+d-title p {
+  font-family: 'Futura Lt BT';
+}
+
+
+/* General */
+
+d-article h3 {
+  margin-top: 1em;
+}
+
+
+
+/* Aside */
+
+aside {
+  width: 200px;
+}
+
+
+/* Block Quotes */
+blockquote p {
+  margin-bottom: 0;
+}
+
+
+
+/* ---------- Code Styles ---------- */
+
+/* Inline Code */
+
+code {
+  color: #c46586;
+  font-family: 'Fira Mono';
+  font-size: 0.8em;
+  letter-spacing: 0.03em;
+}
+
+
+
+/* Output Chunk */
+
+pre.text-output {
+  background-color: #F5F8F9;
+  font-family: 'IBM Plex Mono Regular';
+  font-size: 0.7em;
+}
+
+/* Code Chunk */
+
+d-article pre {
+  font-size: 14px;
+  padding-bottom: 17px;
+  margin-bottom: 2em;
+}
+
+d-code {
+  margin-bottom: 10px;
+}
+
+
+
+/* ---------- ADD-ONS ---------- */
+
+
+/* {rmarkdown} */
+
+.pagedtable-wrapper {
+  margin-bottom: 20px;
+}
+
+
+/* html widgets */
+
+.html-widget {
+  margin-top: 1.0em;
+  margin-bottom: 1.0em;
+}
+
+
+/* {reactable} */
+
+.ReactTable {
+  font-size: 14px;
+  font-family: 'Roboto Medium';
+  background-color: #fbfbfb;
+}
+
+
+/* {xaringanExtra} */
+
+.panelset {
+  margin-top: 10px;
+  --panel-tabs-border-bottom: black;
+  --panel-tab-font-family: 'Montserrat SemiBold';
+  --panel-tab-hover-background: #ddd;
+  --panel-tab-text-decoration: none;
+  border-bottom: 2px solid black;
+  margin-bottom: 30px;
+}
+</style>
+<!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Demystifying stat_ layers in {ggplot2}","description":"The motivation behind stat, the distinction between stat and geom, and a case study of stat_summary()","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/"}],"publishedDate":"2020-09-27T00:00:00.000-04:00","citationText":"Choe, 2020"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<header class="header header--fixed" role="banner">
+<nav class="distill-site-nav distill-site-header">
+<div class="nav-left">
+<a href="../../index.html" class="title">June Choe</a>
+</div>
+<div class="nav-right">
+<a href="../../index.html">Blog Posts</a>
+<a href="../../presentations.html">Presentations</a>
+<a href="../../about.html">About</a>
+<a href="https://twitter.com/yjunechoe">
+<i class="fa fa-twitter" aria-hidden="true"></i>
+</a>
+<a href="https://github.com/yjunechoe">
+<i class="fa fa-github" aria-hidden="true"></i>
+</a>
+<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
+</div>
+</nav>
+</header>
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Demystifying stat_ layers in {ggplot2}</h1>
+<p><p>The motivation behind stat, the distinction between stat and geom, and a case study of stat_summary()</p></p>
+</div>
+
+<div class="d-byline">
+  June Choe  (University of Pennsylvania Linguistics)<a href="https://live-sas-www-ling.pantheon.sas.upenn.edu/" class="uri">https://live-sas-www-ling.pantheon.sas.upenn.edu/</a>
+  
+<br/>09-27-2020
+</div>
+
+<div class="d-article">
+<h3 class="d-toc-header">Table of Contents</h3>
+<nav class="d-toc" id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#when-and-why-should-i-use-stat">When and why should I use STAT?</a>
+<ul>
+<li><a href="#interim-summary-1">Interim Summary #1</a></li>
+</ul></li>
+<li><a href="#understanding-stat-with-stat_summary">Understanding STAT with stat_summary()</a>
+<ul>
+<li><a href="#interim-summary-2">Interim Summary #2</a></li>
+</ul></li>
+<li><a href="#putting-stat-to-use">Putting STAT to use</a>
+<ul>
+<li><a href="#error-bars-showing-95-confidence-interval">1. Error bars showing 95% confidence interval</a></li>
+<li><a href="#a-color-coded-bar-plot-of-medians">2. A color-coded bar plot of medians</a></li>
+<li><a href="#pointrange-plot-with-changing-size">3. Pointrange plot with changing size</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+</nav>
+<hr class="d-toc-separator"/>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<h2 id="introduction">Introduction</h2>
+<p><em>(Feel free to skip the intro section if you want to get to the point!)</em></p>
+<p>A powerful concept in the Grammar of Graphics is that variables are mapped onto <span class="sc">aesthetics</span>. In <code>{ggplot2}</code>, a class of objects called <span class="sc">geom</span> implements this idea. For example, <code>geom_point(mapping = aes(x = mass, y = height))</code> would give you a plot of <em>points</em> (i.e. a scatter plot), where the x-axis represents the <code>mass</code> variable and the y axis represents the <code>height</code> variable.</p>
+<p>Because <code>geom_*()</code>s<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> are so powerful and because aesthetic mappings are easily understandable at an abstract level, you rarely have to think about what happens to the data you feed it. Take this simple histogram for example:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+data(&quot;penguins&quot;, package = &quot;palmerpenguins&quot;)
+
+ggplot(data = penguins, mapping = aes(x = body_mass_g)) +
+  geom_histogram()</code></pre>
+<p><img src="demystifying-stat-layers-ggplot2_files/figure-html5/unnamed-chunk-1-1.png" width="624" /></p>
+</div>
+<p>What’s going on here? You might say that the <code>body_mass_g</code> variable is represented in the x-axis. Sure, that’s not wrong. But a fuller explanation would require you to talk about these extra steps under the hood:</p>
+<ol type="1">
+<li><p>The variable mapped to x is divided into discrete bins</p></li>
+<li><p>A count of observations within each bin is calculated</p></li>
+<li><p>That new variable is then represented in the y axis</p></li>
+<li><p>Finally, the provided x variable and the internally calculated y variable is represented by bars that have certain position and height</p></li>
+</ol>
+<p>I don’t mean to say here that you are <em>a total fool</em> if you can’t give a paragraph-long explanation of <code>geom_histogram()</code>. Rather, my intention here is to emphasize that <strong>the data-to-aesthetic mapping in GEOM objects is not neutral</strong>, although it can often feel very natural, intuitive, and objective (and you should thank the devs for that!). Just think about the many ways in which you can change any of the internal steps above, especially steps 1<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> and 2<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, while still having the output <em>look</em> like a histogram.</p>
+<p>This important point rarely crosses our mind, in part because of what we have gotten drilled into our heads when we first started learning ggplot. As beginners we’ve likely experienced the frustration of having all the data we need to plot something, but ggplot <em>just won’t work</em>. You could imagine a beginner today who’s getting frustrated because <code>geom_point(aes(x = mass, y = height))</code> throws an error with the following data.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>
+  # A tibble: 2 x 4
+    variable subject1 subject2 subject3
+    &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+  1 mass           75       70       55
+  2 height        154      172      144</code></pre>
+</div>
+<p>And what would <del>StackOverflow</del> you tell this beginner? You’d probably tell them to put the data in a <strong>tidy format</strong><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> first.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>
+  # A tibble: 3 x 3
+    subject  mass height
+      &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+  1       1    75    154
+  2       2    70    172
+  3       3    55    144</code></pre>
+</div>
+<p>Now, that’s something you can tell a beginner for a quick and easy fix. But if you still simply think “the thing that makes ggplot work = tidy data”, it’s important that you <strong>unlearn this mantra</strong> in order to fully understand the motivation behind <span class="sc">stat</span>.</p>
+<h2 id="when-and-why-should-i-use-stat">When and why should I use STAT?</h2>
+<p>You could be using ggplot every day and never even touch any of the two-dozen native <code>stat_*()</code> functions. In fact, <em>because</em> you’ve only used <code>geom_*()</code>s, you may find <code>stat_*()</code>s to be the esoteric and mysterious remnants of the past that only <span class="sc">the developers</span> continue to use to maintain law and order in the depths of source code hell.</p>
+<aside>
+The rhetorical strategy I deploy here is also known in the literature as “subtweeting myself”
+</aside>
+<p>If that describes you, you might wonder why you even need to know about all these <code>stat_*()</code> functions.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="https://media.giphy.com/media/cFgb5p5e1My3K/giphy.gif" width="400px" style="display: block; margin: auto;" /></p>
+</div>
+<p>Well, the main motivation for <span class="sc">stat</span> is simply this:</p>
+<blockquote>
+<p><strong>“<em>Even though the data is tidy it may not represent the values you want to display</em>”</strong><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+</blockquote>
+<p>The histogram discussion in the previous section was a good example to this point, but here I’ll introduce another example that I think will hit the point home.</p>
+<p>Suppose you have a data <code>simple_data</code> that looks like this:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+simple_data &lt;- tibble(group = factor(rep(c(&quot;A&quot;, &quot;B&quot;), each = 15)),
+                      subject = 1:30,
+                      score = c(rnorm(15, 40, 20), rnorm(15, 60, 10)))</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["group"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["subject"],"name":[2],"type":["int"],"align":["right"]},{"label":["score"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"A","2":"1","3":"28.79049"},{"1":"A","2":"2","3":"35.39645"},{"1":"A","2":"3","3":"71.17417"},{"1":"A","2":"4","3":"41.41017"},{"1":"A","2":"5","3":"42.58575"},{"1":"A","2":"6","3":"74.30130"},{"1":"A","2":"7","3":"49.21832"},{"1":"A","2":"8","3":"14.69878"},{"1":"A","2":"9","3":"26.26294"},{"1":"A","2":"10","3":"31.08676"},{"1":"A","2":"11","3":"64.48164"},{"1":"A","2":"12","3":"47.19628"},{"1":"A","2":"13","3":"48.01543"},{"1":"A","2":"14","3":"42.21365"},{"1":"A","2":"15","3":"28.88318"},{"1":"B","2":"16","3":"77.86913"},{"1":"B","2":"17","3":"64.97850"},{"1":"B","2":"18","3":"40.33383"},{"1":"B","2":"19","3":"67.01356"},{"1":"B","2":"20","3":"55.27209"},{"1":"B","2":"21","3":"49.32176"},{"1":"B","2":"22","3":"57.82025"},{"1":"B","2":"23","3":"49.73996"},{"1":"B","2":"24","3":"52.71109"},{"1":"B","2":"25","3":"53.74961"},{"1":"B","2":"26","3":"43.13307"},{"1":"B","2":"27","3":"68.37787"},{"1":"B","2":"28","3":"61.53373"},{"1":"B","2":"29","3":"48.61863"},{"1":"B","2":"30","3":"72.53815"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<p>And suppose that you want to draw a bar plot where each bar represents <code>group</code> and the height of the bars corresponds to the mean of <code>score</code> for each group.</p>
+<p>If you’re stuck in the mindset of “the data that I feed in to <code>ggplot()</code> is exactly what gets mapped, so I need to tidy it first and make sure it contains all the aesthetics that each geom needs”, you would need to transform the data before piping it in like this:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+simple_data %&gt;%
+  group_by(group) %&gt;% 
+  summarize(
+    mean_score = mean(score),
+    .groups = &#39;drop&#39; # Remember to ungroup!
+  ) %&gt;% 
+  ggplot(aes(x = group, y = mean_score)) +
+  geom_col()</code></pre>
+</div>
+<aside>
+It’s a good practice to always <strong>ungroup your dataframe</strong> before passing into ggplot, as having grouped data can lead to unintended behaviors that are hard to debug.
+</aside>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="demystifying-stat-layers-ggplot2_files/figure-html5/simple_data_bar-1.png" width="624" /></p>
+</div>
+<p>Where the data passed in looks like this:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>
+  # A tibble: 2 x 2
+    group mean_score
+    &lt;fct&gt;      &lt;dbl&gt;
+  1 A           43.0
+  2 B           57.5</code></pre>
+</div>
+<p>Ok, not really a problem there. But what if we want to add in error bars too? Error bars also plot a summary statistic (the standard error), so we’d need make another summary of the data to pipe into <code>ggplot()</code>.</p>
+<p>Let’s first plot the error bar by itself, we’re again passing in a transformed data</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+simple_data %&gt;% 
+  group_by(group) %&gt;% 
+  summarize(
+    mean_score = mean(score),
+    se = sqrt(var(score)/length(score)),
+    .groups = &#39;drop&#39;
+  ) %&gt;% 
+  mutate(
+    lower = mean_score - se,
+    upper = mean_score + se
+  ) %&gt;% 
+  ggplot(aes(x = group, y = mean_score, ymin = lower, ymax = upper)) +
+  geom_errorbar()</code></pre>
+<p><img src="demystifying-stat-layers-ggplot2_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
+</div>
+<p>Where the transformed data looks like this:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>
+  # A tibble: 2 x 5
+    group mean_score    se lower upper
+    &lt;fct&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+  1 A           43.0  4.37  38.7  47.4
+  2 B           57.5  2.82  54.7  60.4</code></pre>
+</div>
+<p>Ok, now let’s try combining the two. One way to do this is to save the data paseed in for the bar plot and the data passed in for the errorbar plot as two separate variables, and then call each in their respective geoms:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+simple_data_bar &lt;- simple_data %&gt;%
+  group_by(group) %&gt;% 
+  summarize(
+    mean_score = mean(score),
+    .groups = &#39;drop&#39;
+  )
+  
+simple_data_errorbar &lt;- simple_data %&gt;% 
+  group_by(group) %&gt;% 
+  summarize(
+    mean_score = mean(score),
+    se = sqrt(var(score)/length(score)),
+    .groups = &#39;drop&#39;
+  ) %&gt;% 
+  mutate(
+    lower = mean_score - se,
+    upper = mean_score + se
+  )
+
+ggplot() +
+  geom_col(
+    aes(x = group, y = mean_score),
+    data = simple_data_bar
+  ) +
+  geom_errorbar(
+    aes(x = group, y = mean_score, ymin = lower, ymax = upper),
+    data = simple_data_errorbar
+  )</code></pre>
+<p><img src="demystifying-stat-layers-ggplot2_files/figure-html5/unnamed-chunk-10-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="https://media.giphy.com/media/aNtt9T8SqGNK8/giphy.gif" width="400px" style="display: block; margin: auto;" /></p>
+</div>
+<p>Yeah… that code is a mouthful. The above approach is not <strong>parsimonious</strong> because we keep repeating similar processes in different places.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> If you, like myself, don’t like how this looks, then let this be a lesson that <strong>this is the consequence of thinking that you must always prepare a tidy data containing values that can be DIRECTLY mapped to geometric objects</strong>.</p>
+<p>And on a more theoretical note, <code>simple_data_bar</code> and <code>simple_data_errorbar</code> aren’t even really “tidy” in the original sense of the term. We need to remind ourselves here that tidy data is about the organization of <strong>observations in the data</strong>. Under this definition, values like bar height and the top and bottom of whiskers are hardly <em>observations</em> themselves. Rather, they’re abstractions or summaries of the actual observations in our data <code>simple_data</code> which, if you notice, we <em>didn’t even use</em> to make our final plot above!</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
+<img src="https://d33wubrfki0l68.cloudfront.net/6f1ddb544fc5c69a2478e444ab8112fb0eea23f8/91adc/images/tidy-1.png" alt="Tidy data is about the organization of observations." class=external />
+<p class="caption">
+Figure 1: Tidy data is about the organization of observations.
+</p>
+</div>
+</div>
+<p>So not only is it inefficient to create a transformed dataframe that suits the needs of each geom, this method isn’t even championing the principles of tidy data like we thought.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+<p>What we should do instead is to <em>take advantage</em> of the fact that our original data <code>simple_data</code> is the <strong>common denominator</strong> of <code>simple_data_bar</code> and <code>simple_data_errorbar</code>!</p>
+<p>Wouldn’t it be nice if you could just pass in the origin data containing all observations (<code>simple_data</code>) and have each layer internally transform the data in appropriate ways to suit the needs of the geom for that layer?</p>
+<p>Oh, so you mean something like this?</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+simple_data %&gt;% 
+  ggplot(aes(group, score)) +
+  stat_summary(geom = &quot;bar&quot;) +
+  stat_summary(geom = &quot;errorbar&quot;)</code></pre>
+<p><img src="demystifying-stat-layers-ggplot2_files/figure-html5/unnamed-chunk-13-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="https://media.giphy.com/media/xT0xeJpnrWC4XWblEk/giphy.gif" width="400px" style="display: block; margin: auto;" /></p>
+</div>
+<h3 id="interim-summary-1">Interim Summary #1</h3>
+<p>In this section, I built up a tedious walkthrough of making a barplot with error bars using only <code>geom_*()</code>s just to show that two lines of <code>stat_summary()</code> with a single argument can achieve the same without even touching the data through any form of pre-processing.</p>
+<p>So that was a taste of how powerful <code>stat_*()</code>s can be, but how do they work and how can you use them in practice?</p>
+<h2 id="understanding-stat-with-stat_summary">Understanding STAT with stat_summary()</h2>
+<p>Let’s analyze <code>stat_summary()</code> as a case study to understand how <code>stat_*()</code>s work more generally. I think that <code>stat_summary()</code> is a good choice because it’s a more primitive version of many other <code>stat_*()</code>s and is likely to be the one that you’d end up using the most for visualizations in data science.</p>
+<p>Before we start, let’s create a toy data to work with. Let’s call this data <code>height_df</code> because it contains data about a <code>group</code> and the <code>height</code> of individuals in that group.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+height_df &lt;- tibble(group = &quot;A&quot;,
+                    height = rnorm(30, 170, 10))</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["group"],"name":[1],"type":["chr"],"align":["left"]},{"label":["height"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"A","2":"174.2646"},{"1":"A","2":"167.0493"},{"1":"A","2":"178.9513"},{"1":"A","2":"178.7813"},{"1":"A","2":"178.2158"},{"1":"A","2":"176.8864"},{"1":"A","2":"175.5392"},{"1":"A","2":"169.3809"},{"1":"A","2":"166.9404"},{"1":"A","2":"166.1953"},{"1":"A","2":"163.0529"},{"1":"A","2":"167.9208"},{"1":"A","2":"157.3460"},{"1":"A","2":"191.6896"},{"1":"A","2":"182.0796"},{"1":"A","2":"158.7689"},{"1":"A","2":"165.9712"},{"1":"A","2":"165.3334"},{"1":"A","2":"177.7997"},{"1":"A","2":"169.1663"},{"1":"A","2":"172.5332"},{"1":"A","2":"169.7145"},{"1":"A","2":"169.5713"},{"1":"A","2":"183.6860"},{"1":"A","2":"167.7423"},{"1":"A","2":"185.1647"},{"1":"A","2":"154.5125"},{"1":"A","2":"175.8461"},{"1":"A","2":"171.2385"},{"1":"A","2":"172.1594"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<p>We can visualize the data with a familiar geom, say <code>geom_point()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+height_df %&gt;% 
+  ggplot(aes(x = group, y = height)) +
+  geom_point()</code></pre>
+<p><img src="demystifying-stat-layers-ggplot2_files/figure-html5/unnamed-chunk-17-1.png" width="624" /></p>
+</div>
+<p>As a first step in our investigation, let’s just replace our familiar <code>geom_point()</code> with the scary-looking <code>stat_summary()</code> and see what happens:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+height_df %&gt;% 
+  ggplot(aes(x = group, y = height)) +
+  stat_summary()</code></pre>
+<p><img src="demystifying-stat-layers-ggplot2_files/figure-html5/unnamed-chunk-18-1.png" width="624" /></p>
+</div>
+<p>Instead of points, we now see a point and a line through that point. And before you get confused, this is actually one geom, called <span class="sc">pointrange</span>, not two separate geoms.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> Now that that’s cleared up, we might ask: <strong>what data is being represented by the pointrange?</strong></p>
+<p>Answering this question requires us to zoom out a little bit and ask: what <em>variables</em> does pointrange map <em>as a geom</em>? By looking at the documentation with <code>?geom_pointrange</code> we can see that <code>geom_pointrange()</code> <strong>requires</strong> the following aesthetics:</p>
+<ul>
+<li><p><span class="sc">x</span> <em>or</em> <span class="sc">y</span></p></li>
+<li><p><span class="sc">ymin</span> <em>or</em> <span class="sc">xmin</span></p></li>
+<li><p><span class="sc">ymax</span> <em>or</em> <span class="sc">xmax</span></p></li>
+</ul>
+<p>So now let’s look back at our arguments in <code>aes()</code>. We said that <code>group</code> is mapped to <code>x</code> and that <code>height</code> is mapped to <code>y</code>. But we never said anything about <code>ymin/xmin</code> or <code>ymax/xmax</code> anywhere. So how is <code>stat_summary()</code> drawing a pointrange if we didn’t give it the required aesthetic mappings?</p>
+<p>Well, a good guess is that <code>stat_summary()</code> is <strong>transforming the data to calculate the necessary values to be mapped to pointrange</strong>. Here’s one reason for that guess - I’ve been suppressing message throughout this post but if you run the above code with <code>stat_summary()</code> yourself, you’d actually get this message:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>
+  No summary function supplied, defaulting to `mean_se()`</code></pre>
+</div>
+<p>Huh, a <span class="sc">summary function</span>? That sounds promising. Maybe that’s the key to our mystery!</p>
+<p>First, we see from the documentation of <code>stat_summary()</code> that this <code>mean_se()</code> thing is the default value for the <code>fun.data</code> argument.</p>
+<p>Next, let’s call it in the console to see what it is:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+mean_se</code></pre>
+<pre><code>
+  function (x, mult = 1) 
+  {
+      x &lt;- stats::na.omit(x)
+      se &lt;- mult * sqrt(stats::var(x)/length(x))
+      mean &lt;- mean(x)
+      new_data_frame(list(y = mean, ymin = mean - se, ymax = mean + 
+          se), n = 1)
+  }
+  &lt;bytecode: 0x000000001f738518&gt;
+  &lt;environment: namespace:ggplot2&gt;</code></pre>
+</div>
+<p>Ok, so it’s a function that takes some argument <code>x</code> and a second argument <code>mult</code> with the default value <code>1</code>.</p>
+<p>Let’s go over what it does by breaking down the function body line by line:</p>
+<ol type="1">
+<li>Remove <code>NA</code> values</li>
+<li>Calculate variable <code>se</code> which is the standard error of the values in <code>x</code> using the equation <span class="math inline">\(SE = \sqrt{\frac{1}{N-1}\sum_{i=1}^N(x_i-\bar{x})^2}\)</span></li>
+<li>Calculate the variable <code>mean</code><a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> which is the mean of <code>x</code></li>
+<li>Create a new dataframe with one row, with columns <code>y</code>, <code>ymin</code>, and <code>ymax</code>, where <code>y</code> is the mean od <code>x</code>, <code>ymin</code> is one standard error below the mean, and <code>ymax</code> is one standard error above the mean.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></li>
+</ol>
+<p>A cool thing about this is that although <code>mean_se()</code> seems to be exclusively used for internal operations, it’s actually available in the global environment from loading <code>{ggplot2}</code>. So let’s pass <code>height_df</code> to <code>mean_se()</code> and see what we get back!</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+mean_se(height_df)</code></pre>
+<pre><code>
+  Error: Elements must equal the number of rows or 1</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="https://media.giphy.com/media/3ELtfmA4Apkju/giphy.gif" width="400px" style="display: block; margin: auto;" /></p>
+</div>
+<p>Uhhh what?</p>
+<p>Do you see what happened just now? This is actually really important: <code>stat_summary()</code> summarizes <strong>one dimension</strong> of the data.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> <code>mean_se()</code> threw an error when we passed it our whole data because it was expecting just a <strong>vector</strong> of the variable to be summarized.</p>
+<aside>
+Whenever you’re trying out a new <code>stat_*()</code> function, make sure to check what variables/object types the statistical transformation is being applied to!
+</aside>
+<p>Ok now that we’ve went over that little mishap, let’s give <code>mean_se()</code> the vector it wants.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+mean_se(height_df$height)</code></pre>
+<pre><code>
+           y     ymin     ymax
+  1 171.7834 170.2587 173.3081</code></pre>
+</div>
+<p>And look at that, these look like they’re the same values that were being represented by the mid-point and the end-points of the pointrange plot that we drew with <code>stat_summary()</code> above!</p>
+<p>You know how else we can check that this is the case? With this neat function called <code>layer_data()</code>.</p>
+<p>We can pull the data that was used to draw the pointrange by passing our plot object to <code>layer_data()</code> and setting the second argument to <code>1</code><a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+pointrange_plot &lt;- height_df %&gt;% 
+  ggplot(aes(x = group, y = height)) +
+  stat_summary()
+
+layer_data(pointrange_plot, 1)</code></pre>
+<pre><code>
+    x group        y     ymin     ymax PANEL flipped_aes colour size linetype
+  1 1     1 171.7834 170.2587 173.3081     1       FALSE  black  0.5        1
+    shape fill alpha stroke
+  1    19   NA    NA      1</code></pre>
+</div>
+<p>Would ya look at that! There’s a lot of stuff in there, but it looks like the values for <code>y</code>, <code>ymin</code>, and <code>ymax</code> used for the actual plot match up with the values we calculated with <code>mean_se()</code> above!</p>
+<p>We’ve solved our mystery of how the pointrange was drawn when we didn’t provide all the required mappings!</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="https://media.giphy.com/media/srg19CG0cKMuI/giphy.gif" width="400px" style="display: block; margin: auto;" /></p>
+</div>
+<h3 id="interim-summary-2">Interim Summary #2</h3>
+<p>To summarize this section (ha!), <code>stat_summary()</code> works in the following order:</p>
+<ol type="1">
+<li><p>The data that is passed into <code>ggplot()</code> is inherited if one is not provided</p></li>
+<li><p>The function passed into the <code>fun.data</code> argument applies transformations to (a part of) that data (defaults to <code>mean_se()</code>)</p></li>
+<li><p>The result is passed into the geom provided in the <code>geom</code> argument (defaults to <span class="sc">pointrange</span>).</p></li>
+<li><p>If the data contains all the required mapppings for the geom, the geom will be plotted.</p></li>
+</ol>
+<p>And to make things extra clear &amp; to make <code>stat_summary()</code> less mysterious, we can explicitly spell out the two arguments <code>fun.data</code> and <code>geom</code> that we went over in this section.</p>
+<p>Look, it’s the same plot!</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+height_df %&gt;% 
+  ggplot(aes(x = group, y = height)) +
+  stat_summary(
+    geom = &quot;pointrange&quot;,
+    fun.data = mean_se
+  )</code></pre>
+</div>
+<aside>
+You could also do <code>fun.data = "mean_se"</code> but I prefer the unquoted version because it make it extra clear that <code>mean_se</code> is a function, not a special parameter. It also keeps things consistent because if you want to pass in a custom function, they cannot be quoted.
+</aside>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="demystifying-stat-layers-ggplot2_files/figure-html5/explicit_args-1.png" width="624" /></p>
+</div>
+<h2 id="putting-stat-to-use">Putting STAT to use</h2>
+<p>Now we have arrived at the fun part.</p>
+<p>Here, I will demonstrate a few ways of modifying <code>stat_summary()</code> to suit particular visualization needs.</p>
+<p>For this section, I will use a modified version of the <code>penguins</code> data that I loaded all the way up in the intro section (I’m just removing <code>NA</code> values here, nothing fancy).</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+my_penguins &lt;- na.omit(penguins)</code></pre>
+</div>
+<p><strong>At no point in this section will I be modifying the data being piped into <code>ggplot()</code>.</strong> That is the beauty and power of <span class="sc">stat</span>.</p>
+<h3 id="error-bars-showing-95-confidence-interval">1. Error bars showing 95% confidence interval</h3>
+<p>Here, we’re plotting the mean <code>body_mass_g</code> of penguins for each <code>sex</code>, with error bars that show the 95% confidence interval (a range of approx 1.96 standard errors from the mean).</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+my_penguins %&gt;% 
+  ggplot(aes(sex, body_mass_g)) +
+  stat_summary(
+    fun.data = ~mean_se(., mult = 1.96), # Increase `mult` value for bigger interval!
+    geom = &quot;errorbar&quot;,
+  )</code></pre>
+</div>
+<aside>
+As of {ggplot2} 3.3.0, you can use {rlang}-style anonymous functions. If you aren’t familiar, <code>~mean_se(., mult = 1.96)</code> is the same as <code>function(x) {mean_se(x, mult = 1.96)}</code>
+</aside>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="demystifying-stat-layers-ggplot2_files/figure-html5/pointline-1.png" width="624" /></p>
+</div>
+<p>The transformed data used for the <span class="sc">errorbar</span> geom inside <code>stat_summary()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+mean_se(my_penguins$body_mass_g, mult = 1.96)</code></pre>
+<pre><code>
+           y     ymin     ymax
+  1 4207.057 4120.571 4293.543</code></pre>
+</div>
+<h3 id="a-color-coded-bar-plot-of-medians">2. A color-coded bar plot of medians</h3>
+<p>Here, we’re plotting the median <code>bill_length_mm</code> for each penguins <code>species</code> and coloring the groups with median <code>bill_length_mm</code> under <code>40</code> in <code>pink</code>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+calc_median_and_color &lt;- function(x, threshold = 40) {
+  tibble(y = median(x)) %&gt;% 
+    mutate(fill = ifelse(y &lt; threshold, &quot;pink&quot;, &quot;grey35&quot;))
+}
+
+my_penguins %&gt;% 
+  ggplot(aes(species, bill_length_mm)) +
+  stat_summary(
+    fun.data = calc_median_and_color,
+    geom = &quot;bar&quot;
+  )</code></pre>
+</div>
+<aside>
+Calculating summaries by group is automatically handled internally when you provide grouping variables (here, the <code>species</code> variable that’s mapped to <code>x</code>), so you don’t have to worry about that in your custom function.
+</aside>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="demystifying-stat-layers-ggplot2_files/figure-html5/colorbar-1.png" width="624" /></p>
+</div>
+<p>The transformed data used for the <span class="sc">bar</span> geom inside <code>stat_summary()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+group_split(my_penguins, species) %&gt;%
+  map(~ pull(., bill_length_mm)) %&gt;% 
+  map_dfr(calc_median_and_color)</code></pre>
+</div>
+<aside>
+This mimics the internal process of <code>stat_summary()</code>. Run each line incrementally see to what they do!
+</aside>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>
+  # A tibble: 3 x 2
+        y fill  
+    &lt;dbl&gt; &lt;chr&gt; 
+  1  38.8 pink  
+  2  49.6 grey35
+  3  47.4 grey35</code></pre>
+</div>
+<p>Note how you can calculate <em>non-required</em> aesthetics in your custom functions (e.g., <code>fill</code>) and they also be used to make the geom!</p>
+<h3 id="pointrange-plot-with-changing-size">3. Pointrange plot with changing size</h3>
+<p>Here, we’re plotting <code>bill_depth_mm</code> of penguins inhabiting different <code>island</code>s, with the size of each pointrange changing with the number of observations</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+my_penguins %&gt;% 
+  ggplot(aes(species, bill_depth_mm)) +
+  stat_summary(
+    fun.data = function(x) {
+      
+      scaled_size &lt;- length(x)/nrow(my_penguins)
+      
+      mean_se(x) %&gt;% 
+        mutate(size = scaled_size)
+    }
+  )</code></pre>
+</div>
+<aside>
+If you don’t want to declare a new function in the environment just for one plot, you can just pass in an anonymous function to the <code>fun.data</code> argument. And of course, if it’s long, you should wrap it in <code>function(x){}</code>.
+</aside>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="demystifying-stat-layers-ggplot2_files/figure-html5/pointrange_custom-1.png" width="624" /></p>
+</div>
+<aside>
+Looking back, this is actually a cool plot because you can see how lower number of samples (smaller size) contributes to increased uncertainty (longer range) in the pointrange.
+</aside>
+<p>The transformed data used for the <span class="sc">pointrange</span> geom inside <code>stat_summary()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+group_split(my_penguins, species) %&gt;%
+  map(~ pull(., bill_depth_mm)) %&gt;% 
+  map_dfr(
+    function(x) {
+      
+      scaled_size &lt;- length(x)/nrow(my_penguins)
+      
+      mean_se(x) %&gt;% 
+        mutate(size = scaled_size)
+    }
+  )</code></pre>
+<pre><code>
+           y     ymin     ymax      size
+  1 18.34726 18.24635 18.44817 0.4384384
+  2 18.42059 18.28290 18.55828 0.2042042
+  3 14.99664 14.90625 15.08702 0.3573574</code></pre>
+</div>
+<h2 id="conclusion">Conclusion</h2>
+<p>Here are the main ideas from this post:</p>
+<ul>
+<li><p>Even though the data is tidy, it may not represent the values you want to display</p></li>
+<li><p>The solution is not to transform your <em>already-tidy</em> data so that it contains those values</p></li>
+<li><p>Instead, you should pass in your original tidy data into <code>ggplot()</code> as is and allow <code>stat_*()</code> functions to apply transformations internally</p></li>
+<li><p>These <code>stat_*()</code> functions can be customized for both their geoms and their transformation functions, and works similarly to <code>geom_*()</code> functions in other regards</p></li>
+<li><p>If you want to pass in your own <em>custom function</em>, make sure to check the documentation of that particular <code>stat_*()</code> function to check the variable/data type it requires.</p></li>
+<li><p>If you want to use a <em>different geom</em>, make sure that your transformation function calculates all the required aesthetics for that geom</p></li>
+</ul>
+<p>And a final note on <span class="sc">stat</span>s and <span class="sc">geom</span>s:</p>
+<p>Although I have talked about the limitations of <code>geom_*()</code>s to demonstrate the usefulness of <code>stat_*()</code>s, both have their place. It’s about knowing when to use which; it’s not a question of either-or. In fact, they require each other - just like how <code>stat_summary()</code> had a <code>geom</code> argument, <code>geom_*()</code>s also have a <code>stat</code> argument. At a higher level, <code>stat_*()</code>s and <code>geom_*()</code>s are simply convenient instantiations of the <code>layer()</code> function that builds up the layers of ggplot.</p>
+<p>Hadley explains the false dichotomy:</p>
+<blockquote>
+<p>Unfortunately, due to an early design mistake I called these either stat_() or geom_(). A better decision would have been to call them layer_() functions: that’s a more accurate description because <strong>every layer involves a stat and a geom</strong>.<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a></p>
+</blockquote>
+<p> </p>
+<p>Thanks for reading! Best of luck on your ggplot journey!</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="https://media.giphy.com/media/14cDsqOkks6O8U/giphy.gif" width="400px" style="display: block; margin: auto;" /></p>
+</div>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>Just to clarify on notation, I’m using the star symbol * here to say that I’m referencing all the functions that start with <code>geom_</code> like <code>geom_bar()</code> and <code>geom_point()</code>. This is called the Kleene star and it’s used a lot in regex, if you aren’t familiar.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>You could have bins of that are not of equal size. Or, you could have bins that bleed into each other to create a <a href="https://www.quora.com/What-does-the-term-rolling-window-mean-in-econometrics#:~:text=%E2%80%9CRolling%20window%E2%80%9D%20simply%20means%20that,full%20data%20set%20or%20series.">rolling window</a> summary.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>You could calculate the sum of raw values that are in each bin, or calculate proportions instead of counts<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>If you aren’t familiar already, “tidy” is a specific <a href="https://r4ds.had.co.nz/tidy-data.html">term of art</a><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>This quote is adapted from Thomas Lin Pedersen’s <a href="https://www.youtube.com/watch?v=h29g21z0a68">ggplot2 workshop video</a><a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p>Yes, you can still cut down on the code somewhat, but will it even get as succinct as what I show below with <code>stat_summary()</code>?<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7" role="doc-endnote"><p>There’s actually one more argument against transforming data before piping it into ggplot. When you choose the variables to plot, say <code>cyl</code> and <code>mpg</code> in the <code>mtcars</code> dataset, do you call <code>select(cyl, mpg)</code> before piping <code>mtcars</code> into ggplot? No? Well then why would you transform your data beforehand if you can just have that be handled internally instead? It’s the same logic!<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8" role="doc-endnote"><p>If you’re still skeptical, save the plot object to a variable like <code>plot</code> and call <code>plot$layers</code> to confirm that <code>geom_pointrange</code> was used to draw the plot.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9" role="doc-endnote"><p>I personally don’t agree with this naming choice since <code>mean</code> is also the name of the base function<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10" role="doc-endnote"><p>The function <code>new_data_frame()</code> is from <code>{vctrs}</code>. That last line of code in the function body is doing the same thing as <code>data.frame(y = mean, ymin = mean - se, ymax = mean + se)</code>, but there’s less room for error the way it’s done in the source code.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11" role="doc-endnote"><p>If you read the documentation, the very first line starts with “<em><code>stat_summary()</code> operates on unique x <strong>or</strong> y</em> …” (emphasis mine)<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12" role="doc-endnote"><p>This second argument specifies which layer to return. Here, the pointrange layer is the first and only layer in the plot so I actually could have left this argument out.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13" role="doc-endnote"><p><a href="https://cran.r-project.org/web/packages/ggplot2/vignettes/extending-ggplot2.html" class="uri">https://cran.r-project.org/web/packages/ggplot2/vignettes/extending-ggplot2.html</a><a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<div class="distill-site-nav distill-site-footer">
+  <p>
+    <span style="font-family: 'Lora'"> Â© Copyright 2020 June Choe </span>
+  </p>
+</div>
+<!--/radix_placeholder_navigation_after_body-->
+
+
+</body>
+
+</html>
