@@ -1000,7 +1000,11 @@
 <li><a href="#a-color-coded-bar-plot-of-medians">2. A color-coded bar plot of medians</a></li>
 <li><a href="#pointrange-plot-with-changing-size">3. Pointrange plot with changing size</a></li>
 </ul></li>
-<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#conclusion">Conclusion</a>
+<ul>
+<li><a href="#main-ideas">Main Ideas</a></li>
+<li><a href="#stat-vs.-geom-or-stat-and-geom">STAT vs. GEOM or STAT <em>and</em> GEOM?</a></li>
+</ul></li>
 </ul>
 </nav>
 <hr class="d-toc-separator"/>
@@ -1049,9 +1053,6 @@ ggplot(data = penguins, mapping = aes(x = body_mass_g)) +
 <p>Now, that’s something you can tell a beginner for a quick and easy fix. But if you still simply think “the thing that makes ggplot work = tidy data”, it’s important that you <strong>unlearn this mantra</strong> in order to fully understand the motivation behind <span class="sc">stat</span>.</p>
 <h2 id="when-and-why-should-i-use-stat">When and why should I use STAT?</h2>
 <p>You could be using ggplot every day and never even touch any of the two-dozen native <code>stat_*()</code> functions. In fact, <em>because</em> you’ve only used <code>geom_*()</code>s, you may find <code>stat_*()</code>s to be the esoteric and mysterious remnants of the past that only <span class="sc">the developers</span> continue to use to maintain law and order in the depths of source code hell.</p>
-<aside>
-The rhetorical strategy I deploy here is also known in the literature as “subtweeting myself”
-</aside>
 <p>If that describes you, you might wonder why you even need to know about all these <code>stat_*()</code> functions.</p>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="https://media.giphy.com/media/cFgb5p5e1My3K/giphy.gif" width="400px" style="display: block; margin: auto;" /></p>
@@ -1254,7 +1255,7 @@ mean_se</code></pre>
       new_data_frame(list(y = mean, ymin = mean - se, ymax = mean + 
           se), n = 1)
   }
-  &lt;bytecode: 0x000000001f738518&gt;
+  &lt;bytecode: 0x000000001f72f330&gt;
   &lt;environment: namespace:ggplot2&gt;</code></pre>
 </div>
 <p>Ok, so it’s a function that takes some argument <code>x</code> and a second argument <code>mult</code> with the default value <code>1</code>.</p>
@@ -1456,6 +1457,7 @@ group_split(my_penguins, species) %&gt;%
   3 14.99664 14.90625 15.08702 0.3573574</code></pre>
 </div>
 <h2 id="conclusion">Conclusion</h2>
+<h3 id="main-ideas">Main Ideas</h3>
 <p>Here are the main ideas from this post:</p>
 <ul>
 <li><p>Even though the data is tidy, it may not represent the values you want to display</p></li>
@@ -1465,17 +1467,12 @@ group_split(my_penguins, species) %&gt;%
 <li><p>If you want to pass in your own <em>custom function</em>, make sure to check the documentation of that particular <code>stat_*()</code> function to check the variable/data type it requires.</p></li>
 <li><p>If you want to use a <em>different geom</em>, make sure that your transformation function calculates all the required aesthetics for that geom</p></li>
 </ul>
-<p>And a final note on <span class="sc">stat</span>s and <span class="sc">geom</span>s:</p>
+<h3 id="stat-vs.-geom-or-stat-and-geom">STAT vs. GEOM or STAT <em>and</em> GEOM?</h3>
 <p>Although I have talked about the limitations of <code>geom_*()</code>s to demonstrate the usefulness of <code>stat_*()</code>s, both have their place. It’s about knowing when to use which; it’s not a question of either-or. In fact, they require each other - just like how <code>stat_summary()</code> had a <code>geom</code> argument, <code>geom_*()</code>s also have a <code>stat</code> argument. At a higher level, <code>stat_*()</code>s and <code>geom_*()</code>s are simply convenient instantiations of the <code>layer()</code> function that builds up the layers of ggplot.</p>
-<p>Hadley explains the false dichotomy:</p>
+<p>Because this is important, I’ll wrap up this post with a quote from Hadley explaining this false dichotomy:</p>
 <blockquote>
 <p>Unfortunately, due to an early design mistake I called these either stat_() or geom_(). A better decision would have been to call them layer_() functions: that’s a more accurate description because <strong>every layer involves a stat and a geom</strong>.<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a></p>
 </blockquote>
-<p> </p>
-<p>Thanks for reading! Best of luck on your ggplot journey!</p>
-<div class="layout-chunk" data-layout="l-body">
-<p><img src="https://media.giphy.com/media/14cDsqOkks6O8U/giphy.gif" width="400px" style="display: block; margin: auto;" /></p>
-</div>
 <section class="footnotes" role="doc-endnotes">
 <hr />
 <ol>
@@ -1491,7 +1488,7 @@ group_split(my_penguins, species) %&gt;%
 <li id="fn10" role="doc-endnote"><p>The function <code>new_data_frame()</code> is from <code>{vctrs}</code>. That last line of code in the function body is doing the same thing as <code>data.frame(y = mean, ymin = mean - se, ymax = mean + se)</code>, but there’s less room for error the way it’s done in the source code.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn11" role="doc-endnote"><p>If you read the documentation, the very first line starts with “<em><code>stat_summary()</code> operates on unique x <strong>or</strong> y</em> …” (emphasis mine)<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn12" role="doc-endnote"><p>This second argument specifies which layer to return. Here, the pointrange layer is the first and only layer in the plot so I actually could have left this argument out.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn13" role="doc-endnote"><p><a href="https://cran.r-project.org/web/packages/ggplot2/vignettes/extending-ggplot2.html" class="uri">https://cran.r-project.org/web/packages/ggplot2/vignettes/extending-ggplot2.html</a><a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13" role="doc-endnote"><p>Emphasis mine. Source: <a href="https://cran.r-project.org/web/packages/ggplot2/vignettes/extending-ggplot2.html" class="uri">https://cran.r-project.org/web/packages/ggplot2/vignettes/extending-ggplot2.html</a><a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 <!--radix_placeholder_article_footer-->

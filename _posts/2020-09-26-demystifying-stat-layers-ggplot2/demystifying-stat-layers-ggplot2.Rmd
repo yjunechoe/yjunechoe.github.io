@@ -103,10 +103,6 @@ Now, that's something you can tell a beginner for a quick and easy fix. But if y
 
 You could be using ggplot every day and never even touch any of the two-dozen native `stat_*()` functions. In fact, _because_ you've only used `geom_*()`s, you may find `stat_*()`s to be the esoteric and mysterious remnants of the past that only [the developers]{.sc} continue to use to maintain law and order in the depths of source code hell.
 
-<aside>
-The rhetorical strategy I deploy here is also known in the literature as "subtweeting myself"
-</aside>
-
 If that describes you, you might wonder why you even need to know about all these `stat_*()` functions.
 
 ```{r, echo=F, fig.align='center', out.width="400px"}
@@ -560,6 +556,8 @@ group_split(my_penguins, species) %>%
 
 ## Conclusion
 
+### Main Ideas
+
 Here are the main ideas from this post:
 
 - Even though the data is tidy, it may not represent the values you want to display
@@ -574,19 +572,10 @@ Here are the main ideas from this post:
 
 - If you want to use a _different geom_, make sure that your transformation function calculates all the required aesthetics for that geom
 
-
-And a final note on [stat]{.sc}s and [geom]{.sc}s:
+### STAT vs. GEOM or STAT _and_ GEOM?
 
 Although I have talked about the limitations of `geom_*()`s to demonstrate the usefulness of `stat_*()`s, both have their place. It's about knowing when to use which; it's not a question of either-or. In fact, they require each other - just like how `stat_summary()` had a `geom` argument, `geom_*()`s also have a `stat` argument. At a higher level, `stat_*()`s and `geom_*()`s are simply convenient instantiations of the `layer()` function that builds up the layers of ggplot.
 
-Hadley explains the false dichotomy:
+Because this is important, I'll wrap up this post with a quote from Hadley explaining this false dichotomy:
 
-> Unfortunately, due to an early design mistake I called these either stat_() or geom\_(). A better decision would have been to call them layer\_() functions: that's a more accurate description because **every layer involves a stat and a geom**.^[https://cran.r-project.org/web/packages/ggplot2/vignettes/extending-ggplot2.html]
-
-&nbsp;
-
-Thanks for reading! Best of luck on your ggplot journey!
-
-```{r, echo=F, fig.align='center', out.width="400px"}
-include_graphics("https://media.giphy.com/media/14cDsqOkks6O8U/giphy.gif")
-```
+> Unfortunately, due to an early design mistake I called these either stat_() or geom_(). A better decision would have been to call them layer_() functions: that's a more accurate description because **every layer involves a stat and a geom**.^[Emphasis mine. Source: https://cran.r-project.org/web/packages/ggplot2/vignettes/extending-ggplot2.html]
