@@ -1429,15 +1429,26 @@ d-article h3 {
 /* Aside */
 
 aside {
+  margin-left: 20px;
   width: 200px;
+  font-family: 'Adelle';
+}
+
+d-code + aside {
+  margin-top: 1em;
 }
 
 
 /* Block Quotes */
+
+d-article blockquote {
+  border-left: 5px solid rgba(0, 0, 0, 0.2);
+  padding-left: 1em;
+}
+
 blockquote p {
   margin-bottom: 0;
 }
-
 
 
 /* ---------- Code Styles ---------- */
@@ -1837,7 +1848,7 @@ mean_se</code></pre>
       new_data_frame(list(y = mean, ymin = mean - se, ymax = mean + 
           se), n = 1)
   }
-  &lt;bytecode: 0x000000001f72f330&gt;
+  &lt;bytecode: 0x000000001f7073e0&gt;
   &lt;environment: namespace:ggplot2&gt;</code></pre>
 </div>
 <p>Ok, so it’s a function that takes some argument <code>x</code> and a second argument <code>mult</code> with the default value <code>1</code>.</p>
@@ -1901,7 +1912,6 @@ layer_data(pointrange_plot, 1)</code></pre>
 <li><p>If the data contains all the required mapppings for the geom, the geom will be plotted.</p></li>
 </ol>
 <p>And to make things extra clear &amp; to make <code>stat_summary()</code> less mysterious, we can explicitly spell out the two arguments <code>fun.data</code> and <code>geom</code> that we went over in this section.</p>
-<p>Look, it’s the same plot!</p>
 <div class="layout-chunk" data-layout="l-body">
 <pre class="r"><code>
 height_df %&gt;% 
@@ -1917,6 +1927,7 @@ You could also do <code>fun.data = "mean_se"</code> but I prefer the unquoted ve
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="demystifying-stat-layers-ggplot2_files/figure-html5/explicit_args-1.png" width="624" /></p>
 </div>
+<p>Look, it’s the same plot!</p>
 <h2 id="putting-stat-to-use">Putting STAT to use</h2>
 <p>Now we have arrived at the fun part.</p>
 <p>Here, I will demonstrate a few ways of modifying <code>stat_summary()</code> to suit particular visualization needs.</p>
@@ -2040,13 +2051,12 @@ group_split(my_penguins, species) %&gt;%
 </div>
 <h2 id="conclusion">Conclusion</h2>
 <h3 id="main-ideas">Main Ideas</h3>
-<p>Here are the main ideas from this post:</p>
 <ul>
 <li><p>Even though the data is tidy, it may not represent the values you want to display</p></li>
 <li><p>The solution is not to transform your <em>already-tidy</em> data so that it contains those values</p></li>
-<li><p>Instead, you should pass in your original tidy data into <code>ggplot()</code> as is and allow <code>stat_*()</code> functions to apply transformations internally</p></li>
-<li><p>These <code>stat_*()</code> functions can be customized for both their geoms and their transformation functions, and works similarly to <code>geom_*()</code> functions in other regards</p></li>
-<li><p>If you want to pass in your own <em>custom function</em>, make sure to check the documentation of that particular <code>stat_*()</code> function to check the variable/data type it requires.</p></li>
+<li><p>Instead, you should pass in your original tidy data into <code>ggplot()</code> <em>as is</em> and allow <code>stat_*()</code> functions to apply transformations internally</p></li>
+<li><p>These <code>stat_*()</code> functions can be customized for both their <span class="sc">geom</span>s and their transformation functions, and works similarly to <code>geom_*()</code> functions in other regards</p></li>
+<li><p>If you want to use your own <em>custom function</em>, make sure to check the documentation of that particular <code>stat_*()</code> function to check the variable/data type it requires.</p></li>
 <li><p>If you want to use a <em>different geom</em>, make sure that your transformation function calculates all the required aesthetics for that geom</p></li>
 </ul>
 <h3 id="stat-vs.-geom-or-stat-and-geom">STAT vs. GEOM or STAT <em>and</em> GEOM?</h3>

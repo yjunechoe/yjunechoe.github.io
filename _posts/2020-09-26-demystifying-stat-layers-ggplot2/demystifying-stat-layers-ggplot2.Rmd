@@ -405,8 +405,6 @@ To summarize this section (ha!), `stat_summary()` works in the following order:
 
 And to make things extra clear & to make `stat_summary()` less mysterious, we can explicitly spell out the two arguments `fun.data` and `geom` that we went over in this section.
 
-Look, it's the same plot!
-
 ```{r explicit_args, eval = FALSE}
 height_df %>% 
   ggplot(aes(x = group, y = height)) +
@@ -422,6 +420,9 @@ You could also do `fun.data = "mean_se"` but I prefer the unquoted version becau
 
 ```{r explicit_args, echo=F}
 ```
+
+Look, it's the same plot!
+
 
 ## Putting STAT to use
 
@@ -558,17 +559,15 @@ group_split(my_penguins, species) %>%
 
 ### Main Ideas
 
-Here are the main ideas from this post:
-
 - Even though the data is tidy, it may not represent the values you want to display
 
 - The solution is not to transform your _already-tidy_ data so that it contains those values
 
-- Instead, you should pass in your original tidy data into `ggplot()` as is and allow `stat_*()` functions to apply transformations internally
+- Instead, you should pass in your original tidy data into `ggplot()` _as is_ and allow `stat_*()` functions to apply transformations internally
 
-- These `stat_*()` functions can be customized for both their geoms and their transformation functions, and works similarly to `geom_*()` functions in other regards
+- These `stat_*()` functions can be customized for both their [geom]{.sc}s and their transformation functions, and works similarly to `geom_*()` functions in other regards
 
-- If you want to pass in your own _custom function_, make sure to check the documentation of that particular `stat_*()` function to check the variable/data type it requires.
+- If you want to use your own _custom function_, make sure to check the documentation of that particular `stat_*()` function to check the variable/data type it requires.
 
 - If you want to use a _different geom_, make sure that your transformation function calculates all the required aesthetics for that geom
 
