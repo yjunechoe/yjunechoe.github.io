@@ -1180,7 +1180,7 @@ Figure 1: Tidy data is about the organization of observations.
 </div>
 <p>So not only is it inefficient to create a transformed dataframe that suits the needs of each geom, this method isn’t even championing the principles of tidy data like we thought.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
 <p>What we should do instead is to <em>take advantage</em> of the fact that our original data <code>simple_data</code> is the <strong>common denominator</strong> of <code>simple_data_bar</code> and <code>simple_data_errorbar</code>!</p>
-<p>Wouldn’t it be nice if you could just pass in the origin data containing all observations (<code>simple_data</code>) and have each layer internally transform the data in appropriate ways to suit the needs of the geom for that layer?</p>
+<p>Wouldn’t it be nice if you could just pass in the original data containing all observations (<code>simple_data</code>) and have each layer internally transform the data in appropriate ways to suit the needs of the geom for that layer?</p>
 <p>Oh, so you mean something like this?</p>
 <div class="layout-chunk" data-layout="l-body">
 <pre class="r"><code>
@@ -1255,7 +1255,7 @@ mean_se</code></pre>
       new_data_frame(list(y = mean, ymin = mean - se, ymax = mean + 
           se), n = 1)
   }
-  &lt;bytecode: 0x000000001f7123e8&gt;
+  &lt;bytecode: 0x000000001f716bb8&gt;
   &lt;environment: namespace:ggplot2&gt;</code></pre>
 </div>
 <p>Ok, so it’s a function that takes some argument <code>x</code> and a second argument <code>mult</code> with the default value <code>1</code>.</p>
