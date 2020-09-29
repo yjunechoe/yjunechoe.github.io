@@ -4,7 +4,7 @@ description: |
   %||%, imap() + {shinybusy}, and user inputs in modalDialog()
 categories:
   - shiny
-base_url: yjunechoe.github.io
+base_url: https://yjunechoe.github.io
 preview: preview.png
 author:
   - name: June Choe

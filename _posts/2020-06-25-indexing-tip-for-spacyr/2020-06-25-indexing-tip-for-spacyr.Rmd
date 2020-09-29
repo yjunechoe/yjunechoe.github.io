@@ -6,7 +6,7 @@ categories:
   - data wrangling
   - NLP
   - spacyr
-base_url: yjunechoe.github.io
+base_url: https://yjunechoe.github.io
 author:
   - name: June Choe
     affiliation: University of Pennsylvania Linguistics

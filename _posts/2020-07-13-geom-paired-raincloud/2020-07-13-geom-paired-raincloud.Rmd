@@ -5,7 +5,7 @@ description: |
 categories:
   - data visualization
   - ggplot2
-base_url: yjunechoe.github.io
+base_url: https://yjunechoe.github.io
 preview: preview.png
 author:
   - name: June Choe

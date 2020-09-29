@@ -6,12 +6,12 @@ categories:
   - data visualization
   - ggplot2
   - tutorial
-base_url: yjunechoe.github.io
+base_url: https://yjunechoe.github.io
 author:
   - name: June Choe
     affiliation: University of Pennsylvania Linguistics
     affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
-preview: preview.png
+preview: https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/preview.png
 date: 09-27-2020
 output:
   distill::distill_article:
@@ -27,6 +27,8 @@ knitr::opts_chunk$set(
   warning = FALSE,
   R.options = list(width = 80)
 )
+
+options(digits = 4)
 
 library(tidyverse)
 library(extrafont)
@@ -308,11 +310,11 @@ Instead of points, we now see a point and a line through that point. And before 
 
 Answering this question requires us to zoom out a little bit and ask: what _variables_ does pointrange map _as a geom_? By looking at the documentation with `?geom_pointrange` we can see that `geom_pointrange()` **requires** the following aesthetics:
 
-- [x]{.sc} _or_ [y]{.sc}
+- [x]{.sc} or [y]{.sc}
 
-- [ymin]{.sc} _or_ [xmin]{.sc}
+- [ymin]{.sc} or [xmin]{.sc}
 
-- [ymax]{.sc} _or_ [xmax]{.sc}
+- [ymax]{.sc} or [xmax]{.sc}
 
 
 So now let's look back at our arguments in `aes()`. We said that `group` is mapped to `x` and that `height` is mapped to `y`. But we never said anything about `ymin/xmin` or `ymax/xmax` anywhere. So how is `stat_summary()` drawing a pointrange if we didn't give it the required aesthetic mappings?
@@ -327,7 +329,7 @@ height_df %>%
 
 Huh, a [summary function]{.sc}? That sounds promising. Maybe that's the key to our mystery!
 
-First, we see from the documentation of `stat_summary()` that this `mean_se()` thing is the default value for the `fun.data` argument.
+First, we see from the documentation of `stat_summary()` that this `mean_se()` thing is the default value for the `fun.data` argument (we'll talk more on this later).
 
 Next, let's call it in the console to see what it is:
 
@@ -471,7 +473,7 @@ bind_rows(
 
 ### 2. A color-coded bar plot of medians
 
-Here, we're plotting the median `bill_length_mm` for each penguins `species` and coloring the groups with median `bill_length_mm` under `40` in `pink`.
+Here, we're plotting the median `bill_length_mm` for each penguins `species` and coloring the groups with median `bill_length_mm` under 40 in pink.
 
 ```{r colorbar, eval = FALSE}
 calc_median_and_color <- function(x, threshold = 40) {

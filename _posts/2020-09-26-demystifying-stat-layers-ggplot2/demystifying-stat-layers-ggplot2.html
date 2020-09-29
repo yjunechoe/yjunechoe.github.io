@@ -33,24 +33,18 @@
   <meta property="og:title" content="Demystifying stat_ layers in {ggplot2}"/>
   <meta property="og:type" content="article"/>
   <meta property="og:description" content="The motivation behind stat, the distinction between stat and geom, and a case study of stat_summary()"/>
-  <meta property="og:image" content="yjunechoe.github.io/preview.png"/>
-  <meta property="og:image:width" content="240"/>
-  <meta property="og:image:height" content="278"/>
   <meta property="og:locale" content="en_US"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
-  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:card" content="summary"/>
   <meta property="twitter:title" content="Demystifying stat_ layers in {ggplot2}"/>
   <meta property="twitter:description" content="The motivation behind stat, the distinction between stat and geom, and a case study of stat_summary()"/>
-  <meta property="twitter:image" content="yjunechoe.github.io/preview.png"/>
-  <meta property="twitter:image:width" content="240"/>
-  <meta property="twitter:image:height" content="278"/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","preview","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Demystifying stat_ layers in {ggplot2}"]},{"type":"character","attributes":{},"value":["The motivation behind stat, the distinction between stat and geom, and a case study of stat_summary()\n"]},{"type":"character","attributes":{},"value":["data visualization","ggplot2","tutorial"]},{"type":"character","attributes":{},"value":["yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]}]}]},{"type":"character","attributes":{},"value":["preview.png"]},{"type":"character","attributes":{},"value":["09-27-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","preview","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Demystifying stat_ layers in {ggplot2}"]},{"type":"character","attributes":{},"value":["The motivation behind stat, the distinction between stat and geom, and a case study of stat_summary()\n"]},{"type":"character","attributes":{},"value":["data visualization","ggplot2","tutorial"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]}]}]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/preview.png"]},{"type":"character","attributes":{},"value":["09-27-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -1072,7 +1066,7 @@ simple_data &lt;- tibble(group = factor(rep(c(&quot;A&quot;, &quot;B&quot;), eac
 <div class="layout-chunk" data-layout="l-body">
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["group"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["subject"],"name":[2],"type":["int"],"align":["right"]},{"label":["score"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"A","2":"1","3":"28.79049"},{"1":"A","2":"2","3":"35.39645"},{"1":"A","2":"3","3":"71.17417"},{"1":"A","2":"4","3":"41.41017"},{"1":"A","2":"5","3":"42.58575"},{"1":"A","2":"6","3":"74.30130"},{"1":"A","2":"7","3":"49.21832"},{"1":"A","2":"8","3":"14.69878"},{"1":"A","2":"9","3":"26.26294"},{"1":"A","2":"10","3":"31.08676"},{"1":"A","2":"11","3":"64.48164"},{"1":"A","2":"12","3":"47.19628"},{"1":"A","2":"13","3":"48.01543"},{"1":"A","2":"14","3":"42.21365"},{"1":"A","2":"15","3":"28.88318"},{"1":"B","2":"16","3":"77.86913"},{"1":"B","2":"17","3":"64.97850"},{"1":"B","2":"18","3":"40.33383"},{"1":"B","2":"19","3":"67.01356"},{"1":"B","2":"20","3":"55.27209"},{"1":"B","2":"21","3":"49.32176"},{"1":"B","2":"22","3":"57.82025"},{"1":"B","2":"23","3":"49.73996"},{"1":"B","2":"24","3":"52.71109"},{"1":"B","2":"25","3":"53.74961"},{"1":"B","2":"26","3":"43.13307"},{"1":"B","2":"27","3":"68.37787"},{"1":"B","2":"28","3":"61.53373"},{"1":"B","2":"29","3":"48.61863"},{"1":"B","2":"30","3":"72.53815"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["group"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["subject"],"name":[2],"type":["int"],"align":["right"]},{"label":["score"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"A","2":"1","3":"28.79"},{"1":"A","2":"2","3":"35.40"},{"1":"A","2":"3","3":"71.17"},{"1":"A","2":"4","3":"41.41"},{"1":"A","2":"5","3":"42.59"},{"1":"A","2":"6","3":"74.30"},{"1":"A","2":"7","3":"49.22"},{"1":"A","2":"8","3":"14.70"},{"1":"A","2":"9","3":"26.26"},{"1":"A","2":"10","3":"31.09"},{"1":"A","2":"11","3":"64.48"},{"1":"A","2":"12","3":"47.20"},{"1":"A","2":"13","3":"48.02"},{"1":"A","2":"14","3":"42.21"},{"1":"A","2":"15","3":"28.88"},{"1":"B","2":"16","3":"77.87"},{"1":"B","2":"17","3":"64.98"},{"1":"B","2":"18","3":"40.33"},{"1":"B","2":"19","3":"67.01"},{"1":"B","2":"20","3":"55.27"},{"1":"B","2":"21","3":"49.32"},{"1":"B","2":"22","3":"57.82"},{"1":"B","2":"23","3":"49.74"},{"1":"B","2":"24","3":"52.71"},{"1":"B","2":"25","3":"53.75"},{"1":"B","2":"26","3":"43.13"},{"1":"B","2":"27","3":"68.38"},{"1":"B","2":"28","3":"61.53"},{"1":"B","2":"29","3":"48.62"},{"1":"B","2":"30","3":"72.54"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -1207,7 +1201,7 @@ height_df &lt;- tibble(group = &quot;A&quot;,
 <div class="layout-chunk" data-layout="l-body">
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["group"],"name":[1],"type":["chr"],"align":["left"]},{"label":["height"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"A","2":"174.2646"},{"1":"A","2":"167.0493"},{"1":"A","2":"178.9513"},{"1":"A","2":"178.7813"},{"1":"A","2":"178.2158"},{"1":"A","2":"176.8864"},{"1":"A","2":"175.5392"},{"1":"A","2":"169.3809"},{"1":"A","2":"166.9404"},{"1":"A","2":"166.1953"},{"1":"A","2":"163.0529"},{"1":"A","2":"167.9208"},{"1":"A","2":"157.3460"},{"1":"A","2":"191.6896"},{"1":"A","2":"182.0796"},{"1":"A","2":"158.7689"},{"1":"A","2":"165.9712"},{"1":"A","2":"165.3334"},{"1":"A","2":"177.7997"},{"1":"A","2":"169.1663"},{"1":"A","2":"172.5332"},{"1":"A","2":"169.7145"},{"1":"A","2":"169.5713"},{"1":"A","2":"183.6860"},{"1":"A","2":"167.7423"},{"1":"A","2":"185.1647"},{"1":"A","2":"154.5125"},{"1":"A","2":"175.8461"},{"1":"A","2":"171.2385"},{"1":"A","2":"172.1594"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["group"],"name":[1],"type":["chr"],"align":["left"]},{"label":["height"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"A","2":"174.3"},{"1":"A","2":"167.0"},{"1":"A","2":"179.0"},{"1":"A","2":"178.8"},{"1":"A","2":"178.2"},{"1":"A","2":"176.9"},{"1":"A","2":"175.5"},{"1":"A","2":"169.4"},{"1":"A","2":"166.9"},{"1":"A","2":"166.2"},{"1":"A","2":"163.1"},{"1":"A","2":"167.9"},{"1":"A","2":"157.3"},{"1":"A","2":"191.7"},{"1":"A","2":"182.1"},{"1":"A","2":"158.8"},{"1":"A","2":"166.0"},{"1":"A","2":"165.3"},{"1":"A","2":"177.8"},{"1":"A","2":"169.2"},{"1":"A","2":"172.5"},{"1":"A","2":"169.7"},{"1":"A","2":"169.6"},{"1":"A","2":"183.7"},{"1":"A","2":"167.7"},{"1":"A","2":"185.2"},{"1":"A","2":"154.5"},{"1":"A","2":"175.8"},{"1":"A","2":"171.2"},{"1":"A","2":"172.2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -1230,9 +1224,9 @@ height_df %&gt;%
 <p>Instead of points, we now see a point and a line through that point. And before you get confused, this is actually one geom, called <span class="sc">pointrange</span>, not two separate geoms.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> Now that that’s cleared up, we might ask: <strong>what data is being represented by the pointrange?</strong></p>
 <p>Answering this question requires us to zoom out a little bit and ask: what <em>variables</em> does pointrange map <em>as a geom</em>? By looking at the documentation with <code>?geom_pointrange</code> we can see that <code>geom_pointrange()</code> <strong>requires</strong> the following aesthetics:</p>
 <ul>
-<li><p><span class="sc">x</span> <em>or</em> <span class="sc">y</span></p></li>
-<li><p><span class="sc">ymin</span> <em>or</em> <span class="sc">xmin</span></p></li>
-<li><p><span class="sc">ymax</span> <em>or</em> <span class="sc">xmax</span></p></li>
+<li><p><span class="sc">x</span> or <span class="sc">y</span></p></li>
+<li><p><span class="sc">ymin</span> or <span class="sc">xmin</span></p></li>
+<li><p><span class="sc">ymax</span> or <span class="sc">xmax</span></p></li>
 </ul>
 <p>So now let’s look back at our arguments in <code>aes()</code>. We said that <code>group</code> is mapped to <code>x</code> and that <code>height</code> is mapped to <code>y</code>. But we never said anything about <code>ymin/xmin</code> or <code>ymax/xmax</code> anywhere. So how is <code>stat_summary()</code> drawing a pointrange if we didn’t give it the required aesthetic mappings?</p>
 <p>Well, a good guess is that <code>stat_summary()</code> is <strong>transforming the data to calculate the necessary values to be mapped to pointrange</strong>. Here’s one reason for that guess - I’ve been suppressing message throughout this post but if you run the above code with <code>stat_summary()</code> yourself, you’d actually get this message:</p>
@@ -1241,7 +1235,7 @@ height_df %&gt;%
   No summary function supplied, defaulting to `mean_se()`</code></pre>
 </div>
 <p>Huh, a <span class="sc">summary function</span>? That sounds promising. Maybe that’s the key to our mystery!</p>
-<p>First, we see from the documentation of <code>stat_summary()</code> that this <code>mean_se()</code> thing is the default value for the <code>fun.data</code> argument.</p>
+<p>First, we see from the documentation of <code>stat_summary()</code> that this <code>mean_se()</code> thing is the default value for the <code>fun.data</code> argument (we’ll talk more on this later).</p>
 <p>Next, let’s call it in the console to see what it is:</p>
 <div class="layout-chunk" data-layout="l-body">
 <pre class="r"><code>
@@ -1255,7 +1249,7 @@ mean_se</code></pre>
       new_data_frame(list(y = mean, ymin = mean - se, ymax = mean + 
           se), n = 1)
   }
-  &lt;bytecode: 0x000000001f716bb8&gt;
+  &lt;bytecode: 0x0000000020396170&gt;
   &lt;environment: namespace:ggplot2&gt;</code></pre>
 </div>
 <p>Ok, so it’s a function that takes some argument <code>x</code> and a second argument <code>mult</code> with the default value <code>1</code>.</p>
@@ -1286,8 +1280,8 @@ Whenever you’re trying out a new <code>stat_*()</code> function, make sure to 
 <pre class="r"><code>
 mean_se(height_df$height)</code></pre>
 <pre><code>
-           y     ymin     ymax
-  1 171.7834 170.2587 173.3081</code></pre>
+        y  ymin  ymax
+  1 171.8 170.3 173.3</code></pre>
 </div>
 <p>And look at that, these look like they’re the same values that were being represented by the mid-point and the end-points of the pointrange plot that we drew with <code>stat_summary()</code> above!</p>
 <p>You know how else we can check that this is the case? With this neat function called <code>layer_data()</code>.</p>
@@ -1300,10 +1294,10 @@ pointrange_plot &lt;- height_df %&gt;%
 
 layer_data(pointrange_plot, 1)</code></pre>
 <pre><code>
-    x group        y     ymin     ymax PANEL flipped_aes colour size linetype
-  1 1     1 171.7834 170.2587 173.3081     1       FALSE  black  0.5        1
-    shape fill alpha stroke
-  1    19   NA    NA      1</code></pre>
+    x group     y  ymin  ymax PANEL flipped_aes colour size linetype shape fill
+  1 1     1 171.8 170.3 173.3     1       FALSE  black  0.5        1    19   NA
+    alpha stroke
+  1    NA      1</code></pre>
 </div>
 <p>Would ya look at that! There’s a lot of stuff in there, but it looks like the values for <code>y</code>, <code>ymin</code>, and <code>ymax</code> used for the actual plot match up with the values we calculated with <code>mean_se()</code> above!</p>
 <p>We’ve solved our mystery of how the pointrange was drawn when we didn’t provide all the required mappings!</p>
@@ -1369,12 +1363,12 @@ bind_rows(
   mean_se(my_penguins$body_mass_g[my_penguins$sex == &quot;male&quot;], mult = 1.96),
 )</code></pre>
 <pre><code>
-           y     ymin     ymax
-  1 3862.273 3760.624 3963.921
-  2 4545.685 4426.581 4664.788</code></pre>
+       y ymin ymax
+  1 3862 3761 3964
+  2 4546 4427 4665</code></pre>
 </div>
 <h3 id="a-color-coded-bar-plot-of-medians">2. A color-coded bar plot of medians</h3>
-<p>Here, we’re plotting the median <code>bill_length_mm</code> for each penguins <code>species</code> and coloring the groups with median <code>bill_length_mm</code> under <code>40</code> in <code>pink</code>.</p>
+<p>Here, we’re plotting the median <code>bill_length_mm</code> for each penguins <code>species</code> and coloring the groups with median <code>bill_length_mm</code> under 40 in pink.</p>
 <div class="layout-chunk" data-layout="l-body">
 <pre class="r"><code>
 calc_median_and_color &lt;- function(x, threshold = 40) {
@@ -1455,10 +1449,10 @@ group_split(my_penguins, species) %&gt;%
     }
   )</code></pre>
 <pre><code>
-           y     ymin     ymax      size
-  1 18.34726 18.24635 18.44817 0.4384384
-  2 18.42059 18.28290 18.55828 0.2042042
-  3 14.99664 14.90625 15.08702 0.3573574</code></pre>
+        y  ymin  ymax   size
+  1 18.35 18.25 18.45 0.4384
+  2 18.42 18.28 18.56 0.2042
+  3 15.00 14.91 15.09 0.3574</code></pre>
 </div>
 <h2 id="conclusion">Conclusion</h2>
 <h3 id="main-ideas">Main Ideas</h3>
