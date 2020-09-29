@@ -1255,7 +1255,7 @@ mean_se</code></pre>
       new_data_frame(list(y = mean, ymin = mean - se, ymax = mean + 
           se), n = 1)
   }
-  &lt;bytecode: 0x000000001f7073e0&gt;
+  &lt;bytecode: 0x000000001f7123e8&gt;
   &lt;environment: namespace:ggplot2&gt;</code></pre>
 </div>
 <p>Ok, so it’s a function that takes some argument <code>x</code> and a second argument <code>mult</code> with the default value <code>1</code>.</p>
@@ -1264,7 +1264,7 @@ mean_se</code></pre>
 <li>Remove <code>NA</code> values</li>
 <li>Calculate variable <code>se</code> which is the standard error of the values in <code>x</code> using the equation <span class="math inline">\(SE = \sqrt{\frac{1}{N-1}\sum_{i=1}^N(x_i-\bar{x})^2}\)</span></li>
 <li>Calculate the variable <code>mean</code><a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> which is the mean of <code>x</code></li>
-<li>Create a new dataframe with one row, with columns <code>y</code>, <code>ymin</code>, and <code>ymax</code>, where <code>y</code> is the mean od <code>x</code>, <code>ymin</code> is one standard error below the mean, and <code>ymax</code> is one standard error above the mean.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></li>
+<li>Create a new dataframe with one row, with columns <code>y</code>, <code>ymin</code>, and <code>ymax</code>, where <code>y</code> is the mean of <code>x</code>, <code>ymin</code> is one standard error below the mean, and <code>ymax</code> is one standard error above the mean.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></li>
 </ol>
 <p>A cool thing about this is that although <code>mean_se()</code> seems to be exclusively used for internal operations, it’s actually available in the global environment from loading <code>{ggplot2}</code>. So let’s pass <code>height_df</code> to <code>mean_se()</code> and see what we get back!</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -1364,10 +1364,14 @@ As of {ggplot2} 3.3.0, you can use {rlang}-style anonymous functions. If you are
 <p>The transformed data used for the <span class="sc">errorbar</span> geom inside <code>stat_summary()</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <pre class="r"><code>
-mean_se(my_penguins$body_mass_g, mult = 1.96)</code></pre>
+bind_rows(
+  mean_se(my_penguins$body_mass_g[my_penguins$sex == &quot;female&quot;], mult = 1.96),
+  mean_se(my_penguins$body_mass_g[my_penguins$sex == &quot;male&quot;], mult = 1.96),
+)</code></pre>
 <pre><code>
            y     ymin     ymax
-  1 4207.057 4120.571 4293.543</code></pre>
+  1 3862.273 3760.624 3963.921
+  2 4545.685 4426.581 4664.788</code></pre>
 </div>
 <h3 id="a-color-coded-bar-plot-of-medians">2. A color-coded bar plot of medians</h3>
 <p>Here, we’re plotting the median <code>bill_length_mm</code> for each penguins <code>species</code> and coloring the groups with median <code>bill_length_mm</code> under <code>40</code> in <code>pink</code>.</p>
@@ -1399,7 +1403,7 @@ group_split(my_penguins, species) %&gt;%
   map_dfr(calc_median_and_color)</code></pre>
 </div>
 <aside>
-This mimics the internal process of <code>stat_summary()</code>. Run each line incrementally see to what they do!
+This is a more systematic way of mimicking the internal process of <code>stat_summary()</code>. Run each line incrementally see to what they do!
 </aside>
 <div class="layout-chunk" data-layout="l-body">
 <pre><code>

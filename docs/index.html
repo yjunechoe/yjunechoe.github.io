@@ -2046,23 +2046,19 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 }
 
 .posts-list .metadata .publishedDate {
-  margin-right: 2em;
+  margin-right: 1em;
 }
 
-.posts-list .metadata .dt-tags {
-  display: block;
+.posts-list .metadata .tags {
   margin-top: 1em;
-  margin-right: 2em;
 }
 
-.posts-list .dt-tags .dt-tag {
-  display: inline-block;
-  color: rgba(0,0,0,0.6);
-  padding: 0em 0.3em;
-  margin-right: 0.2em;
-  margin-bottom: 0.4em;
+.posts-list .tags .tag {
+  color: rgba(0,0,0,0.67);
+  padding: 0.3em 0.5em;
+  margin: 0;
   font-size: 80%;
-  border: 1px solid rgba(0,0,0,0.2);
+  border: 1px solid rgba(0,0,0,0.4);
   border-radius: 3px;
   text-transform: uppercase;
   font-weight: 500;
@@ -2131,7 +2127,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   }
   .posts-list .post-preview .thumbnail {
     float: right;
-    width: 30%;
+    width: 35%;
     margin-bottom: 0;
   }
   .posts-list .post-preview .description {
@@ -2140,7 +2136,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   }
   .posts-list .post-preview .metadata {
     float: left;
-    width: 20%;
+    width: 15%;
     margin-top: 8px;
   }
   .posts-list .post-preview p {
@@ -2150,7 +2146,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   }
   .posts-with-sidebar .posts-list {
     float: left;
-    width: 75%;
+    width: 72%;
   }
   .posts-with-sidebar .posts-sidebar {
     float: right;
@@ -2217,16 +2213,16 @@ function init_posts_list() {
     set_posts_visible($('.posts-list').children('a'), false);
 
     // if we have a hash filter
-    if (window.location.hash && window.location.hash.startsWith("#category:")) {
+    if (window.location.hash) {
 
       // mark posts that match the category visible
-      var page_category = window.location.hash.replace(/^#category:/, "");
+      var page_category = window.location.hash.replace("#", "");
       var posts = $('.post-metadata').map(function(idx, script) {
         var metadata = $.parseJSON($(script).html());
         var post = null;
         $.each(metadata.categories, function(idx, category) {
           category = category.replace(/ /g,"_");
-          if (page_category === "articles" || category === page_category) {
+          if (category == page_category) {
             post = $(script).parent().get();
             return false;
           }
@@ -2238,22 +2234,10 @@ function init_posts_list() {
       // mark the hash active
       $('.categories li>a[href="' + window.location.hash + '"]').addClass('active');
 
-      // update the list_caption
-      var list_caption = $('.posts-list-caption');
-      var caption = page_category === "articles"
-        ? list_caption.attr('data-caption')
-        : ('Category: ' + page_category.replace(/_/g," "));
-      list_caption.text(caption);
-
     } else {
 
       // no hash filter, make all posts visible (subject to max display)
       set_posts_visible($('.posts-list').children(), true);
-
-      // reset list caption
-      var list_caption = $('.posts-list-caption');
-      list_caption.text(list_caption.attr('data-caption'));
-
 
     }
   }
@@ -2268,12 +2252,6 @@ function init_posts_list() {
       $('.posts-more a').addClass('hidden');
     }
   }
-
-  // click handling for tags
-  $('.dt-tag').click(function(ev) {
-    window.location.hash = '#category:' + $(this).text().replace(/ /g, "_");
-    return false;
-  })
 
   // hash filter handling
   apply_hash_filter();
@@ -2298,16 +2276,11 @@ function init_posts_list() {
 
 <div class="posts-container posts-with-sidebar posts-apply-limit l-screen-inset">
 <div class="posts-list">
-<h1 class="posts-list-caption" data-caption="Blog Posts">Blog Posts</h1>
+<h1 class="posts-list-caption">Blog Posts</h1>
 <a href="posts/2020-09-26-demystifying-stat-layers-ggplot2/" class="post-preview">
 <script class="post-metadata" type="text/json">{"categories":["data visualization","ggplot2","tutorial"]}</script>
 <div class="metadata">
 <div class="publishedDate">Sept. 27, 2020</div>
-<div class="dt-tags">
-<div class="dt-tag">data visualization</div>
-<div class="dt-tag">ggplot2</div>
-<div class="dt-tag">tutorial</div>
-</div>
 </div>
 <div class="thumbnail">
 <img data-src="posts/2020-09-26-demystifying-stat-layers-ggplot2/preview.png"/>
@@ -2321,11 +2294,6 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["ggplot2","data visualization","tidytuesday"]}</script>
 <div class="metadata">
 <div class="publishedDate">Sept. 23, 2020</div>
-<div class="dt-tags">
-<div class="dt-tag">tidytuesday</div>
-<div class="dt-tag">data visualization</div>
-<div class="dt-tag">ggplot2</div>
-</div>
 </div>
 <div class="thumbnail">
 <img data-src="posts/2020-09-23-tidytuesday-2020-week-39/preview.png"/>
@@ -2339,14 +2307,9 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["plot makeover","data visualization","ggplot2"]}</script>
 <div class="metadata">
 <div class="publishedDate">Sept. 20, 2020</div>
-<div class="dt-tags">
-<div class="dt-tag">plot makeover</div>
-<div class="dt-tag">data visualization</div>
-<div class="dt-tag">ggplot2</div>
-</div>
 </div>
 <div class="thumbnail">
-<img src="posts/2020-09-20-plot-makeover-1/plot-makeover-1_files/figure-html5/after_bar_plot-1.png"/>
+<img data-src="posts/2020-09-20-plot-makeover-1/plot-makeover-1_files/figure-html5/after_bar_plot-1.png"/>
 </div>
 <div class="description">
 <h2>Plot Makeover #1</h2>
@@ -2357,14 +2320,9 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["gt","data visualization","tidytuesday"]}</script>
 <div class="metadata">
 <div class="publishedDate">Sept. 14, 2020</div>
-<div class="dt-tags">
-<div class="dt-tag">gt</div>
-<div class="dt-tag">data visualization</div>
-<div class="dt-tag">tidytuesday</div>
-</div>
 </div>
 <div class="thumbnail">
-<img src="posts/2020-09-14-tidytuesday-2020-week-38/preview.png"/>
+<img data-src="posts/2020-09-14-tidytuesday-2020-week-38/preview.png"/>
 </div>
 <div class="description">
 <h2>TidyTuesday 2020 week 38</h2>
@@ -2375,13 +2333,9 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["reactable","data visualization"]}</script>
 <div class="metadata">
 <div class="publishedDate">Sept. 12, 2020</div>
-<div class="dt-tags">
-<div class="dt-tag">reactable</div>
-<div class="dt-tag">data visualization</div>
-</div>
 </div>
 <div class="thumbnail">
-<img src="posts/2020-09-12-videos-in-reactable/preview.png"/>
+<img data-src="posts/2020-09-12-videos-in-reactable/preview.png"/>
 </div>
 <div class="description">
 <h2>Embedding videos in {reactable} tables</h2>
@@ -2392,13 +2346,9 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["data visualization","typography"]}</script>
 <div class="metadata">
 <div class="publishedDate">Sept. 6, 2020</div>
-<div class="dt-tags">
-<div class="dt-tag">data visualization</div>
-<div class="dt-tag">typography</div>
-</div>
 </div>
 <div class="thumbnail">
-<img src="posts/2020-09-06-fonts-for-graphs/preview.png"/>
+<img data-src="posts/2020-09-06-fonts-for-graphs/preview.png"/>
 </div>
 <div class="description">
 <h2>Fonts for graphs</h2>
@@ -2409,14 +2359,9 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["tidytuesday","gganimate","ggplot2"]}</script>
 <div class="metadata">
 <div class="publishedDate">Aug. 17, 2020</div>
-<div class="dt-tags">
-<div class="dt-tag">tidytuesday</div>
-<div class="dt-tag">gganimate</div>
-<div class="dt-tag">ggplot2</div>
-</div>
 </div>
 <div class="thumbnail">
-<img src="posts/2020-08-17-tidytuesday-2020-week-33/preview.png"/>
+<img data-src="posts/2020-08-17-tidytuesday-2020-week-33/preview.png"/>
 </div>
 <div class="description">
 <h2>TidyTuesday 2020 Week 33</h2>
@@ -2427,10 +2372,6 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["data wrangling","dplyr"]}</script>
 <div class="metadata">
 <div class="publishedDate">Aug. 7, 2020</div>
-<div class="dt-tags">
-<div class="dt-tag">data wrangling</div>
-<div class="dt-tag">dplyr</div>
-</div>
 </div>
 <div class="thumbnail">
 <img data-src="posts/2020-08-07-saving-a-line-of-piping/preview.png"/>
@@ -2444,11 +2385,6 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["tidytuesday","data visualization","ggplot2"]}</script>
 <div class="metadata">
 <div class="publishedDate">Aug. 4, 2020</div>
-<div class="dt-tags">
-<div class="dt-tag">tidytuesday</div>
-<div class="dt-tag">data visualization</div>
-<div class="dt-tag">ggplot2</div>
-</div>
 </div>
 <div class="thumbnail">
 <img data-src="posts/2020-08-04-tidytuesday-2020-week-32/preview.png"/>
@@ -2462,13 +2398,6 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["ggplot2","gganimate","spotifyr","data wrangling","data visualization"]}</script>
 <div class="metadata">
 <div class="publishedDate">July 29, 2020</div>
-<div class="dt-tags">
-<div class="dt-tag">ggplot2</div>
-<div class="dt-tag">gganimate</div>
-<div class="dt-tag">spotifyr</div>
-<div class="dt-tag">data wrangling</div>
-<div class="dt-tag">data visualization</div>
-</div>
 </div>
 <div class="thumbnail">
 <img data-src="posts/2020-07-29-six-years-of-my-spotify-playlists/preview.png"/>
@@ -2482,9 +2411,6 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["shiny"]}</script>
 <div class="metadata">
 <div class="publishedDate">July 20, 2020</div>
-<div class="dt-tags">
-<div class="dt-tag">shiny</div>
-</div>
 </div>
 <div class="thumbnail">
 <img data-src="posts/2020-07-20-shiny-tips-1/preview.png"/>
@@ -2498,10 +2424,6 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["data visualization","ggplot2"]}</script>
 <div class="metadata">
 <div class="publishedDate">July 13, 2020</div>
-<div class="dt-tags">
-<div class="dt-tag">data visualization</div>
-<div class="dt-tag">ggplot2</div>
-</div>
 </div>
 <div class="thumbnail">
 <img data-src="posts/2020-07-13-geom-paired-raincloud/preview.png"/>
@@ -2515,11 +2437,6 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["data visualization","treemap","ggplot2"]}</script>
 <div class="metadata">
 <div class="publishedDate">June 30, 2020</div>
-<div class="dt-tags">
-<div class="dt-tag">data visualization</div>
-<div class="dt-tag">treemap</div>
-<div class="dt-tag">ggplot2</div>
-</div>
 </div>
 <div class="thumbnail">
 <img data-src="posts/2020-06-30-treemap-with-ggplot/2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-12-1.png"/>
@@ -2533,11 +2450,6 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["data wrangling","NLP","spacyr"]}</script>
 <div class="metadata">
 <div class="publishedDate">June 25, 2020</div>
-<div class="dt-tags">
-<div class="dt-tag">data wrangling</div>
-<div class="dt-tag">NLP</div>
-<div class="dt-tag">spacyr</div>
-</div>
 </div>
 <div class="thumbnail">
 <img data-src="posts/2020-06-25-indexing-tip-for-spacyr/preview.png"/>
@@ -2551,10 +2463,6 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["statistics","mixed-effects models"]}</script>
 <div class="metadata">
 <div class="publishedDate">June 7, 2020</div>
-<div class="dt-tags">
-<div class="dt-tag">statistics</div>
-<div class="dt-tag">mixed-effects models</div>
-</div>
 </div>
 <div class="thumbnail">
 <img data-src="posts/2020-06-07-correlation-parameter-mem/preview.png"/>
@@ -2566,84 +2474,93 @@ function init_posts_list() {
 </a>
 </div>
 <div class="posts-sidebar">
-<div><div class="sidebar-section custom">
-  <img src="static/img/profile.png" width="200" style="display:block; padding-bottom: 20px">
-  <h3><a href="about.html">About Me</a></h3>
-  I am a (computational) psycholinguist interested in modeling how people parse linguistic input, particularly those that contain structural ambiguities. In my spare time, I enjoy blogging about data visualization and #rstats.
-</div></div>
+<div><div class="sidebar-section custom">
+  <img src="static/img/profile.png" width="200" style="display:block; padding-bottom: 20px">
+  <h3><a href="about.html">About Me</a></h3>
+  I am a (computational) psycholinguist interested in modeling how people parse linguistic input, particularly those that contain structural ambiguities. In my spare time, I enjoy blogging about data visualization and #rstats.
+</div>
+
+<!-- Google Search=
+<div class="sidebar-section custom">
+  <h3>Search</h3>
+  <script async src="https://cse.google.com/cse.js?cx=5004f2335f01c9f8e"></script>
+  <div class="gcse-search"></div>
+</div>
+ -->
+</div>
 <div class="sidebar-section categories">
 <h3>Categories</h3>
 <ul>
 <li>
-<a href="#index">ALL ARTICLES</a>
-<span class="category-count">(15)</span>
+<a href="#data_visualization">data visualization</a>
+<span class="category-count">(10)</span>
 </li>
 <li>
-<a href="#category:data_visualization">data visualization</a>
-<span class="category-count">(8)</span>
-</li>
-<li>
-<a href="#category:data_wrangling">data wrangling</a>
+<a href="#data_wrangling">data wrangling</a>
 <span class="category-count">(3)</span>
 </li>
 <li>
-<a href="#category:dplyr">dplyr</a>
+<a href="#dplyr">dplyr</a>
 <span class="category-count">(1)</span>
 </li>
 <li>
-<a href="#category:gganimate">gganimate</a>
+<a href="#gganimate">gganimate</a>
 <span class="category-count">(2)</span>
 </li>
 <li>
-<a href="#category:ggplot2">ggplot2</a>
-<span class="category-count">(6)</span>
+<a href="#ggplot2">ggplot2</a>
+<span class="category-count">(8)</span>
 </li>
 <li>
-<a href="#category:gt">gt</a>
+<a href="#gt">gt</a>
 <span class="category-count">(1)</span>
 </li>
 <li>
-<a href="#category:mixed-effects_models">mixed-effects models</a>
+<a href="#mixed-effects_models">mixed-effects models</a>
 <span class="category-count">(1)</span>
 </li>
 <li>
-<a href="#category:NLP">NLP</a>
+<a href="#NLP">NLP</a>
 <span class="category-count">(1)</span>
 </li>
 <li>
-<a href="#category:plot_makeover">plot makeover</a>
+<a href="#plot_makeover">plot makeover</a>
 <span class="category-count">(1)</span>
 </li>
 <li>
-<a href="#category:reactable">reactable</a>
+<a href="#reactable">reactable</a>
 <span class="category-count">(1)</span>
 </li>
 <li>
-<a href="#category:shiny">shiny</a>
+<a href="#shiny">shiny</a>
 <span class="category-count">(1)</span>
 </li>
 <li>
-<a href="#category:spacyr">spacyr</a>
+<a href="#spacyr">spacyr</a>
 <span class="category-count">(1)</span>
 </li>
 <li>
-<a href="#category:spotifyr">spotifyr</a>
+<a href="#spotifyr">spotifyr</a>
 <span class="category-count">(1)</span>
 </li>
 <li>
-<a href="#category:statistics">statistics</a>
+<a href="#statistics">statistics</a>
 <span class="category-count">(1)</span>
 </li>
 <li>
-<a href="#category:tidytuesday">tidytuesday</a>
-<span class="category-count">(3)</span>
+<a href="#tidytuesday">tidytuesday</a>
+<span class="category-count">(4)</span>
 </li>
 <li>
-<a href="#category:treemap">treemap</a>
+<a href="#treemap">treemap</a>
 <span class="category-count">(1)</span>
 </li>
 <li>
-<a href="#category:typography">typography</a>
+<a href="#tutorial">tutorial</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#typography">typography</a>
 <span class="category-count">(1)</span>
 </li>
 </ul>
@@ -2653,7 +2570,7 @@ function init_posts_list() {
 <a href="#">More articles &raquo;</a>
 </div>
 </div>
-<!--/radix_placeholder_article_listing-->
+<!--/radix_placeholder_article_listing-->
 
 <div class="d-title">
 <h1>Blog Posts</h1>

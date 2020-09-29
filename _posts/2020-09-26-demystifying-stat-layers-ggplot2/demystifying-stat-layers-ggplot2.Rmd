@@ -342,7 +342,7 @@ Let's go over what it does by breaking down the function body line by line:
 1. Remove `NA` values
 2. Calculate variable `se` which is the standard error of the values in `x` using the equation $SE = \sqrt{\frac{1}{N-1}\sum_{i=1}^N(x_i-\bar{x})^2}$
 3. Calculate the variable `mean`^[I personally don't agree with this naming choice since `mean` is also the name of the base function] which is the mean of `x`
-4. Create a new dataframe with one row, with columns `y`, `ymin`, and `ymax`, where `y` is the mean od `x`, `ymin` is one standard error below the mean, and `ymax` is one standard error above the mean.^[The function `new_data_frame()` is from `{vctrs}`. That last line of code in the function body is doing the same thing as `data.frame(y = mean, ymin = mean - se, ymax = mean + se)`, but there's less room for error the way it's done in the source code.]
+4. Create a new dataframe with one row, with columns `y`, `ymin`, and `ymax`, where `y` is the mean of `x`, `ymin` is one standard error below the mean, and `ymax` is one standard error above the mean.^[The function `new_data_frame()` is from `{vctrs}`. That last line of code in the function body is doing the same thing as `data.frame(y = mean, ymin = mean - se, ymax = mean + se)`, but there's less room for error the way it's done in the source code.]
 
 A cool thing about this is that although `mean_se()` seems to be exclusively used for internal operations, it's actually available in the global environment from loading `{ggplot2}`. So let's pass `height_df` to `mean_se()` and see what we get back!
 
@@ -462,7 +462,10 @@ As of {ggplot2} 3.3.0, you can use {rlang}-style anonymous functions. If you are
 The transformed data used for the [errorbar]{.sc} geom inside `stat_summary()`:
 
 ```{r}
-mean_se(my_penguins$body_mass_g, mult = 1.96)
+bind_rows(
+  mean_se(my_penguins$body_mass_g[my_penguins$sex == "female"], mult = 1.96),
+  mean_se(my_penguins$body_mass_g[my_penguins$sex == "male"], mult = 1.96),
+)
 ```
 
 
@@ -500,7 +503,7 @@ group_split(my_penguins, species) %>%
 ```
 
 <aside>
-This mimics the internal process of `stat_summary()`. Run each line incrementally see to what they do!
+This is a more systematic way of mimicking the internal process of `stat_summary()`. Run each line incrementally see to what they do!
 </aside>
 
 ```{r colorbar_data, echo=F}
