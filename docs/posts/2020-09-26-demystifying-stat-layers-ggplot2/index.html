@@ -36,20 +36,26 @@
 <meta property="og:type" content="article"/>
 <meta property="og:description" content="The motivation behind stat, the distinction between stat and geom, and a case study of stat_summary()"/>
 <meta property="og:url" content="yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/"/>
+<meta property="og:image" content="yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/demystifying-stat-layers-ggplot2_files/figure-html5/unnamed-chunk-1-1.png"/>
+<meta property="og:image:width" content="1248"/>
+<meta property="og:image:height" content="768"/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:site_name" content="June Choe"/>
 
 <!--  https://dev.twitter.com/cards/types/summary -->
-<meta property="twitter:card" content="summary"/>
+<meta property="twitter:card" content="summary_large_image"/>
 <meta property="twitter:title" content="June Choe: Demystifying stat_ layers in {ggplot2}"/>
 <meta property="twitter:description" content="The motivation behind stat, the distinction between stat and geom, and a case study of stat_summary()"/>
 <meta property="twitter:url" content="yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/"/>
+<meta property="twitter:image" content="yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/demystifying-stat-layers-ggplot2_files/figure-html5/unnamed-chunk-1-1.png"/>
+<meta property="twitter:image:width" content="1248"/>
+<meta property="twitter:image:height" content="768"/>
 
 <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","preview","date","output","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["Demystifying stat_ layers in {ggplot2}"]},{"type":"character","attributes":{},"value":["The motivation behind stat, the distinction between stat and geom, and a case study of stat_summary()"]},{"type":"character","attributes":{},"value":["data visualization","ggplot2","tutorial"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]}]}]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/preview.png"]},{"type":"character","attributes":{},"value":["09-27-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/"]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","preview","date","output","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["Demystifying stat_ layers in {ggplot2}"]},{"type":"character","attributes":{},"value":["The motivation behind stat, the distinction between stat and geom, and a case study of stat_summary()"]},{"type":"character","attributes":{},"value":["data visualization","ggplot2","tutorial"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]}]}]},{"type":"character","attributes":{},"value":["posts/2020-09-26-demystifying-stat-layers-ggplot2/preview.png"]},{"type":"character","attributes":{},"value":["09-27-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/"]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -1820,7 +1826,7 @@ mean_se</code></pre>
       new_data_frame(list(y = mean, ymin = mean - se, ymax = mean + 
           se), n = 1)
   }
-  &lt;bytecode: 0x0000000020396170&gt;
+  &lt;bytecode: 0x000000002039c3d8&gt;
   &lt;environment: namespace:ggplot2&gt;</code></pre>
 </div>
 <p>Ok, so it’s a function that takes some argument <code>x</code> and a second argument <code>mult</code> with the default value <code>1</code>.</p>
@@ -2049,7 +2055,7 @@ group_split(my_penguins, species) %&gt;%
 <li id="fn3" role="doc-endnote"><p>You could calculate the sum of raw values that are in each bin, or calculate proportions instead of counts<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4" role="doc-endnote"><p>If you aren’t familiar already, “tidy” is a specific <a href="https://r4ds.had.co.nz/tidy-data.html">term of art</a><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5" role="doc-endnote"><p>This quote is adapted from Thomas Lin Pedersen’s <a href="https://www.youtube.com/watch?v=h29g21z0a68">ggplot2 workshop video</a><a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6" role="doc-endnote"><p>Yes, you can still cut down on the code somewhat, but will it even get as succinct as what I show below with <code>stat_summary()</code>?<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p><del>Yes, you can still cut down on the code somewhat, but will it even get as succinct as what I show below with <code>stat_summary()</code>?</del> (9/30 edit) Okay, I was <em>kinda</em> strawmaning, and Hadley(!) has correctly <a href="https://twitter.com/hadleywickham/status/1311282915704221696">caught me on that</a>. The bar-errorbar plot was not the best choice to demonstrate the benefits of <code>stat_summary()</code>, but I just wanted to get people excited about <code>stat_*()</code>! Sorry for the confusion/irritation!!<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn7" role="doc-endnote"><p>There’s actually one more argument against transforming data before piping it into ggplot. When you choose the variables to plot, say <code>cyl</code> and <code>mpg</code> in the <code>mtcars</code> dataset, do you call <code>select(cyl, mpg)</code> before piping <code>mtcars</code> into ggplot? No? Well then why would you transform your data beforehand if you can just have that be handled internally instead? It’s the same logic!<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8" role="doc-endnote"><p>If you’re still skeptical, save the plot object to a variable like <code>plot</code> and call <code>plot$layers</code> to confirm that <code>geom_pointrange</code> was used to draw the plot.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn9" role="doc-endnote"><p>I personally don’t agree with this naming choice since <code>mean</code> is also the name of the base function<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>

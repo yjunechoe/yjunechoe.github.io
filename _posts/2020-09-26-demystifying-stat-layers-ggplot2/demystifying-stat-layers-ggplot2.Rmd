@@ -11,7 +11,7 @@ author:
   - name: June Choe
     affiliation: University of Pennsylvania Linguistics
     affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
-preview: https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/preview.png
+preview: posts/2020-09-26-demystifying-stat-layers-ggplot2/preview.png
 date: 09-27-2020
 output:
   distill::distill_article:
@@ -240,7 +240,7 @@ ggplot() +
 include_graphics("https://media.giphy.com/media/aNtt9T8SqGNK8/giphy.gif")
 ```
 
-Yeah... that code is a mouthful. The above approach is not **parsimonious** because we keep repeating similar processes in different places.^[Yes, you can still cut down on the code somewhat, but will it even get as succinct as what I show below with `stat_summary()`?] If you, like myself, don't like how this looks, then let this be a lesson that **this is the consequence of thinking that you must always prepare a tidy data containing values that can be DIRECTLY mapped to geometric objects**.
+Yeah... that code is a mouthful. The above approach is not **parsimonious** because we keep repeating similar processes in different places.^[~~Yes, you can still cut down on the code somewhat, but will it even get as succinct as what I show below with `stat_summary()`?~~ (9/30 edit) Okay, I was _kinda_ strawmaning, and Hadley(!) has correctly [caught me on that](https://twitter.com/hadleywickham/status/1311282915704221696). The bar-errorbar plot was not the best choice to demonstrate the benefits of `stat_summary()`, but I just wanted to get people excited about `stat_*()`! Sorry for the confusion/irritation!!] If you, like myself, don't like how this looks, then let this be a lesson that **this is the consequence of thinking that you must always prepare a tidy data containing values that can be DIRECTLY mapped to geometric objects**.
 
 And on a more theoretical note, `simple_data_bar` and `simple_data_errorbar` aren't even really "tidy" in the original sense of the term. We need to remind ourselves here that tidy data is about the organization of **observations in the data**. Under this definition, values like bar height and the top and bottom of whiskers are hardly _observations_  themselves. Rather, they're abstractions or summaries of the actual observations in our data `simple_data` which, if you notice, we _didn't even use_ to make our final plot above!
 
