@@ -11,7 +11,7 @@ author:
   - name: June Choe
     affiliation: University of Pennsylvania Linguistics
     affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
-preview: posts/2020-09-26-demystifying-stat-layers-ggplot2/preview.png
+preview: /posts/2020-09-26-demystifying-stat-layers-ggplot2/preview.png
 date: 09-27-2020
 output:
   distill::distill_article:
@@ -342,7 +342,7 @@ Ok, so it's a function that takes some argument `x` and a second argument `mult`
 Let's go over what it does by breaking down the function body line by line:
 
 1. Remove `NA` values
-2. Calculate variable `se` which is the standard error of the values in `x` using the equation $SE = \sqrt{\frac{1}{N-1}\sum_{i=1}^N(x_i-\bar{x})^2}$
+2. Calculate variable `se` which is the standard error of the values in `x` using the equation $SE = \sqrt{\frac{1}{N}\sum_{i=1}^N(x_i-\bar{x})^2}$
 3. Calculate the variable `mean`^[I personally don't agree with this naming choice since `mean` is also the name of the base function] which is the mean of `x`
 4. Create a new dataframe with one row, with columns `y`, `ymin`, and `ymax`, where `y` is the mean of `x`, `ymin` is one standard error below the mean, and `ymax` is one standard error above the mean.^[The function `new_data_frame()` is from `{vctrs}`. That last line of code in the function body is doing the same thing as `data.frame(y = mean, ymin = mean - se, ymax = mean + se)`, but there's less room for error the way it's done in the source code.]
 

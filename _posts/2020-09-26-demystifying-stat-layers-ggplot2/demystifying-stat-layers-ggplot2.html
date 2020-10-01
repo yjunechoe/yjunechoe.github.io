@@ -50,7 +50,7 @@
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","preview","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Demystifying stat_ layers in {ggplot2}"]},{"type":"character","attributes":{},"value":["The motivation behind stat, the distinction between stat and geom, and a case study of stat_summary()\n"]},{"type":"character","attributes":{},"value":["data visualization","ggplot2","tutorial"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]}]}]},{"type":"character","attributes":{},"value":["posts/2020-09-26-demystifying-stat-layers-ggplot2/preview.png"]},{"type":"character","attributes":{},"value":["09-27-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","preview","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Demystifying stat_ layers in {ggplot2}"]},{"type":"character","attributes":{},"value":["The motivation behind stat, the distinction between stat and geom, and a case study of stat_summary()\n"]},{"type":"character","attributes":{},"value":["data visualization","ggplot2","tutorial"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]}]}]},{"type":"character","attributes":{},"value":["/posts/2020-09-26-demystifying-stat-layers-ggplot2/preview.png"]},{"type":"character","attributes":{},"value":["09-27-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -1255,14 +1255,14 @@ mean_se</code></pre>
       new_data_frame(list(y = mean, ymin = mean - se, ymax = mean + 
           se), n = 1)
   }
-  &lt;bytecode: 0x000000002039c3d8&gt;
+  &lt;bytecode: 0x0000000020392058&gt;
   &lt;environment: namespace:ggplot2&gt;</code></pre>
 </div>
 <p>Ok, so it’s a function that takes some argument <code>x</code> and a second argument <code>mult</code> with the default value <code>1</code>.</p>
 <p>Let’s go over what it does by breaking down the function body line by line:</p>
 <ol type="1">
 <li>Remove <code>NA</code> values</li>
-<li>Calculate variable <code>se</code> which is the standard error of the values in <code>x</code> using the equation <span class="math inline">\(SE = \sqrt{\frac{1}{N-1}\sum_{i=1}^N(x_i-\bar{x})^2}\)</span></li>
+<li>Calculate variable <code>se</code> which is the standard error of the values in <code>x</code> using the equation <span class="math inline">\(SE = \sqrt{\frac{1}{N}\sum_{i=1}^N(x_i-\bar{x})^2}\)</span></li>
 <li>Calculate the variable <code>mean</code><a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> which is the mean of <code>x</code></li>
 <li>Create a new dataframe with one row, with columns <code>y</code>, <code>ymin</code>, and <code>ymax</code>, where <code>y</code> is the mean of <code>x</code>, <code>ymin</code> is one standard error below the mean, and <code>ymax</code> is one standard error above the mean.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></li>
 </ol>
