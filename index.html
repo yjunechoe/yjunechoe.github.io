@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
   <meta name="generator" content="distill" />
+  <link rel="alternate" type="application/rss+xml" href="yjunechoe.github.io/index.xml" />
 
   <style type="text/css">
   /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
@@ -19,27 +20,27 @@
  <!--/radix_placeholder_import_source-->
 
   <!--radix_placeholder_meta_tags-->
-  <title>June Choe: Hi there!</title>
+  <title>June Choe: Blog Posts</title>
 
 
   <link rel="icon" type="image/png" href="static/img/icon.png"/>
 
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="June Choe: Hi there!"/>
+  <meta property="og:title" content="June Choe: Blog Posts"/>
   <meta property="og:type" content="article"/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:site_name" content="June Choe"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="June Choe: Hi there!"/>
+  <meta property="twitter:title" content="June Choe: Blog Posts"/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title"]}},"value":[{"type":"character","attributes":{},"value":["Hi there!"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","site","listing"]}},"value":[{"type":"character","attributes":{},"value":["Blog Posts"]},{"type":"character","attributes":{},"value":["distill::distill_website"]},{"type":"character","attributes":{},"value":["posts"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -1499,12 +1500,12 @@
 
 </head>
 
-<body>
+<body class="layout-listing">
 
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Hi there!","authors":[]}
+{"title":"Blog Posts","authors":[]}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -1531,21 +1532,629 @@
 <!--/radix_placeholder_navigation_before_body-->
 <!--radix_placeholder_site_before_body-->
 <!--/radix_placeholder_site_before_body-->
+<!--radix_placeholder_article_listing-->
+
+<style type="text/css">
+
+/* Styles for listing layout (hide title) */
+.layout-listing d-title, .layout-listing .d-title {
+  display: none;
+}
+
+/* Styles for posts lists (not auto-injected) */
+
+
+.posts-with-sidebar {
+  padding-left: 45px;
+  padding-right: 45px;
+}
+
+.posts-list .description h2,
+.posts-list .description p {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+.posts-list .description h2 {
+  font-weight: 700;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.posts-list h2.post-tag {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding-bottom: 12px;
+}
+.posts-list {
+  margin-top: 60px;
+  margin-bottom: 24px;
+}
+
+.posts-list .post-preview {
+  text-decoration: none;
+  overflow: hidden;
+  display: block;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 24px 0;
+}
+
+.post-preview-last {
+  border-bottom: none !important;
+}
+
+.posts-list .posts-list-caption {
+  grid-column: screen;
+  font-weight: 400;
+}
+
+.posts-list .post-preview h2 {
+  margin: 0 0 6px 0;
+  line-height: 1.2em;
+  font-style: normal;
+  font-size: 24px;
+}
+
+.posts-list .post-preview p {
+  margin: 0 0 12px 0;
+  line-height: 1.4em;
+  font-size: 16px;
+}
+
+.posts-list .post-preview .thumbnail {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+  position: relative;
+  max-width: 500px;
+}
+.posts-list .post-preview img {
+  width: 100%;
+  display: block;
+}
+
+.posts-list .metadata {
+  font-size: 12px;
+  line-height: 1.4em;
+  margin-bottom: 18px;
+}
+
+.posts-list .metadata > * {
+  display: inline-block;
+}
+
+.posts-list .metadata .publishedDate {
+  margin-right: 1em;
+}
+
+.posts-list .metadata .tags {
+  margin-top: 1em;
+}
+
+.posts-list .tags .tag {
+  color: rgba(0,0,0,0.67);
+  padding: 0.3em 0.5em;
+  margin: 0;
+  font-size: 80%;
+  border: 1px solid rgba(0,0,0,0.4);
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.posts-list img {
+  opacity: 1;
+}
+
+.posts-list img[data-src] {
+  opacity: 0;
+}
+
+.posts-more {
+  clear: both;
+}
+
+
+.posts-sidebar {
+  font-size: 16px;
+}
+
+.posts-sidebar h3 {
+  font-size: 16px;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.sidebar-section {
+  margin-bottom: 30px;
+}
+
+.categories ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.categories li {
+  color: rgba(0, 0, 0, 0.8);
+  margin-bottom: 0;
+}
+
+.categories li>a {
+  border-bottom: none;
+}
+
+.categories li>a:hover {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.categories .active {
+  font-weight: 600;
+}
+
+.categories .category-count {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+
+@media(min-width: 768px) {
+  .posts-list .post-preview h2 {
+    font-size: 26px;
+  }
+  .posts-list .post-preview .thumbnail {
+    float: right;
+    width: 35%;
+    margin-bottom: 0;
+  }
+  .posts-list .post-preview .description {
+    float: left;
+    width: 45%;
+  }
+  .posts-list .post-preview .metadata {
+    float: left;
+    width: 15%;
+    margin-top: 8px;
+  }
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.5em;
+    font-size: 16px;
+  }
+  .posts-with-sidebar .posts-list {
+    float: left;
+    width: 72%;
+  }
+  .posts-with-sidebar .posts-sidebar {
+    float: right;
+    width: 20%;
+    margin-top: 60px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+}
+
+.downlevel .posts-list .post-preview {
+  color: inherit;
+}
+
+</style>
+
+<script type="application/javascript">
+
+function init_posts_list() {
+
+  function load_image(img) {
+    var src = $(img).attr('data-src');
+    if (src) {
+      $(img).attr('src', src);
+      $(img).load(function() {
+        img.removeAttribute('data-src');
+      });
+    }
+  }
+
+  function set_posts_visible(posts, visible) {
+    if (visible) {
+
+      // show bottom border by default
+      $(posts).removeClass('post-preview-last');
+
+      // apply limits if need be
+      var max_posts = 25;
+      var apply_limits = $('.posts-container').hasClass('posts-apply-limit');
+      if (apply_limits && posts.length > max_posts) {
+        posts = $(posts).slice(0, max_posts);
+      } else {
+        $('.posts-more a').addClass('hidden');
+      }
+
+      // apply last style
+      $(posts.slice(-1)[0]).addClass('post-preview-last');
+
+      $(posts).removeClass('hidden');
+      $(posts).find('img[data-src]').each(function(i, img) {
+        load_image(img);
+      });
+    } else {
+      $(posts).addClass('hidden');
+    }
+  }
+
+  function apply_hash_filter() {
+
+    // clear active state
+    $('.categories .active').removeClass('active');
+
+    // mark all posts invisible to start
+    set_posts_visible($('.posts-list').children('a'), false);
+
+    // if we have a hash filter
+    if (window.location.hash) {
+
+      // mark posts that match the category visible
+      var page_category = window.location.hash.replace("#", "");
+      var posts = $('.post-metadata').map(function(idx, script) {
+        var metadata = $.parseJSON($(script).html());
+        var post = null;
+        $.each(metadata.categories, function(idx, category) {
+          category = category.replace(/ /g,"_");
+          if (category == page_category) {
+            post = $(script).parent().get();
+            return false;
+          }
+        });
+        return post;
+      });
+      set_posts_visible(posts, true);
+
+      // mark the hash active
+      $('.categories li>a[href="' + window.location.hash + '"]').addClass('active');
+
+    } else {
+
+      // no hash filter, make all posts visible (subject to max display)
+      set_posts_visible($('.posts-list').children(), true);
+
+    }
+  }
+
+  // more articles
+  function apply_post_limits(apply) {
+    if (apply) {
+      $('.posts-container').addClass('posts-apply-limit');
+      $('.posts-more a').removeClass('hidden');
+    } else {
+      $('.posts-container').removeClass('posts-apply-limit');
+      $('.posts-more a').addClass('hidden');
+    }
+  }
+
+  // hash filter handling
+  apply_hash_filter();
+  $(window).on('hashchange',function() {
+    apply_post_limits(true);
+    apply_hash_filter();
+  });
+
+  // more articles link
+  $('.posts-more a').click(function(e) {
+    e.preventDefault();
+    apply_post_limits(false);
+    apply_hash_filter();
+    return false;
+  });
+
+}
+
+</script>
+
+
+
+<div class="posts-container posts-with-sidebar posts-apply-limit l-screen-inset">
+<div class="posts-list">
+<h1 class="posts-list-caption">Blog Posts</h1>
+<a href="posts/2020-09-26-demystifying-stat-layers-ggplot2/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["data visualization","ggplot2","tutorial"]}</script>
+<div class="metadata">
+<div class="publishedDate">Sept. 27, 2020</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2020-09-26-demystifying-stat-layers-ggplot2/demystifying-stat-layers-ggplot2_files/figure-html5/unnamed-chunk-1-1.png"/>
+</div>
+<div class="description">
+<h2>Demystifying stat_ layers in {ggplot2}</h2>
+<p>The motivation behind stat, the distinction between stat and geom, and a case study of stat_summary()</p>
+</div>
+</a>
+<a href="posts/2020-09-23-tidytuesday-2020-week-39/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["ggplot2","data visualization","tidytuesday"]}</script>
+<div class="metadata">
+<div class="publishedDate">Sept. 23, 2020</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2020-09-23-tidytuesday-2020-week-39/preview.png"/>
+</div>
+<div class="description">
+<h2>TidyTuesday 2020 week 39</h2>
+<p>Stacked area plot of the heights of Himalayan peaks attempted over the last century</p>
+</div>
+</a>
+<a href="posts/2020-09-20-plot-makeover-1/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["plot makeover","data visualization","ggplot2"]}</script>
+<div class="metadata">
+<div class="publishedDate">Sept. 20, 2020</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2020-09-20-plot-makeover-1/plot-makeover-1_files/figure-html5/after_bar_plot-1.png"/>
+</div>
+<div class="description">
+<h2>Plot Makeover #1</h2>
+<p>Flattening a faceted grid for strictly horizontal comparisons</p>
+</div>
+</a>
+<a href="posts/2020-09-14-tidytuesday-2020-week-38/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["gt","data visualization","tidytuesday"]}</script>
+<div class="metadata">
+<div class="publishedDate">Sept. 14, 2020</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2020-09-14-tidytuesday-2020-week-38/preview.png"/>
+</div>
+<div class="description">
+<h2>TidyTuesday 2020 week 38</h2>
+<p>Visualizing two decades of primary and secondary education spending with {gt}</p>
+</div>
+</a>
+<a href="posts/2020-09-12-videos-in-reactable/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["reactable","data visualization"]}</script>
+<div class="metadata">
+<div class="publishedDate">Sept. 12, 2020</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2020-09-12-videos-in-reactable/preview.png"/>
+</div>
+<div class="description">
+<h2>Embedding videos in {reactable} tables</h2>
+<p>Pushing the limits of expandable row details</p>
+</div>
+</a>
+<a href="posts/2020-09-06-fonts-for-graphs/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["data visualization","typography"]}</script>
+<div class="metadata">
+<div class="publishedDate">Sept. 6, 2020</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2020-09-06-fonts-for-graphs/preview.png"/>
+</div>
+<div class="description">
+<h2>Fonts for graphs</h2>
+<p>A small collection of my favorite fonts for data visualization</p>
+</div>
+</a>
+<a href="posts/2020-08-17-tidytuesday-2020-week-33/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["tidytuesday","gganimate","ggplot2"]}</script>
+<div class="metadata">
+<div class="publishedDate">Aug. 17, 2020</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2020-08-17-tidytuesday-2020-week-33/preview.png"/>
+</div>
+<div class="description">
+<h2>TidyTuesday 2020 Week 33</h2>
+<p>An animation of the main characters in Avatar</p>
+</div>
+</a>
+<a href="posts/2020-08-07-saving-a-line-of-piping/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["data wrangling","dplyr"]}</script>
+<div class="metadata">
+<div class="publishedDate">Aug. 7, 2020</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2020-08-07-saving-a-line-of-piping/preview.png"/>
+</div>
+<div class="description">
+<h2>Saving a line of piping</h2>
+<p>Some notes on lesser known functions/functionalities that combine common chain of {dplyr} verbs.</p>
+</div>
+</a>
+<a href="posts/2020-08-04-tidytuesday-2020-week-32/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["tidytuesday","data visualization","ggplot2"]}</script>
+<div class="metadata">
+<div class="publishedDate">Aug. 4, 2020</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2020-08-04-tidytuesday-2020-week-32/preview.png"/>
+</div>
+<div class="description">
+<h2>TidyTuesday 2020 Week 32</h2>
+<p>A dumbbell chart visualization of energy production trends among European countries</p>
+</div>
+</a>
+<a href="posts/2020-07-29-six-years-of-my-spotify-playlists/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["ggplot2","gganimate","spotifyr","data wrangling","data visualization"]}</script>
+<div class="metadata">
+<div class="publishedDate">July 29, 2020</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2020-07-29-six-years-of-my-spotify-playlists/preview.png"/>
+</div>
+<div class="description">
+<h2>Six years of my Spotify playlists</h2>
+<p>An analysis of acoustic features with {spotifyr}</p>
+</div>
+</a>
+<a href="posts/2020-07-20-shiny-tips-1/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["shiny"]}</script>
+<div class="metadata">
+<div class="publishedDate">July 20, 2020</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2020-07-20-shiny-tips-1/preview.png"/>
+</div>
+<div class="description">
+<h2>Shiny tips - the first set</h2>
+<p>%||%, imap() + {shinybusy}, and user inputs in modalDialog()</p>
+</div>
+</a>
+<a href="posts/2020-07-13-geom-paired-raincloud/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["data visualization","ggplot2"]}</script>
+<div class="metadata">
+<div class="publishedDate">July 13, 2020</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2020-07-13-geom-paired-raincloud/preview.png"/>
+</div>
+<div class="description">
+<h2>geom_paired_raincloud()</h2>
+<p>A {ggplot2} geom for visualizing change in distribution between two conditions.</p>
+</div>
+</a>
+<a href="posts/2020-06-30-treemap-with-ggplot/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["data visualization","treemap","ggplot2"]}</script>
+<div class="metadata">
+<div class="publishedDate">June 30, 2020</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2020-06-30-treemap-with-ggplot/2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-12-1.png"/>
+</div>
+<div class="description">
+<h2>Plotting treemaps with {treemap} and {ggplot2}</h2>
+<p>Using underlying plot data for maximum customization</p>
+</div>
+</a>
+<a href="posts/2020-06-25-indexing-tip-for-spacyr/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["data wrangling","NLP","spacyr"]}</script>
+<div class="metadata">
+<div class="publishedDate">June 25, 2020</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2020-06-25-indexing-tip-for-spacyr/preview.png"/>
+</div>
+<div class="description">
+<h2>Indexing tip for {spacyr}</h2>
+<p>Speeding up the analysis of dependency relations.</p>
+</div>
+</a>
+<a href="posts/2020-06-07-correlation-parameter-mem/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["statistics","mixed-effects models"]}</script>
+<div class="metadata">
+<div class="publishedDate">June 7, 2020</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2020-06-07-correlation-parameter-mem/preview.png"/>
+</div>
+<div class="description">
+<h2>The Correlation Parameter in Mixed Effects Models</h2>
+<p>Notes on the Corr term in {lme4} output</p>
+</div>
+</a>
+</div>
+<div class="posts-sidebar">
+<div><div class="sidebar-section custom">
+  <img src="static/img/profile.png" width="200" style="display:block; padding-bottom: 20px">
+  <h3><a href="about.html">About Me</a></h3>
+  I am a (computational) psycholinguist interested in modeling how people parse linguistic input, particularly those that contain structural ambiguities. In my spare time, I enjoy blogging about data visualization and #rstats.
+</div>
+
+<!-- Google Search=
+<div class="sidebar-section custom">
+  <h3>Search</h3>
+  <script async src="https://cse.google.com/cse.js?cx=5004f2335f01c9f8e"></script>
+  <div class="gcse-search"></div>
+</div>
+ -->
+</div>
+<div class="sidebar-section categories">
+<h3>Categories</h3>
+<ul>
+<li>
+<a href="#data_visualization">data visualization</a>
+<span class="category-count">(10)</span>
+</li>
+<li>
+<a href="#data_wrangling">data wrangling</a>
+<span class="category-count">(3)</span>
+</li>
+<li>
+<a href="#dplyr">dplyr</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#gganimate">gganimate</a>
+<span class="category-count">(2)</span>
+</li>
+<li>
+<a href="#ggplot2">ggplot2</a>
+<span class="category-count">(8)</span>
+</li>
+<li>
+<a href="#gt">gt</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#mixed-effects_models">mixed-effects models</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#NLP">NLP</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#plot_makeover">plot makeover</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#reactable">reactable</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#shiny">shiny</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#spacyr">spacyr</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#spotifyr">spotifyr</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#statistics">statistics</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#tidytuesday">tidytuesday</a>
+<span class="category-count">(4)</span>
+</li>
+<li>
+<a href="#treemap">treemap</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#tutorial">tutorial</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#typography">typography</a>
+<span class="category-count">(1)</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="posts-more">
+<a href="#">More articles &raquo;</a>
+</div>
+</div>
+<!--/radix_placeholder_article_listing-->
 
 <div class="d-title">
-<h1>Hi there!</h1>
+<h1>Blog Posts</h1>
 
 </div>
 
 
 <div class="d-article">
-<p>I am a first year PhD student in Linguistics at the University of Pennsylvania, specializing in (computational) psycholinguistics. My main research interest is in modeling how people process linguistic information, both in real time and over the course of development. My recent research has looked at the interactions between different levels of linguistic representation (syntactic, semantic, prosodic) in on-line sentence processing.</p>
-<p>I received my B.A. in Linguistics from Northwestern University in the Summer of 2020. During my undergrad there, I worked with <a href="https://sites.northwestern.edu/cole/">Jennifer Cole</a>, <a href="https://faculty.wcas.northwestern.edu/~myo507/">Masaya Yoshida</a>, and <a href="https://faculty.wcas.northwestern.edu/~akd2621/">Annette D’Onofrio</a> in the Linguistics department. I also worked as a research assistant in the <a href="https://learnlab.northwestern.edu/">Language, Education, and Learning Neuroscience Lab</a> under <a href="https://www.communication.northwestern.edu/faculty/ElizabethNorton">Elizabeth Norton</a> in the Communication Sciences and Disorders Department. I wrote my honors thesis on the role of prosodic focus in semantic reanalysis in the processing of sentences with local attachment ambiguity.</p>
-<p>Beyond linguistics research, I have interests in data visualization, science communication and <a href="https://twitter.com/hashtag/rstats">#rstats</a>.</p>
-<br>
-<div style="text-align: center">
-<span class="sc">contact me: </span><a href="mailto:yjchoe@sas.upenn.edu" class="email">yjchoe@sas.upenn.edu</a>
-</div>
+
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
@@ -1561,7 +2170,7 @@
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
 <div class="distill-site-nav distill-site-footer">
-<p><span style="font-family: 'Lora'"> Copyright 2020 June Choe </span></p>
+<p><span style="font-family: 'Lora'"> © Copyright 2020 June Choe </span></p>
 </div>
 <!--/radix_placeholder_navigation_after_body-->
 

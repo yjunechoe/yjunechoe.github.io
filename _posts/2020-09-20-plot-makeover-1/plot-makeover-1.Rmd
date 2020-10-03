@@ -36,6 +36,9 @@ knitr::opts_chunk$set(
 library(extrafont)
 ```
 
+
+
+
 _This is the first installment of **plot makeover** where I take a plot in the wild and make very opinionated modifications to it._
 
 ## Before
@@ -134,7 +137,7 @@ I actually couldn't settle on one final product^[I ran the first plot by a frien
 
 ### Point-line plot
 
-```{r after_pointplot, layout = 'l-body-outset'}
+```{r after_pointplot, echo=FALSE, layout = 'l-body-outset'}
 dodge <- position_dodge(width = .5)
 
 df %>% 
@@ -184,9 +187,12 @@ df %>%
   )
 ```
 
+```{r after_pointplot, eval=FALSE}
+```
+
 ### Bar plot
 
-```{r after_bar_code, eval=FALSE}
+```{r after_bar_plot, echo=FALSE, layout = 'l-body-outset', preview = TRUE}
 dodge <- position_dodge(width = .5)
 
 df %>% 
@@ -230,10 +236,11 @@ df %>%
   )
 ```
 
+```{r after_bar_plot, eval=FALSE}
+```
+
 <aside>
 In this second version, I removed `guides()` and distributed its arguments across `labs()` and `theme()`. I kinda like this layout of having a fat `theme()`. It's also not too hard to read if you group and sort the arguments.
 </aside>
 
-```{r after_bar_plot, echo=FALSE, layout = 'l-body-outset', preview = TRUE}
-<<after_bar_code>>
-```
+
