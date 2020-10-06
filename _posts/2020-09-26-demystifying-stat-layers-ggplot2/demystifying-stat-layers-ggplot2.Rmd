@@ -44,6 +44,8 @@ theme_update(
 set.seed(123)
 ```
 
+_UPDATE 10/5/20: This blog post was featured in the [rweekly highlights podcast](https://rweekly.fireside.fm/8?t=251)! Thanks to the rweekly team for a flattering review of my tutorial!_
+
 ## Introduction
 
 _(Feel free to skip the intro section if you want to get to the point!)_
