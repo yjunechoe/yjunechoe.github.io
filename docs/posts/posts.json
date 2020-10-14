@@ -1,5 +1,27 @@
 [
   {
+    "path": "posts/2020-10-13-designing-guiding-aesthetics/",
+    "title": "Designing guiding aesthetics",
+    "description": "The fine line between creativity and noise",
+    "author": [
+      {
+        "name": "June Choe",
+        "url": {}
+      }
+    ],
+    "date": "2020-10-13",
+    "categories": [
+      "data visualization",
+      "ggplot2",
+      "tidytuesday"
+    ],
+    "preview": "posts/2020-10-13-designing-guiding-aesthetics/preview.png",
+    "last_modified": "2020-10-14T02:52:48-04:00",
+    "input_file": "designing-guiding-aesthetics.utf8.md",
+    "preview_width": 8503,
+    "preview_height": 6377
+  },
+  {
     "path": "posts/2020-09-26-demystifying-stat-layers-ggplot2/",
     "title": "Demystifying stat_ layers in {ggplot2}",
     "description": "The motivation behind stat, the distinction between stat and geom, and a case study of stat_summary()",
@@ -16,8 +38,8 @@
       "tutorial"
     ],
     "preview": "posts/2020-09-26-demystifying-stat-layers-ggplot2/demystifying-stat-layers-ggplot2_files/figure-html5/unnamed-chunk-1-1.png",
-    "last_modified": "2020-10-06T19:37:36-04:00",
-    "input_file": "demystifying-stat-layers-ggplot2.utf8.md",
+    "last_modified": "2020-10-06T19:37:38-04:00",
+    "input_file": {},
     "preview_width": 1248,
     "preview_height": 768
   },

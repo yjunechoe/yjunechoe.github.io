@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+  <!--radix_placeholder_meta_tags-->
+  <title>Designing guiding aesthetics</title>
+
+  <meta property="description" itemprop="description" content="The fine line between creativity and noise"/>
+
+
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2020-10-13"/>
+  <meta property="article:created" itemprop="dateCreated" content="2020-10-13"/>
+  <meta name="article:author" content="June Choe"/>
+
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="Designing guiding aesthetics"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:description" content="The fine line between creativity and noise"/>
+  <meta property="og:image" content="https://yjunechoe.github.io/preview.png"/>
+  <meta property="og:image:width" content="8503"/>
+  <meta property="og:image:height" content="6377"/>
+  <meta property="og:locale" content="en_US"/>
+
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:title" content="Designing guiding aesthetics"/>
+  <meta property="twitter:description" content="The fine line between creativity and noise"/>
+  <meta property="twitter:image" content="https://yjunechoe.github.io/preview.png"/>
+  <meta property="twitter:image:width" content="8503"/>
+  <meta property="twitter:image:height" content="6377"/>
+
+  <!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","preview","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Designing guiding aesthetics"]},{"type":"character","attributes":{},"value":["The fine line between creativity and noise\n"]},{"type":"character","attributes":{},"value":["data visualization","ggplot2","tidytuesday"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]}]}]},{"type":"character","attributes":{},"value":["preview.png"]},{"type":"character","attributes":{},"value":["10-13-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["beetles.png","designing-guiding-aesthetics_files/bowser-1.9.3/bowser.min.js","designing-guiding-aesthetics_files/distill-2.2.21/template.v2.js","designing-guiding-aesthetics_files/figure-html5/unnamed-chunk-1-1.png","designing-guiding-aesthetics_files/figure-html5/unnamed-chunk-2-1.png","designing-guiding-aesthetics_files/figure-html5/unnamed-chunk-3-1.png","designing-guiding-aesthetics_files/header-attrs-2.4/header-attrs.js","designing-guiding-aesthetics_files/jquery-1.11.3/jquery.min.js","designing-guiding-aesthetics_files/webcomponents-2.0.0/webcomponents.js","mountain1.png","mountain2.jpg","mountain3.jpg","preview.png"]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+  <style type="text/css">
+
+  body {
+    background-color: white;
+  }
+
+  .pandoc-table {
+    width: 100%;
+  }
+
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .shaded-content {
+    background: white;
+  }
+
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  d-article {
+    padding-bottom: 30px;
+  }
+
+  d-appendix {
+    padding-top: 30px;
+  }
+
+  d-article>p>img {
+    width: 100%;
+  }
+
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  /* CSS for table of contents */
+
+  .d-toc {
+    color: rgba(0,0,0,0.8);
+    font-size: 0.8em;
+    line-height: 1em;
+  }
+
+  .d-toc-header {
+    font-size: 0.6rem;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 1.3em;
+  }
+
+  .d-toc a {
+    border-bottom: none;
+  }
+
+  .d-toc ul {
+    padding-left: 0;
+  }
+
+  .d-toc li>ul {
+    padding-top: 0.8em;
+    padding-left: 16px;
+    margin-bottom: 0.6em;
+  }
+
+  .d-toc ul,
+  .d-toc li {
+    list-style-type: none;
+  }
+
+  .d-toc li {
+    margin-bottom: 0.9em;
+  }
+
+  .d-toc-separator {
+    margin-top: 20px;
+    margin-bottom: 2em;
+  }
+
+  .d-article-with-toc {
+    border-top: none;
+    padding-top: 0;
+  }
+
+
+
+  /* Tweak code blocks (note that this CSS is repeated above in an injection
+     into the d-code shadow dom) */
+
+  d-code {
+    overflow-x: auto !important;
+  }
+
+  pre.d-code code.d-code {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+
+  pre.text-output {
+
+    font-size: 12px;
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  @media(min-width: 768px) {
+
+  d-code {
+    overflow-x: visible !important;
+  }
+
+  pre.d-code code.d-code  {
+      padding-left: 18px;
+      font-size: 14px;
+  }
+  pre.text-output {
+    font-size: 14px;
+  }
+  }
+
+  /* Figure */
+
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+
+  .figure img {
+    width: 100%;
+  }
+
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+
+
+
+  /* Tweak 1000px media break to show more text */
+
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+
+    .grid {
+      grid-column-gap: 16px;
+    }
+
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+
+
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+
+  /* Social footer */
+
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+
+  .disqus-comments {
+    margin-right: 30px;
+  }
+
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+
+  #disqus_thread {
+    margin-top: 30px;
+  }
+
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+
+
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+
+
+  .sidebar-section.custom {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .custom p {
+    margin-bottom: 0.5em;
+  }
+
+
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  </style>
+
+  <script type="application/javascript">
+
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+
+  // show body when load is complete
+  function on_load_complete() {
+
+    // set body to visible
+    document.body.style.visibility = 'visible';
+
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+
+  function init_distill() {
+
+    init_common();
+
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+
+    // create d-bibliography
+    var bibliography = $('<d-bibliography></d-bibliography>');
+    $('#distill-bibliography').wrap(bibliography);
+
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+    // replace citations with <d-cite>
+    $('.citation').each(function(i, val) {
+      appendix = true;
+      var cites = $(this).attr('data-cites').split(" ");
+      var dt_cite = $('<d-cite></d-cite>');
+      dt_cite.attr('key', cites.join());
+      $(this).replaceWith(dt_cite);
+    });
+    // remove refs
+    $('#refs').remove();
+
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-toc a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+    // replace code blocks with d-code
+    $('pre>code').each(function(i, val) {
+      var code = $(this);
+      var pre = code.parent();
+      var clz = "";
+      var language = pre.attr('class');
+      if (language) {
+        // map unknown languages to "clike" (without this they just dissapear)
+        if ($.inArray(language, ["bash", "clike", "css", "go", "html",
+                                 "javascript", "js", "julia", "lua", "markdown",
+                                 "markup", "mathml", "python", "svg", "xml"]) == -1)
+          language = "clike";
+        language = ' language="' + language + '"';
+        var dt_code = $('<d-code block' + language + clz + '></d-code>');
+        dt_code.text(code.text());
+        pre.replaceWith(dt_code);
+      } else {
+        code.addClass('text-output').unwrap().changeElementType('pre');
+      }
+    });
+
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+
+      // capture layout
+      var layout = $(this).attr('data-layout');
+
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('d-code, pre.text-output, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+
+
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+
+    // load distill framework
+    load_distill_framework();
+
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+
+      // table of contents
+      if (have_authors) // adjust border if we are in authors
+        $('.d-toc').parent().addClass('d-article-with-toc');
+
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+
+      // inject pre code styles (can't do this with a global stylesheet b/c a shadow root is used)
+      $('d-code').each(function(i, val) {
+        var style = document.createElement('style');
+        style.innerHTML = 'pre code { padding-left: 10px; font-size: 12px; border-left: 2px solid rgba(0,0,0,0.1); } ' +
+                          '@media(min-width: 768px) { pre code { padding-left: 18px; font-size: 14px; } }';
+        if (this.shadowRoot)
+          this.shadowRoot.appendChild(style);
+      });
+
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+
+      // clear polling timer
+      clearInterval(tid);
+
+      // show body now that everything is ready
+      on_load_complete();
+    }
+
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+
+  }
+
+  function init_downlevel() {
+
+    init_common();
+
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+
+    // remove toc
+    $('.d-toc-header').remove();
+    $('.d-toc').remove();
+    $('.d-toc-separator').remove();
+
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+
+
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+
+    $('body').addClass('downlevel');
+
+    on_load_complete();
+  }
+
+
+  function init_common() {
+
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+
+      }
+    });
+
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.distill-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+      });
+    }
+
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+
+  </script>
+
+  <!--/radix_placeholder_distill-->
+  <script src="designing-guiding-aesthetics_files/header-attrs-2.4.4/header-attrs.js"></script>
+  <script src="designing-guiding-aesthetics_files/jquery-1.11.3/jquery.min.js"></script>
+  <script src="designing-guiding-aesthetics_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="designing-guiding-aesthetics_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="designing-guiding-aesthetics_files/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Designing guiding aesthetics","description":"The fine line between creativity and noise","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/"}],"publishedDate":"2020-10-13T00:00:00.000-04:00","citationText":"Choe, 2020"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Designing guiding aesthetics</h1>
+<p><p>The fine line between creativity and noise</p></p>
+</div>
+
+<div class="d-byline">
+  June Choe  (University of Pennsylvania Linguistics)<a href="https://live-sas-www-ling.pantheon.sas.upenn.edu/" class="uri">https://live-sas-www-ling.pantheon.sas.upenn.edu/</a>
+  
+<br/>10-13-2020
+</div>
+
+<div class="d-article">
+<h3 class="d-toc-header">Table of Contents</h3>
+<nav class="d-toc" id="TOC">
+<ul>
+<li><a href="#visualization">Visualization</a></li>
+<li><a href="#reflections-on-guiding-aesthetics">Reflections on guiding aesthetics</a></li>
+<li><a href="#why-bother-with-guiding-aesthetics">Why bother with guiding aesthetics?</a></li>
+<li><a href="#designing-guiding-aesthetics">Designing guiding aesthetics</a></li>
+<li><a href="#my-thought-process">My thought process</a></li>
+<li><a href="#code">Code</a></li>
+</ul>
+</nav>
+<hr class="d-toc-separator"/>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<h2 id="visualization">Visualization</h2>
+<div class="layout-chunk" data-layout="l-body-outset">
+<p><img src="preview.png" width="4252" /></p>
+</div>
+<h2 id="reflections-on-guiding-aesthetics">Reflections on guiding aesthetics</h2>
+<p>Breaking from the usual format of my tidytuesday blogposts, I want to talk about the background and motivation behind the plot, as this was a big step in a new (and exciting!) direction for me that I’d like to document.</p>
+<p>Just for clarification, I’m using the term <strong>guiding aesthetics</strong> to refer to <em>elements of the plot that do not represent a variable in the data, but serves to emphasize the overall theme or topic of the being visualized</em>. So the mountains in my plot do not themselves contain any data, but it’s the thing that tells readers that the plot is <em>about</em> mountains (a valuable, but different kind of info!). But more on that later.</p>
+<h2 id="why-bother-with-guiding-aesthetics">Why bother with guiding aesthetics?</h2>
+<p>This was my first time adding a huge element to a plot that wasn’t meaningful, in the sense of representing the data. As someone in academia working on obscure topics (as one does in academia), I’m a firm believer in making your plots as simple and minimal as possible. So I, like many others, think that it’s always a huge risk to add elements that are not absolutely necessary.</p>
+<p>But as you might imagine, I first fell in love with data visualization not because of how objective and straightforward they are, but because of how eye-catching they can be. Like, when I was young I used to be really into insects. In fact, I read insect encyclopedias as a hobby. That TMI is relevant because those are full of data(!) visualizations that employ <em>literal mappings</em> of data, since those are easy to interpret for children. For example, consider the following diagram of the life cycle of the Japanese beetle from the <a href="https://www.aphis.usda.gov/import_export/plants/manuals/domestic/downloads/japanese_beetle.pdf">USDA</a>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-2"></span>
+<img src="beetles.png" alt="Diagram of the life cycle of the Japanese beetle" width="654" class=external />
+<p class="caption">
+Figure 1: Diagram of the life cycle of the Japanese beetle
+</p>
+</div>
+</div>
+<p>As a child, I never appreciated/realized all the data that was seamlessly packed into diagrams like this. But with my <em>Grammar of Graphics</em> lens on, I can now see that:</p>
+<ul>
+<li>The <strong>developmental stage</strong> at each month is mapped to <span class="sc">x</span></li>
+<li>The <strong>depth</strong> at which the developing beetle lives at each stage is mapped to <span class="sc">y</span></li>
+<li>The <strong>appearance</strong> of the beetle at each developmental stage is mapped to <span class="sc">shape</span></li>
+<li>The <strong>size</strong> of the beetle at each developmental stage is mapped to, well, <span class="sc">size</span></li>
+</ul>
+<p>But I could have easily plotted something like this instead:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+beetles &lt;- tibble::tribble(
+  ~Month, ~Depth,   ~Stage, ~Size,
+   &quot;JAN&quot;,    -10,  &quot;Larva&quot;,    10,
+   &quot;FEB&quot;,     -8,  &quot;Larva&quot;,    12,
+   &quot;MAR&quot;,     -7,  &quot;Larva&quot;,    14,
+   &quot;APR&quot;,     -7,  &quot;Larva&quot;,    14,
+   &quot;MAY&quot;,     -6,   &quot;Pupa&quot;,    11,
+   &quot;JUN&quot;,      0, &quot;Beetle&quot;,    12,
+   &quot;JUL&quot;,      0, &quot;Beetle&quot;,    12,
+   &quot;AUG&quot;,     -3,  &quot;Larva&quot;,     1,
+   &quot;SEP&quot;,     -2,  &quot;Larva&quot;,     2,
+   &quot;OCT&quot;,     -1,  &quot;Larva&quot;,     4,
+   &quot;NOV&quot;,     -3,  &quot;Larva&quot;,     5,
+   &quot;DEC&quot;,     -8,  &quot;Larva&quot;,     7
+)
+
+beetles$Month &lt;- fct_inorder(beetles$Month)
+
+ggplot(beetles, aes(x = Month, y = Depth, size = Size, shape = Stage)) +
+  geom_point() +
+  ggtitle(&quot;The lifecycle of the Japanese beetle&quot;)</code></pre>
+<p><img src="designing-guiding-aesthetics_files/figure-html5/unnamed-chunk-3-1.png" width="576" /></p>
+</div>
+<p>Both visuals represent the data accurately, but of course the diagram looks better. And not just because it’s complex, but also because it <em>exploits</em> the <strong>associations</strong> between aesthetic dimensions and their meanings, as well as the <strong>strength</strong> of those associations.</p>
+<p>For example, the <span class="sc">shape</span> dimension literally corresponds to shape, and the shape of the different developmental stages of the beetle are unique enough for there to be interesting within-stage variation and still be recognizable - e.g., the beetle <em>looks</em> different crawling out the ground in June and entering back in August, but it’s still recognizable as a beetle (and the <em>same</em> beetle at that!). This would’ve been difficult if the variable being mapped to <span class="sc">shape</span> was something arbitrary and abstract, like the type of protein that’s most produced at a particular stage. The diagram thus exploits the strength of the association between the <span class="sc">shape</span> dimension and the literal shapes of the beetle to represent the developmental stages. And it should be clear now that the same goes for <span class="sc">y</span> and <span class="sc">size</span>.</p>
+<p>How about <span class="sc">x</span>? There’s no such strong/literal interpretation of the <span class="sc">x</span>-dimension - at best it just means something horizontal. So it’s actually fitting that a similarly abstract concept like the passage of time is mapped to <span class="sc">x</span>. We understand time linearly, and often see time as the x-axis in other plots, so it fits pretty naturally here.</p>
+<p>Lastly, let’s talk about the <span class="sc">color</span> dimension. Even though no information was actually mapped to color, we certainly are getting <em>some</em> kind of information from the colors used in the plot. Literally put, we’re getting the information that the grass is green and the soil is brown. Now, that information is actually not representing any <em>data</em> that we care about so it’s technically visual noise, but it helps bring forward the overall theme of the diagram. While this worked out in the end, notice now that you have effectively thrown out <span class="sc">color</span> as a dimension that can convey meaningful information. That was a necessary <strong>tradeoff</strong>, but a well motivated one, since the information that the diagram is trying to convey doesn’t really <em>need</em> <span class="sc">color</span>.</p>
+<h2 id="designing-guiding-aesthetics">Designing guiding aesthetics</h2>
+<p>I’m hardly the expert, but I found it helpful to think of the process as mediating the tug of war between the <strong>guiding aesthetic</strong> and the <strong>variables in the data</strong> as they fight over space in different mapping dimensions.</p>
+<p>The strong interpretation of this is that I should flip my usual workflow for <strong>explanatory data visualization</strong>, which mostly goes something like this:</p>
+<ol type="1">
+<li>Take my dependent variable and map it to <span class="sc">y</span></li>
+<li>Figure out the distribution of my dependent variable and choose the appropriate <span class="sc">geom</span></li>
+<li>Map my dependent variables - this usually ends at either just <span class="sc">x</span> or <span class="sc">x</span> + facet groupings</li>
+</ol>
+<p>But if I’m trying to <strong>incorporate guiding aesthetics</strong>, my workflow would look more like this:</p>
+<ol type="1">
+<li>Start with a couple ideas for a visual representation of the topic (scenes, objects, etc.)</li>
+<li>Figure out the dimensions that the variables in the data can be mapped to</li>
+<li>Figure out the dimensions that each visual representation would intrude in</li>
+<li>Make compromises between (2) and (3) in a way that maximizes the quality of the data and the visual representation</li>
+</ol>
+<p>Of course, this kind of flexibility is unique to exploratory data visualization, the kinds where there’s no variable that is significant or interesting variable <em>a priori</em>. Of course in real life there will be <em>a lot more</em> constraints, but because we can assume naivity towards the data for #tidytuesday, I get to pick and choose what I want to plot (which makes #tidytuesday such a great place to practice baby steps)!</p>
+<p>For illustration, here’s my actual thought process while making the #tidytuesday plot.</p>
+<p>WARNING: a very non-linear journey ahead!</p>
+<h2 id="my-thought-process">My thought process</h2>
+<p>The topic was about Himalayan peaks, so I wanted my visual to involve a mountain shape. The most obvious idea that came to mind was to draw a mountain where the peak of that mountain corresponded with their <code>height_metres</code>, a variable from the <code>peaks</code> data. It’s straightforward and intuitive! So I drew a sketch (these are the original sketches - please forgive the quality!)</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-4"></span>
+<img src="mountain1.png" alt="The first guiding aesthetic idea" width="426" />
+<p class="caption">
+Figure 2: The first guiding aesthetic idea
+</p>
+</div>
+</div>
+<p>But this felt… a bit empty. I threw in Mount Everest, but now what? I still had data on hundreds of more Himalayan peaks that were in the dataset. Just visualizing Mount Everest is not <em>badly motivated</em> (it’s the most famous peak afterall), but it wouldn’t make an interesting plot since there wasn’t much data for individual peaks. At the same time, however, I struggled to find a handful of mountains that formed a coherent group. I knew that if I wanted to go with the idea of mountain <em>shapes</em> as the guiding aesthetic, I could only manage to fit about a dozen or so without it looking too crowded.</p>
+<p>I put that issue aside for the moment and moved on while trying to accommodate for the possibility that I may have to fit in many more peaks. I came up with an idea where there’s a single mountain shape <em>just for Mount Everest</em> and a point with a vertical spikeline for all other peaks that emphasize the <span class="sc">y-axis</span> representing <code>height_metres</code>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
+<img src="mountain2.jpg" alt="The second guiding aesthetic idea" width="500" />
+<p class="caption">
+Figure 3: The second guiding aesthetic idea
+</p>
+</div>
+</div>
+<p>At this point I started thinking about the x-axis. If I <em>do</em> use points to represent mountains (specifically, mountain heights), where would I actually position them? Just randomly along the x-axis? It really started hitting me at this point that the <strong>quality of my data</strong> was pretty abysmal. Even if I ended up with something amazing, I didn’t think I could justify calling it a <em>data</em> visualization. I felt that it’d be a <em>reach</em> to use complex visuals just to communicate a single variable.</p>
+<p>I toyed around with making the data being plotted <strong>richer</strong>. What if I use <span class="sc">size</span> of the dots to represent the average <code>age</code> of climbers who reached the peak, from the <code>memmbers</code> data? Or what if I used <span class="sc">shape</span> of country flags on top of the dots to represent the <code>country</code> that first reached the peak, from the <code>expeditions</code> data?</p>
+<p>These were all cool ideas, but I kept coming back to the need to make the <span class="sc">x</span>-dimension meaningful. It just stood out too much. I didn’t think I could prevent the reader from <em>expecting</em> some sort of meaning from the positioning of the dots along the <span class="sc">x</span>-axis.</p>
+<p>So I went back to Step #2. I gathered up <em>all the continuous variables</em> across the three data in the #tidytuesday dataset (<code>peaks</code>, <code>members</code>, <code>expeditions</code>) and evaluated how good of a candidate each of them were for being mapped to <span class="sc">x</span>. This was the most time-consuming part of the process, and I narrowed it down to three candidates:</p>
+<ul>
+<li><code>expeditions$members</code>: looked okay at first, but once I started aggregating (averaging) by peak, the distribution became quite narrow. That made it less interesting and not very ideal for mountain shapes (the typical mountain shape is wider than they are tall).</li>
+<li><code>members$age</code>: has a nice distribution and a manageable range with no extreme outliers.</li>
+<li><code>peaks$first_ascent_year</code>: also has the above features + doesn’t need to be aggregated in some way, so the <span class="sc">x</span>-axis would have a very straight forward interpretation.</li>
+</ul>
+<p>The <code>first_ascent_year</code> variable looked promising, so that’s what I first pursued (and ended up ultimately adopting!).</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-6"></span>
+<img src="mountain3.jpg" alt="The third guiding aesthetic idea" width="500" />
+<p class="caption">
+Figure 4: The third guiding aesthetic idea
+</p>
+</div>
+</div>
+<p>Now I felt like I had more direction to tackle the very first issue that I ran into during this process: the problem of picking out a <strong>small set of peaks that were interesting and well-motivated</strong>. I played around more with several options, but I ultimately settled on something very simple - <strong>the top 10 most popular peaks</strong>. Sure it’s overused and not particularly exciting, but that was a sacrifice that my over-worked brain was willing to make at the time.</p>
+<p>And actually, it turned out to be a great fit with my new <span class="sc">x</span> variable! It turns out that the top 10 most climbed peaks are also those that were first to be climbed (not a hard correlation to digest), so this set of peaks had an additional benefit of being localized between the 1940s-1960s. Because 10 was a manageable number, I went ahead with my very first idea of having a mountain accompanying each point, which now represents the peak of the guiding aesthetic as well as the <code>height_metres</code> and <code>first_ascent_year</code>.</p>
+<p>Finally, it came time for me to polish up on the mountains. I needed to decide on features of the mountains like how wide the base is, how many valleys and peaks it has, how tall the peaks are relative to each other, etc. I had to be careful that these superfluous features do not encroach on the dimnensions where I mapped my data to - the <span class="sc">x</span> and <span class="sc">y</span>. Here, I had concerns about two of the mountain features: <strong>base width</strong> and <strong>smaller peaks</strong>:</p>
+<ul>
+<li><p>The base width was troubling because how wide the base of the mountain stretches could be interpreted as representing another variable that has to do with <em>year</em> (like the first and last time it was climbed, for example). This was a bit difficult to deal with, but I settled on a solution which was to <strong>keep the base width constant</strong>. By not having that feature vary at all, I could suppress any expectation for it to carry some sort of meaning. It’s kind of like how when you make a scatterplot with just variables mapped to <span class="sc">x</span> and <span class="sc">y</span>, you don’t imbue any special meaning to the fact that the observations are represented by a point, beacuse <em>all</em> of them are points. If they varied in any way, say some are points and others are triangles, then you’d start expecting the shape to represent some other variable.</p></li>
+<li><p>The smaller peaks of the mountain shapes were troubling because I was already using the peak to represent the height. It helped that the actual peaks representing the data were marked by a point and a label of the peak name. But to make it extra clear that the they were pure noise, I decided to <strong>randomly generate peaks and valleys</strong> In the code attached at the bottom of this post, several parameters of the mountain-generating function allowed me to do this. It also helped that I added a note saying that the mountains were randomly generated when I tweeted it, which is kind of cheating perhaps, but it worked!</p></li>
+</ul>
+<blockquote class="twitter-tweet">
+<p lang="en" dir="ltr">
+I've been feeling particularly inspired by this week's <a href="https://twitter.com/hashtag/TidyTuesday?src=hash&amp;ref_src=twsrc%5Etfw">#TidyTuesday</a> so I made another plot! This is a simple scatterplot of peak height by year of first ascent, but with a twist: each point is also represented by the peak of a randomly generated mountain! <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://t.co/CqNQjdMYXP">pic.twitter.com/CqNQjdMYXP</a>
+</p>
+— June (<span class="citation" data-cites="yjunechoe">@yjunechoe</span>) <a href="https://twitter.com/yjunechoe/status/1309304725523886080?ref_src=twsrc%5Etfw">September 25, 2020</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>That wraps up my long rant on how I made my mountains plot! For more context, making the plot took about a half a day worth of work, which isn’t too bad for a first attempt! Hope to come across more inspirations like this in the future.</p>
+<h2 id="code">Code</h2>
+<p>Also available on <a href="https://github.com/yjunechoe/tidytuesday/blob/master/Scripts/tidytuesday_2020_39_B.R">github</a></p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+library(tidyverse)
+
+make_mountain &lt;- function(x_start, x_end, base = 0, peak_x, peak_y, n_peaks = 3, peaks_ratio = 0.3, side.first = &quot;left&quot;) {
+  
+  midpoint_abs &lt;- (peak_y - base)/2 + base
+  midpoint_rel &lt;- (peak_y - base)/2
+  
+  side_1_n_peaks &lt;- floor(n_peaks/2)
+  side_2_n_peaks &lt;- n_peaks - side_1_n_peaks -1
+  
+  side_1_x &lt;- seq(x_start, peak_x, length.out = side_1_n_peaks * 2 + 2)
+  side_1_x &lt;- side_1_x[-c(1, length(side_1_x))]
+  
+  side_2_x &lt;- seq(peak_x, x_end, length.out = side_2_n_peaks * 2 + 2)
+  side_2_x &lt;- side_2_x[-c(1, length(side_2_x))]
+  
+  side_1_y &lt;- numeric(length(side_1_x))
+  side_1_y[c(TRUE, FALSE)] &lt;- runif(length(side_1_y)/2, midpoint_abs, midpoint_abs + midpoint_rel * peaks_ratio)
+  side_1_y[c(FALSE, TRUE)] &lt;- runif(length(side_1_y)/2, midpoint_abs - midpoint_rel * peaks_ratio, midpoint_abs)
+  
+  side_2_y &lt;- numeric(length(side_2_x))
+  side_2_y[c(TRUE, FALSE)] &lt;- runif(length(side_2_y)/2, midpoint_abs, midpoint_abs + midpoint_rel * peaks_ratio)
+  side_2_y[c(FALSE, TRUE)] &lt;- runif(length(side_2_y)/2, midpoint_abs - midpoint_rel * peaks_ratio, midpoint_abs)
+  
+  if (side.first == &quot;left&quot;) {
+    side_left &lt;- data.frame(x = side_1_x, y = side_1_y)
+    side_right &lt;- data.frame(x = side_2_x, y = rev(side_2_y))
+  } else if (side.first == &quot;right&quot;) {
+    side_left &lt;- data.frame(x = side_2_x, y = side_2_y)
+    side_right &lt;- data.frame(x = side_1_x, y = rev(side_1_y))
+  } else {
+    error(&#39;Inavlid value for side.first - choose between &quot;left&quot; (default) or &quot;right&quot;&#39;)
+  }
+  
+  polygon_points &lt;- rbind(
+    data.frame(x = c(x_start, peak_x, x_end), y = c(base, peak_y, base)),
+    side_left,
+    side_right
+  )
+  
+  polygon_points[order(polygon_points$x),]
+
+}
+
+tuesdata &lt;- tidytuesdayR::tt_load(&quot;2020-09-22&quot;)
+
+peaks &lt;- tuesdata$peaks
+expeditions &lt;- tuesdata$expeditions
+
+top_peaks &lt;- expeditions %&gt;% 
+  count(peak_name) %&gt;% 
+  slice_max(n, n = 10)
+
+plot_df &lt;- peaks %&gt;% 
+  filter(peak_name %in% top_peaks$peak_name) %&gt;% 
+  arrange(-height_metres) %&gt;% 
+  mutate(peak_name = fct_inorder(peak_name))
+
+plot_df %&gt;% 
+  ggplot(aes(x = first_ascent_year, y = height_metres)) +
+  pmap(list(plot_df$first_ascent_year, plot_df$height_metres, plot_df$peak_name),
+       ~ geom_polygon(aes(x, y, fill = ..3), alpha = .6,
+                      make_mountain(x_start = 1945, x_end = 1965, base = 5000,
+                                    peak_x = ..1, peak_y = ..2, n_peaks = sample(3:5, 1)))
+  ) +
+  geom_point(color = &quot;white&quot;) +
+  ggrepel::geom_text_repel(aes(label = peak_name),
+                           nudge_y = 100, segment.color = &#39;white&#39;,
+                           family = &quot;Montserrat&quot;, fontface = &quot;bold&quot;, color = &quot;white&quot;) +
+  guides(fill = guide_none()) +
+  scale_x_continuous(expand = expansion(0.01, 0)) +
+  scale_y_continuous(limits = c(5000, 9000), expand = expansion(0.02, 0)) +
+  theme_minimal(base_family = &quot;Montserrat&quot;, base_size = 12) +
+  labs(title = &quot;TOP 10 Most Attempted Himalayan Peaks&quot;,
+       x = &quot;First Ascent Year&quot;, y = &quot;Peak Height (m)&quot;) +
+  palettetown::scale_fill_poke(pokemon = &quot;articuno&quot;) +
+  theme(
+    plot.title.position = &quot;plot&quot;,
+    plot.title = element_text(size = 24, vjust = 3, family = &quot;Lora&quot;),
+    text = element_text(color = &quot;white&quot;, face = &quot;bold&quot;),
+    axis.text = element_text(color = &quot;white&quot;),
+    axis.title = element_text(size = 14),
+    axis.title.x = element_text(vjust = -2),
+    axis.title.y = element_text(vjust = 4),
+    plot.margin = margin(1, .5, .7, .7, &quot;cm&quot;),
+    plot.background = element_rect(fill = &quot;#5C606A&quot;, color = NA),
+    panel.grid = element_blank(),
+  )</code></pre>
+</div>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>

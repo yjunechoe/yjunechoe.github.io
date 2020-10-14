@@ -2,6 +2,7 @@
 title: "Blog Posts"
 site: distill::distill_website
 listing: posts
+link-citations: true
 ---
 
 

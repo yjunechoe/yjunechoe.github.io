@@ -12,7 +12,19 @@
       <link>yjunechoe.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Sun, 27 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 13 Oct 2020 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Designing guiding aesthetics</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>yjunechoe.github.io/posts/2020-10-13-designing-guiding-aesthetics</link>
+      <description>The fine line between creativity and noise</description>
+      <category>data visualization</category>
+      <category>ggplot2</category>
+      <category>tidytuesday</category>
+      <guid>yjunechoe.github.io/posts/2020-10-13-designing-guiding-aesthetics</guid>
+      <pubDate>Tue, 13 Oct 2020 00:00:00 +0000</pubDate>
+      <media:content url="yjunechoe.github.io/posts/2020-10-13-designing-guiding-aesthetics/preview.png" medium="image" type="image/png" width="8503" height="6377"/>
+    </item>
     <item>
       <title>Demystifying stat_ layers in {ggplot2}</title>
       <dc:creator>June Choe</dc:creator>

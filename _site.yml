@@ -22,7 +22,6 @@ collections:
     categories: true
     categories_metadata: true
     custom: _custom.html
-    citations: false
 output:
   distill::distill_article:
     css: styles.css
