@@ -42,7 +42,7 @@ knitr::include_graphics('preview.png', error = FALSE)
 
 ## Reflections on guiding aesthetics
 
-Breaking from the usual format of my tidytuesday blogposts, I want to talk about the background and motivation behind the plot, as this was a big step in a new (and exciting!) direction for me that I'd like to document.
+Admittedly, the plot itself is quite simple, but I learned a lot from this process. So, breaking from the usual format of my tidytuesday blogposts, I want to talk about the background and motivation behind the plot as this was a big step in a new (and exciting!) direction for me that I'd like to document. 
 
 
 Just for clarification, I'm using the term **guiding aesthetics** to refer to _elements of the plot that do not represent a variable in the data, but serves to emphasize the overall theme or topic of the being visualized_. So the mountains in my plot do not themselves contain any data, but it's the thing that tells readers that the plot is _about_ mountains (a valuable, but different kind of info!). But more on that later.
@@ -106,11 +106,11 @@ Lastly, let's talk about the [color]{.sc} dimension. Even though no information 
 
 I'm hardly the expert, but I found it helpful to think of the process as mediating the tug of war between the **guiding aesthetic** and the **variables in the data** as they fight over space in different mapping dimensions.
 
-The strong interpretation of this is that I should flip my usual workflow for **explanatory data visualization**, which mostly goes something like this:
+This meant I had to make some changes to my usual workflow for **explanatory data visualization**, which mostly goes something like this:
 
-1. Take my dependent variable and map it to [y]{.sc}
-2. Figure out the distribution of my dependent variable and choose the appropriate [geom]{.sc}
-3. Map my dependent variables - this usually ends at either just [x]{.sc} or [x]{.sc} + facet groupings
+1. Take my response variable and map it to [y]{.sc}
+2. Figure out the distribution of my response variables and choose the [geom]{.sc} (e.g., boxplot, histogram).
+3. Map my dependent variables to other dimensions - this usually ends at either just [x]{.sc} or [x]{.sc} + facet groupings
 
 
 But if I'm trying to **incorporate guiding aesthetics**, my workflow would look more like this:
@@ -120,64 +120,64 @@ But if I'm trying to **incorporate guiding aesthetics**, my workflow would look 
 3. Figure out the dimensions that each visual representation would intrude in
 4. Make compromises between (2) and (3) in a way that maximizes the quality of the data and the visual representation
 
-Of course, this kind of flexibility is unique to exploratory data visualization, the kinds where there's no variable that is significant or interesting variable _a priori_. Of course in real life there will be _a lot more_ constraints, but because we can assume naivity towards the data for #tidytuesday, I get to pick and choose what I want to plot (which makes #tidytuesday such a great place to practice baby steps)!
+Of course, this kind of flexibility is unique to exploratory data visualization, in particular to the kinds where none of the variable is significant or interesting  _a priori_. Of course in real life there will be _a lot more_ constraints, but because we can assume a great degree of naivety towards the data for #tidytuesday, I get to pick and choose what I want to plot (which makes #tidytuesday such a great place to practice baby steps)!
 
 
-For illustration, here's my actual thought process while making the #tidytuesday plot.
+For illustration, here's my **actual thought process** while I was making the #tidytuesday plot.
 
 WARNING: a very non-linear journey ahead!
 
 ## My thought process
 
-The topic was about Himalayan peaks, so I wanted my visual to involve a mountain shape. The most obvious idea that came to mind was to draw a mountain where the peak of that mountain corresponded with their `height_metres`, a variable from the `peaks` data. It's straightforward and intuitive! So I drew a sketch (these are the original sketches - please forgive the quality!)
+The topic was about [Himalayan climbing expeditions](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-09-22/readme.md), so I wanted my visual to involve a mountain shape. The most obvious idea that came to mind was to draw a mountain where the peak of that mountain corresponded with their `height_metres`, a variable from the `peaks` data. It's straightforward and intuitive! So I drew a sketch (these are the original rough sketches - please forgive the quality!)
 
 ```{r fig.cap="The first guiding aesthetic idea", echo = FALSE, fig.align='center'}
 knitr::include_graphics("mountain1.png", error = FALSE)
 ```
 
-But this felt... a bit empty. I threw in Mount Everest, but now what? I still had data on hundreds of more Himalayan peaks that were in the dataset. Just visualizing Mount Everest is not _badly motivated_ (it's the most famous peak afterall), but it wouldn't make an interesting plot since there wasn't much data for individual peaks. At the same time, however, I struggled to find a handful of mountains that formed a coherent group. I knew that if I wanted to go with the idea of mountain _shapes_ as the guiding aesthetic, I could only manage to fit about a dozen or so without it looking too crowded. 
+But this felt... a bit empty. I threw in Mount Everest, but now what? I still had data on hundreds of more Himalayan peaks that were in the dataset. Just visualizing Mount Everest is not _badly motivated_ per se (it's the most famous peak afterall), but it wouldn't make an interesting plot since there wasn't much data on individual peaks. I wanted to add a few more mountain shapes, but I struggled to find a handful of peaks that formed a coherent group. I knew that if I wanted to go with the idea of _mountain shapes_ as the guiding aesthetic, I could only manage to fit about a dozen or so without it looking too crowded. 
 
-I put that issue aside for the moment and moved on while trying to accommodate for the possibility that I may have to fit in many more peaks. I came up with an idea where there's a single mountain shape _just for Mount Everest_ and a point with a vertical spikeline for all other peaks that emphasize the [y-axis]{.sc} representing `height_metres`.
+I put that issue aside for the moment and moved on while trying to accommodate for the possibility that I may have to fit in many more peaks. I thought about having a single mountain shape just for Mount Everest, and a point with a _vertical spikeline_ for all other peaks to emphasize the [y-axis]{.sc} representing `height_metres`.
 
 ```{r fig.cap="The second guiding aesthetic idea", out.width = 500, echo = FALSE, fig.align='center'}
 knitr::include_graphics("mountain2.jpg", error = FALSE)
 ```
 
 
-At this point I started thinking about the x-axis. If I _do_ use points to represent mountains (specifically, mountain heights), where would I actually position them? Just randomly along the x-axis? It really started hitting me at this point that the **quality of my data** was pretty abysmal. Even if I ended up with something amazing, I didn't think I could justify calling it a _data_ visualization. I felt that it'd be a _reach_ to use complex visuals just to communicate a single variable. 
+At this point I started thinking about the x-axis. If I _do_ use points to represent peaks (specifically, peak height), where would I actually position each point? Just randomly along the x-axis? It really started hitting me at this point that the **quality of my data** was pretty abysmal. Even if I ended up with a pretty visualization, I didn't think I could justify calling it a _data_ visualization. I felt that it'd be a reach to use complex visuals just to communicate a single variable. 
 
-I toyed around with making the data being plotted **richer**. What if I use [size]{.sc} of the dots to represent the average `age` of climbers who reached the peak, from the `memmbers` data? Or what if I used [shape]{.sc} of country flags on top of the dots to represent the `country` that first reached the peak, from the `expeditions` data? 
+I toyed around with **enriching** the data being plotted. What if I use [size]{.sc} of the dots to represent the average `age` of climbers who reached the peak, from the `memmbers` data? Or what if I used [shape]{.sc} of country flags on top of the dots to represent the `country` that first reached the peak, from the `expeditions` data? 
 
-These were all cool ideas, but I kept coming back to the need to make the [x]{.sc}-dimension meaningful. It just stood out too much. I didn't think I could prevent the reader from _expecting_ some sort of meaning from the positioning of the dots along the [x]{.sc}-axis.
+These were all cool ideas, but I kept coming back to the need to make the [x]{.sc}-dimension meaningful. It just stood out too much. I didn't think I could _prevent the reader from expecting some sort of a meaning_ from the positioning of the dots along the [x]{.sc}-axis.
 
 
-So I went back to Step #2. I gathered up _all the continuous variables_ across the three data in the #tidytuesday dataset (`peaks`, `members`, `expeditions`) and evaluated how good of a candidate each of them were for being mapped to [x]{.sc}. This was the most time-consuming part of the process, and I narrowed it down to three candidates:
+So I went back to Step #2. I gathered up all the **continuous variables** across the three data in the #tidytuesday dataset (`peaks`, `members`, `expeditions`) and evaluated how good of a candidate each of them were for being mapped to [x]{.sc}. This was the most time-consuming part of the process, and I narrowed it down to three candidates:
 
 - `expeditions$members`: looked okay at first, but once I started aggregating (averaging) by peak, the distribution became quite narrow. That made it less interesting and not very ideal for mountain shapes (the typical mountain shape is wider than they are tall).
 - `members$age`: has a nice distribution and a manageable range with no extreme outliers. 
 - `peaks$first_ascent_year`: also has the above features + doesn't need to be aggregated in some way, so the [x]{.sc}-axis would have a very straight forward interpretation.
 
-The `first_ascent_year` variable looked promising, so that's what I first pursued (and ended up ultimately adopting!).
+The `first_ascent_year` variable looked the most promising, so that's what I pursued (and ended up ultimately adopting!).
 
 ```{r fig.cap="The third guiding aesthetic idea", out.width = 500, echo = FALSE, fig.align='center'}
 knitr::include_graphics("mountain3.jpg", error = FALSE)
 ```
 
 
-Now I felt like I had more direction to tackle the very first issue that I ran into during this process: the problem of picking out a **small set of peaks that were interesting and well-motivated**. I played around more with several options, but I ultimately settled on something very simple - **the top 10 most popular peaks**. Sure it's overused and not particularly exciting, but that was a sacrifice that my over-worked brain was willing to make at the time.
+Now I felt like I had more direction to tackle the very first issue that I ran into during this process: the problem of picking out **a small set of peaks that were interesting and well-motivated**. I played around more with several options, but I ultimately settled on something very simple - **the top 10 most popular peaks**. Sure it's overused and not particularly exciting, but that was a sacrifice that my over-worked brain was willing to make at the time.
 
-And actually, it turned out to be a great fit with my new [x]{.sc} variable! It turns out that the top 10 most climbed peaks are also those that were first to be climbed (not a hard correlation to digest), so this set of peaks had an additional benefit of being localized between the 1940s-1960s. Because 10 was a manageable number, I went ahead with my very first idea of having a mountain accompanying each point, which now represents the peak of the guiding aesthetic as well as the `height_metres` and `first_ascent_year`.
+And actually, it turned out to be a great fit with my new [x]{.sc} variable! It turns out that the top 10 most climbed peaks are also those that were among the first to be climbed (a correlation that sorta makes sense), so this set of peaks had an additional benefit of localizing the range of [x]{.sc} to between the 1940s-1960s. And because 10 was a manageable number, I went ahead with my very first idea of having a mountain accompanying each point, where the peaks represent the peak of the guiding aesthetic (the mountain shape) as well as the `height_metres` and `first_ascent_year`.
 
 
-Finally, it came time for me to polish up on the mountains. I needed to decide on features of the mountains like how wide the base is, how many valleys and peaks it has, how tall the peaks are relative to each other, etc. I had to be careful that these superfluous features do not encroach on the dimnensions where I mapped my data to - the [x]{.sc} and [y]{.sc}. Here, I had concerns about two of the mountain features: **base width** and **smaller peaks**:
+Finally, it came time for me to polish up on the mountains. I needed to decide on features of the mountains like how wide the base is, how many valleys and peaks it has, how tall the peaks are relative to each other, etc. I had to be careful that these superfluous features do not **encroach** on the dimensions where I mapped my data to - the [x]{.sc} and [y]{.sc}. Here, I had concerns about two of the mountain features in particular: **base width** and **smaller peaks**:
 
-- The base width was troubling because how wide the base of the mountain stretches could be interpreted as representing another variable that has to do with _year_ (like the first and last time it was climbed, for example). This was a bit difficult to deal with, but I settled on a solution which was to **keep the base width constant**. By not having that feature vary at all, I could suppress any expectation for it to carry some sort of meaning. It's kind of like how when you make a scatterplot with just variables mapped to [x]{.sc} and [y]{.sc}, you don't imbue any special meaning to the fact that the observations are represented by a point, beacuse _all_ of them are points. If they varied in any way, say some are points and others are triangles, then you'd start expecting the shape to represent some other variable.
+- The base width was troubling because how wide the base of the mountain stretches could be interpreted as representing another variable that has to do with _year_ (like the first and last time it was climbed, for example). This was a bit difficult to deal with, but I settled on a solution which was to **keep the base width constant**. By not having that feature vary at all, I could suppress any expectation for it to carry some sort of meaning. It's kind of like how when you make a scatterplot with variables mapped to [x]{.sc} and [y]{.sc}, you don't imbue any special meaning to the fact that the observations are represented by a circle (point), beacuse _all_ of them are that shape. If they varied in any way, say you also have some rectangles and triangles, then you'd start expecting the shape to represent something meaningful.
 
-- The smaller peaks of the mountain shapes were troubling because I was already using the peak to represent the height. It helped that the actual peaks representing the data were marked by a point and a label of the peak name. But to make it extra clear that the they were pure noise, I decided to **randomly generate peaks and valleys** In the code attached at the bottom of this post, several parameters of the mountain-generating function allowed me to do this. It also helped that I added a note saying that the mountains were randomly generated when I tweeted it, which is kind of cheating perhaps, but it worked!
+- The smaller peaks of the mountain shapes were troubling because I was already using the peak to represent the height. It helped that the actual peaks representing the data were also marked by a point and a label of the peak name. But to make it extra clear that the they were pure noise, I decided to **randomly generate peaks and valleys**, and tried to make that obvious. In the code attached at the bottom of this post, several parameters of the mountain-generating function allowed me to do this. It also helped that I added a note saying that the mountains were randomly generated when I tweeted it, which is kind of cheating perhaps, but it worked!
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">I&#39;ve been feeling particularly inspired by this week&#39;s <a href="https://twitter.com/hashtag/TidyTuesday?src=hash&amp;ref_src=twsrc%5Etfw">#TidyTuesday</a> so I made another plot! This is a simple scatterplot of peak height by year of first ascent, but with a twist: each point is also represented by the peak of a randomly generated mountain! <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://t.co/CqNQjdMYXP">pic.twitter.com/CqNQjdMYXP</a></p>&mdash; June (@yjunechoe) <a href="https://twitter.com/yjunechoe/status/1309304725523886080?ref_src=twsrc%5Etfw">September 25, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-That wraps up my long rant on how I made my mountains plot! For more context, making the plot took about a half a day worth of work, which isn't too bad for a first attempt! Hope to come across more inspirations like this in the future.
+That wraps up my long rant on how I made my mountains plot! For more context, making the plot took about a half a day worth of work, which isn't too bad for a first attempt! Definitely looking forward to getting more inspirations like this in the future.
 
 
 ## Code
