@@ -1,5 +1,28 @@
 [
   {
+    "path": "posts/2020-10-22-analysis-of-everycolorbots-tweets/",
+    "title": "Analysis of @everycolorbot's tweets",
+    "description": "And why you should avoid neon colors",
+    "author": [
+      {
+        "name": "June Choe",
+        "url": {}
+      }
+    ],
+    "date": "2020-10-22",
+    "categories": [
+      "data visualization",
+      "ggplot2",
+      "rtweet",
+      "colors"
+    ],
+    "preview": "posts/2020-10-22-analysis-of-everycolorbots-tweets/preview.png",
+    "last_modified": "2020-10-22T22:09:52-04:00",
+    "input_file": {},
+    "preview_width": 2433,
+    "preview_height": 2259
+  },
+  {
     "path": "posts/2020-10-13-designing-guiding-aesthetics/",
     "title": "Designing guiding aesthetics",
     "description": "The fine line between creativity and noise",
@@ -16,8 +39,8 @@
       "tidytuesday"
     ],
     "preview": "posts/2020-10-13-designing-guiding-aesthetics/preview.png",
-    "last_modified": "2020-10-14T12:50:10-04:00",
-    "input_file": "designing-guiding-aesthetics.utf8.md",
+    "last_modified": "2020-10-14T12:50:17-04:00",
+    "input_file": {},
     "preview_width": 8503,
     "preview_height": 6377
   },

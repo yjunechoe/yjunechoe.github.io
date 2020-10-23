@@ -1,0 +1,319 @@
+---
+title: "Analysis of @everycolorbot's tweets"
+description: |
+  And why you should avoid neon colors
+categories:
+  - data visualization
+  - ggplot2
+  - rtweet
+  - colors
+base_url: https://yjunechoe.github.io
+author:
+  - name: June Choe
+    affiliation: University of Pennsylvania Linguistics
+    affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+preview: preview.png
+date: 10-22-2020
+output:
+  distill::distill_article:
+    toc: true
+    self_contained: false
+---
+
+## Introduction
+
+```{css, echo = FALSE}
+.column {
+  float: left;
+  width: 50%;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.sc {
+  font-variant: small-caps;
+  letter-spacing: 0.1em;
+}
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  comment = " ",
+  echo = TRUE,
+  message = TRUE,
+  warning = TRUE,
+  R.options = list(width = 80)
+)
+
+library(extrafont)
+library(tidyverse)
+library(rtweet)
+
+##### Keys and Tokens
+api_key <- '6SpIycJgdOcJ1P4herVKb6m7L'
+api_secret_key <- 'fN2nGVUfrFehewkJrakpDcPIP6DINg1fTiWa7RzgiKQZ5uLTRd'
+access_token <- "1207960817590603777-9Sf2O0TZJCgiQ3HlG3RqF3pzroYevF"
+access_token_secret <- "0hpfvFZ8a8dYGqGZjiN52dZRlDLtdBjiPL3vebe3q39H5"
+
+token <- create_token(
+  app = "research",
+  consumer_key = api_key,
+  consumer_secret = api_secret_key,
+  access_token = access_token,
+  access_secret = access_token_secret)
+##########
+```
+
+I, along with nearly two-hundred thousand other people, follow [\@everycolorbot](https://twitter.com/everycolorbot) on twitter. \@everycolorbot is a twitter bot that tweets an image of a random color every hour (more details on [github](https://github.com/vogon/everycolor)). It's 70% a source of inspiration for new color schemes, and 30% a comforting source of constant in my otherwise hectic life.
+
+What I've been noticing about \@everycolorbot's tweets is that bright, highly saturated neon colors (yellow~green) tend to get less likes compared to cool blue colors and warm pastel colors. You can get a feel of this difference in the number of likes between the two tweets below, tweeted an hour apart:
+
+<div class="row">
+  <div class="column">
+  <blockquote class="twitter-tweet"><p lang="und" dir="ltr">0x54e14b <a href="https://t.co/Aw0cwm7uy8">pic.twitter.com/Aw0cwm7uy8</a></p>&mdash; Every Color (@everycolorbot) <a href="https://twitter.com/everycolorbot/status/1316823932083859457?ref_src=twsrc%5Etfw">October 15, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+  <div class="column">
+  <blockquote class="twitter-tweet"><p lang="pt" dir="ltr">0xaa70a5 <a href="https://t.co/NMBF3mffS4">pic.twitter.com/NMBF3mffS4</a></p>&mdash; Every Color (@everycolorbot) <a href="https://twitter.com/everycolorbot/status/1316808883357319168?ref_src=twsrc%5Etfw">October 15, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+</div>
+
+
+This is actually not a big surprise. **Bright pure colors are very harsh and straining to the eye**, especially on a white background.^[Dark mode ftw!] For this reason bright colors are almost never used in professional web design, and are also [discouraged in data visualization](https://blog.datawrapper.de/beautifulcolors/).
+
+So here's a mini experiment testing that claim: I'll use \@everycolorbot's tweets (more specifically, the **likes** on the tweets) as a **proxy** for likeability/readability/comfortableness/etc. It'll be a good exercise for getting more familiar with different colors! I'm also going to try a simple descriptive analysis using the [HSV color representation](https://en.wikipedia.org/wiki/HSL_and_HSV), which is a psychologically-motivated mental model of color that I like a lot (and am trying to get a better feel for).
+
+```{r, fig.cap="HSV cylinder", echo = FALSE, out.width = 500, out.extra="class=external", fig.align='center'}
+knitr::include_graphics("HSV.png", error = FALSE)
+```
+
+
+## Setup
+
+Using {rtweet} requires authentication from twitter. The steps to do so are very well documented on the [package website](https://docs.ropensci.org/rtweet/) so I wouldn't expect too much trouble setting it up if it's your first time using it. But just for illustration, here's what my setup looks like:
+
+```{r, eval = FALSE}
+api_key <- 'XXXXXXXXXXXXXXXXXXXXX'
+api_secret_key <- 'XXXXXXXXXXXXXXXXXXXXX'
+access_token <- "XXXXXXXXXXXXXXXXXXXXX"
+access_token_secret <- "XXXXXXXXXXXXXXXXXXXXX"
+
+token <- create_token(
+  app = "XXXXXXXXXXXXXXXXXXXXX",
+  consumer_key = api_key,
+  consumer_secret = api_secret_key,
+  access_token = access_token,
+  access_secret = access_token_secret
+)
+```
+
+After authorizing, I queried the last 10,000 tweets made by \@everycolorbot. It ended up only returning about a 1/3 of that because the twitter API only allows you to go back so far in time, but that's plenty for my purposes here.
+
+```{r, echo = FALSE, message = FALSE}
+colortweets_df <- read_csv("static/data/colortweets_df.csv")
+```
+
+```{r, eval = FALSE}
+colortweets <- rtweet::get_timeline("everycolorbot", 10000)
+
+dim(colortweets)
+```
+
+```{r, echo = FALSE}
+c(3238, 90)
+```
+
+As you see above, I also got back 90 variables (columns). I only care about the time of the tweet, the number of likes it got, and the color it tweeted, so those are what I'm going to grab. I also want to clean things up a bit for plotting, so I'm going to grab just the hour from the time and just the hex code from the text.
+
+```{r, eval = FALSE}
+colortweets_df <- colortweets %>% 
+  select(created_at, text, favorite_count) %>%
+  mutate(
+    created_at = lubridate::hour(created_at),
+    text = paste0("#", str_extract(text, "(?<=0x).*(?= )"))
+  ) %>% 
+  rename(
+    likes = favorite_count,
+    hour = created_at,
+    hex = text
+  )
+```
+
+And here's what we end up with:
+
+```{r, echo = FALSE}
+knitr::kable(head(colortweets_df)) %>% 
+  kableExtra::kable_styling(position = "center")
+```
+
+Here is the [link to this data](https://yjunechoe.github.io/static/data/colortweets_df.csv) if you'd like to replicate or extend this analysis yourself.
+
+
+## Analysis
+
+Below is a bar plot of colors where the height corresponds to the number of likes. It looks cooler than your usual bar plot because I transformed the [x]{.sc} dimension into polar coordinates. My intent in doing this was to control for the hour of day in my analysis and visualize it like a clock (turned out better than expected!)
+
+```{r, eval = FALSE}
+colortweets_df %>% 
+  arrange(-likes) %>% 
+  ggplot(aes(hour, likes, color = hex)) +
+  geom_col(
+    aes(size = likes),
+    position = "dodge",
+    show.legend = FALSE
+  ) +
+  scale_color_identity() +
+  theme_void() +
+  theme(
+    plot.background = element_rect(fill = "#222222", color = NA),
+  ) +
+  coord_polar()
+```
+
+<aside>Check out my use of `arrange()` here: it's how I tell ggplot to plot the longer bars first then the smaller bars, minimizing the overlap!</aside>
+
+```{r, echo = FALSE, fig.align='center'}
+knitr::include_graphics("preview.png", error = FALSE)
+```
+
+I notice at least two interesting contrasts in this visualization:
+
+- Neon colors (yellow, green, pink) and dark brown and black seems to dominate the **center** (least liked colors) while warm red~blue pastel colors dominate around the **edges** (most liked colors)
+
+- There also seems to be a distinction between pure blue and red in the **inner-middle** circle vs. the green~blue pastel colors in the **outer-middle** circle.
+
+So maybe we can say that there are four clusters here:
+
+1. **Least liked**: Bright neon colors + highly saturated dark colors
+
+2. **Lesser liked**: Bright pure/near-pure colors
+
+3. **More liked**: Darker pastel RGB
+
+4. **Most liked**: Lighter pastel mixed colors
+
+
+Now's let's try to quantitatively describe each cluster.
+
+First, as a sanity check, I'm just gonna eyeball the range of `likes` for each cluster using an un-transformed version of the above plot with units. I think we can roughly divide up the clusters at 100 likes, 200 likes, and 400 likes.
+
+```{r, fig.width = 10, layout = 'l-body-outset'}
+colortweets_df %>% 
+  arrange(-likes) %>% 
+  ggplot(aes(hour, likes, color = hex)) +
+  geom_col(
+    aes(size = likes),
+    position = "dodge",
+    show.legend = FALSE
+  ) +
+  geom_hline(
+    yintercept = c(100, 200, 400), 
+    color = "white", 
+    linetype = 2, 
+    size = 2
+  ) +
+  scale_y_continuous(breaks = scales::pretty_breaks(10)) +
+  scale_color_identity() +
+  theme_void() +
+  theme(
+    plot.background = element_rect(fill = "#222222", color = NA),
+    axis.line.y = element_line(color = "white"),
+    axis.text.y = element_text(
+      size = 14,
+      color = "white",
+      margin = margin(l = 3, r = 3, unit = "mm")
+    )
+  )
+```
+
+If our initial hypothesis about the four clusters are true, we should see these clusters having distinct profiles. Here, I'm going to use the HSV representation to quantitatively test this. To convert our hex values into HSV, I use the `as.hsv()` function from the {chroma} package - an R wrapper for the javascript library of the same name.
+
+```{r, eval = FALSE}
+colortweets_df_hsv <- colortweets_df %>% 
+  mutate(hsv = map(hex, ~as_tibble((chroma::as.hsv(.x))))) %>% 
+  unnest(hsv)
+```
+
+<aside>Actually, I used `furrr::future_map()` here myself because I found the hex-hsv conversion to be sorta slow.</aside>
+
+And now we have the HSV values ([hue]{.sc}, [saturation]{.sc}, [value]{.sc})!
+
+```{r, echo = FALSE, message = FALSE}
+colortweets_df_hsv <- read_csv("static/data/colortweets_df_hsv.csv")
+
+knitr::kable(head(colortweets_df_hsv)) %>% 
+  kableExtra::kable_styling(position = "center")
+```
+
+What do we get if we average across the dimensions of HSV for each cluster?
+
+```{r}
+colortweets_df_hsv <- colortweets_df_hsv %>% 
+  mutate(
+    cluster = case_when(
+      likes < 100 ~ "Center",
+      between(likes, 100, 200) ~ "Inner-Mid",
+      between(likes, 201, 400) ~ "Outer-Mid",
+      likes > 400 ~ "Edge"
+    ),
+    cluster = fct_reorder(cluster, likes)
+  )
+
+colortweets_df_hsv %>% 
+  group_by(cluster) %>% 
+  summarize(across(h:v, mean), .groups = 'drop')
+```
+
+This actually matches up pretty nicely with our initial analysis! We find a general dislike for green colors (`h` value close to 120) over blue colors (`h` value close to 240), as well as a dislike for highly saturated colors (intense, bright) over those with low saturation (which is what gives off the "pastel" look). To help make the [hue]{.sc} values more interpretable, here's a color wheel with angles that correspond to the hue values in HSV.^[While all color wheels look the same, they aren't all _oriented_ the same. When using HSV, make sure to reference the color wheel where the red is at 0, green is as 120, and blue is at 240.]
+
+```{r, fig.cap="Hue color wheel", echo = FALSE, out.width = 500, out.extra="class=external", fig.align='center'}
+knitr::include_graphics("https://i.stack.imgur.com/Bkqjg.png", error = FALSE)
+```
+
+But we also expect to find within-cluster variation along HSV. In particular, hue is kind of uninterpretable on a scale so it probably doesn't make a whole lot of sense to take a mean of that. So back to the ~~drawing~~ plotting board!
+
+Since [saturation]{.sc} and [value]{.sc} _do_ make more sense on a continuous scale, let's draw a scatterplot for each cluster with [saturation]{.sc} on the x-axis and [value]{.sc} on the y-axis. I'm also going to map [hue]{.sv} to the color of each point, but since [hue]{.sc} is abstract on its own, I'm actually just going to replace it with the hex values (i.e., the actual color).
+
+```{r, layout = "l-page", fig.height = 7}
+colortweets_df_hsv %>% 
+  ggplot(aes(s, v, color = hex)) +
+  geom_point() +
+  scale_color_identity() +
+  lemon::facet_rep_wrap(~cluster) +
+  theme_void(base_size = 16, base_family = "Montserrat Medium") +
+  theme(
+    plot.margin = margin(3, 5, 5, 5, "mm"),
+    strip.text = element_text(margin = margin(b = 3, unit = "mm")),
+    panel.border = element_rect(color = "black", fill = NA),
+    panel.background = element_rect(fill = "grey75", color = NA)
+  )
+```
+
+Here's the mappings spelled out again:
+
+- [saturation]{.sc} (how _colorful_ a color is) is mapped to the **X**-dimension
+- [value]{.sc} (how _light_ a color is) is mapped to the **Y**-dimension
+- [hex]{.sc} (the _actual color_ itself) is mapped to the **COLOR** dimension
+
+<br>
+
+Our plot above reinforce what we've found before. Colors are more likeable (literally) the more they...
+
+1. **Move away from green**: Neon-green dominates the least-liked cluster, and that's a blatant fact. Some forest-greens survive to the lesser-liked cluster, but is practically absent in the more-liked cluster and most-liked cluster. It looks like the only way for green to be redeemable is to either **mix in with blue** to become cyan and turquoise, which dominates the more-liked cluster, or **severly drop in saturation** to join the ranks of other pastel colors in the most-liked cluster.
+
+2. **Increase in value and decrease in saturation**: It's clear that the top-left corner is dominated by the more-liked and the most-liked cluster. That region is, again, where pastel colors live. They're calmer than the bright neon colors that plague the least-liked cluster, and are more liked than highly-saturated and intense colors like those in the top right of the Outer-Mid panel. So perhaps this is a lesson that being "colorful" can only get you so far. 
+
+
+## Conclusion
+
+Obviously, all of this should be taken with a grain of salt. We don't know the people behind the likes - their tastes, whether they see color differently, what medium they saw the tweet through, their experiences, etc.
+
+And of course, we need to remind ourselves that we rarely see a color just by itself in the world. It contrasts and harmonizes with other colors in the environment in very complex ways. 
+
+But that's what kinda makes our analysis cool - despite all these complexities, we see evidence for many things that experts working with color emphasize: avoid pure neon, mix colors, etc. This dataset also opens us up to many more types of analyses (like an _actual cluster analysis_) that might be worth looking into.
+
+Good stuff.

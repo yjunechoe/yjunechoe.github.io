@@ -12,7 +12,20 @@
       <link>yjunechoe.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Tue, 13 Oct 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 22 Oct 2020 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Analysis of @everycolorbot's tweets</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>yjunechoe.github.io/posts/2020-10-22-analysis-of-everycolorbots-tweets</link>
+      <description>And why you should avoid neon colors</description>
+      <category>data visualization</category>
+      <category>ggplot2</category>
+      <category>rtweet</category>
+      <category>colors</category>
+      <guid>yjunechoe.github.io/posts/2020-10-22-analysis-of-everycolorbots-tweets</guid>
+      <pubDate>Thu, 22 Oct 2020 00:00:00 +0000</pubDate>
+      <media:content url="yjunechoe.github.io/posts/2020-10-22-analysis-of-everycolorbots-tweets/preview.png" medium="image" type="image/png" width="2433" height="2259"/>
+    </item>
     <item>
       <title>Designing guiding aesthetics</title>
       <dc:creator>June Choe</dc:creator>

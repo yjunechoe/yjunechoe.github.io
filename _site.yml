@@ -10,6 +10,8 @@ navbar:
       href: index.html
     - text: "Presentations"
       href: presentations.html
+    - text: "Visualizations"
+      href: visualizations.html
     - text: "About"
       href: about.html
     - icon: fa fa-twitter

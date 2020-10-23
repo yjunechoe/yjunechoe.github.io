@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+  <!--radix_placeholder_meta_tags-->
+  <title>Analysis of @everycolorbot's tweets</title>
+
+  <meta property="description" itemprop="description" content="And why you should avoid neon colors"/>
+
+
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2020-10-22"/>
+  <meta property="article:created" itemprop="dateCreated" content="2020-10-22"/>
+  <meta name="article:author" content="June Choe"/>
+
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="Analysis of @everycolorbot&#39;s tweets"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:description" content="And why you should avoid neon colors"/>
+  <meta property="og:image" content="https://yjunechoe.github.io/preview.png"/>
+  <meta property="og:image:width" content="2433"/>
+  <meta property="og:image:height" content="2259"/>
+  <meta property="og:locale" content="en_US"/>
+
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:title" content="Analysis of @everycolorbot&#39;s tweets"/>
+  <meta property="twitter:description" content="And why you should avoid neon colors"/>
+  <meta property="twitter:image" content="https://yjunechoe.github.io/preview.png"/>
+  <meta property="twitter:image:width" content="2433"/>
+  <meta property="twitter:image:height" content="2259"/>
+
+  <!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","preview","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Analysis of @everycolorbot's tweets"]},{"type":"character","attributes":{},"value":["And why you should avoid neon colors\n"]},{"type":"character","attributes":{},"value":["data visualization","ggplot2","rtweet","colors"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]}]}]},{"type":"character","attributes":{},"value":["preview.png"]},{"type":"character","attributes":{},"value":["10-22-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["analysis-of-everycolorbots-tweets_files/bowser-1.9.3/bowser.min.js","analysis-of-everycolorbots-tweets_files/distill-2.2.21/template.v2.js","analysis-of-everycolorbots-tweets_files/figure-html5/unnamed-chunk-11-1.png","analysis-of-everycolorbots-tweets_files/figure-html5/unnamed-chunk-15-1.png","analysis-of-everycolorbots-tweets_files/figure-html5/unnamed-chunk-16-1.png","analysis-of-everycolorbots-tweets_files/figure-html5/unnamed-chunk-9-1.png","analysis-of-everycolorbots-tweets_files/header-attrs-2.4.4/header-attrs.js","analysis-of-everycolorbots-tweets_files/jquery-1.11.3/jquery.min.js","analysis-of-everycolorbots-tweets_files/kePrint-0.0.1/kePrint.js","analysis-of-everycolorbots-tweets_files/lightable-0.0.1/lightable.css","analysis-of-everycolorbots-tweets_files/webcomponents-2.0.0/webcomponents.js","HSV.png","preview.png"]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+  <style type="text/css">
+
+  body {
+    background-color: white;
+  }
+
+  .pandoc-table {
+    width: 100%;
+  }
+
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .shaded-content {
+    background: white;
+  }
+
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  d-article {
+    padding-bottom: 30px;
+  }
+
+  d-appendix {
+    padding-top: 30px;
+  }
+
+  d-article>p>img {
+    width: 100%;
+  }
+
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  /* CSS for table of contents */
+
+  .d-toc {
+    color: rgba(0,0,0,0.8);
+    font-size: 0.8em;
+    line-height: 1em;
+  }
+
+  .d-toc-header {
+    font-size: 0.6rem;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 1.3em;
+  }
+
+  .d-toc a {
+    border-bottom: none;
+  }
+
+  .d-toc ul {
+    padding-left: 0;
+  }
+
+  .d-toc li>ul {
+    padding-top: 0.8em;
+    padding-left: 16px;
+    margin-bottom: 0.6em;
+  }
+
+  .d-toc ul,
+  .d-toc li {
+    list-style-type: none;
+  }
+
+  .d-toc li {
+    margin-bottom: 0.9em;
+  }
+
+  .d-toc-separator {
+    margin-top: 20px;
+    margin-bottom: 2em;
+  }
+
+  .d-article-with-toc {
+    border-top: none;
+    padding-top: 0;
+  }
+
+
+
+  /* Tweak code blocks (note that this CSS is repeated above in an injection
+     into the d-code shadow dom) */
+
+  d-code {
+    overflow-x: auto !important;
+  }
+
+  pre.d-code code.d-code {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+
+  pre.text-output {
+
+    font-size: 12px;
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  @media(min-width: 768px) {
+
+  d-code {
+    overflow-x: visible !important;
+  }
+
+  pre.d-code code.d-code  {
+      padding-left: 18px;
+      font-size: 14px;
+  }
+  pre.text-output {
+    font-size: 14px;
+  }
+  }
+
+  /* Figure */
+
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+
+  .figure img {
+    width: 100%;
+  }
+
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+
+
+
+  /* Tweak 1000px media break to show more text */
+
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+
+    .grid {
+      grid-column-gap: 16px;
+    }
+
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+
+
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+
+  /* Social footer */
+
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+
+  .disqus-comments {
+    margin-right: 30px;
+  }
+
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+
+  #disqus_thread {
+    margin-top: 30px;
+  }
+
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+
+
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+
+
+  .sidebar-section.custom {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .custom p {
+    margin-bottom: 0.5em;
+  }
+
+
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  </style>
+
+  <script type="application/javascript">
+
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+
+  // show body when load is complete
+  function on_load_complete() {
+
+    // set body to visible
+    document.body.style.visibility = 'visible';
+
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+
+  function init_distill() {
+
+    init_common();
+
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+
+    // create d-bibliography
+    var bibliography = $('<d-bibliography></d-bibliography>');
+    $('#distill-bibliography').wrap(bibliography);
+
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+    // replace citations with <d-cite>
+    $('.citation').each(function(i, val) {
+      appendix = true;
+      var cites = $(this).attr('data-cites').split(" ");
+      var dt_cite = $('<d-cite></d-cite>');
+      dt_cite.attr('key', cites.join());
+      $(this).replaceWith(dt_cite);
+    });
+    // remove refs
+    $('#refs').remove();
+
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-toc a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+    // replace code blocks with d-code
+    $('pre>code').each(function(i, val) {
+      var code = $(this);
+      var pre = code.parent();
+      var clz = "";
+      var language = pre.attr('class');
+      if (language) {
+        // map unknown languages to "clike" (without this they just dissapear)
+        if ($.inArray(language, ["bash", "clike", "css", "go", "html",
+                                 "javascript", "js", "julia", "lua", "markdown",
+                                 "markup", "mathml", "python", "svg", "xml"]) == -1)
+          language = "clike";
+        language = ' language="' + language + '"';
+        var dt_code = $('<d-code block' + language + clz + '></d-code>');
+        dt_code.text(code.text());
+        pre.replaceWith(dt_code);
+      } else {
+        code.addClass('text-output').unwrap().changeElementType('pre');
+      }
+    });
+
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+
+      // capture layout
+      var layout = $(this).attr('data-layout');
+
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('d-code, pre.text-output, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+
+
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+
+    // load distill framework
+    load_distill_framework();
+
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+
+      // table of contents
+      if (have_authors) // adjust border if we are in authors
+        $('.d-toc').parent().addClass('d-article-with-toc');
+
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+
+      // inject pre code styles (can't do this with a global stylesheet b/c a shadow root is used)
+      $('d-code').each(function(i, val) {
+        var style = document.createElement('style');
+        style.innerHTML = 'pre code { padding-left: 10px; font-size: 12px; border-left: 2px solid rgba(0,0,0,0.1); } ' +
+                          '@media(min-width: 768px) { pre code { padding-left: 18px; font-size: 14px; } }';
+        if (this.shadowRoot)
+          this.shadowRoot.appendChild(style);
+      });
+
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+
+      // clear polling timer
+      clearInterval(tid);
+
+      // show body now that everything is ready
+      on_load_complete();
+    }
+
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+
+  }
+
+  function init_downlevel() {
+
+    init_common();
+
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+
+    // remove toc
+    $('.d-toc-header').remove();
+    $('.d-toc').remove();
+    $('.d-toc-separator').remove();
+
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+
+
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+
+    $('body').addClass('downlevel');
+
+    on_load_complete();
+  }
+
+
+  function init_common() {
+
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+
+      }
+    });
+
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.distill-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+      });
+    }
+
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+
+  </script>
+
+  <!--/radix_placeholder_distill-->
+  <script src="analysis-of-everycolorbots-tweets_files/header-attrs-2.4.4/header-attrs.js"></script>
+  <script src="analysis-of-everycolorbots-tweets_files/kePrint-0.0.1/kePrint.js"></script>
+  <link href="analysis-of-everycolorbots-tweets_files/lightable-0.0.1/lightable.css" rel="stylesheet" />
+  <script src="analysis-of-everycolorbots-tweets_files/jquery-1.11.3/jquery.min.js"></script>
+  <script src="analysis-of-everycolorbots-tweets_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="analysis-of-everycolorbots-tweets_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="analysis-of-everycolorbots-tweets_files/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Analysis of @everycolorbot's tweets","description":"And why you should avoid neon colors","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/"}],"publishedDate":"2020-10-22T00:00:00.000-04:00","citationText":"Choe, 2020"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Analysis of @everycolorbot’s tweets</h1>
+<p><p>And why you should avoid neon colors</p></p>
+</div>
+
+<div class="d-byline">
+  June Choe  (University of Pennsylvania Linguistics)<a href="https://live-sas-www-ling.pantheon.sas.upenn.edu/" class="uri">https://live-sas-www-ling.pantheon.sas.upenn.edu/</a>
+  
+<br/>10-22-2020
+</div>
+
+<div class="d-article">
+<h3 class="d-toc-header">Table of Contents</h3>
+<nav class="d-toc" id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#analysis">Analysis</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+</nav>
+<hr class="d-toc-separator"/>
+<h2 id="introduction">Introduction</h2>
+<div class="layout-chunk" data-layout="l-body">
+<style type="text/css">
+.column {
+  float: left;
+  width: 50%;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.sc {
+  font-variant: small-caps;
+  letter-spacing: 0.1em;
+}
+</style>
+</div>
+<p>I, along with nearly two-hundred thousand other people, follow <a href="https://twitter.com/everycolorbot">@everycolorbot</a> on twitter. @everycolorbot is a twitter bot that tweets an image of a random color every hour (more details on <a href="https://github.com/vogon/everycolor">github</a>). It’s 70% a source of inspiration for new color schemes, and 30% a comforting source of constant in my otherwise hectic life.</p>
+<p>What I’ve been noticing about @everycolorbot’s tweets is that bright, highly saturated neon colors (yellow~green) tend to get less likes compared to cool blue colors and warm pastel colors. You can get a feel of this difference in the number of likes between the two tweets below, tweeted an hour apart:</p>
+<div class="row">
+<div class="column">
+<blockquote class="twitter-tweet">
+<p lang="und" dir="ltr">
+0x54e14b <a href="https://t.co/Aw0cwm7uy8">pic.twitter.com/Aw0cwm7uy8</a>
+</p>
+— Every Color (<span class="citation" data-cites="everycolorbot">@everycolorbot</span>) <a href="https://twitter.com/everycolorbot/status/1316823932083859457?ref_src=twsrc%5Etfw">October 15, 2020</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+<div class="column">
+<blockquote class="twitter-tweet">
+<p lang="pt" dir="ltr">
+0xaa70a5 <a href="https://t.co/NMBF3mffS4">pic.twitter.com/NMBF3mffS4</a>
+</p>
+— Every Color (<span class="citation" data-cites="everycolorbot">@everycolorbot</span>) <a href="https://twitter.com/everycolorbot/status/1316808883357319168?ref_src=twsrc%5Etfw">October 15, 2020</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+</div>
+<p>This is actually not a big surprise. <strong>Bright pure colors are very harsh and straining to the eye</strong>, especially on a white background.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> For this reason bright colors are almost never used in professional web design, and are also <a href="https://blog.datawrapper.de/beautifulcolors/">discouraged in data visualization</a>.</p>
+<p>So here’s a mini experiment testing that claim: I’ll use @everycolorbot’s tweets (more specifically, the <strong>likes</strong> on the tweets) as a <strong>proxy</strong> for likeability/readability/comfortableness/etc. It’ll be a good exercise for getting more familiar with different colors! I’m also going to try a simple descriptive analysis using the <a href="https://en.wikipedia.org/wiki/HSL_and_HSV">HSV color representation</a>, which is a psychologically-motivated mental model of color that I like a lot (and am trying to get a better feel for).</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-2"></span>
+<img src="HSV.png" alt="HSV cylinder" width="500" class=external />
+<p class="caption">
+Figure 1: HSV cylinder
+</p>
+</div>
+</div>
+<h2 id="setup">Setup</h2>
+<p>Using {rtweet} requires authentication from twitter. The steps to do so are very well documented on the <a href="https://docs.ropensci.org/rtweet/">package website</a> so I wouldn’t expect too much trouble setting it up if it’s your first time using it. But just for illustration, here’s what my setup looks like:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+api_key &lt;- &#39;XXXXXXXXXXXXXXXXXXXXX&#39;
+api_secret_key &lt;- &#39;XXXXXXXXXXXXXXXXXXXXX&#39;
+access_token &lt;- &quot;XXXXXXXXXXXXXXXXXXXXX&quot;
+access_token_secret &lt;- &quot;XXXXXXXXXXXXXXXXXXXXX&quot;
+
+token &lt;- create_token(
+  app = &quot;XXXXXXXXXXXXXXXXXXXXX&quot;,
+  consumer_key = api_key,
+  consumer_secret = api_secret_key,
+  access_token = access_token,
+  access_secret = access_token_secret
+)</code></pre>
+</div>
+<p>After authorizing, I queried the last 10,000 tweets made by @everycolorbot. It ended up only returning about a 1/3 of that because the twitter API only allows you to go back so far in time, but that’s plenty for my purposes here.</p>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+colortweets &lt;- rtweet::get_timeline(&quot;everycolorbot&quot;, 10000)
+
+dim(colortweets)</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>
+  [1] 3238   90</code></pre>
+</div>
+<p>As you see above, I also got back 90 variables (columns). I only care about the time of the tweet, the number of likes it got, and the color it tweeted, so those are what I’m going to grab. I also want to clean things up a bit for plotting, so I’m going to grab just the hour from the time and just the hex code from the text.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+colortweets_df &lt;- colortweets %&gt;% 
+  select(created_at, text, favorite_count) %&gt;%
+  mutate(
+    created_at = lubridate::hour(created_at),
+    text = paste0(&quot;#&quot;, str_extract(text, &quot;(?&lt;=0x).*(?= )&quot;))
+  ) %&gt;% 
+  rename(
+    likes = favorite_count,
+    hour = created_at,
+    hex = text
+  )</code></pre>
+</div>
+<p>And here’s what we end up with:</p>
+<div class="layout-chunk" data-layout="l-body">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+likes
+</th>
+<th style="text-align:right;">
+hour
+</th>
+<th style="text-align:left;">
+hex
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:left;">
+#65f84e
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+65
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:left;">
+#32fc27
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+89
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:left;">
+#997e13
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+140
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:left;">
+#ccbf09
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+303
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+#665f84
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+#b32fc2
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Here is the <a href="https://yjunechoe.github.io/static/data/colortweets_df.csv">link to this data</a> if you’d like to replicate or extend this analysis yourself.</p>
+<h2 id="analysis">Analysis</h2>
+<p>Below is a bar plot of colors where the height corresponds to the number of likes. It looks cooler than your usual bar plot because I transformed the <span class="sc">x</span> dimension into polar coordinates. My intent in doing this was to control for the hour of day in my analysis and visualize it like a clock (turned out better than expected!)</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+colortweets_df %&gt;% 
+  arrange(-likes) %&gt;% 
+  ggplot(aes(hour, likes, color = hex)) +
+  geom_col(
+    aes(size = likes),
+    position = &quot;dodge&quot;,
+    show.legend = FALSE
+  ) +
+  scale_color_identity() +
+  theme_void() +
+  theme(
+    plot.background = element_rect(fill = &quot;#222222&quot;, color = NA),
+  ) +
+  coord_polar()</code></pre>
+</div>
+<aside>
+Check out my use of <code>arrange()</code> here: it’s how I tell ggplot to plot the longer bars first then the smaller bars, minimizing the overlap!
+</aside>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="preview.png" width="1216" style="display: block; margin: auto;" /></p>
+</div>
+<p>I notice at least two interesting contrasts in this visualization:</p>
+<ul>
+<li><p>Neon colors (yellow, green, pink) and dark brown and black seems to dominate the <strong>center</strong> (least liked colors) while warm red~blue pastel colors dominate around the <strong>edges</strong> (most liked colors)</p></li>
+<li><p>There also seems to be a distinction between pure blue and red in the <strong>inner-middle</strong> circle vs. the green~blue pastel colors in the <strong>outer-middle</strong> circle.</p></li>
+</ul>
+<p>So maybe we can say that there are four clusters here:</p>
+<ol type="1">
+<li><p><strong>Least liked</strong>: Bright neon colors + highly saturated dark colors</p></li>
+<li><p><strong>Lesser liked</strong>: Bright pure/near-pure colors</p></li>
+<li><p><strong>More liked</strong>: Darker pastel RGB</p></li>
+<li><p><strong>Most liked</strong>: Lighter pastel mixed colors</p></li>
+</ol>
+<p>Now’s let’s try to quantitatively describe each cluster.</p>
+<p>First, as a sanity check, I’m just gonna eyeball the range of <code>likes</code> for each cluster using an un-transformed version of the above plot with units. I think we can roughly divide up the clusters at 100 likes, 200 likes, and 400 likes.</p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<pre class="r"><code>
+colortweets_df %&gt;% 
+  arrange(-likes) %&gt;% 
+  ggplot(aes(hour, likes, color = hex)) +
+  geom_col(
+    aes(size = likes),
+    position = &quot;dodge&quot;,
+    show.legend = FALSE
+  ) +
+  geom_hline(
+    yintercept = c(100, 200, 400), 
+    color = &quot;white&quot;, 
+    linetype = 2, 
+    size = 2
+  ) +
+  scale_y_continuous(breaks = scales::pretty_breaks(10)) +
+  scale_color_identity() +
+  theme_void() +
+  theme(
+    plot.background = element_rect(fill = &quot;#222222&quot;, color = NA),
+    axis.line.y = element_line(color = &quot;white&quot;),
+    axis.text.y = element_text(
+      size = 14,
+      color = &quot;white&quot;,
+      margin = margin(l = 3, r = 3, unit = &quot;mm&quot;)
+    )
+  )</code></pre>
+<p><img src="analysis-of-everycolorbots-tweets_files/figure-html5/unnamed-chunk-11-1.png" width="960" /></p>
+</div>
+<p>If our initial hypothesis about the four clusters are true, we should see these clusters having distinct profiles. Here, I’m going to use the HSV representation to quantitatively test this. To convert our hex values into HSV, I use the <code>as.hsv()</code> function from the {chroma} package - an R wrapper for the javascript library of the same name.</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+colortweets_df_hsv &lt;- colortweets_df %&gt;% 
+  mutate(hsv = map(hex, ~as_tibble((chroma::as.hsv(.x))))) %&gt;% 
+  unnest(hsv)</code></pre>
+</div>
+<aside>
+Actually, I used <code>furrr::future_map()</code> here myself because I found the hex-hsv conversion to be sorta slow.
+</aside>
+<p>And now we have the HSV values (<span class="sc">hue</span>, <span class="sc">saturation</span>, <span class="sc">value</span>)!</p>
+<div class="layout-chunk" data-layout="l-body">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+likes
+</th>
+<th style="text-align:right;">
+hour
+</th>
+<th style="text-align:left;">
+hex
+</th>
+<th style="text-align:right;">
+h
+</th>
+<th style="text-align:right;">
+s
+</th>
+<th style="text-align:right;">
+v
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:left;">
+#65f84e
+</td>
+<td style="text-align:right;">
+111.88235
+</td>
+<td style="text-align:right;">
+0.6854839
+</td>
+<td style="text-align:right;">
+0.9725490
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+65
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:left;">
+#32fc27
+</td>
+<td style="text-align:right;">
+116.90141
+</td>
+<td style="text-align:right;">
+0.8452381
+</td>
+<td style="text-align:right;">
+0.9882353
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+89
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:left;">
+#997e13
+</td>
+<td style="text-align:right;">
+47.91045
+</td>
+<td style="text-align:right;">
+0.8758170
+</td>
+<td style="text-align:right;">
+0.6000000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+140
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:left;">
+#ccbf09
+</td>
+<td style="text-align:right;">
+56.00000
+</td>
+<td style="text-align:right;">
+0.9558824
+</td>
+<td style="text-align:right;">
+0.8000000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+303
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+#665f84
+</td>
+<td style="text-align:right;">
+251.35135
+</td>
+<td style="text-align:right;">
+0.2803030
+</td>
+<td style="text-align:right;">
+0.5176471
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+#b32fc2
+</td>
+<td style="text-align:right;">
+293.87755
+</td>
+<td style="text-align:right;">
+0.7577320
+</td>
+<td style="text-align:right;">
+0.7607843
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>What do we get if we average across the dimensions of HSV for each cluster?</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre class="r"><code>
+colortweets_df_hsv &lt;- colortweets_df_hsv %&gt;% 
+  mutate(
+    cluster = case_when(
+      likes &lt; 100 ~ &quot;Center&quot;,
+      between(likes, 100, 200) ~ &quot;Inner-Mid&quot;,
+      between(likes, 201, 400) ~ &quot;Outer-Mid&quot;,
+      likes &gt; 400 ~ &quot;Edge&quot;
+    ),
+    cluster = fct_reorder(cluster, likes)
+  )
+
+colortweets_df_hsv %&gt;% 
+  group_by(cluster) %&gt;% 
+  summarize(across(h:v, mean), .groups = &#39;drop&#39;)</code></pre>
+<pre><code>
+  # A tibble: 4 x 4
+    cluster       h     s     v
+    &lt;fct&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+  1 Center     121. 0.770 0.710
+  2 Inner-Mid  191. 0.734 0.737
+  3 Outer-Mid  197. 0.589 0.710
+  4 Edge       249. 0.304 0.832</code></pre>
+</div>
+<p>This actually matches up pretty nicely with our initial analysis! We find a general dislike for green colors (<code>h</code> value close to 120) over blue colors (<code>h</code> value close to 240), as well as a dislike for highly saturated colors (intense, bright) over those with low saturation (which is what gives off the “pastel” look). To help make the <span class="sc">hue</span> values more interpretable, here’s a color wheel with angles that correspond to the hue values in HSV.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-15"></span>
+<img src="https://i.stack.imgur.com/Bkqjg.png" alt="Hue color wheel" width="500" class=external />
+<p class="caption">
+Figure 2: Hue color wheel
+</p>
+</div>
+</div>
+<p>But we also expect to find within-cluster variation along HSV. In particular, hue is kind of uninterpretable on a scale so it probably doesn’t make a whole lot of sense to take a mean of that. So back to the <del>drawing</del> plotting board!</p>
+<p>Since <span class="sc">saturation</span> and <span class="sc">value</span> <em>do</em> make more sense on a continuous scale, let’s draw a scatterplot for each cluster with <span class="sc">saturation</span> on the x-axis and <span class="sc">value</span> on the y-axis. I’m also going to map <span class="sv">hue</span> to the color of each point, but since <span class="sc">hue</span> is abstract on its own, I’m actually just going to replace it with the hex values (i.e., the actual color).</p>
+<div class="layout-chunk" data-layout="l-page">
+<pre class="r"><code>
+colortweets_df_hsv %&gt;% 
+  ggplot(aes(s, v, color = hex)) +
+  geom_point() +
+  scale_color_identity() +
+  lemon::facet_rep_wrap(~cluster) +
+  theme_void(base_size = 16, base_family = &quot;Montserrat Medium&quot;) +
+  theme(
+    plot.margin = margin(3, 5, 5, 5, &quot;mm&quot;),
+    strip.text = element_text(margin = margin(b = 3, unit = &quot;mm&quot;)),
+    panel.border = element_rect(color = &quot;black&quot;, fill = NA),
+    panel.background = element_rect(fill = &quot;grey75&quot;, color = NA)
+  )</code></pre>
+<p><img src="analysis-of-everycolorbots-tweets_files/figure-html5/unnamed-chunk-16-1.png" width="624" /></p>
+</div>
+<p>Here’s the mappings spelled out again:</p>
+<ul>
+<li><span class="sc">saturation</span> (how <em>colorful</em> a color is) is mapped to the <strong>X</strong>-dimension</li>
+<li><span class="sc">value</span> (how <em>light</em> a color is) is mapped to the <strong>Y</strong>-dimension</li>
+<li><span class="sc">hex</span> (the <em>actual color</em> itself) is mapped to the <strong>COLOR</strong> dimension</li>
+</ul>
+<p><br></p>
+<p>Our plot above reinforce what we’ve found before. Colors are more likeable (literally) the more they…</p>
+<ol type="1">
+<li><p><strong>Move away from green</strong>: Neon-green dominates the least-liked cluster, and that’s a blatant fact. Some forest-greens survive to the lesser-liked cluster, but is practically absent in the more-liked cluster and most-liked cluster. It looks like the only way for green to be redeemable is to either <strong>mix in with blue</strong> to become cyan and turquoise, which dominates the more-liked cluster, or <strong>severly drop in saturation</strong> to join the ranks of other pastel colors in the most-liked cluster.</p></li>
+<li><p><strong>Increase in value and decrease in saturation</strong>: It’s clear that the top-left corner is dominated by the more-liked and the most-liked cluster. That region is, again, where pastel colors live. They’re calmer than the bright neon colors that plague the least-liked cluster, and are more liked than highly-saturated and intense colors like those in the top right of the Outer-Mid panel. So perhaps this is a lesson that being “colorful” can only get you so far.</p></li>
+</ol>
+<h2 id="conclusion">Conclusion</h2>
+<p>Obviously, all of this should be taken with a grain of salt. We don’t know the people behind the likes - their tastes, whether they see color differently, what medium they saw the tweet through, their experiences, etc.</p>
+<p>And of course, we need to remind ourselves that we rarely see a color just by itself in the world. It contrasts and harmonizes with other colors in the environment in very complex ways.</p>
+<p>But that’s what kinda makes our analysis cool - despite all these complexities, we see evidence for many things that experts working with color emphasize: avoid pure neon, mix colors, etc. This dataset also opens us up to many more types of analyses (like an <em>actual cluster analysis</em>) that might be worth looking into.</p>
+<p>Good stuff.</p>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>Dark mode ftw!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>While all color wheels look the same, they aren’t all <em>oriented</em> the same. When using HSV, make sure to reference the color wheel where the red is at 0, green is as 120, and blue is at 240.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>

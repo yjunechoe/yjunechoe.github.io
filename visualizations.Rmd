@@ -1,0 +1,29 @@
+---
+title: "Visualizations"
+description: |
+  Selected data visualizations
+---
+
+```{css, echo = FALSE}
+d-article {
+    background-color: #f4f4f4;
+}
+img {
+  padding: 10px;
+}
+```
+
+
+
+```{r, echo = FALSE, fit.align = 'center'}
+viz_paths <- here::here("static", "dataviz") %>%
+  fs::dir_info() %>%
+  arrange(modification_time) %>%
+  pull(path) %>%
+  str_match("static/dataviz/.*") %>%
+  `[`(,1) %>% 
+  rev()
+
+knitr::include_graphics(viz_paths)
+```
+
