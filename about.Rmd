@@ -9,4 +9,4 @@ I received my B.A. in Linguistics from Northwestern University in the Summer of 
 Beyond linguistics research, I have interests in data visualization, science communication and [\#rstats](https://twitter.com/hashtag/rstats).
 
 <br>
-<div style='text-align: center'><span class="sc">contact me: yj{last name}.sas.upenn.edu
+<div style='text-align: center'><span class="sc">contact me:</span> yj{last name}.sas.upenn.edu</div>
