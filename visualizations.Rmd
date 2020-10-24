@@ -1,7 +1,7 @@
 ---
 title: "Visualizations"
 description: |
-  Selected data visualizations
+  Select data visualizations
 ---
 
 ```{css, echo = FALSE}

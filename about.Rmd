@@ -2,11 +2,19 @@
 title: "Hi there!"
 ---
 
-I am a first year PhD student in Linguistics at the University of Pennsylvania, specializing in (computational) psycholinguistics. My main research interest is in modeling how people process linguistic information, both in real time and over the course of development. My recent research has looked at the interactions between different levels of linguistic representation (syntactic, semantic, prosodic) in on-line sentence processing.
+```{css}
+p {
+  font-family: 'Adelle';
+}
+```
 
-I received my B.A. in Linguistics from Northwestern University in the Summer of 2020. During my undergrad there, I worked with [Jennifer Cole](https://sites.northwestern.edu/cole/), [Masaya Yoshida](https://faculty.wcas.northwestern.edu/~myo507/), and [Annette D'Onofrio](https://faculty.wcas.northwestern.edu/~akd2621/) in the Linguistics department. I also worked as a research assistant in the [Language, Education, and Learning Neuroscience Lab](https://learnlab.northwestern.edu/) under [Elizabeth Norton](https://www.communication.northwestern.edu/faculty/ElizabethNorton) in the Communication Sciences and Disorders Department. I wrote my honors thesis on the role of prosodic focus in semantic reanalysis in the processing of sentences with local attachment ambiguity.
+I am a first year PhD student in Linguistics at the University of Pennsylvania, specializing in (computational) psycholinguistics. My main research interest is in modeling how comprehenders parse linguistic input, both in real time and over the course of development.
 
-Beyond linguistics research, I have interests in data visualization, science communication and [\#rstats](https://twitter.com/hashtag/rstats).
+I received my B.A. in Linguistics from Northwestern University ('20), where I worked with [Jennifer Cole](https://sites.northwestern.edu/cole/), [Masaya Yoshida](https://faculty.wcas.northwestern.edu/~myo507/), and [Annette D'Onofrio](https://faculty.wcas.northwestern.edu/~akd2621/). I also worked as a research assistant in the [Language, Education, and Learning Neuroscience Lab](https://learnlab.northwestern.edu/) under [Elizabeth Norton](https://www.communication.northwestern.edu/faculty/ElizabethNorton) in the Communication Sciences and Disorders Department. I wrote my honors thesis on the role of prosodic focus in semantic reanalysis in the processing of sentences with local attachment ambiguity.
+
+Beyond linguistics research, I have interests in data visualization, science communication, and the R programming language. I'm especially passionate about explanatory data visualization in academic research and spend a lot of time thinking about best practices for readability and accessibility.
+
+I'm also a [MindCORE](https://mindcore.sas.upenn.edu/) affiliate and work as a data science tutor for researchers at Penn. You can [schedule an appointment](https://rb.gy/gfhd2f) with me if you have questions related to R and/or data visualization.
 
 <br>
-<div style='text-align: center'><span class="sc">contact me:</span> yj{last name}.sas.upenn.edu</div>
+<div style='text-align: center'><span class="sc">contact me:</span> yj{<i>last_name</i>}@sas.upenn.edu</div>
