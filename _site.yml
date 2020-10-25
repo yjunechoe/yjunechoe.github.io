@@ -3,7 +3,10 @@ title: "June Choe"
 description: |
   Personal Blog
 output_dir: "docs"
+creative_commons: CC BY
 base_url: yjunechoe.github.io
+twitter:
+  site: "@yjunechoe"
 navbar:
   right:
     - text: "Home"

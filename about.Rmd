@@ -5,8 +5,12 @@ title: "Hi there!"
 ```{css}
 p {
   font-family: 'Adelle';
+}
+
+d-article {
   text-align: justify;
 }
+
 ```
 
 I am a first year PhD student in Linguistics at the University of Pennsylvania, specializing in (computational) psycholinguistics. My main research interest is in modeling how comprehenders parse linguistic input, both in real time and over the course of development.
@@ -17,5 +21,6 @@ Beyond linguistics research, I have interests in data visualization, science com
 
 I'm also a [MindCORE](https://mindcore.sas.upenn.edu/) affiliate and work as a data science tutor for researchers at Penn. You can [schedule an appointment](https://rb.gy/gfhd2f) with me if you have questions related to R and/or data visualization.
 
-<br>
+<p></p>
+
 <div style='text-align: center'><span class="sc">contact me:</span> yj{<i>last_name</i>}\@sas.upenn.edu</div>

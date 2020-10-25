@@ -1696,227 +1696,219 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   <style type="text/css">
   /* ---------- Global Styles ---------- */
 
-  html, body, p {
-    
-    font-family: 'Futura Bk BT';
-    font-weight: 200;
-    line-height: 1.55; 
-    font-size: 1em;
-    color: #333333;
-    font-style: normal;
-    
-  }
+	html, body, p {
+	  
+	  font-family: 'Roboto';
+	  font-weight: 400;
+	  line-height: 1.7; 
+	  font-size: 1em;
+	  color: #333333;
+	  font-style: normal;
+	  
+	}
 
-  h1 {
-    font-family: 'Futura';
-  }
+	/* Small caps */
 
-  h2, h3, h4, h5 {
-    font-family: 'Futura Hv BT';
-  }
+	.sc {
+	  font-variant: small-caps;
+	  letter-spacing: 0.1em;
+	}
 
 
-  /* Small caps */
+	/* ---------- Index Page Styles ---------- */
 
-  .sc {
-    font-variant: small-caps;
-    letter-spacing: 0.1em;
-    font-family: Futura Bk BT;
-  }
+	/* Publication Date */
 
-  /* Override bold style (Danger Zone) */
+	.publishedDate {
+	  font-size: 1.1em;
+	}
 
-  p strong {
-      font-family: 'Futura Hv BT';
-      font-weight: normal;
-      font-size: 0.9em;
-      letter-spacing: 0.05em;
-  }
 
+	/* Tags */
 
+	.dt-tags {
+	  margin-top: 10px;
+	  margin-right: 10px;
+	}
 
-  /* ---------- Index Page Styles ---------- */
+	.dt-tag {
+	  font-family: Roboto Slab;
+	}
 
-  /* Publication Date */
 
-  .publishedDate {
-    font-size: 1.1em;
-  }
+	/* Top & Bot bars */
 
+	.distill-site-nav {
+	  background-color: #262c2f;
+	}
 
-  /* Top & Bot bars */
+	.distill-site-footer p {
+	  color: white;
+	}
 
-  .distill-site-nav {
-    background-color: #262c2f;
-  }
 
-  .distill-site-footer p {
-    color: white;
-  }
+	/* Google Search */
 
+	table#gs_id50 {
+	  margin-bottom: 0;
+	  border-bottom: none;
+	}
 
-  /* Google Search */
+	.gsc-control-cse {
+	  margin-bottom: 0;
+	}
 
-  table#gs_id50 {
-    margin-bottom: 0;
-    border-bottom: none;
-  }
+	.gsc-search-button-v2 {
+	  border-color: #272c34;
+	  background-color: #404f67;
+	}
 
-  .gsc-control-cse {
-    margin-bottom: 0;
-  }
 
-  .gsc-search-button-v2 {
-    border-color: #272c34;
-    background-color: #404f67;
-  }
+	/* Post published date medatada */
+	.posts-list .metadata .publishedDate{
+	  font-family: 'Roboto Mono Medium';
+	}
 
 
-  /* Post published date medatada */
-  .posts-list .metadata .publishedDate{
-    font-family: 'Roboto Mono Medium';
-  }
+	/* Post list caption */
+	.posts-list .posts-list-caption{
+	  font-family: 'Fira Mono Medium';
+	  border-bottom: 5px solid #f3f3f3;
+	  padding-bottom: 2rem;
+	}
 
 
-  /* Post list caption */
-  .posts-list .posts-list-caption{
-    font-family: 'Fira Mono Medium';
-    border-bottom: 5px solid #f3f3f3;
-    padding-bottom: 2rem;
-  }
+	/* Sidebar Categories */
+	.posts-sidebar {
+	  font-family: 'Fira Mono';
+	}
 
 
-  /* Sidebar Categories */
-  .posts-sidebar {
-    font-family: 'Fira Mono';
-  }
+	/* ---------- Article Styles ---------- */
 
 
-  /* ---------- Article Styles ---------- */
+	/* Title */
 
+	d-title {
+	  padding-bottom: 0;
+	}
 
-  /* Title */
+	d-title h1 {
+	  font-family: 'Lora';
+	  line-height: 1.3;
+	}
 
-  d-title {
-    padding-bottom: 0;
-  }
 
-  d-title h1 {
-    font-family: 'Lora';
-    line-height: 1.3;
-  }
+	/* General */
 
-  d-title p {
-    font-family: 'Futura Lt BT';
-  }
+	d-article h3 {
+	  margin-top: 1em;
+	}
 
+	d-article ol {
+	  padding-bottom: 15px;
+	}
 
-  /* General */
+	/* Aside */
 
-  d-article h3 {
-    margin-top: 1em;
-  }
+	aside {
+	  margin-left: 20px;
+	  width: 200px;
+	  font-family: 'Adelle';
+	}
 
+	d-code + aside {
+	  margin-top: 1em;
+	}
 
 
-  /* Aside */
+	/* Block Quotes */
 
-  aside {
-    margin-left: 20px;
-    width: 200px;
-    font-family: 'Adelle';
-  }
+	d-article blockquote {
+	  border-left: 5px solid rgba(0, 0, 0, 0.2);
+	  padding-left: 1em;
+	}
 
-  d-code + aside {
-    margin-top: 1em;
-  }
+	blockquote p {
+	  margin-bottom: 0;
+	}
 
 
-  /* Block Quotes */
+	/* ---------- Code Styles ---------- */
 
-  d-article blockquote {
-    border-left: 5px solid rgba(0, 0, 0, 0.2);
-    padding-left: 1em;
-  }
+	/* Inline Code */
 
-  blockquote p {
-    margin-bottom: 0;
-  }
+	code {
+	  color: #d23c6e;
+	  font-family: 'Fira Mono';
+	  font-weight: 500;
+	  font-size: 0.8em;
+	}
 
 
-  /* ---------- Code Styles ---------- */
 
-  /* Inline Code */
+	/* Output Chunk */
 
-  code {
-    color: #c46586;
-    font-family: 'Fira Mono';
-    font-size: 0.8em;
-    letter-spacing: 0.03em;
-  }
+	pre.text-output {
+	  background-color: #f8f8f8;
+	  font-family: 'Fira Mono';
+	  font-weight: 400;
+	  font-size: 0.8em;
+	}
 
+	/* Code Chunk */
 
+	d-article pre {
+	  font-size: 14px;
+	  padding-bottom: 17px;
+	  margin-bottom: 2em;
+	}
 
-  /* Output Chunk */
+	d-code {
+	  font-weight: 500;
+	  margin-bottom: 10px;
+	}
 
-  pre.text-output {
-    background-color: #F5F8F9;
-    font-family: 'IBM Plex Mono Regular';
-    font-size: 0.7em;
-  }
 
-  /* Code Chunk */
 
-  d-article pre {
-    font-size: 14px;
-    padding-bottom: 17px;
-    margin-bottom: 2em;
-  }
+	/* ---------- ADD-ONS ---------- */
 
-  d-code {
-    margin-bottom: 10px;
-  }
 
+	/* {rmarkdown} */
 
+	.pagedtable-wrapper {
+	  margin-bottom: 20px;
+	}
 
-  /* ---------- ADD-ONS ---------- */
 
+	/* html widgets */
 
-  /* {rmarkdown} */
+	.html-widget {
+	  margin-top: 1.0em;
+	  margin-bottom: 1.0em;
+	}
 
-  .pagedtable-wrapper {
-    margin-bottom: 20px;
-  }
 
+	/* {reactable} */
 
-  /* html widgets */
+	.ReactTable {
+	  font-size: 14px;
+	  font-family: 'Roboto Medium';
+	  background-color: #fbfbfb;
+	}
 
-  .html-widget {
-    margin-top: 1.0em;
-    margin-bottom: 1.0em;
-  }
 
+	/* {xaringanExtra} */
 
-  /* {reactable} */
-
-  .ReactTable {
-    font-size: 14px;
-    font-family: 'Roboto Medium';
-    background-color: #fbfbfb;
-  }
-
-
-  /* {xaringanExtra} */
-
-  .panelset {
-    margin-top: 10px;
-    --panel-tabs-border-bottom: black;
-    --panel-tab-font-family: 'Montserrat SemiBold';
-    --panel-tab-hover-background: #ddd;
-    --panel-tab-text-decoration: none;
-    border-bottom: 2px solid black;
-    margin-bottom: 30px;
-  }
+	.panelset {
+	  margin-top: 10px;
+	  --panel-tabs-border-bottom: black;
+	  --panel-tab-font-family: 'Montserrat SemiBold';
+	  --panel-tab-hover-background: #ddd;
+	  --panel-tab-text-decoration: none;
+	  border-bottom: 2px solid black;
+	  margin-bottom: 30px;
+	}
   </style>
   <!--/radix_placeholder_site_in_header-->
 
