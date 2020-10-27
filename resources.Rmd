@@ -13,6 +13,6 @@ p {
 
 ### Data Visualization
 
-- {ggplot2} style guide and showcase (flipbook presentation)
+- {ggplot2} style guide and showcase ({xaringan} + {flipbookr} presentation)
 
-    - [Phonetics Lab 2020](https://yjunechoe.netlify.app/flipbooks/p_lab_ggplot2_2020/p_lab_ggplot2.html)
+    - [Penn Phonetics Lab 2020](https://yjunechoe.netlify.app/flipbooks/p_lab_ggplot2_2020/p_lab_ggplot2.html) ([Code](https://gist.github.com/yjunechoe/b7bc540f290044ffebec0a9031d586df))
