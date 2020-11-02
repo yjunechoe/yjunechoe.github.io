@@ -1,5 +1,5 @@
 ---
-title: "Visualizations"
+title: "Data Visualizations"
 description: |
   Select data visualizations
 ---
@@ -8,7 +8,7 @@ description: |
 d-article {
     background-color: #f4f4f4;
 }
-img {
+d-article img {
   padding: 10px;
 }
 ```
