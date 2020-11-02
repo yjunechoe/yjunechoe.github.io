@@ -21,6 +21,21 @@ html, body, p {
 
 /* ---------- Index Page Styles ---------- */
 
+
+/* Name time */
+
+div.nav-left a.title {
+ font-family: Trispace;
+}
+
+
+/* Search bar */
+
+.angolia-autocomplete {
+  width: 300px;
+}
+
+
 /* Publication Date */
 
 .publishedDate {
@@ -39,6 +54,9 @@ html, body, p {
   font-family: Roboto Slab;
 }
 
+.posts-list .dt-tags .dt-tag {
+  letter-spacing: 1px;
+}
 
 /* Top & Bot bars */
 

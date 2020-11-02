@@ -468,22 +468,19 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     return offset ? offset + '/' + url : url;
   }
 
-  function createIndex() {
-    var options = {
-      keys: [
-        "title",
-        "categories",
-        "description",
-        "contents"
-      ]
-    };
-    return new window.Fuse([],options);
-  }
-
   function createFuseIndex() {
 
     // create fuse index
-    var options = { keys: ["title", "description", "contents"] };
+    var options = {
+      keys: [
+        { name: 'title', weight: 20 },
+        { name: 'categories', weight: 15 },
+        { name: 'description', weight: 10 },
+        { name: 'contents', weight: 5 },
+      ],
+      ignoreLocation: true,
+      threshold: 0
+    };
     var fuse = new window.Fuse([], options);
 
     // fetch the main search.json
@@ -551,12 +548,6 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
               shouldSort: true,
               minMatchCharLength: 2,
               limit: 10,
-              keys: [
-                { name: 'title', weight: 20 },
-                { name: 'categories', weight: 15 },
-                { name: 'description', weight: 10 },
-                { name: 'contents', weight: 5 },
-              ],
             };
             var results = fuse.search(query, searchOptions);
             callback(results
@@ -854,7 +845,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   d-article pre,
   d-article div.sourceCode,
   d-article div.sourceCode pre {
-    overflow: hidden;
+    overflow: auto;
   }
 
   d-article div.sourceCode {
@@ -2032,6 +2023,21 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 
   /* ---------- Index Page Styles ---------- */
 
+
+  /* Name time */
+
+  div.nav-left a.title {
+   font-family: Trispace;
+  }
+
+
+  /* Search bar */
+
+  .angolia-autocomplete {
+    width: 300px;
+  }
+
+
   /* Publication Date */
 
   .publishedDate {
@@ -2050,6 +2056,9 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     font-family: Roboto Slab;
   }
 
+  .posts-list .dt-tags .dt-tag {
+    letter-spacing: 1px;
+  }
 
   /* Top & Bot bars */
 
@@ -2467,7 +2476,7 @@ function init_posts_list() {
 <div class="publishedDate">Sept. 27, 2020</div>
 </div>
 <div class="thumbnail">
-<img src="posts/2020-09-26-demystifying-stat-layers-ggplot2/demystifying-stat-layers-ggplot2_files/figure-html5/unnamed-chunk-1-1.png"/>
+<img src="posts/2020-09-26-demystifying-stat-layers-ggplot2/preview.png"/>
 </div>
 <div class="description">
 <h2>Demystifying stat_ layers in {ggplot2}</h2>

@@ -375,10 +375,15 @@
     },
     "distill": {
       "Package": "distill",
-      "Version": "1.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "c1dd034939f4e35fd82f76dbabced9d1"
+      "Version": "1.0.1",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "distill",
+      "RemoteUsername": "rstudio",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "c98d332192ff75f268ddf69bddace34e4db6d89b",
+      "Hash": "499b1d377d8c77618f2471497adc6969"
     },
     "downlit": {
       "Package": "downlit",

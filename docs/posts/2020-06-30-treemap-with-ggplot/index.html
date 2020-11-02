@@ -498,22 +498,19 @@ function offsetURL(url) {
   return offset ? offset + '/' + url : url;
 }
 
-function createIndex() {
-  var options = {
-    keys: [
-      "title",
-      "categories",
-      "description",
-      "contents"
-    ]
-  };
-  return new window.Fuse([],options);
-}
-
 function createFuseIndex() {
 
   // create fuse index
-  var options = { keys: ["title", "description", "contents"] };
+  var options = {
+    keys: [
+      { name: 'title', weight: 20 },
+      { name: 'categories', weight: 15 },
+      { name: 'description', weight: 10 },
+      { name: 'contents', weight: 5 },
+    ],
+    ignoreLocation: true,
+    threshold: 0
+  };
   var fuse = new window.Fuse([], options);
 
   // fetch the main search.json
@@ -581,12 +578,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             shouldSort: true,
             minMatchCharLength: 2,
             limit: 10,
-            keys: [
-              { name: 'title', weight: 20 },
-              { name: 'categories', weight: 15 },
-              { name: 'description', weight: 10 },
-              { name: 'contents', weight: 5 },
-            ],
           };
           var results = fuse.search(query, searchOptions);
           callback(results
@@ -884,7 +875,7 @@ d-article pre code {
 d-article pre,
 d-article div.sourceCode,
 d-article div.sourceCode pre {
-  overflow: hidden;
+  overflow: auto;
 }
 
 d-article div.sourceCode {
@@ -2062,6 +2053,21 @@ html, body, p {
 
 /* ---------- Index Page Styles ---------- */
 
+
+/* Name time */
+
+div.nav-left a.title {
+ font-family: Trispace;
+}
+
+
+/* Search bar */
+
+.angolia-autocomplete {
+  width: 300px;
+}
+
+
 /* Publication Date */
 
 .publishedDate {
@@ -2080,6 +2086,9 @@ html, body, p {
   font-family: Roboto Slab;
 }
 
+.posts-list .dt-tags .dt-tag {
+  letter-spacing: 1px;
+}
 
 /* Top & Bot bars */
 
@@ -2282,7 +2291,7 @@ d-article pre {
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Plotting treemaps with {treemap} and {ggplot2}","description":"Using underlying plot data for maximum customization","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/","orcidID":"0000-0002-0701-921X"}],"publishedDate":"2020-06-30T00:00:00.000-04:00","citationText":"Choe, 2020"}
+{"title":"Plotting treemaps with {treemap} and {ggplot2}","description":"Using underlying plot data for maximum customization","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/","orcidID":"0000-0002-0701-921X"}],"publishedDate":"2020-06-30T00:00:00.000+00:00","citationText":"Choe, 2020"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
