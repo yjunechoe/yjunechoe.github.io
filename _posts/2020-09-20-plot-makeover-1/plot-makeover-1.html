@@ -18,6 +18,72 @@
  <!--radix_placeholder_import_source-->
  <!--/radix_placeholder_import_source-->
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #545454; font-weight: bold; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #a1024a; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007faa; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #008000; } /* Char */
+code span.cn { color: #d91e18; } /* Constant */
+code span.co { color: #545454; } /* Comment */
+code span.cv { color: #545454; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #aa5d00; } /* DataType */
+code span.dv { color: #a1024a; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #a1024a; } /* Float */
+code span.fu { color: #4254a7; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #545454; font-weight: bold; } /* Information */
+code span.kw { color: #007faa; font-weight: bold; } /* Keyword */
+code span.op { color: #696969; } /* Operator */
+code span.ot { color: #007faa; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #008000; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #008000; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #008000; } /* VerbatimString */
+code span.wa { color: #545454; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
   <!--radix_placeholder_meta_tags-->
   <title>Plot Makeover #1</title>
 
@@ -85,6 +151,51 @@
     font-size: 15px;
   }
 
+  d-byline .byline {
+    grid-template-columns: 2fr 2fr;
+  }
+
+  d-byline .byline h3 {
+    margin-block-start: 1.5em;
+  }
+
+  d-byline .byline .authors-affiliations h3 {
+    margin-block-start: 0.5em;
+  }
+
+  .authors-affiliations .orcid-id {
+    width: 16px;
+    height:16px;
+    margin-left: 4px;
+    margin-right: 4px;
+    vertical-align: middle;
+    padding-bottom: 2px;
+  }
+
+  d-title .dt-tags {
+    margin-top: 1em;
+    grid-column: text;
+  }
+
+  .dt-tags .dt-tag {
+    text-decoration: none;
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0em 0.4em;
+    margin-right: 0.5em;
+    margin-bottom: 0.4em;
+    font-size: 70%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  d-article table.gt_table td,
+  d-article table.gt_table th {
+    border-bottom: none;
+  }
+
   .html-widget {
     margin-bottom: 2.0em;
   }
@@ -124,6 +235,7 @@
   }
 
   d-article {
+    padding-top: 2.5rem;
     padding-bottom: 30px;
   }
 
@@ -135,91 +247,48 @@
     width: 100%;
   }
 
+  d-article h2 {
+    margin: 1rem 0 1.5rem 0;
+  }
+
+  d-article h3 {
+    margin-top: 1.5rem;
+  }
+
   d-article iframe {
     border: 1px solid rgba(0, 0, 0, 0.1);
     margin-bottom: 2.0em;
     width: 100%;
   }
 
-  figure img.external {
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
-    padding: 18px;
-    box-sizing: border-box;
+  /* Tweak code blocks */
+
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
   }
 
-  /* CSS for table of contents */
-
-  .d-toc {
-    color: rgba(0,0,0,0.8);
-    font-size: 0.8em;
-    line-height: 1em;
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: hidden;
   }
 
-  .d-toc-header {
-    font-size: 0.6rem;
-    font-weight: 400;
-    color: rgba(0, 0, 0, 0.5);
-    text-transform: uppercase;
-    margin-top: 0;
-    margin-bottom: 1.3em;
+  d-article div.sourceCode {
+    background-color: white;
   }
 
-  .d-toc a {
-    border-bottom: none;
-  }
-
-  .d-toc ul {
-    padding-left: 0;
-  }
-
-  .d-toc li>ul {
-    padding-top: 0.8em;
-    padding-left: 16px;
-    margin-bottom: 0.6em;
-  }
-
-  .d-toc ul,
-  .d-toc li {
-    list-style-type: none;
-  }
-
-  .d-toc li {
-    margin-bottom: 0.9em;
-  }
-
-  .d-toc-separator {
-    margin-top: 20px;
-    margin-bottom: 2em;
-  }
-
-  .d-article-with-toc {
-    border-top: none;
-    padding-top: 0;
-  }
-
-
-
-  /* Tweak code blocks (note that this CSS is repeated above in an injection
-     into the d-code shadow dom) */
-
-  d-code {
-    overflow-x: auto !important;
-  }
-
-  pre.d-code code.d-code {
+  d-article div.sourceCode pre {
     padding-left: 10px;
     font-size: 12px;
     border-left: 2px solid rgba(0,0,0,0.1);
   }
 
-  pre.text-output {
-
+  d-article pre {
     font-size: 12px;
     color: black;
     background: none;
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    margin-top: 0;
     text-align: left;
     white-space: pre;
     word-spacing: normal;
@@ -237,20 +306,123 @@
     hyphens: none;
   }
 
+  d-article pre a {
+    border-bottom: none;
+  }
+
+  d-article pre a:hover {
+    border-bottom: none;
+    text-decoration: underline;
+  }
+
   @media(min-width: 768px) {
 
-  d-code {
-    overflow-x: visible !important;
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: visible !important;
   }
 
-  pre.d-code code.d-code  {
-      padding-left: 18px;
-      font-size: 14px;
-  }
-  pre.text-output {
+  d-article div.sourceCode pre {
+    padding-left: 18px;
     font-size: 14px;
   }
+
+  d-article pre {
+    font-size: 14px;
   }
+
+  }
+
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  /* CSS for d-contents */
+
+  .d-contents {
+    grid-column: text;
+    color: rgba(0,0,0,0.8);
+    font-size: 0.9em;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    padding-left: 0.25em;
+    justify-self: start;
+  }
+
+  @media(min-width: 1000px) {
+    .d-contents.d-contents-float {
+      height: 0;
+      grid-column-start: 1;
+      grid-column-end: 4;
+      justify-self: center;
+      padding-right: 3em;
+      padding-left: 2em;
+    }
+  }
+
+  .d-contents nav h3 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+
+  .d-contents li {
+    list-style-type: none
+  }
+
+  .d-contents nav > ul {
+    padding-left: 0;
+  }
+
+  .d-contents ul {
+    padding-left: 1em
+  }
+
+  .d-contents nav ul li {
+    margin-top: 0.6em;
+    margin-bottom: 0.2em;
+  }
+
+  .d-contents nav a {
+    font-size: 13px;
+    border-bottom: none;
+    text-decoration: none
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .d-contents nav a:hover {
+    text-decoration: underline solid rgba(0, 0, 0, 0.6)
+  }
+
+  .d-contents nav > ul > li > a {
+    font-weight: 600;
+  }
+
+  .d-contents nav > ul > li > ul {
+    font-weight: inherit;
+  }
+
+  .d-contents nav > ul > li > ul > li {
+    margin-top: 0.2em;
+  }
+
+
+  .d-contents nav ul {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+  }
+
+  .d-article-with-toc h2:nth-child(2) {
+    margin-top: 0;
+  }
+
 
   /* Figure */
 
@@ -288,6 +460,16 @@
     color: rgba(0, 0, 0, 1.0);
   }
 
+  /* Citations */
+
+  d-article .citation {
+    color: inherit;
+    cursor: inherit;
+  }
+
+  div.hanging-indent{
+    margin-left: 1em; text-indent: -1em;
+  }
 
 
   /* Tweak 1000px media break to show more text */
@@ -363,6 +545,91 @@
     word-wrap: break-word;
   }
 
+  /* Include appendix styles here so they can be overridden */
+
+  d-appendix {
+    contain: layout style;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-top: 60px;
+    margin-bottom: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0,0,0,0.5);
+    padding-top: 60px;
+    padding-bottom: 48px;
+  }
+
+  d-appendix h3 {
+    grid-column: page-start / text-start;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 1em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.65);
+  }
+
+  d-appendix h3 + * {
+    margin-top: 1em;
+  }
+
+  d-appendix ol {
+    padding: 0 0 0 15px;
+  }
+
+  @media (min-width: 768px) {
+    d-appendix ol {
+      padding: 0 0 0 30px;
+      margin-left: -30px;
+    }
+  }
+
+  d-appendix li {
+    margin-bottom: 1em;
+  }
+
+  d-appendix a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  d-appendix > * {
+    grid-column: text;
+  }
+
+  d-appendix > d-footnote-list,
+  d-appendix > d-citation-list,
+  d-appendix > distill-appendix {
+    grid-column: screen;
+  }
+
+  /* Include footnote styles here so they can be overridden */
+
+  d-footnote-list {
+    contain: layout style;
+  }
+
+  d-footnote-list > * {
+    grid-column: text;
+  }
+
+  d-footnote-list a.footnote-backlink {
+    color: rgba(0,0,0,0.3);
+    padding-left: 0.5em;
+  }
+
+
+
+  /* Anchor.js */
+
+  .anchorjs-link {
+    /*transition: all .25s linear; */
+    text-decoration: none;
+    border-bottom: none;
+  }
+  *:hover > .anchorjs-link {
+    margin-left: -1.125em !important;
+    text-decoration: none;
+    border-bottom: none;
+  }
 
   /* Social footer */
 
@@ -417,6 +684,211 @@
 
   .custom p {
     margin-bottom: 0.5em;
+  }
+
+  /* Styles for listing layout (hide title) */
+  .layout-listing d-title, .layout-listing .d-title {
+    display: none;
+  }
+
+  /* Styles for posts lists (not auto-injected) */
+
+
+  .posts-with-sidebar {
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+
+  .posts-list .description h2,
+  .posts-list .description p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .posts-list .description h2 {
+    font-weight: 700;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .posts-list h2.post-tag {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 12px;
+  }
+  .posts-list {
+    margin-top: 60px;
+    margin-bottom: 24px;
+  }
+
+  .posts-list .post-preview {
+    text-decoration: none;
+    overflow: hidden;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 24px 0;
+  }
+
+  .post-preview-last {
+    border-bottom: none !important;
+  }
+
+  .posts-list .posts-list-caption {
+    grid-column: screen;
+    font-weight: 400;
+  }
+
+  .posts-list .post-preview h2 {
+    margin: 0 0 6px 0;
+    line-height: 1.2em;
+    font-style: normal;
+    font-size: 24px;
+  }
+
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.4em;
+    font-size: 16px;
+  }
+
+  .posts-list .post-preview .thumbnail {
+    box-sizing: border-box;
+    margin-bottom: 24px;
+    position: relative;
+    max-width: 500px;
+  }
+  .posts-list .post-preview img {
+    width: 100%;
+    display: block;
+  }
+
+  .posts-list .metadata {
+    font-size: 12px;
+    line-height: 1.4em;
+    margin-bottom: 18px;
+  }
+
+  .posts-list .metadata > * {
+    display: inline-block;
+  }
+
+  .posts-list .metadata .publishedDate {
+    margin-right: 2em;
+  }
+
+  .posts-list .metadata .dt-authors {
+    display: block;
+    margin-top: 0.3em;
+    margin-right: 2em;
+  }
+
+  .posts-list .dt-tags {
+    display: block;
+    line-height: 1em;
+  }
+
+  .posts-list .dt-tags .dt-tag {
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0.3em 0.4em;
+    margin-right: 0.2em;
+    margin-bottom: 0.4em;
+    font-size: 60%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .posts-list img {
+    opacity: 1;
+  }
+
+  .posts-list img[data-src] {
+    opacity: 0;
+  }
+
+  .posts-more {
+    clear: both;
+  }
+
+
+  .posts-sidebar {
+    font-size: 16px;
+  }
+
+  .posts-sidebar h3 {
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .sidebar-section {
+    margin-bottom: 30px;
+  }
+
+  .categories ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .categories li {
+    color: rgba(0, 0, 0, 0.8);
+    margin-bottom: 0;
+  }
+
+  .categories li>a {
+    border-bottom: none;
+  }
+
+  .categories li>a:hover {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  }
+
+  .categories .active {
+    font-weight: 600;
+  }
+
+  .categories .category-count {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+
+  @media(min-width: 768px) {
+    .posts-list .post-preview h2 {
+      font-size: 26px;
+    }
+    .posts-list .post-preview .thumbnail {
+      float: right;
+      width: 30%;
+      margin-bottom: 0;
+    }
+    .posts-list .post-preview .description {
+      float: left;
+      width: 45%;
+    }
+    .posts-list .post-preview .metadata {
+      float: left;
+      width: 20%;
+      margin-top: 8px;
+    }
+    .posts-list .post-preview p {
+      margin: 0 0 12px 0;
+      line-height: 1.5em;
+      font-size: 16px;
+    }
+    .posts-with-sidebar .posts-list {
+      float: left;
+      width: 75%;
+    }
+    .posts-with-sidebar .posts-sidebar {
+      float: right;
+      width: 20%;
+      margin-top: 60px;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
   }
 
 
@@ -548,6 +1020,12 @@
     hyphens: none;
   }
 
+  .downlevel .posts-list .post-preview {
+    color: inherit;
+  }
+
+
+
   </style>
 
   <script type="application/javascript">
@@ -563,6 +1041,13 @@
 
   // show body when load is complete
   function on_load_complete() {
+
+    // add anchors
+    if (window.anchors) {
+      window.anchors.options.placement = 'left';
+      window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+    }
+
 
     // set body to visible
     document.body.style.visibility = 'visible';
@@ -609,23 +1094,8 @@
     // create d-appendix
     $('.d-appendix').changeElementType('d-appendix');
 
-    // create d-bibliography
-    var bibliography = $('<d-bibliography></d-bibliography>');
-    $('#distill-bibliography').wrap(bibliography);
-
     // flag indicating that we have appendix items
     var appendix = $('.appendix-bottom').children('h3').length > 0;
-
-    // replace citations with <d-cite>
-    $('.citation').each(function(i, val) {
-      appendix = true;
-      var cites = $(this).attr('data-cites').split(" ");
-      var dt_cite = $('<d-cite></d-cite>');
-      dt_cite.attr('key', cites.join());
-      $(this).replaceWith(dt_cite);
-    });
-    // remove refs
-    $('#refs').remove();
 
     // replace footnotes with <d-footnote>
     $('.footnote-ref').each(function(i, val) {
@@ -643,39 +1113,21 @@
     // remove footnotes
     $('.footnotes').remove();
 
+    // move refs into #references-listing
+    $('#references-listing').replaceWith($('#refs'));
+
     $('h1.appendix, h2.appendix').each(function(i, val) {
       $(this).changeElementType('h3');
     });
     $('h3.appendix').each(function(i, val) {
       var id = $(this).attr('id');
-      $('.d-toc a[href="#' + id + '"]').parent().remove();
+      $('.d-contents a[href="#' + id + '"]').parent().remove();
       appendix = true;
       $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
     });
 
     // show d-appendix if we have appendix content
     $("d-appendix").css('display', appendix ? 'grid' : 'none');
-
-    // replace code blocks with d-code
-    $('pre>code').each(function(i, val) {
-      var code = $(this);
-      var pre = code.parent();
-      var clz = "";
-      var language = pre.attr('class');
-      if (language) {
-        // map unknown languages to "clike" (without this they just dissapear)
-        if ($.inArray(language, ["bash", "clike", "css", "go", "html",
-                                 "javascript", "js", "julia", "lua", "markdown",
-                                 "markup", "mathml", "python", "svg", "xml"]) == -1)
-          language = "clike";
-        language = ' language="' + language + '"';
-        var dt_code = $('<d-code block' + language + clz + '></d-code>');
-        dt_code.text(code.text());
-        pre.replaceWith(dt_code);
-      } else {
-        code.addClass('text-output').unwrap().changeElementType('pre');
-      }
-    });
 
     // localize layout chunks to just output
     $('.layout-chunk').each(function(i, val) {
@@ -684,7 +1136,7 @@
       var layout = $(this).attr('data-layout');
 
       // apply layout to markdown level block elements
-      var elements = $(this).children().not('d-code, pre.text-output, script');
+      var elements = $(this).children().not('div.sourceCode, pre, script');
       elements.each(function(i, el) {
         var layout_div = $('<div class="' + layout + '"></div>');
         if (layout_div.hasClass('shaded')) {
@@ -701,6 +1153,13 @@
       $(this).children().unwrap();
     });
 
+    // remove code block used to force  highlighting css
+    $('.distill-force-highlighting-css').parent().remove();
+
+    // remove empty line numbers inserted by pandoc when using a
+    // custom syntax highlighting theme
+    $('code.sourceCode a:empty').remove();
+
     // load distill framework
     load_distill_framework();
 
@@ -716,12 +1175,26 @@
       if (!have_authors)
         $('d-byline').addClass('hidden');
 
-      // table of contents
-      if (have_authors) // adjust border if we are in authors
-        $('.d-toc').parent().addClass('d-article-with-toc');
+      // article with toc class
+      $('.d-contents').parent().addClass('d-article-with-toc');
 
       // strip links that point to #
       $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+      // add orcid ids
+      $('.authors-affiliations').find('.author').each(function(i, el) {
+        var orcid_id = front_matter.authors[i].orcidID;
+        if (orcid_id) {
+          var a = $('<a></a>');
+          a.attr('href', 'https://orcid.org/' + orcid_id);
+          var img = $('<img></img>');
+          img.addClass('orcid-id');
+          img.attr('alt', 'ORCID ID');
+          img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+          a.append(img);
+          $(this).append(a);
+        }
+      });
 
       // hide elements of author/affiliations grid that have no value
       function hide_byline_column(caption) {
@@ -771,14 +1244,9 @@
         grid.children('h3:contains("Affiliations")').text('Affiliation');
       }
 
-      // inject pre code styles (can't do this with a global stylesheet b/c a shadow root is used)
-      $('d-code').each(function(i, val) {
-        var style = document.createElement('style');
-        style.innerHTML = 'pre code { padding-left: 10px; font-size: 12px; border-left: 2px solid rgba(0,0,0,0.1); } ' +
-                          '@media(min-width: 768px) { pre code { padding-left: 18px; font-size: 14px; } }';
-        if (this.shadowRoot)
-          this.shadowRoot.appendChild(style);
-      });
+      // remove d-appendix and d-footnote-list local styles
+      $('d-appendix > style:first-child').remove();
+      $('d-footnote-list > style:first-child').remove();
 
       // move appendix-bottom entries to the bottom
       $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
@@ -814,9 +1282,7 @@
     $('.d-byline a').remove();
 
     // remove toc
-    $('.d-toc-header').remove();
-    $('.d-toc').remove();
-    $('.d-toc-separator').remove();
+    $('.d-contents').remove();
 
     // move appendix elements
     $('h1.appendix, h2.appendix').each(function(i, val) {
@@ -945,8 +1411,9 @@
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="plot-makeover-1_files/header-attrs-2.4/header-attrs.js"></script>
+  <script src="plot-makeover-1_files/header-attrs-2.5/header-attrs.js"></script>
   <script src="plot-makeover-1_files/jquery-1.11.3/jquery.min.js"></script>
+  <script src="plot-makeover-1_files/anchor-4.2.2/anchor.min.js"></script>
   <script src="plot-makeover-1_files/bowser-1.9.3/bowser.min.js"></script>
   <script src="plot-makeover-1_files/webcomponents-2.0.0/webcomponents.js"></script>
   <script src="plot-makeover-1_files/distill-2.2.21/template.v2.js"></script>
@@ -961,7 +1428,7 @@
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Plot Makeover #1","description":"Flattening a faceted grid for strictly horizontal comparisons","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/"}],"publishedDate":"2020-09-20T00:00:00.000-04:00","citationText":"Choe, 2020"}
+{"title":"Plot Makeover #1","description":"Flattening a faceted grid for strictly horizontal comparisons","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/","orcidID":""}],"publishedDate":"2020-09-20T00:00:00.000-04:00","citationText":"Choe, 2020"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -972,6 +1439,13 @@
 
 <div class="d-title">
 <h1>Plot Makeover #1</h1>
+<!--radix_placeholder_categories-->
+<div class="dt-tags">
+<div class="dt=tag">plot makeover</div>
+<div class="dt=tag">data visualization</div>
+<div class="dt=tag">ggplot2</div>
+</div>
+<!--/radix_placeholder_categories-->
 <p><p>Flattening a faceted grid for strictly horizontal comparisons</p></p>
 </div>
 
@@ -982,8 +1456,9 @@
 </div>
 
 <div class="d-article">
-<h3 class="d-toc-header">Table of Contents</h3>
-<nav class="d-toc" id="TOC">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
 <ul>
 <li><a href="#before">Before</a></li>
 <li><a href="#my-plan">My Plan</a></li>
@@ -994,7 +1469,7 @@
 </ul></li>
 </ul>
 </nav>
-<hr class="d-toc-separator"/>
+</div>
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
@@ -1021,21 +1496,22 @@ Figure 1: Plot from Husband and Patson (2020)
 <p>To get a better sense of what they did, and to make data for the plot makeover, I have recreated the original plot below:<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <p><strong>1. Data</strong></p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-library(tidyverse)
-df &lt;- crossing(level_1 = fct_inorder(c(&quot;Within&quot;, &quot;Between&quot;)),
-               level_2 = fct_inorder(c(&quot;Some&quot;, &quot;Number&quot;, &quot;Or&quot;)),
-               level_3 = factor(c(&quot;Strong&quot;, &quot;Weak&quot;)))
-df$barheight &lt;- c(.63, .35, .72, .55, .61, .15, .60, .55, .52, .63, .17, .16)
+<div class="sourceCode">
+<pre><code><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span>
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>crossing</span><span class='op'>(</span>level_1 <span class='op'>=</span> <span class='fu'>fct_inorder</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Within"</span>, <span class='st'>"Between"</span><span class='op'>)</span><span class='op'>)</span>,
+               level_2 <span class='op'>=</span> <span class='fu'>fct_inorder</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Some"</span>, <span class='st'>"Number"</span>, <span class='st'>"Or"</span><span class='op'>)</span><span class='op'>)</span>,
+               level_3 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Strong"</span>, <span class='st'>"Weak"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>df</span><span class='op'>$</span><span class='va'>barheight</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.63</span>, <span class='fl'>.35</span>, <span class='fl'>.72</span>, <span class='fl'>.55</span>, <span class='fl'>.61</span>, <span class='fl'>.15</span>, <span class='fl'>.60</span>, <span class='fl'>.55</span>, <span class='fl'>.52</span>, <span class='fl'>.63</span>, <span class='fl'>.17</span>, <span class='fl'>.16</span><span class='op'>)</span>
 
-df</code></pre>
+<span class='va'>df</span>
+</code></pre>
+</div>
 </div>
 <aside>
 The numbers for <code>barheight</code> were eyeballed from looking at the original plot, of course.
 </aside>
 <div class="layout-chunk" data-layout="l-body">
-<pre><code>
-  # A tibble: 12 x 4
+<pre><code>  # A tibble: 12 x 4
      level_1 level_2 level_3 barheight
      &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;       &lt;dbl&gt;
    1 Within  Some    Strong       0.63
@@ -1053,24 +1529,26 @@ The numbers for <code>barheight</code> were eyeballed from looking at the origin
 </div>
 <p><strong>2. Plot</strong></p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-df %&gt;% 
-  ggplot(aes(level_3, barheight)) +
-  geom_col(
-    aes(fill = level_3),
-    show.legend = FALSE
-  ) +
-  geom_errorbar(
-    aes(ymin = barheight - .05, ymax = barheight + .05),
-    width = .1) +
-  facet_grid(level_2 ~ level_1) +
-  theme_bw() +
-  scale_fill_manual(values = c(&#39;grey40&#39;, &#39;grey80&#39;)) +
-  ylim(0, 1) +
-  labs(
-    y = &quot;Proportion of Strong Responses&quot;,
-    x = &quot;Prime Type&quot;) +
-  theme_bw()</code></pre>
+<div class="sourceCode">
+<pre><code><span class='va'>df</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>ggplot</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span><span class='va'>level_3</span>, <span class='va'>barheight</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>geom_col</span><span class='op'>(</span>
+    <span class='fu'>aes</span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>level_3</span><span class='op'>)</span>,
+    show.legend <span class='op'>=</span> <span class='cn'>FALSE</span>
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>geom_errorbar</span><span class='op'>(</span>
+    <span class='fu'>aes</span><span class='op'>(</span>ymin <span class='op'>=</span> <span class='va'>barheight</span> <span class='op'>-</span> <span class='fl'>.05</span>, ymax <span class='op'>=</span> <span class='va'>barheight</span> <span class='op'>+</span> <span class='fl'>.05</span><span class='op'>)</span>,
+    width <span class='op'>=</span> <span class='fl'>.1</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>facet_grid</span><span class='op'>(</span><span class='va'>level_2</span> <span class='op'>~</span> <span class='va'>level_1</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>theme_bw</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>scale_fill_manual</span><span class='op'>(</span>values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'grey40'</span>, <span class='st'>'grey80'</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://rdrr.io/r/graphics/plot.window.html'>ylim</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>labs</span><span class='op'>(</span>
+    y <span class='op'>=</span> <span class='st'>"Proportion of Strong Responses"</span>,
+    x <span class='op'>=</span> <span class='st'>"Prime Type"</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>theme_bw</span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
 <p><img src="plot-makeover-1_files/figure-html5/unnamed-chunk-3-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <aside>
@@ -1100,106 +1578,111 @@ The original plot for comparison:
 <p><img src="plot-makeover-1_files/figure-html5/after_pointplot-1.png" width="624" /></p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-dodge &lt;- position_dodge(width = .5)
+<div class="sourceCode">
+<pre><code><span class='va'>dodge</span> <span class='op'>&lt;-</span> <span class='fu'>position_dodge</span><span class='op'>(</span>width <span class='op'>=</span> <span class='fl'>.5</span><span class='op'>)</span>
 
-df %&gt;% 
-  mutate(level_3 = as.numeric(level_3)) %&gt;% 
-  ggplot(aes(x = level_3, y = barheight, group = level_1)) +
-  geom_point(position = dodge) + 
-  geom_errorbar(
-    aes(ymin = barheight - .05, ymax = barheight + .05),
-    width = .2,
-    position = dodge
-  ) +
-  geom_line(
-    aes(linetype = level_1),
-    position = dodge
-  ) +
-  facet_wrap(~ level_2) +
-  scale_x_continuous(
-    breaks = 1:2,
-    labels = levels(df$level_3),
-    expand = expansion(.2),
-  ) +
-  ylim(0, 1) +
-  lemon::coord_capped_cart(left = &quot;both&quot;) +
-  guides(linetype = guide_legend(direction = &quot;horizontal&quot;,
-                                 title.position = &#39;top&#39;,
-                                 title.hjust = .5,
-                                 title.theme = element_text(size = 10, face = &quot;plain&quot;),
-                                 label.theme = element_text(size = 8, family = &quot;Montserrat&quot;))
-  ) +
-  labs(
-    y = &quot;Strong Responses&quot;,
-    x = &quot;Prime Type&quot;,
-    linetype = &quot;Category&quot;
-  ) +
-  ggthemes::theme_clean() +
-  theme(
-    text = element_text(family = &quot;Montserrat&quot;),
-    legend.position = c(.17, .85),
-    legend.background = element_rect(color = &#39;black&#39;, size = unit(.5, &#39;mm&#39;)),
-    strip.text = element_text(size = 13),
-    plot.margin = margin(5, 5, 5, 5, &#39;mm&#39;),
-    axis.title.x = element_text(vjust = -3),
-    axis.title.y = element_text(vjust = 5),
-    plot.background = element_blank(),
-    panel.grid.major.y = element_blank()
+<span class='va'>df</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>mutate</span><span class='op'>(</span>level_3 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>level_3</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>ggplot</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>level_3</span>, y <span class='op'>=</span> <span class='va'>barheight</span>, group <span class='op'>=</span> <span class='va'>level_1</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>geom_point</span><span class='op'>(</span>position <span class='op'>=</span> <span class='va'>dodge</span><span class='op'>)</span> <span class='op'>+</span> 
+  <span class='fu'>geom_errorbar</span><span class='op'>(</span>
+    <span class='fu'>aes</span><span class='op'>(</span>ymin <span class='op'>=</span> <span class='va'>barheight</span> <span class='op'>-</span> <span class='fl'>.05</span>, ymax <span class='op'>=</span> <span class='va'>barheight</span> <span class='op'>+</span> <span class='fl'>.05</span><span class='op'>)</span>,
+    width <span class='op'>=</span> <span class='fl'>.2</span>,
+    position <span class='op'>=</span> <span class='va'>dodge</span>
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>geom_line</span><span class='op'>(</span>
+    <span class='fu'>aes</span><span class='op'>(</span>linetype <span class='op'>=</span> <span class='va'>level_1</span><span class='op'>)</span>,
+    position <span class='op'>=</span> <span class='va'>dodge</span>
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>facet_wrap</span><span class='op'>(</span><span class='op'>~</span> <span class='va'>level_2</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>scale_x_continuous</span><span class='op'>(</span>
+    breaks <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>,
+    labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>level_3</span><span class='op'>)</span>,
+    expand <span class='op'>=</span> <span class='fu'>expansion</span><span class='op'>(</span><span class='fl'>.2</span><span class='op'>)</span>,
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://rdrr.io/r/graphics/plot.window.html'>ylim</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>lemon</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lemon/man/coord_capped.html'>coord_capped_cart</a></span><span class='op'>(</span>left <span class='op'>=</span> <span class='st'>"both"</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>guides</span><span class='op'>(</span>linetype <span class='op'>=</span> <span class='fu'>guide_legend</span><span class='op'>(</span>direction <span class='op'>=</span> <span class='st'>"horizontal"</span>,
+                                 title.position <span class='op'>=</span> <span class='st'>'top'</span>,
+                                 title.hjust <span class='op'>=</span> <span class='fl'>.5</span>,
+                                 title.theme <span class='op'>=</span> <span class='fu'>element_text</span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>10</span>, face <span class='op'>=</span> <span class='st'>"plain"</span><span class='op'>)</span>,
+                                 label.theme <span class='op'>=</span> <span class='fu'>element_text</span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>8</span>, family <span class='op'>=</span> <span class='st'>"Montserrat"</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>labs</span><span class='op'>(</span>
+    y <span class='op'>=</span> <span class='st'>"Strong Responses"</span>,
+    x <span class='op'>=</span> <span class='st'>"Prime Type"</span>,
+    linetype <span class='op'>=</span> <span class='st'>"Category"</span>
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>ggthemes</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ggthemes/man/theme_clean.html'>theme_clean</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>theme</span><span class='op'>(</span>
+    text <span class='op'>=</span> <span class='fu'>element_text</span><span class='op'>(</span>family <span class='op'>=</span> <span class='st'>"Montserrat"</span><span class='op'>)</span>,
+    legend.position <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.17</span>, <span class='fl'>.85</span><span class='op'>)</span>,
+    legend.background <span class='op'>=</span> <span class='fu'>element_rect</span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>'black'</span>, size <span class='op'>=</span> <span class='fu'>unit</span><span class='op'>(</span><span class='fl'>.5</span>, <span class='st'>'mm'</span><span class='op'>)</span><span class='op'>)</span>,
+    strip.text <span class='op'>=</span> <span class='fu'>element_text</span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>13</span><span class='op'>)</span>,
+    plot.margin <span class='op'>=</span> <span class='fu'>margin</span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='st'>'mm'</span><span class='op'>)</span>,
+    axis.title.x <span class='op'>=</span> <span class='fu'>element_text</span><span class='op'>(</span>vjust <span class='op'>=</span> <span class='op'>-</span><span class='fl'>3</span><span class='op'>)</span>,
+    axis.title.y <span class='op'>=</span> <span class='fu'>element_text</span><span class='op'>(</span>vjust <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>,
+    plot.background <span class='op'>=</span> <span class='fu'>element_blank</span><span class='op'>(</span><span class='op'>)</span>,
+    panel.grid.major.y <span class='op'>=</span> <span class='fu'>element_blank</span><span class='op'>(</span><span class='op'>)</span>
     
-  )</code></pre>
+  <span class='op'>)</span>
+</code></pre>
+</div>
 </div>
 <h3 id="bar-plot">Bar plot</h3>
 <div class="layout-chunk" data-layout="l-body-outset">
 <p><img src="plot-makeover-1_files/figure-html5/after_bar_plot-1.png" width="624" data-distill-preview=1 /></p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-dodge &lt;- position_dodge(width = .5)
+<div class="sourceCode">
+<pre><code><span class='va'>dodge</span> <span class='op'>&lt;-</span> <span class='fu'>position_dodge</span><span class='op'>(</span>width <span class='op'>=</span> <span class='fl'>.5</span><span class='op'>)</span>
 
-df %&gt;% 
-  mutate(level_3 = as.numeric(level_3)) %&gt;% 
-  ggplot(aes(x = level_3, y = barheight, group = level_1)) +
-  geom_col(position = dodge, width = .5, color = &#39;white&#39;, aes(fill = level_1)) +
-  scale_fill_manual(values = c(&quot;grey30&quot;, &quot;grey60&quot;)) +
-  geom_errorbar(
-    aes(ymin = barheight - .05, ymax = barheight + .05),
-    width = .2,
-    position = dodge
-  ) +
-  facet_wrap(~ level_2) +
-  scale_x_continuous(
-    breaks = 1:2,
-    labels = levels(df$level_3),
-    expand = expansion(.2),
-  ) +
-  ylim(0, 1) +
-  lemon::coord_capped_cart(left = &quot;both&quot;) +
-  labs(
-    y = &quot;Strong Responses&quot;,
-    x = &quot;Prime Type&quot;,
-    fill = NULL
-  ) +
-  ggthemes::theme_clean(base_size=14) +
-  theme(
-    text = element_text(family = &quot;Montserrat&quot;),
-    legend.text = element_text(size = 10),
-    legend.key.size = unit(5, &#39;mm&#39;),
-    legend.direction = &quot;horizontal&quot;,
-    legend.position = c(.17, .85),
-    legend.background = element_blank(),
-    strip.text = element_text(size = 14),
-    axis.ticks.x = element_blank(),
-    axis.title.x = element_text(vjust = -3),
-    axis.title.y = element_text(vjust = 5),
-    panel.grid.major.y = element_blank(),
-    plot.background = element_blank(),
-    plot.margin = margin(5, 5, 5, 5, &#39;mm&#39;)
-  )</code></pre>
+<span class='va'>df</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>mutate</span><span class='op'>(</span>level_3 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>level_3</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>ggplot</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>level_3</span>, y <span class='op'>=</span> <span class='va'>barheight</span>, group <span class='op'>=</span> <span class='va'>level_1</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>geom_col</span><span class='op'>(</span>position <span class='op'>=</span> <span class='va'>dodge</span>, width <span class='op'>=</span> <span class='fl'>.5</span>, color <span class='op'>=</span> <span class='st'>'white'</span>, <span class='fu'>aes</span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>level_1</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>scale_fill_manual</span><span class='op'>(</span>values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"grey30"</span>, <span class='st'>"grey60"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>geom_errorbar</span><span class='op'>(</span>
+    <span class='fu'>aes</span><span class='op'>(</span>ymin <span class='op'>=</span> <span class='va'>barheight</span> <span class='op'>-</span> <span class='fl'>.05</span>, ymax <span class='op'>=</span> <span class='va'>barheight</span> <span class='op'>+</span> <span class='fl'>.05</span><span class='op'>)</span>,
+    width <span class='op'>=</span> <span class='fl'>.2</span>,
+    position <span class='op'>=</span> <span class='va'>dodge</span>
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>facet_wrap</span><span class='op'>(</span><span class='op'>~</span> <span class='va'>level_2</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>scale_x_continuous</span><span class='op'>(</span>
+    breaks <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>,
+    labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>level_3</span><span class='op'>)</span>,
+    expand <span class='op'>=</span> <span class='fu'>expansion</span><span class='op'>(</span><span class='fl'>.2</span><span class='op'>)</span>,
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://rdrr.io/r/graphics/plot.window.html'>ylim</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>lemon</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lemon/man/coord_capped.html'>coord_capped_cart</a></span><span class='op'>(</span>left <span class='op'>=</span> <span class='st'>"both"</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>labs</span><span class='op'>(</span>
+    y <span class='op'>=</span> <span class='st'>"Strong Responses"</span>,
+    x <span class='op'>=</span> <span class='st'>"Prime Type"</span>,
+    fill <span class='op'>=</span> <span class='cn'>NULL</span>
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>ggthemes</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ggthemes/man/theme_clean.html'>theme_clean</a></span><span class='op'>(</span>base_size<span class='op'>=</span><span class='fl'>14</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>theme</span><span class='op'>(</span>
+    text <span class='op'>=</span> <span class='fu'>element_text</span><span class='op'>(</span>family <span class='op'>=</span> <span class='st'>"Montserrat"</span><span class='op'>)</span>,
+    legend.text <span class='op'>=</span> <span class='fu'>element_text</span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>,
+    legend.key.size <span class='op'>=</span> <span class='fu'>unit</span><span class='op'>(</span><span class='fl'>5</span>, <span class='st'>'mm'</span><span class='op'>)</span>,
+    legend.direction <span class='op'>=</span> <span class='st'>"horizontal"</span>,
+    legend.position <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.17</span>, <span class='fl'>.85</span><span class='op'>)</span>,
+    legend.background <span class='op'>=</span> <span class='fu'>element_blank</span><span class='op'>(</span><span class='op'>)</span>,
+    strip.text <span class='op'>=</span> <span class='fu'>element_text</span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>14</span><span class='op'>)</span>,
+    axis.ticks.x <span class='op'>=</span> <span class='fu'>element_blank</span><span class='op'>(</span><span class='op'>)</span>,
+    axis.title.x <span class='op'>=</span> <span class='fu'>element_text</span><span class='op'>(</span>vjust <span class='op'>=</span> <span class='op'>-</span><span class='fl'>3</span><span class='op'>)</span>,
+    axis.title.y <span class='op'>=</span> <span class='fu'>element_text</span><span class='op'>(</span>vjust <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>,
+    panel.grid.major.y <span class='op'>=</span> <span class='fu'>element_blank</span><span class='op'>(</span><span class='op'>)</span>,
+    plot.background <span class='op'>=</span> <span class='fu'>element_blank</span><span class='op'>(</span><span class='op'>)</span>,
+    plot.margin <span class='op'>=</span> <span class='fu'>margin</span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='st'>'mm'</span><span class='op'>)</span>
+  <span class='op'>)</span>
+</code></pre>
+</div>
 </div>
 <aside>
 In this second version, I removed <code>guides()</code> and distributed its arguments across <code>labs()</code> and <code>theme()</code>. I kinda like this layout of having a fat <code>theme()</code>. It’s also not too hard to read if you group and sort the arguments.
 </aside>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <div id="refs" class="references hanging-indent" role="doc-bibliography">
 <div id="ref-HusbandEtAl2020AMLaP">
 <p>Husband, E. Matthew, and Nikole Patson. 2020. <em>Priming of Implicatures Within and Between Categories: The Case of or</em>. AMLaP2020. <a href="https://amlap2020.github.io/a/272.pdf">https://amlap2020.github.io/a/272.pdf</a>.</p>
@@ -1223,16 +1706,10 @@ In this second version, I removed <code>guides()</code> and distributed its argu
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->
 <!--radix_placeholder_appendices-->
-<div class="appendix-bottom"></div>
-<script id="distill-bibliography" type="text/bibtex">
-@proceedings{HusbandEtAl2020AMLaP,
-  author = {E. Matthew Husband and Nikole Patson},
-  title = {Priming of implicatures within and between categories: The case of or},
-  year = {2020},
-  organization = {AMLaP2020},
-  url = {https://amlap2020.github.io/a/272.pdf}
-}
-</script>
+<div class="appendix-bottom">
+<h3 id="references">References</h3>
+<div id="references-listing"></div>
+</div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
 <!--/radix_placeholder_navigation_after_body-->

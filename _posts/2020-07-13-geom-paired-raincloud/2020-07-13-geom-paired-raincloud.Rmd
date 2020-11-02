@@ -11,6 +11,7 @@ author:
   - name: June Choe
     affiliation: University of Pennsylvania Linguistics
     affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+    orcid_id: 0000-0002-0701-921X
 date: 07-13-2020
 output:
   distill::distill_article:
@@ -172,7 +173,7 @@ plants3 %>%
 But I think `geom_paired_raincloud()` works great if you have the right data. Here's an example from my recent work, looking at the variation in how subjects respond to stimuli when they're presented in one condition (Subject Accent) compared to the other (Verb Accent).
 
 ```{r, echo = FALSE}
-knitr::include_graphics('preview.png')
+knitr::include_graphics('preview.png', error = FALSE)
 ```
 
 The above plot is a combination of `geom_paired_raincloud()`, `geom_point()`, `geom_line()`, and `geom_boxplot()`. I like that you can employ all these aesthetics at once without making the plot too overwhelming. I've included the important part of the code here and the full code is available at the [github repo for this research project](https://github.com/yjunechoe/Semantic-Persistence).

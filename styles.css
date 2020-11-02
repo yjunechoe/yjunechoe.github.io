@@ -142,37 +142,54 @@ blockquote p {
 
 /* Inline Code */
 
-code {
+p code {
   color: #d23c6e;
+  background-color: #ff002f0a;
   font-family: 'Fira Mono';
   font-weight: 500;
   font-size: 0.8em;
 }
 
 
-
-/* Output Chunk */
-
-pre.text-output {
-  background-color: #f8f8f8;
-  font-family: 'Fira Mono';
-  font-weight: 400;
-  font-size: 0.8em;
-}
 
 /* Code Chunk */
 
-d-article pre {
-  font-size: 14px;
-  padding-bottom: 17px;
-  margin-bottom: 2em;
-}
-
-d-code {
-  font-weight: 500;
+d-article div.sourceCode pre {
+  background-color: white;
+  padding-top: 10px;
+  padding-bottom: 10px;
   margin-bottom: 10px;
 }
 
+d-article div.sourceCode pre code {
+  font-family: 'Roboto Mono';
+  font-weight: 500;
+}
+
+/* overrides some syntax highlighting */
+code span.va {
+  color: black;
+}
+
+/* underline auto-linked functions */
+span.fu a {
+    text-decoration: underline;
+}
+
+/* Output Chunk */
+
+d-article pre code {
+    font-family: IBM Plex Mono;
+    font-weight: 500;
+}
+
+d-article pre {
+    background-color: #f9f9f9;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    overflow-x: scroll;
+}
 
 
 /* ---------- ADD-ONS ---------- */

@@ -12,6 +12,7 @@ author:
   - name: June Choe
     affiliation: University of Pennsylvania Linguistics
     affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+    orcid_id: 0000-0002-0701-921X
 preview: preview.png
 date: 10-22-2020
 output:
@@ -234,7 +235,7 @@ If our initial hypothesis about the four clusters are true, we should see these 
 
 ```{r, eval = FALSE}
 colortweets_df_hsv <- colortweets_df %>% 
-  mutate(hsv = map(hex, ~as_tibble((chroma::as.hsv(.x))))) %>% 
+  mutate(hsv = map(hex, ~as_tibble(chroma::as.hsv(.x)))) %>% 
   unnest(hsv)
 ```
 

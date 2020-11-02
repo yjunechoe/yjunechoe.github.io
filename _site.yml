@@ -4,7 +4,7 @@ description: |
   Personal Blog
 output_dir: "docs"
 creative_commons: CC BY
-base_url: yjunechoe.github.io
+base_url: https://yjunechoe.github.io
 twitter:
   site: "@yjunechoe"
 navbar:
@@ -23,6 +23,8 @@ navbar:
       href: https://twitter.com/yjunechoe
     - icon: fa fa-github
       href: https://github.com/yjunechoe
+    - image: static/img/osf.png
+      href: https://osf.io/72vrb/
     - icon: fa fa-rss
       href: index.xml
   search: true
@@ -35,9 +37,11 @@ collections:
     custom: _custom.html
 output:
   distill::distill_article:
+    highlight: rstudio
+    highlight_downlit: true
     css: styles.css
     toc: true
     fig_caption: true
-exclude: ['etc']
+exclude: ['etc', 'renv*']
 favicon: static/img/icon.png
 google_analytics: "UA-178413324-1"

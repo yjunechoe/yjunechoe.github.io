@@ -46,7 +46,7 @@ _This is the first installment of **plot makeover** where I take a plot in the w
 Our plot-in-the-wild comes from the recent [AMLAP 2020](https://amlap2020.github.io/) conference, where I presented my [thesis research](https://osf.io/fjkp9/) and had the opportunity to talk with and listen to expert psycholinguists around the world. The plot that I'll be looking at here is <span class="sc">Figure 3</span> from the [abstract](https://amlap2020.github.io/a/272.pdf) of a work by E. Matthew Husband and Nikole Patson[@HusbandEtAl2020AMLaP].
 
 ```{r fig.cap="Plot from Husband and Patson (2020)", echo = FALSE, out.width = 500, out.extra="class=external", fig.align='center'}
-knitr::include_graphics("plot.png")
+knitr::include_graphics("plot.png", error = FALSE)
 ```
 
 What we have is 6 pairs of barplots with error bars, laid out in a 2-by-3 grid. The total of 12 bars are grouped at three levels which are mapped in the following way:
@@ -105,7 +105,7 @@ df %>%
 <aside>
 The original plot for comparison:
 ```{r, echo=FALSE}
-knitr::include_graphics("plot.png")
+knitr::include_graphics("plot.png", error = FALSE)
 ```
 </aside>
 

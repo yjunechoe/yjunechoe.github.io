@@ -11,6 +11,7 @@ author:
   - name: June Choe
     affiliation: University of Pennsylvania Linguistics
     affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+    orcid_id: 0000-0002-0701-921X
 preview: /posts/2020-09-26-demystifying-stat-layers-ggplot2/preview.png
 date: 09-27-2020
 output:

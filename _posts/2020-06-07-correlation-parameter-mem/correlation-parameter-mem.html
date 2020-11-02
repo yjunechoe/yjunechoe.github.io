@@ -18,6 +18,72 @@
  <!--radix_placeholder_import_source-->
  <!--/radix_placeholder_import_source-->
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #545454; font-weight: bold; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #a1024a; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007faa; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #008000; } /* Char */
+code span.cn { color: #d91e18; } /* Constant */
+code span.co { color: #545454; } /* Comment */
+code span.cv { color: #545454; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #aa5d00; } /* DataType */
+code span.dv { color: #a1024a; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #a1024a; } /* Float */
+code span.fu { color: #4254a7; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #545454; font-weight: bold; } /* Information */
+code span.kw { color: #007faa; font-weight: bold; } /* Keyword */
+code span.op { color: #696969; } /* Operator */
+code span.ot { color: #007faa; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #008000; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #008000; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #008000; } /* VerbatimString */
+code span.wa { color: #545454; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
   <!--radix_placeholder_meta_tags-->
   <title>The Correlation Parameter in Mixed Effects Models</title>
 
@@ -33,7 +99,7 @@
   <meta property="og:title" content="The Correlation Parameter in Mixed Effects Models"/>
   <meta property="og:type" content="article"/>
   <meta property="og:description" content="Notes on the Corr term in {lme4} output"/>
-  <meta property="og:image" content="yjunechoe.github.io/preview.png"/>
+  <meta property="og:image" content="https://yjunechoe.github.io/preview.png"/>
   <meta property="og:image:width" content="1248"/>
   <meta property="og:image:height" content="768"/>
   <meta property="og:locale" content="en_US"/>
@@ -42,7 +108,7 @@
   <meta property="twitter:card" content="summary_large_image"/>
   <meta property="twitter:title" content="The Correlation Parameter in Mixed Effects Models"/>
   <meta property="twitter:description" content="Notes on the Corr term in {lme4} output"/>
-  <meta property="twitter:image" content="yjunechoe.github.io/preview.png"/>
+  <meta property="twitter:image" content="https://yjunechoe.github.io/preview.png"/>
   <meta property="twitter:image:width" content="1248"/>
   <meta property="twitter:image:height" content="768"/>
 
@@ -50,7 +116,7 @@
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","preview","date","output"]}},"value":[{"type":"character","attributes":{},"value":["The Correlation Parameter in Mixed Effects Models"]},{"type":"character","attributes":{},"value":["Notes on the Corr term in {lme4} output\n"]},{"type":"character","attributes":{},"value":["statistics","mixed-effects models"]},{"type":"character","attributes":{},"value":["yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]}]}]},{"type":"character","attributes":{},"value":["preview.png"]},{"type":"character","attributes":{},"value":["06-07-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","preview","date","output"]}},"value":[{"type":"character","attributes":{},"value":["The Correlation Parameter in Mixed Effects Models"]},{"type":"character","attributes":{},"value":["Notes on the Corr term in {lme4} output\n"]},{"type":"character","attributes":{},"value":["statistics","mixed-effects models"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]},{"type":"character","attributes":{},"value":["0000-0002-0701-921X"]}]}]},{"type":"character","attributes":{},"value":["preview.png"]},{"type":"character","attributes":{},"value":["06-07-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -81,6 +147,51 @@
 
   .pagedtable-footer {
     font-size: 15px;
+  }
+
+  d-byline .byline {
+    grid-template-columns: 2fr 2fr;
+  }
+
+  d-byline .byline h3 {
+    margin-block-start: 1.5em;
+  }
+
+  d-byline .byline .authors-affiliations h3 {
+    margin-block-start: 0.5em;
+  }
+
+  .authors-affiliations .orcid-id {
+    width: 16px;
+    height:16px;
+    margin-left: 4px;
+    margin-right: 4px;
+    vertical-align: middle;
+    padding-bottom: 2px;
+  }
+
+  d-title .dt-tags {
+    margin-top: 1em;
+    grid-column: text;
+  }
+
+  .dt-tags .dt-tag {
+    text-decoration: none;
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0em 0.4em;
+    margin-right: 0.5em;
+    margin-bottom: 0.4em;
+    font-size: 70%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  d-article table.gt_table td,
+  d-article table.gt_table th {
+    border-bottom: none;
   }
 
   .html-widget {
@@ -122,6 +233,7 @@
   }
 
   d-article {
+    padding-top: 2.5rem;
     padding-bottom: 30px;
   }
 
@@ -133,91 +245,48 @@
     width: 100%;
   }
 
+  d-article h2 {
+    margin: 1rem 0 1.5rem 0;
+  }
+
+  d-article h3 {
+    margin-top: 1.5rem;
+  }
+
   d-article iframe {
     border: 1px solid rgba(0, 0, 0, 0.1);
     margin-bottom: 2.0em;
     width: 100%;
   }
 
-  figure img.external {
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
-    padding: 18px;
-    box-sizing: border-box;
+  /* Tweak code blocks */
+
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
   }
 
-  /* CSS for table of contents */
-
-  .d-toc {
-    color: rgba(0,0,0,0.8);
-    font-size: 0.8em;
-    line-height: 1em;
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: hidden;
   }
 
-  .d-toc-header {
-    font-size: 0.6rem;
-    font-weight: 400;
-    color: rgba(0, 0, 0, 0.5);
-    text-transform: uppercase;
-    margin-top: 0;
-    margin-bottom: 1.3em;
+  d-article div.sourceCode {
+    background-color: white;
   }
 
-  .d-toc a {
-    border-bottom: none;
-  }
-
-  .d-toc ul {
-    padding-left: 0;
-  }
-
-  .d-toc li>ul {
-    padding-top: 0.8em;
-    padding-left: 16px;
-    margin-bottom: 0.6em;
-  }
-
-  .d-toc ul,
-  .d-toc li {
-    list-style-type: none;
-  }
-
-  .d-toc li {
-    margin-bottom: 0.9em;
-  }
-
-  .d-toc-separator {
-    margin-top: 20px;
-    margin-bottom: 2em;
-  }
-
-  .d-article-with-toc {
-    border-top: none;
-    padding-top: 0;
-  }
-
-
-
-  /* Tweak code blocks (note that this CSS is repeated above in an injection
-     into the d-code shadow dom) */
-
-  d-code {
-    overflow-x: auto !important;
-  }
-
-  pre.d-code code.d-code {
+  d-article div.sourceCode pre {
     padding-left: 10px;
     font-size: 12px;
     border-left: 2px solid rgba(0,0,0,0.1);
   }
 
-  pre.text-output {
-
+  d-article pre {
     font-size: 12px;
     color: black;
     background: none;
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    margin-top: 0;
     text-align: left;
     white-space: pre;
     word-spacing: normal;
@@ -235,20 +304,123 @@
     hyphens: none;
   }
 
+  d-article pre a {
+    border-bottom: none;
+  }
+
+  d-article pre a:hover {
+    border-bottom: none;
+    text-decoration: underline;
+  }
+
   @media(min-width: 768px) {
 
-  d-code {
-    overflow-x: visible !important;
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: visible !important;
   }
 
-  pre.d-code code.d-code  {
-      padding-left: 18px;
-      font-size: 14px;
-  }
-  pre.text-output {
+  d-article div.sourceCode pre {
+    padding-left: 18px;
     font-size: 14px;
   }
+
+  d-article pre {
+    font-size: 14px;
   }
+
+  }
+
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  /* CSS for d-contents */
+
+  .d-contents {
+    grid-column: text;
+    color: rgba(0,0,0,0.8);
+    font-size: 0.9em;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    padding-left: 0.25em;
+    justify-self: start;
+  }
+
+  @media(min-width: 1000px) {
+    .d-contents.d-contents-float {
+      height: 0;
+      grid-column-start: 1;
+      grid-column-end: 4;
+      justify-self: center;
+      padding-right: 3em;
+      padding-left: 2em;
+    }
+  }
+
+  .d-contents nav h3 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+
+  .d-contents li {
+    list-style-type: none
+  }
+
+  .d-contents nav > ul {
+    padding-left: 0;
+  }
+
+  .d-contents ul {
+    padding-left: 1em
+  }
+
+  .d-contents nav ul li {
+    margin-top: 0.6em;
+    margin-bottom: 0.2em;
+  }
+
+  .d-contents nav a {
+    font-size: 13px;
+    border-bottom: none;
+    text-decoration: none
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .d-contents nav a:hover {
+    text-decoration: underline solid rgba(0, 0, 0, 0.6)
+  }
+
+  .d-contents nav > ul > li > a {
+    font-weight: 600;
+  }
+
+  .d-contents nav > ul > li > ul {
+    font-weight: inherit;
+  }
+
+  .d-contents nav > ul > li > ul > li {
+    margin-top: 0.2em;
+  }
+
+
+  .d-contents nav ul {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+  }
+
+  .d-article-with-toc h2:nth-child(2) {
+    margin-top: 0;
+  }
+
 
   /* Figure */
 
@@ -286,6 +458,16 @@
     color: rgba(0, 0, 0, 1.0);
   }
 
+  /* Citations */
+
+  d-article .citation {
+    color: inherit;
+    cursor: inherit;
+  }
+
+  div.hanging-indent{
+    margin-left: 1em; text-indent: -1em;
+  }
 
 
   /* Tweak 1000px media break to show more text */
@@ -361,6 +543,91 @@
     word-wrap: break-word;
   }
 
+  /* Include appendix styles here so they can be overridden */
+
+  d-appendix {
+    contain: layout style;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-top: 60px;
+    margin-bottom: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0,0,0,0.5);
+    padding-top: 60px;
+    padding-bottom: 48px;
+  }
+
+  d-appendix h3 {
+    grid-column: page-start / text-start;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 1em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.65);
+  }
+
+  d-appendix h3 + * {
+    margin-top: 1em;
+  }
+
+  d-appendix ol {
+    padding: 0 0 0 15px;
+  }
+
+  @media (min-width: 768px) {
+    d-appendix ol {
+      padding: 0 0 0 30px;
+      margin-left: -30px;
+    }
+  }
+
+  d-appendix li {
+    margin-bottom: 1em;
+  }
+
+  d-appendix a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  d-appendix > * {
+    grid-column: text;
+  }
+
+  d-appendix > d-footnote-list,
+  d-appendix > d-citation-list,
+  d-appendix > distill-appendix {
+    grid-column: screen;
+  }
+
+  /* Include footnote styles here so they can be overridden */
+
+  d-footnote-list {
+    contain: layout style;
+  }
+
+  d-footnote-list > * {
+    grid-column: text;
+  }
+
+  d-footnote-list a.footnote-backlink {
+    color: rgba(0,0,0,0.3);
+    padding-left: 0.5em;
+  }
+
+
+
+  /* Anchor.js */
+
+  .anchorjs-link {
+    /*transition: all .25s linear; */
+    text-decoration: none;
+    border-bottom: none;
+  }
+  *:hover > .anchorjs-link {
+    margin-left: -1.125em !important;
+    text-decoration: none;
+    border-bottom: none;
+  }
 
   /* Social footer */
 
@@ -415,6 +682,211 @@
 
   .custom p {
     margin-bottom: 0.5em;
+  }
+
+  /* Styles for listing layout (hide title) */
+  .layout-listing d-title, .layout-listing .d-title {
+    display: none;
+  }
+
+  /* Styles for posts lists (not auto-injected) */
+
+
+  .posts-with-sidebar {
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+
+  .posts-list .description h2,
+  .posts-list .description p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .posts-list .description h2 {
+    font-weight: 700;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .posts-list h2.post-tag {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 12px;
+  }
+  .posts-list {
+    margin-top: 60px;
+    margin-bottom: 24px;
+  }
+
+  .posts-list .post-preview {
+    text-decoration: none;
+    overflow: hidden;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 24px 0;
+  }
+
+  .post-preview-last {
+    border-bottom: none !important;
+  }
+
+  .posts-list .posts-list-caption {
+    grid-column: screen;
+    font-weight: 400;
+  }
+
+  .posts-list .post-preview h2 {
+    margin: 0 0 6px 0;
+    line-height: 1.2em;
+    font-style: normal;
+    font-size: 24px;
+  }
+
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.4em;
+    font-size: 16px;
+  }
+
+  .posts-list .post-preview .thumbnail {
+    box-sizing: border-box;
+    margin-bottom: 24px;
+    position: relative;
+    max-width: 500px;
+  }
+  .posts-list .post-preview img {
+    width: 100%;
+    display: block;
+  }
+
+  .posts-list .metadata {
+    font-size: 12px;
+    line-height: 1.4em;
+    margin-bottom: 18px;
+  }
+
+  .posts-list .metadata > * {
+    display: inline-block;
+  }
+
+  .posts-list .metadata .publishedDate {
+    margin-right: 2em;
+  }
+
+  .posts-list .metadata .dt-authors {
+    display: block;
+    margin-top: 0.3em;
+    margin-right: 2em;
+  }
+
+  .posts-list .dt-tags {
+    display: block;
+    line-height: 1em;
+  }
+
+  .posts-list .dt-tags .dt-tag {
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0.3em 0.4em;
+    margin-right: 0.2em;
+    margin-bottom: 0.4em;
+    font-size: 60%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .posts-list img {
+    opacity: 1;
+  }
+
+  .posts-list img[data-src] {
+    opacity: 0;
+  }
+
+  .posts-more {
+    clear: both;
+  }
+
+
+  .posts-sidebar {
+    font-size: 16px;
+  }
+
+  .posts-sidebar h3 {
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .sidebar-section {
+    margin-bottom: 30px;
+  }
+
+  .categories ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .categories li {
+    color: rgba(0, 0, 0, 0.8);
+    margin-bottom: 0;
+  }
+
+  .categories li>a {
+    border-bottom: none;
+  }
+
+  .categories li>a:hover {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  }
+
+  .categories .active {
+    font-weight: 600;
+  }
+
+  .categories .category-count {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+
+  @media(min-width: 768px) {
+    .posts-list .post-preview h2 {
+      font-size: 26px;
+    }
+    .posts-list .post-preview .thumbnail {
+      float: right;
+      width: 30%;
+      margin-bottom: 0;
+    }
+    .posts-list .post-preview .description {
+      float: left;
+      width: 45%;
+    }
+    .posts-list .post-preview .metadata {
+      float: left;
+      width: 20%;
+      margin-top: 8px;
+    }
+    .posts-list .post-preview p {
+      margin: 0 0 12px 0;
+      line-height: 1.5em;
+      font-size: 16px;
+    }
+    .posts-with-sidebar .posts-list {
+      float: left;
+      width: 75%;
+    }
+    .posts-with-sidebar .posts-sidebar {
+      float: right;
+      width: 20%;
+      margin-top: 60px;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
   }
 
 
@@ -546,6 +1018,12 @@
     hyphens: none;
   }
 
+  .downlevel .posts-list .post-preview {
+    color: inherit;
+  }
+
+
+
   </style>
 
   <script type="application/javascript">
@@ -561,6 +1039,13 @@
 
   // show body when load is complete
   function on_load_complete() {
+
+    // add anchors
+    if (window.anchors) {
+      window.anchors.options.placement = 'left';
+      window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+    }
+
 
     // set body to visible
     document.body.style.visibility = 'visible';
@@ -607,23 +1092,8 @@
     // create d-appendix
     $('.d-appendix').changeElementType('d-appendix');
 
-    // create d-bibliography
-    var bibliography = $('<d-bibliography></d-bibliography>');
-    $('#distill-bibliography').wrap(bibliography);
-
     // flag indicating that we have appendix items
     var appendix = $('.appendix-bottom').children('h3').length > 0;
-
-    // replace citations with <d-cite>
-    $('.citation').each(function(i, val) {
-      appendix = true;
-      var cites = $(this).attr('data-cites').split(" ");
-      var dt_cite = $('<d-cite></d-cite>');
-      dt_cite.attr('key', cites.join());
-      $(this).replaceWith(dt_cite);
-    });
-    // remove refs
-    $('#refs').remove();
 
     // replace footnotes with <d-footnote>
     $('.footnote-ref').each(function(i, val) {
@@ -641,39 +1111,21 @@
     // remove footnotes
     $('.footnotes').remove();
 
+    // move refs into #references-listing
+    $('#references-listing').replaceWith($('#refs'));
+
     $('h1.appendix, h2.appendix').each(function(i, val) {
       $(this).changeElementType('h3');
     });
     $('h3.appendix').each(function(i, val) {
       var id = $(this).attr('id');
-      $('.d-toc a[href="#' + id + '"]').parent().remove();
+      $('.d-contents a[href="#' + id + '"]').parent().remove();
       appendix = true;
       $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
     });
 
     // show d-appendix if we have appendix content
     $("d-appendix").css('display', appendix ? 'grid' : 'none');
-
-    // replace code blocks with d-code
-    $('pre>code').each(function(i, val) {
-      var code = $(this);
-      var pre = code.parent();
-      var clz = "";
-      var language = pre.attr('class');
-      if (language) {
-        // map unknown languages to "clike" (without this they just dissapear)
-        if ($.inArray(language, ["bash", "clike", "css", "go", "html",
-                                 "javascript", "js", "julia", "lua", "markdown",
-                                 "markup", "mathml", "python", "svg", "xml"]) == -1)
-          language = "clike";
-        language = ' language="' + language + '"';
-        var dt_code = $('<d-code block' + language + clz + '></d-code>');
-        dt_code.text(code.text());
-        pre.replaceWith(dt_code);
-      } else {
-        code.addClass('text-output').unwrap().changeElementType('pre');
-      }
-    });
 
     // localize layout chunks to just output
     $('.layout-chunk').each(function(i, val) {
@@ -682,7 +1134,7 @@
       var layout = $(this).attr('data-layout');
 
       // apply layout to markdown level block elements
-      var elements = $(this).children().not('d-code, pre.text-output, script');
+      var elements = $(this).children().not('div.sourceCode, pre, script');
       elements.each(function(i, el) {
         var layout_div = $('<div class="' + layout + '"></div>');
         if (layout_div.hasClass('shaded')) {
@@ -699,6 +1151,13 @@
       $(this).children().unwrap();
     });
 
+    // remove code block used to force  highlighting css
+    $('.distill-force-highlighting-css').parent().remove();
+
+    // remove empty line numbers inserted by pandoc when using a
+    // custom syntax highlighting theme
+    $('code.sourceCode a:empty').remove();
+
     // load distill framework
     load_distill_framework();
 
@@ -714,12 +1173,26 @@
       if (!have_authors)
         $('d-byline').addClass('hidden');
 
-      // table of contents
-      if (have_authors) // adjust border if we are in authors
-        $('.d-toc').parent().addClass('d-article-with-toc');
+      // article with toc class
+      $('.d-contents').parent().addClass('d-article-with-toc');
 
       // strip links that point to #
       $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+      // add orcid ids
+      $('.authors-affiliations').find('.author').each(function(i, el) {
+        var orcid_id = front_matter.authors[i].orcidID;
+        if (orcid_id) {
+          var a = $('<a></a>');
+          a.attr('href', 'https://orcid.org/' + orcid_id);
+          var img = $('<img></img>');
+          img.addClass('orcid-id');
+          img.attr('alt', 'ORCID ID');
+          img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+          a.append(img);
+          $(this).append(a);
+        }
+      });
 
       // hide elements of author/affiliations grid that have no value
       function hide_byline_column(caption) {
@@ -769,14 +1242,9 @@
         grid.children('h3:contains("Affiliations")').text('Affiliation');
       }
 
-      // inject pre code styles (can't do this with a global stylesheet b/c a shadow root is used)
-      $('d-code').each(function(i, val) {
-        var style = document.createElement('style');
-        style.innerHTML = 'pre code { padding-left: 10px; font-size: 12px; border-left: 2px solid rgba(0,0,0,0.1); } ' +
-                          '@media(min-width: 768px) { pre code { padding-left: 18px; font-size: 14px; } }';
-        if (this.shadowRoot)
-          this.shadowRoot.appendChild(style);
-      });
+      // remove d-appendix and d-footnote-list local styles
+      $('d-appendix > style:first-child').remove();
+      $('d-footnote-list > style:first-child').remove();
 
       // move appendix-bottom entries to the bottom
       $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
@@ -812,9 +1280,7 @@
     $('.d-byline a').remove();
 
     // remove toc
-    $('.d-toc-header').remove();
-    $('.d-toc').remove();
-    $('.d-toc-separator').remove();
+    $('.d-contents').remove();
 
     // move appendix elements
     $('h1.appendix, h2.appendix').each(function(i, val) {
@@ -943,8 +1409,9 @@
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="correlation-parameter-mem_files/header-attrs-2.3/header-attrs.js"></script>
+  <script src="correlation-parameter-mem_files/header-attrs-2.5/header-attrs.js"></script>
   <script src="correlation-parameter-mem_files/jquery-1.11.3/jquery.min.js"></script>
+  <script src="correlation-parameter-mem_files/anchor-4.2.2/anchor.min.js"></script>
   <script src="correlation-parameter-mem_files/bowser-1.9.3/bowser.min.js"></script>
   <script src="correlation-parameter-mem_files/webcomponents-2.0.0/webcomponents.js"></script>
   <script src="correlation-parameter-mem_files/distill-2.2.21/template.v2.js"></script>
@@ -959,7 +1426,7 @@
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"The Correlation Parameter in Mixed Effects Models","description":"Notes on the Corr term in {lme4} output","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/"}],"publishedDate":"2020-06-07T00:00:00.000-04:00","citationText":"Choe, 2020"}
+{"title":"The Correlation Parameter in Mixed Effects Models","description":"Notes on the Corr term in {lme4} output","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/","orcidID":"0000-0002-0701-921X"}],"publishedDate":"2020-06-07T00:00:00.000-04:00","citationText":"Choe, 2020"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -970,6 +1437,12 @@
 
 <div class="d-title">
 <h1>The Correlation Parameter in Mixed Effects Models</h1>
+<!--radix_placeholder_categories-->
+<div class="dt-tags">
+<div class="dt=tag">statistics</div>
+<div class="dt=tag">mixed-effects models</div>
+</div>
+<!--/radix_placeholder_categories-->
 <p><p>Notes on the Corr term in {lme4} output</p></p>
 </div>
 
@@ -1007,10 +1480,11 @@
 
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-toydata</code></pre>
-<pre><code>
-  # A tibble: 1,920 x 4
+<div class="sourceCode">
+<pre><code><span class='va'>toydata</span>
+</code></pre>
+</div>
+<pre><code>  # A tibble: 1,920 x 4
      Subject Item  Condition Response
      &lt;fct&gt;   &lt;fct&gt; &lt;fct&gt;        &lt;dbl&gt;
    1 1       1     Control       226.
@@ -1028,22 +1502,27 @@ toydata</code></pre>
 <p>Imagine <code>toydata</code> to be the results from a very simple experiment. In this imaginary experiment, there are 80 subjects and each subject is tested on 24 items, resulting in a total of 1,920 trials/observations. This is a within-partipant design, so each participant sees 12 of the items in the Control condition and the other 12 in the Treatment condition.</p>
 <p>Let’s say that with our toy data, we want to know <strong>whether Condition has a positive effect on Response</strong>. Our goal by using mixed-effects modeling is to isolate the effect of Condition on Response (fixed effect), while controlling for by-item and by-subject variations (random effects). So let’s fit a simple linear mixed-effects model with the maximal random effects structure, with random intercepts and slopes for Condition by Subject and Item:</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-model &lt;- lmer(Response ~ Condition + (1+Condition|Subject) + (1+Condition|Item),
-              REML = FALSE, control = lmerControl(&#39;bobyqa&#39;), data = toydata)</code></pre>
+<div class="sourceCode">
+<pre><code><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>lmer</span><span class='op'>(</span><span class='va'>Response</span> <span class='op'>~</span> <span class='va'>Condition</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>+</span><span class='va'>Condition</span><span class='op'>|</span><span class='va'>Subject</span><span class='op'>)</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>+</span><span class='va'>Condition</span><span class='op'>|</span><span class='va'>Item</span><span class='op'>)</span>,
+              REML <span class='op'>=</span> <span class='cn'>FALSE</span>, control <span class='op'>=</span> <span class='fu'>lmerControl</span><span class='op'>(</span><span class='st'>'bobyqa'</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>toydata</span><span class='op'>)</span>
+</code></pre>
+</div>
 </div>
 <p>And let’s really quickly check model assumptions:</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-performance::check_model(model)</code></pre>
+<div class="sourceCode">
+<pre><code><span class='fu'>performance</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/performance/reference/check_model.html'>check_model</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+</code></pre>
+</div>
 </div>
 <p><img src="check_model.png" /></p>
 <p>Everything looks okay, so let’s look at the model output:</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-summary(model)</code></pre>
-<pre><code>
-  Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite&#39;s
+<div class="sourceCode">
+<pre><code><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite&#39;s
     method [lmerModLmerTest]
   Formula: Response ~ Condition + (1 + Condition | Subject) + (1 + Condition |  
       Item)
@@ -1080,9 +1559,10 @@ summary(model)</code></pre>
 <p>The high t-statistic and low p-value of <code>ConditionTreatment</code> in the fixed effects output suggests that our data is extremely unlikely given the null hypothesis that Condition has no effect on Response (and the sign of the estimate further suggests a positive effect of the Treatment condition on Response compared to the Control condition). Therefore, this is strong evidence in support of our hypothesis.</p>
 <p>Here’s a nicer-looking summary table made with <code>tab_model()</code> from the <code>{sjPlot}</code> package. I will keep using this format from this point on. Not only is this nicer to look at, the notations used here (like <span class="math inline">\(\tau_{00}\)</span> and <span class="math inline">\(\rho_{01}\)</span>) are from Barr et al. (2013), so it’s easier to connect the pieces IMO.</p>
 <div class="layout-chunk" data-layout="l-body">
-
-<pre class="r"><code>
-sjPlot::tab_model(model)</code></pre>
+<div class="sourceCode">
+<pre><code><span class='fu'>sjPlot</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/sjPlot/reference/tab_model.html'>tab_model</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+</code></pre>
+</div>
 <table style="border-collapse:collapse; border:none;">
 <tr>
 <th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
@@ -1231,10 +1711,11 @@ Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
 <h3 id="the-random-effects-a-review"><strong>The random effects (a review)</strong></h3>
 <p>We can isolate the random effects from the model using <code>VarCorr()</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-VarCorr(model)</code></pre>
-<pre><code>
-   Groups   Name               Std.Dev. Corr
+<div class="sourceCode">
+<pre><code><span class='fu'>VarCorr</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>   Groups   Name               Std.Dev. Corr
    Subject  (Intercept)        25.24        
             ConditionTreatment 10.40    0.85
    Item     (Intercept)         6.66        
@@ -1257,8 +1738,7 @@ VarCorr(model)</code></pre>
 <h1 id="the-correlation-parameter"><strong>The Correlation Parameter</strong></h1>
 <p>Looking at the <code>Corr</code> column now, we see two numbers: 0.85 within the Subject random effects group and 0.14 within the Item random effects group.</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre><code>
-   Groups   Name               Std.Dev. Corr
+<pre><code>   Groups   Name               Std.Dev. Corr
    Subject  (Intercept)        25.24        
             ConditionTreatment 10.40    0.85
    Item     (Intercept)         6.66        
@@ -1268,25 +1748,27 @@ VarCorr(model)</code></pre>
 <p>As you might have guessed, they have something to do with <strong>the correlation between random effects</strong> (intercept and slope) within each group (subject and item).</p>
 <p>But if we extract the subject random effects, for example, and measure the correlation between subject intercepts and subject slopes, we get a slightly different number:</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-# Extract by-subject intercept and slope
-ranef_subj &lt;- ranef(model)$Subject
+<div class="sourceCode">
+<pre><code><span class='co'># Extract by-subject intercept and slope</span>
+<span class='va'>ranef_subj</span> <span class='op'>&lt;-</span> <span class='fu'>ranef</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span><span class='op'>$</span><span class='va'>Subject</span>
 
-ranef_subj_intercepts &lt;- ranef_subj$`(Intercept)`
-ranef_subj_slopes &lt;- ranef_subj$ConditionTreatment
+<span class='va'>ranef_subj_intercepts</span> <span class='op'>&lt;-</span> <span class='va'>ranef_subj</span><span class='op'>$</span><span class='va'>`(Intercept)`</span>
+<span class='va'>ranef_subj_slopes</span> <span class='op'>&lt;-</span> <span class='va'>ranef_subj</span><span class='op'>$</span><span class='va'>ConditionTreatment</span>
 
-# Calculate correlation
-cor(ranef_subj_intercepts, ranef_subj_slopes)</code></pre>
-<pre><code>
-  [1] 0.88</code></pre>
+<span class='co'># Calculate correlation</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>ranef_subj_intercepts</span>, <span class='va'>ranef_subj_slopes</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  [1] 0.88</code></pre>
 </div>
 <p>In fact, we get slightly different values for the <em>standard deviation</em> of the subject random intercepts and slopes as well:</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-# Calculate the standard deviation of by-subject intercepts and slopes
-summarize_all(ranef_subj, sd)</code></pre>
-<pre><code>
-    (Intercept) ConditionTreatment
+<div class="sourceCode">
+<pre><code><span class='co'># Calculate the standard deviation of by-subject intercepts and slopes</span>
+<span class='fu'>summarize_all</span><span class='op'>(</span><span class='va'>ranef_subj</span>, <span class='va'>sd</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>    (Intercept) ConditionTreatment
   1        25.3              10.18</code></pre>
 </div>
 <p>So it looks like what the model isn’t just taking the random effects in our <code>toydata</code> dataset and calculating their variations and correlations. So then what <em>is</em> it doing?</p>
@@ -1528,12 +2010,13 @@ Notice how I added <span class="math inline">\(\rho = 0.85\)</span> in this top 
 <p>We can check by building another model without the correlation term between the subject random effects and comparing it with our original model.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <p>The <code>no_subj_cor_model</code> below is a <em>depleted</em> model without the correlation parameter between the random intercepts and random slopes by subject. You can see that the subject group is missing a value in the <code>Corr</code> column.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
 <div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre><code><span class='va'>no_subj_cor_model</span> <span class='op'>&lt;-</span> <span class='fu'>lmer</span><span class='op'>(</span><span class='va'>Response</span> <span class='op'>~</span> <span class='va'>Condition</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>+</span><span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span><span class='op'>||</span><span class='va'>Subject</span><span class='op'>)</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>+</span><span class='va'>Condition</span><span class='op'>|</span><span class='va'>Item</span><span class='op'>)</span>,
+                          REML <span class='op'>=</span> <span class='cn'>FALSE</span>, control <span class='op'>=</span> <span class='fu'>lmerControl</span><span class='op'>(</span><span class='st'>'bobyqa'</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>toydata</span><span class='op'>)</span>
 
-<pre class="r"><code>
-no_subj_cor_model &lt;- lmer(Response ~ Condition + (1+model.matrix(model)[,2]||Subject) + (1+Condition|Item),
-                          REML = FALSE, control = lmerControl(&#39;bobyqa&#39;), data = toydata)
-
-tab_model(no_subj_cor_model)</code></pre>
+<span class='fu'>tab_model</span><span class='op'>(</span><span class='va'>no_subj_cor_model</span><span class='op'>)</span>
+</code></pre>
+</div>
 <table style="border-collapse:collapse; border:none;">
 <tr>
 <th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
@@ -1673,10 +2156,11 @@ Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
 </div>
 <p>Now let’s perform a likelihood ratio test using <code>anova()</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-anova(no_subj_cor_model, model, test = &#39;Chisq&#39;)</code></pre>
-<pre><code>
-  Data: toydata
+<div class="sourceCode">
+<pre><code><span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span><span class='op'>(</span><span class='va'>no_subj_cor_model</span>, <span class='va'>model</span>, test <span class='op'>=</span> <span class='st'>'Chisq'</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  Data: toydata
   Models:
   no_subj_cor_model: Response ~ Condition + (1 + model.matrix(model)[, 2] || Subject) + 
   no_subj_cor_model:     (1 + Condition | Item)
@@ -1725,8 +2209,7 @@ anova(no_subj_cor_model, model, test = &#39;Chisq&#39;)</code></pre>
 <p>Let’s repeat the model comparison process above, except this time taking out the correlation parameter for <em>item</em>.</p>
 <p>For context, here is the random effects output of <code>model</code> again:</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre><code>
-   Groups   Name               Std.Dev. Corr
+<pre><code>   Groups   Name               Std.Dev. Corr
    Subject  (Intercept)        25.24        
             ConditionTreatment 10.40    0.85
    Item     (Intercept)         6.66        
@@ -1751,12 +2234,13 @@ anova(no_subj_cor_model, model, test = &#39;Chisq&#39;)</code></pre>
 <p>The model estimates a low correlation of 0.14, which is reflected in the small tilt of the ellipse. It looks like the model is capturing the distribution of the item random effects pretty well. But is the correlation parameter really <em>that</em> necessary here?</p>
 <p>Let’s make another depleted model, <code>no_item_cor_model</code>, with the correlation between item random effects removed:</p>
 <div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre><code><span class='va'>no_item_cor_model</span> <span class='op'>&lt;-</span> <span class='fu'>lmer</span><span class='op'>(</span><span class='va'>Response</span> <span class='op'>~</span> <span class='va'>Condition</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>+</span><span class='va'>Condition</span><span class='op'>|</span><span class='va'>Subject</span><span class='op'>)</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>+</span><span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span><span class='op'>||</span><span class='va'>Item</span><span class='op'>)</span>,
+                          REML <span class='op'>=</span> <span class='cn'>FALSE</span>, control <span class='op'>=</span> <span class='fu'>lmerControl</span><span class='op'>(</span><span class='st'>'bobyqa'</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>toydata</span><span class='op'>)</span>
 
-<pre class="r"><code>
-no_item_cor_model &lt;- lmer(Response ~ Condition + (1+Condition|Subject) + (1+model.matrix(model)[,2]||Item),
-                          REML = FALSE, control = lmerControl(&#39;bobyqa&#39;), data = toydata)
-
-tab_model(no_item_cor_model)</code></pre>
+<span class='fu'>tab_model</span><span class='op'>(</span><span class='va'>no_item_cor_model</span><span class='op'>)</span>
+</code></pre>
+</div>
 <table style="border-collapse:collapse; border:none;">
 <tr>
 <th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
@@ -1904,10 +2388,11 @@ Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
 </div>
 <p>Doesn’t seem like there are big differences here, but we have to run some statistics to be sure. So let’s perform another log likelihood ratio test:</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-anova(no_item_cor_model, model)</code></pre>
-<pre><code>
-  Data: toydata
+<div class="sourceCode">
+<pre><code><span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span><span class='op'>(</span><span class='va'>no_item_cor_model</span>, <span class='va'>model</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  Data: toydata
   Models:
   no_item_cor_model: Response ~ Condition + (1 + Condition | Subject) + (1 + model.matrix(model)[, 
   no_item_cor_model:     2] || Item)
@@ -1928,102 +2413,105 @@ anova(no_item_cor_model, model)</code></pre>
 <p>To resolve this, a lot of people have streamlined different methods of reducing the complexity of the random effects structure in a statistically motivated way. One such example is using <strong>Principal Components Analysis</strong> (PCA) (suggested in Bates et al., 2015). In Section 3 of their paper, Bates and colleagues outline a procedure for <strong>iterative model reduction</strong> which involves PCA (now available as <code>rePCA()</code> in the <code>lme4</code> package) to determine how many random effect terms are sufficient to capture the variance in the random effects. This is still <a href="https://rpubs.com/danmirman/repsychling_test1">not a perfect solution</a>, of course, but it’s a good next step for putting this knowledge into practice. <del>Or you can just do <em>fancy</em> Bayesian analyses and avoid all these problems, so I hear</del></p>
 <p>Anyways, that’s it for my notes. Here’s the code that generated <code>toydata</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-###########
-## Setup ##
-###########
+<div class="sourceCode">
+<pre><code><span class='co'>###########</span>
+<span class='co'>## Setup ##</span>
+<span class='co'>###########</span>
 
-# Load Packages (make sure dplyr::filter() isn&#39;t makes by MASS:filter())
-library(MASS)
-library(tidyverse)
-library(lme4)
+<span class='co'># Load Packages (make sure dplyr::filter() isn't makes by MASS:filter())</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://www.stats.ox.ac.uk/pub/MASS4/'>MASS</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/lme4/lme4/'>lme4</a></span><span class='op'>)</span>
 
-# Set seed
-set.seed(1234)
+<span class='co'># Set seed</span>
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1234</span><span class='op'>)</span>
 
-# Set number of participants and items
-n_subjects &lt;- 80
-n_items &lt;- 24
+<span class='co'># Set number of participants and items</span>
+<span class='va'>n_subjects</span> <span class='op'>&lt;-</span> <span class='fl'>80</span>
+<span class='va'>n_items</span> <span class='op'>&lt;-</span> <span class='fl'>24</span>
 
-#################
-## Make trials ##
-#################
+<span class='co'>#################</span>
+<span class='co'>## Make trials ##</span>
+<span class='co'>#################</span>
 
-# Generate levels
-Subject &lt;- gl(n_subjects, n_items)
-Item &lt;- rep(gl(n_items, 1), n_subjects)
-Condition &lt;- factor(rep(c(rep(c(&quot;Control&quot;, &quot;Treatment&quot;), n_items/2),
-                   rep(c(&quot;Treatment&quot;, &quot;Control&quot;), n_items/2)),
-                 n_subjects/2))
+<span class='co'># Generate levels</span>
+<span class='va'>Subject</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/gl.html'>gl</a></span><span class='op'>(</span><span class='va'>n_subjects</span>, <span class='va'>n_items</span><span class='op'>)</span>
+<span class='va'>Item</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/gl.html'>gl</a></span><span class='op'>(</span><span class='va'>n_items</span>, <span class='fl'>1</span><span class='op'>)</span>, <span class='va'>n_subjects</span><span class='op'>)</span>
+<span class='va'>Condition</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Control"</span>, <span class='st'>"Treatment"</span><span class='op'>)</span>, <span class='va'>n_items</span><span class='op'>/</span><span class='fl'>2</span><span class='op'>)</span>,
+                   <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Treatment"</span>, <span class='st'>"Control"</span><span class='op'>)</span>, <span class='va'>n_items</span><span class='op'>/</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>,
+                 <span class='va'>n_subjects</span><span class='op'>/</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
 
-# Treatment coding
-Condition_coded &lt;- ifelse(Condition == &quot;Control&quot;, 0, 1)
+<span class='co'># Treatment coding</span>
+<span class='va'>Condition_coded</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>Condition</span> <span class='op'>==</span> <span class='st'>"Control"</span>, <span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>
 
-# Combine into trials
-Data &lt;- tibble(Subject, Item, Condition, Condition_coded)
+<span class='co'># Combine into trials</span>
+<span class='va'>Data</span> <span class='op'>&lt;-</span> <span class='fu'>tibble</span><span class='op'>(</span><span class='va'>Subject</span>, <span class='va'>Item</span>, <span class='va'>Condition</span>, <span class='va'>Condition_coded</span><span class='op'>)</span>
 
-#############################
-## Add Intercept and Slope ##
-#############################
+<span class='co'>#############################</span>
+<span class='co'>## Add Intercept and Slope ##</span>
+<span class='co'>#############################</span>
 
-# Add intercept
-Data$Intercept &lt;- 200
+<span class='co'># Add intercept</span>
+<span class='va'>Data</span><span class='op'>$</span><span class='va'>Intercept</span> <span class='op'>&lt;-</span> <span class='fl'>200</span>
 
-# Add slope
-Data$Slope &lt;- ifelse(Data$Condition == &quot;Treatment&quot;, 30, 0)
+<span class='co'># Add slope</span>
+<span class='va'>Data</span><span class='op'>$</span><span class='va'>Slope</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>Data</span><span class='op'>$</span><span class='va'>Condition</span> <span class='op'>==</span> <span class='st'>"Treatment"</span>, <span class='fl'>30</span>, <span class='fl'>0</span><span class='op'>)</span>
 
-########################
-## Add Random Effects ##
-########################
+<span class='co'>########################</span>
+<span class='co'>## Add Random Effects ##</span>
+<span class='co'>########################</span>
 
-# By-subject variation in intercept and slope (sampled from bivariate normal)
-sd_subj_intercept &lt;- 25
-sd_subj_slope &lt;- 10
-subj_ranef_cor &lt;- 0.8
+<span class='co'># By-subject variation in intercept and slope (sampled from bivariate normal)</span>
+<span class='va'>sd_subj_intercept</span> <span class='op'>&lt;-</span> <span class='fl'>25</span>
+<span class='va'>sd_subj_slope</span> <span class='op'>&lt;-</span> <span class='fl'>10</span>
+<span class='va'>subj_ranef_cor</span> <span class='op'>&lt;-</span> <span class='fl'>0.8</span>
 
-subj_ranef &lt;- mvrnorm(n_subjects,
-                      # means of two normals are both 0
-                      c(&quot;Intercept&quot; = 0, &quot;Slope&quot; = 0),
-                      # 2x2 variance-covariance matrix
-                      matrix(
-                        c(sd_subj_intercept^2,
-                          subj_ranef_cor*sd_subj_intercept*sd_subj_slope,
-                          subj_ranef_cor*sd_subj_intercept*sd_subj_slope,
-                          sd_subj_slope^2),
-                        ncol = 2)
-                      )
+<span class='va'>subj_ranef</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/MASS/man/mvrnorm.html'>mvrnorm</a></span><span class='op'>(</span><span class='va'>n_subjects</span>,
+                      <span class='co'># means of two normals are both 0</span>
+                      <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Intercept"</span> <span class='op'>=</span> <span class='fl'>0</span>, <span class='st'>"Slope"</span> <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>,
+                      <span class='co'># 2x2 variance-covariance matrix</span>
+                      <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span>
+                        <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>sd_subj_intercept</span><span class='op'>^</span><span class='fl'>2</span>,
+                          <span class='va'>subj_ranef_cor</span><span class='op'>*</span><span class='va'>sd_subj_intercept</span><span class='op'>*</span><span class='va'>sd_subj_slope</span>,
+                          <span class='va'>subj_ranef_cor</span><span class='op'>*</span><span class='va'>sd_subj_intercept</span><span class='op'>*</span><span class='va'>sd_subj_slope</span>,
+                          <span class='va'>sd_subj_slope</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span>,
+                        ncol <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+                      <span class='op'>)</span>
 
-Data$Subj_intercept &lt;- rep(subj_ranef[,&quot;Intercept&quot;], each = n_items)
-Data$Subj_slope &lt;- rep(subj_ranef[,&quot;Slope&quot;], each = n_items)
+<span class='va'>Data</span><span class='op'>$</span><span class='va'>Subj_intercept</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='va'>subj_ranef</span><span class='op'>[</span>,<span class='st'>"Intercept"</span><span class='op'>]</span>, each <span class='op'>=</span> <span class='va'>n_items</span><span class='op'>)</span>
+<span class='va'>Data</span><span class='op'>$</span><span class='va'>Subj_slope</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='va'>subj_ranef</span><span class='op'>[</span>,<span class='st'>"Slope"</span><span class='op'>]</span>, each <span class='op'>=</span> <span class='va'>n_items</span><span class='op'>)</span>
 
-# By-item variation in intercept and slope (sampled independently)
-Data$Item_intercept &lt;- rep(rnorm(n_items, sd = 5), times = n_subjects)
-Data$Item_slope &lt;- rep(rnorm(n_items, sd = 15), times = n_subjects)
+<span class='co'># By-item variation in intercept and slope (sampled independently)</span>
+<span class='va'>Data</span><span class='op'>$</span><span class='va'>Item_intercept</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>n_items</span>, sd <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>, times <span class='op'>=</span> <span class='va'>n_subjects</span><span class='op'>)</span>
+<span class='va'>Data</span><span class='op'>$</span><span class='va'>Item_slope</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>n_items</span>, sd <span class='op'>=</span> <span class='fl'>15</span><span class='op'>)</span>, times <span class='op'>=</span> <span class='va'>n_subjects</span><span class='op'>)</span>
 
-# Random noise
-Data$Noise &lt;- rnorm(nrow(Data), 0, 5) + rlnorm(nrow(Data), 0.5)
+<span class='co'># Random noise</span>
+<span class='va'>Data</span><span class='op'>$</span><span class='va'>Noise</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>Data</span><span class='op'>)</span>, <span class='fl'>0</span>, <span class='fl'>5</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/Lognormal.html'>rlnorm</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>Data</span><span class='op'>)</span>, <span class='fl'>0.5</span><span class='op'>)</span>
 
-###########################
-## Generate Observations ##
-###########################
+<span class='co'>###########################</span>
+<span class='co'>## Generate Observations ##</span>
+<span class='co'>###########################</span>
 
-Data &lt;- Data %&gt;%
-  mutate(Response =
-           Intercept +
-           Slope * Condition_coded +
-           Subj_intercept +
-           Subj_slope * Condition_coded +
-           Item_intercept +
-           Item_slope * Condition_coded +
-           Noise)
+<span class='va'>Data</span> <span class='op'>&lt;-</span> <span class='va'>Data</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>mutate</span><span class='op'>(</span>Response <span class='op'>=</span>
+           <span class='va'>Intercept</span> <span class='op'>+</span>
+           <span class='va'>Slope</span> <span class='op'>*</span> <span class='va'>Condition_coded</span> <span class='op'>+</span>
+           <span class='va'>Subj_intercept</span> <span class='op'>+</span>
+           <span class='va'>Subj_slope</span> <span class='op'>*</span> <span class='va'>Condition_coded</span> <span class='op'>+</span>
+           <span class='va'>Item_intercept</span> <span class='op'>+</span>
+           <span class='va'>Item_slope</span> <span class='op'>*</span> <span class='va'>Condition_coded</span> <span class='op'>+</span>
+           <span class='va'>Noise</span><span class='op'>)</span>
 
-#################
-## Toy Dataset ##
-#################
+<span class='co'>#################</span>
+<span class='co'>## Toy Dataset ##</span>
+<span class='co'>#################</span>
 
-toydata &lt;- Data %&gt;% 
-  select(Subject, Item, Condition, Response)</code></pre>
+<span class='va'>toydata</span> <span class='op'>&lt;-</span> <span class='va'>Data</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://rdrr.io/pkg/MASS/man/lm.ridge.html'>select</a></span><span class='op'>(</span><span class='va'>Subject</span>, <span class='va'>Item</span>, <span class='va'>Condition</span>, <span class='va'>Response</span><span class='op'>)</span>
+</code></pre>
 </div>
+</div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <section class="footnotes" role="doc-endnotes">
 <hr />
 <ol>

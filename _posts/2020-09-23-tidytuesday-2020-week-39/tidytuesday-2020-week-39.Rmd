@@ -11,6 +11,7 @@ author:
   - name: June Choe
     affiliation: University of Pennsylvania Linguistics
     affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+    orcid_id: 0000-0002-0701-921X
 preview: preview.png
 date: 09-23-2020
 output:
@@ -33,7 +34,7 @@ knitr::opts_chunk$set(
 
 
 ```{r, echo = FALSE, layout = 'l-body-outset'}
-knitr::include_graphics('preview.png')
+knitr::include_graphics('preview.png', error = FALSE)
 ```
 
 ### Things I learned

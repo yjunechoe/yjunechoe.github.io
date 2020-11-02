@@ -11,6 +11,7 @@ author:
   - name: June Choe
     affiliation: University of Pennsylvania Linguistics
     affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+    orcid_id: 0000-0002-0701-921X
 date: 09-06-2020
 output:
   distill::distill_article:
@@ -47,8 +48,10 @@ favorites <- c(
   "Arial" = "It's the default. It's dull. It's just here for comparison.",
   "Montserrat" = "Simple design that can handle long lines of text. I like it for minimal plots.",
   "Roboto Mono" = "Monospaced member of the Roboto family. Very easy to read.",
-  "Futura Bk BT" = "A slender and bold member of the Futura family. Looks nice even in larger sizes. Has my favorite design of numbers.",
-  "Lora" = "I generally try to stay away from serif fonts but if I had to choose one it'd be Lora"
+  "Futura Bk BT" = "A slender and bold member of the Futura family. Looks nice even in larger sizes.",
+  "Barlow" = "Also a slender font like Futura, but this has nicer 'j's",
+  "Adelle" = "A serif font that doesn't go overboard. I use it a lot for short paragraphs.",
+  "Merriweather" = "Similar to Adelle, but has a bit more pronounced hooks"
 )
 
 

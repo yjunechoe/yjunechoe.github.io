@@ -18,12 +18,78 @@
  <!--radix_placeholder_import_source-->
  <!--/radix_placeholder_import_source-->
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #545454; font-weight: bold; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #a1024a; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007faa; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #008000; } /* Char */
+code span.cn { color: #d91e18; } /* Constant */
+code span.co { color: #545454; } /* Comment */
+code span.cv { color: #545454; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #aa5d00; } /* DataType */
+code span.dv { color: #a1024a; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #a1024a; } /* Float */
+code span.fu { color: #4254a7; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #545454; font-weight: bold; } /* Information */
+code span.kw { color: #007faa; font-weight: bold; } /* Keyword */
+code span.op { color: #696969; } /* Operator */
+code span.ot { color: #007faa; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #008000; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #008000; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #008000; } /* VerbatimString */
+code span.wa { color: #545454; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
   <!--radix_placeholder_meta_tags-->
 <title>June Choe: Saving a line of piping</title>
 
 <meta property="description" itemprop="description" content="Some notes on lesser known functions/functionalities that combine common chain of {dplyr} verbs."/>
 
-<link rel="canonical" href="yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/"/>
+<link rel="canonical" href="https://yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/"/>
 <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
 <link rel="icon" type="image/png" href="../../static/img/icon.png"/>
 
@@ -36,8 +102,8 @@
 <meta property="og:title" content="June Choe: Saving a line of piping"/>
 <meta property="og:type" content="article"/>
 <meta property="og:description" content="Some notes on lesser known functions/functionalities that combine common chain of {dplyr} verbs."/>
-<meta property="og:url" content="yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/"/>
-<meta property="og:image" content="yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/preview.png"/>
+<meta property="og:url" content="https://yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/"/>
+<meta property="og:image" content="https://yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/preview.png"/>
 <meta property="og:image:width" content="877"/>
 <meta property="og:image:height" content="372"/>
 <meta property="og:locale" content="en_US"/>
@@ -47,15 +113,15 @@
 <meta property="twitter:card" content="summary_large_image"/>
 <meta property="twitter:title" content="June Choe: Saving a line of piping"/>
 <meta property="twitter:description" content="Some notes on lesser known functions/functionalities that combine common chain of {dplyr} verbs."/>
-<meta property="twitter:url" content="yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/"/>
-<meta property="twitter:image" content="yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/preview.png"/>
+<meta property="twitter:url" content="https://yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/"/>
+<meta property="twitter:image" content="https://yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/preview.png"/>
 <meta property="twitter:image:width" content="877"/>
 <meta property="twitter:image:height" content="372"/>
 <meta property="twitter:site" content="@yjunechoe"/>
 
 <!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
 <meta name="citation_title" content="June Choe: Saving a line of piping"/>
-<meta name="citation_fulltext_html_url" content="yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/"/>
+<meta name="citation_fulltext_html_url" content="https://yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/"/>
 <meta name="citation_fulltext_world_readable" content=""/>
 <meta name="citation_online_date" content="2020/08/07"/>
 <meta name="citation_publication_date" content="2020/08/07"/>
@@ -65,7 +131,7 @@
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["creative_commons","title","description","categories","base_url","author","preview","date","output","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["CC BY"]},{"type":"character","attributes":{},"value":["Saving a line of piping"]},{"type":"character","attributes":{},"value":["Some notes on lesser known functions/functionalities that combine common chain of {dplyr} verbs."]},{"type":"character","attributes":{},"value":["data wrangling","dplyr"]},{"type":"character","attributes":{},"value":["yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]}]}]},{"type":"character","attributes":{},"value":["preview.png"]},{"type":"character","attributes":{},"value":["08-07-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/"]},{"type":"character","attributes":{},"value":["yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/"]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["creative_commons","title","description","categories","base_url","author","preview","date","output","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["CC BY"]},{"type":"character","attributes":{},"value":["Saving a line of piping"]},{"type":"character","attributes":{},"value":["Some notes on lesser known functions/functionalities that combine common chain of {dplyr} verbs."]},{"type":"character","attributes":{},"value":["data wrangling","dplyr"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]},{"type":"character","attributes":{},"value":["0000-0002-0701-921X"]}]}]},{"type":"character","attributes":{},"value":["preview.png"]},{"type":"character","attributes":{},"value":["08-07-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/"]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -73,6 +139,7 @@
   {"type":"character","attributes":{},"value":["preview.png","saving-a-line-of-piping_files/bowser-1.9.3/bowser.min.js","saving-a-line-of-piping_files/core-js-2.5.3/LICENSE","saving-a-line-of-piping_files/core-js-2.5.3/package.json","saving-a-line-of-piping_files/core-js-2.5.3/shim.min.js","saving-a-line-of-piping_files/distill-2.2.21/template.v2.js","saving-a-line-of-piping_files/header-attrs-2.3/header-attrs.js","saving-a-line-of-piping_files/htmlwidgets-1.5.1/htmlwidgets.js","saving-a-line-of-piping_files/jquery-1.11.3/jquery.min.js","saving-a-line-of-piping_files/react-16.12.0/AUTHORS","saving-a-line-of-piping_files/react-16.12.0/LICENSE.txt","saving-a-line-of-piping_files/react-16.12.0/react-dom.min.js","saving-a-line-of-piping_files/react-16.12.0/react.min.js","saving-a-line-of-piping_files/reactable-binding-0.2.0/reactable.js","saving-a-line-of-piping_files/reactwidget-1.0.0/react-tools.js","saving-a-line-of-piping_files/reactwidget-1.0.0/react-tools.js.map","saving-a-line-of-piping_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
+<meta name="distill:offset" content="../.."/>
 
 <script type="application/javascript">
 
@@ -132,7 +199,7 @@
 
 .distill-site-nav {
   color: rgba(255, 255, 255, 0.8);
-  background-color: #455a64;
+  background-color: #0F2E3D;
   font-size: 15px;
   font-weight: 300;
 }
@@ -195,6 +262,7 @@
 
 .distill-site-header .title {
   font-size: 18px;
+  min-width: 150px;
 }
 
 .distill-site-header .logo {
@@ -336,7 +404,7 @@
 
 
 @media screen and (max-width: 768px) {
-  .distill-site-header.responsive {position: relative;}
+  .distill-site-header.responsive {position: relative; min-height: 500px; }
   .distill-site-header.responsive a.nav-toggle {
     position: absolute;
     right: 0;
@@ -410,6 +478,267 @@ d-title {
 <link href="../../site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
 <link href="../../site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
 <script src="../../site_libs/headroom-0.9.4/headroom.min.js"></script>
+<script src="../../site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
+<script src="../../site_libs/fuse-6.4.1/fuse.min.js"></script>
+
+<script type="application/javascript">
+
+function getMeta(metaName) {
+  var metas = document.getElementsByTagName('meta');
+  for (let i = 0; i < metas.length; i++) {
+    if (metas[i].getAttribute('name') === metaName) {
+      return metas[i].getAttribute('content');
+    }
+  }
+  return '';
+}
+
+function offsetURL(url) {
+  var offset = getMeta('distill:offset');
+  return offset ? offset + '/' + url : url;
+}
+
+function createIndex() {
+  var options = {
+    keys: [
+      "title",
+      "categories",
+      "description",
+      "contents"
+    ]
+  };
+  return new window.Fuse([],options);
+}
+
+function createFuseIndex() {
+
+  // create fuse index
+  var options = { keys: ["title", "description", "contents"] };
+  var fuse = new window.Fuse([], options);
+
+  // fetch the main search.json
+  return fetch(offsetURL('search.json'))
+    .then(function(response) {
+      if (response.status == 200) {
+        return response.json().then(function(json) {
+          // index main articles
+          json.articles.forEach(function(article) {
+            fuse.add(article);
+          });
+          // download collections and index their articles
+          return Promise.all(json.collections.map(function(collection) {
+            return fetch(offsetURL(collection)).then(function(response) {
+              if (response.status === 200) {
+                return response.json().then(function(articles) {
+                  articles.forEach(function(article) {
+                    fuse.add(article);
+                  });
+                })
+              } else {
+                return Promise.reject(
+                  new Error('Unexpected status from search index request: ' +
+                            response.status)
+                );
+              }
+            });
+          })).then(function() {
+            return fuse;
+          });
+        });
+
+      } else {
+        return Promise.reject(
+          new Error('Unexpected status from search index request: ' +
+                      response.status)
+        );
+      }
+    });
+}
+
+window.document.addEventListener("DOMContentLoaded", function (event) {
+
+  // get search element (bail if we don't have one)
+  var searchEl = window.document.getElementById('distill-search');
+  if (!searchEl)
+    return;
+
+  createFuseIndex()
+    .then(function(fuse) {
+
+      // make search box visible
+      searchEl.classList.remove('hidden');
+
+      // initialize autocomplete
+      var options = {
+        autoselect: true,
+        hint: false,
+        minLength: 2,
+      };
+      window.autocomplete(searchEl, options, [{
+        source: function(query, callback) {
+          const searchOptions = {
+            isCaseSensitive: false,
+            shouldSort: true,
+            minMatchCharLength: 2,
+            limit: 10,
+            keys: [
+              { name: 'title', weight: 20 },
+              { name: 'categories', weight: 15 },
+              { name: 'description', weight: 10 },
+              { name: 'contents', weight: 5 },
+            ],
+          };
+          var results = fuse.search(query, searchOptions);
+          callback(results
+            .map(function(result) { return result.item; })
+            .filter(function(item) { return !!item.description; })
+          );
+        },
+        templates: {
+          suggestion: function(suggestion) {
+            var html = `
+              <div class="search-item">
+                <h3>${suggestion.title}</h3>
+                <div class="search-item-description">
+                  ${suggestion.description}
+                </div>
+                <div class="search-item-preview">
+                  <img src="${suggestion.preview ? offsetURL(suggestion.preview) : ''}"</img>
+                </div>
+              </div>
+            `;
+            return html;
+          }
+        }
+      }]).on('autocomplete:selected', function(event, suggestion) {
+        window.location.href = offsetURL(suggestion.path);
+      });
+      // remove inline display style on autocompleter (we want to
+      // manage responsive display via css)
+      $('.algolia-autocomplete').css("display", "");
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+
+});
+
+</script>
+
+<style type="text/css">
+
+/* Algolioa Autocomplete */
+
+.algolia-autocomplete {
+  display: inline-block;
+  margin-left: 10px;
+  vertical-align: sub;
+  background-color: white;
+  color: black;
+  padding: 6px;
+  padding-top: 8px;
+  padding-bottom: 0;
+  border-radius: 6px;
+  border: 1px #0F2E3D solid;
+  width: 180px;
+}
+
+
+@media screen and (max-width: 768px) {
+  .distill-site-nav .algolia-autocomplete {
+    display: none;
+    visibility: hidden;
+  }
+  .distill-site-nav.responsive .algolia-autocomplete {
+    display: inline-block;
+    visibility: visible;
+  }
+  .distill-site-nav.responsive .algolia-autocomplete .aa-dropdown-menu {
+    margin-left: 0;
+    width: 400px;
+    max-height: 400px;
+  }
+}
+
+.algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
+  width: 90%;
+  outline: none;
+  border: none;
+}
+
+.algolia-autocomplete .aa-hint {
+  color: #999;
+}
+.algolia-autocomplete .aa-dropdown-menu {
+  width: 550px;
+  max-height: 70vh;
+  overflow-x: visible;
+  overflow-y: scroll;
+  padding: 5px;
+  margin-top: 3px;
+  margin-left: -150px;
+  background-color: #fff;
+  border-radius: 5px;
+  border: 1px solid #999;
+  border-top: none;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
+  cursor: pointer;
+  padding: 5px 4px;
+  border-bottom: 1px solid #eee;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion:last-of-type {
+  border-bottom: none;
+  margin-bottom: 2px;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item {
+  overflow: hidden;
+  font-size: 0.8em;
+  line-height: 1.4em;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
+  margin-block-start: 0;
+  margin-block-end: 5px;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-description {
+  display: inline-block;
+  overflow: hidden;
+  height: 2.8em;
+  width: 80%;
+  margin-right: 4%;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview {
+  display: inline-block;
+  width: 15%;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img {
+  height: 3em;
+  width: auto;
+  display: none;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img[src] {
+  display: initial;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
+  background-color: #eee;
+}
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
+  font-weight: bold;
+  font-style: normal;
+}
+
+</style>
+
+
 <!--/radix_placeholder_navigation_in_header-->
   <!--radix_placeholder_distill-->
 
@@ -433,6 +762,51 @@ body {
 
 .pagedtable-footer {
   font-size: 15px;
+}
+
+d-byline .byline {
+  grid-template-columns: 2fr 2fr;
+}
+
+d-byline .byline h3 {
+  margin-block-start: 1.5em;
+}
+
+d-byline .byline .authors-affiliations h3 {
+  margin-block-start: 0.5em;
+}
+
+.authors-affiliations .orcid-id {
+  width: 16px;
+  height:16px;
+  margin-left: 4px;
+  margin-right: 4px;
+  vertical-align: middle;
+  padding-bottom: 2px;
+}
+
+d-title .dt-tags {
+  margin-top: 1em;
+  grid-column: text;
+}
+
+.dt-tags .dt-tag {
+  text-decoration: none;
+  display: inline-block;
+  color: rgba(0,0,0,0.6);
+  padding: 0em 0.4em;
+  margin-right: 0.5em;
+  margin-bottom: 0.4em;
+  font-size: 70%;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+d-article table.gt_table td,
+d-article table.gt_table th {
+  border-bottom: none;
 }
 
 .html-widget {
@@ -474,6 +848,7 @@ body {
 }
 
 d-article {
+  padding-top: 2.5rem;
   padding-bottom: 30px;
 }
 
@@ -485,91 +860,48 @@ d-article>p>img {
   width: 100%;
 }
 
+d-article h2 {
+  margin: 1rem 0 1.5rem 0;
+}
+
+d-article h3 {
+  margin-top: 1.5rem;
+}
+
 d-article iframe {
   border: 1px solid rgba(0, 0, 0, 0.1);
   margin-bottom: 2.0em;
   width: 100%;
 }
 
-figure img.external {
-  background: white;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
-  padding: 18px;
-  box-sizing: border-box;
+/* Tweak code blocks */
+
+d-article div.sourceCode code,
+d-article pre code {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
 }
 
-/* CSS for table of contents */
-
-.d-toc {
-  color: rgba(0,0,0,0.8);
-  font-size: 0.8em;
-  line-height: 1em;
+d-article pre,
+d-article div.sourceCode,
+d-article div.sourceCode pre {
+  overflow: hidden;
 }
 
-.d-toc-header {
-  font-size: 0.6rem;
-  font-weight: 400;
-  color: rgba(0, 0, 0, 0.5);
-  text-transform: uppercase;
-  margin-top: 0;
-  margin-bottom: 1.3em;
+d-article div.sourceCode {
+  background-color: white;
 }
 
-.d-toc a {
-  border-bottom: none;
-}
-
-.d-toc ul {
-  padding-left: 0;
-}
-
-.d-toc li>ul {
-  padding-top: 0.8em;
-  padding-left: 16px;
-  margin-bottom: 0.6em;
-}
-
-.d-toc ul,
-.d-toc li {
-  list-style-type: none;
-}
-
-.d-toc li {
-  margin-bottom: 0.9em;
-}
-
-.d-toc-separator {
-  margin-top: 20px;
-  margin-bottom: 2em;
-}
-
-.d-article-with-toc {
-  border-top: none;
-  padding-top: 0;
-}
-
-
-
-/* Tweak code blocks (note that this CSS is repeated above in an injection
-   into the d-code shadow dom) */
-
-d-code {
-  overflow-x: auto !important;
-}
-
-pre.d-code code.d-code {
+d-article div.sourceCode pre {
   padding-left: 10px;
   font-size: 12px;
   border-left: 2px solid rgba(0,0,0,0.1);
 }
 
-pre.text-output {
-
+d-article pre {
   font-size: 12px;
   color: black;
   background: none;
-  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  margin-top: 0;
   text-align: left;
   white-space: pre;
   word-spacing: normal;
@@ -587,20 +919,123 @@ pre.text-output {
   hyphens: none;
 }
 
+d-article pre a {
+  border-bottom: none;
+}
+
+d-article pre a:hover {
+  border-bottom: none;
+  text-decoration: underline;
+}
+
 @media(min-width: 768px) {
 
-d-code {
-  overflow-x: visible !important;
+d-article pre,
+d-article div.sourceCode,
+d-article div.sourceCode pre {
+  overflow: visible !important;
 }
 
-pre.d-code code.d-code  {
-    padding-left: 18px;
-    font-size: 14px;
-}
-pre.text-output {
+d-article div.sourceCode pre {
+  padding-left: 18px;
   font-size: 14px;
 }
+
+d-article pre {
+  font-size: 14px;
 }
+
+}
+
+figure img.external {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  padding: 18px;
+  box-sizing: border-box;
+}
+
+/* CSS for d-contents */
+
+.d-contents {
+  grid-column: text;
+  color: rgba(0,0,0,0.8);
+  font-size: 0.9em;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+  padding-bottom: 0.5em;
+  margin-bottom: 1em;
+  padding-left: 0.25em;
+  justify-self: start;
+}
+
+@media(min-width: 1000px) {
+  .d-contents.d-contents-float {
+    height: 0;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    justify-self: center;
+    padding-right: 3em;
+    padding-left: 2em;
+  }
+}
+
+.d-contents nav h3 {
+  font-size: 18px;
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+.d-contents li {
+  list-style-type: none
+}
+
+.d-contents nav > ul {
+  padding-left: 0;
+}
+
+.d-contents ul {
+  padding-left: 1em
+}
+
+.d-contents nav ul li {
+  margin-top: 0.6em;
+  margin-bottom: 0.2em;
+}
+
+.d-contents nav a {
+  font-size: 13px;
+  border-bottom: none;
+  text-decoration: none
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.d-contents nav a:hover {
+  text-decoration: underline solid rgba(0, 0, 0, 0.6)
+}
+
+.d-contents nav > ul > li > a {
+  font-weight: 600;
+}
+
+.d-contents nav > ul > li > ul {
+  font-weight: inherit;
+}
+
+.d-contents nav > ul > li > ul > li {
+  margin-top: 0.2em;
+}
+
+
+.d-contents nav ul {
+  margin-top: 0;
+  margin-bottom: 0.25em;
+}
+
+.d-article-with-toc h2:nth-child(2) {
+  margin-top: 0;
+}
+
 
 /* Figure */
 
@@ -638,6 +1073,16 @@ pre.text-output {
   color: rgba(0, 0, 0, 1.0);
 }
 
+/* Citations */
+
+d-article .citation {
+  color: inherit;
+  cursor: inherit;
+}
+
+div.hanging-indent{
+  margin-left: 1em; text-indent: -1em;
+}
 
 
 /* Tweak 1000px media break to show more text */
@@ -713,6 +1158,91 @@ d-appendix .citation-appendix,
   word-wrap: break-word;
 }
 
+/* Include appendix styles here so they can be overridden */
+
+d-appendix {
+  contain: layout style;
+  font-size: 0.8em;
+  line-height: 1.7em;
+  margin-top: 60px;
+  margin-bottom: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  color: rgba(0,0,0,0.5);
+  padding-top: 60px;
+  padding-bottom: 48px;
+}
+
+d-appendix h3 {
+  grid-column: page-start / text-start;
+  font-size: 15px;
+  font-weight: 500;
+  margin-top: 1em;
+  margin-bottom: 0;
+  color: rgba(0,0,0,0.65);
+}
+
+d-appendix h3 + * {
+  margin-top: 1em;
+}
+
+d-appendix ol {
+  padding: 0 0 0 15px;
+}
+
+@media (min-width: 768px) {
+  d-appendix ol {
+    padding: 0 0 0 30px;
+    margin-left: -30px;
+  }
+}
+
+d-appendix li {
+  margin-bottom: 1em;
+}
+
+d-appendix a {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+d-appendix > * {
+  grid-column: text;
+}
+
+d-appendix > d-footnote-list,
+d-appendix > d-citation-list,
+d-appendix > distill-appendix {
+  grid-column: screen;
+}
+
+/* Include footnote styles here so they can be overridden */
+
+d-footnote-list {
+  contain: layout style;
+}
+
+d-footnote-list > * {
+  grid-column: text;
+}
+
+d-footnote-list a.footnote-backlink {
+  color: rgba(0,0,0,0.3);
+  padding-left: 0.5em;
+}
+
+
+
+/* Anchor.js */
+
+.anchorjs-link {
+  /*transition: all .25s linear; */
+  text-decoration: none;
+  border-bottom: none;
+}
+*:hover > .anchorjs-link {
+  margin-left: -1.125em !important;
+  text-decoration: none;
+  border-bottom: none;
+}
 
 /* Social footer */
 
@@ -767,6 +1297,211 @@ d-appendix .citation-appendix,
 
 .custom p {
   margin-bottom: 0.5em;
+}
+
+/* Styles for listing layout (hide title) */
+.layout-listing d-title, .layout-listing .d-title {
+  display: none;
+}
+
+/* Styles for posts lists (not auto-injected) */
+
+
+.posts-with-sidebar {
+  padding-left: 45px;
+  padding-right: 45px;
+}
+
+.posts-list .description h2,
+.posts-list .description p {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+.posts-list .description h2 {
+  font-weight: 700;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.posts-list h2.post-tag {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding-bottom: 12px;
+}
+.posts-list {
+  margin-top: 60px;
+  margin-bottom: 24px;
+}
+
+.posts-list .post-preview {
+  text-decoration: none;
+  overflow: hidden;
+  display: block;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 24px 0;
+}
+
+.post-preview-last {
+  border-bottom: none !important;
+}
+
+.posts-list .posts-list-caption {
+  grid-column: screen;
+  font-weight: 400;
+}
+
+.posts-list .post-preview h2 {
+  margin: 0 0 6px 0;
+  line-height: 1.2em;
+  font-style: normal;
+  font-size: 24px;
+}
+
+.posts-list .post-preview p {
+  margin: 0 0 12px 0;
+  line-height: 1.4em;
+  font-size: 16px;
+}
+
+.posts-list .post-preview .thumbnail {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+  position: relative;
+  max-width: 500px;
+}
+.posts-list .post-preview img {
+  width: 100%;
+  display: block;
+}
+
+.posts-list .metadata {
+  font-size: 12px;
+  line-height: 1.4em;
+  margin-bottom: 18px;
+}
+
+.posts-list .metadata > * {
+  display: inline-block;
+}
+
+.posts-list .metadata .publishedDate {
+  margin-right: 2em;
+}
+
+.posts-list .metadata .dt-authors {
+  display: block;
+  margin-top: 0.3em;
+  margin-right: 2em;
+}
+
+.posts-list .dt-tags {
+  display: block;
+  line-height: 1em;
+}
+
+.posts-list .dt-tags .dt-tag {
+  display: inline-block;
+  color: rgba(0,0,0,0.6);
+  padding: 0.3em 0.4em;
+  margin-right: 0.2em;
+  margin-bottom: 0.4em;
+  font-size: 60%;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.posts-list img {
+  opacity: 1;
+}
+
+.posts-list img[data-src] {
+  opacity: 0;
+}
+
+.posts-more {
+  clear: both;
+}
+
+
+.posts-sidebar {
+  font-size: 16px;
+}
+
+.posts-sidebar h3 {
+  font-size: 16px;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.sidebar-section {
+  margin-bottom: 30px;
+}
+
+.categories ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.categories li {
+  color: rgba(0, 0, 0, 0.8);
+  margin-bottom: 0;
+}
+
+.categories li>a {
+  border-bottom: none;
+}
+
+.categories li>a:hover {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.categories .active {
+  font-weight: 600;
+}
+
+.categories .category-count {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+
+@media(min-width: 768px) {
+  .posts-list .post-preview h2 {
+    font-size: 26px;
+  }
+  .posts-list .post-preview .thumbnail {
+    float: right;
+    width: 30%;
+    margin-bottom: 0;
+  }
+  .posts-list .post-preview .description {
+    float: left;
+    width: 45%;
+  }
+  .posts-list .post-preview .metadata {
+    float: left;
+    width: 20%;
+    margin-top: 8px;
+  }
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.5em;
+    font-size: 16px;
+  }
+  .posts-with-sidebar .posts-list {
+    float: left;
+    width: 75%;
+  }
+  .posts-with-sidebar .posts-sidebar {
+    float: right;
+    width: 20%;
+    margin-top: 60px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
 }
 
 
@@ -898,6 +1633,12 @@ d-appendix .citation-appendix,
   hyphens: none;
 }
 
+.downlevel .posts-list .post-preview {
+  color: inherit;
+}
+
+
+
 </style>
 
 <script type="application/javascript">
@@ -913,6 +1654,13 @@ function is_downlevel_browser() {
 
 // show body when load is complete
 function on_load_complete() {
+
+  // add anchors
+  if (window.anchors) {
+    window.anchors.options.placement = 'left';
+    window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+  }
+
 
   // set body to visible
   document.body.style.visibility = 'visible';
@@ -959,23 +1707,8 @@ function init_distill() {
   // create d-appendix
   $('.d-appendix').changeElementType('d-appendix');
 
-  // create d-bibliography
-  var bibliography = $('<d-bibliography></d-bibliography>');
-  $('#distill-bibliography').wrap(bibliography);
-
   // flag indicating that we have appendix items
   var appendix = $('.appendix-bottom').children('h3').length > 0;
-
-  // replace citations with <d-cite>
-  $('.citation').each(function(i, val) {
-    appendix = true;
-    var cites = $(this).attr('data-cites').split(" ");
-    var dt_cite = $('<d-cite></d-cite>');
-    dt_cite.attr('key', cites.join());
-    $(this).replaceWith(dt_cite);
-  });
-  // remove refs
-  $('#refs').remove();
 
   // replace footnotes with <d-footnote>
   $('.footnote-ref').each(function(i, val) {
@@ -993,39 +1726,21 @@ function init_distill() {
   // remove footnotes
   $('.footnotes').remove();
 
+  // move refs into #references-listing
+  $('#references-listing').replaceWith($('#refs'));
+
   $('h1.appendix, h2.appendix').each(function(i, val) {
     $(this).changeElementType('h3');
   });
   $('h3.appendix').each(function(i, val) {
     var id = $(this).attr('id');
-    $('.d-toc a[href="#' + id + '"]').parent().remove();
+    $('.d-contents a[href="#' + id + '"]').parent().remove();
     appendix = true;
     $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
   });
 
   // show d-appendix if we have appendix content
   $("d-appendix").css('display', appendix ? 'grid' : 'none');
-
-  // replace code blocks with d-code
-  $('pre>code').each(function(i, val) {
-    var code = $(this);
-    var pre = code.parent();
-    var clz = "";
-    var language = pre.attr('class');
-    if (language) {
-      // map unknown languages to "clike" (without this they just dissapear)
-      if ($.inArray(language, ["bash", "clike", "css", "go", "html",
-                               "javascript", "js", "julia", "lua", "markdown",
-                               "markup", "mathml", "python", "svg", "xml"]) == -1)
-        language = "clike";
-      language = ' language="' + language + '"';
-      var dt_code = $('<d-code block' + language + clz + '></d-code>');
-      dt_code.text(code.text());
-      pre.replaceWith(dt_code);
-    } else {
-      code.addClass('text-output').unwrap().changeElementType('pre');
-    }
-  });
 
   // localize layout chunks to just output
   $('.layout-chunk').each(function(i, val) {
@@ -1034,7 +1749,7 @@ function init_distill() {
     var layout = $(this).attr('data-layout');
 
     // apply layout to markdown level block elements
-    var elements = $(this).children().not('d-code, pre.text-output, script');
+    var elements = $(this).children().not('div.sourceCode, pre, script');
     elements.each(function(i, el) {
       var layout_div = $('<div class="' + layout + '"></div>');
       if (layout_div.hasClass('shaded')) {
@@ -1051,6 +1766,13 @@ function init_distill() {
     $(this).children().unwrap();
   });
 
+  // remove code block used to force  highlighting css
+  $('.distill-force-highlighting-css').parent().remove();
+
+  // remove empty line numbers inserted by pandoc when using a
+  // custom syntax highlighting theme
+  $('code.sourceCode a:empty').remove();
+
   // load distill framework
   load_distill_framework();
 
@@ -1066,12 +1788,26 @@ function init_distill() {
     if (!have_authors)
       $('d-byline').addClass('hidden');
 
-    // table of contents
-    if (have_authors) // adjust border if we are in authors
-      $('.d-toc').parent().addClass('d-article-with-toc');
+    // article with toc class
+    $('.d-contents').parent().addClass('d-article-with-toc');
 
     // strip links that point to #
     $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+    // add orcid ids
+    $('.authors-affiliations').find('.author').each(function(i, el) {
+      var orcid_id = front_matter.authors[i].orcidID;
+      if (orcid_id) {
+        var a = $('<a></a>');
+        a.attr('href', 'https://orcid.org/' + orcid_id);
+        var img = $('<img></img>');
+        img.addClass('orcid-id');
+        img.attr('alt', 'ORCID ID');
+        img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+        a.append(img);
+        $(this).append(a);
+      }
+    });
 
     // hide elements of author/affiliations grid that have no value
     function hide_byline_column(caption) {
@@ -1121,14 +1857,9 @@ function init_distill() {
       grid.children('h3:contains("Affiliations")').text('Affiliation');
     }
 
-    // inject pre code styles (can't do this with a global stylesheet b/c a shadow root is used)
-    $('d-code').each(function(i, val) {
-      var style = document.createElement('style');
-      style.innerHTML = 'pre code { padding-left: 10px; font-size: 12px; border-left: 2px solid rgba(0,0,0,0.1); } ' +
-                        '@media(min-width: 768px) { pre code { padding-left: 18px; font-size: 14px; } }';
-      if (this.shadowRoot)
-        this.shadowRoot.appendChild(style);
-    });
+    // remove d-appendix and d-footnote-list local styles
+    $('d-appendix > style:first-child').remove();
+    $('d-footnote-list > style:first-child').remove();
 
     // move appendix-bottom entries to the bottom
     $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
@@ -1164,9 +1895,7 @@ function init_downlevel() {
   $('.d-byline a').remove();
 
   // remove toc
-  $('.d-toc-header').remove();
-  $('.d-toc').remove();
-  $('.d-toc-separator').remove();
+  $('.d-contents').remove();
 
   // move appendix elements
   $('h1.appendix, h2.appendix').each(function(i, val) {
@@ -1295,14 +2024,15 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <!--/radix_placeholder_distill-->
-  <script src="../../site_libs/header-attrs-2.3/header-attrs.js"></script>
+  <script src="../../site_libs/header-attrs-2.5/header-attrs.js"></script>
   <script src="../../site_libs/core-js-2.5.3/shim.min.js"></script>
   <script src="../../site_libs/react-16.12.0/react.min.js"></script>
   <script src="../../site_libs/react-16.12.0/react-dom.min.js"></script>
   <script src="../../site_libs/reactwidget-1.0.0/react-tools.js"></script>
-  <script src="../../site_libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
-  <script src="../../site_libs/reactable-binding-0.2.0/reactable.js"></script>
+  <script src="../../site_libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
+  <script src="../../site_libs/reactable-binding-0.2.3/reactable.js"></script>
   <script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
+  <script src="../../site_libs/anchor-4.2.2/anchor.min.js"></script>
   <script src="../../site_libs/bowser-1.9.3/bowser.min.js"></script>
   <script src="../../site_libs/webcomponents-2.0.0/webcomponents.js"></script>
   <script src="../../site_libs/distill-2.2.21/template.v2.js"></script>
@@ -1459,37 +2189,54 @@ blockquote p {
 
 /* Inline Code */
 
-code {
+p code {
   color: #d23c6e;
+  background-color: #ff002f0a;
   font-family: 'Fira Mono';
   font-weight: 500;
   font-size: 0.8em;
 }
 
 
-
-/* Output Chunk */
-
-pre.text-output {
-  background-color: #f8f8f8;
-  font-family: 'Fira Mono';
-  font-weight: 400;
-  font-size: 0.8em;
-}
 
 /* Code Chunk */
 
-d-article pre {
-  font-size: 14px;
-  padding-bottom: 17px;
-  margin-bottom: 2em;
-}
-
-d-code {
-  font-weight: 500;
+d-article div.sourceCode pre {
+  background-color: white;
+  padding-top: 10px;
+  padding-bottom: 10px;
   margin-bottom: 10px;
 }
 
+d-article div.sourceCode pre code {
+  font-family: 'Roboto Mono';
+  font-weight: 500;
+}
+
+/* overrides some syntax highlighting */
+code span.va {
+  color: black;
+}
+
+/* underline auto-linked functions */
+span.fu a {
+    text-decoration: underline;
+}
+
+/* Output Chunk */
+
+d-article pre code {
+    font-family: IBM Plex Mono;
+    font-weight: 500;
+}
+
+d-article pre {
+    background-color: #f9f9f9;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    overflow-x: scroll;
+}
 
 
 /* ---------- ADD-ONS ---------- */
@@ -1541,7 +2288,7 @@ d-code {
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Saving a line of piping","description":"Some notes on lesser known functions/functionalities that combine common chain of {dplyr} verbs.","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/"}],"publishedDate":"2020-08-07T00:00:00.000-04:00","citationText":"Choe, 2020"}
+{"title":"Saving a line of piping","description":"Some notes on lesser known functions/functionalities that combine common chain of {dplyr} verbs.","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/","orcidID":"0000-0002-0701-921X"}],"publishedDate":"2020-08-07T00:00:00.000-04:00","citationText":"Choe, 2020"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -1550,6 +2297,7 @@ d-code {
 <nav class="distill-site-nav distill-site-header">
 <div class="nav-left">
 <a href="../../index.html" class="title">June Choe</a>
+<input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
 </div>
 <div class="nav-right">
 <a href="../../index.html">Home</a>
@@ -1562,6 +2310,9 @@ d-code {
 </a>
 <a href="https://github.com/yjunechoe">
 <i class="fa fa-github" aria-hidden="true"></i>
+</a>
+<a href="https://osf.io/72vrb/" class="nav-image">
+<img src="../../static/img/osf.png"/>
 </a>
 <a href="../../index.xml">
 <i class="fa fa-rss" aria-hidden="true"></i>
@@ -1576,6 +2327,12 @@ d-code {
 
 <div class="d-title">
 <h1>Saving a line of piping</h1>
+<!--radix_placeholder_categories-->
+<div class="dt-tags">
+  <a href="../../index.html#category:data_wrangling" class="dt-tag">data wrangling</a>
+  <a href="../../index.html#category:dplyr" class="dt-tag">dplyr</a>
+</div>
+<!--/radix_placeholder_categories-->
 <p><p>Some notes on lesser known functions/functionalities that combine common chain of {dplyr} verbs.</p></p>
 </div>
 
@@ -1586,8 +2343,9 @@ d-code {
 </div>
 
 <div class="d-article">
-<h3 class="d-toc-header">Table of Contents</h3>
-<nav class="d-toc" id="TOC">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
 <ul>
 <li><a href="#rename-inside-select">1. <code>rename()</code> inside <code>select()</code></a></li>
 <li><a href="#rename-inside-count">2. <code>rename()</code> inside <code>count()</code></a></li>
@@ -1598,7 +2356,7 @@ d-code {
 <li><a href="#count-and-sum-by-group-with-add_count">7. count and sum by group with <code>add_count()</code></a></li>
 </ul>
 </nav>
-<hr class="d-toc-separator"/>
+</div>
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
@@ -1607,29 +2365,32 @@ d-code {
 </div>
 <p>Using a cleaned up version of <code>penguins</code> data from <code>{palmerpenguins}</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-data(&quot;penguins&quot;, package = &quot;palmerpenguins&quot;)
+<div class="sourceCode">
+<pre><code><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"penguins"</span>, package <span class='op'>=</span> <span class='st'>"palmerpenguins"</span><span class='op'>)</span>
 
-penguins &lt;- na.omit(penguins)</code></pre>
+<span class='va'>penguins</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/na.fail.html'>na.omit</a></span><span class='op'>(</span><span class='va'>penguins</span><span class='op'>)</span>
+</code></pre>
+</div>
 </div>
 <div class="layout-chunk" data-layout="l-body-outset">
-<div id="htmlwidget-be7458f254984611db43" class="reactable html-widget" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-be7458f254984611db43">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"species":["Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap"],"island":["Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream"],"bill_length_mm":[39.1,39.5,40.3,36.7,39.3,38.9,39.2,41.1,38.6,34.6,36.6,38.7,42.5,34.4,46,37.8,37.7,35.9,38.2,38.8,35.3,40.6,40.5,37.9,40.5,39.5,37.2,39.5,40.9,36.4,39.2,38.8,42.2,37.6,39.8,36.5,40.8,36,44.1,37,39.6,41.1,36,42.3,39.6,40.1,35,42,34.5,41.4,39,40.6,36.5,37.6,35.7,41.3,37.6,41.1,36.4,41.6,35.5,41.1,35.9,41.8,33.5,39.7,39.6,45.8,35.5,42.8,40.9,37.2,36.2,42.1,34.6,42.9,36.7,35.1,37.3,41.3,36.3,36.9,38.3,38.9,35.7,41.1,34,39.6,36.2,40.8,38.1,40.3,33.1,43.2,35,41,37.7,37.8,37.9,39.7,38.6,38.2,38.1,43.2,38.1,45.6,39.7,42.2,39.6,42.7,38.6,37.3,35.7,41.1,36.2,37.7,40.2,41.4,35.2,40.6,38.8,41.5,39,44.1,38.5,43.1,36.8,37.5,38.1,41.1,35.6,40.2,37,39.7,40.2,40.6,32.1,40.7,37.3,39,39.2,36.6,36,37.8,36,41.5,46.1,50,48.7,50,47.6,46.5,45.4,46.7,43.3,46.8,40.9,49,45.5,48.4,45.8,49.3,42,49.2,46.2,48.7,50.2,45.1,46.5,46.3,42.9,46.1,47.8,48.2,50,47.3,42.8,45.1,59.6,49.1,48.4,42.6,44.4,44,48.7,42.7,49.6,45.3,49.6,50.5,43.6,45.5,50.5,44.9,45.2,46.6,48.5,45.1,50.1,46.5,45,43.8,45.5,43.2,50.4,45.3,46.2,45.7,54.3,45.8,49.8,49.5,43.5,50.7,47.7,46.4,48.2,46.5,46.4,48.6,47.5,51.1,45.2,45.2,49.1,52.5,47.4,50,44.9,50.8,43.4,51.3,47.5,52.1,47.5,52.2,45.5,49.5,44.5,50.8,49.4,46.9,48.4,51.1,48.5,55.9,47.2,49.1,46.8,41.7,53.4,43.3,48.1,50.5,49.8,43.5,51.5,46.2,55.1,48.8,47.2,46.8,50.4,45.2,49.9,46.5,50,51.3,45.4,52.7,45.2,46.1,51.3,46,51.3,46.6,51.7,47,52,45.9,50.5,50.3,58,46.4,49.2,42.4,48.5,43.2,50.6,46.7,52,50.5,49.5,46.4,52.8,40.9,54.2,42.5,51,49.7,47.5,47.6,52,46.9,53.5,49,46.2,50.9,45.5,50.9,50.8,50.1,49,51.5,49.8,48.1,51.4,45.7,50.7,42.5,52.2,45.2,49.3,50.2,45.6,51.9,46.8,45.7,55.8,43.5,49.6,50.8,50.2],"bill_depth_mm":[18.7,17.4,18,19.3,20.6,17.8,19.6,17.6,21.2,21.1,17.8,19,20.7,18.4,21.5,18.3,18.7,19.2,18.1,17.2,18.9,18.6,17.9,18.6,18.9,16.7,18.1,17.8,18.9,17,21.1,20,18.5,19.3,19.1,18,18.4,18.5,19.7,16.9,18.8,19,17.9,21.2,17.7,18.9,17.9,19.5,18.1,18.6,17.5,18.8,16.6,19.1,16.9,21.1,17,18.2,17.1,18,16.2,19.1,16.6,19.4,19,18.4,17.2,18.9,17.5,18.5,16.8,19.4,16.1,19.1,17.2,17.6,18.8,19.4,17.8,20.3,19.5,18.6,19.2,18.8,18,18.1,17.1,18.1,17.3,18.9,18.6,18.5,16.1,18.5,17.9,20,16,20,18.6,18.9,17.2,20,17,19,16.5,20.3,17.7,19.5,20.7,18.3,17,20.5,17,18.6,17.2,19.8,17,18.5,15.9,19,17.6,18.3,17.1,18,17.9,19.2,18.5,18.5,17.6,17.5,17.5,20.1,16.5,17.9,17.1,17.2,15.5,17,16.8,18.7,18.6,18.4,17.8,18.1,17.1,18.5,13.2,16.3,14.1,15.2,14.5,13.5,14.6,15.3,13.4,15.4,13.7,16.1,13.7,14.6,14.6,15.7,13.5,15.2,14.5,15.1,14.3,14.5,14.5,15.8,13.1,15.1,15,14.3,15.3,15.3,14.2,14.5,17,14.8,16.3,13.7,17.3,13.6,15.7,13.7,16,13.7,15,15.9,13.9,13.9,15.9,13.3,15.8,14.2,14.1,14.4,15,14.4,15.4,13.9,15,14.5,15.3,13.8,14.9,13.9,15.7,14.2,16.8,16.2,14.2,15,15,15.6,15.6,14.8,15,16,14.2,16.3,13.8,16.4,14.5,15.6,14.6,15.9,13.8,17.3,14.4,14.2,14,17,15,17.1,14.5,16.1,14.7,15.7,15.8,14.6,14.4,16.5,15,17,15.5,15,16.1,14.7,15.8,14,15.1,15.2,15.9,15.2,16.3,14.1,16,16.2,13.7,14.3,15.7,14.8,16.1,17.9,19.5,19.2,18.7,19.8,17.8,18.2,18.2,18.9,19.9,17.8,20.3,17.3,18.1,17.1,19.6,20,17.8,18.6,18.2,17.3,17.5,16.6,19.4,17.9,19,18.4,19,17.8,20,16.6,20.8,16.7,18.8,18.6,16.8,18.3,20.7,16.6,19.9,19.5,17.5,19.1,17,17.9,18.5,17.9,19.6,18.7,17.3,16.4,19,17.3,19.7,17.3,18.8,16.6,19.9,18.8,19.4,19.5,16.5,17,19.8,18.1,18.2,19,18.7],"flipper_length_mm":[181,186,195,193,190,181,195,182,191,198,185,195,197,184,194,174,180,189,185,180,187,183,187,172,180,178,178,188,184,195,196,190,180,181,184,182,195,186,196,185,190,182,190,191,186,188,190,200,187,191,186,193,181,194,185,195,185,192,184,192,195,188,190,198,190,190,196,197,190,195,191,184,187,195,189,196,187,193,191,194,190,189,189,190,202,205,185,186,187,208,190,196,178,192,192,203,183,190,193,184,199,190,181,197,198,191,193,197,191,196,188,199,189,189,187,198,176,202,186,199,191,195,191,210,190,197,193,199,187,190,191,200,185,193,193,187,188,190,192,185,190,184,195,193,187,201,211,230,210,218,215,210,211,219,209,215,214,216,214,213,210,217,210,221,209,222,218,215,213,215,215,215,215,210,220,222,209,207,230,220,220,213,219,208,208,208,225,210,216,222,217,210,225,213,215,210,220,210,225,217,220,208,220,208,224,208,221,214,231,219,230,229,220,223,216,221,221,217,216,230,209,220,215,223,212,221,212,224,212,228,218,218,212,230,218,228,212,224,214,226,216,222,203,225,219,228,215,228,215,210,219,208,209,216,229,213,230,217,230,222,214,215,222,212,213,192,196,193,188,197,198,178,197,195,198,193,194,185,201,190,201,197,181,190,195,181,191,187,193,195,197,200,200,191,205,187,201,187,203,195,199,195,210,192,205,210,187,196,196,196,201,190,212,187,198,199,201,193,203,187,197,191,203,202,194,206,189,195,207,202,193,210,198],"body_mass_g":[3750,3800,3250,3450,3650,3625,4675,3200,3800,4400,3700,3450,4500,3325,4200,3400,3600,3800,3950,3800,3800,3550,3200,3150,3950,3250,3900,3300,3900,3325,4150,3950,3550,3300,4650,3150,3900,3100,4400,3000,4600,3425,3450,4150,3500,4300,3450,4050,2900,3700,3550,3800,2850,3750,3150,4400,3600,4050,2850,3950,3350,4100,3050,4450,3600,3900,3550,4150,3700,4250,3700,3900,3550,4000,3200,4700,3800,4200,3350,3550,3800,3500,3950,3600,3550,4300,3400,4450,3300,4300,3700,4350,2900,4100,3725,4725,3075,4250,2925,3550,3750,3900,3175,4775,3825,4600,3200,4275,3900,4075,2900,3775,3350,3325,3150,3500,3450,3875,3050,4000,3275,4300,3050,4000,3325,3500,3500,4475,3425,3900,3175,3975,3400,4250,3400,3475,3050,3725,3000,3650,4250,3475,3450,3750,3700,4000,4500,5700,4450,5700,5400,4550,4800,5200,4400,5150,4650,5550,4650,5850,4200,5850,4150,6300,4800,5350,5700,5000,4400,5050,5000,5100,5650,4600,5550,5250,4700,5050,6050,5150,5400,4950,5250,4350,5350,3950,5700,4300,4750,5550,4900,4200,5400,5100,5300,4850,5300,4400,5000,4900,5050,4300,5000,4450,5550,4200,5300,4400,5650,4700,5700,5800,4700,5550,4750,5000,5100,5200,4700,5800,4600,6000,4750,5950,4625,5450,4725,5350,4750,5600,4600,5300,4875,5550,4950,5400,4750,5650,4850,5200,4925,4875,4625,5250,4850,5600,4975,5500,5500,4700,5500,4575,5500,5000,5950,4650,5500,4375,5850,6000,4925,4850,5750,5200,5400,3500,3900,3650,3525,3725,3950,3250,3750,4150,3700,3800,3775,3700,4050,3575,4050,3300,3700,3450,4400,3600,3400,2900,3800,3300,4150,3400,3800,3700,4550,3200,4300,3350,4100,3600,3900,3850,4800,2700,4500,3950,3650,3550,3500,3675,4450,3400,4300,3250,3675,3325,3950,3600,4050,3350,3450,3250,4050,3800,3525,3950,3650,3650,4000,3400,3775,4100,3775],"sex":["male","female","female","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","male","female","male","female","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","male","female","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","male","female","male","male","female","female","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","male","female","male","female","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","male","female","male","female","female","male","female","male","male","female","female","male","female","male","female","male","female","male","male","female","male","female","female","male","female","male","male","female"],"year":[2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009]},"columns":[{"accessor":"species","name":"species","type":"factor"},{"accessor":"island","name":"island","type":"factor"},{"accessor":"bill_length_mm","name":"bill_length_mm","type":"numeric"},{"accessor":"bill_depth_mm","name":"bill_depth_mm","type":"numeric"},{"accessor":"flipper_length_mm","name":"flipper_length_mm","type":"numeric"},{"accessor":"body_mass_g","name":"body_mass_g","type":"numeric"},{"accessor":"sex","name":"sex","type":"factor"},{"accessor":"year","name":"year","type":"numeric"}],"sortable":false,"defaultPageSize":5,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"nowrap":true,"dataKey":"b650b7a1a5c792f49c2b2303a0449c36"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-b32436d196c54c5756ef" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-b32436d196c54c5756ef">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"species":["Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap"],"island":["Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream"],"bill_length_mm":[39.1,39.5,40.3,36.7,39.3,38.9,39.2,41.1,38.6,34.6,36.6,38.7,42.5,34.4,46,37.8,37.7,35.9,38.2,38.8,35.3,40.6,40.5,37.9,40.5,39.5,37.2,39.5,40.9,36.4,39.2,38.8,42.2,37.6,39.8,36.5,40.8,36,44.1,37,39.6,41.1,36,42.3,39.6,40.1,35,42,34.5,41.4,39,40.6,36.5,37.6,35.7,41.3,37.6,41.1,36.4,41.6,35.5,41.1,35.9,41.8,33.5,39.7,39.6,45.8,35.5,42.8,40.9,37.2,36.2,42.1,34.6,42.9,36.7,35.1,37.3,41.3,36.3,36.9,38.3,38.9,35.7,41.1,34,39.6,36.2,40.8,38.1,40.3,33.1,43.2,35,41,37.7,37.8,37.9,39.7,38.6,38.2,38.1,43.2,38.1,45.6,39.7,42.2,39.6,42.7,38.6,37.3,35.7,41.1,36.2,37.7,40.2,41.4,35.2,40.6,38.8,41.5,39,44.1,38.5,43.1,36.8,37.5,38.1,41.1,35.6,40.2,37,39.7,40.2,40.6,32.1,40.7,37.3,39,39.2,36.6,36,37.8,36,41.5,46.1,50,48.7,50,47.6,46.5,45.4,46.7,43.3,46.8,40.9,49,45.5,48.4,45.8,49.3,42,49.2,46.2,48.7,50.2,45.1,46.5,46.3,42.9,46.1,47.8,48.2,50,47.3,42.8,45.1,59.6,49.1,48.4,42.6,44.4,44,48.7,42.7,49.6,45.3,49.6,50.5,43.6,45.5,50.5,44.9,45.2,46.6,48.5,45.1,50.1,46.5,45,43.8,45.5,43.2,50.4,45.3,46.2,45.7,54.3,45.8,49.8,49.5,43.5,50.7,47.7,46.4,48.2,46.5,46.4,48.6,47.5,51.1,45.2,45.2,49.1,52.5,47.4,50,44.9,50.8,43.4,51.3,47.5,52.1,47.5,52.2,45.5,49.5,44.5,50.8,49.4,46.9,48.4,51.1,48.5,55.9,47.2,49.1,46.8,41.7,53.4,43.3,48.1,50.5,49.8,43.5,51.5,46.2,55.1,48.8,47.2,46.8,50.4,45.2,49.9,46.5,50,51.3,45.4,52.7,45.2,46.1,51.3,46,51.3,46.6,51.7,47,52,45.9,50.5,50.3,58,46.4,49.2,42.4,48.5,43.2,50.6,46.7,52,50.5,49.5,46.4,52.8,40.9,54.2,42.5,51,49.7,47.5,47.6,52,46.9,53.5,49,46.2,50.9,45.5,50.9,50.8,50.1,49,51.5,49.8,48.1,51.4,45.7,50.7,42.5,52.2,45.2,49.3,50.2,45.6,51.9,46.8,45.7,55.8,43.5,49.6,50.8,50.2],"bill_depth_mm":[18.7,17.4,18,19.3,20.6,17.8,19.6,17.6,21.2,21.1,17.8,19,20.7,18.4,21.5,18.3,18.7,19.2,18.1,17.2,18.9,18.6,17.9,18.6,18.9,16.7,18.1,17.8,18.9,17,21.1,20,18.5,19.3,19.1,18,18.4,18.5,19.7,16.9,18.8,19,17.9,21.2,17.7,18.9,17.9,19.5,18.1,18.6,17.5,18.8,16.6,19.1,16.9,21.1,17,18.2,17.1,18,16.2,19.1,16.6,19.4,19,18.4,17.2,18.9,17.5,18.5,16.8,19.4,16.1,19.1,17.2,17.6,18.8,19.4,17.8,20.3,19.5,18.6,19.2,18.8,18,18.1,17.1,18.1,17.3,18.9,18.6,18.5,16.1,18.5,17.9,20,16,20,18.6,18.9,17.2,20,17,19,16.5,20.3,17.7,19.5,20.7,18.3,17,20.5,17,18.6,17.2,19.8,17,18.5,15.9,19,17.6,18.3,17.1,18,17.9,19.2,18.5,18.5,17.6,17.5,17.5,20.1,16.5,17.9,17.1,17.2,15.5,17,16.8,18.7,18.6,18.4,17.8,18.1,17.1,18.5,13.2,16.3,14.1,15.2,14.5,13.5,14.6,15.3,13.4,15.4,13.7,16.1,13.7,14.6,14.6,15.7,13.5,15.2,14.5,15.1,14.3,14.5,14.5,15.8,13.1,15.1,15,14.3,15.3,15.3,14.2,14.5,17,14.8,16.3,13.7,17.3,13.6,15.7,13.7,16,13.7,15,15.9,13.9,13.9,15.9,13.3,15.8,14.2,14.1,14.4,15,14.4,15.4,13.9,15,14.5,15.3,13.8,14.9,13.9,15.7,14.2,16.8,16.2,14.2,15,15,15.6,15.6,14.8,15,16,14.2,16.3,13.8,16.4,14.5,15.6,14.6,15.9,13.8,17.3,14.4,14.2,14,17,15,17.1,14.5,16.1,14.7,15.7,15.8,14.6,14.4,16.5,15,17,15.5,15,16.1,14.7,15.8,14,15.1,15.2,15.9,15.2,16.3,14.1,16,16.2,13.7,14.3,15.7,14.8,16.1,17.9,19.5,19.2,18.7,19.8,17.8,18.2,18.2,18.9,19.9,17.8,20.3,17.3,18.1,17.1,19.6,20,17.8,18.6,18.2,17.3,17.5,16.6,19.4,17.9,19,18.4,19,17.8,20,16.6,20.8,16.7,18.8,18.6,16.8,18.3,20.7,16.6,19.9,19.5,17.5,19.1,17,17.9,18.5,17.9,19.6,18.7,17.3,16.4,19,17.3,19.7,17.3,18.8,16.6,19.9,18.8,19.4,19.5,16.5,17,19.8,18.1,18.2,19,18.7],"flipper_length_mm":[181,186,195,193,190,181,195,182,191,198,185,195,197,184,194,174,180,189,185,180,187,183,187,172,180,178,178,188,184,195,196,190,180,181,184,182,195,186,196,185,190,182,190,191,186,188,190,200,187,191,186,193,181,194,185,195,185,192,184,192,195,188,190,198,190,190,196,197,190,195,191,184,187,195,189,196,187,193,191,194,190,189,189,190,202,205,185,186,187,208,190,196,178,192,192,203,183,190,193,184,199,190,181,197,198,191,193,197,191,196,188,199,189,189,187,198,176,202,186,199,191,195,191,210,190,197,193,199,187,190,191,200,185,193,193,187,188,190,192,185,190,184,195,193,187,201,211,230,210,218,215,210,211,219,209,215,214,216,214,213,210,217,210,221,209,222,218,215,213,215,215,215,215,210,220,222,209,207,230,220,220,213,219,208,208,208,225,210,216,222,217,210,225,213,215,210,220,210,225,217,220,208,220,208,224,208,221,214,231,219,230,229,220,223,216,221,221,217,216,230,209,220,215,223,212,221,212,224,212,228,218,218,212,230,218,228,212,224,214,226,216,222,203,225,219,228,215,228,215,210,219,208,209,216,229,213,230,217,230,222,214,215,222,212,213,192,196,193,188,197,198,178,197,195,198,193,194,185,201,190,201,197,181,190,195,181,191,187,193,195,197,200,200,191,205,187,201,187,203,195,199,195,210,192,205,210,187,196,196,196,201,190,212,187,198,199,201,193,203,187,197,191,203,202,194,206,189,195,207,202,193,210,198],"body_mass_g":[3750,3800,3250,3450,3650,3625,4675,3200,3800,4400,3700,3450,4500,3325,4200,3400,3600,3800,3950,3800,3800,3550,3200,3150,3950,3250,3900,3300,3900,3325,4150,3950,3550,3300,4650,3150,3900,3100,4400,3000,4600,3425,3450,4150,3500,4300,3450,4050,2900,3700,3550,3800,2850,3750,3150,4400,3600,4050,2850,3950,3350,4100,3050,4450,3600,3900,3550,4150,3700,4250,3700,3900,3550,4000,3200,4700,3800,4200,3350,3550,3800,3500,3950,3600,3550,4300,3400,4450,3300,4300,3700,4350,2900,4100,3725,4725,3075,4250,2925,3550,3750,3900,3175,4775,3825,4600,3200,4275,3900,4075,2900,3775,3350,3325,3150,3500,3450,3875,3050,4000,3275,4300,3050,4000,3325,3500,3500,4475,3425,3900,3175,3975,3400,4250,3400,3475,3050,3725,3000,3650,4250,3475,3450,3750,3700,4000,4500,5700,4450,5700,5400,4550,4800,5200,4400,5150,4650,5550,4650,5850,4200,5850,4150,6300,4800,5350,5700,5000,4400,5050,5000,5100,5650,4600,5550,5250,4700,5050,6050,5150,5400,4950,5250,4350,5350,3950,5700,4300,4750,5550,4900,4200,5400,5100,5300,4850,5300,4400,5000,4900,5050,4300,5000,4450,5550,4200,5300,4400,5650,4700,5700,5800,4700,5550,4750,5000,5100,5200,4700,5800,4600,6000,4750,5950,4625,5450,4725,5350,4750,5600,4600,5300,4875,5550,4950,5400,4750,5650,4850,5200,4925,4875,4625,5250,4850,5600,4975,5500,5500,4700,5500,4575,5500,5000,5950,4650,5500,4375,5850,6000,4925,4850,5750,5200,5400,3500,3900,3650,3525,3725,3950,3250,3750,4150,3700,3800,3775,3700,4050,3575,4050,3300,3700,3450,4400,3600,3400,2900,3800,3300,4150,3400,3800,3700,4550,3200,4300,3350,4100,3600,3900,3850,4800,2700,4500,3950,3650,3550,3500,3675,4450,3400,4300,3250,3675,3325,3950,3600,4050,3350,3450,3250,4050,3800,3525,3950,3650,3650,4000,3400,3775,4100,3775],"sex":["male","female","female","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","male","female","male","female","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","male","female","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","male","female","male","male","female","female","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","male","female","male","female","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","male","female","male","female","female","male","female","male","male","female","female","male","female","male","female","male","female","male","male","female","male","female","female","male","female","male","male","female"],"year":[2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009]},"columns":[{"accessor":"species","name":"species","type":"factor"},{"accessor":"island","name":"island","type":"factor"},{"accessor":"bill_length_mm","name":"bill_length_mm","type":"numeric"},{"accessor":"bill_depth_mm","name":"bill_depth_mm","type":"numeric"},{"accessor":"flipper_length_mm","name":"flipper_length_mm","type":"numeric"},{"accessor":"body_mass_g","name":"body_mass_g","type":"numeric"},{"accessor":"sex","name":"sex","type":"factor"},{"accessor":"year","name":"year","type":"numeric"}],"sortable":false,"defaultPageSize":5,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"nowrap":true,"dataKey":"b650b7a1a5c792f49c2b2303a0449c36","key":"b650b7a1a5c792f49c2b2303a0449c36"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 <h2 id="rename-inside-select">1. <code>rename()</code> inside <code>select()</code></h2>
 <p>You can rename a column inside <code>select()</code> by assigning a new name on the left hand side:</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-##### Long Form #####
-# penguins %&gt;% 
-#   select(species, island) %&gt;% 
-#   rename(penguin_species = species)
+<div class="sourceCode">
+<pre><code><span class='co'>##### Long Form #####</span>
+<span class='co'># penguins %&gt;% </span>
+<span class='co'>#   select(species, island) %&gt;% </span>
+<span class='co'>#   rename(penguin_species = species)</span>
 
-penguins %&gt;% 
-  select(penguin_species = species,
-         island)</code></pre>
-<pre><code>
-  # A tibble: 333 x 2
+<span class='va'>penguins</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>select</span><span class='op'>(</span>penguin_species <span class='op'>=</span> <span class='va'>species</span>,
+         <span class='va'>island</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  # A tibble: 333 x 2
      penguin_species island   
      &lt;fct&gt;           &lt;fct&gt;    
    1 Adelie          Torgersen
@@ -1646,19 +2407,20 @@ penguins %&gt;%
 </div>
 <p>This also works with <code>{tidyselect}</code> helpers like <code>starts_with()</code>, <code>ends_with()</code>, <code>contains()</code>, and <code>matches()</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-##### Long Form #####
-# penguins %&gt;% 
-#   select(species, island) %&gt;% 
-#   rename(penguin_species = species,
-#          weight = body_weight_g)
+<div class="sourceCode">
+<pre><code><span class='co'>##### Long Form #####</span>
+<span class='co'># penguins %&gt;% </span>
+<span class='co'>#   select(species, island) %&gt;% </span>
+<span class='co'>#   rename(penguin_species = species,</span>
+<span class='co'>#          weight = body_weight_g)</span>
 
-penguins %&gt;% 
-  select(penguin_species = species,
-         island,
-         weight = contains(&quot;mass&quot;))</code></pre>
-<pre><code>
-  # A tibble: 333 x 3
+<span class='va'>penguins</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>select</span><span class='op'>(</span>penguin_species <span class='op'>=</span> <span class='va'>species</span>,
+         <span class='va'>island</span>,
+         weight <span class='op'>=</span> <span class='fu'>contains</span><span class='op'>(</span><span class='st'>"mass"</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  # A tibble: 333 x 3
      penguin_species island    weight
      &lt;fct&gt;           &lt;fct&gt;      &lt;int&gt;
    1 Adelie          Torgersen   3750
@@ -1676,16 +2438,17 @@ penguins %&gt;%
 <h2 id="rename-inside-count">2. <code>rename()</code> inside <code>count()</code></h2>
 <p>You can rename the new column of counts (<code>n</code> by default) using the <code>name</code> argument:</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-##### Long Form #####
-# penguins %&gt;% 
-#   count(species) %&gt;% 
-#   rename(total = n)
+<div class="sourceCode">
+<pre><code><span class='co'>##### Long Form #####</span>
+<span class='co'># penguins %&gt;% </span>
+<span class='co'>#   count(species) %&gt;% </span>
+<span class='co'>#   rename(total = n)</span>
 
-penguins %&gt;% 
-  count(species, name = &quot;total&quot;)</code></pre>
-<pre><code>
-  # A tibble: 3 x 2
+<span class='va'>penguins</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>count</span><span class='op'>(</span><span class='va'>species</span>, name <span class='op'>=</span> <span class='st'>"total"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  # A tibble: 3 x 2
     species   total
     &lt;fct&gt;     &lt;int&gt;
   1 Adelie      146
@@ -1694,17 +2457,18 @@ penguins %&gt;%
 </div>
 <p>You can also rename the column(s) that are selected for counting in the same way as shown in the <code>select()</code> examples above:</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-##### Long Form #####
-# penguins %&gt;% 
-#   count(species) %&gt;% 
-#   rename(total = n,
-#          penguin_species = species)
+<div class="sourceCode">
+<pre><code><span class='co'>##### Long Form #####</span>
+<span class='co'># penguins %&gt;% </span>
+<span class='co'>#   count(species) %&gt;% </span>
+<span class='co'>#   rename(total = n,</span>
+<span class='co'>#          penguin_species = species)</span>
 
-penguins %&gt;% 
-  count(penguin_species = species, name = &quot;total&quot;)</code></pre>
-<pre><code>
-  # A tibble: 3 x 2
+<span class='va'>penguins</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>count</span><span class='op'>(</span>penguin_species <span class='op'>=</span> <span class='va'>species</span>, name <span class='op'>=</span> <span class='st'>"total"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  # A tibble: 3 x 2
     penguin_species total
     &lt;fct&gt;           &lt;int&gt;
   1 Adelie            146
@@ -1713,17 +2477,18 @@ penguins %&gt;%
 </div>
 <p>Note that the new name passed into the <code>name</code> argument must be quoted, but the new name for selected column needs not to be unquoted:</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-identical(
-  # Method 1: new column name UNQUOTED
-  penguins %&gt;% 
-    count(penguin_species = species, name = &quot;total&quot;),
-  # Method 2: new column name QUOTED
-  penguins %&gt;% 
-    count(&quot;penguin_species&quot; = species, name = &quot;total&quot;) 
-)</code></pre>
-<pre><code>
-  [1] TRUE</code></pre>
+<div class="sourceCode">
+<pre><code><span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span><span class='op'>(</span>
+  <span class='co'># Method 1: new column name UNQUOTED</span>
+  <span class='va'>penguins</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>count</span><span class='op'>(</span>penguin_species <span class='op'>=</span> <span class='va'>species</span>, name <span class='op'>=</span> <span class='st'>"total"</span><span class='op'>)</span>,
+  <span class='co'># Method 2: new column name QUOTED</span>
+  <span class='va'>penguins</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>count</span><span class='op'>(</span><span class='st'>"penguin_species"</span> <span class='op'>=</span> <span class='va'>species</span>, name <span class='op'>=</span> <span class='st'>"total"</span><span class='op'>)</span> 
+<span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  [1] TRUE</code></pre>
 </div>
 <p>I prefer to unquote the new column names to keep it consistent with the recommended style for <code>rename()</code></p>
 <p>This feature of <code>select()</code> may seem weird and hackish (and I guess it sort of is in this demonstration) but it’s explicitly documented <a href="https://tidyselect.r-lib.org/articles/syntax.html#renaming-variables-1">here</a> if you want to read more on it.</p>
@@ -1731,16 +2496,17 @@ identical(
 <p>You can also create a new column to count by inside <code>count()</code>. This works very similarly to the above, but I think it’s worth its own mention.</p>
 <p>It’s pretty simple - you just do what you’d do for <code>mutate()</code> inside <code>count()</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-##### Long Form #####
-# penguins %&gt;% 
-#   mutate(long_beak = bill_length_mm &gt; 50) %&gt;% 
-#   count(long_beak)
+<div class="sourceCode">
+<pre><code><span class='co'>##### Long Form #####</span>
+<span class='co'># penguins %&gt;% </span>
+<span class='co'>#   mutate(long_beak = bill_length_mm &gt; 50) %&gt;% </span>
+<span class='co'>#   count(long_beak)</span>
 
-penguins %&gt;% 
-  count(long_beak = bill_length_mm &gt; 50)</code></pre>
-<pre><code>
-  # A tibble: 2 x 2
+<span class='va'>penguins</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>count</span><span class='op'>(</span>long_beak <span class='op'>=</span> <span class='va'>bill_length_mm</span> <span class='op'>&gt;</span> <span class='fl'>50</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  # A tibble: 2 x 2
     long_beak     n
     &lt;lgl&gt;     &lt;int&gt;
   1 FALSE       281
@@ -1748,18 +2514,19 @@ penguins %&gt;%
 </div>
 <p>And of course, this also works when specifying <em>multiple</em> variables to count by:</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-##### Long Form #####
-# penguins %&gt;% 
-#   mutate(long_beak = bill_length_mm &gt; 50,
-#          is_adelie = species == &quot;Adelie&quot;) %&gt;% 
-#   count(is_adelie, long_beak)
+<div class="sourceCode">
+<pre><code><span class='co'>##### Long Form #####</span>
+<span class='co'># penguins %&gt;% </span>
+<span class='co'>#   mutate(long_beak = bill_length_mm &gt; 50,</span>
+<span class='co'>#          is_adelie = species == "Adelie") %&gt;% </span>
+<span class='co'>#   count(is_adelie, long_beak)</span>
 
-penguins %&gt;% 
-  count(long_beak = bill_length_mm &gt; 50,
-        is_adelie = species == &quot;Adelie&quot;)</code></pre>
-<pre><code>
-  # A tibble: 3 x 3
+<span class='va'>penguins</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>count</span><span class='op'>(</span>long_beak <span class='op'>=</span> <span class='va'>bill_length_mm</span> <span class='op'>&gt;</span> <span class='fl'>50</span>,
+        is_adelie <span class='op'>=</span> <span class='va'>species</span> <span class='op'>==</span> <span class='st'>"Adelie"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  # A tibble: 3 x 3
     long_beak is_adelie     n
     &lt;lgl&gt;     &lt;lgl&gt;     &lt;int&gt;
   1 FALSE     FALSE       135
@@ -1769,16 +2536,17 @@ penguins %&gt;%
 <h2 id="transmute-select">4. <code>transmute()</code> + <code>select()</code></h2>
 <p><code>transmute()</code> is a function that mutates columns and returns only those columns:</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-##### Long Form #####
-# penguins %&gt;% 
-#   mutate(body_mass_kg = body_mass_g/1000) %&gt;% 
-#   select(body_mass_kg)
+<div class="sourceCode">
+<pre><code><span class='co'>##### Long Form #####</span>
+<span class='co'># penguins %&gt;% </span>
+<span class='co'>#   mutate(body_mass_kg = body_mass_g/1000) %&gt;% </span>
+<span class='co'>#   select(body_mass_kg)</span>
 
-penguins %&gt;% 
-  transmute(body_mass_kg = body_mass_g/1000)</code></pre>
-<pre><code>
-  # A tibble: 333 x 1
+<span class='va'>penguins</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>transmute</span><span class='op'>(</span>body_mass_kg <span class='op'>=</span> <span class='va'>body_mass_g</span><span class='op'>/</span><span class='fl'>1000</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  # A tibble: 333 x 1
      body_mass_kg
             &lt;dbl&gt;
    1         3.75
@@ -1796,19 +2564,20 @@ penguins %&gt;%
 <p>I’ve rarely used <code>transmute()</code> in the past because I thought it could only return <em>modified</em> columns, which would be very limiting (like in the above example, what good is a single column of penguin body mass in kilograms?)</p>
 <p>But actually you can just name the columns you want to include in <code>transmute()</code> like you would in <code>select()</code> to carry over columns that you aren’t modifying. And of course, you can “rename” them as you do it<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>:</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-##### Long Form #####
-# penguins %&gt;% 
-#   mutate(body_mass_kg = body_mass_g/1000) %&gt;% 
-#   select(species, island, body_mass_kg) %&gt;% 
-#   rename(penguin_species = species)
+<div class="sourceCode">
+<pre><code><span class='co'>##### Long Form #####</span>
+<span class='co'># penguins %&gt;% </span>
+<span class='co'>#   mutate(body_mass_kg = body_mass_g/1000) %&gt;% </span>
+<span class='co'>#   select(species, island, body_mass_kg) %&gt;% </span>
+<span class='co'>#   rename(penguin_species = species)</span>
 
-penguins %&gt;% 
-  transmute(penguin_species = species,
-            island,
-            body_mass_kg = body_mass_g/1000)</code></pre>
-<pre><code>
-  # A tibble: 333 x 3
+<span class='va'>penguins</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>transmute</span><span class='op'>(</span>penguin_species <span class='op'>=</span> <span class='va'>species</span>,
+            <span class='va'>island</span>,
+            body_mass_kg <span class='op'>=</span> <span class='va'>body_mass_g</span><span class='op'>/</span><span class='fl'>1000</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  # A tibble: 333 x 3
      penguin_species island    body_mass_kg
      &lt;fct&gt;           &lt;fct&gt;            &lt;dbl&gt;
    1 Adelie          Torgersen         3.75
@@ -1826,13 +2595,14 @@ penguins %&gt;%
 <h2 id="ungroup-inside-summarize">5. <code>ungroup()</code> inside <code>summarize()</code></h2>
 <p>I always found using <code>ungroup()</code> after <code>summarize()</code> to be <em>extremely</em> ugly, but I found myself using it a lot to remove left-over groupings after a <code>summarize</code> call:</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-penguins %&gt;% 
-  group_by(island, species) %&gt;% 
-  summarize(mean_mass = mean(body_mass_g, na.rm = TRUE)) %&gt;% 
-  ungroup()</code></pre>
-<pre><code>
-  # A tibble: 5 x 3
+<div class="sourceCode">
+<pre><code><span class='va'>penguins</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>island</span>, <span class='va'>species</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>summarize</span><span class='op'>(</span>mean_mass <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>body_mass_g</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>ungroup</span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  # A tibble: 5 x 3
     island    species   mean_mass
     &lt;fct&gt;     &lt;fct&gt;         &lt;dbl&gt;
   1 Biscoe    Adelie        3710.
@@ -1843,32 +2613,35 @@ penguins %&gt;%
 </div>
 <p>… because <code>summarize()</code> only drops the last grouping variable by defaut, meaning that the output is still grouped by the <code>island</code> variable if <code>ungroup()</code> isn’t called:</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-# Without ungroup()
-penguins %&gt;% 
-  group_by(island, species) %&gt;% 
-  summarize(mean_mass = mean(body_mass_g, na.rm = TRUE)) %&gt;% 
-  group_vars()</code></pre>
-<pre><code>
-  [1] &quot;island&quot;</code></pre>
-<pre class="r"><code>
-# With ungroup()
-penguins %&gt;% 
-  group_by(island, species) %&gt;% 
-  summarize(mean_mass = mean(body_mass_g, na.rm = TRUE)) %&gt;% 
-  ungroup() %&gt;% 
-  group_vars()</code></pre>
-<pre><code>
-  character(0)</code></pre>
+<div class="sourceCode">
+<pre><code><span class='co'># Without ungroup()</span>
+<span class='va'>penguins</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>island</span>, <span class='va'>species</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>summarize</span><span class='op'>(</span>mean_mass <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>body_mass_g</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>group_vars</span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  [1] &quot;island&quot;</code></pre>
+<div class="sourceCode">
+<pre><code><span class='co'># With ungroup()</span>
+<span class='va'>penguins</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>island</span>, <span class='va'>species</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>summarize</span><span class='op'>(</span>mean_mass <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>body_mass_g</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>ungroup</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>group_vars</span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  character(0)</code></pre>
 </div>
 <p>Since <code>{dplyr}</code> 1.0.0, you can simply set the <code>.groups</code> argument inside <code>summarize()</code> to <code>'drop'</code> to achieve the same:</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-penguins %&gt;% 
-  group_by(island, species) %&gt;% 
-  summarize(mean_mass = mean(body_mass_g, na.rm = TRUE), .groups = &#39;drop&#39;)</code></pre>
-<pre><code>
-  # A tibble: 5 x 3
+<div class="sourceCode">
+<pre><code><span class='va'>penguins</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>island</span>, <span class='va'>species</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>summarize</span><span class='op'>(</span>mean_mass <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>body_mass_g</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, .groups <span class='op'>=</span> <span class='st'>'drop'</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  # A tibble: 5 x 3
     island    species   mean_mass
     &lt;fct&gt;     &lt;fct&gt;         &lt;dbl&gt;
   1 Biscoe    Adelie        3710.
@@ -1881,16 +2654,17 @@ penguins %&gt;%
 <h2 id="arrange-other-features-inside-slice">6. <code>arrange()</code> + other features inside <code>slice()</code></h2>
 <p>In past versions of <code>{dplyr}</code>, if you wanted to grab the top n rows sorted by a column, you’d use <code>top_n()</code>, which provides a simpler way of doing <code>slice()</code> + <code>arrange()</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-##### Long Form #####
-# penguins %&gt;% 
-#   arrange(desc(body_mass_g)) %&gt;% 
-#   slice(1:5)
+<div class="sourceCode">
+<pre><code><span class='co'>##### Long Form #####</span>
+<span class='co'># penguins %&gt;% </span>
+<span class='co'>#   arrange(desc(body_mass_g)) %&gt;% </span>
+<span class='co'>#   slice(1:5)</span>
 
-penguins %&gt;% 
-  top_n(5, wt = body_mass_g)</code></pre>
-<pre><code>
-  # A tibble: 6 x 8
+<span class='va'>penguins</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>top_n</span><span class='op'>(</span><span class='fl'>5</span>, wt <span class='op'>=</span> <span class='va'>body_mass_g</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  # A tibble: 6 x 8
     species island bill_length_mm bill_depth_mm flipper_length_~ body_mass_g sex  
     &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt; &lt;fct&gt;
   1 Gentoo  Biscoe           49.2          15.2              221        6300 male 
@@ -1903,15 +2677,16 @@ penguins %&gt;%
 </div>
 <p>But the recent <code>{dplyr}</code> 1.0.0 augmented <code>slice()</code> with variants like <code>slice_min()</code> and <code>slice_max()</code> that now supresede <code>top_n()</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-##### Pre-1.0.0 #####
-# penguins %&gt;% 
-#   top_n(5, wt = body_mass_g)
+<div class="sourceCode">
+<pre><code><span class='co'>##### Pre-1.0.0 #####</span>
+<span class='co'># penguins %&gt;% </span>
+<span class='co'>#   top_n(5, wt = body_mass_g)</span>
 
-penguins %&gt;% 
-  slice_max(order_by = body_mass_g, n = 5)</code></pre>
-<pre><code>
-  # A tibble: 6 x 8
+<span class='va'>penguins</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>slice_max</span><span class='op'>(</span>order_by <span class='op'>=</span> <span class='va'>body_mass_g</span>, n <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  # A tibble: 6 x 8
     species island bill_length_mm bill_depth_mm flipper_length_~ body_mass_g sex  
     &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt; &lt;fct&gt;
   1 Gentoo  Biscoe           49.2          15.2              221        6300 male 
@@ -1925,11 +2700,12 @@ penguins %&gt;%
 <p>Note that the order of arguments is different for <code>slice_min/max()</code> - the first argument after piping is where you specify the variable for ordering rather than the number of rows to return, like in <code>top_n()</code>.</p>
 <p>This is because <code>slice_min/max()</code> gives you an option to either specify a certain number of rows <code>n</code> or a proportion of rows <code>prop</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-penguins %&gt;% 
-  slice_max(body_mass_g, prop = .01)</code></pre>
-<pre><code>
-  # A tibble: 4 x 8
+<div class="sourceCode">
+<pre><code><span class='va'>penguins</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>slice_max</span><span class='op'>(</span><span class='va'>body_mass_g</span>, prop <span class='op'>=</span> <span class='fl'>.01</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  # A tibble: 4 x 8
     species island bill_length_mm bill_depth_mm flipper_length_~ body_mass_g sex  
     &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt; &lt;fct&gt;
   1 Gentoo  Biscoe           49.2          15.2              221        6300 male 
@@ -1941,12 +2717,13 @@ penguins %&gt;%
 <p>And actually, the most significant change with the new <code>slice_*()</code> functions is from adding appropriate behavior for <strong>grouped dataframes</strong>.</p>
 <p>So for example, this example below returns the top 5% of penguins by weight for each species:</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-penguins %&gt;% 
-  group_by(species) %&gt;% 
-  slice_max(body_mass_g, prop = .05)</code></pre>
-<pre><code>
-  # A tibble: 16 x 8
+<div class="sourceCode">
+<pre><code><span class='va'>penguins</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>species</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>slice_max</span><span class='op'>(</span><span class='va'>body_mass_g</span>, prop <span class='op'>=</span> <span class='fl'>.05</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  # A tibble: 16 x 8
   # Groups:   species [3]
      species island bill_length_mm bill_depth_mm flipper_length_~ body_mass_g
      &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt;
@@ -1973,19 +2750,20 @@ penguins %&gt;%
 <p>Saving my favorite lesser-known <code>{dplyr}</code> function for last!</p>
 <p><code>add_count()</code> adds a column with the counts of each group (or combination of groups):</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-##### Long Form #####
-# penguins %&gt;% 
-#   group_by(species) %&gt;% 
-#   mutate(count_by_species = n()) %&gt;% 
-#   ungroup()
+<div class="sourceCode">
+<pre><code><span class='co'>##### Long Form #####</span>
+<span class='co'># penguins %&gt;% </span>
+<span class='co'>#   group_by(species) %&gt;% </span>
+<span class='co'>#   mutate(count_by_species = n()) %&gt;% </span>
+<span class='co'>#   ungroup()</span>
 
-penguins %&gt;% 
-  add_count(species, name = &quot;count_by_species&quot;) %&gt;% 
-  # cutting down some columns to show the new column
-  select(-contains(&quot;mm&quot;))</code></pre>
-<pre><code>
-  # A tibble: 333 x 6
+<span class='va'>penguins</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>add_count</span><span class='op'>(</span><span class='va'>species</span>, name <span class='op'>=</span> <span class='st'>"count_by_species"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='co'># cutting down some columns to show the new column</span>
+  <span class='fu'>select</span><span class='op'>(</span><span class='op'>-</span><span class='fu'>contains</span><span class='op'>(</span><span class='st'>"mm"</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  # A tibble: 333 x 6
      species island    body_mass_g sex     year count_by_species
      &lt;fct&gt;   &lt;fct&gt;           &lt;int&gt; &lt;fct&gt;  &lt;int&gt;            &lt;int&gt;
    1 Adelie  Torgersen        3750 male    2007              146
@@ -2002,20 +2780,21 @@ penguins %&gt;%
 </div>
 <p>You can use the <code>wt</code> to effectively get sums by group (perhaps hackish but very very useful):</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-##### Long Form #####
-# penguins %&gt;% 
-#   group_by(species) %&gt;% 
-#   mutate(total_weight_by_species = sum(body_mass_g)) %&gt;% 
-#   ungroup()
+<div class="sourceCode">
+<pre><code><span class='co'>##### Long Form #####</span>
+<span class='co'># penguins %&gt;% </span>
+<span class='co'>#   group_by(species) %&gt;% </span>
+<span class='co'>#   mutate(total_weight_by_species = sum(body_mass_g)) %&gt;% </span>
+<span class='co'>#   ungroup()</span>
   
 
-penguins %&gt;% 
-  add_count(species, wt = body_mass_g, name = &quot;total_weight_by_species&quot;) %&gt;% 
-    # cutting down some columns to show the new column
-  select(-contains(&quot;mm&quot;))</code></pre>
-<pre><code>
-  # A tibble: 333 x 6
+<span class='va'>penguins</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>add_count</span><span class='op'>(</span><span class='va'>species</span>, wt <span class='op'>=</span> <span class='va'>body_mass_g</span>, name <span class='op'>=</span> <span class='st'>"total_weight_by_species"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='co'># cutting down some columns to show the new column</span>
+  <span class='fu'>select</span><span class='op'>(</span><span class='op'>-</span><span class='fu'>contains</span><span class='op'>(</span><span class='st'>"mm"</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  # A tibble: 333 x 6
      species island    body_mass_g sex     year total_weight_by_species
      &lt;fct&gt;   &lt;fct&gt;           &lt;int&gt; &lt;fct&gt;  &lt;int&gt;                   &lt;int&gt;
    1 Adelie  Torgersen        3750 male    2007                  541100
@@ -2033,13 +2812,14 @@ penguins %&gt;%
 <p>Also check out its more primitive version <code>add_tally()</code>.</p>
 <p>By default, <code>add_tally()</code> adds a count of rows, which you can already do with <code>mutate(n = n())</code>, but it shines when you make use of its <code>wt</code> argument:</p>
 <div class="layout-chunk" data-layout="l-body">
-<pre class="r"><code>
-penguins %&gt;% 
-  add_count(species, wt = body_mass_g, name = &quot;total_weight_by_species&quot;) %&gt;% 
-  add_tally(wt = body_mass_g, name = &quot;total_weight_of_all_species&quot;) %&gt;% 
-  select(1:2, last_col(0):last_col(1))</code></pre>
-<pre><code>
-  # A tibble: 333 x 4
+<div class="sourceCode">
+<pre><code><span class='va'>penguins</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>add_count</span><span class='op'>(</span><span class='va'>species</span>, wt <span class='op'>=</span> <span class='va'>body_mass_g</span>, name <span class='op'>=</span> <span class='st'>"total_weight_by_species"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>add_tally</span><span class='op'>(</span>wt <span class='op'>=</span> <span class='va'>body_mass_g</span>, name <span class='op'>=</span> <span class='st'>"total_weight_of_all_species"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>select</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>, <span class='fu'>last_col</span><span class='op'>(</span><span class='fl'>0</span><span class='op'>)</span><span class='op'>:</span><span class='fu'>last_col</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  # A tibble: 333 x 4
      species island    total_weight_of_all_species total_weight_by_species
      &lt;fct&gt;   &lt;fct&gt;                           &lt;int&gt;                   &lt;int&gt;
    1 Adelie  Torgersen                     1400950                  541100
@@ -2054,6 +2834,7 @@ penguins %&gt;%
   10 Adelie  Torgersen                     1400950                  541100
   # ... with 323 more rows</code></pre>
 </div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <section class="footnotes" role="doc-endnotes">
 <hr />
 <ol>
@@ -2065,7 +2846,7 @@ penguins %&gt;%
   <p class="social_footer">
     <span class="article-sharing">
       Share: &nbsp;
-      <a href="https://twitter.com/share?text=Saving%20a%20line%20of%20piping&amp;url=yjunechoe.github.io%2Fposts%2F2020-08-07-saving-a-line-of-piping%2F">
+      <a href="https://twitter.com/share?text=Saving%20a%20line%20of%20piping&amp;url=https%3A%2F%2Fyjunechoe.github.io%2Fposts%2F2020-08-07-saving-a-line-of-piping%2F">
         <i class="fab fa-twitter"></i>
       </a>
     </span>
@@ -2086,12 +2867,12 @@ penguins %&gt;%
   <p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
   <h3 id="citation">Citation</h3>
   <p>For attribution, please cite this work as</p>
-  <pre class="citation-appendix short">Choe (2020, Aug. 7). June Choe: Saving a line of piping. Retrieved from yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/</pre>
+  <pre class="citation-appendix short">Choe (2020, Aug. 7). June Choe: Saving a line of piping. Retrieved from https://yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/</pre>
   <p>BibTeX citation</p>
   <pre class="citation-appendix long">@misc{choe2020saving,
   author = {Choe, June},
   title = {June Choe: Saving a line of piping},
-  url = {yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/},
+  url = {https://yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/},
   year = {2020}
 }</pre>
 </div>

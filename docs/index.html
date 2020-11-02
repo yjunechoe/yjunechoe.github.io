@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
   <meta name="generator" content="distill" />
-  <link rel="alternate" type="application/rss+xml" href="yjunechoe.github.io/index.xml" />
+  <link rel="alternate" type="application/rss+xml" href="https://yjunechoe.github.io/index.xml" />
 
   <style type="text/css">
   /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
@@ -84,8 +84,10 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 
   <!--radix_placeholder_meta_tags-->
   <title>June Choe: Blog Posts</title>
-  <link rel="icon" type="image/png" href="static/img/icon.png">
 
+
+  <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
+  <link rel="icon" type="image/png" href="static/img/icon.png"/>
 
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
@@ -97,12 +99,13 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
   <meta property="twitter:title" content="June Choe: Blog Posts"/>
+  <meta property="twitter:site" content="@yjunechoe"/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","site","listing"]}},"value":[{"type":"character","attributes":{},"value":["Blog Posts"]},{"type":"character","attributes":{},"value":["distill::distill_website"]},{"type":"character","attributes":{},"value":["posts"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","site","listing","link-citations"]}},"value":[{"type":"character","attributes":{},"value":["Blog Posts"]},{"type":"character","attributes":{},"value":["distill::distill_website"]},{"type":"character","attributes":{},"value":["posts"]},{"type":"logical","attributes":{},"value":[true]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -166,7 +169,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 
   .distill-site-nav {
     color: rgba(255, 255, 255, 0.8);
-    background-color: #455a64;
+    background-color: #0F2E3D;
     font-size: 15px;
     font-weight: 300;
   }
@@ -580,10 +583,14 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
         }]).on('autocomplete:selected', function(event, suggestion) {
           window.location.href = offsetURL(suggestion.path);
         });
+        // remove inline display style on autocompleter (we want to
+        // manage responsive display via css)
+        $('.algolia-autocomplete').css("display", "");
       })
       .catch(function(error) {
         console.log(error);
       });
+
   });
 
   </script>
@@ -602,16 +609,18 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     padding-top: 8px;
     padding-bottom: 0;
     border-radius: 6px;
-    border: 1px #455a64 solid;
+    border: 1px #0F2E3D solid;
     width: 180px;
   }
 
 
   @media screen and (max-width: 768px) {
     .distill-site-nav .algolia-autocomplete {
-      visibility: hidden
+      display: none;
+      visibility: hidden;
     }
     .distill-site-nav.responsive .algolia-autocomplete {
+      display: inline-block;
       visibility: visible;
     }
     .distill-site-nav.responsive .algolia-autocomplete .aa-dropdown-menu {
@@ -723,6 +732,18 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 
   .pagedtable-footer {
     font-size: 15px;
+  }
+
+  d-byline .byline {
+    grid-template-columns: 2fr 2fr;
+  }
+
+  d-byline .byline h3 {
+    margin-block-start: 1.5em;
+  }
+
+  d-byline .byline .authors-affiliations h3 {
+    margin-block-start: 0.5em;
   }
 
   .authors-affiliations .orcid-id {
@@ -919,7 +940,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   }
 
   @media(min-width: 1000px) {
-    .d-contents {
+    .d-contents.d-contents-float {
       height: 0;
       grid-column-start: 1;
       grid-column-end: 4;
@@ -1107,6 +1128,78 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     word-wrap: break-word;
   }
 
+  /* Include appendix styles here so they can be overridden */
+
+  d-appendix {
+    contain: layout style;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-top: 60px;
+    margin-bottom: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0,0,0,0.5);
+    padding-top: 60px;
+    padding-bottom: 48px;
+  }
+
+  d-appendix h3 {
+    grid-column: page-start / text-start;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 1em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.65);
+  }
+
+  d-appendix h3 + * {
+    margin-top: 1em;
+  }
+
+  d-appendix ol {
+    padding: 0 0 0 15px;
+  }
+
+  @media (min-width: 768px) {
+    d-appendix ol {
+      padding: 0 0 0 30px;
+      margin-left: -30px;
+    }
+  }
+
+  d-appendix li {
+    margin-bottom: 1em;
+  }
+
+  d-appendix a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  d-appendix > * {
+    grid-column: text;
+  }
+
+  d-appendix > d-footnote-list,
+  d-appendix > d-citation-list,
+  d-appendix > distill-appendix {
+    grid-column: screen;
+  }
+
+  /* Include footnote styles here so they can be overridden */
+
+  d-footnote-list {
+    contain: layout style;
+  }
+
+  d-footnote-list > * {
+    grid-column: text;
+  }
+
+  d-footnote-list a.footnote-backlink {
+    color: rgba(0,0,0,0.3);
+    padding-left: 0.5em;
+  }
+
+
 
   /* Anchor.js */
 
@@ -1174,6 +1267,211 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 
   .custom p {
     margin-bottom: 0.5em;
+  }
+
+  /* Styles for listing layout (hide title) */
+  .layout-listing d-title, .layout-listing .d-title {
+    display: none;
+  }
+
+  /* Styles for posts lists (not auto-injected) */
+
+
+  .posts-with-sidebar {
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+
+  .posts-list .description h2,
+  .posts-list .description p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .posts-list .description h2 {
+    font-weight: 700;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .posts-list h2.post-tag {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 12px;
+  }
+  .posts-list {
+    margin-top: 60px;
+    margin-bottom: 24px;
+  }
+
+  .posts-list .post-preview {
+    text-decoration: none;
+    overflow: hidden;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 24px 0;
+  }
+
+  .post-preview-last {
+    border-bottom: none !important;
+  }
+
+  .posts-list .posts-list-caption {
+    grid-column: screen;
+    font-weight: 400;
+  }
+
+  .posts-list .post-preview h2 {
+    margin: 0 0 6px 0;
+    line-height: 1.2em;
+    font-style: normal;
+    font-size: 24px;
+  }
+
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.4em;
+    font-size: 16px;
+  }
+
+  .posts-list .post-preview .thumbnail {
+    box-sizing: border-box;
+    margin-bottom: 24px;
+    position: relative;
+    max-width: 500px;
+  }
+  .posts-list .post-preview img {
+    width: 100%;
+    display: block;
+  }
+
+  .posts-list .metadata {
+    font-size: 12px;
+    line-height: 1.4em;
+    margin-bottom: 18px;
+  }
+
+  .posts-list .metadata > * {
+    display: inline-block;
+  }
+
+  .posts-list .metadata .publishedDate {
+    margin-right: 2em;
+  }
+
+  .posts-list .metadata .dt-authors {
+    display: block;
+    margin-top: 0.3em;
+    margin-right: 2em;
+  }
+
+  .posts-list .dt-tags {
+    display: block;
+    line-height: 1em;
+  }
+
+  .posts-list .dt-tags .dt-tag {
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0.3em 0.4em;
+    margin-right: 0.2em;
+    margin-bottom: 0.4em;
+    font-size: 60%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .posts-list img {
+    opacity: 1;
+  }
+
+  .posts-list img[data-src] {
+    opacity: 0;
+  }
+
+  .posts-more {
+    clear: both;
+  }
+
+
+  .posts-sidebar {
+    font-size: 16px;
+  }
+
+  .posts-sidebar h3 {
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .sidebar-section {
+    margin-bottom: 30px;
+  }
+
+  .categories ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .categories li {
+    color: rgba(0, 0, 0, 0.8);
+    margin-bottom: 0;
+  }
+
+  .categories li>a {
+    border-bottom: none;
+  }
+
+  .categories li>a:hover {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  }
+
+  .categories .active {
+    font-weight: 600;
+  }
+
+  .categories .category-count {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+
+  @media(min-width: 768px) {
+    .posts-list .post-preview h2 {
+      font-size: 26px;
+    }
+    .posts-list .post-preview .thumbnail {
+      float: right;
+      width: 30%;
+      margin-bottom: 0;
+    }
+    .posts-list .post-preview .description {
+      float: left;
+      width: 45%;
+    }
+    .posts-list .post-preview .metadata {
+      float: left;
+      width: 20%;
+      margin-top: 8px;
+    }
+    .posts-list .post-preview p {
+      margin: 0 0 12px 0;
+      line-height: 1.5em;
+      font-size: 16px;
+    }
+    .posts-with-sidebar .posts-list {
+      float: left;
+      width: 75%;
+    }
+    .posts-with-sidebar .posts-sidebar {
+      float: right;
+      width: 20%;
+      margin-top: 60px;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
   }
 
 
@@ -1304,6 +1602,12 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     -ms-hyphens: none;
     hyphens: none;
   }
+
+  .downlevel .posts-list .post-preview {
+    color: inherit;
+  }
+
+
 
   </style>
 
@@ -1523,6 +1827,10 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
         grid.children('h3:contains("Affiliations")').text('Affiliation');
       }
 
+      // remove d-appendix and d-footnote-list local styles
+      $('d-appendix > style:first-child').remove();
+      $('d-footnote-list > style:first-child').remove();
+
       // move appendix-bottom entries to the bottom
       $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
       $('.appendix-bottom').remove();
@@ -1686,229 +1994,253 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.3/header-attrs.js"></script>
+  <script src="site_libs/header-attrs-2.5/header-attrs.js"></script>
   <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
   <script src="site_libs/anchor-4.2.2/anchor.min.js"></script>
   <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
   <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
   <script src="site_libs/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-178413324-1"></script>
+  <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-178413324-1');
+  </script>
   <style type="text/css">
   /* ---------- Global Styles ---------- */
 
-	html, body, p {
-	  
-	  font-family: 'Roboto';
-	  font-weight: 400;
-	  line-height: 1.7; 
-	  font-size: 1em;
-	  color: #333333;
-	  font-style: normal;
-	  
-	}
+  html, body, p {
+    
+    font-family: 'Roboto';
+    font-weight: 400;
+    line-height: 1.7; 
+    font-size: 1em;
+    color: #333333;
+    font-style: normal;
+    
+  }
 
-	/* Small caps */
+  /* Small caps */
 
-	.sc {
-	  font-variant: small-caps;
-	  letter-spacing: 0.1em;
-	}
+  .sc {
+    font-variant: small-caps;
+    letter-spacing: 0.1em;
+  }
 
 
-	/* ---------- Index Page Styles ---------- */
+  /* ---------- Index Page Styles ---------- */
 
-	/* Publication Date */
+  /* Publication Date */
 
-	.publishedDate {
-	  font-size: 1.1em;
-	}
+  .publishedDate {
+    font-size: 1.1em;
+  }
 
 
-	/* Tags */
+  /* Tags */
 
-	.dt-tags {
-	  margin-top: 10px;
-	  margin-right: 10px;
-	}
+  .dt-tags {
+    margin-top: 10px;
+    margin-right: 10px;
+  }
 
-	.dt-tag {
-	  font-family: Roboto Slab;
-	}
+  .dt-tag {
+    font-family: Roboto Slab;
+  }
 
 
-	/* Top & Bot bars */
+  /* Top & Bot bars */
 
-	.distill-site-nav {
-	  background-color: #262c2f;
-	}
+  .distill-site-nav {
+    background-color: #262c2f;
+  }
 
-	.distill-site-footer p {
-	  color: white;
-	}
+  .distill-site-footer p {
+    color: white;
+  }
 
 
-	/* Google Search */
+  /* Google Search */
 
-	table#gs_id50 {
-	  margin-bottom: 0;
-	  border-bottom: none;
-	}
+  table#gs_id50 {
+    margin-bottom: 0;
+    border-bottom: none;
+  }
 
-	.gsc-control-cse {
-	  margin-bottom: 0;
-	}
+  .gsc-control-cse {
+    margin-bottom: 0;
+  }
 
-	.gsc-search-button-v2 {
-	  border-color: #272c34;
-	  background-color: #404f67;
-	}
+  .gsc-search-button-v2 {
+    border-color: #272c34;
+    background-color: #404f67;
+  }
 
 
-	/* Post published date medatada */
-	.posts-list .metadata .publishedDate{
-	  font-family: 'Roboto Mono Medium';
-	}
+  /* Post published date medatada */
+  .posts-list .metadata .publishedDate{
+    font-family: 'Roboto Mono Medium';
+  }
 
 
-	/* Post list caption */
-	.posts-list .posts-list-caption{
-	  font-family: 'Fira Mono Medium';
-	  border-bottom: 5px solid #f3f3f3;
-	  padding-bottom: 2rem;
-	}
+  /* Post list caption */
+  .posts-list .posts-list-caption{
+    font-family: 'Fira Mono Medium';
+    border-bottom: 5px solid #f3f3f3;
+    padding-bottom: 2rem;
+  }
 
 
-	/* Sidebar Categories */
-	.posts-sidebar {
-	  font-family: 'Fira Mono';
-	}
+  /* Sidebar Categories */
+  .posts-sidebar {
+    font-family: 'Fira Mono';
+  }
 
 
-	/* ---------- Article Styles ---------- */
+  /* ---------- Article Styles ---------- */
 
 
-	/* Title */
+  /* Title */
 
-	d-title {
-	  padding-bottom: 0;
-	}
+  d-title {
+    padding-bottom: 0;
+  }
 
-	d-title h1 {
-	  font-family: 'Lora';
-	  line-height: 1.3;
-	}
+  d-title h1 {
+    font-family: 'Lora';
+    line-height: 1.3;
+  }
 
 
-	/* General */
+  /* General */
 
-	d-article h3 {
-	  margin-top: 1em;
-	}
+  d-article h3 {
+    margin-top: 1em;
+  }
 
-	d-article ol {
-	  padding-bottom: 15px;
-	}
+  d-article ol {
+    padding-bottom: 15px;
+  }
 
-	/* Aside */
+  /* Aside */
 
-	aside {
-	  margin-left: 20px;
-	  width: 200px;
-	  font-family: 'Adelle';
-	}
+  aside {
+    margin-left: 20px;
+    width: 200px;
+    font-family: 'Adelle';
+  }
 
-	d-code + aside {
-	  margin-top: 1em;
-	}
+  d-code + aside {
+    margin-top: 1em;
+  }
 
 
-	/* Block Quotes */
+  /* Block Quotes */
 
-	d-article blockquote {
-	  border-left: 5px solid rgba(0, 0, 0, 0.2);
-	  padding-left: 1em;
-	}
+  d-article blockquote {
+    border-left: 5px solid rgba(0, 0, 0, 0.2);
+    padding-left: 1em;
+  }
 
-	blockquote p {
-	  margin-bottom: 0;
-	}
+  blockquote p {
+    margin-bottom: 0;
+  }
 
 
-	/* ---------- Code Styles ---------- */
+  /* ---------- Code Styles ---------- */
 
-	/* Inline Code */
+  /* Inline Code */
 
-	code {
-	  color: #d23c6e;
-	  font-family: 'Fira Mono';
-	  font-weight: 500;
-	  font-size: 0.8em;
-	}
+  p code {
+    color: #d23c6e;
+    background-color: #ff002f0a;
+    font-family: 'Fira Mono';
+    font-weight: 500;
+    font-size: 0.8em;
+  }
 
 
 
-	/* Output Chunk */
+  /* Code Chunk */
 
-	pre.text-output {
-	  background-color: #f8f8f8;
-	  font-family: 'Fira Mono';
-	  font-weight: 400;
-	  font-size: 0.8em;
-	}
+  d-article div.sourceCode pre {
+    background-color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+  }
 
-	/* Code Chunk */
+  d-article div.sourceCode pre code {
+    font-family: 'Roboto Mono';
+    font-weight: 500;
+  }
 
-	d-article pre {
-	  font-size: 14px;
-	  padding-bottom: 17px;
-	  margin-bottom: 2em;
-	}
+  /* overrides some syntax highlighting */
+  code span.va {
+    color: black;
+  }
 
-	d-code {
-	  font-weight: 500;
-	  margin-bottom: 10px;
-	}
+  /* underline auto-linked functions */
+  span.fu a {
+      text-decoration: underline;
+  }
 
+  /* Output Chunk */
 
+  d-article pre code {
+      font-family: IBM Plex Mono;
+      font-weight: 500;
+  }
 
-	/* ---------- ADD-ONS ---------- */
+  d-article pre {
+      background-color: #f9f9f9;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      margin-bottom: 30px;
+      overflow-x: scroll;
+  }
 
 
-	/* {rmarkdown} */
+  /* ---------- ADD-ONS ---------- */
 
-	.pagedtable-wrapper {
-	  margin-bottom: 20px;
-	}
 
+  /* {rmarkdown} */
 
-	/* html widgets */
+  .pagedtable-wrapper {
+    margin-bottom: 20px;
+  }
 
-	.html-widget {
-	  margin-top: 1.0em;
-	  margin-bottom: 1.0em;
-	}
 
+  /* html widgets */
 
-	/* {reactable} */
+  .html-widget {
+    margin-top: 1.0em;
+    margin-bottom: 1.0em;
+  }
 
-	.ReactTable {
-	  font-size: 14px;
-	  font-family: 'Roboto Medium';
-	  background-color: #fbfbfb;
-	}
 
+  /* {reactable} */
 
-	/* {xaringanExtra} */
+  .ReactTable {
+    font-size: 14px;
+    font-family: 'Roboto Medium';
+    background-color: #fbfbfb;
+  }
 
-	.panelset {
-	  margin-top: 10px;
-	  --panel-tabs-border-bottom: black;
-	  --panel-tab-font-family: 'Montserrat SemiBold';
-	  --panel-tab-hover-background: #ddd;
-	  --panel-tab-text-decoration: none;
-	  border-bottom: 2px solid black;
-	  margin-bottom: 30px;
-	}
+
+  /* {xaringanExtra} */
+
+  .panelset {
+    margin-top: 10px;
+    --panel-tabs-border-bottom: black;
+    --panel-tab-font-family: 'Montserrat SemiBold';
+    --panel-tab-hover-background: #ddd;
+    --panel-tab-text-decoration: none;
+    border-bottom: 2px solid black;
+    margin-bottom: 30px;
+  }
   </style>
   <!--/radix_placeholder_site_in_header-->
 
@@ -1928,7 +2260,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <!--radix_placeholder_navigation_before_body-->
 <header class="header header--fixed" role="banner">
 <nav class="distill-site-nav distill-site-header">
-<div class="nav-left" style="margin-left:0">
+<div class="nav-left">
 <a href="index.html" class="title">June Choe</a>
 <input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
 </div>
@@ -1944,6 +2276,9 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <a href="https://github.com/yjunechoe">
 <i class="fa fa-github" aria-hidden="true"></i>
 </a>
+<a href="https://osf.io/72vrb/" class="nav-image">
+<img src="static/img/osf.png"/>
+</a>
 <a href="index.xml">
 <i class="fa fa-rss" aria-hidden="true"></i>
 </a>
@@ -1956,213 +2291,6 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <!--/radix_placeholder_site_before_body-->
 <!--radix_placeholder_article_listing-->
 
-<style type="text/css">
-
-/* Styles for listing layout (hide title) */
-.layout-listing d-title, .layout-listing .d-title {
-  display: none;
-}
-
-/* Styles for posts lists (not auto-injected) */
-
-
-.posts-with-sidebar {
-  padding-left: 45px;
-  padding-right: 45px;
-}
-
-.posts-list .description h2,
-.posts-list .description p {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
-}
-
-.posts-list .description h2 {
-  font-weight: 700;
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-.posts-list h2.post-tag {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  padding-bottom: 12px;
-}
-.posts-list {
-  margin-top: 60px;
-  margin-bottom: 24px;
-}
-
-.posts-list .post-preview {
-  text-decoration: none;
-  overflow: hidden;
-  display: block;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 24px 0;
-}
-
-.post-preview-last {
-  border-bottom: none !important;
-}
-
-.posts-list .posts-list-caption {
-  grid-column: screen;
-  font-weight: 400;
-}
-
-.posts-list .post-preview h2 {
-  margin: 0 0 6px 0;
-  line-height: 1.2em;
-  font-style: normal;
-  font-size: 24px;
-}
-
-.posts-list .post-preview p {
-  margin: 0 0 12px 0;
-  line-height: 1.4em;
-  font-size: 16px;
-}
-
-.posts-list .post-preview .thumbnail {
-  box-sizing: border-box;
-  margin-bottom: 24px;
-  position: relative;
-  max-width: 500px;
-}
-.posts-list .post-preview img {
-  width: 100%;
-  display: block;
-}
-
-.posts-list .metadata {
-  font-size: 12px;
-  line-height: 1.4em;
-  margin-bottom: 18px;
-}
-
-.posts-list .metadata > * {
-  display: inline-block;
-}
-
-.posts-list .metadata .publishedDate {
-  margin-right: 2em;
-}
-
-.posts-list .metadata .dt-tags {
-  display: block;
-  margin-top: 1em;
-  margin-right: 2em;
-}
-
-.posts-list .dt-tags .dt-tag {
-  display: inline-block;
-  color: rgba(0,0,0,0.6);
-  padding: 0em 0.3em;
-  margin-right: 0.2em;
-  margin-bottom: 0.4em;
-  font-size: 80%;
-  border: 1px solid rgba(0,0,0,0.2);
-  border-radius: 3px;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-
-.posts-list img {
-  opacity: 1;
-}
-
-.posts-list img[data-src] {
-  opacity: 0;
-}
-
-.posts-more {
-  clear: both;
-}
-
-
-.posts-sidebar {
-  font-size: 16px;
-}
-
-.posts-sidebar h3 {
-  font-size: 16px;
-  margin-top: 0;
-  margin-bottom: 0.5em;
-  font-weight: 400;
-  text-transform: uppercase;
-}
-
-.sidebar-section {
-  margin-bottom: 30px;
-}
-
-.categories ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-.categories li {
-  color: rgba(0, 0, 0, 0.8);
-  margin-bottom: 0;
-}
-
-.categories li>a {
-  border-bottom: none;
-}
-
-.categories li>a:hover {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-}
-
-.categories .active {
-  font-weight: 600;
-}
-
-.categories .category-count {
-  color: rgba(0, 0, 0, 0.4);
-}
-
-
-@media(min-width: 768px) {
-  .posts-list .post-preview h2 {
-    font-size: 26px;
-  }
-  .posts-list .post-preview .thumbnail {
-    float: right;
-    width: 30%;
-    margin-bottom: 0;
-  }
-  .posts-list .post-preview .description {
-    float: left;
-    width: 45%;
-  }
-  .posts-list .post-preview .metadata {
-    float: left;
-    width: 20%;
-    margin-top: 8px;
-  }
-  .posts-list .post-preview p {
-    margin: 0 0 12px 0;
-    line-height: 1.5em;
-    font-size: 16px;
-  }
-  .posts-with-sidebar .posts-list {
-    float: left;
-    width: 75%;
-  }
-  .posts-with-sidebar .posts-sidebar {
-    float: right;
-    width: 20%;
-    margin-top: 60px;
-    padding-top: 24px;
-    padding-bottom: 24px;
-  }
-}
-
-.downlevel .posts-list .post-preview {
-  color: inherit;
-}
-
-</style>
 
 <script type="application/javascript">
 
@@ -2223,7 +2351,7 @@ function init_posts_list() {
         var post = null;
         $.each(metadata.categories, function(idx, category) {
           category = category.replace(/ /g,"_");
-          if (page_category === "articles" || category === page_category) {
+          if ((page_category || '').toLowerCase() === "articles" || category === page_category) {
             post = $(script).parent().get();
             return false;
           }
@@ -2237,7 +2365,7 @@ function init_posts_list() {
 
       // update the list_caption
       var list_caption = $('.posts-list-caption');
-      var caption = page_category === "articles"
+      var caption = (page_category || '').toLowerCase() === "articles"
         ? list_caption.attr('data-caption')
         : ('Category: ' + page_category.replace(/_/g," "));
       list_caption.text(caption);
@@ -2300,18 +2428,18 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["data visualization","ggplot2","rtweet","colors"]}</script>
 <div class="metadata">
 <div class="publishedDate">Oct. 22, 2020</div>
-<div class="dt-tags">
-<div class="dt-tag">data visualization</div>
-<div class="dt-tag">ggplot2</div>
-<div class="dt-tag">colors</div>
-<div class="dt-tag">rtweet</div>
-</div>
 </div>
 <div class="thumbnail">
-<img data-src="posts/2020-10-22-analysis-of-everycolorbots-tweets/preview.png"/>
+<img src="posts/2020-10-22-analysis-of-everycolorbots-tweets/preview.png"/>
 </div>
 <div class="description">
 <h2>Analysis of @everycolorbot's tweets</h2>
+<div class="dt-tags">
+<div class="dt-tag">data visualization</div>
+<div class="dt-tag">ggplot2</div>
+<div class="dt-tag">rtweet</div>
+<div class="dt-tag">colors</div>
+</div>
 <p>And why you should avoid neon colors</p>
 </div>
 </a>
@@ -2319,17 +2447,17 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["data visualization","ggplot2","tidytuesday"]}</script>
 <div class="metadata">
 <div class="publishedDate">Oct. 13, 2020</div>
+</div>
+<div class="thumbnail">
+<img src="posts/2020-10-13-designing-guiding-aesthetics/preview.png"/>
+</div>
+<div class="description">
+<h2>Designing guiding aesthetics</h2>
 <div class="dt-tags">
 <div class="dt-tag">data visualization</div>
 <div class="dt-tag">ggplot2</div>
 <div class="dt-tag">tidytuesday</div>
 </div>
-</div>
-<div class="thumbnail">
-<img data-src="posts/2020-10-13-designing-guiding-aesthetics/preview.png"/>
-</div>
-<div class="description">
-<h2>Designing guiding aesthetics</h2>
 <p>The fine line between creativity and noise</p>
 </div>
 </a>
@@ -2337,17 +2465,17 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["data visualization","ggplot2","tutorial"]}</script>
 <div class="metadata">
 <div class="publishedDate">Sept. 27, 2020</div>
+</div>
+<div class="thumbnail">
+<img src="posts/2020-09-26-demystifying-stat-layers-ggplot2/demystifying-stat-layers-ggplot2_files/figure-html5/unnamed-chunk-1-1.png"/>
+</div>
+<div class="description">
+<h2>Demystifying stat_ layers in {ggplot2}</h2>
 <div class="dt-tags">
 <div class="dt-tag">data visualization</div>
 <div class="dt-tag">ggplot2</div>
 <div class="dt-tag">tutorial</div>
 </div>
-</div>
-<div class="thumbnail">
-<img data-src="posts/2020-09-26-demystifying-stat-layers-ggplot2/preview.png"/>
-</div>
-<div class="description">
-<h2>Demystifying stat_ layers in {ggplot2}</h2>
 <p>The motivation behind stat, the distinction between stat and geom, and a case study of stat_summary()</p>
 </div>
 </a>
@@ -2355,17 +2483,17 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["ggplot2","data visualization","tidytuesday"]}</script>
 <div class="metadata">
 <div class="publishedDate">Sept. 23, 2020</div>
-<div class="dt-tags">
-<div class="dt-tag">tidytuesday</div>
-<div class="dt-tag">data visualization</div>
-<div class="dt-tag">ggplot2</div>
-</div>
 </div>
 <div class="thumbnail">
-<img data-src="posts/2020-09-23-tidytuesday-2020-week-39/preview.png"/>
+<img src="posts/2020-09-23-tidytuesday-2020-week-39/preview.png"/>
 </div>
 <div class="description">
 <h2>TidyTuesday 2020 week 39</h2>
+<div class="dt-tags">
+<div class="dt-tag">ggplot2</div>
+<div class="dt-tag">data visualization</div>
+<div class="dt-tag">tidytuesday</div>
+</div>
 <p>Stacked area plot of the heights of Himalayan peaks attempted over the last century</p>
 </div>
 </a>
@@ -2373,17 +2501,17 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["plot makeover","data visualization","ggplot2"]}</script>
 <div class="metadata">
 <div class="publishedDate">Sept. 20, 2020</div>
-<div class="dt-tags">
-<div class="dt-tag">plot makeover</div>
-<div class="dt-tag">data visualization</div>
-<div class="dt-tag">ggplot2</div>
-</div>
 </div>
 <div class="thumbnail">
 <img src="posts/2020-09-20-plot-makeover-1/plot-makeover-1_files/figure-html5/after_bar_plot-1.png"/>
 </div>
 <div class="description">
 <h2>Plot Makeover #1</h2>
+<div class="dt-tags">
+<div class="dt-tag">plot makeover</div>
+<div class="dt-tag">data visualization</div>
+<div class="dt-tag">ggplot2</div>
+</div>
 <p>Flattening a faceted grid for strictly horizontal comparisons</p>
 </div>
 </a>
@@ -2391,17 +2519,17 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["gt","data visualization","tidytuesday"]}</script>
 <div class="metadata">
 <div class="publishedDate">Sept. 14, 2020</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2020-09-14-tidytuesday-2020-week-38/preview.png"/>
+</div>
+<div class="description">
+<h2>TidyTuesday 2020 week 38</h2>
 <div class="dt-tags">
 <div class="dt-tag">gt</div>
 <div class="dt-tag">data visualization</div>
 <div class="dt-tag">tidytuesday</div>
 </div>
-</div>
-<div class="thumbnail">
-<img src="posts/2020-09-14-tidytuesday-2020-week-38/preview.png"/>
-</div>
-<div class="description">
-<h2>TidyTuesday 2020 week 38</h2>
 <p>Visualizing two decades of primary and secondary education spending with {gt}</p>
 </div>
 </a>
@@ -2409,16 +2537,16 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["reactable","data visualization"]}</script>
 <div class="metadata">
 <div class="publishedDate">Sept. 12, 2020</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2020-09-12-videos-in-reactable/preview.png"/>
+</div>
+<div class="description">
+<h2>Embedding videos in {reactable} tables</h2>
 <div class="dt-tags">
 <div class="dt-tag">reactable</div>
 <div class="dt-tag">data visualization</div>
 </div>
-</div>
-<div class="thumbnail">
-<img src="posts/2020-09-12-videos-in-reactable/preview.png"/>
-</div>
-<div class="description">
-<h2>Embedding videos in {reactable} tables</h2>
 <p>Pushing the limits of expandable row details</p>
 </div>
 </a>
@@ -2426,16 +2554,16 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["data visualization","typography"]}</script>
 <div class="metadata">
 <div class="publishedDate">Sept. 6, 2020</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2020-09-06-fonts-for-graphs/preview.png"/>
+</div>
+<div class="description">
+<h2>Fonts for graphs</h2>
 <div class="dt-tags">
 <div class="dt-tag">data visualization</div>
 <div class="dt-tag">typography</div>
 </div>
-</div>
-<div class="thumbnail">
-<img src="posts/2020-09-06-fonts-for-graphs/preview.png"/>
-</div>
-<div class="description">
-<h2>Fonts for graphs</h2>
 <p>A small collection of my favorite fonts for data visualization</p>
 </div>
 </a>
@@ -2443,17 +2571,17 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["tidytuesday","gganimate","ggplot2"]}</script>
 <div class="metadata">
 <div class="publishedDate">Aug. 17, 2020</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2020-08-17-tidytuesday-2020-week-33/preview.png"/>
+</div>
+<div class="description">
+<h2>TidyTuesday 2020 Week 33</h2>
 <div class="dt-tags">
 <div class="dt-tag">tidytuesday</div>
 <div class="dt-tag">gganimate</div>
 <div class="dt-tag">ggplot2</div>
 </div>
-</div>
-<div class="thumbnail">
-<img src="posts/2020-08-17-tidytuesday-2020-week-33/preview.png"/>
-</div>
-<div class="description">
-<h2>TidyTuesday 2020 Week 33</h2>
 <p>An animation of the main characters in Avatar</p>
 </div>
 </a>
@@ -2461,16 +2589,16 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["data wrangling","dplyr"]}</script>
 <div class="metadata">
 <div class="publishedDate">Aug. 7, 2020</div>
-<div class="dt-tags">
-<div class="dt-tag">data wrangling</div>
-<div class="dt-tag">dplyr</div>
-</div>
 </div>
 <div class="thumbnail">
 <img data-src="posts/2020-08-07-saving-a-line-of-piping/preview.png"/>
 </div>
 <div class="description">
 <h2>Saving a line of piping</h2>
+<div class="dt-tags">
+<div class="dt-tag">data wrangling</div>
+<div class="dt-tag">dplyr</div>
+</div>
 <p>Some notes on lesser known functions/functionalities that combine common chain of {dplyr} verbs.</p>
 </div>
 </a>
@@ -2478,17 +2606,17 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["tidytuesday","data visualization","ggplot2"]}</script>
 <div class="metadata">
 <div class="publishedDate">Aug. 4, 2020</div>
-<div class="dt-tags">
-<div class="dt-tag">tidytuesday</div>
-<div class="dt-tag">data visualization</div>
-<div class="dt-tag">ggplot2</div>
-</div>
 </div>
 <div class="thumbnail">
 <img data-src="posts/2020-08-04-tidytuesday-2020-week-32/preview.png"/>
 </div>
 <div class="description">
 <h2>TidyTuesday 2020 Week 32</h2>
+<div class="dt-tags">
+<div class="dt-tag">tidytuesday</div>
+<div class="dt-tag">data visualization</div>
+<div class="dt-tag">ggplot2</div>
+</div>
 <p>A dumbbell chart visualization of energy production trends among European countries</p>
 </div>
 </a>
@@ -2496,6 +2624,12 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["ggplot2","gganimate","spotifyr","data wrangling","data visualization"]}</script>
 <div class="metadata">
 <div class="publishedDate">July 29, 2020</div>
+</div>
+<div class="thumbnail">
+<img data-src="posts/2020-07-29-six-years-of-my-spotify-playlists/preview.png"/>
+</div>
+<div class="description">
+<h2>Six years of my Spotify playlists</h2>
 <div class="dt-tags">
 <div class="dt-tag">ggplot2</div>
 <div class="dt-tag">gganimate</div>
@@ -2503,12 +2637,6 @@ function init_posts_list() {
 <div class="dt-tag">data wrangling</div>
 <div class="dt-tag">data visualization</div>
 </div>
-</div>
-<div class="thumbnail">
-<img data-src="posts/2020-07-29-six-years-of-my-spotify-playlists/preview.png"/>
-</div>
-<div class="description">
-<h2>Six years of my Spotify playlists</h2>
 <p>An analysis of acoustic features with {spotifyr}</p>
 </div>
 </a>
@@ -2516,15 +2644,15 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["shiny"]}</script>
 <div class="metadata">
 <div class="publishedDate">July 20, 2020</div>
-<div class="dt-tags">
-<div class="dt-tag">shiny</div>
-</div>
 </div>
 <div class="thumbnail">
 <img data-src="posts/2020-07-20-shiny-tips-1/preview.png"/>
 </div>
 <div class="description">
 <h2>Shiny tips - the first set</h2>
+<div class="dt-tags">
+<div class="dt-tag">shiny</div>
+</div>
 <p>%||%, imap() + {shinybusy}, and user inputs in modalDialog()</p>
 </div>
 </a>
@@ -2532,16 +2660,16 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["data visualization","ggplot2"]}</script>
 <div class="metadata">
 <div class="publishedDate">July 13, 2020</div>
-<div class="dt-tags">
-<div class="dt-tag">data visualization</div>
-<div class="dt-tag">ggplot2</div>
-</div>
 </div>
 <div class="thumbnail">
 <img data-src="posts/2020-07-13-geom-paired-raincloud/preview.png"/>
 </div>
 <div class="description">
 <h2>geom_paired_raincloud()</h2>
+<div class="dt-tags">
+<div class="dt-tag">data visualization</div>
+<div class="dt-tag">ggplot2</div>
+</div>
 <p>A {ggplot2} geom for visualizing change in distribution between two conditions.</p>
 </div>
 </a>
@@ -2549,17 +2677,17 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["data visualization","treemap","ggplot2"]}</script>
 <div class="metadata">
 <div class="publishedDate">June 30, 2020</div>
-<div class="dt-tags">
-<div class="dt-tag">data visualization</div>
-<div class="dt-tag">treemap</div>
-<div class="dt-tag">ggplot2</div>
-</div>
 </div>
 <div class="thumbnail">
 <img data-src="posts/2020-06-30-treemap-with-ggplot/2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-12-1.png"/>
 </div>
 <div class="description">
 <h2>Plotting treemaps with {treemap} and {ggplot2}</h2>
+<div class="dt-tags">
+<div class="dt-tag">data visualization</div>
+<div class="dt-tag">treemap</div>
+<div class="dt-tag">ggplot2</div>
+</div>
 <p>Using underlying plot data for maximum customization</p>
 </div>
 </a>
@@ -2567,17 +2695,17 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["data wrangling","NLP","spacyr"]}</script>
 <div class="metadata">
 <div class="publishedDate">June 25, 2020</div>
-<div class="dt-tags">
-<div class="dt-tag">data wrangling</div>
-<div class="dt-tag">NLP</div>
-<div class="dt-tag">spacyr</div>
-</div>
 </div>
 <div class="thumbnail">
 <img data-src="posts/2020-06-25-indexing-tip-for-spacyr/preview.png"/>
 </div>
 <div class="description">
 <h2>Indexing tip for {spacyr}</h2>
+<div class="dt-tags">
+<div class="dt-tag">data wrangling</div>
+<div class="dt-tag">NLP</div>
+<div class="dt-tag">spacyr</div>
+</div>
 <p>Speeding up the analysis of dependency relations.</p>
 </div>
 </a>
@@ -2585,16 +2713,16 @@ function init_posts_list() {
 <script class="post-metadata" type="text/json">{"categories":["statistics","mixed-effects models"]}</script>
 <div class="metadata">
 <div class="publishedDate">June 7, 2020</div>
-<div class="dt-tags">
-<div class="dt-tag">statistics</div>
-<div class="dt-tag">mixed-effects models</div>
-</div>
 </div>
 <div class="thumbnail">
 <img data-src="posts/2020-06-07-correlation-parameter-mem/preview.png"/>
 </div>
 <div class="description">
 <h2>The Correlation Parameter in Mixed Effects Models</h2>
+<div class="dt-tags">
+<div class="dt-tag">statistics</div>
+<div class="dt-tag">mixed-effects models</div>
+</div>
 <p>Notes on the Corr term in {lme4} output</p>
 </div>
 </a>
@@ -2604,13 +2732,21 @@ function init_posts_list() {
   <img src="static/img/profile.png" width="200" style="display:block; padding-bottom: 20px">
   <h3><a href="about.html">About Me</a></h3>
   I am a (computational) psycholinguist interested in modeling how people parse linguistic input, particularly those that contain structural ambiguities. In my spare time, I enjoy blogging about data visualization and #rstats.
-</div></div>
+</div>
 
+<!-- Google Search=
+<div class="sidebar-section custom">
+  <h3>Search</h3>
+  <script async src="https://cse.google.com/cse.js?cx=5004f2335f01c9f8e"></script>
+  <div class="gcse-search"></div>
+</div>
+ -->
+</div>
 <div class="sidebar-section categories">
 <h3>Categories</h3>
 <ul>
 <li>
-<a href="">ALL ARTICLES</a>
+<a href="#category:Articles">Articles</a>
 <span class="category-count">(17)</span>
 </li>
 <li>
@@ -2619,7 +2755,7 @@ function init_posts_list() {
 </li>
 <li>
 <a href="#category:data_visualization">data visualization</a>
-<span class="category-count">(13)</span>
+<span class="category-count">(12)</span>
 </li>
 <li>
 <a href="#category:data_wrangling">data wrangling</a>
@@ -2635,7 +2771,7 @@ function init_posts_list() {
 </li>
 <li>
 <a href="#category:ggplot2">ggplot2</a>
-<span class="category-count">(11)</span>
+<span class="category-count">(10)</span>
 </li>
 <li>
 <a href="#category:gt">gt</a>
@@ -2723,11 +2859,14 @@ function init_posts_list() {
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->
 <!--radix_placeholder_appendices-->
-<div class="appendix-bottom"></div>
+<div class="appendix-bottom">
+<h3 id="reuse">Reuse</h3>
+<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
+</div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
 <div class="distill-site-nav distill-site-footer">
-<p><span style="font-family: 'Lora'">© Copyright 2020 June Choe </span></p>
+<p><span style="font-family: 'Lora'"> © Copyright 2020 June Choe </span></p>
 </div>
 <!--/radix_placeholder_navigation_after_body-->
 

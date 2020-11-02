@@ -14,6 +14,7 @@ author:
   - name: June Choe
     affiliation: University of Pennsylvania Linguistics
     affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+    orcid_id: 0000-0002-0701-921X
 date: 07-29-2020
 output:
   distill::distill_article:
@@ -40,7 +41,7 @@ I've been doing this for many years, and have the best record of my monthly play
 <p>
 
 ```{r, echo = FALSE, out.width = '20%', fig.align='center'}
-knitr::include_graphics('spotify.png')
+knitr::include_graphics('spotify.png', error = FALSE)
 ```
 
 

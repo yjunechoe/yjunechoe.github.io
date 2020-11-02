@@ -10,6 +10,7 @@ author:
   - name: June Choe
     affiliation: University of Pennsylvania Linguistics
     affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+    orcid_id: 0000-0002-0701-921X
 preview: preview.png
 date: 06-07-2020
 output:
@@ -486,7 +487,7 @@ subj_intercepts_plot + plot_spacer() + (ranef_subj_plot +  geom_ellipse(aes(x0=0
 In fact, we cannot generate any distribution of a tilted shape with just two independent distributions for each variable. We need to factor in **covariation** to capture the correlation between variables. Barr et al. (2013) illustrates this clearly in [the supplementary materials to their paper](http://talklab.psy.gla.ac.uk/simgen/rsonly.html). You can see from the plot below (originally Figure 1 on the linked page) that without the correlation parameter, you can only capture distributions that are symmetrical with respect to the axes (the darker ellipses). However, once you add in a correlation parameter ($\rho$), you can capture distributions that are in the "tilted" shape (the lighter ellipses) like the distribution of our highly correlated subject intercepts and subject slopes.
 
 ```{r fig.cap="Figure from Barr et al. (2013)", echo = FALSE, out.extra="class=external", fig.align='center'}
-knitr::include_graphics("nocor.png")
+knitr::include_graphics("nocor.png", error = FALSE)
 ```
 
 ### **Putting it all together**
