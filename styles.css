@@ -143,6 +143,10 @@ d-code + aside {
   margin-top: 1em;
 }
 
+aside code {
+    font-weight: 600;
+}
+
 
 /* Block Quotes */
 
