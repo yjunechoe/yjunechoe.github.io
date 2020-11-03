@@ -2027,7 +2027,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   /* Name time */
 
   div.nav-left a.title {
-   font-family: Trispace;
+    font-family: Trispace;
   }
 
 
@@ -2047,17 +2047,17 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 
   /* Tags */
 
-  .dt-tags {
+  .posts-list .dt-tags {
     margin-top: 10px;
     margin-right: 10px;
   }
 
-  .dt-tag {
-    font-family: Roboto Slab;
-  }
 
   .posts-list .dt-tags .dt-tag {
+    font-family: Ubuntu;
+    font-weight: bold;
     letter-spacing: 1px;
+    background-color: #f9f9f9;
   }
 
   /* Top & Bot bars */
@@ -2142,7 +2142,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   }
 
   div.sourceCode + aside {
-      margin-top: 1.5em;
+    margin-top: 1.5em;
   }
 
   aside code {
@@ -2196,25 +2196,38 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   }
 
   /* underline auto-linked functions */
-  span.fu a {
-      text-decoration: underline;
+  code span.va a {
+    text-decoration: underline;
   }
+  code span.fu a {
+    text-decoration: underline;
+  }
+
+
+
 
   /* Output Chunk */
 
   d-article pre code {
-      font-family: IBM Plex Mono;
-      font-weight: 500;
+    font-family: IBM Plex Mono;
+    font-weight: 500;
   }
 
   d-article pre {
-      background-color: #f9f9f9;
-      padding-top: 10px;
-      padding-bottom: 10px;
-      margin-bottom: 30px;
-      overflow-x: scroll;
+    background-color: #f9f9f9;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    overflow-x: scroll;
   }
 
+
+  /* Footnote inline code */
+
+  d-footnote-list code {
+    color: rgb(0 0 0 / 0.70);
+    font-weight: 600;
+  }
 
   /* ---------- ADD-ONS ---------- */
 
@@ -2437,6 +2450,42 @@ function init_posts_list() {
 <div class="posts-container posts-with-sidebar posts-apply-limit l-screen-inset">
 <div class="posts-list">
 <h1 class="posts-list-caption" data-caption="Blog Posts">Blog Posts</h1>
+<a href="posts/2020-11-03-tidytuesday-2020-week-45/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["ggplot2","data visualization","tidytuesday"]}</script>
+<div class="metadata">
+<div class="publishedDate">Nov. 3, 2020</div>
+</div>
+<div class="thumbnail">
+<img src="posts/2020-11-03-tidytuesday-2020-week-45/preview.png"/>
+</div>
+<div class="description">
+<h2>TidyTuesday 2020 week 45</h2>
+<div class="dt-tags">
+<div class="dt-tag">ggplot2</div>
+<div class="dt-tag">data visualization</div>
+<div class="dt-tag">tidytuesday</div>
+</div>
+<p>Waffle chart of IKEA furnitures in stock</p>
+</div>
+</a>
+<a href="posts/2020-10-28-tidytuesday-2020-week-44/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["ggplot2","data visualization","tidytuesday"]}</script>
+<div class="metadata">
+<div class="publishedDate">Oct. 28, 2020</div>
+</div>
+<div class="thumbnail">
+<img src="posts/2020-10-28-tidytuesday-2020-week-44/preview.png"/>
+</div>
+<div class="description">
+<h2>TidyTuesday 2020 week 44</h2>
+<div class="dt-tags">
+<div class="dt-tag">ggplot2</div>
+<div class="dt-tag">data visualization</div>
+<div class="dt-tag">tidytuesday</div>
+</div>
+<p>Patched animation of the location and cumulative capacity of wind turbines in Canada</p>
+</div>
+</a>
 <a href="posts/2020-10-22-analysis-of-everycolorbots-tweets/" class="post-preview">
 <script class="post-metadata" type="text/json">{"categories":["data visualization","ggplot2","rtweet","colors"]}</script>
 <div class="metadata">
@@ -2498,7 +2547,7 @@ function init_posts_list() {
 <div class="publishedDate">Sept. 23, 2020</div>
 </div>
 <div class="thumbnail">
-<img src="posts/2020-09-23-tidytuesday-2020-week-39/preview.png"/>
+<img data-src="posts/2020-09-23-tidytuesday-2020-week-39/preview.png"/>
 </div>
 <div class="description">
 <h2>TidyTuesday 2020 week 39</h2>
@@ -2516,7 +2565,7 @@ function init_posts_list() {
 <div class="publishedDate">Sept. 20, 2020</div>
 </div>
 <div class="thumbnail">
-<img src="posts/2020-09-20-plot-makeover-1/plot-makeover-1_files/figure-html5/after_bar_plot-1.png"/>
+<img data-src="posts/2020-09-20-plot-makeover-1/plot-makeover-1_files/figure-html5/after_bar_plot-1.png"/>
 </div>
 <div class="description">
 <h2>Plot Makeover #1</h2>
@@ -2760,7 +2809,7 @@ function init_posts_list() {
 <ul>
 <li>
 <a href="#category:Articles">Articles</a>
-<span class="category-count">(17)</span>
+<span class="category-count">(19)</span>
 </li>
 <li>
 <a href="#category:colors">colors</a>
@@ -2768,7 +2817,7 @@ function init_posts_list() {
 </li>
 <li>
 <a href="#category:data_visualization">data visualization</a>
-<span class="category-count">(12)</span>
+<span class="category-count">(14)</span>
 </li>
 <li>
 <a href="#category:data_wrangling">data wrangling</a>
@@ -2784,7 +2833,7 @@ function init_posts_list() {
 </li>
 <li>
 <a href="#category:ggplot2">ggplot2</a>
-<span class="category-count">(10)</span>
+<span class="category-count">(12)</span>
 </li>
 <li>
 <a href="#category:gt">gt</a>
@@ -2828,7 +2877,7 @@ function init_posts_list() {
 </li>
 <li>
 <a href="#category:tidytuesday">tidytuesday</a>
-<span class="category-count">(5)</span>
+<span class="category-count">(7)</span>
 </li>
 <li>
 <a href="#category:treemap">treemap</a>

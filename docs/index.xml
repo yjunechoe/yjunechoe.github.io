@@ -12,7 +12,31 @@
       <link>https://yjunechoe.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Thu, 22 Oct 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>TidyTuesday 2020 week 45</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>https://yjunechoe.github.io/posts/2020-11-03-tidytuesday-2020-week-45</link>
+      <description>Waffle chart of IKEA furnitures in stock</description>
+      <category>ggplot2</category>
+      <category>data visualization</category>
+      <category>tidytuesday</category>
+      <guid>https://yjunechoe.github.io/posts/2020-11-03-tidytuesday-2020-week-45</guid>
+      <pubDate>Tue, 03 Nov 2020 00:00:00 +0000</pubDate>
+      <media:content url="https://yjunechoe.github.io/posts/2020-11-03-tidytuesday-2020-week-45/preview.png" medium="image" type="image/png" width="4800" height="10400"/>
+    </item>
+    <item>
+      <title>TidyTuesday 2020 week 44</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>https://yjunechoe.github.io/posts/2020-10-28-tidytuesday-2020-week-44</link>
+      <description>Patched animation of the location and cumulative capacity of wind turbines in Canada</description>
+      <category>ggplot2</category>
+      <category>data visualization</category>
+      <category>tidytuesday</category>
+      <guid>https://yjunechoe.github.io/posts/2020-10-28-tidytuesday-2020-week-44</guid>
+      <pubDate>Wed, 28 Oct 2020 00:00:00 +0000</pubDate>
+      <media:content url="https://yjunechoe.github.io/posts/2020-10-28-tidytuesday-2020-week-44/preview.png" medium="image" type="image/png" width="735" height="541"/>
+    </item>
     <item>
       <title>Analysis of @everycolorbot's tweets</title>
       <dc:creator>June Choe</dc:creator>

@@ -2026,7 +2026,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   /* Name time */
 
   div.nav-left a.title {
-   font-family: Trispace;
+    font-family: Trispace;
   }
 
 
@@ -2046,17 +2046,17 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 
   /* Tags */
 
-  .dt-tags {
+  .posts-list .dt-tags {
     margin-top: 10px;
     margin-right: 10px;
   }
 
-  .dt-tag {
-    font-family: Roboto Slab;
-  }
 
   .posts-list .dt-tags .dt-tag {
+    font-family: Ubuntu;
+    font-weight: bold;
     letter-spacing: 1px;
+    background-color: #f9f9f9;
   }
 
   /* Top & Bot bars */
@@ -2141,7 +2141,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   }
 
   div.sourceCode + aside {
-      margin-top: 1.5em;
+    margin-top: 1.5em;
   }
 
   aside code {
@@ -2195,25 +2195,38 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   }
 
   /* underline auto-linked functions */
-  span.fu a {
-      text-decoration: underline;
+  code span.va a {
+    text-decoration: underline;
   }
+  code span.fu a {
+    text-decoration: underline;
+  }
+
+
+
 
   /* Output Chunk */
 
   d-article pre code {
-      font-family: IBM Plex Mono;
-      font-weight: 500;
+    font-family: IBM Plex Mono;
+    font-weight: 500;
   }
 
   d-article pre {
-      background-color: #f9f9f9;
-      padding-top: 10px;
-      padding-bottom: 10px;
-      margin-bottom: 30px;
-      overflow-x: scroll;
+    background-color: #f9f9f9;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    overflow-x: scroll;
   }
 
+
+  /* Footnote inline code */
+
+  d-footnote-list code {
+    color: rgb(0 0 0 / 0.70);
+    font-weight: 600;
+  }
 
   /* ---------- ADD-ONS ---------- */
 
@@ -2323,9 +2336,9 @@ d-article {
 
 </style>
 </div>
-<p>I am a first year PhD student in Linguistics at the University of Pennsylvania, specializing in (computational) psycholinguistics. My main research interest is in modeling how comprehenders parse linguistic input, both in real time and over the course of development.</p>
+<p>I am a first year PhD student in <a href="https://live-sas-www-ling.pantheon.sas.upenn.edu/">Linguistics at the University of Pennsylvania</a>, specializing in (computational) psycholinguistics. My main research interest is in modeling how comprehenders parse linguistic input, both in real time and at different stages of language development.</p>
 <p>I received my B.A. in Linguistics from Northwestern University (’20), where I worked with <a href="https://sites.northwestern.edu/cole/">Jennifer Cole</a>, <a href="https://faculty.wcas.northwestern.edu/~myo507/">Masaya Yoshida</a>, and <a href="https://faculty.wcas.northwestern.edu/~akd2621/">Annette D’Onofrio</a>. I also worked as a research assistant in the <a href="https://learnlab.northwestern.edu/">Language, Education, and Reading Neuroscience Lab</a> under <a href="https://www.communication.northwestern.edu/faculty/ElizabethNorton">Elizabeth Norton</a> in the Communication Sciences and Disorders Department. I wrote my honors thesis on the role of prosodic focus in semantic reanalysis in the processing of sentences with local attachment ambiguity.</p>
-<p>Beyond linguistics research, I have interests in data visualization, science communication, literate programming, and the R language. I’m especially passionate about explanatory data visualization in academic research and spend a lot of time thinking about best practices for readability and accessibility.</p>
+<p>Beyond linguistics research, I have interests in data visualization, science communication, literate programming, and the R language. I’m especially passionate about explanatory data viz in academic research and spend a lot of time thinking about best practices for readability and accessibility.</p>
 <p>I’m also a <a href="https://mindcore.sas.upenn.edu/">MindCORE</a> affiliate and work as a data science tutor for researchers at Penn. You can <a href="https://rb.gy/gfhd2f">schedule an appointment</a> with me if you have questions related to R and/or data visualization.</p>
 <p>
 </p>

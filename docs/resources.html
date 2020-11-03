@@ -2026,7 +2026,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   /* Name time */
 
   div.nav-left a.title {
-   font-family: Trispace;
+    font-family: Trispace;
   }
 
 
@@ -2046,17 +2046,17 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 
   /* Tags */
 
-  .dt-tags {
+  .posts-list .dt-tags {
     margin-top: 10px;
     margin-right: 10px;
   }
 
-  .dt-tag {
-    font-family: Roboto Slab;
-  }
 
   .posts-list .dt-tags .dt-tag {
+    font-family: Ubuntu;
+    font-weight: bold;
     letter-spacing: 1px;
+    background-color: #f9f9f9;
   }
 
   /* Top & Bot bars */
@@ -2141,7 +2141,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   }
 
   div.sourceCode + aside {
-      margin-top: 1.5em;
+    margin-top: 1.5em;
   }
 
   aside code {
@@ -2195,25 +2195,38 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   }
 
   /* underline auto-linked functions */
-  span.fu a {
-      text-decoration: underline;
+  code span.va a {
+    text-decoration: underline;
   }
+  code span.fu a {
+    text-decoration: underline;
+  }
+
+
+
 
   /* Output Chunk */
 
   d-article pre code {
-      font-family: IBM Plex Mono;
-      font-weight: 500;
+    font-family: IBM Plex Mono;
+    font-weight: 500;
   }
 
   d-article pre {
-      background-color: #f9f9f9;
-      padding-top: 10px;
-      padding-bottom: 10px;
-      margin-bottom: 30px;
-      overflow-x: scroll;
+    background-color: #f9f9f9;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    overflow-x: scroll;
   }
 
+
+  /* Footnote inline code */
+
+  d-footnote-list code {
+    color: rgb(0 0 0 / 0.70);
+    font-weight: 600;
+  }
 
   /* ---------- ADD-ONS ---------- */
 
