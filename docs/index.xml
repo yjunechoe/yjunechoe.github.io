@@ -31,6 +31,8 @@
       <link>https://yjunechoe.github.io/posts/2020-10-28-tidytuesday-2020-week-44</link>
       <description>Patched animation of the location and cumulative capacity of wind turbines in Canada</description>
       <category>ggplot2</category>
+      <category>gganimate</category>
+      <category>spatial</category>
       <category>data visualization</category>
       <category>tidytuesday</category>
       <guid>https://yjunechoe.github.io/posts/2020-10-28-tidytuesday-2020-week-44</guid>

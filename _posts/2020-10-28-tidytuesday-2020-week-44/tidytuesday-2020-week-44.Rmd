@@ -46,16 +46,16 @@ knitr::include_graphics('tidytuesday_2020_44.gif', error = FALSE)
 
 - Using `{magick}` for animation composition, thanks to the `{gganimate}` [wiki](https://github.com/thomasp85/gganimate/wiki/Animation-Composition)
 
-- The very basics of working with spatial data with `{rnaturalearth}` and `{sf}`
+- The very basics of working with spatial data with `{rnaturalearth}` and `{sf}`^[If I don't count all the convenient US-centric data/packages I've used to plot _American_ maps before, this would be the first map I've made from scratch.]
 
-- A bit about olor schemes for maps (particularly love this color <span style="background-color:#FFF8DC; padding-left:30px; border:1px solid black"></span>) as a way of de-emphasizing other territories in the map)
+- A bit about color schemes for maps (I particularly love this color <span style="background-color:#FFF8DC; padding-left:30px; margin-right:5px; border:1px solid black"></span> as a way of de-emphasizing territories in the background)
 
 
 ### Things to improve
 
 - I couldn't figure out how to add margins to the bottom, but I now realize that I could've just played around with `expansion()` for the y-axis of the bar animation plot.
 
-- Image composition took a while to render, which was a bit frustrating. Need to find a way to speed that up
+- Image composition took a while to render, which was a bit frustrating. Need to find a way to speed that up.
 
 
 ## Code

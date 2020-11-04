@@ -131,12 +131,12 @@ code span.wa { color: #545454; font-weight: bold; font-style: italic; } /* Warni
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["creative_commons","title","description","categories","base_url","author","preview","date","output","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["CC BY"]},{"type":"character","attributes":{},"value":["TidyTuesday 2020 week 44"]},{"type":"character","attributes":{},"value":["Patched animation of the location and cumulative capacity of wind turbines in Canada"]},{"type":"character","attributes":{},"value":["ggplot2","data visualization","tidytuesday"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]},{"type":"character","attributes":{},"value":["0000-0002-0701-921X"]}]}]},{"type":"character","attributes":{},"value":["preview.png"]},{"type":"character","attributes":{},"value":["10-28-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io/posts/2020-10-28-tidytuesday-2020-week-44/"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io/posts/2020-10-28-tidytuesday-2020-week-44/"]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["creative_commons","title","description","categories","base_url","author","preview","date","output","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["CC BY"]},{"type":"character","attributes":{},"value":["TidyTuesday 2020 week 44"]},{"type":"character","attributes":{},"value":["Patched animation of the location and cumulative capacity of wind turbines in Canada"]},{"type":"character","attributes":{},"value":["ggplot2","gganimate","spatial","data visualization","tidytuesday"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]},{"type":"character","attributes":{},"value":["0000-0002-0701-921X"]}]}]},{"type":"character","attributes":{},"value":["preview.png"]},{"type":"character","attributes":{},"value":["10-28-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io/posts/2020-10-28-tidytuesday-2020-week-44/"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io/posts/2020-10-28-tidytuesday-2020-week-44/"]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["preview.png","tidytuesday_2020_44.gif"]}
+  {"type":"character","attributes":{},"value":["preview.png","tidytuesday-2020-week-44_files/anchor-4.2.2/anchor.min.js","tidytuesday-2020-week-44_files/bowser-1.9.3/bowser.min.js","tidytuesday-2020-week-44_files/distill-2.2.21/template.v2.js","tidytuesday-2020-week-44_files/header-attrs-2.5/header-attrs.js","tidytuesday-2020-week-44_files/jquery-1.11.3/jquery.min.js","tidytuesday-2020-week-44_files/webcomponents-2.0.0/webcomponents.js","tidytuesday_2020_44.gif"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2350,6 +2350,8 @@ d-footnote-list code {
 <!--radix_placeholder_categories-->
 <div class="dt-tags">
   <a href="../../index.html#category:ggplot2" class="dt-tag">ggplot2</a>
+  <a href="../../index.html#category:gganimate" class="dt-tag">gganimate</a>
+  <a href="../../index.html#category:spatial" class="dt-tag">spatial</a>
   <a href="../../index.html#category:data_visualization" class="dt-tag">data visualization</a>
   <a href="../../index.html#category:tidytuesday" class="dt-tag">tidytuesday</a>
 </div>
@@ -2387,13 +2389,13 @@ d-footnote-list code {
 <h3 id="things-i-learned">Things I learned</h3>
 <ul>
 <li><p>Using <code>{magick}</code> for animation composition, thanks to the <code>{gganimate}</code> <a href="https://github.com/thomasp85/gganimate/wiki/Animation-Composition">wiki</a></p></li>
-<li><p>The very basics of working with spatial data with <code>{rnaturalearth}</code> and <code>{sf}</code></p></li>
-<li><p>A bit about olor schemes for maps (particularly love this color <span style="background-color:#FFF8DC; padding-left:30px; border:1px solid black"></span>) as a way of de-emphasizing other territories in the map)</p></li>
+<li><p>The very basics of working with spatial data with <code>{rnaturalearth}</code> and <code>{sf}</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p></li>
+<li><p>A bit about color schemes for maps (I particularly love this color <span style="background-color:#FFF8DC; padding-left:30px; margin-right:5px; border:1px solid black"></span> as a way of de-emphasizing territories in the background)</p></li>
 </ul>
 <h3 id="things-to-improve">Things to improve</h3>
 <ul>
 <li><p>I couldn’t figure out how to add margins to the bottom, but I now realize that I could’ve just played around with <code>expansion()</code> for the y-axis of the bar animation plot.</p></li>
-<li><p>Image composition took a while to render, which was a bit frustrating. Need to find a way to speed that up</p></li>
+<li><p>Image composition took a while to render, which was a bit frustrating. Need to find a way to speed that up.</p></li>
 </ul>
 <h2 id="code">Code</h2>
 <p>Also available on <a href="https://github.com/yjunechoe/tidytuesday/blob/master/Scripts/tidytuesday_2020_44.R">github</a></p>
@@ -2513,6 +2515,12 @@ d-footnote-list code {
 </div>
 </div>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>If I don’t count all the convenient US-centric data/packages I’ve used to plot <em>American</em> maps before, this would be the first map I’ve made from scratch.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 <!--radix_placeholder_article_footer-->
 <div class="article-footer">
   <p class="social_footer">
