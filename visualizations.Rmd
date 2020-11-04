@@ -11,6 +11,9 @@ d-article {
 d-article img {
   padding: 10px;
 }
+a {
+  color: black;
+}
 ```
 
 
@@ -25,7 +28,7 @@ viz_paths <- here::here("static", "dataviz") %>%
   stringr::str_match("static/dataviz/.*") %>%
   `[`(,1) %>% 
   rev()
-
+# 
 knitr::include_graphics(viz_paths)
 ```
 
