@@ -2194,6 +2194,17 @@ blockquote p {
 }
 
 
+/* Footnote Image */
+
+d-footnote-list ol li img {
+  width: 700px;
+}
+
+d-footnote img {
+  width: 660px;
+  padding: 10px;
+}
+
 /* ---------- Code Styles ---------- */
 
 /* Inline Code */
@@ -2222,20 +2233,36 @@ d-article div.sourceCode pre code {
   font-weight: 500;
 }
 
+
 /* overrides some syntax highlighting */
+
 code span.va {
   color: black;
 }
+code span.fu {
+  color: #3456cc;
+}
+code span.cn {
+  color: #ef3e3a;
+}
+code span.fl {
+  color: #c8531d;
+}
+code span.kw {
+  color: #9f1eb1;
+}
+code span.st {
+    color: #148a14;
+}
 
 /* underline auto-linked functions */
+
 code span.va a {
   text-decoration: underline;
 }
 code span.fu a {
   text-decoration: underline;
 }
-
-
 
 
 /* Output Chunk */

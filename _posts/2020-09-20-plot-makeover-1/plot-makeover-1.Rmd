@@ -137,13 +137,19 @@ I actually couldn't settle on one final product^[I ran the first plot by a frien
 
 ### Point-line plot
 
+_Edit 11/4/20: [Mark](https://www.ling.upenn.edu/~myl/) has rightly pointed out to me that the groups could additionally be mapped to shape for greater clarity, so I've incorporated that change._^[The plot used to look like this: <img src="prev.png">]
+
 ```{r after_pointplot, echo=FALSE, layout = 'l-body-outset'}
 dodge <- position_dodge(width = .5)
 
 df %>% 
   mutate(level_3 = as.numeric(level_3)) %>% 
   ggplot(aes(x = level_3, y = barheight, group = level_1)) +
-  geom_point(position = dodge) + 
+  geom_point(
+    aes(shape = level_1),
+    size = 2,
+    position = dodge
+  ) + 
   geom_errorbar(
     aes(ymin = barheight - .05, ymax = barheight + .05),
     width = .2,
@@ -151,7 +157,8 @@ df %>%
   ) +
   geom_line(
     aes(linetype = level_1),
-    position = dodge
+    position = dodge,
+    show.legend = FALSE
   ) +
   facet_wrap(~ level_2) +
   scale_x_continuous(
@@ -159,24 +166,27 @@ df %>%
     labels = levels(df$level_3),
     expand = expansion(.2),
   ) +
-  ylim(0, 1) +
+  scale_y_continuous(
+    limits = c(0, 1),
+    expand = expansion(c(0, .1))
+  ) +
   lemon::coord_capped_cart(left = "both") +
-  guides(linetype = guide_legend(direction = "horizontal",
-                                 title.position = 'top',
-                                 title.hjust = .5,
-                                 title.theme = element_text(size = 10, face = "plain"),
-                                 label.theme = element_text(size = 8, family = "Montserrat"))
+  guides(shape = guide_legend(
+      title = NULL,
+      direction = "horizontal",
+      label.theme = element_text(size = 10, family = "Montserrat"),
+    )
   ) +
   labs(
     y = "Strong Responses",
     x = "Prime Type",
     linetype = "Category"
   ) +
-  ggthemes::theme_clean() +
+  ggthemes::theme_clean(base_size = 14) +
   theme(
     text = element_text(family = "Montserrat"),
-    legend.position = c(.17, .85),
-    legend.background = element_rect(color = 'black', size = unit(.5, 'mm')),
+    legend.position = c(.18, .87),
+    legend.background = element_rect(color = NA, fill = NA),
     strip.text = element_text(size = 13),
     plot.margin = margin(5, 5, 5, 5, 'mm'),
     axis.title.x = element_text(vjust = -3),
