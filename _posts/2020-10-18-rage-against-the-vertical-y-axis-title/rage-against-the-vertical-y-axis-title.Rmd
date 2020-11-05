@@ -1,5 +1,5 @@
 ---
-title: "Rage against the vertical y-axis title"
+title: "Rage against the y-axis"
 description: |
   Five alternatives to the default vertical y-axis title
 categories:
