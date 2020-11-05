@@ -105,7 +105,7 @@
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2020-09-14-tidytuesday-2020-week-38</link>
       <description>Visualizing two decades of primary and secondary education spending with {gt}</description>
-      <category>gt</category>
+      <category>tables</category>
       <category>data visualization</category>
       <category>tidytuesday</category>
       <guid>https://yjunechoe.github.io/posts/2020-09-14-tidytuesday-2020-week-38</guid>
@@ -117,7 +117,7 @@
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2020-09-12-videos-in-reactable</link>
       <description>Pushing the limits of expandable row details</description>
-      <category>reactable</category>
+      <category>tables</category>
       <category>data visualization</category>
       <guid>https://yjunechoe.github.io/posts/2020-09-12-videos-in-reactable</guid>
       <pubDate>Sat, 12 Sep 2020 00:00:00 +0000</pubDate>

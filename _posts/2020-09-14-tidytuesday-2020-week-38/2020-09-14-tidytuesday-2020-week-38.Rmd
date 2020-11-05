@@ -3,7 +3,7 @@ title: TidyTuesday 2020 week 38
 description: |
   Visualizing two decades of primary and secondary education spending with {gt}
 categories:
-  - gt
+  - tables
   - data visualization
   - tidytuesday
 base_url: https://yjunechoe.github.io

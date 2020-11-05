@@ -11,10 +11,8 @@ navbar:
   right:
     - text: "Home"
       href: index.html
-    - text: "Visualizations"
-      href: visualizations.html
-    - text: "Presentations"
-      href: presentations.html
+    - text: "Research"
+      href: research.html
     - text: "Resources"
       href: resources.html
     - text: "About"
@@ -37,7 +35,7 @@ collections:
     custom: _custom.html
 output:
   distill::distill_article:
-    highlight: rstudio
+    highlight: tango
     highlight_downlit: true
     css: styles.css
     toc: true

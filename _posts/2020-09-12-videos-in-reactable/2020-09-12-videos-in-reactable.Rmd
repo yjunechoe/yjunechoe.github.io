@@ -3,7 +3,7 @@ title: Embedding videos in {reactable} tables
 description: |
   Pushing the limits of expandable row details
 categories:
-  - reactable
+  - tables
   - data visualization
 base_url: https://yjunechoe.github.io
 author:
