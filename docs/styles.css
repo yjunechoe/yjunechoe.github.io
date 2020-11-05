@@ -43,6 +43,14 @@ div.nav-left a.title {
 }
 
 
+/* Post Description */
+
+.description p {
+  font-style: italic;
+  padding-top: 5px;
+}
+
+
 /* Tags */
 
 .posts-list .dt-tags {
