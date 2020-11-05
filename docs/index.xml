@@ -153,6 +153,7 @@
       <description>Some notes on lesser known functions/functionalities that combine common chain of {dplyr} verbs.</description>
       <category>data wrangling</category>
       <category>dplyr</category>
+      <category>tutorial</category>
       <guid>https://yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping</guid>
       <pubDate>Fri, 07 Aug 2020 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/preview.png" medium="image" type="image/png" width="877" height="372"/>
@@ -212,6 +213,7 @@
       <category>data visualization</category>
       <category>treemap</category>
       <category>ggplot2</category>
+      <category>tutorial</category>
       <guid>https://yjunechoe.github.io/posts/2020-06-30-treemap-with-ggplot</guid>
       <pubDate>Tue, 30 Jun 2020 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2020-06-30-treemap-with-ggplot/2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-12-1.png" medium="image" type="image/png" width="1920" height="768"/>
@@ -235,6 +237,7 @@
       <description>Notes on the Corr term in {lme4} output</description>
       <category>statistics</category>
       <category>mixed-effects models</category>
+      <category>tutorial</category>
       <guid>https://yjunechoe.github.io/posts/2020-06-07-correlation-parameter-mem</guid>
       <pubDate>Sun, 07 Jun 2020 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2020-06-07-correlation-parameter-mem/preview.png" medium="image" type="image/png" width="1248" height="768"/>

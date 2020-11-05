@@ -2,7 +2,7 @@
 title: "Resources"
 output:
   distill::distill_article:
-    toc: false
+    toc: true
 ---
 
 ```{css}
@@ -16,3 +16,14 @@ p {
 - {ggplot2} style guide and showcase ({xaringan} + {flipbookr} presentation)
 
     - [Penn Phonetics Lab 2020](https://yjunechoe.netlify.app/flipbooks/p_lab_ggplot2_2020/p_lab_ggplot2.html) ([Code](https://gist.github.com/yjunechoe/b7bc540f290044ffebec0a9031d586df))
+
+
+### [Tutorial Blog Posts](https://yjunechoe.github.io/#category:tutorial)
+
+- [{ggplot2} stat_*() functions](https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/)
+
+- [The correlation parameter in {lme4} mixed effects models](https://yjunechoe.github.io/posts/2020-06-07-correlation-parameter-mem/)
+
+- [Shortcuts for common chain of {dplyr} functions](https://yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/)
+
+- [Plotting highly-customizable treemaps with {treemap} and {ggplot2}](https://yjunechoe.github.io/posts/2020-06-30-treemap-with-ggplot/)

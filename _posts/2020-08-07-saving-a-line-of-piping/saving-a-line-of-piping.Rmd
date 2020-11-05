@@ -5,6 +5,7 @@ description: |
 categories:
   - data wrangling
   - dplyr
+  - tutorial
 base_url: https://yjunechoe.github.io
 author:
   - name: June Choe

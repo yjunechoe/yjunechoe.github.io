@@ -5,6 +5,7 @@ description: |
 categories:
   - statistics
   - mixed-effects models
+  - tutorial
 base_url: https://yjunechoe.github.io
 author:
   - name: June Choe
