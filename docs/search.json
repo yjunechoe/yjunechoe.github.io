@@ -5,35 +5,35 @@
       "title": "Hi there!",
       "author": [],
       "contents": "\r\n\r\n\r\np {\r\n  font-family: 'Adelle';\r\n}\r\n\r\nd-article {\r\n  text-align: justify;\r\n}\r\n\r\n\r\nI am a first year PhD student in Linguistics at the University of Pennsylvania, specializing in (computational) psycholinguistics. My main research interest is in modeling how comprehenders parse linguistic input, both in real time and at different stages of language development.\r\nI received my B.A. in Linguistics from Northwestern University (’20), where I worked with Jennifer Cole, Masaya Yoshida, and Annette D’Onofrio. I also worked as a research assistant in the Language, Education, and Reading Neuroscience Lab under Elizabeth Norton in the Communication Sciences and Disorders Department. I wrote my honors thesis on the role of prosodic focus in semantic reanalysis in the processing of sentences with local attachment ambiguity.\r\nBeyond linguistics research, I have interests in data visualization, science communication, literate programming, and the R language. I’m especially passionate about explanatory data viz in academic research and spend a lot of time thinking about best practices for readability and accessibility.\r\nI’m also a MindCORE affiliate and work as a data science tutor for researchers at Penn. You can schedule an appointment with me if you have questions related to R and/or data visualization.\r\n\r\n\r\n\r\ncontact me: yj{last_name}@sas.upenn.edu\r\n\r\n\r\n\r\n\r\n",
-      "last_modified": "2020-11-07T02:23:52-05:00"
+      "last_modified": "2020-11-07T16:22:01-05:00"
     },
     {
       "path": "index.html",
       "title": "Blog Posts",
       "author": [],
       "contents": "\r\n\r\n\r\n\r\n",
-      "last_modified": "2020-11-07T02:23:56-05:00"
+      "last_modified": "2020-11-07T16:22:07-05:00"
     },
     {
       "path": "news.html",
       "title": "News",
       "author": [],
       "contents": "\r\n\r\n\r\nd-article h2 {\r\n  font-family: Rubik;\r\n  font-size: 3em;\r\n  text-align: center;\r\n  border-bottom: 3px solid black;\r\n}\r\n\r\nd-article h3 {\r\n  font-size: 1.5em;\r\n  text-align: center;\r\n  font-variant: small-caps;\r\n  font-family: Bitter;\r\n  letter-spacing: .2em;\r\n}\r\n\r\nd-article ul {\r\n  font-family: Adelle;\r\n}\r\n\r\nli::marker {\r\n    font-size: 1.2em;\r\n}\r\n\r\n2020\r\nOctober\r\nMy tutorial on stat_*() functions in {ggplot2} was featured as a weekly highlight on the rweekly podcast, which curates weekly updates from the R community\r\nI became a data science tutor at MindCORE to help researchers at Penn with issues related to data visualization and R programming.\r\nSeptember\r\nI have moved to Philly to start my PhD in Linguistics at the University of Pennsylvania!\r\nI presented a poster at AMLaP on my undergrad thesis research, advised by Professors Jennifer Cole and Masaya Yoshida.\r\nJune\r\nI graduated from Northwestern University with a B.A. in Linguistics! I was also appointed as the Senior Marshal for Linguistics (though missed out on the chance to carry a banner representing the major at graduation)\r\n\r\n\r\n\r\n",
-      "last_modified": "2020-11-07T15:22:39-05:00"
+      "last_modified": "2020-11-07T16:22:13-05:00"
     },
     {
       "path": "research.html",
       "title": "Research",
       "author": [],
       "contents": "\r\n\r\nContents\r\nConference Presentations\r\n2020\r\n2019\r\n\r\n\r\n\r\n\r\np {\r\n  font-family: 'Adelle';\r\n}\r\n\r\nConference Presentations\r\n2020\r\nJune Choe, Jennifer Cole, and Masaya Yoshida. Prosodic Focus Strengthens Semantic Persistence. Poster presented at The 26th Architectures and Mechanisms for Language Processing (AMLaP), 3-5 September 2020. Potsdam, Germany. Abstract Video Slides\r\nJune Choe. Computer-assisted snowball search for meta-analysis research. Poster presented at The 2020 Undergraduate Research & Arts Exposition. 27-28 May 2020. Northwestern University, Evanston, IL. 2nd Place Award. Abstract\r\n2019\r\nJune Choe. Social Information in Sentence Processing. Talk at The 2019 Undergraduate Research & Arts Exposition. 29 May 2019. Northwestern University, Evanston, IL. Abstract\r\nJune Choe, Shayne Sloggett, Masaya Yoshida and Annette D’Onofrio. Personae in syntactic processing: Socially-specific agents bias expectations of verb transitivity. Poster presented at The 32nd CUNY Conference on Human Sentence Processing. 29-31 March 2019. University of Colorado, Boulder, CO.\r\nD’Onofrio, Annette, June Choe and Masaya Yoshida. Personae in syntactic processing: Socially-specific agents bias expectations of verb transitivity. Poster presented at The 93rd Annual Meeting of the Linguistics Society of America. 3-6 January 2019. New York City, NY.\r\n\r\n\r\n\r\n",
-      "last_modified": "2020-11-07T02:24:02-05:00"
+      "last_modified": "2020-11-07T16:22:17-05:00"
     },
     {
       "path": "resources.html",
       "title": "Resources",
       "author": [],
       "contents": "\r\n\r\nContents\r\nData Visualization\r\nTutorial Blog Posts\r\n\r\n\r\n\r\np {\r\n  font-family: 'Adelle';\r\n}\r\n\r\nData Visualization\r\n{ggplot2} style guide and showcase ({xaringan} + {flipbookr} presentation)\r\nPenn Phonetics Lab 2020 (Code)\r\n\r\nTutorial Blog Posts\r\n{ggplot2} stat_*() functions\r\nThe correlation parameter in {lme4} mixed effects models\r\nShortcuts for common chain of {dplyr} functions\r\nPlotting highly-customizable treemaps with {treemap} and {ggplot2}\r\n\r\n\r\n\r\n",
-      "last_modified": "2020-11-07T02:24:07-05:00"
+      "last_modified": "2020-11-07T16:22:22-05:00"
     },
     {
       "path": "visualizations.html",
@@ -41,7 +41,7 @@
       "description": "Select data visualizations. All made in R; mostly <a href=\"https://yjunechoe.github.io/#category:tidytuesday\">submissions<\/a> for <a href=\"https://github.com/rfordatascience/tidytuesday\">TidyTuesday<\/a>",
       "author": [],
       "contents": "\r\n\r\n\r\nd-article {\r\n    background-color: #f4f4f4;\r\n}\r\nd-article img {\r\n  padding: 10px;\r\n}\r\na {\r\n  color: black;\r\n}\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n",
-      "last_modified": "2020-11-07T02:24:13-05:00"
+      "last_modified": "2020-11-07T16:22:33-05:00"
     }
   ],
   "collections": ["posts/posts.json"]
