@@ -90,7 +90,6 @@ code span.wa { color: #545454; font-weight: bold; font-style: italic; } /* Warni
 <meta property="description" itemprop="description" content="Flattening a faceted grid for strictly horizontal comparisons"/>
 
 <link rel="canonical" href="https://yjunechoe.github.io/posts/2020-09-20-plot-makeover-1/"/>
-<link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
 <link rel="icon" type="image/png" href="../../static/img/icon.png"/>
 
 <!--  https://schema.org/Article -->
@@ -119,21 +118,13 @@ code span.wa { color: #545454; font-weight: bold; font-style: italic; } /* Warni
 <meta property="twitter:image:height" content="768"/>
 <meta property="twitter:site" content="@yjunechoe"/>
 
-<!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
-<meta name="citation_title" content="June Choe: Plot Makeover #1"/>
-<meta name="citation_fulltext_html_url" content="https://yjunechoe.github.io/posts/2020-09-20-plot-makeover-1/"/>
-<meta name="citation_fulltext_world_readable" content=""/>
-<meta name="citation_online_date" content="2020/09/20"/>
-<meta name="citation_publication_date" content="2020/09/20"/>
-<meta name="citation_author" content="June Choe"/>
-<meta name="citation_author_institution" content="University of Pennsylvania Linguistics"/>
 <!--/radix_placeholder_meta_tags-->
   
   <meta name="citation_reference" content="citation_title=Priming of implicatures within and between categories: The case of or;citation_publication_date=2020;citation_publisher=AMLaP2020;citation_author=E. Matthew Husband;citation_author=Nikole Patson"/>
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["creative_commons","title","description","categories","base_url","author","date","output","editor_options","bibliography","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["CC BY"]},{"type":"character","attributes":{},"value":["Plot Makeover #1"]},{"type":"character","attributes":{},"value":["Flattening a faceted grid for strictly horizontal comparisons"]},{"type":"character","attributes":{},"value":["plot makeover","data visualization","ggplot2"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]}]}]},{"type":"character","attributes":{},"value":["09-20-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["chunk_output_type"]}},"value":[{"type":"character","attributes":{},"value":["console"]}]},{"type":"character","attributes":{},"value":["biblio.bib"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io/posts/2020-09-20-plot-makeover-1/"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io/posts/2020-09-20-plot-makeover-1/"]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","date","output","editor_options","bibliography","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["Plot Makeover #1"]},{"type":"character","attributes":{},"value":["Flattening a faceted grid for strictly horizontal comparisons"]},{"type":"character","attributes":{},"value":["plot makeover","data visualization","ggplot2"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]}]}]},{"type":"character","attributes":{},"value":["09-20-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["chunk_output_type"]}},"value":[{"type":"character","attributes":{},"value":["console"]}]},{"type":"character","attributes":{},"value":["biblio.bib"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io/posts/2020-09-20-plot-makeover-1/"]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -2363,8 +2354,21 @@ d-footnote-list code {
 <div class="nav-right">
 <a href="../../index.html">Home</a>
 <a href="../../research.html">Research</a>
-<a href="../../resources.html">Resources</a>
 <a href="../../about.html">About</a>
+<div class="nav-dropdown">
+<button class="nav-dropbtn">
+Misc.
+ 
+<span class="down-arrow">&#x25BE;</span>
+</button>
+<div class="nav-dropdown-content">
+<a href="../../news.html">News</a>
+<hr/>
+<a href="../../resources.html">Resources</a>
+<hr/>
+<a href="../../visualizations.html">Data Visualization</a>
+</div>
+</div>
 <a href="https://twitter.com/yjunechoe">
 <i class="fa fa-twitter" aria-hidden="true"></i>
 </a>
@@ -2677,18 +2681,6 @@ In this second version, I removed <code>guides()</code> and distributed its argu
 <div class="appendix-bottom">
   <h3 id="references">References</h3>
   <div id="references-listing"></div>
-  <h3 id="reuse">Reuse</h3>
-  <p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
-  <h3 id="citation">Citation</h3>
-  <p>For attribution, please cite this work as</p>
-  <pre class="citation-appendix short">Choe (2020, Sept. 20). June Choe: Plot Makeover #1. Retrieved from https://yjunechoe.github.io/posts/2020-09-20-plot-makeover-1/</pre>
-  <p>BibTeX citation</p>
-  <pre class="citation-appendix long">@misc{choe2020plot,
-  author = {Choe, June},
-  title = {June Choe: Plot Makeover #1},
-  url = {https://yjunechoe.github.io/posts/2020-09-20-plot-makeover-1/},
-  year = {2020}
-}</pre>
 </div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
