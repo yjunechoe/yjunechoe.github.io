@@ -25,6 +25,10 @@ d-article ul {
   font-family: Adelle;
 }
 
+d-article ul li p {
+    font-family: Adelle;
+}
+
 li::marker {
     font-size: 1.2em;
 }
