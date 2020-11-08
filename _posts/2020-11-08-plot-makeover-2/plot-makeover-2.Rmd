@@ -29,6 +29,7 @@ knitr::opts_chunk$set(
   warning = TRUE,
   R.options = list(width = 80)
 )
+xaringanExtra::use_clipboard()
 ```
 
 ## Before
