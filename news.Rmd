@@ -39,16 +39,16 @@ li::marker {
 
 ### October
 
-- My [tutorial](https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/) on stat_*() functions in {ggplot2} was **featured as a weekly highlight** on the [rweekly podcast](https://rweekly.fireside.fm/8?t=251), which curates weekly updates from the R community
+- My [tutorial](https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/) on stat_*() functions in {ggplot2} was **featured as a highlight** on the [rweekly podcast](https://rweekly.fireside.fm/8?t=251), which curates weekly updates from the R community
 
-- I became a **data science tutor** at [MindCORE](https://mindcore.sas.upenn.edu/) to help researchers at Penn with issues related to data visualization and R programming.
+- I became a **data science tutor** at [MindCORE](https://mindcore.sas.upenn.edu/) to help researchers at Penn with data visualization and R programming
 
 ### September
 
 - **I have moved to Philly to start my PhD in Linguistics at the University of Pennsylvania!**
 
-- I presented a **poster at AMLaP** on my undergrad thesis research, advised by Professors Jennifer Cole and Masaya Yoshida.
+- I presented a **poster at AMLaP** on my undergrad thesis research with my advisors Jennifer Cole and Masaya Yoshida
 
 ### June
 
-- **I graduated from Northwestern University with a B.A. in Linguistics!** I was also appointed as the Senior Marshal for Linguistics (though missed out on the chance to carry a banner representing the major at graduation)
+- **I graduated from Northwestern University with a B.A. in Linguistics!** I was also appointed as the Senior Marshal for Linguistics (but sadly missed out on the chance to carry a banner representing the major at graduation due to COVID)

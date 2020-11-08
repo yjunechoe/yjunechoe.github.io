@@ -1,5 +1,7 @@
 ---
 title: "Resources"
+description: |
+  Mostly for R and data visualization
 output:
   distill::distill_article:
     toc: true
@@ -11,14 +13,14 @@ p {
 }
 ```
 
-### Data Visualization
+## Data Visualization
 
 - {ggplot2} style guide and showcase ({xaringan} + {flipbookr} presentation)
 
-    - [Penn Phonetics Lab 2020](https://yjunechoe.netlify.app/flipbooks/p_lab_ggplot2_2020/p_lab_ggplot2.html) ([Code](https://gist.github.com/yjunechoe/b7bc540f290044ffebec0a9031d586df))
+    - [Penn Phonetics Lab 2020 Slides](https://yjunechoe.netlify.app/flipbooks/p_lab_ggplot2_2020/p_lab_ggplot2.html) ([Code](https://gist.github.com/yjunechoe/b7bc540f290044ffebec0a9031d586df))
 
 
-### [Tutorial Blog Posts](https://yjunechoe.github.io/#category:tutorial)
+## Tutorial Blog Posts
 
 - [{ggplot2} stat_*() functions](https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/)
 
@@ -27,3 +29,18 @@ p {
 - [Shortcuts for common chain of {dplyr} functions](https://yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/)
 
 - [Plotting highly-customizable treemaps with {treemap} and {ggplot2}](https://yjunechoe.github.io/posts/2020-06-30-treemap-with-ggplot/)
+
+
+## By others
+
+- [R for Data Science](https://r4ds.had.co.nz/) _by Hadley Wickham and Garrett Grolemund_
+
+- [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/) _by Yihui Xie, J. J. Allaire, and Garrett Grolemund_
+
+- [ggplot2: elegant graphics for data analysis](https://ggplot2-book.org/) _by Hadley Wickham, Danielle Navarro, and Thomas Lin Pedersen_
+
+- [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/) _by Claus O. Wilke_
+
+- [Efficient R Programming](https://csgillespie.github.io/efficientR/) _by Colin Gillespie and Robin Lovelace_
+
+- [Advanced R](https://adv-r.hadley.nz/) _by Hadley Wickham_
