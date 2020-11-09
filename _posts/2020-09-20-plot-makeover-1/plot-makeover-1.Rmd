@@ -11,6 +11,7 @@ author:
   - name: June Choe
     affiliation: University of Pennsylvania Linguistics
     affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+    orcid_id: 0000-0002-0701-921X
 date: 09-20-2020
 output:
   distill::distill_article:
@@ -35,8 +36,6 @@ knitr::opts_chunk$set(
 ```{r, echo = FALSE, message = FALSE}
 library(extrafont)
 ```
-
-
 
 
 _This is the first installment of **plot makeover** where I take a plot in the wild and make very opinionated modifications to it._

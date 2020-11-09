@@ -3,10 +3,23 @@ title: "Research"
 ---
 
 ```{css}
-p {
-  font-family: 'Adelle';
+d-article ul {
+  font-family: Adelle;
+}
+
+d-article ul li p {
+    font-family: Adelle;
 }
 ```
+
+
+## Publications
+
+### Under Review
+
+* McWeeny, S., Choi, S. J., LaTourette, A., **Choe, J.**, Roberts, M. Y., & Norton, E. S. (under review).
+Rapid automatized naming as a kindergarten predictor of future reading: A meta-analysis.
+
 
 ## Conference Presentations
 
