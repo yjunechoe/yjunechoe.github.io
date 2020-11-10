@@ -17,18 +17,24 @@ p {
 
 - {ggplot2} style guide and showcase ({xaringan} + {flipbookr} presentation)
 
-    - [Penn Phonetics Lab 2020 Slides](https://yjunechoe.netlify.app/flipbooks/p_lab_ggplot2_2020/p_lab_ggplot2.html) ([Code](https://gist.github.com/yjunechoe/b7bc540f290044ffebec0a9031d586df))
+    - Penn Phonetics Lab [[slides](https://yjunechoe.netlify.app/flipbooks/p_lab_ggplot2_2020/p_lab_ggplot2.html), [code](https://gist.github.com/yjunechoe/b7bc540f290044ffebec0a9031d586df)] (10/23/20)
 
+
+## R Programming
+
+- [Advanced R Book Club](https://github.com/r4ds/bookclub-Advanced_R) presentations
+
+    - Chappter 6 - Functions [[video](https://youtu.be/lg5rzOU6lsg?t=113), [code](https://github.com/r4ds/bookclub-Advanced_R/tree/main/Presentations/Week06/Cohort4)] (11/9/20)
 
 ## Tutorial Blog Posts
 
-- [{ggplot2} stat_*() functions](https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/)
+- {ggplot2} stat_*() functions [[post](https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/)]
 
-- [The correlation parameter in {lme4} mixed effects models](https://yjunechoe.github.io/posts/2020-06-07-correlation-parameter-mem/)
+- The correlation parameter in {lme4} mixed effects models [[post](https://yjunechoe.github.io/posts/2020-06-07-correlation-parameter-mem/)]
 
-- [Shortcuts for common chain of {dplyr} functions](https://yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/)
+- Shortcuts for common chain of {dplyr} functions [[post](https://yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/)]
 
-- [Plotting highly-customizable treemaps with {treemap} and {ggplot2}](https://yjunechoe.github.io/posts/2020-06-30-treemap-with-ggplot/)
+- Plotting highly-customizable treemaps with {treemap} and {ggplot2} [[post](https://yjunechoe.github.io/posts/2020-06-30-treemap-with-ggplot/)]
 
 
 ## By others
