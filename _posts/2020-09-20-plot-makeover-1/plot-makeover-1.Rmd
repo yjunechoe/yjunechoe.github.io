@@ -144,11 +144,6 @@ dodge <- position_dodge(width = .5)
 df %>% 
   mutate(level_3 = as.numeric(level_3)) %>% 
   ggplot(aes(x = level_3, y = barheight, group = level_1)) +
-  geom_point(
-    aes(shape = level_1),
-    size = 2,
-    position = dodge
-  ) + 
   geom_errorbar(
     aes(ymin = barheight - .05, ymax = barheight + .05),
     width = .2,
@@ -159,6 +154,14 @@ df %>%
     position = dodge,
     show.legend = FALSE
   ) +
+  geom_point(
+    aes(shape = level_1, fill = level_1),
+    size = 1.5,
+    stroke = .6,
+    position = dodge
+  ) + 
+  scale_fill_manual(values = c("black", "white")) +
+  scale_shape_manual(values = c(21, 24)) +
   facet_wrap(~ level_2) +
   scale_x_continuous(
     breaks = 1:2,
@@ -170,10 +173,13 @@ df %>%
     expand = expansion(c(0, .1))
   ) +
   lemon::coord_capped_cart(left = "both") +
-  guides(shape = guide_legend(
+  guides(
+    fill = guide_none(),
+    shape = guide_legend(
       title = NULL,
       direction = "horizontal",
       label.theme = element_text(size = 10, family = "Montserrat"),
+      override.aes = list(fill = c("black", "white"))
     )
   ) +
   labs(
@@ -192,7 +198,6 @@ df %>%
     axis.title.y = element_text(vjust = 5),
     plot.background = element_blank(),
     panel.grid.major.y = element_blank()
-    
   )
 ```
 
