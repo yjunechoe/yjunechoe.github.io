@@ -382,8 +382,8 @@
       "RemoteRepo": "distill",
       "RemoteUsername": "rstudio",
       "RemoteRef": "HEAD",
-      "RemoteSha": "c98d332192ff75f268ddf69bddace34e4db6d89b",
-      "Hash": "499b1d377d8c77618f2471497adc6969"
+      "RemoteSha": "5941c5dde851273948a40ec84b3e7bf7a2183f9e",
+      "Hash": "1968412915c93113e806aad9da87cc3b"
     },
     "downlit": {
       "Package": "downlit",
