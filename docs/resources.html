@@ -124,6 +124,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
       var header = $('header').get(0);
       var headerHeight = header.offsetHeight;
       var headroom = new Headroom(header, {
+        tolerance: 5,
         onPin : function() {
           if (window.headroom_prevent_pin) {
             window.headroom_prevent_pin = false;
@@ -2401,7 +2402,7 @@ p {
 <ul>
 <li><p>{ggplot2} style guide and showcase ({xaringan} + {flipbookr} presentation)</p>
 <ul>
-<li>Penn Phonetics Lab [<a href="https://yjunechoe.netlify.app/flipbooks/p_lab_ggplot2_2020/p_lab_ggplot2.html">slides</a>, <a href="https://gist.github.com/yjunechoe/b7bc540f290044ffebec0a9031d586df">code</a>] (10/23/20)</li>
+<li>Penn Phonetics Lab [<a href="https://yjunechoe.netlify.app/flipbooks/p_lab_ggplot2_2020/p_lab_ggplot2.html">slides</a>, <a href="https://raw.githubusercontent.com/yjunechoe/yjunechoe.github.io/master/flipbooks/P_lab_ggplot2_2020/P_lab_ggplot2.Rmd">code</a>] (10/23/20)</li>
 </ul></li>
 </ul>
 <h2 id="r-programming">R Programming</h2>

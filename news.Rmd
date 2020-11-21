@@ -37,6 +37,10 @@ li::marker {
 
 ## 2020
 
+### November
+
+- I joined designer [Will Chase](https://www.williamrchase.com/) on his [stream](https://www.youtube.com/watch?v=Z0NVmQXYjac) to talk about the psycholinguistics of speech production for a data visualization project on Michael's speech errors in The Office. Was a very cool opportunity to bring my two interests together!
+
 ### October
 
 - My [tutorial](https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/) on stat_*() functions in {ggplot2} was **featured as a highlight** on the [rweekly podcast](https://rweekly.fireside.fm/8?t=251), which curates weekly updates from the R community
