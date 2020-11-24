@@ -266,6 +266,7 @@ A bit hacky, I guess, but it works!
 <p></p>
 <p></p>
 
+
 ### Final touch-up
 
 ```{r final, echo = FALSE, fig.width = 7, fig.height = 6, preview = TRUE}
