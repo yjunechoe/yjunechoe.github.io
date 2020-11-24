@@ -31,6 +31,7 @@ knitr::opts_chunk$set(
   R.options = list(width = 80)
 )
 xaringanExtra::use_clipboard()
+xaringanExtra::use_panelset()
 ```
 
 _This is the second installment of **plot makeover** where I take a plot in the wild and make very opinionated modifications to it._
@@ -80,7 +81,7 @@ For a first pass on the makeover, I wanted to get the hybrid design right.
 The plot below isn't quite there in terms of covering everything I laid out in my plan, but it does replicate the bar plot design specifically.
 
 
-```{r, message = FALSE}
+```{r first-draft, message = FALSE, include = FALSE}
 library(tidyverse)
 library(extrafont)
 
@@ -157,6 +158,30 @@ ggplot(mapping = aes(x = Condition, y = Accuracy, fill = color)) +
     base_size = 16
   )
 ```
+
+
+::::: {.panelset}
+
+::: {.panel}
+
+## Plot {.panel-name}
+
+```{r first-draft, echo = FALSE, fig.align='center'}
+```
+
+:::
+
+::: {.panel}
+
+## Code {.panel-name}
+
+```{r first-draft, eval = FALSE}
+```
+
+:::
+
+:::::
+
 
 As you might guess from my two calls to `geom_col()` and `geom_errorbar()`, I actually split the plotting of the bars into two parts. First I drew the blue bars and their errorbars, then I drew the green and red bars and their errorbars.
 
@@ -236,14 +261,14 @@ ggplot(mapping = aes(x = Condition, y = Accuracy, fill = color)) +
   )
 ```
 
-A bit hacky I guess but it works!
+A bit hacky, I guess, but it works!
 
 <p></p>
 <p></p>
 
 ### Final touch-up
 
-```{r final, echo = FALSE, layout = "l-body-outset", fig.width = 7, fig.height = 6, preview = TRUE}
+```{r final, echo = FALSE, fig.width = 7, fig.height = 6, preview = TRUE}
 ggplot(mapping = aes(x = Condition, y = Accuracy, fill = color)) +
   geom_col(
     data = filter(df, left),
