@@ -19,6 +19,7 @@ p {
 
     - Penn Phonetics Lab [[slides](https://yjunechoe.netlify.app/flipbooks/p_lab_ggplot2_2020/p_lab_ggplot2.html), [code](https://raw.githubusercontent.com/yjunechoe/yjunechoe.github.io/master/flipbooks/P_lab_ggplot2_2020/P_lab_ggplot2.Rmd)] (10/23/20)
 
+    - Trueswell, Swingley, and Gleitman Lab [[slides](https://yjunechoe.netlify.app/flipbooks/tsg_lab_ggplot2_2020/tsg_lab_ggplot2.html), [code](https://raw.githubusercontent.com/yjunechoe/yjunechoe.github.io/master/flipbooks/tsg_lab_ggplot2_2020/tsg_lab_ggplot2.Rmd)] (11/25/20)
 
 ## R Programming
 
