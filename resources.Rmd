@@ -40,6 +40,14 @@ p {
 
 ## By others
 
+**Tutorials**:
+
+- [A ggplot2 Tutorial for Beautiful Plotting in R](https://cedricscherer.netlify.app/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/) _by Cédric Scherer_
+
+- [ggplot2 workshop](https://www.youtube.com/watch?v=h29g21z0a68) _by Thomas Lin Pedersen_
+
+**Books**:
+
 - [R for Data Science](https://r4ds.had.co.nz/) _by Hadley Wickham and Garrett Grolemund_
 
 - [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/) _by Yihui Xie, J. J. Allaire, and Garrett Grolemund_
