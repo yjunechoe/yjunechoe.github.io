@@ -310,13 +310,6 @@
       "Repository": "CRAN",
       "Hash": "870b41daf1a4c3640f2e3407a40c31b9"
     },
-    "cpp11": {
-      "Package": "cpp11",
-      "Version": "0.2.3",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "f9df472593124299aef98fba2c96dfd3"
-    },
     "crayon": {
       "Package": "crayon",
       "Version": "1.3.4",
@@ -368,22 +361,17 @@
     },
     "digest": {
       "Package": "digest",
-      "Version": "0.6.26",
+      "Version": "0.6.27",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "312b822306ececbbf7b9731937d9ec55"
+      "Hash": "a0cbe758a531d054b537d16dff4d58a1"
     },
     "distill": {
       "Package": "distill",
-      "Version": "1.0.1",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "distill",
-      "RemoteUsername": "rstudio",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "5941c5dde851273948a40ec84b3e7bf7a2183f9e",
-      "Hash": "1968412915c93113e806aad9da87cc3b"
+      "Version": "1.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "0e3a1bd101abd10ce59d4f71057bf84a"
     },
     "downlit": {
       "Package": "downlit",
@@ -849,15 +837,10 @@
     },
     "magrittr": {
       "Package": "magrittr",
-      "Version": "1.5.0.9000",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "magrittr",
-      "RemoteUsername": "tidyverse",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "0221e18523b1da1b050faac9da36891f8e5dce49",
-      "Hash": "445ada95951ee350dd63432332bc0606"
+      "Version": "2.0.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "41287f1ac7d28a92f0a286ed507928d3"
     },
     "maps": {
       "Package": "maps",
@@ -1253,10 +1236,10 @@
     },
     "rlang": {
       "Package": "rlang",
-      "Version": "0.4.8",
+      "Version": "0.4.9",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "843a6af51414bce7f8a8e372f11d6cd0"
+      "Hash": "9d7aba7bed9a79e2403b4777428a2b12"
     },
     "rmarkdown": {
       "Package": "rmarkdown",
