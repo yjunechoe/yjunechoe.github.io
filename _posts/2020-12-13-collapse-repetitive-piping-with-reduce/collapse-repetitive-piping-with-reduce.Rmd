@@ -564,7 +564,7 @@ The `+1` is there because the table includes row names, so there's one more "col
 ```{r rainbow_table, echo = FALSE}
 ```
 
-### eat. accumulate2()
+### feat. accumulate2()
 
 Yep, that's right - more animations with `accumulate()` and {magick}!
 
