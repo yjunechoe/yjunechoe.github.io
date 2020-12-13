@@ -132,8 +132,13 @@ d-title h1 {
 
 /* General */
 
+d-article h2 {
+  margin: 3rem 0 1.5rem 0;
+}
+
 d-article h3 {
   margin-top: 1em;
+  font-size: 28px;
 }
 
 d-article ol {
@@ -168,6 +173,12 @@ blockquote p {
   margin-bottom: 0;
 }
 
+
+/* Footnote margins */
+d-footnote {
+  margin-left: -.2em;
+  margin-right: .1em;
+}
 
 /* Footnote Image */
 

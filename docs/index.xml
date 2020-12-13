@@ -12,7 +12,18 @@
       <link>https://yjunechoe.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Sun, 08 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 13 Dec 2020 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Collapse repetitive piping with reduce()</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>https://yjunechoe.github.io/posts/2020-12-13-collapse-repetitive-piping-with-reduce</link>
+      <description>Featuring accumulate()</description>
+      <category>data wrangling</category>
+      <category>tutorial</category>
+      <guid>https://yjunechoe.github.io/posts/2020-12-13-collapse-repetitive-piping-with-reduce</guid>
+      <pubDate>Sun, 13 Dec 2020 00:00:00 +0000</pubDate>
+      <media:content url="https://yjunechoe.github.io/posts/2020-12-13-collapse-repetitive-piping-with-reduce/reduce_ggplot.png" medium="image" type="image/png" width="1233" height="775"/>
+    </item>
     <item>
       <title>Plot Makeover #2</title>
       <dc:creator>June Choe</dc:creator>

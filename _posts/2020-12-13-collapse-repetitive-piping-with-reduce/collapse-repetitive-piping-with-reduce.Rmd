@@ -1,0 +1,818 @@
+---
+title: "Collapse repetitive piping with reduce()"
+description: |
+  Featuring accumulate()
+categories:
+  - data wrangling
+  - tutorial
+base_url: https://yjunechoe.github.io
+author:
+  - name: June Choe
+    affiliation: University of Pennsylvania Linguistics
+    affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+    orcid_id: 0000-0002-0701-921X
+date: 12-13-2020
+output:
+  distill::distill_article:
+    toc: true
+    self_contained: false
+editor_options: 
+  chunk_output_type: console
+preview: reduce_ggplot.png
+---
+
+```{r opts, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(
+  comment = " ",
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  R.options = list(width = 80)
+)
+
+library(tidyverse)
+xaringanExtra::use_panelset()
+xaringanExtra::use_clipboard()
+```
+
+```{css, echo = FALSE}
+table.lightable-classic {
+  margin-bottom: 30px;
+}
+```
+
+
+## Introduction
+
+### Happy pipes
+
+Modern day programming with R is all about pipes.^[So much so that there's going to be a native pipe operator!] You start out with some object that undergoes incremental changes as it is passed (piped) into a chain of functions and finally returned as the desired output, like in this simple example. ^[Taken from [Advanced R Ch. 6](https://adv-r.hadley.nz/functions.html#function-composition)]
+
+```{r}
+set.seed(2021) # Can 2020 be over already?
+
+square <- function(x) x^2
+deviation <- function(x) x - mean(x)
+
+nums <- runif(100)
+
+nums %>%
+  deviation() %>%
+  square() %>%
+  mean() %>%
+  sqrt()
+```
+
+When we pipe (or pass anything through any function, for that matter), we often do one distinct thing at a time, like in the above example.
+
+So, we rarely have a chain of functions that look like this:
+
+```{r, eval = FALSE}
+mtcars %>% 
+  mutate(kmpg = mpg/1.6) %>% 
+  mutate(disp = round(disp)) %>% 
+  select(-vs) %>% 
+  select(-am) %>% 
+  select(-gear) %>% 
+  select(-carb) %>% 
+  filter(mpg > 15) %>% 
+  filter(cyl == 6) %>% 
+  filter(wt < 3)
+```
+
+... because many functions are vectorized, or designed to handle multiple values by other means, like this:
+
+```{r, eval = FALSE}
+penguins %>% 
+  mutate(kmpg = mpg/1.6, disp = round(disp)) %>% 
+  select(-(vs:carb)) %>% 
+  filter(mpg > 15, cyl == 6, wt < 3)
+```
+
+### Sad (repetitive) pipes
+
+But some functions do not handle multiple inputs the way we want it to, or just not at all. Here are some examples of what I'm talking about.
+
+In **{ggplot2}**, this doesn't plot 3 overlapping points with sizes 8, 4, and 2:
+
+```{r, error = TRUE, fig.show='hide'}
+ggplot(mtcars, aes(hp, mpg)) + 
+  geom_point(size = c(8, 4, 2), alpha = .5)
+```
+
+So you have to do this:
+
+```{r, fig.align = 'center', fig.width = 6, fig.height = 4}
+ggplot(mtcars, aes(hp, mpg)) + 
+  geom_point(size = 8, alpha = .5) +
+  geom_point(size = 4, alpha = .5) +
+  geom_point(size = 2, alpha = .5)
+```
+
+In **{kableExtra}**, this doesn't color the third column "skyblue", the fourth column "forestgreen", and the fifth column "chocolate":
+
+```{r, warning = TRUE}
+library(kableExtra)
+
+mtcars %>% 
+  head() %>% 
+  kbl() %>% 
+  kable_classic(html_font = "Roboto") %>% 
+  column_spec(3:5, background = c("skyblue", "forestgreen", "chocolate"))
+```
+
+So you have to do this:
+
+```{r}
+mtcars %>% 
+  head() %>% 
+  kbl() %>% 
+  kable_classic(html_font = "Roboto") %>% 
+  column_spec(3, background = "skyblue") %>% 
+  column_spec(4, background = "forestgreen") %>% 
+  column_spec(5, background = "chocolate")
+```
+
+In **{dplyr}**, this doesn't make 3 new columns named "a", "b", and "c", all filled with NA:^[If this is your first time seeing the "bang bang" `!!` operator and the "walrus" `:=` operator being used this way, check out the [documentation on quasiquotation](https://rlang.r-lib.org/reference/quasiquotation.html). If you are familiar with quasiquation in {dplyr}, I should also mention that using "big bang" `!!!` like in `mutate(!!!new_cols := NA)` doesn't work either. As far as I know, `:=` is just an alias of `=` for the {rlang} parser, and as we know `=` cannot assign more than one variable at once (unlike Python, for example), which explains the error.]
+
+```{r, error = TRUE}
+new_cols <- c("a", "b", "c")
+
+mtcars %>% 
+  head() %>% 
+  select(mpg) %>% 
+  mutate(!!new_cols := NA)
+```
+
+So you have to do either one of these:
+
+```{r, eval = FALSE}
+mtcars %>% 
+  head() %>% 
+  select(mpg) %>% 
+  mutate(
+    !!new_cols[1] := NA,
+    !!new_cols[2] := NA,
+    !!new_cols[3] := NA
+  )
+
+mtcars %>% 
+  head() %>% 
+  select(mpg) %>% 
+  mutate(!!new_cols[1] := NA) %>% 
+  mutate(!!new_cols[2] := NA) %>% 
+  mutate(!!new_cols[3] := NA)
+```
+
+```{r, echo = FALSE, message = FALSE}
+new_cols <- c("a", "b", "c")
+
+mtcars %>% 
+  head() %>% 
+  select(mpg) %>% 
+  mutate(
+    !!new_cols[1] := NA,
+    !!new_cols[2] := NA,
+    !!new_cols[3] := NA
+  )
+```
+
+So we've got functions being repeated, but in all these cases it looks like we can't just throw in a vector and expect the function to loop/map over them internally in the specific way that we want it to. And the "correct ways" I provided here are not very satisfying: that's a lot of copying and pasting! 
+
+Personally, I think it'd be nice to collapse these repetitive calls - but how?
+
+### Introducing reduce()
+
+`reduce()` is a powerful functional that allows you to abstract away from a sequence of functions that are applied in a fixed direction. You should go give [Advanced R Ch. 9.5](https://adv-r.hadley.nz/functionals.html) a read if you want an in-depth explanation, because here I'm just gonna give a quick crash course for our application of it to our current problem.^[Also, note that there are more motivated uses-cases of `reduce()`, mostly in doing mathy-things, and I'm by no means advocating that you should _always_ use it in our context - I just think it's fun to play around with!]
+
+All you need to know here is that `reduce()` takes a vector as its first argument, a function as its second argument, and an optional `.init` argument.^[There's also `.dir` argument that allows you to specify the direction, but not relevant here because when you pipe, the left-hand side is always the input to the next function.] Here's a schematic:
+
+```{r, echo = FALSE, fig.align='center', out.width = 500, fig.cap="From <a href='https://adv-r.hadley.nz/functionals.html'>Advanced R by Hadley Wickham</a>"}
+knitr::include_graphics("https://d33wubrfki0l68.cloudfront.net/b5835b80325b22f9460992f7bc9de5e0cf56de2c/27994/diagrams/functionals/reduce-init.png", error = FALSE)
+```
+
+Let me really quickly demonstrate `reduce()` in action.
+
+Say you wanted to add up the numbers 1 through 5, but only using the plus operator `+`. You could do something like this:^[If it helps, think of it like `((((1 + 2) + 3) + 4) + 5)`]
+
+```{r}
+1 + 2 + 3 + 4 + 5
+```
+
+Which is the same as this:
+
+```{r}
+reduce(1:5, `+`)
+```
+
+And if you want the start value to be something that's _not_ the first argument of the vector, pass that to the `.init` argument:
+
+```{r}
+identical(
+  0.5 + 1 + 2 + 3 + 4 + 5,
+  reduce(1:5, `+`, .init = 0.5)
+)
+```
+
+If you want to be specific, you can use an {rlang}-style anonymous function where `.x` is the accumulated value being passed into the first argument fo the function and `.y` is the second argument of the function.^[The function passed into `reduce()` doesn't have to be in {rlang} anonymous function syntax, but I like it so I'll keep using it here.]
+
+```{r}
+identical(
+  reduce(1:5, `+`, .init = 0.5),
+  reduce(1:5, ~ .x + .y, .init = 0.5)
+)
+```
+
+And two more examples just to demonstrate that directionality matters:
+
+```{r}
+identical(
+  reduce(1:5, `^`, .init = 0.5),
+  reduce(1:5, ~ .x ^ .y, .init = 0.5) # .x on left, .y on right
+)
+
+identical(
+  reduce(1:5, `^`, .init = 0.5),
+  reduce(1:5, ~ .y ^ .x, .init = 0.5) # .y on left, .x on right
+)
+```
+
+That's pretty much all you need to know - let's jump right in!
+
+
+## Example 1: {ggplot2}
+
+### A reduce() solution
+
+Recall that we had this sad code:
+
+```{r, eval = FALSE}
+ggplot(mtcars, aes(hp, mpg)) + 
+  geom_point(size = 8, alpha = .5) +
+  geom_point(size = 4, alpha = .5) +
+  geom_point(size = 2, alpha = .5)
+```
+
+For illustrative purposes, I'm going to move the `+` "pipes" to the beginning of each line:
+
+```{r, eval = FALSE}
+ggplot(mtcars, aes(hp, mpg))
+  + geom_point(size = 8, alpha = .5)
+  + geom_point(size = 4, alpha = .5)
+  + geom_point(size = 2, alpha = .5)
+```
+
+At this point, we see a clear pattern emerge line-by-line. We start with `ggplot(mtcars, aes(hp, mpg))`, which is kind of its own thing. Then we have three repetitions of `+ geom_point(size = X, alpha = .5)` where the `X` varies between 8, 4, and 2. We also notice that the sequence of calls goes from left to right, as is the normal order of piping.
+
+Now let's translate these observations into `reduce()`. I'm bad with words so here's a visual:
+
+```{r, echo = FALSE, out.width = '700px', fig.align='center'}
+knitr::include_graphics("reduce_ggplot.png", error = FALSE)
+```
+
+Let's go over what we did in our call to `reduce()` above:
+
+- In the **first argument**, we have the vector of values that are iterated over.
+
+- In the **second argument**, we have an anonymous function composed of...
+
+    - The `.x` variable, which represents the accumulated value. In this context, we keep the `.x` on the left because that is the left-hand side that we are carrying over to the next call via the `+`.
+    
+    - The `.y` variable, which takes on values from the first argument passed into `reduce()`. In this context, `.y` will be each value of the numeric vector `c(8, 4, 2)` since `.init` is given.
+    
+    - The repeating function call <code>geom_point(size = .y, alpha = .5)</code> that is called with each value of the vector passed in as the first argument.
+
+- In the **third argument** `.init`, we have `ggplot(mtcars, aes(hp, mpg))` which is the non-repeating piece of code that we start with.
+
+If you want to see the actual code run, here it is:
+
+```{r, fig.align='center', fig.width = 6, fig.height = 4}
+reduce(
+  c(8, 4, 2),
+  ~ .x + geom_point(size = .y, alpha = .5),
+  .init = ggplot(mtcars, aes(hp, mpg))
+)
+```
+
+
+Let's dig in a bit more, this time with an example that looks prettier.
+
+Suppose you want to collapse the repeated calls to `geom_point()` in this code:
+
+```{r, fig.align='center'}
+viridis_colors <- viridis::viridis(10)
+
+mtcars %>% 
+  ggplot(aes(hp, mpg)) +
+  geom_point(size = 20, color = viridis_colors[10]) +
+  geom_point(size = 18, color = viridis_colors[9]) +
+  geom_point(size = 16, color = viridis_colors[8]) +
+  geom_point(size = 14, color = viridis_colors[7]) +
+  geom_point(size = 12, color = viridis_colors[6]) +
+  geom_point(size = 10, color = viridis_colors[5]) +
+  geom_point(size = 8, color = viridis_colors[4]) +
+  geom_point(size = 6, color = viridis_colors[3]) +
+  geom_point(size = 4, color = viridis_colors[2]) +
+  geom_point(size = 2, color = viridis_colors[1]) +
+  scale_x_discrete(expand = expansion(.2)) +
+  scale_y_continuous(expand = expansion(.2)) +
+  theme_void() +
+  theme(panel.background = element_rect(fill = "grey20"))
+```
+
+You could do this in a couple ways:
+
+::::: {.panelset}
+
+::: {.panel}
+[Method 1]{.panel-name}
+
+**Method 1**: Move all the "constant" parts to `.init`, since the order of these layers don't matter.
+
+```{r, eval=F}
+reduce(
+    10L:1L,
+    ~ .x + geom_point(size = .y * 2, color = viridis_colors[.y]),
+    
+    .init = mtcars %>% 
+      ggplot(aes(hp, mpg)) +
+      scale_x_discrete(expand = expansion(.2)) +
+      scale_y_continuous(expand = expansion(.2)) +
+      theme_void() +
+      theme(panel.background = element_rect(fill = "grey20"))
+    
+)
+```
+
+:::
+
+::: {.panel}
+[Method 2]{.panel-name}
+
+**Method 2**: Use `reduce()` in place, with the help of the {magrittr} dot `.`
+
+```{r, eval=F}
+mtcars %>% 
+  ggplot(aes(hp, mpg)) %>% 
+  
+  reduce(
+    10L:1L,
+    ~ .x + geom_point(size = .y * 2, color = viridis_colors[.y]),
+    .init = . #<- right here!
+  ) +
+  
+  scale_x_discrete(expand = expansion(.2)) +
+  scale_y_continuous(expand = expansion(.2)) +
+  theme_void() +
+  theme(panel.background = element_rect(fill = "grey20"))
+```
+
+:::
+
+::: {.panel}
+[Method 3]{.panel-name}
+
+**Method 3**: Move all the "constant" parts to the top, wrap it in parentheses, and pass the whole thing into `.init` using the {magrittr} dot `.`
+
+```{r, eval=F}
+(mtcars %>% 
+  ggplot(aes(hp, mpg)) +
+  scale_x_discrete(expand = expansion(.2)) +
+  scale_y_continuous(expand = expansion(.2)) +
+  theme_void() +
+  theme(panel.background = element_rect(fill = "grey20"))) %>% 
+  
+  reduce(
+    10L:1L,
+    ~ .x + geom_point(size = .y * 2, color = viridis_colors[.y]),
+    .init = . #<- right here!
+  )
+```
+
+:::
+
+:::::
+
+All in all, we see that `reduce()` gives us more succinct code!
+
+An obvious advantage to this is that it is now really easy to make a single change that applies to all the repeated calls.
+
+For example, if I want to make the radius of the points grow/shrink exponentially, I just need to modify the anonymous function in the second argument of `reduce()`: 
+
+```{r, fig.align='center'}
+# Using Method 3
+(mtcars %>% 
+  ggplot(aes(hp, mpg)) +
+  scale_x_discrete(expand = expansion(.2)) +
+  scale_y_continuous(expand = expansion(.2)) +
+  theme_void() +
+  theme(panel.background = element_rect(fill = "grey20"))) %>% 
+  reduce(
+    10L:1L,
+    ~ .x + geom_point(size = .y ^ 1.5, color = viridis_colors[.y]),  # exponential!
+    .init = .
+  )
+```
+
+Yay, we collapsed ten layers of `geom_point()`!^[By the way, we could also do this with `map()` since [multiple ggplot2 layers can be stored into a list and added all together in one step](https://ggplot2-book.org/programming.html#multiple-components). But then we can't do this cool thing I'm going to show with `accumulate()` next!]
+
+### Feat. accumulate()
+
+There's actually one more thing I want to show here, which is **holding onto intermediate values** using `accumulate()`.
+
+`accumulate()` is like `reduce()`, except instead of returning a single value which is the output of the very last function call, it keeps all intermediate values and returns them in a list.
+
+```{r}
+accumulate(1:5, `+`)
+```
+
+Do you see where I'm going with this?
+
+Check out what happens if I change `reduce()` to `accumulate()` and return each element of the resulting list:
+
+```{r, fig.show="hold", out.width="25%"}
+plots <- (mtcars %>% 
+  ggplot(aes(hp, mpg)) +
+  scale_x_discrete(expand = expansion(.2)) +
+  scale_y_continuous(expand = expansion(.2)) +
+  theme_void() +
+  theme(panel.background = element_rect(fill = "grey20"))) %>% 
+  accumulate(
+    10L:1L,
+    ~ .x + geom_point(size = .y ^ 1.5, color = viridis_colors[.y]),
+    .init = .
+  )
+
+for (i in plots) { plot(i) }
+```
+
+We got back the intermediate plots!
+
+Still with me? Let's animate this!
+
+```{r, eval = FALSE}
+library(magick)
+
+# change ggplot2 objects into images
+imgs <- map(1:length(plots), ~ {
+  img <- image_graph(width = 672, height = 480)
+  plot(plots[[.x]])
+  dev.off()
+  img
+})
+
+# combine images as frames
+imgs <- image_join(imgs)
+
+# animate
+image_animate(imgs)
+```
+
+```{r, echo = FALSE, fig.align='center'}
+knitr::include_graphics("ggplot2_anim.gif", error = FALSE)
+```
+
+
+Neat! By the way, if you want a whole package dedicated to animating and incrementally building {ggplot2} code, check out [\@EvaMaeRey](https://twitter.com/EvaMaeRey)'s {[flipbookr](https://evamaerey.github.io/flipbooks/about)} package!
+
+## Example 2: {kableExtra}
+
+### A reduce2() solution
+
+Recall that we had this sad code:
+
+```{r, eval = F}
+mtcars %>% 
+  head() %>% 
+  kbl() %>% 
+  kable_classic(html_font = "Roboto") %>% 
+  column_spec(3, background = "skyblue") %>% 
+  column_spec(4, background = "forestgreen") %>% 
+  column_spec(5, background = "chocolate")
+```
+
+We've got two things varying here: the column location `3:5` and the background color `c("skyblue", "forestgreen", "chocolate")`. We  _could_ do the same trick I sneaked into the previous section by just passing one vector to `reduce()` that basically functions as an index:
+
+```{r, eval = F}
+numbers <- 3:5
+background_colors <- c("skyblue", "forestgreen", "chocolate")
+
+(mtcars %>% 
+  head() %>% 
+  kbl() %>% 
+  kable_classic(html_font = "Roboto")) %>% 
+  reduce(
+    1:3,
+    ~ .x %>% column_spec(numbers[.y], background = background_colors[.y]),
+    .init = .
+  )
+```
+
+But I want to use this opportunity to showcase `reduce2()`, which explicitly takes a _second_ varying argument to the function that you are `reduce()`-ing over.
+
+Here, `..1` is like the `.x` and `..2` is like the `.y` from `reduce()`. The only new part is `..3` which refers to the second varying argument.
+
+```{r, eval = F}
+(mtcars %>% 
+  head() %>% 
+  kbl() %>% 
+  kable_classic(html_font = "Roboto")) %>% 
+  reduce2(
+    3:5,                                           # 1st varying argument (represented by ..2)
+    c("skyblue", "forestgreen", "chocolate"),      # 2nd varying argument (represented by ..3)
+    ~ ..1 %>% column_spec(..2, background = ..3),
+    .init = .
+  )
+```
+
+We're not done yet! We can actually skip the {magrittr} pipe `%>%` and just stick `..1` as the first argument inside `column_spec()`.^[Note that we couldn't do this with `+` in our {ggplot2} example because `geom_point()` doesn't take a ggplot object as its first argument. Basically, the `+` operator is re-purposed as a class method for ggplot objects but it's kinda complicated so that's all I'll say about that.] This actually improves performance because you're removing the overhead from evaluating the pipe!
+
+Additionally, because the pipe forces evaluation with each call unlike `+` in {ggplot2}, we don't need the parantheses wrapped around the top part of the code for the {magrittr} dot `.` to work!
+
+Here is the final `reduce2()` solution for our sad code:
+
+```{r}
+mtcars %>% 
+  head() %>% 
+  kbl() %>% 
+  kable_classic(html_font = "Roboto") %>% 
+  reduce2(
+    3:5,                                          
+    c("skyblue", "forestgreen", "chocolate"),  
+    ~ column_spec(..1, ..2, background = ..3),  # No need for the pipe!
+    .init = .
+  )
+```
+
+And of course, we now have the flexibilty to do much more complicated manipulations!
+
+```{r rainbow_table, eval = FALSE}
+mtcars %>% 
+  head() %>% 
+  kbl() %>% 
+  kable_classic(html_font = "Roboto") %>% 
+  reduce2(
+    1:(length(mtcars)+1),                                          
+    viridis::viridis(length(mtcars)+1),  
+    ~ column_spec(..1, ..2, background = ..3, color = if(..2 < 5){"white"}),
+    .init = .
+  )
+```
+
+<aside>
+The `+1` is there because the table includes row names, so there's one more "column" to color
+</aside>
+
+```{r rainbow_table, echo = FALSE}
+```
+
+
+
+### Feat. accumulate2()
+
+Yep, that's right - more animations with `accumulate()` and {magick}!
+
+Actually, to be precise, we're going to use the `accumuate2()` here to replace our `reduce2()`.
+
+First, we save the list of intermediate outputs to `tables`:
+
+```{r}
+tables <- mtcars %>% 
+  head() %>% 
+  kbl() %>% 
+  kable_classic(html_font = "Roboto") %>% 
+  accumulate2(
+    1:(length(mtcars)+1),                                          
+    viridis::viridis(length(mtcars)+1),  
+    ~ column_spec(..1, ..2, background = ..3, color = if(..2 < 5){"white"}),
+    .init = .
+  )
+```
+
+Then, we save each table in `tables` as an image:
+
+```{r, eval = FALSE}
+iwalk(tables, ~ save_kable(.x, file = here::here("img", paste0("table", .y, ".png")), zoom = 2))
+```
+
+Finally, we read them in and animate:
+
+```{r, eval = FALSE}
+tables <- map(
+  paste0("table", 1:length(tables), ".png"),
+  ~ image_read(here::here("img", .x))
+)
+
+tables <- image_join(tables)
+
+image_animate(tables)
+```
+
+```{r, echo=F, fig.align='center', layout = 'l-body-outset'}
+knitr::include_graphics("table_gif.gif", error = FALSE)
+```
+
+
+## Example 3: {dplyr}
+
+### A reduce() solution
+
+Recall that we had this sad code:
+
+```{r}
+new_cols <- c("a", "b", "c")
+
+mtcars %>% 
+  head() %>% 
+  select(mpg) %>% 
+  mutate(!!new_cols[1] := NA) %>% 
+  mutate(!!new_cols[2] := NA) %>% 
+  mutate(!!new_cols[3] := NA)
+```
+
+You know the drill - a simple call to `reduce()` does the job!
+
+```{r}
+# Converting to tibble for nicer printing
+mtcars <- as_tibble(mtcars)
+
+mtcars %>% 
+  head() %>% 
+  select(mpg) %>% 
+  reduce(
+    new_cols,
+    ~ mutate(.x, !!.y := NA),
+    .init = .
+  )
+```
+
+Again, this affords you a lot more flexibility, like dynamically assigning values to each column:
+
+```{r}
+mtcars %>% 
+  head() %>% 
+  select(mpg) %>% 
+  reduce(
+    new_cols,
+    ~ mutate(.x, !!.y := paste0(.y, "-", row_number())),
+    .init = .
+  )
+```
+
+We can go crazy using [context dependent expressions](https://dplyr.tidyverse.org/reference/context.html) like `cur_data()`, and do something like keeping track of the columns present at each point a new column has been created via `mutate()`:
+
+```{r}
+mtcars %>% 
+  head() %>% 
+  select(mpg) %>% 
+  reduce(
+    new_cols,
+    ~ mutate(.x, !!.y := paste(c(names(cur_data()), .y), collapse = "-")),
+    .init = .
+  )
+```
+
+Here's a less crazy, more practical application of this: **explicit dummy coding**!
+
+In R, the **factor** data structure allows implicit dummy coding, which you can access using `contrasts()`.
+
+Here, in our data `penguins` from the {[palmerpenguins](https://allisonhorst.github.io/palmerpenguins/articles/palmerpenguins.html)} package, we see that the 3-way contrast between "Adelie", "Chinstrap", and "Gentoo" in the `species` variable is treatment coded, with "Adelie" set as the reference level:
+
+```{r}
+data("penguins", package = "palmerpenguins")
+
+penguins_implicit <- penguins %>% 
+  na.omit() %>% 
+  select(species, flipper_length_mm) %>% 
+  mutate(species = factor(species))
+
+contrasts(penguins_implicit$species)
+```
+
+We can also infer this from this output of a simple linear model:
+
+```{r}
+broom::tidy(lm(flipper_length_mm ~ species, data = penguins_implicit))
+```
+
+And you can actually make this 3-way treatment coding explicit by expanding the matrix into actual columns of the data!
+
+Here's a `reduce()` solution:
+
+```{r}
+penguins_explicit <- 
+  reduce(
+    levels(penguins_implicit$species)[-1],
+    ~ mutate(.x, !!paste0("species", .y) := as.integer(species == .y)),
+    .init = penguins_implicit
+  )
+```
+
+```{r, echo = FALSE}
+penguins_explicit %>% 
+  kbl() %>% 
+  kable_classic(html_font = "Roboto") %>% 
+  scroll_box(height = "300px", extra_css = "overflow-x: auto; border: 5px solid #ddd; margin-bottom: 20px;")
+```
+
+
+Check this out - we get the exact same output!
+
+```{r}
+broom::tidy(lm(flipper_length_mm ~ speciesChinstrap + speciesGentoo, data = penguins_explicit))
+```
+
+By the way, if you're wondering why this is practical, some modeling packages in R (like {[lavaan](https://www.lavaan.ugent.be)} for structural equation modeling) only accept dummy coded variables that exist as independent columns/vectors, not as a metadata of a factor vector.^[Figuring this out has caused some headaches and that's what I get for not carefully reading the [docs](https://www.lavaan.ugent.be/tutorial/cat.html)] Because this is pretty common, packages like {psych} have a function that does the same transformation we just did, called `dummy.code()`^[Except `dummy.code()` also returns a column for the reference level whose value is always `1`, which is kinda pointless]:
+
+```{r}
+bind_cols(
+  penguins_implicit,
+  psych::dummy.code(penguins_implicit$species)
+)
+```
+
+
+### Feat. {data.table}
+
+Of course, you could do all of this without `reduce()` in {data.table} because its walrus `:=` is vectorized.
+
+Here's the {data.table} solution for our sad code:
+
+```{r, eval = FALSE}
+library(data.table)
+new_cols <- c("a", "b", "c")
+
+mtcars_dt <- mtcars %>% 
+  head() %>% 
+  select(mpg) %>% 
+  as.data.table()
+
+mtcars_dt[, (new_cols) := NA]
+```
+
+And here's a {data.table} solution for explicit dummy coding as another example:
+
+```{r, eval = FALSE}
+penguins_dt <- as.data.table(penguins_implicit)
+
+treatment_lvls <- levels(penguins_dt$species)[-1]
+treatment_cols <- paste0("species", treatment_lvls)
+
+
+penguins_dt[, (treatment_cols) := lapply(treatment_lvls, function(x){as.integer(species == x)})]
+```
+
+I personally default to using {data.table} over {dplyr} in these cases.
+
+## Misc.
+
+You can also pass in a list of functions instead of arguments because why not. 
+
+For example, this replicates the very first code I showed in this blog post:
+
+```{r}
+my_funs <- list(deviation, square, mean, sqrt)
+
+reduce(
+  my_funs,
+  ~ .y(.x),
+  .init = nums
+)
+```
+
+You could also pass in both a list of functions _and_ a list of their arguments if you really want to abstract away from, like, _literally everything_:
+
+::::: {.panelset}
+
+::: {.panel}
+[Lawful Good]{.panel-name}
+
+```{r}
+library(janitor)
+
+mtcars %>% 
+  clean_names(case = "title") %>% 
+  tabyl(2) %>% 
+  adorn_rounding(digits = 2) %>% 
+  adorn_totals()
+```
+
+:::
+
+::: {.panel}
+[Chaotic Evil]{.panel-name}
+
+```{r}
+janitor_funs <- list(clean_names, tabyl, adorn_rounding, adorn_totals)
+janitor_args <- list(list(case = "title"), list(2), list(digits = 2), list())
+
+reduce2(
+  janitor_funs,
+  janitor_args,
+  ~ do.call(..2, c(list(dat = ..1), ..3)),
+  .init = mtcars
+)
+```
+:::
+
+:::::
