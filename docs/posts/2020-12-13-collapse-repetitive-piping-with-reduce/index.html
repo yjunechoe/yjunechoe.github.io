@@ -2212,7 +2212,7 @@ blockquote p {
 
 /* Footnote margins */
 d-footnote {
-  margin-left: -.2em;
+  margin-left: -.1em;
   margin-right: .1em;
 }
 
@@ -2447,17 +2447,17 @@ Misc.
 <li><a href="#example-1-ggplot2">Example 1: {ggplot2}</a>
 <ul>
 <li><a href="#a-reduce-solution">A reduce() solution</a></li>
-<li><a href="#teat.-accumulate">teat. accumulate()</a></li>
+<li><a href="#feat.-accumulate">feat. accumulate()</a></li>
 </ul></li>
 <li><a href="#example-2-kableextra">Example 2: {kableExtra}</a>
 <ul>
 <li><a href="#a-reduce2-solution">A reduce2() solution</a></li>
-<li><a href="#teat.-accumulate2">teat. accumulate2()</a></li>
+<li><a href="#eat.-accumulate2">eat. accumulate2()</a></li>
 </ul></li>
 <li><a href="#example-3-dplyr">Example 3: {dplyr}</a>
 <ul>
 <li><a href="#a-reduce-solution-1">A reduce() solution</a></li>
-<li><a href="#teat.-data.table">teat. {data.table}</a></li>
+<li><a href="#feat.-data.table">feat. {data.table}</a></li>
 </ul></li>
 <li><a href="#misc.">Misc.</a></li>
 </ul>
@@ -3393,7 +3393,7 @@ Figure 1: From <a href='https://adv-r.hadley.nz/functionals.html'>Advanced R by 
 <p><img src="collapse-repetitive-piping-with-reduce_files/figure-html5/unnamed-chunk-26-1.png" width="624" style="display: block; margin: auto;" /></p>
 </div>
 <p>Yay, we collapsed ten layers of <code>geom_point()</code>!<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
-<h3 id="teat.-accumulate">teat. accumulate()</h3>
+<h3 id="feat.-accumulate">feat. accumulate()</h3>
 <p>There’s actually one more thing I want to show here, which is <strong>holding onto intermediate values</strong> using <code>accumulate()</code>.</p>
 <p><code>accumulate()</code> is like <code>reduce()</code>, except instead of returning a single value which is the output of the very last function call, it keeps all intermediate values and returns them in a list.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -3403,7 +3403,6 @@ Figure 1: From <a href='https://adv-r.hadley.nz/functionals.html'>Advanced R by 
 </div>
 <pre><code>  [1]  1  3  6 10 15</code></pre>
 </div>
-<p>Do you see where I’m going with this?</p>
 <p>Check out what happens if I change <code>reduce()</code> to <code>accumulate()</code> and return each element of the resulting list:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -3425,7 +3424,7 @@ Figure 1: From <a href='https://adv-r.hadley.nz/functionals.html'>Advanced R by 
 <p><img src="collapse-repetitive-piping-with-reduce_files/figure-html5/unnamed-chunk-28-1.png" width="25%" /><img src="collapse-repetitive-piping-with-reduce_files/figure-html5/unnamed-chunk-28-2.png" width="25%" /><img src="collapse-repetitive-piping-with-reduce_files/figure-html5/unnamed-chunk-28-3.png" width="25%" /><img src="collapse-repetitive-piping-with-reduce_files/figure-html5/unnamed-chunk-28-4.png" width="25%" /><img src="collapse-repetitive-piping-with-reduce_files/figure-html5/unnamed-chunk-28-5.png" width="25%" /><img src="collapse-repetitive-piping-with-reduce_files/figure-html5/unnamed-chunk-28-6.png" width="25%" /><img src="collapse-repetitive-piping-with-reduce_files/figure-html5/unnamed-chunk-28-7.png" width="25%" /><img src="collapse-repetitive-piping-with-reduce_files/figure-html5/unnamed-chunk-28-8.png" width="25%" /><img src="collapse-repetitive-piping-with-reduce_files/figure-html5/unnamed-chunk-28-9.png" width="25%" /><img src="collapse-repetitive-piping-with-reduce_files/figure-html5/unnamed-chunk-28-10.png" width="25%" /><img src="collapse-repetitive-piping-with-reduce_files/figure-html5/unnamed-chunk-28-11.png" width="25%" /></p>
 </div>
 <p>We got back the intermediate plots!</p>
-<p>Still with me? Let’s animate this!</p>
+<p>Are you thinking what I’m thinking? Let’s animate this!</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre><code><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://docs.ropensci.org/magick/'>magick</a></span><span class='op'>)</span>
@@ -4081,7 +4080,7 @@ Valiant
 </tbody>
 </table>
 </div>
-<h3 id="teat.-accumulate2">teat. accumulate2()</h3>
+<h3 id="eat.-accumulate2">eat. accumulate2()</h3>
 <p>Yep, that’s right - more animations with <code>accumulate()</code> and {magick}!</p>
 <p>Actually, to be precise, we’re going to use the <code>accumuate2()</code> here to replace our <code>reduce2()</code>.</p>
 <p>First, we save the list of intermediate outputs to <code>tables</code>:</p>
@@ -4124,6 +4123,7 @@ Valiant
 <div class="layout-chunk" data-layout="l-body-outset">
 <p><img src="table_gif.gif" style="display: block; margin: auto;" /></p>
 </div>
+<p>Bet you don’t see animated tables often!</p>
 <h2 id="example-3-dplyr">Example 3: {dplyr}</h2>
 <h3 id="a-reduce-solution-1">A reduce() solution</h3>
 <p>Recall that we had this sad code:</p>
@@ -4147,7 +4147,7 @@ Valiant
   5 18.7 NA NA NA
   6 18.1 NA NA NA</code></pre>
 </div>
-<p>You know the drill - a simple call to <code>reduce()</code> does the job!</p>
+<p>You know the drill - a simple call to <code>reduce()</code> gets the job done!</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre><code><span class='co'># Converting to tibble for nicer printing</span>
@@ -4173,7 +4173,7 @@ Valiant
   5  18.7 NA    NA    NA   
   6  18.1 NA    NA    NA</code></pre>
 </div>
-<p>Again, this affords you a lot more flexibility, like dynamically assigning values to each column:</p>
+<p>Again, this gives you a lot of flexibility, like the ability to dynamically assign values to each column:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre><code><span class='va'>mtcars</span> <span class='op'>%&gt;%</span> 
@@ -4196,7 +4196,7 @@ Valiant
   5  18.7 a-5   b-5   c-5  
   6  18.1 a-6   b-6   c-6</code></pre>
 </div>
-<p>We can go crazy using <a href="https://dplyr.tidyverse.org/reference/context.html">context dependent expressions</a> like <code>cur_data()</code>, and do something like keeping track of the columns present at each point a new column has been created via <code>mutate()</code>:</p>
+<p>We can go super crazy using <a href="https://dplyr.tidyverse.org/reference/context.html">context dependent expressions</a> like <code>cur_data()</code>, and do something like keeping track of the columns present at each point a new column has been created via <code>mutate()</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre><code><span class='va'>mtcars</span> <span class='op'>%&gt;%</span> 
@@ -4239,7 +4239,7 @@ Valiant
   Chinstrap         1      0
   Gentoo            0      1</code></pre>
 </div>
-<p>We can also infer this from this output of a simple linear model:</p>
+<p>We can also infer that from the output of this simple linear model:<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre><code><span class='fu'>broom</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>flipper_length_mm</span> <span class='op'>~</span> <span class='va'>species</span>, data <span class='op'>=</span> <span class='va'>penguins_implicit</span><span class='op'>)</span><span class='op'>)</span>
@@ -8964,7 +8964,7 @@ Chinstrap
   2 speciesChinstrap     5.72     0.980      5.84 1.25e-  8
   3 speciesGentoo       27.1      0.824     32.9  2.68e-106</code></pre>
 </div>
-<p>By the way, if you’re wondering why this is practical, some modeling packages in R (like {<a href="https://www.lavaan.ugent.be">lavaan</a>} for structural equation modeling) only accept dummy coded variables that exist as independent columns/vectors, not as a metadata of a factor vector.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> Because this is pretty common, packages like {psych} have a function that does the same transformation we just did, called <code>dummy.code()</code><a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>:</p>
+<p>By the way, if you’re wondering how this is practical, some modeling packages in R (like {<a href="https://www.lavaan.ugent.be">lavaan</a>} for structural equation modeling) only accept dummy coded variables that exist as independent columns/vectors, not as a metadata of a factor vector.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> This is common enough that some packages like {psych} have a function that does the same transformation we just did, called <code>dummy.code()</code><a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre><code><span class='fu'>bind_cols</span><span class='op'>(</span>
@@ -8988,7 +8988,7 @@ Chinstrap
   10 Adelie                198               1           0              0
   # ... with 323 more rows</code></pre>
 </div>
-<h3 id="teat.-data.table">teat. {data.table}</h3>
+<h3 id="feat.-data.table">feat. {data.table}</h3>
 <p>Of course, you could do all of this without <code>reduce()</code> in {data.table} because its walrus <code>:=</code> is vectorized.</p>
 <p>Here’s the {data.table} solution for our sad code:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -9080,6 +9080,7 @@ Chinstrap
 </div>
 </div>
 </div>
+<p>Have fun reducing repetitions in your code with <code>reduce()</code>!</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <section class="footnotes" role="doc-endnotes">
 <hr />
@@ -9088,13 +9089,14 @@ Chinstrap
 <li id="fn2" role="doc-endnote"><p>Taken from <a href="https://adv-r.hadley.nz/functions.html#function-composition">Advanced R Ch. 6</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3" role="doc-endnote"><p>If this is your first time seeing the “bang bang” <code>!!</code> operator and the “walrus” <code>:=</code> operator being used this way, check out the <a href="https://rlang.r-lib.org/reference/quasiquotation.html">documentation on quasiquotation</a>. If you are familiar with quasiquation in {dplyr}, I should also mention that using “big bang” <code>!!!</code> like in <code>mutate(!!!new_cols := NA)</code> doesn’t work either. As far as I know, <code>:=</code> is just an alias of <code>=</code> for the {rlang} parser, and as we know <code>=</code> cannot assign more than one variable at once (unlike Python, for example), which explains the error.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4" role="doc-endnote"><p>Also, note that there are more motivated uses-cases of <code>reduce()</code>, mostly in doing mathy-things, and I’m by no means advocating that you should <em>always</em> use it in our context - I just think it’s fun to play around with!<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5" role="doc-endnote"><p>There’s also <code>.dir</code> argument that allows you to specify the direction, but not relevant here because when you pipe, the left-hand side is always the input to the next function.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>There’s also <code>.dir</code> argument that allows you to specify the direction, but not relevant here because when you pipe, the left-hand side is always the first input to the next function.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6" role="doc-endnote"><p>If it helps, think of it like <code>((((1 + 2) + 3) + 4) + 5)</code><a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn7" role="doc-endnote"><p>The function passed into <code>reduce()</code> doesn’t have to be in {rlang} anonymous function syntax, but I like it so I’ll keep using it here.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8" role="doc-endnote"><p>By the way, we could also do this with <code>map()</code> since <a href="https://ggplot2-book.org/programming.html#multiple-components">multiple ggplot2 layers can be stored into a list and added all together in one step</a>. But then we can’t do this cool thing I’m going to show with <code>accumulate()</code> next!<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn9" role="doc-endnote"><p>Note that we couldn’t do this with <code>+</code> in our {ggplot2} example because <code>geom_point()</code> doesn’t take a ggplot object as its first argument. Basically, the <code>+</code> operator is re-purposed as a class method for ggplot objects but it’s kinda complicated so that’s all I’ll say about that.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10" role="doc-endnote"><p>Figuring this out has caused some headaches and that’s what I get for not carefully reading the <a href="https://www.lavaan.ugent.be/tutorial/cat.html">docs</a><a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn11" role="doc-endnote"><p>Except <code>dummy.code()</code> also returns a column for the reference level whose value is always <code>1</code>, which is kinda pointless<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10" role="doc-endnote"><p>If you aren’t familiar with linear models, we know that “Adelie” is the reference level because there is no “speciesAdelie” term. The estimate for “Adelie” is the <code>(Intercept)</code>!<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11" role="doc-endnote"><p>Figuring this out has caused some headaches and that’s what I get for not carefully reading the <a href="https://www.lavaan.ugent.be/tutorial/cat.html">docs</a><a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12" role="doc-endnote"><p>Except <code>dummy.code()</code> also returns a column for the reference level whose value is always <code>1</code>, which is kinda pointless<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 <!--radix_placeholder_article_footer-->

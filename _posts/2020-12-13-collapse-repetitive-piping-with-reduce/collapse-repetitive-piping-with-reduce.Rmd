@@ -185,7 +185,7 @@ Personally, I think it'd be nice to collapse these repetitive calls - but how?
 
 `reduce()` is a powerful functional that allows you to abstract away from a sequence of functions that are applied in a fixed direction. You should go give [Advanced R Ch. 9.5](https://adv-r.hadley.nz/functionals.html) a read if you want an in-depth explanation, because here I'm just gonna give a quick crash course for our application of it to our current problem.^[Also, note that there are more motivated uses-cases of `reduce()`, mostly in doing mathy-things, and I'm by no means advocating that you should _always_ use it in our context - I just think it's fun to play around with!]
 
-All you need to know here is that `reduce()` takes a vector as its first argument, a function as its second argument, and an optional `.init` argument.^[There's also `.dir` argument that allows you to specify the direction, but not relevant here because when you pipe, the left-hand side is always the input to the next function.] Here's a schematic:
+All you need to know here is that `reduce()` takes a vector as its first argument, a function as its second argument, and an optional `.init` argument.^[There's also `.dir` argument that allows you to specify the direction, but not relevant here because when you pipe, the left-hand side is always the first input to the next function.] Here's a schematic:
 
 ```{r, echo = FALSE, fig.align='center', out.width = 500, fig.cap="From <a href='https://adv-r.hadley.nz/functionals.html'>Advanced R by Hadley Wickham</a>"}
 knitr::include_graphics("https://d33wubrfki0l68.cloudfront.net/b5835b80325b22f9460992f7bc9de5e0cf56de2c/27994/diagrams/functionals/reduce-init.png", error = FALSE)
@@ -416,7 +416,7 @@ For example, if I want to make the radius of the points grow/shrink exponentiall
 
 Yay, we collapsed ten layers of `geom_point()`!^[By the way, we could also do this with `map()` since [multiple ggplot2 layers can be stored into a list and added all together in one step](https://ggplot2-book.org/programming.html#multiple-components). But then we can't do this cool thing I'm going to show with `accumulate()` next!]
 
-### teat. accumulate()
+### feat. accumulate()
 
 There's actually one more thing I want to show here, which is **holding onto intermediate values** using `accumulate()`.
 
@@ -425,8 +425,6 @@ There's actually one more thing I want to show here, which is **holding onto int
 ```{r}
 accumulate(1:5, `+`)
 ```
-
-Do you see where I'm going with this?
 
 Check out what happens if I change `reduce()` to `accumulate()` and return each element of the resulting list:
 
@@ -448,7 +446,7 @@ for (i in plots) { plot(i) }
 
 We got back the intermediate plots!
 
-Still with me? Let's animate this!
+Are you thinking what I'm thinking? Let's animate this!
 
 ```{r, eval = FALSE}
 library(magick)
@@ -566,9 +564,7 @@ The `+1` is there because the table includes row names, so there's one more "col
 ```{r rainbow_table, echo = FALSE}
 ```
 
-
-
-### teat. accumulate2()
+### eat. accumulate2()
 
 Yep, that's right - more animations with `accumulate()` and {magick}!
 
@@ -612,6 +608,8 @@ image_animate(tables)
 knitr::include_graphics("table_gif.gif", error = FALSE)
 ```
 
+Bet you don't see animated tables often!
+
 
 ## Example 3: {dplyr}
 
@@ -630,7 +628,7 @@ mtcars %>%
   mutate(!!new_cols[3] := NA)
 ```
 
-You know the drill - a simple call to `reduce()` does the job!
+You know the drill - a simple call to `reduce()` gets the job done!
 
 ```{r}
 # Converting to tibble for nicer printing
@@ -646,7 +644,7 @@ mtcars %>%
   )
 ```
 
-Again, this affords you a lot more flexibility, like dynamically assigning values to each column:
+Again, this gives you a lot of flexibility, like the ability to dynamically assign values to each column:
 
 ```{r}
 mtcars %>% 
@@ -659,7 +657,7 @@ mtcars %>%
   )
 ```
 
-We can go crazy using [context dependent expressions](https://dplyr.tidyverse.org/reference/context.html) like `cur_data()`, and do something like keeping track of the columns present at each point a new column has been created via `mutate()`:
+We can go super crazy using [context dependent expressions](https://dplyr.tidyverse.org/reference/context.html) like `cur_data()`, and do something like keeping track of the columns present at each point a new column has been created via `mutate()`:
 
 ```{r}
 mtcars %>% 
@@ -689,7 +687,7 @@ penguins_implicit <- penguins %>%
 contrasts(penguins_implicit$species)
 ```
 
-We can also infer this from this output of a simple linear model:
+We can also infer that from the output of this simple linear model:^[If you aren't familiar with linear models, we know that "Adelie" is the reference level because there is no "speciesAdelie" term. The estimate for "Adelie" is the `(Intercept)`!]
 
 ```{r}
 broom::tidy(lm(flipper_length_mm ~ species, data = penguins_implicit))
@@ -722,7 +720,7 @@ And we get the exact same output from `lm`!
 broom::tidy(lm(flipper_length_mm ~ speciesChinstrap + speciesGentoo, data = penguins_explicit))
 ```
 
-By the way, if you're wondering why this is practical, some modeling packages in R (like {[lavaan](https://www.lavaan.ugent.be)} for structural equation modeling) only accept dummy coded variables that exist as independent columns/vectors, not as a metadata of a factor vector.^[Figuring this out has caused some headaches and that's what I get for not carefully reading the [docs](https://www.lavaan.ugent.be/tutorial/cat.html)] Because this is pretty common, packages like {psych} have a function that does the same transformation we just did, called `dummy.code()`^[Except `dummy.code()` also returns a column for the reference level whose value is always `1`, which is kinda pointless]:
+By the way, if you're wondering how this is practical, some modeling packages in R (like {[lavaan](https://www.lavaan.ugent.be)} for structural equation modeling) only accept dummy coded variables that exist as independent columns/vectors, not as a metadata of a factor vector.^[Figuring this out has caused some headaches and that's what I get for not carefully reading the [docs](https://www.lavaan.ugent.be/tutorial/cat.html)] This is common enough that some packages like {psych} have a function that does the same transformation we just did, called `dummy.code()`^[Except `dummy.code()` also returns a column for the reference level whose value is always `1`, which is kinda pointless]:
 
 ```{r}
 bind_cols(
@@ -732,7 +730,7 @@ bind_cols(
 ```
 
 
-### teat. {data.table}
+### feat. {data.table}
 
 Of course, you could do all of this without `reduce()` in {data.table} because its walrus `:=` is vectorized.
 
@@ -816,3 +814,5 @@ reduce2(
 :::
 
 :::::
+
+Have fun reducing repetitions in your code with `reduce()`!
