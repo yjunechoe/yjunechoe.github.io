@@ -2168,6 +2168,10 @@ d-article h2 {
   margin: 3rem 0 1.5rem 0;
 }
 
+div.l-body + h2 {
+  margin-top: 0px;
+}
+
 d-article h3 {
   margin-top: 1em;
   font-size: 28px;
@@ -2443,17 +2447,17 @@ Misc.
 <li><a href="#example-1-ggplot2">Example 1: {ggplot2}</a>
 <ul>
 <li><a href="#a-reduce-solution">A reduce() solution</a></li>
-<li><a href="#feat.-accumulate">Feat. accumulate()</a></li>
+<li><a href="#teat.-accumulate">teat. accumulate()</a></li>
 </ul></li>
 <li><a href="#example-2-kableextra">Example 2: {kableExtra}</a>
 <ul>
 <li><a href="#a-reduce2-solution">A reduce2() solution</a></li>
-<li><a href="#feat.-accumulate2">Feat. accumulate2()</a></li>
+<li><a href="#teat.-accumulate2">teat. accumulate2()</a></li>
 </ul></li>
 <li><a href="#example-3-dplyr">Example 3: {dplyr}</a>
 <ul>
 <li><a href="#a-reduce-solution-1">A reduce() solution</a></li>
-<li><a href="#feat.-data.table">Feat. {data.table}</a></li>
+<li><a href="#teat.-data.table">teat. {data.table}</a></li>
 </ul></li>
 <li><a href="#misc.">Misc.</a></li>
 </ul>
@@ -3152,7 +3156,7 @@ Valiant
   5 18.7 NA NA NA
   6 18.1 NA NA NA</code></pre>
 </div>
-<p>So we’ve got functions being repeated, but in all these cases it looks like we can’t just throw in a vector and expect the function to loop/map over them internally in the specific way that we want it to. And the “correct ways” I provided here are not very satisfying: that’s a lot of copying and pasting!</p>
+<p>So we’ve got functions being repeated, but in all these cases it looks like <strong>we can’t just throw in a vector and expect the function to loop/map over them internally in the specific way that we want it to</strong>. And the “correct ways” I provided here are not very satisfying: that’s a lot of copying and pasting!</p>
 <p>Personally, I think it’d be nice to collapse these repetitive calls - but how?</p>
 <h3 id="introducing-reduce">Introducing reduce()</h3>
 <p><code>reduce()</code> is a powerful functional that allows you to abstract away from a sequence of functions that are applied in a fixed direction. You should go give <a href="https://adv-r.hadley.nz/functionals.html">Advanced R Ch. 9.5</a> a read if you want an in-depth explanation, because here I’m just gonna give a quick crash course for our application of it to our current problem.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
@@ -3389,7 +3393,7 @@ Figure 1: From <a href='https://adv-r.hadley.nz/functionals.html'>Advanced R by 
 <p><img src="collapse-repetitive-piping-with-reduce_files/figure-html5/unnamed-chunk-26-1.png" width="624" style="display: block; margin: auto;" /></p>
 </div>
 <p>Yay, we collapsed ten layers of <code>geom_point()</code>!<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
-<h3 id="feat.-accumulate">Feat. accumulate()</h3>
+<h3 id="teat.-accumulate">teat. accumulate()</h3>
 <p>There’s actually one more thing I want to show here, which is <strong>holding onto intermediate values</strong> using <code>accumulate()</code>.</p>
 <p><code>accumulate()</code> is like <code>reduce()</code>, except instead of returning a single value which is the output of the very last function call, it keeps all intermediate values and returns them in a list.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -4077,7 +4081,7 @@ Valiant
 </tbody>
 </table>
 </div>
-<h3 id="feat.-accumulate2">Feat. accumulate2()</h3>
+<h3 id="teat.-accumulate2">teat. accumulate2()</h3>
 <p>Yep, that’s right - more animations with <code>accumulate()</code> and {magick}!</p>
 <p>Actually, to be precise, we’re going to use the <code>accumuate2()</code> here to replace our <code>reduce2()</code>.</p>
 <p>First, we save the list of intermediate outputs to <code>tables</code>:</p>
@@ -4248,7 +4252,7 @@ Valiant
   2 speciesChinstrap     5.72     0.980      5.84 1.25e-  8
   3 speciesGentoo       27.1      0.824     32.9  2.68e-106</code></pre>
 </div>
-<p>And you can actually make this 3-way treatment coding explicit by expanding the matrix into actual columns of the data!</p>
+<p>What’s cool is that you can make this 3-way treatment coding explicit by expanding the matrix into actual columns of the data!</p>
 <p>Here’s a <code>reduce()</code> solution:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -8947,7 +8951,7 @@ Chinstrap
 </table>
 </div>
 </div>
-<p>Check this out - we get the exact same output!</p>
+<p>And we get the exact same output from <code>lm</code>!</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre><code><span class='fu'>broom</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>flipper_length_mm</span> <span class='op'>~</span> <span class='va'>speciesChinstrap</span> <span class='op'>+</span> <span class='va'>speciesGentoo</span>, data <span class='op'>=</span> <span class='va'>penguins_explicit</span><span class='op'>)</span><span class='op'>)</span>
@@ -8984,7 +8988,7 @@ Chinstrap
   10 Adelie                198               1           0              0
   # ... with 323 more rows</code></pre>
 </div>
-<h3 id="feat.-data.table">Feat. {data.table}</h3>
+<h3 id="teat.-data.table">teat. {data.table}</h3>
 <p>Of course, you could do all of this without <code>reduce()</code> in {data.table} because its walrus <code>:=</code> is vectorized.</p>
 <p>Here’s the {data.table} solution for our sad code:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -9001,7 +9005,7 @@ Chinstrap
 </code></pre>
 </div>
 </div>
-<p>And here’s a {data.table} solution for explicit dummy coding as another example:</p>
+<p>And here’s a {data.table} solution for the explicit dummy coding example:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre><code><span class='va'>penguins_dt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html'>as.data.table</a></span><span class='op'>(</span><span class='va'>penguins_implicit</span><span class='op'>)</span>
@@ -9016,7 +9020,7 @@ Chinstrap
 </div>
 <p>I personally default to using {data.table} over {dplyr} in these cases.</p>
 <h2 id="misc.">Misc.</h2>
-<p>You can also pass in a list of functions instead of arguments because why not.</p>
+<p>You can also pass in a list of functions instead of a list of arguments because why not.</p>
 <p>For example, this replicates the very first code I showed in this blog post:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">

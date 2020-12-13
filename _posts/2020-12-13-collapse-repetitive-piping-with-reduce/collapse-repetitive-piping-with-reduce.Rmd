@@ -177,7 +177,7 @@ mtcars %>%
   )
 ```
 
-So we've got functions being repeated, but in all these cases it looks like we can't just throw in a vector and expect the function to loop/map over them internally in the specific way that we want it to. And the "correct ways" I provided here are not very satisfying: that's a lot of copying and pasting! 
+So we've got functions being repeated, but in all these cases it looks like **we can't just throw in a vector and expect the function to loop/map over them internally in the specific way that we want it to**. And the "correct ways" I provided here are not very satisfying: that's a lot of copying and pasting! 
 
 Personally, I think it'd be nice to collapse these repetitive calls - but how?
 
@@ -416,7 +416,7 @@ For example, if I want to make the radius of the points grow/shrink exponentiall
 
 Yay, we collapsed ten layers of `geom_point()`!^[By the way, we could also do this with `map()` since [multiple ggplot2 layers can be stored into a list and added all together in one step](https://ggplot2-book.org/programming.html#multiple-components). But then we can't do this cool thing I'm going to show with `accumulate()` next!]
 
-### Feat. accumulate()
+### teat. accumulate()
 
 There's actually one more thing I want to show here, which is **holding onto intermediate values** using `accumulate()`.
 
@@ -568,7 +568,7 @@ The `+1` is there because the table includes row names, so there's one more "col
 
 
 
-### Feat. accumulate2()
+### teat. accumulate2()
 
 Yep, that's right - more animations with `accumulate()` and {magick}!
 
@@ -695,7 +695,7 @@ We can also infer this from this output of a simple linear model:
 broom::tidy(lm(flipper_length_mm ~ species, data = penguins_implicit))
 ```
 
-And you can actually make this 3-way treatment coding explicit by expanding the matrix into actual columns of the data!
+What's cool is that you can make this 3-way treatment coding explicit by expanding the matrix into actual columns of the data!
 
 Here's a `reduce()` solution:
 
@@ -716,7 +716,7 @@ penguins_explicit %>%
 ```
 
 
-Check this out - we get the exact same output!
+And we get the exact same output from `lm`!
 
 ```{r}
 broom::tidy(lm(flipper_length_mm ~ speciesChinstrap + speciesGentoo, data = penguins_explicit))
@@ -732,7 +732,7 @@ bind_cols(
 ```
 
 
-### Feat. {data.table}
+### teat. {data.table}
 
 Of course, you could do all of this without `reduce()` in {data.table} because its walrus `:=` is vectorized.
 
@@ -750,7 +750,7 @@ mtcars_dt <- mtcars %>%
 mtcars_dt[, (new_cols) := NA]
 ```
 
-And here's a {data.table} solution for explicit dummy coding as another example:
+And here's a {data.table} solution for the explicit dummy coding example:
 
 ```{r, eval = FALSE}
 penguins_dt <- as.data.table(penguins_implicit)
@@ -766,7 +766,7 @@ I personally default to using {data.table} over {dplyr} in these cases.
 
 ## Misc.
 
-You can also pass in a list of functions instead of arguments because why not. 
+You can also pass in a list of functions instead of a list of arguments because why not. 
 
 For example, this replicates the very first code I showed in this blog post:
 
