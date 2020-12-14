@@ -109,7 +109,7 @@ ggplot(mtcars, aes(hp, mpg)) +
   geom_point(size = 2, alpha = .5)
 ```
 
-In **{kableExtra}**, this doesn't color the third column "skyblue", the fourth column "forestgreen", and the fifth column "chocolate":
+In **{kableExtra}**, this doesn't color the third column "skyblue", the fourth column "forestgreen", and the fifth column "chocolate":^[If you aren't familiar with {kableExtra}, you just need to know that `column_spec()` can take a column index as its first argument and a color as the `background` argument to set the background color of a column to the provided color. And as we see here, if a color vector is passed into `background`, it's just recycled to color the rows which is not what we want.]
 
 ```{r, warning = TRUE}
 library(kableExtra)
@@ -133,7 +133,7 @@ mtcars %>%
   column_spec(5, background = "chocolate")
 ```
 
-In **{dplyr}**, this doesn't make 3 new columns named "a", "b", and "c", all filled with NA:^[If this is your first time seeing the "bang bang" `!!` operator and the "walrus" `:=` operator being used this way, check out the [documentation on quasiquotation](https://rlang.r-lib.org/reference/quasiquotation.html). If you are familiar with quasiquation in {dplyr}, I should also mention that using "big bang" `!!!` like in `mutate(!!!new_cols := NA)` doesn't work either. As far as I know, `:=` is just an alias of `=` for the {rlang} parser, and as we know `=` cannot assign more than one variable at once (unlike Python, for example), which explains the error.]
+In **{dplyr}**, this doesn't make 3 new columns named "a", "b", and "c", all filled with NA:^[If this is your first time seeing the "bang bang" `!!` operator and the "walrus" `:=` operator being used this way, check out the [documentation on quasiquotation](https://rlang.r-lib.org/reference/quasiquotation.html).]
 
 ```{r, error = TRUE}
 new_cols <- c("a", "b", "c")
@@ -144,7 +144,7 @@ mtcars %>%
   mutate(!!new_cols := NA)
 ```
 
-So you have to do either one of these:
+So you have to do either one of these:^[For those of you more familiar with quasiquation in {dplyr}, I should also mention that using "big bang" `!!!` like in `mutate(!!!new_cols := NA)` doesn't work either. As far as I know, `:=` is just an alias of `=` for the {rlang} parser, and as we know `=` cannot assign more than one variable at once (unlike Python, for example), which explains the error.]
 
 ```{r, eval = FALSE}
 mtcars %>% 
@@ -183,7 +183,7 @@ Personally, I think it'd be nice to collapse these repetitive calls - but how?
 
 ### Introducing reduce()
 
-`reduce()` is a powerful functional that allows you to abstract away from a sequence of functions that are applied in a fixed direction. You should go give [Advanced R Ch. 9.5](https://adv-r.hadley.nz/functionals.html) a read if you want an in-depth explanation, because here I'm just gonna give a quick crash course for our application of it to our current problem.^[Also, note that there are more motivated uses-cases of `reduce()`, mostly in doing mathy-things, and I'm by no means advocating that you should _always_ use it in our context - I just think it's fun to play around with!]
+`reduce()` is a powerful functional that allows you to abstract away from a sequence of functions that are applied in a fixed direction. You should go give [Advanced R Ch. 9.5](https://adv-r.hadley.nz/functionals.html) a read if you want an in-depth explanation, but here I'm just gonna give a quick crash course for our application of it to our current problem.^[Also, note that there are more motivated uses-cases of `reduce()`, mostly in doing mathy-things, and I'm by no means advocating that you should _always_ use it in our context - I just think it's fun to play around with!]
 
 All you need to know here is that `reduce()` takes a vector as its first argument, a function as its second argument, and an optional `.init` argument.^[There's also `.dir` argument that allows you to specify the direction, but not relevant here because when you pipe, the left-hand side is always the first input to the next function.] Here's a schematic:
 
@@ -533,7 +533,7 @@ Here is the final `reduce2()` solution for our sad code:
 mtcars %>% 
   head() %>% 
   kbl() %>% 
-  kable_classic(html_font = "Roboto") %>% 
+  kable_classic(html_font = "Roboto") %>%       # No need to wrap in parentheses!
   reduce2(
     3:5,                                          
     c("skyblue", "forestgreen", "chocolate"),  
@@ -572,11 +572,12 @@ Actually, to be precise, we're going to use the `accumuate2()` here to replace o
 
 First, we save the list of intermediate outputs to `tables`:
 
-```{r}
+```{r, eval = FALSE}
 tables <- mtcars %>% 
   head() %>% 
   kbl() %>% 
   kable_classic(html_font = "Roboto") %>% 
+  kable_styling(full_width = FALSE) %>% # Added to keep aspect ratio constant when saving
   accumulate2(
     1:(length(mtcars)+1),                                          
     viridis::viridis(length(mtcars)+1),  
@@ -604,8 +605,8 @@ tables <- image_join(tables)
 image_animate(tables)
 ```
 
-```{r, echo=F, fig.align='center', layout = 'l-body-outset'}
-knitr::include_graphics("table_gif.gif", error = FALSE)
+```{r, echo=F, fig.align='center'}
+knitr::include_graphics("table_anim.gif", error = FALSE)
 ```
 
 Bet you don't see animated tables often!
@@ -687,7 +688,7 @@ penguins_implicit <- penguins %>%
 contrasts(penguins_implicit$species)
 ```
 
-We can also infer that from the output of this simple linear model:^[If you aren't familiar with linear models, we know that "Adelie" is the reference level because there is no "speciesAdelie" term. The estimate for "Adelie" is the `(Intercept)`!]
+We can also infer that from the output of this simple linear model:^[If you aren't familiar with linear models, we know that "Adelie" is the reference level because there is no "speciesAdelie" term. The estimate for "Adelie" is represented by the "(Intercept)"!]
 
 ```{r}
 broom::tidy(lm(flipper_length_mm ~ species, data = penguins_implicit))
@@ -714,7 +715,7 @@ penguins_explicit %>%
 ```
 
 
-And we get the exact same output from `lm`!
+And we get the exact same output from `lm` when we throw in the new columns `speciesChinstrap` and `speciesGentoo` as the predictors!
 
 ```{r}
 broom::tidy(lm(flipper_length_mm ~ speciesChinstrap + speciesGentoo, data = penguins_explicit))
