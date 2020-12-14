@@ -183,9 +183,11 @@ Personally, I think it'd be nice to collapse these repetitive calls - but how?
 
 ### Introducing purrr::reduce()
 
-The `reduce()` function from the {[purrr](https://purrr.tidyverse.org/)} package is a powerful functional that allows you to abstract away from a sequence of functions that are applied in a fixed direction. You should go give [Advanced R Ch. 9.5](https://adv-r.hadley.nz/functionals.html) a read if you want an in-depth explanation, but here I'm just gonna give a quick crash course for our application of it to our current problem.^[Also, note that there are more motivated uses-cases of `reduce()`, mostly in doing mathy-things, and I'm by no means advocating that you should _always_ use it in our context - I just think it's fun to play around with!]
+The `reduce()` function from the {[purrr](https://purrr.tidyverse.org/)} package is a powerful functional that allows you to abstract away from a sequence of functions that are applied in a fixed direction. You should go give [Advanced R Ch. 9.5](https://adv-r.hadley.nz/functionals.html) a read if you want an in-depth explanation, but here I'm just gonna give a quick crash course for our application of it to our current problem.^[Note that there are more motivated usescases of `reduce()` out there, mostly in doing mathy-things, and I'm by no means advocating that you should _always_ use `reduce()` in our context - I just think it's fun to play around with!]
 
-All you need to know here is that `reduce()` takes a vector as its first argument, a function as its second argument, and an optional `.init` argument.^[There's also `.dir` argument that allows you to specify the direction, but not relevant here because when you pipe, the left-hand side is always the first input to the next function.] Here's a schematic:
+All you need to know here is that `reduce()` takes a vector as its first argument, a function as its second argument, and an optional `.init` argument.^[There's also `.dir` argument that allows you to specify the direction, but not relevant here because when you pipe, the left-hand side is always the first input to the next function.]
+
+Here's a schematic:
 
 ```{r, echo = FALSE, fig.align='center', out.width = 500, fig.cap="From <a href='https://adv-r.hadley.nz/functionals.html'>Advanced R by Hadley Wickham</a>"}
 knitr::include_graphics("https://d33wubrfki0l68.cloudfront.net/b5835b80325b22f9460992f7bc9de5e0cf56de2c/27994/diagrams/functionals/reduce-init.png", error = FALSE)
@@ -489,7 +491,7 @@ mtcars %>%
   column_spec(5, background = "chocolate")
 ```
 
-We've got two things varying here: the column location `3:5` and the background color `c("skyblue", "forestgreen", "chocolate")`. We  _could_ do the same trick I sneaked into the previous section by just passing one vector to `reduce()` that basically functions as an index:
+We've got two things varying here: the column location `3:5` and the background color `c("skyblue", "forestgreen", "chocolate")`. We  _could_ do the same trick I sneaked into the previous section by just passing one vector to `reduce()` that basically functions as an index:^[We are still "iterating" over the `numbers` and `background_colors` vectors but in a round-about way by passing a vector of indices for `reduce()` to iterate over instead and using the indices to access elements of the two vectors. This actually seems like the way to go when you have more than two varying arguments because there's no `pmap()` equavalent for `reduce()` like `preduce()`.]
 
 ```{r, eval = F}
 numbers <- 3:5
@@ -675,17 +677,17 @@ mtcars %>%
   head() %>% 
   select(mpg) %>% 
   reduce(
-    as.character(.$mpg),
-    ~ mutate(.x, !!.y := as.double(.y) + mpg),
+    pull(., mpg),
+    ~ mutate(.x, !!as.character(.y) := .y + mpg),
     .init = .
   )
 ```
 
-Let's now look at a less crazy, more practical application of this: **explicit dummy coding**!
+Let's now look at a more practical application of this: **explicit dummy coding**!
 
 In R, the **factor** data structure allows implicit dummy coding, which you can access using `contrasts()`.
 
-Here, in our data `penguins` from the {[palmerpenguins](https://allisonhorst.github.io/palmerpenguins/articles/palmerpenguins.html)} package, we see that the 3-way contrast between "Adelie", "Chinstrap", and "Gentoo" in the `species` variable is treatment coded, with "Adelie" set as the reference level:
+Here, in our data `penguins` from the {[palmerpenguins](https://allisonhorst.github.io/palmerpenguins/articles/palmerpenguins.html)} package, we see that the 3-way contrast between "Adelie", "Chinstrap", and "Gentoo" in the `species` factor column is treatment coded, with "Adelie" set as the reference level:
 
 ```{r}
 data("penguins", package = "palmerpenguins")
@@ -698,7 +700,7 @@ penguins_implicit <- penguins %>%
 contrasts(penguins_implicit$species)
 ```
 
-We can also infer that from the output of this simple linear model:^[If you aren't familiar with linear models, we know that "Adelie" is the reference level because there is no "speciesAdelie" term. The estimate for "Adelie" is represented by the "(Intercept)"!]
+We can also infer that from the output of this simple linear model:^[If you aren't familiar with linear models in R, we know that "Adelie" is the reference level because there is no "speciesAdelie" term. The estimate for "Adelie" is represented by the "(Intercept)"!]
 
 ```{r}
 broom::tidy(lm(flipper_length_mm ~ species, data = penguins_implicit))

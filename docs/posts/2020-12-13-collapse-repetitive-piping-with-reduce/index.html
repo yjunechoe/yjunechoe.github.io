@@ -3160,7 +3160,8 @@ Valiant
 <p>Personally, I think it’d be nice to collapse these repetitive calls - but how?</p>
 <h3 id="introducing-purrrreduce">Introducing purrr::reduce()</h3>
 <p>The <code>reduce()</code> function from the {<a href="https://purrr.tidyverse.org/">purrr</a>} package is a powerful functional that allows you to abstract away from a sequence of functions that are applied in a fixed direction. You should go give <a href="https://adv-r.hadley.nz/functionals.html">Advanced R Ch. 9.5</a> a read if you want an in-depth explanation, but here I’m just gonna give a quick crash course for our application of it to our current problem.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
-<p>All you need to know here is that <code>reduce()</code> takes a vector as its first argument, a function as its second argument, and an optional <code>.init</code> argument.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> Here’s a schematic:</p>
+<p>All you need to know here is that <code>reduce()</code> takes a vector as its first argument, a function as its second argument, and an optional <code>.init</code> argument.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+<p>Here’s a schematic:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
 <img src="https://d33wubrfki0l68.cloudfront.net/b5835b80325b22f9460992f7bc9de5e0cf56de2c/27994/diagrams/functionals/reduce-init.png" alt="From &lt;a href='https://adv-r.hadley.nz/functionals.html'&gt;Advanced R by Hadley Wickham&lt;/a&gt;" width="500" />
@@ -3464,7 +3465,7 @@ Figure 1: From <a href='https://adv-r.hadley.nz/functionals.html'>Advanced R by 
 </code></pre>
 </div>
 </div>
-<p>We’ve got two things varying here: the column location <code>3:5</code> and the background color <code>c("skyblue", "forestgreen", "chocolate")</code>. We <em>could</em> do the same trick I sneaked into the previous section by just passing one vector to <code>reduce()</code> that basically functions as an index:</p>
+<p>We’ve got two things varying here: the column location <code>3:5</code> and the background color <code>c("skyblue", "forestgreen", "chocolate")</code>. We <em>could</em> do the same trick I sneaked into the previous section by just passing one vector to <code>reduce()</code> that basically functions as an index:<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a></p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre><code><span class='va'>numbers</span> <span class='op'>&lt;-</span> <span class='fl'>3</span><span class='op'>:</span><span class='fl'>5</span>
@@ -3499,7 +3500,7 @@ Figure 1: From <a href='https://adv-r.hadley.nz/functionals.html'>Advanced R by 
 </code></pre>
 </div>
 </div>
-<p>We’re not done yet! We can actually skip the {magrittr} pipe <code>%&gt;%</code> and just stick <code>..1</code> as the first argument inside <code>column_spec()</code>.<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a> This actually improves performance because you’re removing the overhead from evaluating the pipe!</p>
+<p>We’re not done yet! We can actually skip the {magrittr} pipe <code>%&gt;%</code> and just stick <code>..1</code> as the first argument inside <code>column_spec()</code>.<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a> This actually improves performance because you’re removing the overhead from evaluating the pipe!</p>
 <p>Additionally, because the pipe forces evaluation with each call unlike <code>+</code> in {ggplot2}, we don’t need the parantheses wrapped around the top part of the code for the {magrittr} dot <code>.</code> to work!</p>
 <p>Here is the final <code>reduce2()</code> solution for our sad code:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -4224,8 +4225,8 @@ Valiant
   <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
   <span class='fu'>select</span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
   <span class='fu'>reduce</span><span class='op'>(</span>
-    <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>.</span><span class='op'>$</span><span class='va'>mpg</span><span class='op'>)</span>,
-    <span class='op'>~</span> <span class='fu'>mutate</span><span class='op'>(</span><span class='va'>.x</span>, <span class='op'>!</span><span class='op'>!</span><span class='va'>.y</span> <span class='op'>:=</span> <span class='fu'><a href='https://rdrr.io/r/base/double.html'>as.double</a></span><span class='op'>(</span><span class='va'>.y</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'>mpg</span><span class='op'>)</span>,
+    <span class='fu'>pull</span><span class='op'>(</span><span class='va'>.</span>, <span class='va'>mpg</span><span class='op'>)</span>,
+    <span class='op'>~</span> <span class='fu'>mutate</span><span class='op'>(</span><span class='va'>.x</span>, <span class='op'>!</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>.y</span><span class='op'>)</span> <span class='op'>:=</span> <span class='va'>.y</span> <span class='op'>+</span> <span class='va'>mpg</span><span class='op'>)</span>,
     .init <span class='op'>=</span> <span class='va'>.</span>
   <span class='op'>)</span>
 </code></pre>
@@ -4240,9 +4241,9 @@ Valiant
   5  18.7  39.7   41.5   40.1   37.4   36.8
   6  18.1  39.1   40.9   39.5   36.8   36.2</code></pre>
 </div>
-<p>Let’s now look at a less crazy, more practical application of this: <strong>explicit dummy coding</strong>!</p>
+<p>Let’s now look at a more practical application of this: <strong>explicit dummy coding</strong>!</p>
 <p>In R, the <strong>factor</strong> data structure allows implicit dummy coding, which you can access using <code>contrasts()</code>.</p>
-<p>Here, in our data <code>penguins</code> from the {<a href="https://allisonhorst.github.io/palmerpenguins/articles/palmerpenguins.html">palmerpenguins</a>} package, we see that the 3-way contrast between “Adelie”, “Chinstrap”, and “Gentoo” in the <code>species</code> variable is treatment coded, with “Adelie” set as the reference level:</p>
+<p>Here, in our data <code>penguins</code> from the {<a href="https://allisonhorst.github.io/palmerpenguins/articles/palmerpenguins.html">palmerpenguins</a>} package, we see that the 3-way contrast between “Adelie”, “Chinstrap”, and “Gentoo” in the <code>species</code> factor column is treatment coded, with “Adelie” set as the reference level:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre><code><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"penguins"</span>, package <span class='op'>=</span> <span class='st'>"palmerpenguins"</span><span class='op'>)</span>
@@ -4260,7 +4261,7 @@ Valiant
   Chinstrap         1      0
   Gentoo            0      1</code></pre>
 </div>
-<p>We can also infer that from the output of this simple linear model:<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a></p>
+<p>We can also infer that from the output of this simple linear model:<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a></p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre><code><span class='fu'>broom</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>flipper_length_mm</span> <span class='op'>~</span> <span class='va'>species</span>, data <span class='op'>=</span> <span class='va'>penguins_implicit</span><span class='op'>)</span><span class='op'>)</span>
@@ -8985,7 +8986,7 @@ Chinstrap
   2 speciesChinstrap     5.72     0.980      5.84 1.25e-  8
   3 speciesGentoo       27.1      0.824     32.9  2.68e-106</code></pre>
 </div>
-<p>By the way, if you’re wondering how this is practical, some modeling packages in R (like {<a href="https://www.lavaan.ugent.be">lavaan</a>} for structural equation modeling) only accept dummy coded variables that exist as independent columns/vectors, not as a metadata of a factor vector.<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a> This is common enough that some packages like {psych} have a function that does the same transformation we just did, called <code>dummy.code()</code><a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a>:</p>
+<p>By the way, if you’re wondering how this is practical, some modeling packages in R (like {<a href="https://www.lavaan.ugent.be">lavaan</a>} for structural equation modeling) only accept dummy coded variables that exist as independent columns/vectors, not as a metadata of a factor vector.<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a> This is common enough that some packages like {psych} have a function that does the same transformation we just did, called <code>dummy.code()</code><a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre><code><span class='fu'>bind_cols</span><span class='op'>(</span>
@@ -9129,16 +9130,17 @@ Chinstrap
 <li id="fn3" role="doc-endnote"><p>If you aren’t familiar with {kableExtra}, you just need to know that <code>column_spec()</code> can take a column index as its first argument and a color as the <code>background</code> argument to set the background color of a column to the provided color. And as we see here, if a color vector is passed into <code>background</code>, it’s just recycled to color the rows which is not what we want.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4" role="doc-endnote"><p>If this is your first time seeing the “bang bang” <code>!!</code> operator and the “walrus” <code>:=</code> operator being used this way, check out the <a href="https://rlang.r-lib.org/reference/quasiquotation.html">documentation on quasiquotation</a>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5" role="doc-endnote"><p>For those of you more familiar with quasiquation in {dplyr}, I should also mention that using “big bang” <code>!!!</code> like in <code>mutate(!!!new_cols := NA)</code> doesn’t work either. As far as I know, <code>:=</code> is just an alias of <code>=</code> for the {rlang} parser, and as we know <code>=</code> cannot assign more than one variable at once (unlike Python, for example), which explains the error.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6" role="doc-endnote"><p>Also, note that there are more motivated uses-cases of <code>reduce()</code>, mostly in doing mathy-things, and I’m by no means advocating that you should <em>always</em> use it in our context - I just think it’s fun to play around with!<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p>Note that there are more motivated usescases of <code>reduce()</code> out there, mostly in doing mathy-things, and I’m by no means advocating that you should <em>always</em> use <code>reduce()</code> in our context - I just think it’s fun to play around with!<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn7" role="doc-endnote"><p>There’s also <code>.dir</code> argument that allows you to specify the direction, but not relevant here because when you pipe, the left-hand side is always the first input to the next function.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8" role="doc-endnote"><p>If it helps, think of it like <code>((((1 + 2) + 3) + 4) + 5)</code><a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn9" role="doc-endnote"><p>The function passed into <code>reduce()</code> doesn’t have to be in {rlang} anonymous function syntax, but I like it so I’ll keep using it here.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn10" role="doc-endnote"><p>By the way, we could also do this with <code>purrr::map()</code> since <a href="https://ggplot2-book.org/programming.html#multiple-components">multiple ggplot2 layers can be stored into a list and added all together in one step</a>. But then we can’t do this cool thing I’m going to show with <code>accumulate()</code> next!<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn11" role="doc-endnote"><p>By the way, if you want a whole package dedicated to animating and incrementally building {ggplot2} code, check out <a href="https://twitter.com/EvaMaeRey">@EvaMaeRey</a>’s {<a href="https://evamaerey.github.io/flipbooks/about">flipbookr</a>} package!<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn12" role="doc-endnote"><p>Note that we couldn’t do this with <code>+</code> in our {ggplot2} example because <code>geom_point()</code> doesn’t take a ggplot object as its first argument. Basically, the <code>+</code> operator is re-purposed as a class method for ggplot objects but it’s kinda complicated so that’s all I’ll say about that.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn13" role="doc-endnote"><p>If you aren’t familiar with linear models, we know that “Adelie” is the reference level because there is no “speciesAdelie” term. The estimate for “Adelie” is represented by the “(Intercept)”!<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn14" role="doc-endnote"><p>Figuring this out has caused some headaches and that’s what I get for not carefully reading the <a href="https://www.lavaan.ugent.be/tutorial/cat.html">docs</a><a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn15" role="doc-endnote"><p>Except <code>dummy.code()</code> also returns a column for the reference level whose value is always <code>1</code>, which is kinda pointless<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12" role="doc-endnote"><p>We are still “iterating” over the <code>numbers</code> and <code>background_colors</code> vectors but in a round-about way by passing a vector of indices for <code>reduce()</code> to iterate over instead and using the indices to access elements of the two vectors. This actually seems like the way to go when you have more than two varying arguments because there’s no <code>pmap()</code> equavalent for <code>reduce()</code> like <code>preduce()</code>.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13" role="doc-endnote"><p>Note that we couldn’t do this with <code>+</code> in our {ggplot2} example because <code>geom_point()</code> doesn’t take a ggplot object as its first argument. Basically, the <code>+</code> operator is re-purposed as a class method for ggplot objects but it’s kinda complicated so that’s all I’ll say about that.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14" role="doc-endnote"><p>If you aren’t familiar with linear models in R, we know that “Adelie” is the reference level because there is no “speciesAdelie” term. The estimate for “Adelie” is represented by the “(Intercept)”!<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15" role="doc-endnote"><p>Figuring this out has caused some headaches and that’s what I get for not carefully reading the <a href="https://www.lavaan.ugent.be/tutorial/cat.html">docs</a><a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16" role="doc-endnote"><p>Except <code>dummy.code()</code> also returns a column for the reference level whose value is always <code>1</code>, which is kinda pointless<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 <!--radix_placeholder_article_footer-->
