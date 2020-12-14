@@ -320,7 +320,7 @@ mtcars %>%
   theme(panel.background = element_rect(fill = "grey20"))
 ```
 
-You could do this in a couple ways:
+You can do this with `reduce()` in a couple ways:^[By the way, we could also do this with `purrr::map()` since [multiple ggplot2 layers can be stored into a list and added all together in one step](https://ggplot2-book.org/programming.html#multiple-components). But then we can't do this cool thing I'm going to show with `accumulate()` next!]
 
 ::::: {.panelset}
 
@@ -393,7 +393,7 @@ mtcars %>%
 
 :::::
 
-All in all, we see that `reduce()` gives us more succinct code!
+All in all, we see that `reduce()` allows us to write more succinct code!
 
 An obvious advantage to this is that it is now really easy to make a single change that applies to all the repeated calls.
 
@@ -414,7 +414,7 @@ For example, if I want to make the radius of the points grow/shrink exponentiall
   )
 ```
 
-Yay, we collapsed ten layers of `geom_point()`!^[By the way, we could also do this with `map()` since [multiple ggplot2 layers can be stored into a list and added all together in one step](https://ggplot2-book.org/programming.html#multiple-components). But then we can't do this cool thing I'm going to show with `accumulate()` next!]
+Yay, we collapsed ten layers of `geom_point()`!
 
 ### feat. accumulate()
 
@@ -471,7 +471,7 @@ knitr::include_graphics("ggplot2_anim.gif", error = FALSE)
 ```
 
 
-Neat! By the way, if you want a whole package dedicated to animating and incrementally building {ggplot2} code, check out [\@EvaMaeRey](https://twitter.com/EvaMaeRey)'s {[flipbookr](https://evamaerey.github.io/flipbooks/about)} package!
+Neat!^[By the way, if you want a whole package dedicated to animating and incrementally building {ggplot2} code, check out [\@EvaMaeRey](https://twitter.com/EvaMaeRey)'s {[flipbookr](https://evamaerey.github.io/flipbooks/about)} package!]
 
 ## Example 2: {kableExtra}
 
@@ -550,16 +550,13 @@ mtcars %>%
   kbl() %>% 
   kable_classic(html_font = "Roboto") %>% 
   reduce2(
-    1:(length(mtcars)+1),                                          
-    viridis::viridis(length(mtcars)+1),  
+    1:12,                                          
+    viridis::viridis(12),  
     ~ column_spec(..1, ..2, background = ..3, color = if(..2 < 5){"white"}),
     .init = .
   )
 ```
 
-<aside>
-The `+1` is there because the table includes row names, so there's one more "column" to color
-</aside>
 
 ```{r rainbow_table, echo = FALSE}
 ```
@@ -629,7 +626,7 @@ mtcars %>%
   mutate(!!new_cols[3] := NA)
 ```
 
-You know the drill - a simple call to `reduce()` gets the job done!
+You know the drill - a simple call to `reduce()` gives us three new columns with names corresponding to the elements of the `new_cols` character vector we defined above:
 
 ```{r}
 # Converting to tibble for nicer printing
@@ -645,7 +642,7 @@ mtcars %>%
   )
 ```
 
-Again, this gives you a lot of flexibility, like the ability to dynamically assign values to each column:
+Again, this gives you a lot of flexibility, like the ability to dynamically assign values to each new column:
 
 ```{r}
 mtcars %>% 
@@ -658,7 +655,7 @@ mtcars %>%
   )
 ```
 
-We can go super crazy using [context dependent expressions](https://dplyr.tidyverse.org/reference/context.html) like `cur_data()`, and do something like keeping track of the columns present at each point a new column has been created via `mutate()`:
+We can take this even further using [context dependent expressions](https://dplyr.tidyverse.org/reference/context.html) like `cur_data()`, and do something like keeping track of the columns present at each point a new column has been created via `mutate()`:
 
 ```{r}
 mtcars %>% 
@@ -671,7 +668,20 @@ mtcars %>%
   )
 ```
 
-Here's a less crazy, more practical application of this: **explicit dummy coding**!
+Here's another example just for fun - an "addition matrix":
+
+```{r}
+mtcars %>% 
+  head() %>% 
+  select(mpg) %>% 
+  reduce(
+    as.character(.$mpg),
+    ~ mutate(.x, !!.y := as.double(.y) + mpg),
+    .init = .
+  )
+```
+
+Let's now look at a less crazy, more practical application of this: **explicit dummy coding**!
 
 In R, the **factor** data structure allows implicit dummy coding, which you can access using `contrasts()`.
 

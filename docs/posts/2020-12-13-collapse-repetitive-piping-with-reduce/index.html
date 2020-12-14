@@ -3304,7 +3304,7 @@ Figure 1: From <a href='https://adv-r.hadley.nz/functionals.html'>Advanced R by 
 </div>
 <p><img src="collapse-repetitive-piping-with-reduce_files/figure-html5/unnamed-chunk-22-1.png" width="624" style="display: block; margin: auto;" /></p>
 </div>
-<p>You could do this in a couple ways:</p>
+<p>You can do this with <code>reduce()</code> in a couple ways:<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
 <div class="panelset">
 <div class="panel">
 <p><span class="panel-name">Method 1</span></p>
@@ -3371,7 +3371,7 @@ Figure 1: From <a href='https://adv-r.hadley.nz/functionals.html'>Advanced R by 
 </div>
 </div>
 </div>
-<p>All in all, we see that <code>reduce()</code> gives us more succinct code!</p>
+<p>All in all, we see that <code>reduce()</code> allows us to write more succinct code!</p>
 <p>An obvious advantage to this is that it is now really easy to make a single change that applies to all the repeated calls.</p>
 <p>For example, if I want to make the radius of the points grow/shrink exponentially, I just need to modify the anonymous function in the second argument of <code>reduce()</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -3392,7 +3392,7 @@ Figure 1: From <a href='https://adv-r.hadley.nz/functionals.html'>Advanced R by 
 </div>
 <p><img src="collapse-repetitive-piping-with-reduce_files/figure-html5/unnamed-chunk-26-1.png" width="1950" style="display: block; margin: auto;" /></p>
 </div>
-<p>Yay, we collapsed ten layers of <code>geom_point()</code>!<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
+<p>Yay, we collapsed ten layers of <code>geom_point()</code>!</p>
 <h3 id="feat.-accumulate">feat. accumulate()</h3>
 <p>There’s actually one more thing I want to show here, which is <strong>holding onto intermediate values</strong> using <code>accumulate()</code>.</p>
 <p><code>accumulate()</code> is like <code>reduce()</code>, except instead of returning a single value which is the output of the very last function call, it keeps all intermediate values and returns them in a list.</p>
@@ -3448,7 +3448,7 @@ Figure 1: From <a href='https://adv-r.hadley.nz/functionals.html'>Advanced R by 
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="ggplot2_anim.gif" style="display: block; margin: auto;" /></p>
 </div>
-<p>Neat! By the way, if you want a whole package dedicated to animating and incrementally building {ggplot2} code, check out <a href="https://twitter.com/EvaMaeRey">@EvaMaeRey</a>’s {<a href="https://evamaerey.github.io/flipbooks/about">flipbookr</a>} package!</p>
+<p>Neat!<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a></p>
 <h2 id="example-2-kableextra">Example 2: {kableExtra}</h2>
 <h3 id="a-reduce2-solution">A reduce2() solution</h3>
 <p>Recall that we had this sad code:</p>
@@ -3499,7 +3499,7 @@ Figure 1: From <a href='https://adv-r.hadley.nz/functionals.html'>Advanced R by 
 </code></pre>
 </div>
 </div>
-<p>We’re not done yet! We can actually skip the {magrittr} pipe <code>%&gt;%</code> and just stick <code>..1</code> as the first argument inside <code>column_spec()</code>.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> This actually improves performance because you’re removing the overhead from evaluating the pipe!</p>
+<p>We’re not done yet! We can actually skip the {magrittr} pipe <code>%&gt;%</code> and just stick <code>..1</code> as the first argument inside <code>column_spec()</code>.<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a> This actually improves performance because you’re removing the overhead from evaluating the pipe!</p>
 <p>Additionally, because the pipe forces evaluation with each call unlike <code>+</code> in {ggplot2}, we don’t need the parantheses wrapped around the top part of the code for the {magrittr} dot <code>.</code> to work!</p>
 <p>Here is the final <code>reduce2()</code> solution for our sad code:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -3796,17 +3796,14 @@ Valiant
   <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kbl.html'>kbl</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
   <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kable_classic.html'>kable_classic</a></span><span class='op'>(</span>html_font <span class='op'>=</span> <span class='st'>"Roboto"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
   <span class='fu'>reduce2</span><span class='op'>(</span>
-    <span class='fl'>1</span><span class='op'>:</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span><span class='op'>+</span><span class='fl'>1</span><span class='op'>)</span>,                                          
-    <span class='fu'>viridis</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/viridisLite/man/viridis.html'>viridis</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span><span class='op'>+</span><span class='fl'>1</span><span class='op'>)</span>,  
+    <span class='fl'>1</span><span class='op'>:</span><span class='fl'>12</span>,                                          
+    <span class='fu'>viridis</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/viridisLite/man/viridis.html'>viridis</a></span><span class='op'>(</span><span class='fl'>12</span><span class='op'>)</span>,  
     <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/column_spec.html'>column_spec</a></span><span class='op'>(</span><span class='va'>..1</span>, <span class='va'>..2</span>, background <span class='op'>=</span> <span class='va'>..3</span>, color <span class='op'>=</span> <span class='kw'>if</span><span class='op'>(</span><span class='va'>..2</span> <span class='op'>&lt;</span> <span class='fl'>5</span><span class='op'>)</span><span class='op'>{</span><span class='st'>"white"</span><span class='op'>}</span><span class='op'>)</span>,
     .init <span class='op'>=</span> <span class='va'>.</span>
   <span class='op'>)</span>
 </code></pre>
 </div>
 </div>
-<aside>
-The <code>+1</code> is there because the table includes row names, so there’s one more “column” to color
-</aside>
 <div class="layout-chunk" data-layout="l-body">
 <table class=" lightable-classic" style="font-family: Roboto; margin-left: auto; margin-right: auto;">
 <thead>
@@ -4148,7 +4145,7 @@ Valiant
   5 18.7 NA NA NA
   6 18.1 NA NA NA</code></pre>
 </div>
-<p>You know the drill - a simple call to <code>reduce()</code> gets the job done!</p>
+<p>You know the drill - a simple call to <code>reduce()</code> gives us three new columns with names corresponding to the elements of the <code>new_cols</code> character vector we defined above:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre><code><span class='co'># Converting to tibble for nicer printing</span>
@@ -4174,7 +4171,7 @@ Valiant
   5  18.7 NA    NA    NA   
   6  18.1 NA    NA    NA</code></pre>
 </div>
-<p>Again, this gives you a lot of flexibility, like the ability to dynamically assign values to each column:</p>
+<p>Again, this gives you a lot of flexibility, like the ability to dynamically assign values to each new column:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre><code><span class='va'>mtcars</span> <span class='op'>%&gt;%</span> 
@@ -4197,7 +4194,7 @@ Valiant
   5  18.7 a-5   b-5   c-5  
   6  18.1 a-6   b-6   c-6</code></pre>
 </div>
-<p>We can go super crazy using <a href="https://dplyr.tidyverse.org/reference/context.html">context dependent expressions</a> like <code>cur_data()</code>, and do something like keeping track of the columns present at each point a new column has been created via <code>mutate()</code>:</p>
+<p>We can take this even further using <a href="https://dplyr.tidyverse.org/reference/context.html">context dependent expressions</a> like <code>cur_data()</code>, and do something like keeping track of the columns present at each point a new column has been created via <code>mutate()</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre><code><span class='va'>mtcars</span> <span class='op'>%&gt;%</span> 
@@ -4220,7 +4217,30 @@ Valiant
   5  18.7 mpg-a mpg-a-b mpg-a-b-c
   6  18.1 mpg-a mpg-a-b mpg-a-b-c</code></pre>
 </div>
-<p>Here’s a less crazy, more practical application of this: <strong>explicit dummy coding</strong>!</p>
+<p>Here’s another example just for fun - an “addition matrix”:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre><code><span class='va'>mtcars</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>select</span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>reduce</span><span class='op'>(</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>.</span><span class='op'>$</span><span class='va'>mpg</span><span class='op'>)</span>,
+    <span class='op'>~</span> <span class='fu'>mutate</span><span class='op'>(</span><span class='va'>.x</span>, <span class='op'>!</span><span class='op'>!</span><span class='va'>.y</span> <span class='op'>:=</span> <span class='fu'><a href='https://rdrr.io/r/base/double.html'>as.double</a></span><span class='op'>(</span><span class='va'>.y</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'>mpg</span><span class='op'>)</span>,
+    .init <span class='op'>=</span> <span class='va'>.</span>
+  <span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  # A tibble: 6 x 6
+      mpg  `21` `22.8` `21.4` `18.7` `18.1`
+    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+  1  21    42     43.8   42.4   39.7   39.1
+  2  21    42     43.8   42.4   39.7   39.1
+  3  22.8  43.8   45.6   44.2   41.5   40.9
+  4  21.4  42.4   44.2   42.8   40.1   39.5
+  5  18.7  39.7   41.5   40.1   37.4   36.8
+  6  18.1  39.1   40.9   39.5   36.8   36.2</code></pre>
+</div>
+<p>Let’s now look at a less crazy, more practical application of this: <strong>explicit dummy coding</strong>!</p>
 <p>In R, the <strong>factor</strong> data structure allows implicit dummy coding, which you can access using <code>contrasts()</code>.</p>
 <p>Here, in our data <code>penguins</code> from the {<a href="https://allisonhorst.github.io/palmerpenguins/articles/palmerpenguins.html">palmerpenguins</a>} package, we see that the 3-way contrast between “Adelie”, “Chinstrap”, and “Gentoo” in the <code>species</code> variable is treatment coded, with “Adelie” set as the reference level:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -4240,7 +4260,7 @@ Valiant
   Chinstrap         1      0
   Gentoo            0      1</code></pre>
 </div>
-<p>We can also infer that from the output of this simple linear model:<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a></p>
+<p>We can also infer that from the output of this simple linear model:<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a></p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre><code><span class='fu'>broom</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>flipper_length_mm</span> <span class='op'>~</span> <span class='va'>species</span>, data <span class='op'>=</span> <span class='va'>penguins_implicit</span><span class='op'>)</span><span class='op'>)</span>
@@ -8965,7 +8985,7 @@ Chinstrap
   2 speciesChinstrap     5.72     0.980      5.84 1.25e-  8
   3 speciesGentoo       27.1      0.824     32.9  2.68e-106</code></pre>
 </div>
-<p>By the way, if you’re wondering how this is practical, some modeling packages in R (like {<a href="https://www.lavaan.ugent.be">lavaan</a>} for structural equation modeling) only accept dummy coded variables that exist as independent columns/vectors, not as a metadata of a factor vector.<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a> This is common enough that some packages like {psych} have a function that does the same transformation we just did, called <code>dummy.code()</code><a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a>:</p>
+<p>By the way, if you’re wondering how this is practical, some modeling packages in R (like {<a href="https://www.lavaan.ugent.be">lavaan</a>} for structural equation modeling) only accept dummy coded variables that exist as independent columns/vectors, not as a metadata of a factor vector.<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a> This is common enough that some packages like {psych} have a function that does the same transformation we just did, called <code>dummy.code()</code><a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre><code><span class='fu'>bind_cols</span><span class='op'>(</span>
@@ -9100,7 +9120,7 @@ Chinstrap
 </div>
 </div>
 <p>Have fun reducing repetitions in your code with <code>reduce()</code>!</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <section class="footnotes" role="doc-endnotes">
 <hr />
 <ol>
@@ -9113,11 +9133,12 @@ Chinstrap
 <li id="fn7" role="doc-endnote"><p>There’s also <code>.dir</code> argument that allows you to specify the direction, but not relevant here because when you pipe, the left-hand side is always the first input to the next function.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8" role="doc-endnote"><p>If it helps, think of it like <code>((((1 + 2) + 3) + 4) + 5)</code><a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn9" role="doc-endnote"><p>The function passed into <code>reduce()</code> doesn’t have to be in {rlang} anonymous function syntax, but I like it so I’ll keep using it here.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10" role="doc-endnote"><p>By the way, we could also do this with <code>map()</code> since <a href="https://ggplot2-book.org/programming.html#multiple-components">multiple ggplot2 layers can be stored into a list and added all together in one step</a>. But then we can’t do this cool thing I’m going to show with <code>accumulate()</code> next!<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn11" role="doc-endnote"><p>Note that we couldn’t do this with <code>+</code> in our {ggplot2} example because <code>geom_point()</code> doesn’t take a ggplot object as its first argument. Basically, the <code>+</code> operator is re-purposed as a class method for ggplot objects but it’s kinda complicated so that’s all I’ll say about that.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn12" role="doc-endnote"><p>If you aren’t familiar with linear models, we know that “Adelie” is the reference level because there is no “speciesAdelie” term. The estimate for “Adelie” is represented by the “(Intercept)”!<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn13" role="doc-endnote"><p>Figuring this out has caused some headaches and that’s what I get for not carefully reading the <a href="https://www.lavaan.ugent.be/tutorial/cat.html">docs</a><a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn14" role="doc-endnote"><p>Except <code>dummy.code()</code> also returns a column for the reference level whose value is always <code>1</code>, which is kinda pointless<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10" role="doc-endnote"><p>By the way, we could also do this with <code>purrr::map()</code> since <a href="https://ggplot2-book.org/programming.html#multiple-components">multiple ggplot2 layers can be stored into a list and added all together in one step</a>. But then we can’t do this cool thing I’m going to show with <code>accumulate()</code> next!<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11" role="doc-endnote"><p>By the way, if you want a whole package dedicated to animating and incrementally building {ggplot2} code, check out <a href="https://twitter.com/EvaMaeRey">@EvaMaeRey</a>’s {<a href="https://evamaerey.github.io/flipbooks/about">flipbookr</a>} package!<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12" role="doc-endnote"><p>Note that we couldn’t do this with <code>+</code> in our {ggplot2} example because <code>geom_point()</code> doesn’t take a ggplot object as its first argument. Basically, the <code>+</code> operator is re-purposed as a class method for ggplot objects but it’s kinda complicated so that’s all I’ll say about that.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13" role="doc-endnote"><p>If you aren’t familiar with linear models, we know that “Adelie” is the reference level because there is no “speciesAdelie” term. The estimate for “Adelie” is represented by the “(Intercept)”!<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14" role="doc-endnote"><p>Figuring this out has caused some headaches and that’s what I get for not carefully reading the <a href="https://www.lavaan.ugent.be/tutorial/cat.html">docs</a><a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15" role="doc-endnote"><p>Except <code>dummy.code()</code> also returns a column for the reference level whose value is always <code>1</code>, which is kinda pointless<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 <!--radix_placeholder_article_footer-->
