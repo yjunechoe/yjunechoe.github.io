@@ -1469,7 +1469,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <ul>
 <li><a href="#happy-pipes">Happy pipes</a></li>
 <li><a href="#sad-repetitive-pipes">Sad (repetitive) pipes</a></li>
-<li><a href="#introducing-reduce">Introducing reduce()</a></li>
+<li><a href="#introducing-purrrreduce">Introducing purrr::reduce()</a></li>
 </ul></li>
 <li><a href="#example-1-ggplot2">Example 1: {ggplot2}</a>
 <ul>
@@ -2185,8 +2185,8 @@ Valiant
 </div>
 <p>So we’ve got functions being repeated, but in all these cases it looks like <strong>we can’t just throw in a vector and expect the function to loop/map over them internally in the specific way that we want it to</strong>. And the “correct ways” I provided here are not very satisfying: that’s a lot of copying and pasting!</p>
 <p>Personally, I think it’d be nice to collapse these repetitive calls - but how?</p>
-<h3 id="introducing-reduce">Introducing reduce()</h3>
-<p><code>reduce()</code> is a powerful functional that allows you to abstract away from a sequence of functions that are applied in a fixed direction. You should go give <a href="https://adv-r.hadley.nz/functionals.html">Advanced R Ch. 9.5</a> a read if you want an in-depth explanation, but here I’m just gonna give a quick crash course for our application of it to our current problem.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<h3 id="introducing-purrrreduce">Introducing purrr::reduce()</h3>
+<p>The <code>reduce()</code> function from the {<a href="https://purrr.tidyverse.org/">purrr</a>} package is a powerful functional that allows you to abstract away from a sequence of functions that are applied in a fixed direction. You should go give <a href="https://adv-r.hadley.nz/functionals.html">Advanced R Ch. 9.5</a> a read if you want an in-depth explanation, but here I’m just gonna give a quick crash course for our application of it to our current problem.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
 <p>All you need to know here is that <code>reduce()</code> takes a vector as its first argument, a function as its second argument, and an optional <code>.init</code> argument.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> Here’s a schematic:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>

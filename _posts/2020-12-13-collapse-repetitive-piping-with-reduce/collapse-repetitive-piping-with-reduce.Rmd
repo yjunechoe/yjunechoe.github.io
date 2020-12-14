@@ -181,9 +181,9 @@ So we've got functions being repeated, but in all these cases it looks like **we
 
 Personally, I think it'd be nice to collapse these repetitive calls - but how?
 
-### Introducing reduce()
+### Introducing purrr::reduce()
 
-`reduce()` is a powerful functional that allows you to abstract away from a sequence of functions that are applied in a fixed direction. You should go give [Advanced R Ch. 9.5](https://adv-r.hadley.nz/functionals.html) a read if you want an in-depth explanation, but here I'm just gonna give a quick crash course for our application of it to our current problem.^[Also, note that there are more motivated uses-cases of `reduce()`, mostly in doing mathy-things, and I'm by no means advocating that you should _always_ use it in our context - I just think it's fun to play around with!]
+The `reduce()` function from the {[purrr](https://purrr.tidyverse.org/)} package is a powerful functional that allows you to abstract away from a sequence of functions that are applied in a fixed direction. You should go give [Advanced R Ch. 9.5](https://adv-r.hadley.nz/functionals.html) a read if you want an in-depth explanation, but here I'm just gonna give a quick crash course for our application of it to our current problem.^[Also, note that there are more motivated uses-cases of `reduce()`, mostly in doing mathy-things, and I'm by no means advocating that you should _always_ use it in our context - I just think it's fun to play around with!]
 
 All you need to know here is that `reduce()` takes a vector as its first argument, a function as its second argument, and an optional `.init` argument.^[There's also `.dir` argument that allows you to specify the direction, but not relevant here because when you pipe, the left-hand side is always the first input to the next function.] Here's a schematic:
 
