@@ -133,7 +133,7 @@ mtcars %>%
   column_spec(5, background = "chocolate")
 ```
 
-In **{dplyr}**, this doesn't make 3 new columns named "a", "b", and "c", all filled with NA:^[If this is your first time seeing the "bang bang" `!!` operator and the "walrus" `:=` operator being used this way, check out the [documentation on quasiquotation](https://rlang.r-lib.org/reference/quasiquotation.html).]
+In **{dplyr}**, this doesn't make 3 new columns named "a", "b", and "c", all filled with `NA`:^[If this is your first time seeing the "bang bang" `!!` operator and the "walrus" `:=` operator being used this way, check out the [documentation on quasiquotation](https://rlang.r-lib.org/reference/quasiquotation.html).]
 
 ```{r, error = TRUE}
 new_cols <- c("a", "b", "c")
@@ -399,7 +399,7 @@ An obvious advantage to this is that it is now really easy to make a single chan
 
 For example, if I want to make the radius of the points grow/shrink exponentially, I just need to modify the anonymous function in the second argument of `reduce()`: 
 
-```{r, fig.align='center'}
+```{r, fig.align='center', dpi=300}
 # Using Method 3
 (mtcars %>% 
   ggplot(aes(hp, mpg)) +
@@ -715,7 +715,7 @@ penguins_explicit %>%
 ```
 
 
-And we get the exact same output from `lm` when we throw in the new columns `speciesChinstrap` and `speciesGentoo` as the predictors!
+And we get the exact same output from `lm()` when we throw in the new columns `speciesChinstrap` and `speciesGentoo` as the predictors!
 
 ```{r}
 broom::tidy(lm(flipper_length_mm ~ speciesChinstrap + speciesGentoo, data = penguins_explicit))
@@ -737,7 +737,7 @@ Of course, you could do all of this without `reduce()` in {data.table} because i
 
 Here's the {data.table} solution for our sad code:
 
-```{r, eval = FALSE}
+```{r}
 library(data.table)
 new_cols <- c("a", "b", "c")
 
@@ -746,19 +746,18 @@ mtcars_dt <- mtcars %>%
   select(mpg) %>% 
   as.data.table()
 
-mtcars_dt[, (new_cols) := NA]
+mtcars_dt[, (new_cols) := NA][]
 ```
 
 And here's a {data.table} solution for the explicit dummy coding example:
 
-```{r, eval = FALSE}
+```{r}
 penguins_dt <- as.data.table(penguins_implicit)
 
 treatment_lvls <- levels(penguins_dt$species)[-1]
 treatment_cols <- paste0("species", treatment_lvls)
 
-
-penguins_dt[, (treatment_cols) := lapply(treatment_lvls, function(x){as.integer(species == x)})]
+penguins_dt[, (treatment_cols) := lapply(treatment_lvls, function(x){as.integer(species == x)})][]
 ```
 
 I personally default to using {data.table} over {dplyr} in these cases.
