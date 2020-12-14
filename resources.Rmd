@@ -29,6 +29,8 @@ p {
 
 ## Tutorial Blog Posts
 
+- {purrr} apply() family [[post](https://yjunechoe.github.io/posts/2020-12-13-collapse-repetitive-piping-with-reduce/)]
+
 - {ggplot2} stat_*() functions [[post](https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/)]
 
 - The correlation parameter in {lme4} mixed effects models [[post](https://yjunechoe.github.io/posts/2020-06-07-correlation-parameter-mem/)]
