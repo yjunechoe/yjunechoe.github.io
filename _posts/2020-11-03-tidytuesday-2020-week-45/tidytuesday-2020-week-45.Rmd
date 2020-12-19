@@ -35,7 +35,7 @@ knitr::opts_chunk$set(
 
 
 ```{r, echo = FALSE, layout = 'l-body-outset'}
-knitr::include_graphics('preview.png', error = FALSE)
+knitr::include_graphics('preview_full.png', error = FALSE)
 ```
 
 

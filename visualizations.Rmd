@@ -21,14 +21,13 @@ a {
 ```{r, echo = FALSE, fit.align = 'center', message = FALSE}
 library(tidyverse)
 
-viz_paths <- here::here("static", "dataviz") %>%
+here::here("static", "dataviz") %>%
   fs::dir_info() %>%
   dplyr::arrange(modification_time) %>%
   dplyr::pull(path) %>%
   stringr::str_match("static/dataviz/.*") %>%
   `[`(,1) %>% 
-  rev()
-# 
-knitr::include_graphics(viz_paths)
+  rev() %>% 
+  knitr::include_graphics()
 ```
 
