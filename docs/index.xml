@@ -17,7 +17,8 @@
       <title>Collapse repetitive piping with reduce()</title>
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2020-12-13-collapse-repetitive-piping-with-reduce</link>
-      <description>Featuring accumulate()</description>
+      <description>&lt;p&gt;Featuring accumulate()&lt;/p&gt;
+</description>
       <category>data wrangling</category>
       <category>tutorial</category>
       <guid>https://yjunechoe.github.io/posts/2020-12-13-collapse-repetitive-piping-with-reduce</guid>
@@ -28,19 +29,21 @@
       <title>Plot Makeover #2</title>
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2020-11-08-plot-makeover-2</link>
-      <description>Making a dodged-stacked hybrid bar plot in {ggplot2}</description>
+      <description>&lt;p&gt;Making a dodged-stacked hybrid bar plot in {ggplot2}&lt;/p&gt;
+</description>
       <category>plot makeover</category>
       <category>data visualization</category>
       <category>ggplot2</category>
       <guid>https://yjunechoe.github.io/posts/2020-11-08-plot-makeover-2</guid>
-      <pubDate>Sun, 08 Nov 2020 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 07 Nov 2020 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2020-11-08-plot-makeover-2/plot-makeover-2_files/figure-html5/final-1.png" medium="image" type="image/png" width="1344" height="1152"/>
     </item>
     <item>
       <title>TidyTuesday 2020 week 45</title>
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2020-11-03-tidytuesday-2020-week-45</link>
-      <description>Waffle chart of IKEA furnitures in stock</description>
+      <description>&lt;p&gt;Waffle chart of IKEA furnitures in stock&lt;/p&gt;
+</description>
       <category>ggplot2</category>
       <category>data visualization</category>
       <category>tidytuesday</category>
@@ -52,7 +55,8 @@
       <title>TidyTuesday 2020 week 44</title>
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2020-10-28-tidytuesday-2020-week-44</link>
-      <description>Patched animation of the location and cumulative capacity of wind turbines in Canada</description>
+      <description>&lt;p&gt;Patched animation of the location and cumulative capacity of wind turbines in Canada&lt;/p&gt;
+</description>
       <category>ggplot2</category>
       <category>gganimate</category>
       <category>spatial</category>
@@ -66,7 +70,8 @@
       <title>Analysis of @everycolorbot's tweets</title>
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2020-10-22-analysis-of-everycolorbots-tweets</link>
-      <description>And why you should avoid neon colors</description>
+      <description>&lt;p&gt;And why you should avoid neon colors&lt;/p&gt;
+</description>
       <category>data visualization</category>
       <category>ggplot2</category>
       <category>rtweet</category>
@@ -79,7 +84,8 @@
       <title>Designing guiding aesthetics</title>
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2020-10-13-designing-guiding-aesthetics</link>
-      <description>The fine line between creativity and noise</description>
+      <description>&lt;p&gt;The fine line between creativity and noise&lt;/p&gt;
+</description>
       <category>data visualization</category>
       <category>ggplot2</category>
       <category>tidytuesday</category>
@@ -91,7 +97,8 @@
       <title>Demystifying stat_ layers in {ggplot2}</title>
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2</link>
-      <description>The motivation behind stat, the distinction between stat and geom, and a case study of stat_summary()</description>
+      <description>&lt;p&gt;The motivation behind stat, the distinction between stat and geom, and a case study of stat_summary()&lt;/p&gt;
+</description>
       <category>data visualization</category>
       <category>ggplot2</category>
       <category>tutorial</category>
@@ -103,7 +110,8 @@
       <title>TidyTuesday 2020 week 39</title>
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2020-09-23-tidytuesday-2020-week-39</link>
-      <description>Stacked area plot of the heights of Himalayan peaks attempted over the last century</description>
+      <description>&lt;p&gt;Stacked area plot of the heights of Himalayan peaks attempted over the last century&lt;/p&gt;
+</description>
       <category>ggplot2</category>
       <category>data visualization</category>
       <category>tidytuesday</category>
@@ -115,7 +123,8 @@
       <title>Plot Makeover #1</title>
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2020-09-20-plot-makeover-1</link>
-      <description>Flattening a faceted grid for strictly horizontal comparisons</description>
+      <description>&lt;p&gt;Flattening a faceted grid for strictly horizontal comparisons&lt;/p&gt;
+</description>
       <category>plot makeover</category>
       <category>data visualization</category>
       <category>ggplot2</category>
@@ -127,7 +136,8 @@
       <title>TidyTuesday 2020 week 38</title>
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2020-09-14-tidytuesday-2020-week-38</link>
-      <description>Visualizing two decades of primary and secondary education spending with {gt}</description>
+      <description>&lt;p&gt;Visualizing two decades of primary and secondary education spending with {gt}&lt;/p&gt;
+</description>
       <category>tables</category>
       <category>data visualization</category>
       <category>tidytuesday</category>
@@ -139,7 +149,8 @@
       <title>Embedding videos in {reactable} tables</title>
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2020-09-12-videos-in-reactable</link>
-      <description>Pushing the limits of expandable row details</description>
+      <description>&lt;p&gt;Pushing the limits of expandable row details&lt;/p&gt;
+</description>
       <category>tables</category>
       <category>data visualization</category>
       <guid>https://yjunechoe.github.io/posts/2020-09-12-videos-in-reactable</guid>
@@ -150,7 +161,8 @@
       <title>Fonts for graphs</title>
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2020-09-06-fonts-for-graphs</link>
-      <description>A small collection of my favorite fonts for data visualization</description>
+      <description>&lt;p&gt;A small collection of my favorite fonts for data visualization&lt;/p&gt;
+</description>
       <category>data visualization</category>
       <category>typography</category>
       <guid>https://yjunechoe.github.io/posts/2020-09-06-fonts-for-graphs</guid>
@@ -161,7 +173,8 @@
       <title>TidyTuesday 2020 Week 33</title>
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2020-08-17-tidytuesday-2020-week-33</link>
-      <description>An animation of the main characters in Avatar</description>
+      <description>&lt;p&gt;An animation of the main characters in Avatar&lt;/p&gt;
+</description>
       <category>tidytuesday</category>
       <category>gganimate</category>
       <category>ggplot2</category>
@@ -173,7 +186,8 @@
       <title>Saving a line of piping</title>
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping</link>
-      <description>Some notes on lesser known functions/functionalities that combine common chain of {dplyr} verbs.</description>
+      <description>&lt;p&gt;Some notes on lesser known functions/functionalities that combine common chain of {dplyr} verbs.&lt;/p&gt;
+</description>
       <category>data wrangling</category>
       <category>dplyr</category>
       <category>tutorial</category>
@@ -185,7 +199,8 @@
       <title>TidyTuesday 2020 Week 32</title>
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2020-08-04-tidytuesday-2020-week-32</link>
-      <description>A dumbbell chart visualization of energy production trends among European countries</description>
+      <description>&lt;p&gt;A dumbbell chart visualization of energy production trends among European countries&lt;/p&gt;
+</description>
       <category>tidytuesday</category>
       <category>data visualization</category>
       <category>ggplot2</category>
@@ -197,7 +212,8 @@
       <title>Six years of my Spotify playlists</title>
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2020-07-29-six-years-of-my-spotify-playlists</link>
-      <description>An analysis of acoustic features with {spotifyr}</description>
+      <description>&lt;p&gt;An analysis of acoustic features with {spotifyr}&lt;/p&gt;
+</description>
       <category>ggplot2</category>
       <category>gganimate</category>
       <category>spotifyr</category>
@@ -211,7 +227,7 @@
       <title>Shiny tips - the first set</title>
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2020-07-20-shiny-tips-1</link>
-      <description>%||%, imap() + {shinybusy}, and user inputs in modalDialog()</description>
+      <description/>
       <category>shiny</category>
       <guid>https://yjunechoe.github.io/posts/2020-07-20-shiny-tips-1</guid>
       <pubDate>Mon, 20 Jul 2020 00:00:00 +0000</pubDate>
@@ -221,7 +237,8 @@
       <title>geom_paired_raincloud()</title>
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2020-07-13-geom-paired-raincloud</link>
-      <description>A {ggplot2} geom for visualizing change in distribution between two conditions.</description>
+      <description>&lt;p&gt;A {ggplot2} geom for visualizing change in distribution between two conditions.&lt;/p&gt;
+</description>
       <category>data visualization</category>
       <category>ggplot2</category>
       <guid>https://yjunechoe.github.io/posts/2020-07-13-geom-paired-raincloud</guid>
@@ -232,7 +249,8 @@
       <title>Plotting treemaps with {treemap} and {ggplot2}</title>
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2020-06-30-treemap-with-ggplot</link>
-      <description>Using underlying plot data for maximum customization</description>
+      <description>&lt;p&gt;Using underlying plot data for maximum customization&lt;/p&gt;
+</description>
       <category>data visualization</category>
       <category>treemap</category>
       <category>ggplot2</category>
@@ -245,7 +263,8 @@
       <title>Indexing tip for {spacyr}</title>
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2020-06-25-indexing-tip-for-spacyr</link>
-      <description>Speeding up the analysis of dependency relations.</description>
+      <description>&lt;p&gt;Speeding up the analysis of dependency relations.&lt;/p&gt;
+</description>
       <category>data wrangling</category>
       <category>NLP</category>
       <category>spacyr</category>
@@ -257,7 +276,8 @@
       <title>The Correlation Parameter in Mixed Effects Models</title>
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2020-06-07-correlation-parameter-mem</link>
-      <description>Notes on the Corr term in {lme4} output</description>
+      <description>&lt;p&gt;Notes on the Corr term in {lme4} output&lt;/p&gt;
+</description>
       <category>statistics</category>
       <category>mixed-effects models</category>
       <category>tutorial</category>

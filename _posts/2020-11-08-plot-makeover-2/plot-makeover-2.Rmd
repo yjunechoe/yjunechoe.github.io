@@ -164,7 +164,7 @@ ggplot(mapping = aes(x = Condition, y = Accuracy, fill = color)) +
 
 ::: {.panel}
 
-## Plot {.panel-name}
+[Plot]{.panel-name}
 
 ```{r first-draft, echo = FALSE, fig.align='center'}
 ```
@@ -173,7 +173,7 @@ ggplot(mapping = aes(x = Condition, y = Accuracy, fill = color)) +
 
 ::: {.panel}
 
-## Code {.panel-name}
+[Code]{.panel-name}
 
 ```{r first-draft, eval = FALSE}
 ```
@@ -308,8 +308,12 @@ ggplot(mapping = aes(x = Condition, y = Accuracy, fill = color)) +
     inherit.aes = FALSE
   ) +
   scale_fill_identity(
-    labels = levels(df$Referent),
-    guide = guide_legend(title = "Referent")
+    labels = c("Single", "Primacy", "Recency"),
+    guide = guide_legend(
+      title = NULL,
+      direction = "horizontal",
+      override.aes = list(fill = c("#29476B", "#AD403D", "#9BBB58"))
+    )
   ) +
   scale_x_continuous(
     breaks = 1:3 - .15,
@@ -329,12 +333,6 @@ ggplot(mapping = aes(x = Condition, y = Accuracy, fill = color)) +
   theme_classic(
     base_family = "Roboto",
     base_size = 16
-  ) +
-  guides(
-    fill = guide_legend(
-      title = NULL,
-      direction = "horizontal",
-    )
   ) +
   theme(
     plot.title.position = "plot",
