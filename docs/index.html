@@ -445,8 +445,15 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
     top: 0;
   }
 
+  /* adjust viewport for navbar height */
+  /* helps vertically center bootstrap (non-distill) content */
+  .min-vh-100 {
+    min-height: calc(100vh - 100px) !important;
+  }
+
   </style>
 
+  <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
   <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
   <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
   <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
@@ -559,6 +566,9 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
           },
           templates: {
             suggestion: function(suggestion) {
+              var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
+                ? `<img src="${offsetURL(suggestion.preview)}"</img>`
+                : '';
               var html = `
                 <div class="search-item">
                   <h3>${suggestion.title}</h3>
@@ -566,7 +576,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
                     ${suggestion.description}
                   </div>
                   <div class="search-item-preview">
-                    <img src="${suggestion.preview ? offsetURL(suggestion.preview) : ''}"</img>
+                    ${img}
                   </div>
                 </div>
               `;
@@ -589,6 +599,10 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   </script>
 
   <style type="text/css">
+
+  .nav-search {
+    font-size: x-small;
+  }
 
   /* Algolioa Autocomplete */
 
@@ -1988,14 +2002,13 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 
   <!--/radix_placeholder_distill-->
   <script src="site_libs/header-attrs-2.5/header-attrs.js"></script>
-  <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
   <script src="site_libs/anchor-4.2.2/anchor.min.js"></script>
   <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
   <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
   <script src="site_libs/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-178413324-1"></script>
-  <script>
+  <script type="text/javascript" cookie-consent="tracking" async src="https://www.googletagmanager.com/gtag/js?id=UA-178413324-1"></script>
+  <script type="text/javascript" cookie-consent="tracking">
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
@@ -2003,6 +2016,17 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   </script>
   <style type="text/css">
   /* ---------- Global Styles ---------- */
+
+  @import url('https://fonts.googleapis.com/css?family=Adelle&display=swap');
+  @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+  @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+  @import url('https://fonts.googleapis.com/css?family=Roboto+Medium&display=swap');
+  @import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');
+  @import url('https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap');
+  @import url('https://fonts.googleapis.com/css?family=Fira+Mono&display=swap');
+  @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Mono&display=swap');
+  @import url('https://fonts.googleapis.com/css?family=Trispace&display=swap');
+  @import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
 
   html, body, p {
     
@@ -2325,7 +2349,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   .panelset {
     margin-top: 10px;
     --panel-tabs-border-bottom: black;
-    --panel-tab-font-family: 'Montserrat SemiBold';
+    --panel-tab-font-family: 'Roboto Medium';
     --panel-tab-hover-background: #ddd;
     --panel-tab-text-decoration: none;
     border-bottom: 2px solid black;
@@ -2551,7 +2575,7 @@ function init_posts_list() {
 <a href="posts/2020-11-08-plot-makeover-2/" class="post-preview">
 <script class="post-metadata" type="text/json">{"categories":["plot makeover","data visualization","ggplot2"]}</script>
 <div class="metadata">
-<div class="publishedDate">Nov. 7, 2020</div>
+<div class="publishedDate">Nov. 8, 2020</div>
 </div>
 <div class="thumbnail">
 <img src="posts/2020-11-08-plot-makeover-2/plot-makeover-2_files/figure-html5/final-1.png"/>
@@ -2911,10 +2935,10 @@ function init_posts_list() {
 </a>
 </div>
 <div class="posts-sidebar">
-<div><div class="sidebar-section custom">
-  <img src="static/img/profile.png" width="200" style="display:block; padding-bottom: 20px">
-  <h3><a href="about.html">About Me</a></h3>
-  <span>I am a (computational) psycholinguist interested in modeling how comprehenders parse linguistic input, particularly those that contain structural ambiguities. In my spare time, I blog about data visualization and #rstats.</span>
+<div><div class="sidebar-section custom">
+  <img src="static/img/profile.png" width="200" style="display:block; padding-bottom: 20px">
+  <h3><a href="about.html">About Me</a></h3>
+  <span>I am a (computational) psycholinguist interested in modeling how comprehenders parse linguistic input, particularly those that contain structural ambiguities. In my spare time, I blog about data visualization and #rstats.</span>
 </div></div>
 <div class="sidebar-section categories">
 <h3>Categories</h3>
@@ -3010,7 +3034,7 @@ function init_posts_list() {
 <a href="#">More articles &raquo;</a>
 </div>
 </div>
-<!--/radix_placeholder_article_listing-->
+<!--/radix_placeholder_article_listing-->
 
 <div class="d-title">
 <h1>Blog Posts</h1>
