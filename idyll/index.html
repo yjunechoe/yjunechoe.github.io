@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0"
+    />
+    <title>Test Project</title>
+    <meta property="og:title" content="Test Project" />
+    <meta charset="utf-8" />
+    <meta property="og:type" content="article" />
+
+    <meta property="og:description" content="Short description of your project" />
+    <meta property="description" content="Short description of your project" />
+
+    <link rel="stylesheet" href="static/idyll_styles.css" />
+  </head>
+  <body>
+    <div id="idyll-mount"><div data-reactroot=""><div class="idyll-root"><div class=" idyll-text-container"></div><div class="article-header" style="background:#222222;color:#ffffff"><h1 class="hed">Test Project</h1><h2 class="dek">Welcome to Idyll. Open index.idyll to start writing</h2><div class="byline">By: <a href="https://idyll-lang.org">Your Name Here</a></div><div class="idyll-pub-date">Wed Dec 16 2020</div></div><div class=" idyll-text-container"><h2 id="introduction">Introduction</h2><p>This is an Idyll post. It is generated via
+the file <code>index.idyll</code>. To compile this post using
+idyll, run the command <code>idyll</code> inside of this directory.</p><p>Idyll posts are designed to support interaction and
+data-driven graphics.</p><div class="d3-component" style="width:100%"></div><button>
+  Click Me.</button><p>Configuration can be done via the <code>idyll</code> field in <code>package.json</code>.</p><h2 id="markup">Markup</h2><p>Idyll is based on Markdown.</p><p>You can use familiar syntax
+to create <strong>bold</strong> (<code>**bold**</code> ) and <em>italic</em> (`<code>*italic*</code> ) styles,</p><ul><li>lists</li><li>of</li><li>items,</li></ul><pre><code>* lists
+* of
+* items,</code></pre><ol><li>and numbered</li><li>lists</li><li>of items,</li></ol><pre><code>1. and numbered
+2. lists
+3. of items,</code></pre><p>in addition to <a href="https://idyll-lang.org">hyperlinks</a> and images:</p><img src="static/images/quill.svg" alt="quill"/><pre><code>![quill](static/images/quill.svg)</code></pre><h2 id="components">Components</h2><p>Components can be embedded using a bracket syntax:</p><pre><code>[Range /]</code></pre><p>and can contain nested content:</p><pre><code>[Equation]e = mc^{2}[/Equation]</code></pre><p>Components accept properties:</p><pre><code>[Range value:x min:0 max:1 /]</code></pre><p>that can be bound to variables to achieve interactivity (more in next section).</p><p>A variety of components are included by default. See <a href="https://idyll-lang.org/docs/components/">all the available components</a>. You can also use any html tag, for example: <code>[div] A div! [/div]</code>.</p><p>To create your own, add it to the <code>components/</code> folder. There are examples of how to use Idyll with React and D3 based components already included.</p><h2 id="interactivity">Interactivity</h2><p>Here is how you can instantiate a variable and bind it to a component:</p><input type="range" value="5" min="0" max="10" step="1"/><span class="idyll-display">5.00</span><pre><code>[var name:&quot;exampleVar&quot; value:5 /]
+
+[Range min:0 max:10 value:exampleVar /]
+[Display value:exampleVar /]</code></pre><h2 id="learn-more">Learn More</h2><p>To learn more see the documentation at <a href="https://idyll-lang.org/docs/">https://idyll-lang.org/docs/</a>,
+join our <a href="https://gitter.im/idyll-lang/Lobby">chatroom</a>, or see the project on <a href="https://github.com/idyll-lang/idyll">GitHub</a>.</p><hr/><h1 id="technical-details">Technical Details</h1><h2 id="installation">Installation</h2><ul><li>Make sure you have <code>idyll</code> installed (<code>npm i -g idyll</code>).</li><li>Clone this repo and run <code>npm install</code>.</li></ul><h2 id="developing-a-post-locally">Developing a post locally</h2><p>Run <code>idyll</code>.</p><h2 id="building-a-post-for-production">Building a post for production</h2><p>Run <code>idyll build</code>. The output will appear in the top-level <code>build</code> folder. To change the output location, change the <code>output</code> option in <code>package.json</code>.</p><h2 id="deploying">Deploying</h2><p>Make sure your post has been built, then deploy the docs folder via any static hosting service.</p><h2 id="dependencies">Dependencies</h2><p>You can install custom dependencies by running <code>npm install &lt;package-name&gt; --save</code>. Note that any collaborators will also need download the package locally by running <code>npm install</code> after pulling the changes.</p></div></div></div></div>
+    <script src="static/idyll_index.js"></script>
+  </body>
+</html>

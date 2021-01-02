@@ -1,0 +1,53 @@
+name: "June Choe"
+title: "June Choe"
+description: |
+  Personal Blog
+output_dir: "docs"
+base_url: https://yjunechoe.github.io
+twitter:
+  site: "@yjunechoe"
+navbar:
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "Research"
+      href: research.html
+    - text: "About"
+      href: about.html
+    - text: "Misc."
+      menu:
+        - text: "News"
+          href: news.html
+        - text: "---"
+        - text: "Resources"
+          href: resources.html
+        - text: "---"
+        - text: "Data Visualization"
+          href: "visualizations.html"
+    - icon: fa fa-twitter
+      href: https://twitter.com/yjunechoe
+    - icon: fa fa-github
+      href: https://github.com/yjunechoe
+    - image: static/img/osf.png
+      href: https://osf.io/72vrb/
+    - icon: fa fa-rss
+      href: index.xml
+  search: true
+collections:
+  posts:
+    categories: true
+    categories_metadata: true
+    authors_metadata: false
+    citations: false
+    share: [twitter]
+    custom: _custom.html
+output:
+  distill::distill_article:
+    highlight: tango
+    highlight_downlit: true
+    css: styles.css
+    toc: true
+    fig_caption: true
+exclude: ['etc', 'renv*']
+favicon: static/img/icon.png
+google_analytics: "UA-178413324-1"

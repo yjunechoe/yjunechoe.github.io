@@ -1,0 +1,168 @@
+---
+title: Shiny tips - the first set
+description: |
+  %||%, imap() + {shinybusy}, and user inputs in modalDialog()
+categories:
+  - shiny
+base_url: https://yjunechoe.github.io
+preview: preview.png
+author:
+  - name: June Choe
+    affiliation: University of Pennsylvania Linguistics
+    affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+    orcid_id: 0000-0002-0701-921X
+date: 07-20-2020
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+```{r opts}
+knitr::opts_chunk$set(
+  comment = " ",
+  echo = TRUE,
+  message = TRUE,
+  warning = TRUE,
+  R.options = list(width = 80)
+)
+```
+
+When I was an RA in the [LEARN lab](https://learnlab.northwestern.edu/) - a child language development lab at Northwestern - I worked on a shiny app that automates snowball search for meta-analysis research ([relevant research poster](../../../static/poster/Snowballer_June_Choe.pdf)). Long story short, I worked on it for a couple months, got it working, then stopped working on it for another couple months, and had the chance to revisit it just recently.
+
+When I picked the project back up, I realized that my old code was poorly commented, somewhat inefficient, and even hackish at times. So I decided to re-write it from scratch. In this second time around, I learned a lot of useful functions/tricks that really helped streamline my code and I thought I'd document my three favorite ones here for future reference.
+
+### 1. `%||%` from `{rlang}`
+
+Basically, `%||%` is an infix operator that returns the left-hand side when it is not `Null` and the right-hand side when it is `Null`. It's from the `{rlang}` package but you can also define the function yourself:
+
+```{r}
+"%||%" <- function(lhs, rhs) {
+  if (is.null(lhs)) rhs else lhs
+}
+
+a <- 10
+b <- NULL
+
+a %||% b
+b %||% a
+
+# note how the output is different when b is no longer null
+b <- 11
+b %||% a
+```
+
+I found this operator to be extremely useful when displaying empty tables as placeholders when using `DT::datatable()`. It allows me to communicate to the user where a table is expected to appear rather than just not showing anything at all when no data is loaded (which is what happens by default).
+
+For example, if you want to show an empty column with an empty row when the data (here, the reactive variable `mydf`) is null, you might do the following:
+
+```{r, eval = FALSE}
+mydf_display <- renderDataTable({
+  datatable(mydf() %||% tibble(` ` = NA))
+})
+```
+
+Another use-case for `%||%` is when I'm trying a sequence of function calls until one one of them succeeds and returns a non-null value. For example, say I want to scrape some information online and I have API wrappers for different websites that potentially have that information. I can chain them together using `%||%` like so:
+
+```{r, eval = FALSE}
+myinfo <- 
+  scrape_website1() %||%
+  scrape_website2() %||%
+  scrape_website3()
+```
+
+This is much neater than nested if...else statements!
+
+
+### 2. `purrr::imap()` and `{shinybusy}`
+
+Using my shiny app involves a lot of waiting (querying online databases), so I looked into ways to show a progress bar similar to the family of `*Modal()` functions from `{shiny}`. The extension package `{shinybusy}` ([project site](https://dreamrs.github.io/shinybusy/index.html)) offers a very satisfying solution to this problem.
+
+Basically, you initialize a progress bar with `show_modal_progress_*()` and increment its value inside whatever operation you're doing. Here's a pseudo code demonstrating how it works:
+
+```{r, eval = FALSE}
+initialize a progress bar
+
+create a new_list of same size to store output
+
+for index in seq_along(list):
+  new_list[index] <- calculations(list[index])
+  increment progress bar by index
+  
+remove progress bar
+
+return new_list
+```
+
+But in my case, my "do stuff" part didn't involve a big wall of code because I packed it into a single function in a separate file that I source at the beginning. This, coupled with my general aversion to for-loops, drove me to `imap()` and its variants from `{purrr}`. `imap()` is like `map()` except it also keeps track of the index of the element that you're operating on (to put it another way, it's like `map2()` where `.y` is the index).
+
+Now, you don't need an explicit for-loop to increment and the above code can be reduced to this:
+
+```{r, eval = FALSE}
+initialize a progress bar
+
+new_list <- imap(list,
+                 ~{
+                   calculations(.x)
+                   increment progress bar by .y
+                 })
+  
+remove progress bar
+
+return new_list
+```
+
+In my opinion, this is much cleaner! For a more concrete example, here's a template using actual code:
+
+```{r, eval = FALSE}
+my_data <- eventReactive(input$my_button, {
+  
+  # initialize a progress bar
+  show_modal_progress_line()
+  
+  # do operation on elements of vector
+  result <- imap(my_reactive_var(),
+                 ~{
+                   update_modal_progress(value = .y / length(my_reactive_var()))
+                   my_operation_on_element(.x)
+                 })
+  
+  # remove progress bar
+  remove_modal_progress()
+  
+  # return output
+  return(result)
+  
+})
+```
+
+
+
+### 3. User inputs inside `modalDialog()`
+
+In `{shiny}`, you can show the user a pop-up message box by first laying out the content of the message in `modalDialog()` and then rendering it with `showModal()`. In the first version of my app, I used this to show simple messages like warnings, but did you know that you can include any `*Input` widgets too?
+
+For example, this code renders a pop-up box for a file upload in response to a button click:
+
+```{r, eval = FALSE}
+observeEvent(input$MyButton, {
+  showModal(modalDialogue(
+    title = "Upload File Here",
+    fileInput(inputID = "UploadedFile", label = "Upload")
+  ))
+})
+```
+
+And you can access whatever is uploaded using `input$UploadedFile` like you would if the file upload widget was in the `ui` side of the app!
+
+This took me a bit to get used to because you are defining the modal in the `server` side where the content of the modal looks like the `ui` side but can be accessed back at the `server` side. But this was life-changing and it opened up a lot of potential for my GUI to be less cluttered. Using this neat trick, I was able to move a large feature into a modal that would only be available upon a click of a button (it was a feature designed for a rare case scenario so I thought I'd save the user from having to see the entire interface for that if they don't ask for it).
+
+
+### Ending note
+
+The more I learn and use shiny, the less I feel like I know. I'm actually enjoying this stage of my progress because every new thing just absolutely wows me (and I hope to continue sharing what I learn - hence this being the "first set"). And very much looking forward to [Hadley Wickham's new book on shiny](https://mastering-shiny.org/)!
+
+
+
+
+
+

@@ -1,0 +1,33 @@
+---
+title: "Data Visualizations"
+description: |
+  Select data visualizations. All made in R; mostly <a href="https://yjunechoe.github.io/#category:tidytuesday">submissions</a> for <a href="https://github.com/rfordatascience/tidytuesday">TidyTuesday</a>
+---
+
+```{css, echo = FALSE}
+d-article {
+    background-color: #f4f4f4;
+}
+d-article img {
+  padding: 10px;
+}
+a {
+  color: black;
+}
+```
+
+
+
+```{r, echo = FALSE, fit.align = 'center', message = FALSE}
+library(tidyverse)
+
+here::here("static", "dataviz") %>%
+  fs::dir_info() %>%
+  dplyr::arrange(modification_time) %>%
+  dplyr::pull(path) %>%
+  stringr::str_match("static/dataviz/.*") %>%
+  `[`(,1) %>% 
+  rev() %>% 
+  knitr::include_graphics()
+```
+

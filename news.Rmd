@@ -1,0 +1,58 @@
+---
+title: "News"
+output:
+  distill::distill_article:
+    toc: false
+---
+
+```{css, echo = FALSE}
+d-article h2 {
+  font-family: Rubik;
+  font-size: 3em;
+  text-align: center;
+  border-bottom: 3px solid black;
+}
+
+d-article h3 {
+  font-size: 1.5em;
+  text-align: center;
+  font-variant: small-caps;
+  font-family: Bitter;
+  letter-spacing: .2em;
+}
+
+d-article ul {
+  font-family: Adelle;
+}
+
+d-article ul li p {
+    font-family: Adelle;
+}
+
+li::marker {
+    font-size: 1.2em;
+}
+```
+
+
+## 2020
+
+### November
+
+- I joined designer [Will Chase](https://www.williamrchase.com/) on his [stream](https://www.youtube.com/watch?v=Z0NVmQXYjac) to talk about the psycholinguistics of speech production for a data visualization project on Michael's speech errors in The Office. Was a very cool opportunity to bring my two interests together!
+
+### October
+
+- My [tutorial](https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/) on stat_*() functions in {ggplot2} was **featured as a highlight** on the [rweekly podcast](https://rweekly.fireside.fm/8?t=251), which curates weekly updates from the R community
+
+- I became a **data science tutor** at [MindCORE](https://mindcore.sas.upenn.edu/) to help researchers at Penn with data visualization and R programming
+
+### September
+
+- **I have moved to Philly to start my PhD in Linguistics at the University of Pennsylvania!**
+
+- I presented a **poster at AMLaP** on my undergrad thesis research with my advisors Jennifer Cole and Masaya Yoshida
+
+### June
+
+- **I graduated from Northwestern University with a B.A. in Linguistics!** I was also appointed as the Senior Marshal for Linguistics (but sadly missed out on the chance to carry a banner representing the major at graduation due to COVID)

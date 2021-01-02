@@ -1,0 +1,63 @@
+---
+title: "Resources"
+description: |
+  Mostly for R and data visualization
+output:
+  distill::distill_article:
+    toc: true
+---
+
+```{css}
+p {
+  font-family: 'Roboto';
+}
+```
+
+## Data Visualization
+
+- {ggplot2} style guide and showcase - [pdf of most recent ver.](static/slides/ggplot2_flipbook_CHOE.pdf)
+
+    - Penn Phonetics Lab [[slides](https://yjunechoe.netlify.app/flipbooks/p_lab_ggplot2_2020/p_lab_ggplot2.html), [code](https://raw.githubusercontent.com/yjunechoe/yjunechoe.github.io/master/flipbooks/P_lab_ggplot2_2020/P_lab_ggplot2.Rmd)] (10/23/20)
+
+    - Trueswell, Swingley, and Gleitman Lab [[slides](https://yjunechoe.netlify.app/flipbooks/tsg_lab_ggplot2_2020/tsg_lab_ggplot2.html), [code](https://raw.githubusercontent.com/yjunechoe/yjunechoe.github.io/master/flipbooks/tsg_lab_ggplot2_2020/tsg_lab_ggplot2.Rmd)] (11/25/20)
+
+## R Programming
+
+- [Advanced R Book Club](https://github.com/r4ds/bookclub-Advanced_R) presentations
+
+    - Chappter 6 - Functions [[video](https://youtu.be/lg5rzOU6lsg?t=113), [code](https://github.com/r4ds/bookclub-Advanced_R/tree/main/Presentations/Week06/Cohort4)] (11/9/20)
+
+## Tutorial Blog Posts
+
+- {purrr} apply() family [[post](https://yjunechoe.github.io/posts/2020-12-13-collapse-repetitive-piping-with-reduce/)]
+
+- {ggplot2} stat_*() functions [[post](https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/)]
+
+- The correlation parameter in {lme4} mixed effects models [[post](https://yjunechoe.github.io/posts/2020-06-07-correlation-parameter-mem/)]
+
+- Shortcuts for common chain of {dplyr} functions [[post](https://yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/)]
+
+- Plotting highly-customizable treemaps with {treemap} and {ggplot2} [[post](https://yjunechoe.github.io/posts/2020-06-30-treemap-with-ggplot/)]
+
+
+## By others
+
+**Tutorials**:
+
+- [A ggplot2 Tutorial for Beautiful Plotting in R](https://cedricscherer.netlify.app/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/) _by Cédric Scherer_
+
+- [ggplot2 workshop](https://www.youtube.com/watch?v=h29g21z0a68) _by Thomas Lin Pedersen_
+
+**Books**:
+
+- [R for Data Science](https://r4ds.had.co.nz/) _by Hadley Wickham and Garrett Grolemund_
+
+- [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/) _by Yihui Xie, J. J. Allaire, and Garrett Grolemund_
+
+- [ggplot2: elegant graphics for data analysis](https://ggplot2-book.org/) _by Hadley Wickham, Danielle Navarro, and Thomas Lin Pedersen_
+
+- [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/) _by Claus O. Wilke_
+
+- [Efficient R Programming](https://csgillespie.github.io/efficientR/) _by Colin Gillespie and Robin Lovelace_
+
+- [Advanced R](https://adv-r.hadley.nz/) _by Hadley Wickham_
