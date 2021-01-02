@@ -4,11 +4,11 @@ title: "Research"
 
 ```{css}
 d-article ul {
-  font-family: Adelle;
+  font-family: Roboto;
 }
 
 d-article ul li p {
-    font-family: Adelle;
+    font-family: Roboto;
 }
 ```
 

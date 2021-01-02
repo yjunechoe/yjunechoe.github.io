@@ -9,7 +9,7 @@ output:
 
 ```{css}
 p {
-  font-family: 'Adelle';
+  font-family: 'Roboto';
 }
 ```
 
