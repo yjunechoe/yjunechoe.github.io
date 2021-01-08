@@ -1,7 +1,7 @@
 ---
 title: "Data Visualizations"
 description: |
-  Select data visualizations. All made in R; mostly <a href="https://yjunechoe.github.io/#category:tidytuesday">submissions</a> for <a href="https://github.com/rfordatascience/tidytuesday">TidyTuesday</a>
+  Select data visualizations
 ---
 
 ```{css, echo = FALSE}
