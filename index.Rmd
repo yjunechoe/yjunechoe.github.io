@@ -73,8 +73,8 @@ p {
   <p style="font-weight:bold; margin-top:5px">
     <i class="fa fa-graduation-cap" aria-hidden="true" style="padding-right:5px"></i> Education
   </p>
-  <li>B.A. Northwestern University (2020)</li>
-  <li>Ph.D. University of Pennsylvania (expected 2025)</li>
+  <li>B.A. Northwestern University (2016 – 2020)</li>
+  <li>Ph.D. University of Pennsylvania (2020 ~)</li>
   <p style="font-weight:bold; margin-top:15px">
     <i class="fa fa-lightbulb-o" aria-hidden="true" style="padding-right:5px"></i> Interests
   </p>
@@ -102,7 +102,7 @@ p {
 </div>
 
 
-<h3 style="margin: 0px 0px 25px 0px; font-variant:small-caps; text-align:center; font-size:2em">about</h3>
+<h3 style="margin: 0px 0px 25px 0px; font-variant:small-caps; text-align:center; font-size:2em; letter-spacing:2px">about</h3>
 
 
 I am a first year PhD student in [Linguistics at the University of Pennsylvania](https://live-sas-www-ling.pantheon.sas.upenn.edu/). I use computational and psycholinguistic methods to study how comprehenders parse linguistic input, both in real time and at different stages of language development.
