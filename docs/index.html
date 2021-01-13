@@ -2213,6 +2213,46 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
     padding: 10px;
   }
 
+
+  /* -------- Layout Helpers -------- */
+
+  /* 2-column Even */
+
+  .pull-left {
+    float: left;
+    width: 47%;
+  }
+
+  .pull-right {
+    float: right;
+    width: 47%;
+  }
+
+  /* 2-column Left-skew */
+
+  .pull-left-wide {
+    float: left;
+    width: 75%;
+  }
+
+  .pull-right-narrow {
+    float: right;
+    width: 20%;
+  }
+
+  /* 2-column Right-skew */
+
+  .pull-left-narrow {
+    float: left;
+    width: 20%;
+  }
+
+  .pull-right-wide {
+    float: right;
+    width: 75%;
+  }
+
+
   /* ---------- Code Styles ---------- */
 
   /* Inline Code */
@@ -2367,8 +2407,8 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div class="nav-right">
 <a href="index.html">Home</a>
-<a href="research.html">Research</a>
 <a href="about.html">About</a>
+<a href="research.html">Research</a>
 <div class="nav-dropdown">
 <button class="nav-dropbtn">
 Misc.
@@ -2918,7 +2958,7 @@ function init_posts_list() {
 </div>
 <div class="posts-sidebar">
 <div><div class="sidebar-section custom">
-  <img src="static/img/profile.png" width="200" style="display:block; padding-bottom: 20px">
+  <img src="static/img/profile.png" width=65% style="display:block; padding-bottom: 20px">
   <h3><a href="about.html">About Me</a></h3>
   <span>I am a (computational) psycholinguist interested in modeling how comprehenders parse linguistic input, particularly those that contain structural ambiguities. In my spare time, I blog about data visualization and #rstats.</span>
 </div></div>

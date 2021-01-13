@@ -10,10 +10,10 @@ navbar:
   right:
     - text: "Home"
       href: index.html
-    - text: "Research"
-      href: research.html
     - text: "About"
       href: about.html
+    - text: "Research"
+      href: research.html
     - text: "Misc."
       menu:
         - text: "News"
