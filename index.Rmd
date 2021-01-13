@@ -24,7 +24,7 @@ p {
 }
 
 .hero-left img {
-  width: 100%
+  width: 100%;
   border-radius: 15%;
   border: 3px solid grey;
   display: block;
@@ -49,12 +49,15 @@ p {
     width:32%;
     float:left;
   }
-  .hero-left img {
-    width: 50%;
-  }
   .hero-right {
     width:63%;
     float:right;
+  }
+}
+
+@media (max-width: 1199px) {
+  .hero-left img {
+    width: 50%;
   }
 }
 ```
