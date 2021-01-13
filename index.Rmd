@@ -23,25 +23,36 @@ p {
   font-family: 'Roboto';
 }
 
-.hero p {
+hero-right p {
   margin: 10px 0px 10px 0px;
   font-size: 1.2em;
   font-family: Roboto Slab
 }
 
-.hero li {
+hero-right li {
   margin-bottom: 5px;
   padding-left: 10px;
+}
+
+@media (min-width: 1200px) {
+  .hero-left {
+    width:32%;
+    float:left;
+  }
+  .hero-right {
+    width:63%;
+    float:right;
+  }
 }
 ```
 
 <div style="border-bottom:3px solid black; margin-bottom:20px">
 
-<div style="float:left; width:32%">
+<div class="hero-left">
   <img src="static/img/profile_rect.jpeg" width="100%" style="border-radius:15%; border:3px solid grey">
 </div>
 
-<div class="hero" style="float:right; width:63%; padding-bottom:1.5em">
+<div class="hero-right" style="padding-bottom:1.5em">
   <p style="font-weight:bold; margin-top:5px">
     Education <i class="fa fa-graduation-cap" aria-hidden="true" style="padding-left:5px"></i>
   </p>
