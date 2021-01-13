@@ -10,8 +10,8 @@ navbar:
   right:
     - text: "Home"
       href: index.html
-    - text: "About"
-      href: about.html
+    - text: "Blog"
+      href: blog.html
     - text: "Research"
       href: research.html
     - text: "Misc."

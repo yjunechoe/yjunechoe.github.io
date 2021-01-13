@@ -3,7 +3,7 @@
   <channel>
     <title>June Choe</title>
     <link>https://yjunechoe.github.io</link>
-    <atom:link href="https://yjunechoe.github.io/index.xml" rel="self" type="application/rss+xml"/>
+    <atom:link href="https://yjunechoe.github.io/blog.xml" rel="self" type="application/rss+xml"/>
     <description>Personal Blog
 </description>
     <image>
