@@ -12,7 +12,8 @@ d-article {
 
 d-title h1 {
   text-align: center;
-  font-family: trispace;
+  font-family: Roboto Mono;
+  letter-spacing: 3px;
 }
 
 d-title p {
@@ -30,13 +31,13 @@ p {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 25px;
+  margin-bottom: 1em;
 }
 
 .hero-right p {
   margin: 10px 0px 10px 0px;
   font-size: 1.2em;
-  font-family: Roboto Slab
+  font-family: Roboto Slab;
 }
 
 .hero-right li {
@@ -68,22 +69,41 @@ p {
   <img src="static/img/profile_rect.jpeg">
 </div>
 
-<div class="hero-right" style="padding-bottom:1.5em">
+<div class="hero-right" style="padding-bottom:1em">
   <p style="font-weight:bold; margin-top:5px">
-    Education <i class="fa fa-graduation-cap" aria-hidden="true" style="padding-left:5px"></i>
+    <i class="fa fa-graduation-cap" aria-hidden="true" style="padding-right:5px"></i> Education
   </p>
   <li>B.A. Northwestern University (2020)</li>
   <li>Ph.D. University of Pennsylvania (expected 2025)</li>
   <p style="font-weight:bold; margin-top:15px">
-    Interests <i class="fa fa-lightbulb-o" aria-hidden="true" style="padding-left:5px"></i>
+    <i class="fa fa-lightbulb-o" aria-hidden="true" style="padding-right:5px"></i> Interests
   </p>
   <li>(Computational) Psycholinguistics</li>
   <li>Parsing / Sentence Processing</li>
   <li>Language Acquisition</li>
-  <li>Quantitative Methods</li> 
+  <li>Prosody & Information Structure</li> 
+</div>
+
+<div style="float:left; width:100%;">
+  <p style="margin-bottom:.5em">
+    <strong style="font-family: Roboto Slab; font-size: 1.2em">
+      <i class="fa fa-flask" aria-hidden="true" style="padding-right:12.5px"></i> Methods: 
+    </strong>
+    Eye-tracking, self-paced reading, corpus/text analysis
+  </p>
+  <p style="margin-bottom:1.5em">
+    <strong style="font-family:Roboto Slab; font-size:1.2em">
+      <i class="fa fa-code" aria-hidden="true" style="padding-right:5px"></i> Programming: 
+    </strong>
+    R <span style="font-size:0.8em">(fluent)</span> | HTML/CSS/JS <span style="font-size:0.8em">(proficient)</span> | Python <span style="font-size:0.8em">(coursework)</span>
+  </p>
 </div>
 
 </div>
+
+
+<h3 style="margin: 0px 0px 25px 0px; font-variant:small-caps; text-align:center; font-size:2em">about</h3>
+
 
 I am a first year PhD student in [Linguistics at the University of Pennsylvania](https://live-sas-www-ling.pantheon.sas.upenn.edu/). I use computational and psycholinguistic methods to study how comprehenders parse linguistic input, both in real time and at different stages of language development.
 
