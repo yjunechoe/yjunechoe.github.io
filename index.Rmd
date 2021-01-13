@@ -23,6 +23,16 @@ p {
   font-family: 'Roboto';
 }
 
+.hero-left img {
+  width: 100%
+  border-radius: 15%;
+  border: 3px solid grey;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 25px;
+}
+
 .hero-right p {
   margin: 10px 0px 10px 0px;
   font-size: 1.2em;
@@ -39,6 +49,9 @@ p {
     width:32%;
     float:left;
   }
+  .hero-left img {
+    width: 50%;
+  }
   .hero-right {
     width:63%;
     float:right;
@@ -49,7 +62,7 @@ p {
 <div style="border-bottom:3px solid black; margin-bottom:20px">
 
 <div class="hero-left">
-  <img src="static/img/profile_rect.jpeg" width="100%" style="border-radius:15%; border:3px solid grey">
+  <img src="static/img/profile_rect.jpeg">
 </div>
 
 <div class="hero-right" style="padding-bottom:1.5em">
