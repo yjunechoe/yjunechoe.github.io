@@ -1,0 +1,7 @@
+{
+    "schedule": "weekly",
+	"ignoredFiles": [
+		"docs/site_libs/*"
+	],
+	"minKBReduced": 500
+}
