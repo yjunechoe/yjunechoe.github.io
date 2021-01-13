@@ -6,11 +6,14 @@ description: |
 
 ```{css, echo = FALSE}
 d-article {
-    background-color: #f4f4f4;
+  background-color: #f4f4f4;
 }
+
 d-article img {
-  padding: 10px;
+  padding: 25px 0px 15px 0px;
+  border-top: 1px solid #2f2f2f;
 }
+
 a {
   color: black;
 }
@@ -19,15 +22,13 @@ a {
 
 
 ```{r, echo = FALSE, fit.align = 'center', message = FALSE}
-library(tidyverse)
+library(magrittr)
 
 here::here("static", "dataviz") %>%
   fs::dir_info() %>%
-  dplyr::arrange(modification_time) %>%
-  dplyr::pull(path) %>%
-  stringr::str_match("static/dataviz/.*") %>%
-  `[`(,1) %>% 
-  rev() %>% 
+  dplyr::arrange(desc(birth_time)) %$%
+  stringr::str_match(path, "static/dataviz/.*") %>%
+  as.character() %>% 
   knitr::include_graphics()
 ```
 

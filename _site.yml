@@ -22,7 +22,7 @@ navbar:
         - text: "Resources"
           href: resources.html
         - text: "---"
-        - text: "Data Visualization"
+        - text: "Data Visualizations"
           href: "visualizations.html"
     - icon: fa fa-twitter
       href: https://twitter.com/yjunechoe

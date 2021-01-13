@@ -39,20 +39,20 @@ li::marker {
 
 ### November
 
-- I joined designer [Will Chase](https://www.williamrchase.com/) on his [stream](https://www.youtube.com/watch?v=Z0NVmQXYjac) to talk about the psycholinguistics of speech production for a data visualization project on Michael's speech errors in The Office. Was a very cool opportunity to bring my two interests together!
+- I joined designer [Will Chase](https://www.williamrchase.com/) on his [stream](https://www.youtube.com/watch?v=Z0NVmQXYjac) to talk about the psycholinguistics of speech production for a data viz project on Michael's speech errors in The Office. It was a very cool and unique opportunity to bring my two interests together!
 
 ### October
 
-- My [tutorial](https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/) on stat_*() functions in {ggplot2} was **featured as a highlight** on the [rweekly podcast](https://rweekly.fireside.fm/8?t=251), which curates weekly updates from the R community
+- My [tutorial](https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/) on stat_*() functions in {ggplot2} was **featured as a highlight** on the [rweekly podcast](https://rweekly.fireside.fm/8?t=251), which curates weekly updates from the R community.
 
-- I became a **data science tutor** at [MindCORE](https://mindcore.sas.upenn.edu/) to help researchers at Penn with data visualization and R programming
+- I became a **data science tutor** at [MindCORE](https://mindcore.sas.upenn.edu/) to help researchers at Penn with data visualization and R programming.
 
 ### September
 
-- **I have moved to Philly to start my PhD in Linguistics at the University of Pennsylvania!**
+- I have moved to Philadelphia to **start my PhD in Linguistics at the University of Pennsylvania**!
 
-- I presented a **poster at AMLaP** on my undergrad thesis research with my advisors Jennifer Cole and Masaya Yoshida
+- I presented a **poster at AMLaP** on my undergrad thesis research with my advisors Jennifer Cole and Masaya Yoshida.
 
 ### June
 
-- **I graduated from Northwestern University with a B.A. in Linguistics!** I was also appointed as the Senior Marshal for Linguistics (but sadly missed out on the chance to carry a banner representing the major at graduation due to COVID)
+- **I graduated from Northwestern University** with a B.A. in Linguistics! I was also elected into Phi Beta Kappa and appointed as the Senior Marshal for Linguistics (but sadly missed out on the chance to carry the banner due to COVID)
