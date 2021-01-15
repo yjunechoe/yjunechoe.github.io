@@ -55,4 +55,4 @@ li::marker {
 
 ### June
 
-- **I graduated from Northwestern University** with a B.A. in Linguistics! I was also elected into Phi Beta Kappa and appointed as the Senior Marshal for Linguistics (but sadly missed out on the chance to carry the banner due to COVID)
+- **I graduated from Northwestern University** with a B.A. in Linguistics! I was also elected into Phi Beta Kappa and appointed as the Senior Marshal for Linguistics.
