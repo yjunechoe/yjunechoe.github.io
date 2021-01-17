@@ -1,0 +1,252 @@
+---
+title: "Random Sampling: A table animation"
+description: |
+  Plus a convenient way of rendering LaTex expressions as images
+categories:
+  - data visualization
+  - data wrangling
+base_url: https://yjunechoe.github.io
+author:
+  - name: June Choe
+    affiliation: University of Pennsylvania Linguistics
+    affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+    orcid_id: 0000-0002-0701-921X
+date: 01-17-2020
+output:
+  distill::distill_article:
+    toc: true
+    self_contained: false
+editor_options: 
+  chunk_output_type: console
+preview: table_preview.png
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  comment = " ",
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  R.options = list(width = 80)
+)
+```
+
+In my [last blogpost](https://yjunechoe.github.io/posts/2020-12-13-collapse-repetitive-piping-with-reduce/), I demonstrated a couple use cases for the higher-order functionals `reduce()` and `accumulate()` from the {purrr} package. In one example, I made an animated {kableExtra} table by `accumulate()`-ing over multiple calls to `column_spec()` that set a background color for a column.
+
+Animated tables are virtually non-existent in the wild, and probably for a good reason. but I wanted to extend upon my previous table animation and create something that's maybe a bit more on the "informative" side.
+
+To that end, here's an animate table that simulates sampling from a bivariate normal distribution.
+
+## Static
+
+Let's first start by generating 100,000 data points:
+
+```{r}
+set.seed(2021)
+
+library(dplyr)
+
+samples_data <- MASS::mvrnorm(1e5, c(0, 0), matrix(c(1, .7, .7, 1), ncol = 2)) %>% 
+  as_tibble(.name_repair = ~c("x", "y")) %>% 
+  mutate(across(everything(), ~ as.character(.x - .x %% 0.2)))
+
+samples_data
+```
+
+Let's see how this looks when we turn this into a "matrix"^[Visually speaking. It's still a dataframe object for compatibility with {kableExtra}]. To place continuous values into discrete cells in the table, I'm also binning both variables by 0.2:
+
+```{r}
+samples_data_spread <- samples_data %>% 
+  count(x, y) %>% 
+  right_join(
+    tidyr::crossing(
+      x = as.character(seq(-3, 3, 0.2)),
+      y = as.character(seq(-3, 3, 0.2))
+    ),
+    by = c("x", "y")
+  ) %>% 
+  tidyr::pivot_wider(names_from = y, values_from = n) %>% 
+  arrange(-as.numeric(x)) %>% 
+  select(c("x", as.character(seq(-3, 3, 0.2)))) %>% 
+  rename(" " = x)
+
+samples_data_spread
+```
+
+Now we can turn this into a table and fill the cells according to the counts using `reduce()`:
+
+```{r}
+library(kableExtra)
+
+samples_data_table <- samples_data_spread %>% 
+  kable() %>% 
+  kable_classic() %>% 
+  purrr::reduce(2L:length(samples_data_spread), ~ {
+    column_spec(
+      kable_input = .x,
+      column = .y,
+      background = spec_color(
+        samples_data_spread[[.y]],
+        scale_from = c(1, max(as.numeric(as.matrix(samples_data_spread)), na.rm = TRUE)),
+        na_color = "white",
+        option = "plasma"
+      ),
+      color = "white"
+    )},
+    .init = .
+  )
+
+samples_data_table
+```
+
+### An aside on LaTex equations
+
+As an aside, let's say we also want to annotate this table with the true distribution where this sample came from. As specified in our call to `MASS::mvrnorm()` used to make `samples_data`, the distribution is one where both variables have a mean of 0 and a standard deviation of 1, plus a correlation of 0.7:
+
+$$\begin{bmatrix} X \\ Y \end{bmatrix}\ \sim\ N(\begin{bmatrix} 0 \\ 0 \end{bmatrix},\begin{bmatrix}1 & 0.7 \\ 0.7 & 1 \end{bmatrix})$$
+
+Where the LaTex code for the above formula is:
+
+```{r, echo = FALSE}
+cat(r"(\begin{bmatrix} X \\ Y \end{bmatrix}\ \sim\
+N(\begin{bmatrix} 0 \\ 0 \end{bmatrix},
+\begin{bmatrix}1 & 0.7 \\ 0.7 & 1 \end{bmatrix})
+)")
+```
+
+Many different solutions already exist to LaTex math annotations. The most common is probably Non-Standard Evaluation (NSE) methods using `parse()`, `expression()`, `bquote()` etc. There are bulkier solutions like the {latex2exp} package that plots **plotmath** expressions^[Though it hasn't been updated since 2015 and it seems like there are quite a few unresolved StackOverflow issue].
+
+One solution I've never heard of/considered before is querying a web LaTex editor that has an API. The [Online LaTex Equation Editor](https://www.codecogs.com/latex/eqneditor.php?lang=en-en) by CodeCogs is the perfect example of this. A simple link that contains the LaTex code in a URL-compatible encoding renders the resulting expression as an image!
+
+I wrote a function `latex_query` (not thoroughly tested) in my [personal package](https://github.com/yjunechoe/junebug) that takes LaTex code and generates a CodeCogs URL containing the rendered expression^[Details about the API - [https://www.codecogs.com/latex/editor-api.php](https://www.codecogs.com/latex/editor-api.php)] 
+
+```{r, out.width="350px", fig.align="center"}
+# NOTE the string literal syntax using r"(...)" is only available in R 4.0.0 and up
+latex_url <- junebug::latex_query(
+  formula = r"(\begin{bmatrix} X \\ Y \end{bmatrix}\ \sim\
+              N(\begin{bmatrix} 0 \\ 0 \end{bmatrix},
+              \begin{bmatrix}1 & 0.7 \\ 0.7 & 1 \end{bmatrix}))",
+  dpi = 150
+)
+
+knitr::include_graphics(latex_url)
+```
+
+The variable `latex_url` is this [really long URL](https://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Clarge%20%5Cbegin%7Bbmatrix%7D%20X%20%5C%5C%20Y%20%5Cend%7Bbmatrix%7D%5C%20%5Csim%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20N%28%5Cbegin%7Bbmatrix%7D%200%20%5C%5C%200%20%5Cend%7Bbmatrix%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Cbegin%7Bbmatrix%7D1%20%26%200.7%20%5C%5C%200.7%20%26%201%20%5Cend%7Bbmatrix%7D%29) which, as we see above, points to a rendered image of the LaTex expression we fed it!
+
+Annotating our table, then, is pretty straightforward. We save it as an image, read in the LaTex equation as an image, then combine!
+
+```{r, eval = FALSE}
+save_kable(samples_data_table, "img/samples_data_table.png")
+
+library(magick)
+
+image_composite(
+  image_read("img/samples_data_table.png"),
+  image_read(latex_url),
+  offset = "+50+50"
+)
+```
+
+```{r, echo = FALSE, fig.align = "center"}
+knitr::include_graphics("img/samples_data_table_annotated.png", error = FALSE)
+```
+
+## Animated
+
+For an animated version, we add a step where we split the data at every 10,000 additional samples before binning the observations into cells. We then draw a table at each point of the accumulation using {kableExtra} (but with some nicer-looking settings) with the help of `map()` and `reduce()`.
+
+```{r, eval = FALSE}
+samples_tables <- purrr::map(1L:10L, ~{
+  samples_slice <- samples_data %>% 
+    slice(1L:(.x * 1e4)) %>% 
+    count(x, y) %>% 
+    right_join(
+      tidyr::crossing(
+        x = as.character(seq(-3, 3, 0.2)),
+        y = as.character(seq(-3, 3, 0.2))
+      ),
+      by = c("x", "y")
+    ) %>% 
+    tidyr::pivot_wider(names_from = y, values_from = n) %>% 
+    arrange(-as.numeric(x)) %>% 
+    select(c("x", as.character(seq(-3, 3, 0.2)))) %>% 
+    rename(" " = x)
+
+  
+  samples_slice %>%
+    kable() %>% 
+    kable_classic() %>% 
+    purrr::reduce(
+      2L:length(samples_slice),
+      ~ {
+        .x %>% 
+          column_spec(
+            column = .y,
+            width_min = "35px",
+            background = spec_color(
+              samples_slice[[.y]],
+              scale_from = c(1, max(as.numeric(as.matrix(samples_slice)), na.rm = TRUE)),
+              na_color = "white",
+              option = "plasma"
+            ),
+            color = "white"
+          ) %>% 
+          row_spec(
+            row = .y - 1L,
+            hline_after = FALSE,
+            extra_css = "border-top:none; padding-top:15px;"
+          )
+      },
+      .init = .
+    ) %>% 
+    row_spec(0L, bold = TRUE) %>% 
+    column_spec(1L, bold = TRUE, border_right = TRUE) %>% 
+    kable_styling(
+      full_width = F,
+      font_size = 10,
+      html_font = "IBM Plex Mono",
+    )
+})
+```
+
+The result, `samples_tables` is a list of tables. We can `walk()` over that list with `save_kable()` to write them as images and then read them back in with {magick}:
+
+```{r, eval = FALSE}
+purrr::iwalk(samples_tables, ~ save_kable(.x, file = glue::glue("tbl_imgs/tbl{.y}.png")))
+
+table_imgs <- image_read(paste0("tbl_imgs/tbl", 1:10, ".png"))
+```
+
+Now we can add our LaTex expression from the previous section as an annotation to these table images using `image_composite()`:
+
+```{r, eval = FALSE}
+table_imgs_annotated <- table_imgs %>% 
+  image_composite(
+    image_read(latex_url),
+    offset = "+100+80"
+  )
+```
+
+Finally, we just patch the table images together into an animation using `image_animate()` and we have our animated table!
+
+### Final Product
+
+```{r, eval = FALSE}
+table_imgs_animated <- table_imgs_annotated %>% 
+  image_animate(optimize = TRUE)
+
+table_imgs_animated
+```
+
+```{r, echo = FALSE, layout='l-body-outset'}
+knitr::include_graphics("img/table_imgs_animated.gif", error = FALSE)
+```
+
+You can also see the differences in the degree of "interpolation" by directly comparing the tables at 10 thousand vs 100 thousand samples (first vs. last frames):
+
+```{r, fig.show='hold', out.width='49%'}
+knitr::include_graphics(c("img/tbl1.png", "img/tbl10.png"), error = FALSE)
+```
+
+Neat!
