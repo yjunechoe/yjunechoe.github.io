@@ -12,7 +12,19 @@
       <link>https://yjunechoe.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Sun, 13 Dec 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 Jan 2021 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Random Sampling: A table animation</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>https://yjunechoe.github.io/posts/2021-01-17-random-sampling-a-table-animation</link>
+      <description>&lt;p&gt;Plus a convenient way of rendering LaTex expressions as images&lt;/p&gt;
+</description>
+      <category>data visualization</category>
+      <category>data wrangling</category>
+      <guid>https://yjunechoe.github.io/posts/2021-01-17-random-sampling-a-table-animation</guid>
+      <pubDate>Sun, 17 Jan 2021 00:00:00 +0000</pubDate>
+      <media:content url="https://yjunechoe.github.io/posts/2021-01-17-random-sampling-a-table-animation/table_preview.png" medium="image" type="image/png" width="1185" height="1180"/>
+    </item>
     <item>
       <title>Collapse repetitive piping with reduce()</title>
       <dc:creator>June Choe</dc:creator>
@@ -284,18 +296,6 @@
       <guid>https://yjunechoe.github.io/posts/2020-06-07-correlation-parameter-mem</guid>
       <pubDate>Sun, 07 Jun 2020 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2020-06-07-correlation-parameter-mem/preview.png" medium="image" type="image/png" width="1248" height="768"/>
-    </item>
-    <item>
-      <title>Random Sampling: A table animation</title>
-      <dc:creator>June Choe</dc:creator>
-      <link>https://yjunechoe.github.io/posts/2021-01-17-random-sampling-a-table-animation</link>
-      <description>&lt;p&gt;Plus a convenient way of rendering LaTex expressions as images&lt;/p&gt;
-</description>
-      <category>data visualization</category>
-      <category>data wrangling</category>
-      <guid>https://yjunechoe.github.io/posts/2021-01-17-random-sampling-a-table-animation</guid>
-      <pubDate>Thu, 16 Jan 2020 00:00:00 +0000</pubDate>
-      <media:content url="https://yjunechoe.github.io/posts/2021-01-17-random-sampling-a-table-animation/table_preview.png" medium="image" type="image/png" width="1185" height="1180"/>
     </item>
   </channel>
 </rss>

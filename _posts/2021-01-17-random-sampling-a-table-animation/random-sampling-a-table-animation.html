@@ -91,8 +91,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--  https://schema.org/Article -->
-  <meta property="article:published" itemprop="datePublished" content="2020-01-17"/>
-  <meta property="article:created" itemprop="dateCreated" content="2020-01-17"/>
+  <meta property="article:published" itemprop="datePublished" content="2021-01-17"/>
+  <meta property="article:created" itemprop="dateCreated" content="2021-01-17"/>
   <meta name="article:author" content="June Choe"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
@@ -116,7 +116,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","date","output","editor_options","preview"]}},"value":[{"type":"character","attributes":{},"value":["Random Sampling: A table animation"]},{"type":"character","attributes":{},"value":["Plus a convenient way of rendering LaTex expressions as images\n"]},{"type":"character","attributes":{},"value":["data visualization","data wrangling"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]},{"type":"character","attributes":{},"value":["0000-0002-0701-921X"]}]}]},{"type":"character","attributes":{},"value":["01-17-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["chunk_output_type"]}},"value":[{"type":"character","attributes":{},"value":["console"]}]},{"type":"character","attributes":{},"value":["table_preview.png"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","date","output","editor_options","preview"]}},"value":[{"type":"character","attributes":{},"value":["Random Sampling: A table animation"]},{"type":"character","attributes":{},"value":["Plus a convenient way of rendering LaTex expressions as images\n"]},{"type":"character","attributes":{},"value":["data visualization","data wrangling"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]},{"type":"character","attributes":{},"value":["0000-0002-0701-921X"]}]}]},{"type":"character","attributes":{},"value":["01-17-2021"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["chunk_output_type"]}},"value":[{"type":"character","attributes":{},"value":["console"]}]},{"type":"character","attributes":{},"value":["table_preview.png"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -1428,7 +1428,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Random Sampling: A table animation","description":"Plus a convenient way of rendering LaTex expressions as images","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/","orcidID":"0000-0002-0701-921X"}],"publishedDate":"2020-01-17T00:00:00.000+09:00","citationText":"Choe, 2020"}
+{"title":"Random Sampling: A table animation","description":"Plus a convenient way of rendering LaTex expressions as images","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/","orcidID":"0000-0002-0701-921X"}],"publishedDate":"2021-01-17T00:00:00.000+09:00","citationText":"Choe, 2021"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -1451,7 +1451,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="d-byline">
   June Choe  (University of Pennsylvania Linguistics)<a href="https://live-sas-www-ling.pantheon.sas.upenn.edu/" class="uri">https://live-sas-www-ling.pantheon.sas.upenn.edu/</a>
   
-<br/>01-17-2020
+<br/>01-17-2021
 </div>
 
 <div class="d-article">
@@ -4767,7 +4767,7 @@ NA
 <p><img src="img/samples_data_table_annotated.png" width="496" style="display: block; margin: auto;" /></p>
 </div>
 <h2 id="animated">Animated</h2>
-<p>For an animated version, we add a step where we split the data at every 10,000 additional samples before binning the observations into cells. We then draw a table at each point of the accumulation using {kableExtra} (but with some nicer-looking settings) with the help of <code>map()</code> and <code>reduce()</code>.</p>
+<p>For an animated version, we add a step where we split the data at every 10,000 additional samples before binning the observations into cells. We then draw a table at each point of the accumulation using {kableExtra} with the help of <code>map()</code> and <code>reduce()</code> (plus some more kable styling).</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre><code><span class='va'>samples_tables</span> <span class='op'>&lt;-</span> <span class='fu'>purrr</span><span class='fu'>::</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span><span class='op'>(</span><span class='fl'>1L</span><span class='op'>:</span><span class='fl'>10L</span>, <span class='op'>~</span><span class='op'>{</span>
@@ -4849,8 +4849,6 @@ NA
 <div class="sourceCode">
 <pre><code><span class='va'>table_imgs_animated</span> <span class='op'>&lt;-</span> <span class='va'>table_imgs_annotated</span> <span class='op'>%&gt;%</span> 
   <span class='fu'><a href='https://docs.ropensci.org/magick/reference/animation.html'>image_animate</a></span><span class='op'>(</span>optimize <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-
-<span class='va'>table_imgs_animated</span>
 </code></pre>
 </div>
 </div>
@@ -4860,10 +4858,6 @@ NA
 </div>
 <p>You can also see the difference in the degree of “interpolation” by directly comparing the table at 10 thousand vs 100 thousand samples (the first and last frames):</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre><code><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/include_graphics.html'>include_graphics</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"img/tbl1.png"</span>, <span class='st'>"img/tbl10.png"</span><span class='op'>)</span>, error <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</code></pre>
-</div>
 <p><img src="img/tbl1.png" width="49%" /><img src="img/tbl10.png" width="49%" /></p>
 </div>
 <p>Neat!</p>

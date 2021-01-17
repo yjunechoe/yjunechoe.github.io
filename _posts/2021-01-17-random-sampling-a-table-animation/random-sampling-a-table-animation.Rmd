@@ -11,7 +11,7 @@ author:
     affiliation: University of Pennsylvania Linguistics
     affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
     orcid_id: 0000-0002-0701-921X
-date: 01-17-2020
+date: 01-17-2021
 output:
   distill::distill_article:
     toc: true
@@ -164,7 +164,7 @@ knitr::include_graphics("img/samples_data_table_annotated.png", error = FALSE)
 
 ## Animated
 
-For an animated version, we add a step where we split the data at every 10,000 additional samples before binning the observations into cells. We then draw a table at each point of the accumulation using {kableExtra} (but with some nicer-looking settings) with the help of `map()` and `reduce()`.
+For an animated version, we add a step where we split the data at every 10,000 additional samples before binning the observations into cells. We then draw a table at each point of the accumulation using {kableExtra} with the help of `map()` and `reduce()` (plus some more kable styling).
 
 ```{r, eval = FALSE}
 samples_tables <- purrr::map(1L:10L, ~{
@@ -243,8 +243,6 @@ Finally, we just patch the table images together into an animation using `image_
 ```{r, eval = FALSE}
 table_imgs_animated <- table_imgs_annotated %>% 
   image_animate(optimize = TRUE)
-
-table_imgs_animated
 ```
 
 ### Final Product
@@ -255,7 +253,7 @@ knitr::include_graphics("img/table_imgs_animated.gif", error = FALSE)
 
 You can also see the difference in the degree of "interpolation" by directly comparing the table at 10 thousand vs 100 thousand samples (the first and last frames):
 
-```{r, fig.show='hold', out.width='49%'}
+```{r, echo=F, fig.show='hold', out.width='49%'}
 knitr::include_graphics(c("img/tbl1.png", "img/tbl10.png"), error = FALSE)
 ```
 
