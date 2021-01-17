@@ -1470,6 +1470,16 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </ul>
 </nav>
 </div>
+<div class="layout-chunk" data-layout="l-body">
+<style type="text/css">
+d-article table th {
+  font-size: 12px;
+}
+d-article table td {
+  font-size: 12px;
+}
+</style>
+</div>
 <p>In my <a href="https://yjunechoe.github.io/posts/2020-12-13-collapse-repetitive-piping-with-reduce/">last blogpost</a>, I demonstrated a couple use cases for the higher-order functionals <code>reduce()</code> and <code>accumulate()</code> from the {purrr} package. In one example, I made an animated {kableExtra} table by <code>accumulate()</code>-ing over multiple calls to <code>column_spec()</code> that set a background color for a column.</p>
 <p>Animated tables are virtually non-existent in the wild, and probably for a good reason. but I wanted to extend upon my previous table animation and create something that’s maybe a bit more on the “informative” side.</p>
 <p>To that end, here’s an animate table that simulates sampling from a bivariate normal distribution.</p>
@@ -4719,9 +4729,9 @@ NA
   N(\begin{bmatrix} 0 \\ 0 \end{bmatrix},
   \begin{bmatrix}1 &amp; 0.7 \\ 0.7 &amp; 1 \end{bmatrix})</code></pre>
 </div>
-<p>Many different solutions already exist to LaTex math annotations. The most common is probably Non-Standard Evaluation (NSE) methods using <code>parse()</code>, <code>expression()</code>, <code>bquote()</code> etc. There are bulkier solutions like the {latex2exp} package that plots <strong>plotmath</strong> expressions<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+<p>Many different solutions already exist to LaTex math annotations. The most common is probably Non-Standard Evaluation (NSE) methods using <code>parse()</code>, <code>expression()</code>, <code>bquote()</code> etc. There are bulkier solutions like the {latex2exp} package that plots <strong>plotmath</strong> expressions, though it hasn’t been updated since 2015 and I personally had difficulty getting it to work.</p>
 <p>One solution I’ve never heard of/considered before is querying a web LaTex editor that has an API. The <a href="https://www.codecogs.com/latex/eqneditor.php?lang=en-en">Online LaTex Equation Editor</a> by CodeCogs is the perfect example of this. A simple link that contains the LaTex code in a URL-compatible encoding renders the resulting expression as an image!</p>
-<p>I wrote a function <code>latex_query</code> (not thoroughly tested) in my <a href="https://github.com/yjunechoe/junebug">personal package</a> that takes LaTex code and generates a CodeCogs URL containing the rendered expression<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>I wrote a function <code>latex_query</code> (not thoroughly tested) in my <a href="https://github.com/yjunechoe/junebug">personal package</a> that takes LaTex code and generates a CodeCogs URL containing the rendered expression<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre><code><span class='co'># NOTE the string literal syntax using r"(...)" is only available in R 4.0.0 and up</span>
@@ -4835,7 +4845,6 @@ NA
 </div>
 </div>
 <p>Finally, we just patch the table images together into an animation using <code>image_animate()</code> and we have our animated table!</p>
-<h3 id="final-product">Final Product</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre><code><span class='va'>table_imgs_animated</span> <span class='op'>&lt;-</span> <span class='va'>table_imgs_annotated</span> <span class='op'>%&gt;%</span> 
@@ -4845,10 +4854,11 @@ NA
 </code></pre>
 </div>
 </div>
+<h3 id="final-product">Final Product</h3>
 <div class="layout-chunk" data-layout="l-body-outset">
 <p><img src="img/table_imgs_animated.gif" /><!-- --></p>
 </div>
-<p>You can also see the differences in the degree of “interpolation” by directly comparing the tables at 10 thousand vs 100 thousand samples (first vs. last frames):</p>
+<p>You can also see the difference in the degree of “interpolation” by directly comparing the table at 10 thousand vs 100 thousand samples (the first and last frames):</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre><code><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/include_graphics.html'>include_graphics</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"img/tbl1.png"</span>, <span class='st'>"img/tbl10.png"</span><span class='op'>)</span>, error <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
@@ -4862,8 +4872,7 @@ NA
 <hr />
 <ol>
 <li id="fn1" role="doc-endnote"><p>Visually speaking. It’s still a dataframe object for compatibility with {kableExtra}<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>Though it hasn’t been updated since 2015 and it seems like there are quite a few unresolved StackOverflow issue<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p>Details about the API - <a href="https://www.codecogs.com/latex/editor-api.php">https://www.codecogs.com/latex/editor-api.php</a><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>Details about the API - <a href="https://www.codecogs.com/latex/editor-api.php">https://www.codecogs.com/latex/editor-api.php</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 <!--radix_placeholder_article_footer-->

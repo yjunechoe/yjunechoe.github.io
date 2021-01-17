@@ -31,6 +31,16 @@ knitr::opts_chunk$set(
 )
 ```
 
+```{css, echo = FALSE}
+d-article table th {
+  font-size: 12px;
+}
+d-article table td {
+  font-size: 12px;
+}
+```
+
+
 In my [last blogpost](https://yjunechoe.github.io/posts/2020-12-13-collapse-repetitive-piping-with-reduce/), I demonstrated a couple use cases for the higher-order functionals `reduce()` and `accumulate()` from the {purrr} package. In one example, I made an animated {kableExtra} table by `accumulate()`-ing over multiple calls to `column_spec()` that set a background color for a column.
 
 Animated tables are virtually non-existent in the wild, and probably for a good reason. but I wanted to extend upon my previous table animation and create something that's maybe a bit more on the "informative" side.
@@ -114,7 +124,7 @@ N(\begin{bmatrix} 0 \\ 0 \end{bmatrix},
 )")
 ```
 
-Many different solutions already exist to LaTex math annotations. The most common is probably Non-Standard Evaluation (NSE) methods using `parse()`, `expression()`, `bquote()` etc. There are bulkier solutions like the {latex2exp} package that plots **plotmath** expressions^[Though it hasn't been updated since 2015 and it seems like there are quite a few unresolved StackOverflow issue].
+Many different solutions already exist to LaTex math annotations. The most common is probably Non-Standard Evaluation (NSE) methods using `parse()`, `expression()`, `bquote()` etc. There are bulkier solutions like the {latex2exp} package that plots **plotmath** expressions, though it hasn't been updated since 2015 and I personally had difficulty getting it to work.
 
 One solution I've never heard of/considered before is querying a web LaTex editor that has an API. The [Online LaTex Equation Editor](https://www.codecogs.com/latex/eqneditor.php?lang=en-en) by CodeCogs is the perfect example of this. A simple link that contains the LaTex code in a URL-compatible encoding renders the resulting expression as an image!
 
@@ -230,8 +240,6 @@ table_imgs_annotated <- table_imgs %>%
 
 Finally, we just patch the table images together into an animation using `image_animate()` and we have our animated table!
 
-### Final Product
-
 ```{r, eval = FALSE}
 table_imgs_animated <- table_imgs_annotated %>% 
   image_animate(optimize = TRUE)
@@ -239,11 +247,13 @@ table_imgs_animated <- table_imgs_annotated %>%
 table_imgs_animated
 ```
 
+### Final Product
+
 ```{r, echo = FALSE, layout='l-body-outset'}
 knitr::include_graphics("img/table_imgs_animated.gif", error = FALSE)
 ```
 
-You can also see the differences in the degree of "interpolation" by directly comparing the tables at 10 thousand vs 100 thousand samples (first vs. last frames):
+You can also see the difference in the degree of "interpolation" by directly comparing the table at 10 thousand vs 100 thousand samples (the first and last frames):
 
 ```{r, fig.show='hold', out.width='49%'}
 knitr::include_graphics(c("img/tbl1.png", "img/tbl10.png"), error = FALSE)
