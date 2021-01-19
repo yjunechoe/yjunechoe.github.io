@@ -68,6 +68,8 @@ When we pipe (or pass anything through any function, for that matter), we often 
 So, we rarely have a chain of functions that look like this:
 
 ```{r, eval = FALSE}
+library(dplyr)
+
 mtcars %>% 
   mutate(kmpg = mpg/1.6) %>% 
   mutate(disp = round(disp)) %>% 
@@ -96,6 +98,8 @@ But some functions do not handle multiple inputs the way we want it to, or just 
 In **{ggplot2}**, this doesn't plot 3 overlapping points with sizes 8, 4, and 2:
 
 ```{r, error = TRUE, fig.show='hide'}
+library(ggplot2)
+
 ggplot(mtcars, aes(hp, mpg)) + 
   geom_point(size = c(8, 4, 2), alpha = .5)
 ```
@@ -204,6 +208,7 @@ Say you wanted to add up the numbers 1 through 5, but only using the plus operat
 Which is the same as this:
 
 ```{r}
+library(purrr)
 reduce(1:5, `+`)
 ```
 
@@ -670,7 +675,7 @@ mtcars %>%
   )
 ```
 
-Here's another example just for fun - an "addition matrix":
+Here's another example just for fun - an "addition matrix":^[Note the use of `as.character()` to make sure that the left-hand side of the walrus `:=` is converted from numeric to character. Alternatively, using the new [glue syntax support](https://www.tidyverse.org/blog/2020/02/glue-strings-and-tidy-eval/) from dplyr > 1.0.0, we can simplify `!!as.character(.y) :=` to `"{.y}" :=`]
 
 ```{r}
 mtcars %>% 
@@ -814,7 +819,7 @@ mtcars %>%
 
 ```{r}
 janitor_funs <- list(clean_names, tabyl, adorn_rounding, adorn_totals)
-janitor_args <- list(list(case = "title"), list(2), list(digits = 2), list())
+janitor_args <- list(list(case = "title"), list(2), list(digits = 2), NULL)
 
 reduce2(
   janitor_funs,
