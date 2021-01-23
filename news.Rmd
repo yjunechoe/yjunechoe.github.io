@@ -35,6 +35,13 @@ li::marker {
 ```
 
 
+## 2021
+
+### January
+
+- I joined [Dr. Nayoun Kim](https://nayounkimlinguist.com/) for a [workshop on experimental syntax](https://skb.skku.edu/bk21english/board/notice.do?mode=view&articleNo=110726&article.offset=0&articleLimit=10) held at Sungkyunkwan University (Korea). I helped design [materials](https://github.com/yjunechoe/IBEX-Workshop-Materials) for a session on scripting online experiments with IBEX, including [interactive slides](https://ibex-workshop-slides.netlify.app/) made with R!
+
+
 ## 2020
 
 ### November

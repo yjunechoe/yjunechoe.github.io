@@ -89,7 +89,7 @@ p {
     <strong style="font-family: Roboto Slab; font-size: 1.2em">
       <i class="fa fa-flask" aria-hidden="true" style="padding-right:12.5px"></i> Methods: 
     </strong>
-    Eye-tracking, self-paced reading, corpus/text analysis
+    Eye-tracking, self-paced reading, comprehension tasks, corpus analysis
   </p>
   <p style="margin-bottom:1.5em">
     <strong style="font-family:Roboto Slab; font-size:1.2em">

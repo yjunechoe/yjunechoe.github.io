@@ -13,6 +13,11 @@ p {
 }
 ```
 
+## Linguistics
+
+- Scripting online experiments with IBEX (workshop [slides](https://ibex-workshop-slides.netlify.app/) & [materials](https://github.com/yjunechoe/IBEX-Workshop-Materials))
+
+
 ## Data Visualization
 
 - {ggplot2} style guide and showcase - [pdf of most recent ver.](static/slides/ggplot2_flipbook_CHOE.pdf)
