@@ -20,11 +20,7 @@ p {
 
 ## Data Visualization
 
-- {ggplot2} style guide and showcase - [pdf of most recent ver.](static/slides/ggplot2_flipbook_CHOE.pdf)
-
-    - Penn Phonetics Lab [[slides](https://yjunechoe.netlify.app/flipbooks/p_lab_ggplot2_2020/p_lab_ggplot2.html), [code](https://raw.githubusercontent.com/yjunechoe/sandbox/master/flipbooks/P_lab_ggplot2_2020/P_lab_ggplot2.Rmd)] (10/23/20)
-
-    - Trueswell, Swingley, and Gleitman Lab [[slides](https://yjunechoe.netlify.app/flipbooks/tsg_lab_ggplot2_2020/tsg_lab_ggplot2.html), [code](https://raw.githubusercontent.com/yjunechoe/sandbox/master/flipbooks/tsg_lab_ggplot2_2020/tsg_lab_ggplot2.Rmd)] (11/25/20)
+- {ggplot2} style guide and showcase - [most recent version (2/10/2021)](https://yjunechoe.netlify.app/flipbooks/ggplot2_master/feb_2020_ggplot2.html)
 
 ## R Programming
 
@@ -34,7 +30,7 @@ p {
 
 ## Tutorial Blog Posts
 
-- {purrr} apply() family [[post](https://yjunechoe.github.io/posts/2020-12-13-collapse-repetitive-piping-with-reduce/)]
+- {purrr} reduce() family [[post1](https://yjunechoe.github.io/posts/2020-12-13-collapse-repetitive-piping-with-reduce/), [post2](https://yjunechoe.github.io/posts/2021-01-17-random-sampling-a-table-animation/)]
 
 - {ggplot2} stat_*() functions [[post](https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/)]
 
@@ -50,6 +46,8 @@ p {
 **Tutorials**:
 
 - [A ggplot2 Tutorial for Beautiful Plotting in R](https://cedricscherer.netlify.app/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/) _by Cédric Scherer_
+
+- [ggplot2 Wizardry Hands-On](https://z3tt.github.io/OutlierConf2021/) - _by Cédric Scherer_
 
 - [ggplot2 workshop](https://www.youtube.com/watch?v=h29g21z0a68) _by Thomas Lin Pedersen_
 

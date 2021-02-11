@@ -563,7 +563,6 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
             var results = fuse.search(query, searchOptions);
             callback(results
               .map(function(result) { return result.item; })
-              .filter(function(item) { return !!item.description; })
             );
           },
           templates: {
@@ -575,7 +574,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
                 <div class="search-item">
                   <h3>${suggestion.title}</h3>
                   <div class="search-item-description">
-                    ${suggestion.description}
+                    ${suggestion.description || ''}
                   </div>
                   <div class="search-item-preview">
                     ${img}
@@ -680,6 +679,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   }
 
   .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
+    font-size: 1rem;
     margin-block-start: 0;
     margin-block-end: 5px;
   }
@@ -907,6 +907,11 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
     text-decoration: underline;
   }
 
+  d-article details {
+    grid-column: text;
+    margin-bottom: 0.8em;
+  }
+
   @media(min-width: 768px) {
 
   d-article pre,
@@ -1061,6 +1066,17 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 
   div.hanging-indent{
     margin-left: 1em; text-indent: -1em;
+  }
+
+  /* Citation hover box */
+
+  .tippy-box[data-theme~=light-border] {
+    background-color: rgba(250, 250, 250, 0.95);
+  }
+
+  .tippy-content > p {
+    margin-bottom: 0;
+    padding: 2px;
   }
 
 
@@ -1728,7 +1744,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
       var layout = $(this).attr('data-layout');
 
       // apply layout to markdown level block elements
-      var elements = $(this).children().not('div.sourceCode, pre, script');
+      var elements = $(this).children().not('details, div.sourceCode, pre, script');
       elements.each(function(i, el) {
         var layout_div = $('<div class="' + layout + '"></div>');
         if (layout_div.hasClass('shaded')) {
@@ -1843,6 +1859,20 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
       // move appendix-bottom entries to the bottom
       $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
       $('.appendix-bottom').remove();
+
+      // hoverable references
+      $('span.citation[data-cites]').each(function() {
+        var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
+        window.tippy(this, {
+          allowHTML: true,
+          content: refHtml,
+          maxWidth: 500,
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        });
+      });
 
       // clear polling timer
       clearInterval(tid);
@@ -2003,7 +2033,11 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.5/header-attrs.js"></script>
+  <script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
+  <script src="site_libs/popper-2.6.0/popper.min.js"></script>
+  <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
   <script src="site_libs/anchor-4.2.2/anchor.min.js"></script>
   <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
   <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
@@ -2472,6 +2506,9 @@ Misc.
 </nav>
 </div>
 <div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb1"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>p {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span>: <span class="st">&#39;Roboto&#39;</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <style type="text/css">
 p {
   font-family: 'Roboto';
@@ -2484,11 +2521,7 @@ p {
 </ul>
 <h2 id="data-visualization">Data Visualization</h2>
 <ul>
-<li><p>{ggplot2} style guide and showcase - <a href="static/slides/ggplot2_flipbook_CHOE.pdf">pdf of most recent ver.</a></p>
-<ul>
-<li><p>Penn Phonetics Lab [<a href="https://yjunechoe.netlify.app/flipbooks/p_lab_ggplot2_2020/p_lab_ggplot2.html">slides</a>, <a href="https://raw.githubusercontent.com/yjunechoe/sandbox/master/flipbooks/P_lab_ggplot2_2020/P_lab_ggplot2.Rmd">code</a>] (10/23/20)</p></li>
-<li><p>Trueswell, Swingley, and Gleitman Lab [<a href="https://yjunechoe.netlify.app/flipbooks/tsg_lab_ggplot2_2020/tsg_lab_ggplot2.html">slides</a>, <a href="https://raw.githubusercontent.com/yjunechoe/sandbox/master/flipbooks/tsg_lab_ggplot2_2020/tsg_lab_ggplot2.Rmd">code</a>] (11/25/20)</p></li>
-</ul></li>
+<li>{ggplot2} style guide and showcase - <a href="https://yjunechoe.netlify.app/flipbooks/ggplot2_master/feb_2020_ggplot2.html">most recent version (2/10/2021)</a></li>
 </ul>
 <h2 id="r-programming">R Programming</h2>
 <ul>
@@ -2499,7 +2532,7 @@ p {
 </ul>
 <h2 id="tutorial-blog-posts">Tutorial Blog Posts</h2>
 <ul>
-<li><p>{purrr} apply() family [<a href="https://yjunechoe.github.io/posts/2020-12-13-collapse-repetitive-piping-with-reduce/">post</a>]</p></li>
+<li><p>{purrr} reduce() family [<a href="https://yjunechoe.github.io/posts/2020-12-13-collapse-repetitive-piping-with-reduce/">post1</a>, <a href="https://yjunechoe.github.io/posts/2021-01-17-random-sampling-a-table-animation/">post2</a>]</p></li>
 <li><p>{ggplot2} stat_*() functions [<a href="https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/">post</a>]</p></li>
 <li><p>The correlation parameter in {lme4} mixed effects models [<a href="https://yjunechoe.github.io/posts/2020-06-07-correlation-parameter-mem/">post</a>]</p></li>
 <li><p>Shortcuts for common chain of {dplyr} functions [<a href="https://yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/">post</a>]</p></li>
@@ -2509,6 +2542,7 @@ p {
 <p><strong>Tutorials</strong>:</p>
 <ul>
 <li><p><a href="https://cedricscherer.netlify.app/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/">A ggplot2 Tutorial for Beautiful Plotting in R</a> <em>by Cédric Scherer</em></p></li>
+<li><p><a href="https://z3tt.github.io/OutlierConf2021/">ggplot2 Wizardry Hands-On</a> - <em>by Cédric Scherer</em></p></li>
 <li><p><a href="https://www.youtube.com/watch?v=h29g21z0a68">ggplot2 workshop</a> <em>by Thomas Lin Pedersen</em></p></li>
 </ul>
 <p><strong>Books</strong>:</p>
@@ -2520,7 +2554,7 @@ p {
 <li><p><a href="https://csgillespie.github.io/efficientR/">Efficient R Programming</a> <em>by Colin Gillespie and Robin Lovelace</em></p></li>
 <li><p><a href="https://adv-r.hadley.nz/">Advanced R</a> <em>by Hadley Wickham</em></p></li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
