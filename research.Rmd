@@ -2,17 +2,6 @@
 title: "Research"
 ---
 
-```{css}
-d-article ul {
-  font-family: Roboto;
-}
-
-d-article ul li p {
-    font-family: Roboto;
-}
-```
-
-
 ## Publications
 
 ### Under Review

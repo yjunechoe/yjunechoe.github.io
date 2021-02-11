@@ -375,23 +375,17 @@
     },
     "distill": {
       "Package": "distill",
-      "Version": "1.1.2",
-      "Source": "GitHub",
-      "Remotes": "rstudio/rmarkdown",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "distill",
-      "RemoteUsername": "rstudio",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "f2a8a9ed4f658f7065f1df7290a4ac868428bd1c",
-      "Hash": "33bdb75b03fe1969d210c88cf8fe0e80"
+      "Version": "1.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "0e3a1bd101abd10ce59d4f71057bf84a"
     },
     "downlit": {
       "Package": "downlit",
-      "Version": "0.2.1",
+      "Version": "0.2.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "f24f1e44320a978c03050b8403a83793"
+      "Hash": "0f42132bc675888f9ee5d2fa7ff07d64"
     },
     "dplyr": {
       "Package": "dplyr",

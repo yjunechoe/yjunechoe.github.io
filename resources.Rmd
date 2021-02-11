@@ -7,12 +7,6 @@ output:
     toc: true
 ---
 
-```{css}
-p {
-  font-family: 'Roboto';
-}
-```
-
 ## Linguistics
 
 - Scripting online experiments with IBEX (workshop [slides](https://ibex-workshop-slides.netlify.app/) & [materials](https://github.com/yjunechoe/IBEX-Workshop-Materials))

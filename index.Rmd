@@ -4,7 +4,7 @@ description: "Ph.D. Student in Linguistics"
 site: distill::distill_website
 ---
 
-```{css}
+<style>
 d-article {
   padding-top: 5px;
   border-top: 0px;
@@ -61,7 +61,7 @@ p {
     width: 50%;
   }
 }
-```
+</style>
 
 <div style="border-bottom:3px solid black; margin-bottom:20px">
 
