@@ -315,6 +315,11 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     text-decoration: underline;
   }
 
+  d-article details {
+    grid-column: text;
+    margin-bottom: 0.8em;
+  }
+
   @media(min-width: 768px) {
 
   d-article pre,
@@ -469,6 +474,17 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
   div.hanging-indent{
     margin-left: 1em; text-indent: -1em;
+  }
+
+  /* Citation hover box */
+
+  .tippy-box[data-theme~=light-border] {
+    background-color: rgba(250, 250, 250, 0.95);
+  }
+
+  .tippy-content > p {
+    margin-bottom: 0;
+    padding: 2px;
   }
 
 
@@ -1136,7 +1152,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
       var layout = $(this).attr('data-layout');
 
       // apply layout to markdown level block elements
-      var elements = $(this).children().not('div.sourceCode, pre, script');
+      var elements = $(this).children().not('details, div.sourceCode, pre, script');
       elements.each(function(i, el) {
         var layout_div = $('<div class="' + layout + '"></div>');
         if (layout_div.hasClass('shaded')) {
@@ -1251,6 +1267,20 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
       // move appendix-bottom entries to the bottom
       $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
       $('.appendix-bottom').remove();
+
+      // hoverable references
+      $('span.citation[data-cites]').each(function() {
+        var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
+        window.tippy(this, {
+          allowHTML: true,
+          content: refHtml,
+          maxWidth: 500,
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        });
+      });
 
       // clear polling timer
       clearInterval(tid);
@@ -1411,7 +1441,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="plot-makeover-2_files/header-attrs-2.5/header-attrs.js"></script>
+  <script src="plot-makeover-2_files/header-attrs-2.6/header-attrs.js"></script>
   <script src="plot-makeover-2_files/clipboard-2.0.6/clipboard.min.js"></script>
   <link href="plot-makeover-2_files/xaringanExtra-clipboard-0.2.3/xaringanExtra-clipboard.css" rel="stylesheet" />
   <script src="plot-makeover-2_files/xaringanExtra-clipboard-0.2.3/xaringanExtra-clipboard.js"></script>
@@ -1419,6 +1449,10 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <link href="plot-makeover-2_files/panelset-0.2.3/panelset.css" rel="stylesheet" />
   <script src="plot-makeover-2_files/panelset-0.2.3/panelset.js"></script>
   <script src="plot-makeover-2_files/jquery-1.11.3/jquery.min.js"></script>
+  <script src="plot-makeover-2_files/popper-2.6.0/popper.min.js"></script>
+  <link href="plot-makeover-2_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="plot-makeover-2_files/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="plot-makeover-2_files/tippy-6.2.7/tippy.umd.min.js"></script>
   <script src="plot-makeover-2_files/anchor-4.2.2/anchor.min.js"></script>
   <script src="plot-makeover-2_files/bowser-1.9.3/bowser.min.js"></script>
   <script src="plot-makeover-2_files/webcomponents-2.0.0/webcomponents.js"></script>
@@ -1477,11 +1511,25 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </nav>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>knitr</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/knitr/man/opts_chunk.html'>opts_chunk</a></span><span class='op'>$</span><span class='fu'>set</span><span class='op'>(</span>
+  comment <span class='op'>=</span> <span class='st'>" "</span>,
+  echo <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  message <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  warning <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  R.options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>width <span class='op'>=</span> <span class='fl'>80</span><span class='op'>)</span>
+<span class='op'>)</span>
+<span class='fu'>xaringanExtra</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/xaringanExtra/man/clipboard.html'>use_clipboard</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>xaringanExtra</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/xaringanExtra/man/panelset.html'>use_panelset</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
 </div>
 <p><em>This is the second installment of <strong>plot makeover</strong> where I take a plot in the wild and make very opinionated modifications to it.</em></p>
 <h2 id="before">Before</h2>
-<p>Our plot-in-the-wild comes from <span class="citation" data-cites="Yurovsky2008MutualEI">(Yurovsky and Yu <a href="#ref-Yurovsky2008MutualEI" role="doc-biblioref">2008</a>)</span>, a paper on statistical word learning. The plot that I’ll be looking at here is <span class="sc">Figure 2</span>, a bar plot of accuracy in a 3-by-3 experimental design.</p>
+<p>Our plot-in-the-wild comes from <span class="citation" data-cites="Yurovsky2008MutualEI">(<a href="#ref-Yurovsky2008MutualEI" role="doc-biblioref">Yurovsky and Yu 2008</a>)</span>, a paper on statistical word learning. The plot that I’ll be looking at here is <span class="sc">Figure 2</span>, a bar plot of accuracy in a 3-by-3 experimental design.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-1"></span>
 <img src="plot.png" alt="Plot from Yurovsky and Yu (2008)" width="608" />
@@ -1521,7 +1569,7 @@ Figure 1: Plot from Yurovsky and Yu (2008)
 <p><span class="panel-name">Code</span></p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre><code><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/wch/extrafont'>extrafont</a></span><span class='op'>)</span>
 
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>tribble</span><span class='op'>(</span>
@@ -1617,7 +1665,7 @@ Figure 1: Plot from Yurovsky and Yu (2008)
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre><code><span class='fu'>ggplot</span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>Condition</span>, y <span class='op'>=</span> <span class='va'>Accuracy</span>, fill <span class='op'>=</span> <span class='va'>color</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>ggplot</span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>Condition</span>, y <span class='op'>=</span> <span class='va'>Accuracy</span>, fill <span class='op'>=</span> <span class='va'>color</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>geom_col</span><span class='op'>(</span>
     data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>left</span><span class='op'>)</span>,
     width <span class='op'>=</span> <span class='fl'>.3</span>,
@@ -1695,9 +1743,9 @@ Figure 1: Plot from Yurovsky and Yu (2008)
 </div>
 </div>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
-<div id="refs" class="references hanging-indent" role="doc-bibliography">
-<div id="ref-Yurovsky2008MutualEI">
-<p>Yurovsky, Daniel, and C. Yu. 2008. <em>Mutual Exclusivity in Cross-Situational Statistical Learning</em>. <a href="https://dll.sitehost.iu.edu/papers/Yurovsky_cs08.pdf">https://dll.sitehost.iu.edu/papers/Yurovsky_cs08.pdf</a>.</p>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-Yurovsky2008MutualEI" class="csl-entry" role="doc-biblioentry">
+Yurovsky, Daniel, and C. Yu. 2008. <em>Mutual Exclusivity in Cross-Situational Statistical Learning</em>. <a href="https://dll.sitehost.iu.edu/papers/Yurovsky_cs08.pdf">https://dll.sitehost.iu.edu/papers/Yurovsky_cs08.pdf</a>.
 </div>
 </div>
 <section class="footnotes" role="doc-endnotes">
