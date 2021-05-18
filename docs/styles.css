@@ -292,6 +292,7 @@ span.st {
 }
 span.co {
   color: #999999;
+  font-weight: 500;
 }
 
 /* underline auto-linked functions */

@@ -9,7 +9,7 @@ output:
 
 ## Linguistics
 
-- Scripting online experiments with IBEX (workshop [slides](https://ibex-workshop-slides.netlify.app/) & [materials](https://github.com/yjunechoe/IBEX-Workshop-Materials))
+- Scripting online experiments with IBEX (workshop [slides](https://ibex-workshop-slides.netlify.app/) & [materials](https://github.com/yjunechoe/IBEX-Workshop-Materials) with Nayoun Kim)
 
 
 ## Data Visualization
@@ -21,6 +21,10 @@ output:
 - [Advanced R Book Club](https://github.com/r4ds/bookclub-Advanced_R) presentations
 
     - Chappter 6 - Functions [[video](https://youtu.be/lg5rzOU6lsg?t=113), [code](https://github.com/r4ds/bookclub-Advanced_R/tree/main/Presentations/Week06/Cohort4)] (11/9/20)
+    
+## Tools
+
+- [SnowGlobe](https://snowglobe.soc.northwestern.edu/): A tool for meta-analysis research. Developed with Jinnie Choi, Sean McWeeny, and Elizabeth Norton, with funding from the Northwestern University Library. Currently under development but basic features are functional. Validation experiments and guides at [OSF repo](https://osf.io/u25rn/).
 
 ## Tutorial Blog Posts
 
