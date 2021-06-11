@@ -22,7 +22,7 @@ editor_options:
 bibliography: biblio.bib
 ---
 
-```{r opts}
+```{r opts, echo = FALSE}
 knitr::opts_chunk$set(
   comment = " ",
   echo = TRUE,

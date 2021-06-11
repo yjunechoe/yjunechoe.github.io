@@ -22,7 +22,7 @@ editor_options:
 bibliography: biblio.bib
 ---
 
-```{r opts}
+```{r opts, echo = FALSE}
 knitr::opts_chunk$set(
   comment = " ",
   echo = TRUE,
@@ -136,7 +136,7 @@ I actually couldn't settle on one final product^[I ran the first plot by a frien
 
 ### Point-line plot
 
-_Edit 11/4/20: [Mark](https://www.ling.upenn.edu/~myl/) has rightly pointed out to me that the groups could additionally be mapped to shape for greater clarity, so I've incorporated that change._^[The plot used to look like this: <img src="prev.png">]
+_I got a suggestion that the groups could additionally be mapped to shape for greater clarity, so I've incorporated that change._^[The plot used to look like this: <img src="prev.png">]
 
 ```{r after_pointplot, echo=FALSE, layout = 'l-body-outset'}
 dodge <- position_dodge(width = .5)

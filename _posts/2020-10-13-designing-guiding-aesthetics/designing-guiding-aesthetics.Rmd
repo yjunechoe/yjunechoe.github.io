@@ -20,7 +20,7 @@ output:
     self_contained: false
 ---
 
-```{r opts}
+```{r opts, echo = FALSE}
 knitr::opts_chunk$set(
   comment = " ",
   echo = TRUE,

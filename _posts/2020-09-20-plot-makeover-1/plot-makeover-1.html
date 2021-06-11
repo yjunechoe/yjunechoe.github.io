@@ -23,6 +23,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -123,7 +124,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["biblio.bib","plot-makeover-1_files/anchor-4.2.2/anchor.min.js","plot-makeover-1_files/bowser-1.9.3/bowser.min.js","plot-makeover-1_files/distill-2.2.21/template.v2.js","plot-makeover-1_files/figure-html5/after_bar_plot-1.png","plot-makeover-1_files/figure-html5/after_pointplot-1.png","plot-makeover-1_files/figure-html5/unnamed-chunk-3-1.png","plot-makeover-1_files/figure-html5/unnamed-chunk-4-1.png","plot-makeover-1_files/figure-html5/unnamed-chunk-5-1.png","plot-makeover-1_files/figure-html5/unnamed-chunk-6-1.png","plot-makeover-1_files/figure-html5/unnamed-chunk-7-1.png","plot-makeover-1_files/header-attrs-2.3/header-attrs.js","plot-makeover-1_files/header-attrs-2.4/header-attrs.js","plot-makeover-1_files/header-attrs-2.5/header-attrs.js","plot-makeover-1_files/jquery-1.11.3/jquery.min.js","plot-makeover-1_files/webcomponents-2.0.0/webcomponents.js","plot.png","prev.png"]}
+  {"type":"character","attributes":{},"value":["biblio.bib","plot-makeover-1_files/anchor-4.2.2/anchor.min.js","plot-makeover-1_files/bowser-1.9.3/bowser.min.js","plot-makeover-1_files/distill-2.2.21/template.v2.js","plot-makeover-1_files/figure-html5/after_bar_plot-1.png","plot-makeover-1_files/figure-html5/after_pointplot-1.png","plot-makeover-1_files/figure-html5/unnamed-chunk-3-1.png","plot-makeover-1_files/figure-html5/unnamed-chunk-4-1.png","plot-makeover-1_files/figure-html5/unnamed-chunk-5-1.png","plot-makeover-1_files/figure-html5/unnamed-chunk-6-1.png","plot-makeover-1_files/figure-html5/unnamed-chunk-7-1.png","plot-makeover-1_files/header-attrs-2.3/header-attrs.js","plot-makeover-1_files/header-attrs-2.4/header-attrs.js","plot-makeover-1_files/header-attrs-2.5/header-attrs.js","plot-makeover-1_files/header-attrs-2.6/header-attrs.js","plot-makeover-1_files/jquery-1.11.3/jquery.min.js","plot-makeover-1_files/popper-2.6.0/popper.min.js","plot-makeover-1_files/tippy-6.2.7/tippy-bundle.umd.min.js","plot-makeover-1_files/tippy-6.2.7/tippy-light-border.css","plot-makeover-1_files/tippy-6.2.7/tippy.css","plot-makeover-1_files/tippy-6.2.7/tippy.umd.min.js","plot-makeover-1_files/webcomponents-2.0.0/webcomponents.js","plot.png","prev.png"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1441,7 +1442,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="plot-makeover-1_files/header-attrs-2.6/header-attrs.js"></script>
+  <script src="plot-makeover-1_files/header-attrs-2.8/header-attrs.js"></script>
   <script src="plot-makeover-1_files/jquery-1.11.3/jquery.min.js"></script>
   <script src="plot-makeover-1_files/popper-2.6.0/popper.min.js"></script>
   <link href="plot-makeover-1_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -1505,16 +1506,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </nav>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>knitr</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/knitr/man/opts_chunk.html'>opts_chunk</a></span><span class='op'>$</span><span class='fu'>set</span><span class='op'>(</span>
-  comment <span class='op'>=</span> <span class='st'>" "</span>,
-  echo <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  message <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  warning <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  R.options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>width <span class='op'>=</span> <span class='fl'>80</span><span class='op'>)</span>
-<span class='op'>)</span>
-</code></pre>
-</div>
+
 </div>
 <div class="layout-chunk" data-layout="l-body">
 
@@ -1617,7 +1609,7 @@ The original plot for comparison:
 <h2 id="after">After</h2>
 <p>I actually couldn’t settle on one final product<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> so here are two plots that incorporate the changes that I wanted to make. I think that both look nice and you may prefer one style over the other depending on what relationships/comparisons you want your graph to emphasize.</p>
 <h3 id="point-line-plot">Point-line plot</h3>
-<p><em>Edit 11/4/20: <a href="https://www.ling.upenn.edu/~myl/">Mark</a> has rightly pointed out to me that the groups could additionally be mapped to shape for greater clarity, so I’ve incorporated that change.</em><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p><em>I got a suggestion that the groups could additionally be mapped to shape for greater clarity, so I’ve incorporated that change.</em><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <div class="layout-chunk" data-layout="l-body-outset">
 <p><img src="plot-makeover-1_files/figure-html5/after_pointplot-1.png" width="624" /></p>
 </div>
