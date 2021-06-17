@@ -12,7 +12,19 @@
       <link>https://yjunechoe.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Sun, 17 Jan 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 11 Jun 2021 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Setting up and debugging custom fonts</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>https://yjunechoe.github.io/posts/2021-06-11-setting-up-and-debugging-custom-fonts</link>
+      <description>Plus a convenient way of rendering LaTeX expressions as images</description>
+      <category>data visualization</category>
+      <category>ggplot2</category>
+      <category>typography</category>
+      <guid>https://yjunechoe.github.io/posts/2021-06-11-setting-up-and-debugging-custom-fonts</guid>
+      <pubDate>Fri, 11 Jun 2021 00:00:00 +0000</pubDate>
+      <media:content url="https://yjunechoe.github.io/posts/2021-06-11-setting-up-and-debugging-custom-fonts/img/alegreya_word.png" medium="image" type="image/png" width="1169" height="555"/>
+    </item>
     <item>
       <title>Random Sampling: A table animation</title>
       <dc:creator>June Choe</dc:creator>
@@ -44,7 +56,7 @@
       <category>data visualization</category>
       <category>ggplot2</category>
       <guid>https://yjunechoe.github.io/posts/2020-11-08-plot-makeover-2</guid>
-      <pubDate>Sat, 07 Nov 2020 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 08 Nov 2020 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2020-11-08-plot-makeover-2/plot-makeover-2_files/figure-html5/final-1.png" medium="image" type="image/png" width="1344" height="1152"/>
     </item>
     <item>

@@ -1,0 +1,146 @@
+---
+title: "Setting up and debugging custom fonts"
+description: |
+  Plus a convenient way of rendering LaTeX expressions as images
+categories:
+  - data visualization
+  - ggplot2
+  - typography
+base_url: https://yjunechoe.github.io
+author:
+  - name: June Choe
+    affiliation: University of Pennsylvania Linguistics
+    affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+    orcid_id: 0000-0002-0701-921X
+date: 06-11-2021
+output:
+  distill::distill_article:
+    toc: true
+    self_contained: false
+editor_options: 
+  chunk_output_type: console
+draft: true
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+opts_chunk$set(
+  comment = " ",
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  R.options = list(width = 80)
+)
+```
+
+Getting custom fonts to work in R have historically been pretty difficult.^[In fact, text rendering as a whole is an incredibly complicated task. Check out [Text Rendering Hates You](https://gankra.github.io/blah/text-hates-you/#how-do-you-write-that-you-cant-write) for a fun and informative read.] Folks who have ventured into this area are probably familiar with packages like `{showtext}` and `{extrafont}` which were the more established solutions to importing fonts in the past, though there's always been a huge variation on people's mileage with these packages because the issue runs much deeper.
+
+At a high level, getting custom fonts to work involve the non-trivial task of unifying the **graphics device**, the **operating system**, and **text rendering** to seamlessly work with each other. Luckily for us in 2021, we have an amazing solution to this problem thanks to recent developments in the `{ragg}`, `{systemfonts}`, and `{textshaping}` packages by RStudio, each roughly corresponding to the three issues I just mentioned. For more details on the improvements to font support, you should check out these official blog posts:
+
+- [Updates to ragg and systemfonts](https://www.tidyverse.org/blog/2020/05/updates-to-ragg-and-systemfonts/)
+
+- [Modern Text Features in R](https://www.tidyverse.org/blog/2021/02/modern-text-features/)
+
+- [svglite 2.0.0](https://www.tidyverse.org/blog/2021/02/svglite-2-0-0/)
+
+This is great news because a lot of the work is being done for us under the hood!
+
+In this blog post I'll go over how to make use of these new features for practical data visualization.
+
+## Setting up `{ragg}`
+
+The first thing you should do, if you haven't already, is to install {[ragg](https://ragg.r-lib.org/)}, {[systemfonts](https://github.com/r-lib/systemfonts)}, and {[textshaping](https://github.com/r-lib/textshaping)}.
+
+```{r, eval = FALSE}
+install.packages('ragg')
+install.packages('systemfonts')
+install.packages('textshaping')
+```
+
+Next, we want to make sure that whenever we output a plot^[I'm focusing on outputing to _bitmap_ (e.g., `.png`, `.jpeg`, `.tiff`). For other formats like SVG (which I often default to for online material), you can use `svglite` - read more on the [package website](https://svglite.r-lib.org/).], we do so using the **AGG graphics device** (that's the "agg" part of "ragg"). There are two places where this is relevant:
+
+1. Rendering to the RStudio plot pane - for RStudio >= 1.4, go to _Tools_ > _Global Options_ > _General_ > _Graphics_ and set the **Backend** to AGG.
+
+    ```{r sc, echo = FALSE, fig.cap="Screenshot from the ragg package website - https://ragg.r-lib.org", fig.align='center'}
+    include_graphics("https://i.imgur.com/4XgiPWy.png")
+    ```
+
+
+2. Saving as external file - call any of the `ragg::agg_*()` functions to render plots using the AGG device.
+  
+    ```{r, eval = FALSE}
+    # Set output path
+    pngfile <- here::here("img", "my_plot.png")
+    # Initialize device
+    ragg::agg_png(
+      pngfile, width = 10, height = 6, units = "in",
+      res = 300, scaling = 3
+    )
+    # Plot
+    plot(hist(mtcars$mpg))
+    # Close device
+    invisible(dev.off())
+    ```
+
+    - The above way works for any plot, but if you use `{ggplot2}` and `ggplot2::ggsave()` a lot, you might wonder whether you can just pass in `ragg::agg_png()` into the `device` argument and specify the arguments in `ggsave()` instead. This turns out to actually not be so straightforward, but will likely be patched in the next update (v3.3.4?) ^[Check out the discussion on [this issue](https://github.com/tidyverse/ggplot2/issues/4347) and [this commit](https://github.com/tidyverse/ggplot2/issues/4347). There's also been some talk of making AGG the default renderer, though I don't know if that's been settled.]. I personally just have the long-winded rendering method wrapped into [a function in my personal package](https://github.com/yjunechoe/junebug/blob/master/R/plotsave_auto.R).^[Please excuse the messy code.]
+
+## Installing custom fonts
+
+Now that you have `{ragg}` and its related packages set up, take it for a spin with a custom font! When you're rendering plots using `{ragg}`, custom fonts should _just work_ as long as you have them installed on your local machine. 
+
+If you haven't really worked with custom fonts before, "installing a custom font" simply means finding the font file on the internet, downloading it, and drag-and-drop into a special folder on your local machine. It's something like `Network/Library/Fonts` for Macs and `Microsoft/Windows/Fonts` for Windows. There can actually be a bit more to this (in Windows 10, for example, you have to drag and drop fonts onto the "Fonts" section of Settings), so make sure to google and check the process for installing fonts for your machine.
+
+Font files come in many forms. In general, fonts files that match these two criteria tend to work the best:
+
+1. **Fonts in `.otf` (OpenType Font) or `.ttf` (TrueType Font) formats**. These are font formats that are installable on your machine. You want to avoid other formats like `.woff` or `.woff2`, for example, which are designed for use for the web. In theory both `.otf` and `.ttf` should work with `{ragg}`, though I've sometimes had trouble with `.otf`. In those cases, I simply converted the `.otf` font file to `.ttf` before installing it using [free online tools like this one](https://convertio.co/otf-ttf/).
+
+2. **Static fonts**. A static font means that each _member_ of the font family has their own set of _glyphs_ (i.e., there is a font file for each _style_). This is in contrast to _variable fonts_, where you have a single font file which can take the form of multiple styles.^[Variable fonts are hit-or-miss because while `{ragg}` and `{systemfonts}` _do_ support some variable font features, "variable" can mean many different things, some of which are not supported (e.g., variable width)] To illustrate, look at the difference between the static (top) vs. variable (bottom) files for the [Alegreya family](https://fonts.google.com/specimen/Alegreya).
+
+    ```{r static, echo = FALSE, fig.cap="Static font files for Alegreya", fig.align='center'}
+    include_graphics("https://pbs.twimg.com/media/EzBpmgNXMAUBFfR?format=png&name=900x900")
+    ```
+
+    ```{r variable, echo = FALSE, fig.cap="Variable font files for Alegreya", fig.align='center'}
+    include_graphics("https://pbs.twimg.com/media/EzBphU4WQAE6mFs?format=png&name=900x900")
+    ```
+
+     We see that static fonts are differentiated from variable fonts by having a distinct file for each style, like `Alegreya-Black.ttf`. On the other hand, variable fonts usually say "variable" somewhere in the file name, and are slightly larger in size than any individual static member. Note that not all fonts have both static and variable files, and not all static and variable files are `.ttf` (there can be static `.otf` and variable `.otf` files).^[In my experience, static fonts tend to be `.ttf` and variable fonts tend to be `.otf`.]
+
+The above images show the contents of the `.zip` file that you'd get if you went to [Google Fonts](https://fonts.google.com/) (an awesome repository of free professional fonts) and clicked the **Download family** button on the [page for Alegreya](https://fonts.google.com/specimen/Alegreya). If you want to use Alegreya in R, then you simply drag-and-drop all the static font files in `/static` into your system's font folder.
+
+If you install a font on your system, it should also be available elsewhere locally on your machine (this is a good sanity check). For example, I can use Alegreya in Microsoft Word after I download it.
+
+```{r word, echo = FALSE, fig.cap="Alegreya in Microsoft Word", fig.align='center'}
+include_graphics("img/alegreya_word.png", error = FALSE)
+```
+
+And by extension Alegreya should now be available for figures rendered with `{ragg}`
+
+```{r, eval = FALSE}
+ggplot(NULL, aes(0, 0)) +
+  geom_text(aes(label = "The Alegreya font"), size = 25, family = "Alegreya")
+```
+
+```{r, echo = FALSE}
+include_graphics("img/alegreya.png", error = FALSE)
+```
+
+It _just_ works!
+
+
+## Debugging custom fonts
+
+So far we've seen that the workflow for setting up and installing fonts is very straightforward. But what do we do in times when things inevitable go wrong?
+
+
+Unable to access style is biggest cause
+
+gpar only supports a limited set of styles
+
+### alegreya heavy example
+
+### fontawesome free 5 example
+
+### material icons example
+
+### font_hoist
