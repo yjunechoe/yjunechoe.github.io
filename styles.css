@@ -21,6 +21,13 @@ h2, h3 {
   font-family: 'Roboto Slab'
 }
 
+summary {
+  background-color: lightgrey;
+  padding-left: 5px;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
 /* Small caps */
 
 .sc {
