@@ -638,8 +638,7 @@ ggplot(ordinal_data, aes(Quarter, Earnings)) +
 If this blog post was your first time encountering icon fonts in R, you probably have a lot of questions right now about using them in data visualizations. You can check out my **lightning talk on icon fonts** that I gave at [RLadies Philly](https://www.rladiesphilly.org/) for a quick overview as well as some tips & tricks!
 
 <br>
-<p style='color:red; text-align:center; font-weight:bold;'>To be updated with link to the talk!</strong>
-<br>
+<p style='color:red; text-align:center; font-weight:bold;'>To be updated with link to the talk!</p>
 
 Some extra stuff not mentioned in the talk:
 
