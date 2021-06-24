@@ -65,7 +65,7 @@ Next, we want to make sure that whenever we output a plot^[I'm focusing on outpu
 
 There are at least four places where this is relevant:
 
-### RStudio plot pane
+### 1. Rendering in RStudio plot pane
 
 For RStudio >= 1.4, go to _Tools_ > _Global Options_ > _General_ > _Graphics_ and set the **Backend** to AGG.
 
@@ -74,7 +74,7 @@ include_graphics("https://i.imgur.com/4XgiPWy.png")
 ```
 
 
-### Saving as an external file
+### 2. Saving as an external file
 
 For any bitmap output, use any of the `ragg::agg_*()` function to render plots using the AGG device.
   
@@ -99,7 +99,7 @@ For **ggplot2 figures**: as of the new [ggplot2 v3.3.4 release](https://github.c
 This long-winded way works for any plot, but if you use `{ggplot2}` and `ggplot2::ggsave()` a lot, you might wonder whether you can just pass in `ragg::agg_png()` into the `device` argument and specify the arguments in `ggsave()` instead. This turns out to actually not be so straightforward, but will likely be patched in the next update (v3.3.4?) ^[Check out the discussion on [this issue](https://github.com/tidyverse/ggplot2/issues/4347) and [this commit](https://github.com/tidyverse/ggplot2/issues/4347). There's also been some talk of making AGG the default renderer, though I don't know if that's been settled.].
 </details>
 
-### Rmarkdown
+### 3. Rmarkdown
 
 Pass in a `{ragg}` device has `res` and `units` specified to the `dev` argument of `knitr::chunk_opts$set()` at the top of the script.^[These are used to calculate DPI (dots per inch). Resolution is in pixels, so `res=150` and `units="inch"` is the same as `dpi=150`. `{ragg}` devices don't have a `dpi` argument like the default device, so you have to specify both resolution and units.]
 
@@ -110,7 +110,7 @@ ragg_png = function(..., res = 150) {
 opts_chunk$set(dev = "ragg_png")
 ```
 
-### Shiny
+### 4. Shiny
 
 Simply set `options(shiny.useragg = TRUE)` before rendering. Also check out the {[thematic](https://rstudio.github.io/thematic/)} package for using custom fonts in shiny plot outputs.
 
@@ -635,10 +635,10 @@ ggplot(ordinal_data, aes(Quarter, Earnings)) +
 
 ### Icon fonts
 
-If this blog post was your first time encountering icon fonts in R, you probably have a lot of questions right now about using them in data visualizations. You can check out my lightning talk on icon fonts that I gave at [RLadies Philly](https://www.rladiesphilly.org/) for a quick overview as well as some tips & tricks!
+If this blog post was your first time encountering icon fonts in R, you probably have a lot of questions right now about using them in data visualizations. You can check out my **lightning talk on icon fonts** that I gave at [RLadies Philly](https://www.rladiesphilly.org/) for a quick overview as well as some tips & tricks!
 
 <br>
-<strong style='color:red; text-align:center;'>To be updated with link to the talk!</strong>
+<p style='color:red; text-align:center; font-weight:bold;'>To be updated with link to the talk!</strong>
 <br>
 
 Some extra stuff not mentioned in the talk:

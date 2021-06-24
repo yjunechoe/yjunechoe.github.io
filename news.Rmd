@@ -29,6 +29,10 @@ li::marker {
 
 ## 2021
 
+### June
+
+- I gave a talk at [RLadies philly](https://www.rladiesphilly.org/) on using icon fonts for data viz (talk link coming soon).
+
 ### May
 
 - [SnowGlobe](https://snowglobe.soc.northwestern.edu/), a project started in my undergrad, was featured in an [article](https://sites.northwestern.edu/northwesternlibrary/2021/05/11/student-developed-app-expedites-time-consuming-research-task/) by the NU Library. We also had a [workshop for SnowGlobe](https://www.eventbrite.com/e/an-introduction-to-snowglobe-a-tool-for-systematic-reviews-tickets-149045397797#) which drew participants from over a hundred universities!

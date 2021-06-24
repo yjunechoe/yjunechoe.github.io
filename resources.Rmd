@@ -28,9 +28,11 @@ output:
 
 ## Tutorial Blog Posts
 
-- {purrr} reduce() family [[post1](https://yjunechoe.github.io/posts/2020-12-13-collapse-repetitive-piping-with-reduce/), [post2](https://yjunechoe.github.io/posts/2021-01-17-random-sampling-a-table-animation/)]
-
 - {ggplot2} stat_*() functions [[post](https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/)]
+
+- Custom fonts in R [[post](https://yjunechoe.github.io/posts/2021-06-24-setting-up-and-debugging-custom-fonts/)]
+
+- {purrr} reduce() family [[post1](https://yjunechoe.github.io/posts/2020-12-13-collapse-repetitive-piping-with-reduce/), [post2](https://yjunechoe.github.io/posts/2021-01-17-random-sampling-a-table-animation/)]
 
 - The correlation parameter in {lme4} mixed effects models [[post](https://yjunechoe.github.io/posts/2020-06-07-correlation-parameter-mem/)]
 

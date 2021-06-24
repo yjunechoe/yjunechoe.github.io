@@ -4,14 +4,16 @@ title: "Research"
 
 ## Publications
 
-### Under Review
+### Submitted
 
-* McWeeny, S., Choi, S. J., LaTourette, A., **Choe, J.**, Roberts, M. Y., & Norton, E. S. (under review).
+* **Choe, J.**, Cole, J., and Yoshida, M. (Submitted). The role of prosodic focus in the reanalysis of garden path sentences: Depth of semantic processing impedes the revision of an erroneous local analysis. https://doi.org/10.17605/OSF.IO/U6DQ5
+
+* McWeeny, S., Choi, S. J., LaTourette, A., **Choe, J.**, Roberts, M. Y., & Norton, E. S. (Submitted).
 Rapid automatized naming as a kindergarten predictor of future reading: A meta-analysis.
 
-### In Prep
+### Pre-print / in-prep.
 
-* **June Choe**, Jennifer Cole, and Masaya Yoshida. (in prep). Prosodic focus strengthens semantic persistence.
+McWeeny, S., **Choe, J.**, & Norton, E. (2021). SnowGlobe: An Iterative Search Tool for Systematic Reviews and Meta-Analyses. https://doi.org/10.17605/OSF.IO/U25RN
 
 ## Conference Presentations
 
