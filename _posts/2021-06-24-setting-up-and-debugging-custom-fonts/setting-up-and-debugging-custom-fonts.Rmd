@@ -12,7 +12,7 @@ author:
     affiliation: University of Pennsylvania Linguistics
     affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
     orcid_id: 0000-0002-0701-921X
-date: 06-11-2021
+date: 06-24-2021
 output:
   distill::distill_article:
     toc: true
@@ -20,7 +20,6 @@ output:
 editor_options: 
   chunk_output_type: console
 preview: preview.png
-draft: true
 ---
 
 ```{r setup, include=FALSE}
@@ -304,6 +303,23 @@ Third time's the charm !!!
 
 Hopefully the lesson is now clear: to make a custom font work in R, it must be **visible to `systemfonts::system_fonts()` in a style that is accessible to `grid::gpar()`**. The nifty trick of registering an inaccessible style as the "plain" member of its own family can be extended and automated as a utility function that is called purely for this side effect. In my [experimental package](https://github.com/yjunechoe/junebug), I have very simple function called [`font_hoist()`](https://github.com/yjunechoe/junebug/blob/master/R/font_helpers.R) which "hoists"^[Borrowing terminology from `tidyr::hoist()`, the under-appreciated beast of list-column workflows] _all_ styles of a family as the "plain"/Regular style of their own families. This way, you never have to worry about things going wrong in the `fontface` argument.
 
+<details>
+<summary>font_hoist()</summary>
+```{r, eval = FALSE, echo = TRUE}
+font_hoist <- function(family, silent = FALSE) {
+  font_specs <- systemfonts::system_fonts() %>%
+    dplyr::filter(family == .env[["family"]]) %>%
+    dplyr::mutate(family = paste(.data[["family"]], .data[["style"]])) %>%
+    dplyr::select(plain = .data[["path"]], name = .data[["family"]])
+
+  purrr::pwalk(as.list(font_specs), systemfonts::register_font)
+
+  if (!silent)  message(paste0("Hoisted ", nrow(font_specs), " variants:\n",
+                               paste(font_specs$name, collapse = "\n")))
+}
+```
+</details>
+
 Let's apply this to our Alegreya family. As we saw earlier, it has 12 styles, but only 4 can be accessed by `grid::gpar()`.^[Regular as "plain", Bold as "bold", Italic as "italic", and Bold Italic as "bold.italic".] But once we hoist the styles, we can access them all!
 
 ```{r alegreya-hoist, message = TRUE}
@@ -332,13 +348,13 @@ But note that this **registration is not persistent across sessions**. If you re
 
 But wait, that's not all!
 
-Many modern professional fonts come with **OpenType features**, which mostly consist of stylistic parameters that can be turned on-and-off for a font. Note that despite being called "OpenType" features, it's not something unique to `.otf` font formats. **TrueType fonts (`.ttf`) can have OpenType features as well**. You can check out the [full list of registered features](https://en.wikipedia.org/wiki/List_of_typographic_features#OpenType_typographic_features) and this [article with visual examples](https://lauraworthingtondesign.com/news/article/opentype-features) for the full picture.
+Many modern professional fonts come with **OpenType features**, which mostly consist of stylistic parameters that can be turned on-and-off for a font. Note that despite being called "OpenType" features, it's not something unique to `.otf` font formats. **TrueType fonts (`.ttf`) can have OpenType features as well**. For a fuller picture, you can check out the [full list of registered features](https://en.wikipedia.org/wiki/List_of_typographic_features#OpenType_typographic_features) and this [article](https://typofonderie.com/font-support/opentype-features) with visual examples for commonly used features.
 
 It looks overwhelming but only a handful are relevant for data visualization. I'll showcase two features here: _lining_ and _ordinals_.
 
 ### Lining
 
-One of the most practical font features is _lining_, also called `"lnum"` (the four-letter feature tag), where all numbers share the same height and baseline.
+One of the most practical font features is _lining_, also called `"lnum"` (the four-letter feature tag), where all numbers share the same height and baseline.^[Also check out the related "pnum" (proportional numbers) and "tnum" (tabular numbers) features.]
 
 Let's use our Alegreya font as an example again. By default, Alegreya has what are called "old style" numbers, where number glyphs have ascending and descending strokes which can make a string of numbers look unbalanced. Notice how the digits share different baselines here:
 
@@ -357,7 +373,7 @@ library(textshaping)
 get_font_features("Alegreya")
 ```
 
-To access the lining feature, we can use the `systemfonts::register_variant()` function, which works similarly to `systemfonts::register_font()`. `register_variant()` is simply a wrapper around `register_font()`, and we use it here for convenience because "Alegreya" is already accessible without us having to point to the font file.
+To access the lining feature, we can use the `systemfonts::register_variant()` function, which works similarly to `systemfonts::register_font()`. The former is simply a wrapper around the latter, and we use it here for convenience because "Alegreya" (as in, the default Regular style) is already accessible without us having to point to the font file.
 
 To turn the lining feature on, we need to set the `features` argument of `register_variant()` using the helper function `systemfonts::font_feature()`. The full code looks like this:
 
@@ -435,7 +451,7 @@ First, we check that "ordn" is supported for Alegreya:
 "ordn" %in% unlist(get_font_features("Alegreya"))
 ```
 
-Then, we register the variant. Note that "ordn" is not built-in as an option for the `letters` argument of `font_features()`, whereas "lnum" from our last example was a built-in option for the `numbers` argument.^[check the help page `?systemfonts::font_feature` for details.] Therefore, we have to set the "ordn" feature inside the `...` with `"ordn" = TRUE`. And let's simultaneously also turn on the lining feature from before as well.
+Then, we register the ordinal variant. Note that "ordn" is not built-in as an option for the `letters` argument of `font_features()`, unlike "lnum" which is a built-in option for the `numbers` argument.^[check the help page `?systemfonts::font_feature` for details.] Therefore, we have to set the "ordn" feature inside the `...` with `"ordn" = TRUE`. And let's simultaneously also turn on the lining feature from before as well.
 
 ```{r alegreya-ordinal}
 # Register variant
@@ -484,7 +500,7 @@ ggplot(NULL) +
   )
 ```
 
-One solution is to render the month in the Regular style and the rest in the ordinal variant. We can do this with html syntax supported by `geom_richtext()` from `{ggtext}`. If you're already familiar with `{ggtext}`, this example shows that it works the same for registered custom font variants!
+One solution is to render the month in the Regular style and the rest in the ordinal variant.^[Another solution would be to use the small-cap variant (the "smcp" feature) for "une".] We can combine text in multiple fonts in-line with html syntax supported by `geom_richtext()` from `{ggtext}`. If you're already familiar with `{ggtext}`, this example shows that it works the same for registered custom font variants!
 
 ```{r alegreya-mixed}
 library(ggtext)
@@ -517,7 +533,7 @@ ggplot(NULL) +
   scale_y_continuous(expand = expansion(add = 0.5))
 ```
 
-In my opinion, **you should always err towards using the supplied font features** because they are designed with the particular aesthetics of the font in mind.^[But this also means that not all fonts support "ordn", while `<sup>` is always available.] Hopefully this example has convinced you!
+In my opinion, **you should always err towards using the supported font features** because they are designed with the particular aesthetics of the font in mind.^[But this also means that not all fonts support "ordn", while `<sup>` is always available.] Hopefully this example has convinced you!
 
 ## Usecases
 
@@ -621,7 +637,9 @@ ggplot(ordinal_data, aes(Quarter, Earnings)) +
 
 If this blog post was your first time encountering icon fonts in R, you probably have a lot of questions right now about using them in data visualizations. You can check out my lightning talk on icon fonts that I gave at [RLadies Philly](https://www.rladiesphilly.org/) for a quick overview as well as some tips & tricks!
 
-
+<br>
+<strong style='color:red; text-align:center;'>To be updated with link to the talk!</strong>
+<br>
 
 Some extra stuff not mentioned in the talk:
 
@@ -636,7 +654,7 @@ Some extra stuff not mentioned in the talk:
       theme_classic()
     ```
 
-- All fonts based on SVG (which is the case for pretty much all icon fonts) should work with `{ragg}` as long as you can get it installed on your local machine. For example, the [Bootstrap Icons](https://github.com/twbs/icons) font ([MIT license](https://github.com/twbs/icons/blob/main/LICENSE.md)) only come in `.woff` and `.woff2` [files](https://github.com/twbs/icons/tree/main/font/fonts) for web use, but it's fundamentally just a collection of SVGs, so it can be installed on your local machine once you convert to `.ttf`. Then it should just work right out of the box.
+- All fonts based on SVG (which is the case for pretty much all icon fonts) should work with `{ragg}` as long as you can get it installed on your local machine. For example, the [Bootstrap Icons](https://github.com/twbs/icons) font ([MIT license](https://github.com/twbs/icons/blob/main/LICENSE.md)) only come in `.woff` and `.woff2` [files](https://github.com/twbs/icons/tree/main/font/fonts) for web use, but it's fundamentally just a collection of SVGs, so it can be installed on your local machine once you convert to `.ttf`. Then it should just work right in R out of the box.
 
     ```{r}
     ggplot(NULL, aes(0, 0)) +
@@ -646,7 +664,7 @@ Some extra stuff not mentioned in the talk:
       )
     ```
 
-- If you're design oriented, you can also **make your own icon font** for use in R. In Inkscape, you can do this in File > New From Template > Typography Canvas ([Guide](https://inkscape-manuals.readthedocs.io/en/latest/creating-custom-fonts.html)). Once you save your SVG font, you can convert it to `.ttf` and follow the same installation process, and it should be available in R if you render with `{ragg}`.
+- If you're design oriented, you can also **make your own icon font** for use in R. In Inkscape, you can do this in File > New From Template > Typography Canvas ([Guide](https://inkscape-manuals.readthedocs.io/en/latest/creating-custom-fonts.html)). Once you save your SVG font, you can convert it to `.ttf` and follow the same installation process, and then it should be available in R if you render with `{ragg}`.
 
     ```{r inkscape-svg, echo = FALSE, fig.cap="Making a font in Inkscape", fig.align='center'}
     include_graphics("img/inkscape_svg.png", error = FALSE)
@@ -676,6 +694,8 @@ Some extra stuff not mentioned in the talk:
 - The {[hrbragg](https://github.com/hrbrmstr/hrbragg/)} package by [\@hrbrmstr](https://twitter.com/hrbrmstr) for more utility functions for registering font variants and typography-centered ggplot2 themes.
 
 - The [text formatting](https://practicaltypography.com/text-formatting.html) chapter of [Practical Typography by Matthew Butterick](https://practicaltypography.com) for a general guideline on using different font features.
+
+- Everything from [Thomas Lin Pedersen](https://twitter.com/thomasp85), the main person responsible for these developments.
 
 - Many [#TidyTuesday](https://twitter.com/search?q=%23TidyTuesday) submissions.
 
