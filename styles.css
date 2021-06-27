@@ -13,7 +13,7 @@
 html, body, p {
   
   font-family: 'Chillax';
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.7; 
   font-size: 1em;
   color: #333333;
@@ -148,6 +148,10 @@ d-title {
 d-title h1 {
   font-family: 'Roboto Slab';
   line-height: 1.3;
+}
+
+d-title p {
+  font-weight: 500;
 }
 
 
