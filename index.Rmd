@@ -69,7 +69,7 @@ d-title p {
   <p style="font-weight:bold; margin-top:5px">
     <i class="fa fa-graduation-cap" aria-hidden="true" style="padding-right:5px"></i> Education
   </p>
-  <li>B.A. (hons.) Northwestern University (2016–2020)</li>
+  <li>B.A. (hons.) Northwestern University (2016–20)</li>
   <li>Ph.D. University of Pennsylvania (2020 ~)</li>
   <p style="font-weight:bold; margin-top:15px">
     <i class="fa fa-lightbulb-o" aria-hidden="true" style="padding-right:5px"></i> Interests
