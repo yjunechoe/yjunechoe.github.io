@@ -6,7 +6,7 @@
 @import url('https://fonts.googleapis.com/css?family=Fira+Mono&display=swap');
 
 @font-face {
-  font-family: Chillax;
+  font-family: 'Chillax';
   src: url("./static/chillax.css")
 }
 
@@ -201,7 +201,7 @@ blockquote p {
 
 /* Footnote margins */
 d-footnote {
-  margin-left: -.3em;
+  margin-left: -.2em;
   margin-right: .1em;
 }
 
