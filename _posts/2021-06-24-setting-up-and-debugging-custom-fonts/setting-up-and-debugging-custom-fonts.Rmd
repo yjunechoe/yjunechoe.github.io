@@ -96,7 +96,7 @@ For **ggplot2 figures**: as of the new [ggplot2 v3.3.4 release](https://github.c
 
 <details>
 <summary>Old disclaimer for {ggplot2} < v.3.3.4</summary>
-This long-winded way works for any plot, but if you use `{ggplot2}` and `ggplot2::ggsave()` a lot, you might wonder whether you can just pass in `ragg::agg_png()` into the `device` argument and specify the arguments in `ggsave()` instead. This turns out to actually not be so straightforward, but will likely be patched in the next update (v3.3.4?) ^[Check out the discussion on [this issue](https://github.com/tidyverse/ggplot2/issues/4347) and [this commit](https://github.com/tidyverse/ggplot2/issues/4347). There's also been some talk of making AGG the default renderer, though I don't know if that's been settled.].
+This long-winded way works for any plot, but if you use `{ggplot2}` and `ggplot2::ggsave()` a lot, you might wonder whether you can just pass in `ragg::agg_png()` into the `device` argument and specify the arguments in `ggsave()` instead. This turns out to actually not be so straightforward, but will likely be patched in the next update (v3.3.4?). ^[Check out the discussion on [this issue](https://github.com/tidyverse/ggplot2/issues/4347) and [this commit](https://github.com/tidyverse/ggplot2/issues/4347). There's also been some talk of making AGG the default renderer, though I don't know if that's been settled.]
 </details>
 
 ### 3. Rmarkdown
@@ -242,7 +242,7 @@ The structure is roughly like this:
   |---  Regular
 </pre>
 
-In `geom_text()`, the font style is set by the `fontface` argument. When we don't specify `fontface`, such as in our working example for the clock and twitter icons, it defaults to the regular style.^[Technically, it defaults to `fontface = "plain"`, but `{systemfonts}` and (also probably your OS) calls it the "Regular" style].
+In `geom_text()`, the font style is set by the `fontface` argument. When we don't specify `fontface`, such as in our working example for the clock and twitter icons, it defaults to the regular style.^[Technically, it defaults to `fontface = "plain"`, but `{systemfonts}` and (also probably your OS) calls it the "Regular" style]
 
 So the solution to our problem is to put in `fontface = "solid"`, right...?
 
@@ -288,7 +288,7 @@ systemfonts::registry_fonts() %>%
   )
 ```
 
-We see that the Solid style is now available as the Regular (a.k.a. "plain") style of its own font family, **Font Awesome 5 Free Solid**!^[The same font file also registered as the Bold, Italic, and Bold Italic styles of the family as well, which is what happens by default if you only supply the `plain` argument to `register_font()`. You can of course just ignore this.].
+We see that the Solid style is now available as the Regular (a.k.a. "plain") style of its own font family, **Font Awesome 5 Free Solid**!^[The same font file also registered as the Bold, Italic, and Bold Italic styles of the family as well, which is what happens by default if you only supply the `plain` argument to `register_font()`. You can of course just ignore this.]
 
 Now we're back to our cat icon example. Again, because [Font Awewsome says there's a cat icon in the Solid style](https://fontawesome.com/v5.15/icons/cat?style=solid), we'd expect a cat icon if we render the text "cat" in the Solid style. Let's set the `family` argument to our newly registered "Font Awesome 5 Free Solid" family and see what happens:
 

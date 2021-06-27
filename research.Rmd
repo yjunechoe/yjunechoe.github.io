@@ -2,6 +2,12 @@
 title: "Research"
 ---
 
+<style>
+p {
+  font-family: Roboto;
+}
+</style>
+
 ## Publications
 
 ### Submitted

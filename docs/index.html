@@ -2058,11 +2058,15 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   @import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');
   @import url('https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap');
   @import url('https://fonts.googleapis.com/css?family=Fira+Mono&display=swap');
-  @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Mono&display=swap');
+
+  @font-face {
+    font-family: Chillax;
+    src: url("./static/chillax.css")
+  }
 
   html, body, p {
     
-    font-family: 'Roboto';
+    font-family: 'Chillax';
     font-weight: 400;
     line-height: 1.7; 
     font-size: 1em;
@@ -2073,6 +2077,10 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 
   h2, h3 {
     font-family: 'Roboto Slab'
+  }
+
+  em {
+    margin-right: 3px;
   }
 
   summary {
@@ -2247,7 +2255,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 
   /* Footnote margins */
   d-footnote {
-    margin-left: -.1em;
+    margin-left: -.3em;
     margin-right: .1em;
   }
 
@@ -2325,6 +2333,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
     padding-top: 10px;
     padding-bottom: 10px;
     margin-bottom: 10px;
+    border-left: 5px solid orange;
   }
 
   d-article div.sourceCode pre code {
@@ -2371,7 +2380,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   /* Output Chunk */
 
   d-article pre code {
-    font-family: IBM Plex Mono;
+    font-family: 'Fira Mono';
     font-weight: 500;
   }
 
@@ -2518,10 +2527,6 @@ d-title p {
   text-align:center;
 }
 
-p {
-  font-family: 'Roboto';
-}
-
 .hero-left img {
   width: 100%;
   border-radius: 15%;
@@ -2592,7 +2597,7 @@ Prosody &amp; Information Structure
 </div>
 <div style="float:left; width:100%;">
 <p style="margin-bottom:.5em">
-<strong style="font-family: Roboto Slab; font-size: 1.2em"> <i class="fa fa-flask" aria-hidden="true" style="padding-right:12.5px"></i> Methods: </strong> Eye-tracking, self-paced reading, comprehension tasks, corpus analysis
+<strong style="font-family: Roboto Slab; font-size: 1.2em"> <i class="fa fa-flask" aria-hidden="true" style="padding-right:12.5px"></i> Methods: </strong> Eye-tracking, sentence comprehension, text/speech corpus analysis
 </p>
 <p style="margin-bottom:1.5em">
 <strong style="font-family:Roboto Slab; font-size:1.2em"> <i class="fa fa-code" aria-hidden="true" style="padding-right:5px"></i> Programming: </strong> R <span style="font-size:0.8em">(fluent)</span> | HTML/CSS/JS <span style="font-size:0.8em">(proficient)</span> | Python <span style="font-size:0.8em">(coursework)</span>
@@ -2603,11 +2608,11 @@ Prosody &amp; Information Structure
 about
 </h3>
 <p>I am a second year PhD student in <a href="https://live-sas-www-ling.pantheon.sas.upenn.edu/">Linguistics at the University of Pennsylvania</a>. I use computational and behavioral methods to study how comprehenders parse linguistic input, both in real time and at different stages of language development.</p>
-<p>I received my B.A. in Linguistics from Northwestern University, where I worked with <a href="https://sites.northwestern.edu/cole/">Jennifer Cole</a>, <a href="https://faculty.wcas.northwestern.edu/~myo507/">Masaya Yoshida</a>, and <a href="https://faculty.wcas.northwestern.edu/~akd2621/">Annette D’Onofrio</a>. I also worked as a research assistant for (and still collaborate with) the <a href="https://learnlab.northwestern.edu/">Language, Education, and Reading Neuroscience Lab</a> (P.I. <a href="https://www.communication.northwestern.edu/faculty/ElizabethNorton">Elizabeth Norton</a>) in Communication Sciences and Disorders. I wrote my thesis on the role of prosodic focus in semantic reanalysis in the processing of garden-path sentences with local attachment ambiguity.</p>
+<p>I received my B.A. in Linguistics from Northwestern University, where I worked with <a href="https://sites.northwestern.edu/cole/">Jennifer Cole</a>, <a href="https://faculty.wcas.northwestern.edu/~myo507/">Masaya Yoshida</a>, and <a href="https://faculty.wcas.northwestern.edu/~akd2621/">Annette D’Onofrio</a>. I also worked as a research assistant for (and still collaborate with) the <a href="https://learnlab.northwestern.edu/">Language, Education, and Reading Neuroscience Lab</a>) in Communication Sciences and Disorders. I wrote my thesis on the role of prosodic focus in semantic reanalysis in the processing of garden-path sentences with local attachment ambiguity.</p>
 <p>Beyond linguistics research, I have interests in data visualization, science communication, and the R programming language. I’m especially passionate about explanatory data viz in academic research and strongly believe that <em>style</em> is just as important as <em>content</em>. I <a href="https://yjunechoe.github.io/blog.html">blog</a> about these topics in my spare time as a hobby. I am also a <a href="https://mindcore.sas.upenn.edu/">Penn MindCORE</a> student affiliate and work as a data science tutor for researchers at Penn.</p>
 <p>
 </p>
-<div style="text-align: center">
+<div style="text-align: center; font-family: Fira Mono;">
 <span class="sc" style="font-size:1.2em">contact me: </span> yj<span>choe</span>@sas.upenn.edu
 </div>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>

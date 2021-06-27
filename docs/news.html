@@ -2055,11 +2055,15 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   @import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');
   @import url('https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap');
   @import url('https://fonts.googleapis.com/css?family=Fira+Mono&display=swap');
-  @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Mono&display=swap');
+
+  @font-face {
+    font-family: Chillax;
+    src: url("./static/chillax.css")
+  }
 
   html, body, p {
     
-    font-family: 'Roboto';
+    font-family: 'Chillax';
     font-weight: 400;
     line-height: 1.7; 
     font-size: 1em;
@@ -2070,6 +2074,10 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 
   h2, h3 {
     font-family: 'Roboto Slab'
+  }
+
+  em {
+    margin-right: 3px;
   }
 
   summary {
@@ -2244,7 +2252,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 
   /* Footnote margins */
   d-footnote {
-    margin-left: -.1em;
+    margin-left: -.3em;
     margin-right: .1em;
   }
 
@@ -2322,6 +2330,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
     padding-top: 10px;
     padding-bottom: 10px;
     margin-bottom: 10px;
+    border-left: 5px solid orange;
   }
 
   d-article div.sourceCode pre code {
@@ -2368,7 +2377,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   /* Output Chunk */
 
   d-article pre code {
-    font-family: IBM Plex Mono;
+    font-family: 'Fira Mono';
     font-weight: 500;
   }
 

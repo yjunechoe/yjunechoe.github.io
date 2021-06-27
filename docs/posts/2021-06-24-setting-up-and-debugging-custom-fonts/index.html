@@ -2077,11 +2077,15 @@ gtag('config', 'UA-178413324-1');
 @import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Fira+Mono&display=swap');
-@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Mono&display=swap');
+
+@font-face {
+  font-family: Chillax;
+  src: url("./static/chillax.css")
+}
 
 html, body, p {
   
-  font-family: 'Roboto';
+  font-family: 'Chillax';
   font-weight: 400;
   line-height: 1.7; 
   font-size: 1em;
@@ -2092,6 +2096,10 @@ html, body, p {
 
 h2, h3 {
   font-family: 'Roboto Slab'
+}
+
+em {
+  margin-right: 3px;
 }
 
 summary {
@@ -2266,7 +2274,7 @@ blockquote p {
 
 /* Footnote margins */
 d-footnote {
-  margin-left: -.1em;
+  margin-left: -.3em;
   margin-right: .1em;
 }
 
@@ -2344,6 +2352,7 @@ d-article div.sourceCode pre {
   padding-top: 10px;
   padding-bottom: 10px;
   margin-bottom: 10px;
+  border-left: 5px solid orange;
 }
 
 d-article div.sourceCode pre code {
@@ -2390,7 +2399,7 @@ span.fu a {
 /* Output Chunk */
 
 d-article pre code {
-  font-family: IBM Plex Mono;
+  font-family: 'Fira Mono';
   font-weight: 500;
 }
 
@@ -2617,7 +2626,7 @@ Figure 1: Where to set AGG as the graphic device for RStudio - image from <a hre
 <summary>
 Old disclaimer for {ggplot2} &lt; v.3.3.4
 </summary>
-This long-winded way works for any plot, but if you use <code>{ggplot2}</code> and <code>ggplot2::ggsave()</code> a lot, you might wonder whether you can just pass in <code>ragg::agg_png()</code> into the <code>device</code> argument and specify the arguments in <code>ggsave()</code> instead. This turns out to actually not be so straightforward, but will likely be patched in the next update (v3.3.4?) <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.
+This long-winded way works for any plot, but if you use <code>{ggplot2}</code> and <code>ggplot2::ggsave()</code> a lot, you might wonder whether you can just pass in <code>ragg::agg_png()</code> into the <code>device</code> argument and specify the arguments in <code>ggsave()</code> instead. This turns out to actually not be so straightforward, but will likely be patched in the next update (v3.3.4?). <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>
 </details>
 <h3 id="rmarkdown">3. Rmarkdown</h3>
 <p>Pass in a <code>{ragg}</code> device has <code>res</code> and <code>units</code> specified to the <code>dev</code> argument of <code>knitr::chunk_opts$set()</code> at the top of the script.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
@@ -2784,7 +2793,7 @@ Figure 5: Font Awesome 5 files
   Font Awesome 5 Brands
   |---  Regular
 </pre>
-<p>In <code>geom_text()</code>, the font style is set by the <code>fontface</code> argument. When we don’t specify <code>fontface</code>, such as in our working example for the clock and twitter icons, it defaults to the regular style.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>.</p>
+<p>In <code>geom_text()</code>, the font style is set by the <code>fontface</code> argument. When we don’t specify <code>fontface</code>, such as in our working example for the clock and twitter icons, it defaults to the regular style.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p>
 <p>So the solution to our problem is to put in <code>fontface = "solid"</code>, right…?</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2840,7 +2849,7 @@ Figure 5: Font Awesome 5 files
   3 Font Awesome 5 Free Solid Italic      Font-Awesome-5-Free-Solid-900.ttf
   4 Font Awesome 5 Free Solid Bold Italic Font-Awesome-5-Free-Solid-900.ttf</code></pre>
 </div>
-<p>We see that the Solid style is now available as the Regular (a.k.a. “plain”) style of its own font family, <strong>Font Awesome 5 Free Solid</strong>!<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>.</p>
+<p>We see that the Solid style is now available as the Regular (a.k.a. “plain”) style of its own font family, <strong>Font Awesome 5 Free Solid</strong>!<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a></p>
 <p>Now we’re back to our cat icon example. Again, because <a href="https://fontawesome.com/v5.15/icons/cat?style=solid">Font Awewsome says there’s a cat icon in the Solid style</a>, we’d expect a cat icon if we render the text “cat” in the Solid style. Let’s set the <code>family</code> argument to our newly registered “Font Awesome 5 Free Solid” family and see what happens:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
