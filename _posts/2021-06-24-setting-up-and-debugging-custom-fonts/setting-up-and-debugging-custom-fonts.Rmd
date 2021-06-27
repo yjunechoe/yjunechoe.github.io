@@ -6,6 +6,7 @@ categories:
   - data visualization
   - ggplot2
   - typography
+  - tutorial
 base_url: https://yjunechoe.github.io
 author:
   - name: June Choe
@@ -37,19 +38,11 @@ opts_chunk$set(
 )
 ```
 
-Getting custom fonts to work in R has historically been pretty difficult.^[In fact, text rendering as a whole is an incredibly complicated task. Check out [Text Rendering Hates You](https://gankra.github.io/blah/text-hates-you/#how-do-you-write-that-you-cant-write) for a fun and informative read.] Folks who have ventured into this area are probably familiar with packages like `{showtext}` and `{extrafont}` which were the more established solutions to importing fonts in the past, though there's always been a good amount of variation on people's ability to get these packages to work (which is totally _not_ on the developers - the issue just runs so much deeper!).
+Getting **custom fonts** to work in R has historically been pretty difficult.^[In fact, text rendering as a whole is an incredibly complicated task. Check out [Text Rendering Hates You](https://gankra.github.io/blah/text-hates-you/#how-do-you-write-that-you-cant-write) for a fun and informative read.] At a high level, it involves the non-trivial task of unifying the _graphics device_, the _operating system_, and _text rendering_, (and also in our case, R!) to seamlessly work with each other.
 
-At a high level, getting fonts to work involve the non-trivial task of unifying the _graphics device_, the _operating system_, and _text rendering_, (and also in our case, R!) to seamlessly work with each other. Luckily for us in 2021, we have an amazing solution to this problem thanks to recent developments in the `{ragg}`,  `{systemfonts}`, and `{textshaping}` packages by RStudio. For more details on the recent improvements to font support, you should check out these official blog posts:
+Luckily for us in 2021, we have an amazing solution to this problem thanks to recent developments in the `{ragg}`,  `{systemfonts}`, and `{textshaping}` packages by RStudio. This is great news because a lot of the work for getting custom fonts to work in R is already done for us!
 
-- [Modern Text Features in R](https://www.tidyverse.org/blog/2021/02/modern-text-features/)
-
-- [Updates to ragg and systemfonts](https://www.tidyverse.org/blog/2020/05/updates-to-ragg-and-systemfonts/)
-
-- [svglite 2.0.0](https://www.tidyverse.org/blog/2021/02/svglite-2-0-0/)
-
-This is great news because a lot of the work in getting custom fonts to work in R is already done for us under the hood!
-
-In this blog post, I'll start with the basics of setting up custom fonts, followed by a walkthrough of the font debugging workflow, concluding with some practical use-cases that can spice up your typography game for data viz.  
+In this blog post, I'll start with the basics of **setting up custom fonts** followed by a walkthrough of the **font debugging workflow**, concluding with some **practical use-cases** that can spice up your typography game for data viz.  
 
 ## Setting up `{ragg}`
 
@@ -118,7 +111,7 @@ Simply set `options(shiny.useragg = TRUE)` before rendering. Also check out the 
 
 Now that you have `{ragg}` and `{systemfonts}` installed, take it for a spin with a custom font! When you're rendering plots using `{ragg}`, custom fonts should _just work_ as long as you have them installed on your local machine. 
 
-If you haven't really worked with custom fonts before, "installing a custom font" simply means finding the font file on the internet, downloading it, and drag-and-drop into a special folder on your local machine. It's something like _Network/Library/Fonts_ for Macs and _Microsoft/Windows/Fonts_ for Windows. There can actually be a bit more to this (in Windows 10, for example, you have to drag and drop fonts onto the "Fonts" section of Settings), so make sure to google and check the process for installing fonts for your machine.
+If you haven't really worked with custom fonts before, "installing a custom font" simply means finding the font file on the internet, downloading it, and drag-and-drop into a special folder on your local machine. It's something like _Network/Library/Fonts_ for Macs and _Microsoft/Windows/Fonts_ for Windows. There can actually be a bit more to this process^[in Windows 10, for example, you have to drag and drop fonts onto the "Fonts" section of Settings], so make sure to google and check the process for installing fonts on your machine.
 
 ### Finding the right file
 
@@ -342,7 +335,7 @@ purrr::walk(
 )
 ```
 
-But note that this **registration is not persistent across sessions**. If you restart R and run `systemfonts::registry_fonts()` again, it will return an empty data frame, indicating that you have no font varieties registered. You have to register font variants for every session, which is why it's nice to have the `systemfonts::register_fonts()` workflow wrapped into a function like `font_hoist()`.
+But note that this **registration is not persistent across sessions**. If you restart R and run `registry_fonts()` again, it will return an empty data frame, indicating that you have no font varieties registered. You have to register font variants for every session, which is why it's nice to have the `register_fonts()` workflow wrapped into a function like `font_hoist()`.
 
 ## Advanced font features
 
@@ -697,6 +690,14 @@ Some extra stuff not mentioned in the talk:
 - Everything from [Thomas Lin Pedersen](https://twitter.com/thomasp85), the main person responsible for these developments.
 
 - Many [#TidyTuesday](https://twitter.com/search?q=%23TidyTuesday) submissions.
+
+Official RStudio blog posts:
+
+- [Modern Text Features in R](https://www.tidyverse.org/blog/2021/02/modern-text-features/)
+
+- [Updates to ragg and systemfonts](https://www.tidyverse.org/blog/2020/05/updates-to-ragg-and-systemfonts/)
+
+- [svglite 2.0.0](https://www.tidyverse.org/blog/2021/02/svglite-2-0-0/)
 
 ## Session info
 

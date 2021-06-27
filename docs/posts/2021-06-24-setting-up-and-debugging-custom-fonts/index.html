@@ -123,7 +123,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","date","output","editor_options","preview","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["Setting up and debugging custom fonts"]},{"type":"character","attributes":{},"value":["A practical introduction to all (new) things font in R"]},{"type":"character","attributes":{},"value":["data visualization","ggplot2","typography"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]},{"type":"character","attributes":{},"value":["0000-0002-0701-921X"]}]}]},{"type":"character","attributes":{},"value":["06-24-2021"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["chunk_output_type"]}},"value":[{"type":"character","attributes":{},"value":["console"]}]},{"type":"character","attributes":{},"value":["preview.png"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io/posts/2021-06-24-setting-up-and-debugging-custom-fonts/"]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","date","output","editor_options","preview","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["Setting up and debugging custom fonts"]},{"type":"character","attributes":{},"value":["A practical introduction to all (new) things font in R"]},{"type":"character","attributes":{},"value":["data visualization","ggplot2","typography","tutorial"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]},{"type":"character","attributes":{},"value":["0000-0002-0701-921X"]}]}]},{"type":"character","attributes":{},"value":["06-24-2021"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["chunk_output_type"]}},"value":[{"type":"character","attributes":{},"value":["console"]}]},{"type":"character","attributes":{},"value":["preview.png"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io/posts/2021-06-24-setting-up-and-debugging-custom-fonts/"]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -2531,6 +2531,7 @@ Misc.
   <a href="../../blog.html#category:data_visualization" class="dt-tag">data visualization</a>
   <a href="../../blog.html#category:ggplot2" class="dt-tag">ggplot2</a>
   <a href="../../blog.html#category:typography" class="dt-tag">typography</a>
+  <a href="../../blog.html#category:tutorial" class="dt-tag">tutorial</a>
 </div>
 <!--/radix_placeholder_categories-->
 <p><p>A practical introduction to all (new) things font in R</p></p>
@@ -2576,15 +2577,9 @@ Misc.
 </ul>
 </nav>
 </div>
-<p>Getting custom fonts to work in R has historically been pretty difficult.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Folks who have ventured into this area are probably familiar with packages like <code>{showtext}</code> and <code>{extrafont}</code> which were the more established solutions to importing fonts in the past, though there’s always been a good amount of variation on people’s ability to get these packages to work (which is totally <em>not</em> on the developers - the issue just runs so much deeper!).</p>
-<p>At a high level, getting fonts to work involve the non-trivial task of unifying the <em>graphics device</em>, the <em>operating system</em>, and <em>text rendering</em>, (and also in our case, R!) to seamlessly work with each other. Luckily for us in 2021, we have an amazing solution to this problem thanks to recent developments in the <code>{ragg}</code>, <code>{systemfonts}</code>, and <code>{textshaping}</code> packages by RStudio. For more details on the recent improvements to font support, you should check out these official blog posts:</p>
-<ul>
-<li><p><a href="https://www.tidyverse.org/blog/2021/02/modern-text-features/">Modern Text Features in R</a></p></li>
-<li><p><a href="https://www.tidyverse.org/blog/2020/05/updates-to-ragg-and-systemfonts/">Updates to ragg and systemfonts</a></p></li>
-<li><p><a href="https://www.tidyverse.org/blog/2021/02/svglite-2-0-0/">svglite 2.0.0</a></p></li>
-</ul>
-<p>This is great news because a lot of the work in getting custom fonts to work in R is already done for us under the hood!</p>
-<p>In this blog post, I’ll start with the basics of setting up custom fonts, followed by a walkthrough of the font debugging workflow, concluding with some practical use-cases that can spice up your typography game for data viz. </p>
+<p>Getting <strong>custom fonts</strong> to work in R has historically been pretty difficult.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> At a high level, it involves the non-trivial task of unifying the <em>graphics device</em>, the <em>operating system</em>, and <em>text rendering</em>, (and also in our case, R!) to seamlessly work with each other.</p>
+<p>Luckily for us in 2021, we have an amazing solution to this problem thanks to recent developments in the <code>{ragg}</code>, <code>{systemfonts}</code>, and <code>{textshaping}</code> packages by RStudio. This is great news because a lot of the work for getting custom fonts to work in R is already done for us!</p>
+<p>In this blog post, I’ll start with the basics of <strong>setting up custom fonts</strong> followed by a walkthrough of the <strong>font debugging workflow</strong>, concluding with some <strong>practical use-cases</strong> that can spice up your typography game for data viz. </p>
 <h2 id="setting-up-ragg">Setting up <code>{ragg}</code></h2>
 <p>The first thing you should do, if you haven’t already, is to install {<a href="https://ragg.r-lib.org/">ragg</a>}, {<a href="https://github.com/r-lib/systemfonts">systemfonts</a>}, and {<a href="https://github.com/r-lib/textshaping">textshaping</a>}.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2647,12 +2642,12 @@ This long-winded way works for any plot, but if you use <code>{ggplot2}</code> a
 <p>Simply set <code>options(shiny.useragg = TRUE)</code> before rendering. Also check out the {<a href="https://rstudio.github.io/thematic/">thematic</a>} package for using custom fonts in shiny plot outputs.</p>
 <h2 id="installing-custom-fonts">Installing custom fonts</h2>
 <p>Now that you have <code>{ragg}</code> and <code>{systemfonts}</code> installed, take it for a spin with a custom font! When you’re rendering plots using <code>{ragg}</code>, custom fonts should <em>just work</em> as long as you have them installed on your local machine.</p>
-<p>If you haven’t really worked with custom fonts before, “installing a custom font” simply means finding the font file on the internet, downloading it, and drag-and-drop into a special folder on your local machine. It’s something like <em>Network/Library/Fonts</em> for Macs and <em>Microsoft/Windows/Fonts</em> for Windows. There can actually be a bit more to this (in Windows 10, for example, you have to drag and drop fonts onto the “Fonts” section of Settings), so make sure to google and check the process for installing fonts for your machine.</p>
+<p>If you haven’t really worked with custom fonts before, “installing a custom font” simply means finding the font file on the internet, downloading it, and drag-and-drop into a special folder on your local machine. It’s something like <em>Network/Library/Fonts</em> for Macs and <em>Microsoft/Windows/Fonts</em> for Windows. There can actually be a bit more to this process<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>, so make sure to google and check the process for installing fonts on your machine.</p>
 <h3 id="finding-the-right-file">Finding the right file</h3>
 <p>Font files come in many forms. In general, fonts files that match these two criteria tend to work the best:</p>
 <ol type="1">
 <li><p><strong>Fonts in <em>.otf</em> (OpenType Font) or <em>.ttf</em> (TrueType Font) formats</strong>. These are font formats that are installable on your local machine. You want to avoid other formats like <em>.woff</em> or <em>.woff2</em>, for example, which are designed for use for the web. In theory both <em>.otf</em> and <em>.ttf</em> should work with <code>{ragg}</code>, though I’ve sometimes had trouble with <em>.otf</em>. In those cases, I simply converted the <em>.otf</em> font file to <em>.ttf</em> before installing it, using free online conversion tools that you can easily find on Google. I’m of course glossing over the details here and I’m hardly an expert, but you can <a href="https://helpx.adobe.com/fonts/using/adobe-type-resources-faq.html">read more about TrueType and OpenType formats here</a>.</p></li>
-<li><p><strong>Static fonts</strong>. In static fonts, each <em>member</em> of the family has their own set of <em>glyphs</em> (i.e., there is a font file for each <em>style</em>). This is in contrast to <em>variable fonts</em>, where you have a single font file which can take the form of multiple styles (either by having many sets of glyphs or variable parameters).<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> To illustrate, look at the difference between the static (top) vs. variable (bottom) files for the <a href="https://fonts.google.com/specimen/Alegreya">Alegreya family</a>.</p>
+<li><p><strong>Static fonts</strong>. In static fonts, each <em>member</em> of the family has their own set of <em>glyphs</em> (i.e., there is a font file for each <em>style</em>). This is in contrast to <em>variable fonts</em>, where you have a single font file which can take the form of multiple styles (either by having many sets of glyphs or variable parameters).<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> To illustrate, look at the difference between the static (top) vs. variable (bottom) files for the <a href="https://fonts.google.com/specimen/Alegreya">Alegreya family</a>.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="figure" style="text-align: center"><span id="fig:static"></span>
 <img src="https://pbs.twimg.com/media/EzBpmgNXMAUBFfR?format=png&name=900x900" alt="Static font files for Alegreya"  />
@@ -2669,9 +2664,9 @@ Figure 3: Variable font files for Alegreya
 </p>
 </div>
 </div>
-<p>We see that static fonts are differentiated from variable fonts by having a distinct file for each style, like <em>Alegreya-Black.ttf</em>. On the other hand, variable fonts usually say “variable” somewhere in the file name, and are slightly larger in size than any individual static member. Note that not all fonts have both static and variable files, and not all static font files are <em>.ttf</em> (there can be static <em>.otf</em> and variable <em>.ttf</em> files).<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p></li>
+<p>We see that static fonts are differentiated from variable fonts by having a distinct file for each style, like <em>Alegreya-Black.ttf</em>. On the other hand, variable fonts usually say “variable” somewhere in the file name, and are slightly larger in size than any individual static member. Note that not all fonts have both static and variable files, and not all static font files are <em>.ttf</em> (there can be static <em>.otf</em> and variable <em>.ttf</em> files).<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p></li>
 </ol>
-<p>The above two images show the contents of the <em>.zip</em> file that you’d get if you went to <a href="https://fonts.google.com/">Google Fonts</a> (an awesome repository of free and open-source professional fonts) and clicked the <strong>Download family</strong> button on the <a href="https://fonts.google.com/specimen/Alegreya">page for Alegreya</a>. If you want to use the Alegreya font family (<a href="https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&amp;id=OFL">Open Font License</a><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>) in R, then you simply drag-and-drop all the static font files in <em>/static</em> into your system’s font folder (or in Settings &gt; Fonts for Windows 10).</p>
+<p>The above two images show the contents of the <em>.zip</em> file that you’d get if you went to <a href="https://fonts.google.com/">Google Fonts</a> (an awesome repository of free and open-source professional fonts) and clicked the <strong>Download family</strong> button on the <a href="https://fonts.google.com/specimen/Alegreya">page for Alegreya</a>. If you want to use the Alegreya font family (<a href="https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&amp;id=OFL">Open Font License</a><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>) in R, then you simply drag-and-drop all the static font files in <em>/static</em> into your system’s font folder (or in Settings &gt; Fonts for Windows 10).</p>
 <h3 id="checking-that-a-font-is-installed-and-available">Checking that a font is installed and available</h3>
 <p>Once you install a custom font on your system, it should also be available elsewhere locally on your machine (this is my first go-to sanity check). For example, I can use Alegreya in Microsoft Word after I download it.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2739,7 +2734,7 @@ Figure 5: Font Awesome 5 files
 </p>
 </div>
 </div>
-<p>Remember how I said R tends to play nicer with <em>.ttf</em> than <em>.otf</em> fonts?<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> Lets go ahead and convert the <em>.otf</em> files using an online converter, like <a href="https://convertio.co/otf-ttf">https://convertio.co/otf-ttf</a>. Now, with the three font files in <em>.ttf</em> format, follow the instructions for installing fonts on your OS.</p>
+<p>Remember how I said R tends to play nicer with <em>.ttf</em> than <em>.otf</em> fonts?<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> Lets go ahead and convert the <em>.otf</em> files using an online converter, like <a href="https://convertio.co/otf-ttf">https://convertio.co/otf-ttf</a>. Now, with the three font files in <em>.ttf</em> format, follow the instructions for installing fonts on your OS.</p>
 <p>Once Font Awesome is installed on our local machine, it should be visible to <code>{systemfonts}</code>, like this:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2797,7 +2792,7 @@ Figure 5: Font Awesome 5 files
   Font Awesome 5 Brands
   |---  Regular
 </pre>
-<p>In <code>geom_text()</code>, the font style is set by the <code>fontface</code> argument. When we don’t specify <code>fontface</code>, such as in our working example for the clock and twitter icons, it defaults to the regular style.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p>
+<p>In <code>geom_text()</code>, the font style is set by the <code>fontface</code> argument. When we don’t specify <code>fontface</code>, such as in our working example for the clock and twitter icons, it defaults to the regular style.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
 <p>So the solution to our problem is to put in <code>fontface = "solid"</code>, right…?</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2810,7 +2805,7 @@ Figure 5: Font Awesome 5 files
 </div>
 <pre><code>  Error in FUN(X[[i]], ...): invalid fontface solid</code></pre>
 </div>
-<p>Well now it just errors!<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> The issue here runs a bit deeper: if we track down the error,<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> it takes us to a function inside <code>grid::gpar()</code> that validates <code>fontface</code>. <a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a> If we take a look at the code, we see that only a very few font styles are valid, and “solid” isn’t one of them.</p>
+<p>Well now it just errors!<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> The issue here runs a bit deeper: if we track down the error,<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a> it takes us to a function inside <code>grid::gpar()</code> that validates <code>fontface</code>. <a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a> If we take a look at the code, we see that only a very few font styles are valid, and “solid” isn’t one of them.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'>function</span> <span class='op'>(</span><span class='va'>ch</span><span class='op'>)</span> 
@@ -2853,7 +2848,7 @@ Figure 5: Font Awesome 5 files
   3 Font Awesome 5 Free Solid Italic      Font-Awesome-5-Free-Solid-900.ttf
   4 Font Awesome 5 Free Solid Bold Italic Font-Awesome-5-Free-Solid-900.ttf</code></pre>
 </div>
-<p>We see that the Solid style is now available as the Regular (a.k.a. “plain”) style of its own font family, <strong>Font Awesome 5 Free Solid</strong>!<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a></p>
+<p>We see that the Solid style is now available as the Regular (a.k.a. “plain”) style of its own font family, <strong>Font Awesome 5 Free Solid</strong>!<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a></p>
 <p>Now we’re back to our cat icon example. Again, because <a href="https://fontawesome.com/v5.15/icons/cat?style=solid">Font Awewsome says there’s a cat icon in the Solid style</a>, we’d expect a cat icon if we render the text “cat” in the Solid style. Let’s set the <code>family</code> argument to our newly registered “Font Awesome 5 Free Solid” family and see what happens:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2865,7 +2860,7 @@ Figure 5: Font Awesome 5 files
 </div>
 <p>Third time’s the charm !!!</p>
 <h2 id="hoisting-font-styles">Hoisting font styles</h2>
-<p>Hopefully the lesson is now clear: to make a custom font work in R, it must be <strong>visible to <code>systemfonts::system_fonts()</code> in a style that is accessible to <code>grid::gpar()</code></strong>. The nifty trick of registering an inaccessible style as the “plain” member of its own family can be extended and automated as a utility function that is called purely for this side effect. In my <a href="https://github.com/yjunechoe/junebug">experimental package</a>, I have very simple function called <a href="https://github.com/yjunechoe/junebug/blob/master/R/font_helpers.R"><code>font_hoist()</code></a> which “hoists”<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a> <em>all</em> styles of a family as the “plain”/Regular style of their own families. This way, you never have to worry about things going wrong in the <code>fontface</code> argument.</p>
+<p>Hopefully the lesson is now clear: to make a custom font work in R, it must be <strong>visible to <code>systemfonts::system_fonts()</code> in a style that is accessible to <code>grid::gpar()</code></strong>. The nifty trick of registering an inaccessible style as the “plain” member of its own family can be extended and automated as a utility function that is called purely for this side effect. In my <a href="https://github.com/yjunechoe/junebug">experimental package</a>, I have very simple function called <a href="https://github.com/yjunechoe/junebug/blob/master/R/font_helpers.R"><code>font_hoist()</code></a> which “hoists”<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a> <em>all</em> styles of a family as the “plain”/Regular style of their own families. This way, you never have to worry about things going wrong in the <code>fontface</code> argument.</p>
 <details>
 <summary>
 font_hoist()
@@ -2887,7 +2882,7 @@ font_hoist()
 </div>
 </div>
 </details>
-<p>Let’s apply this to our Alegreya family. As we saw earlier, it has 12 styles, but only 4 can be accessed by <code>grid::gpar()</code>.<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a> But once we hoist the styles, we can access them all!</p>
+<p>Let’s apply this to our Alegreya family. As we saw earlier, it has 12 styles, but only 4 can be accessed by <code>grid::gpar()</code>.<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a> But once we hoist the styles, we can access them all!</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># install_github("yjunechoe/junebug")</span>
@@ -2925,13 +2920,13 @@ font_hoist()
 </div>
 <p><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-1.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-2.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-3.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-4.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-5.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-6.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-7.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-8.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-9.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-10.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-11.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-12.png" width="30%" /></p>
 </div>
-<p>But note that this <strong>registration is not persistent across sessions</strong>. If you restart R and run <code>systemfonts::registry_fonts()</code> again, it will return an empty data frame, indicating that you have no font varieties registered. You have to register font variants for every session, which is why it’s nice to have the <code>systemfonts::register_fonts()</code> workflow wrapped into a function like <code>font_hoist()</code>.</p>
+<p>But note that this <strong>registration is not persistent across sessions</strong>. If you restart R and run <code>registry_fonts()</code> again, it will return an empty data frame, indicating that you have no font varieties registered. You have to register font variants for every session, which is why it’s nice to have the <code>register_fonts()</code> workflow wrapped into a function like <code>font_hoist()</code>.</p>
 <h2 id="advanced-font-features">Advanced font features</h2>
 <p>But wait, that’s not all!</p>
 <p>Many modern professional fonts come with <strong>OpenType features</strong>, which mostly consist of stylistic parameters that can be turned on-and-off for a font. Note that despite being called “OpenType” features, it’s not something unique to <em>.otf</em> font formats. <strong>TrueType fonts (<em>.ttf</em>) can have OpenType features as well</strong>. For a fuller picture, you can check out the <a href="https://en.wikipedia.org/wiki/List_of_typographic_features#OpenType_typographic_features">full list of registered features</a> and this <a href="https://typofonderie.com/font-support/opentype-features">article</a> with visual examples for commonly used features.</p>
 <p>It looks overwhelming but only a handful are relevant for data visualization. I’ll showcase two features here: <em>lining</em> and <em>ordinals</em>.</p>
 <h3 id="lining">Lining</h3>
-<p>One of the most practical font features is <em>lining</em>, also called <code>"lnum"</code> (the four-letter feature tag), where all numbers share the same height and baseline.<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a></p>
+<p>One of the most practical font features is <em>lining</em>, also called <code>"lnum"</code> (the four-letter feature tag), where all numbers share the same height and baseline.<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a></p>
 <p>Let’s use our Alegreya font as an example again. By default, Alegreya has what are called “old style” numbers, where number glyphs have ascending and descending strokes which can make a string of numbers look unbalanced. Notice how the digits share different baselines here:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -3041,7 +3036,7 @@ font_hoist()
 </div>
 <pre><code>  [1] TRUE</code></pre>
 </div>
-<p>Then, we register the ordinal variant. Note that “ordn” is not built-in as an option for the <code>letters</code> argument of <code>font_features()</code>, unlike “lnum” which is a built-in option for the <code>numbers</code> argument.<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a> Therefore, we have to set the “ordn” feature inside the <code>...</code> with <code>"ordn" = TRUE</code>. And let’s simultaneously also turn on the lining feature from before as well.</p>
+<p>Then, we register the ordinal variant. Note that “ordn” is not built-in as an option for the <code>letters</code> argument of <code>font_features()</code>, unlike “lnum” which is a built-in option for the <code>numbers</code> argument.<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a> Therefore, we have to set the “ordn” feature inside the <code>...</code> with <code>"ordn" = TRUE</code>. And let’s simultaneously also turn on the lining feature from before as well.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Register variant</span>
@@ -3101,7 +3096,7 @@ font_hoist()
 </div>
 <p><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-ordn-allcap-1.png" width="624" /></p>
 </div>
-<p>One solution is to render the month in the Regular style and the rest in the ordinal variant.<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a> We can combine text in multiple fonts in-line with html syntax supported by <code>geom_richtext()</code> from <code>{ggtext}</code>. If you’re already familiar with <code>{ggtext}</code>, this example shows that it works the same for registered custom font variants!</p>
+<p>One solution is to render the month in the Regular style and the rest in the ordinal variant.<a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a> We can combine text in multiple fonts in-line with html syntax supported by <code>geom_richtext()</code> from <code>{ggtext}</code>. If you’re already familiar with <code>{ggtext}</code>, this example shows that it works the same for registered custom font variants!</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://wilkelab.org/ggtext/'>ggtext</a></span><span class='op'>)</span>
@@ -3138,7 +3133,7 @@ font_hoist()
 </div>
 <p><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/unnamed-chunk-7-1.png" width="624" /></p>
 </div>
-<p>In my opinion, <strong>you should always err towards using the supported font features</strong> because they are designed with the particular aesthetics of the font in mind.<a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a> Hopefully this example has convinced you!</p>
+<p>In my opinion, <strong>you should always err towards using the supported font features</strong> because they are designed with the particular aesthetics of the font in mind.<a href="#fn20" class="footnote-ref" id="fnref20" role="doc-noteref"><sup>20</sup></a> Hopefully this example has convinced you!</p>
 <h2 id="usecases">Usecases</h2>
 <h3 id="a-mash-up">A mash-up</h3>
 <p>Here’s a made up plot that mashes up everything we went over so far:</p>
@@ -3244,7 +3239,7 @@ To be updated with link to the talk!
 </p>
 <p>Some extra stuff not mentioned in the talk:</p>
 <ul>
-<li><p><code>{ragg}</code> supports colored fonts like emojis, which also means that it can render <strong>colored icon fonts</strong>.<a href="#fn20" class="footnote-ref" id="fnref20" role="doc-noteref"><sup>20</sup></a> Icons don’t often come in colors, but one example is Google’s <a href="https://fonts.google.com/icons">Material Icons</a> font (<a href="https://github.com/google/material-design-icons/blob/master/LICENSE">Apache 2.0 license</a>), which has a <a href="https://fonts.google.com/icons?selected=Material+Icons+Two+Tone">Two Tone</a> style where icons have a grey fill in addition to a black stroke:<a href="#fn21" class="footnote-ref" id="fnref21" role="doc-noteref"><sup>21</sup></a></p>
+<li><p><code>{ragg}</code> supports colored fonts like emojis, which also means that it can render <strong>colored icon fonts</strong>.<a href="#fn21" class="footnote-ref" id="fnref21" role="doc-noteref"><sup>21</sup></a> Icons don’t often come in colors, but one example is Google’s <a href="https://fonts.google.com/icons">Material Icons</a> font (<a href="https://github.com/google/material-design-icons/blob/master/LICENSE">Apache 2.0 license</a>), which has a <a href="https://fonts.google.com/icons?selected=Material+Icons+Two+Tone">Two Tone</a> style where icons have a grey fill in addition to a black stroke:<a href="#fn22" class="footnote-ref" id="fnref22" role="doc-noteref"><sup>22</sup></a></p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='cn'>NULL</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
@@ -3305,6 +3300,12 @@ Figure 6: Making a font in Inkscape
 <li><p>Everything from <a href="https://twitter.com/thomasp85">Thomas Lin Pedersen</a>, the main person responsible for these developments.</p></li>
 <li><p>Many <a href="https://twitter.com/search?q=%23TidyTuesday">#TidyTuesday</a> submissions.</p></li>
 </ul>
+<p>Official RStudio blog posts:</p>
+<ul>
+<li><p><a href="https://www.tidyverse.org/blog/2021/02/modern-text-features/">Modern Text Features in R</a></p></li>
+<li><p><a href="https://www.tidyverse.org/blog/2020/05/updates-to-ragg-and-systemfonts/">Updates to ragg and systemfonts</a></p></li>
+<li><p><a href="https://www.tidyverse.org/blog/2021/02/svglite-2-0-0/">svglite 2.0.0</a></p></li>
+</ul>
 <h2 id="session-info">Session info</h2>
 <details>
 <summary>
@@ -3356,23 +3357,24 @@ Session Info
 <li id="fn2" role="doc-endnote"><p>I’m focusing on outputing to <em>bitmap</em> (e.g., <code>.png</code>, <code>.jpeg</code>, <code>.tiff</code>). For other formats like SVG (which I often default to for online material), you can use <code>svglite</code> - read more on the <a href="https://svglite.r-lib.org/">package website</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3" role="doc-endnote"><p>Check out the discussion on <a href="https://github.com/tidyverse/ggplot2/issues/4347">this issue</a> and <a href="https://github.com/tidyverse/ggplot2/issues/4347">this commit</a>. There’s also been some talk of making AGG the default renderer, though I don’t know if that’s been settled.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4" role="doc-endnote"><p>These are used to calculate DPI (dots per inch). Resolution is in pixels, so <code>res=150</code> and <code>units="inch"</code> is the same as <code>dpi=150</code>. <code>{ragg}</code> devices don’t have a <code>dpi</code> argument like the default device, so you have to specify both resolution and units.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5" role="doc-endnote"><p>Variable fonts are hit-or-miss because while <code>{ragg}</code> and <code>{systemfonts}</code> <em>do</em> support some variable font features (see the section on <strong>Advanced features</strong>), “variable” can mean many different things, some of which are not supported (e.g., variable width). If you install a variable font, it might render with <code>{ragg}</code> but you’re unlikely to be able to tweak its parameters (like change the weight, for example).<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6" role="doc-endnote"><p>In my experience, though, static fonts tend to be <em>.ttf</em> and variable fonts tend to be <em>.otf</em>.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7" role="doc-endnote"><p>“You can use them freely in your products &amp; projects - print or digital, commercial or otherwise. However, you can’t sell the fonts on their own.”<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8" role="doc-endnote"><p>Again, YMMV but I’ve had to help a few people with this problem.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9" role="doc-endnote"><p>Technically, it defaults to <code>fontface = "plain"</code>, but <code>{systemfonts}</code> and (also probably your OS) calls it the “Regular” style<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10" role="doc-endnote"><p>In case you’re wondering, it still errors with “Solid”, capitalized.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn11" role="doc-endnote"><p><code>options(error = recover)</code> is your friend! And remember to set <code>options(error = NULL)</code> back once you’re done!<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn12" role="doc-endnote"><p>You might wonder: what’s the <code>{grid}</code> package doing here? Well, <code>{grid}</code> is kinda the “backend” for <code>{ggplot2}</code> that handles the actual “drawing to the canvas”, which is why it’s relevant here. For example, <code>geom_text()</code> returns a <strong>Gr</strong>aphical <strong>ob</strong>ject (“Grob”), specifically <code>grid::textGrob()</code>, that inherits arguments like <code>family</code> and <code>fontface</code> (which are in turn passed into <code>grid::gpar()</code>, where <code>gpar</code> stands for <strong>g</strong>raphical <strong>par</strong>ameters).<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn13" role="doc-endnote"><p>The same font file also registered as the Bold, Italic, and Bold Italic styles of the family as well, which is what happens by default if you only supply the <code>plain</code> argument to <code>register_font()</code>. You can of course just ignore this.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn14" role="doc-endnote"><p>Borrowing terminology from <code>tidyr::hoist()</code>, the under-appreciated beast of list-column workflows<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn15" role="doc-endnote"><p>Regular as “plain”, Bold as “bold”, Italic as “italic”, and Bold Italic as “bold.italic”.<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn16" role="doc-endnote"><p>Also check out the related “pnum” (proportional numbers) and “tnum” (tabular numbers) features.<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn17" role="doc-endnote"><p>check the help page <code>?systemfonts::font_feature</code> for details.<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn18" role="doc-endnote"><p>Another solution would be to use the small-cap variant (the “smcp” feature) for “une”.<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn19" role="doc-endnote"><p>But this also means that not all fonts support “ordn”, while <code>&lt;sup&gt;</code> is always available.<a href="#fnref19" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn20" role="doc-endnote"><p>But not <em>all</em> colored fonts, in my experience.<a href="#fnref20" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn21" role="doc-endnote"><p>The colors are fixed though - they come colored in black and filled in grey.<a href="#fnref21" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>in Windows 10, for example, you have to drag and drop fonts onto the “Fonts” section of Settings<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p>Variable fonts are hit-or-miss because while <code>{ragg}</code> and <code>{systemfonts}</code> <em>do</em> support some variable font features (see the section on <strong>Advanced features</strong>), “variable” can mean many different things, some of which are not supported (e.g., variable width). If you install a variable font, it might render with <code>{ragg}</code> but you’re unlikely to be able to tweak its parameters (like change the weight, for example).<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7" role="doc-endnote"><p>In my experience, though, static fonts tend to be <em>.ttf</em> and variable fonts tend to be <em>.otf</em>.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8" role="doc-endnote"><p>“You can use them freely in your products &amp; projects - print or digital, commercial or otherwise. However, you can’t sell the fonts on their own.”<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9" role="doc-endnote"><p>Again, YMMV but I’ve had to help a few people with this problem.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10" role="doc-endnote"><p>Technically, it defaults to <code>fontface = "plain"</code>, but <code>{systemfonts}</code> and (also probably your OS) calls it the “Regular” style<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11" role="doc-endnote"><p>In case you’re wondering, it still errors with “Solid”, capitalized.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12" role="doc-endnote"><p><code>options(error = recover)</code> is your friend! And remember to set <code>options(error = NULL)</code> back once you’re done!<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13" role="doc-endnote"><p>You might wonder: what’s the <code>{grid}</code> package doing here? Well, <code>{grid}</code> is kinda the “backend” for <code>{ggplot2}</code> that handles the actual “drawing to the canvas”, which is why it’s relevant here. For example, <code>geom_text()</code> returns a <strong>Gr</strong>aphical <strong>ob</strong>ject (“Grob”), specifically <code>grid::textGrob()</code>, that inherits arguments like <code>family</code> and <code>fontface</code> (which are in turn passed into <code>grid::gpar()</code>, where <code>gpar</code> stands for <strong>g</strong>raphical <strong>par</strong>ameters).<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14" role="doc-endnote"><p>The same font file also registered as the Bold, Italic, and Bold Italic styles of the family as well, which is what happens by default if you only supply the <code>plain</code> argument to <code>register_font()</code>. You can of course just ignore this.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15" role="doc-endnote"><p>Borrowing terminology from <code>tidyr::hoist()</code>, the under-appreciated beast of list-column workflows<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16" role="doc-endnote"><p>Regular as “plain”, Bold as “bold”, Italic as “italic”, and Bold Italic as “bold.italic”.<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn17" role="doc-endnote"><p>Also check out the related “pnum” (proportional numbers) and “tnum” (tabular numbers) features.<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn18" role="doc-endnote"><p>check the help page <code>?systemfonts::font_feature</code> for details.<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn19" role="doc-endnote"><p>Another solution would be to use the small-cap variant (the “smcp” feature) for “une”.<a href="#fnref19" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn20" role="doc-endnote"><p>But this also means that not all fonts support “ordn”, while <code>&lt;sup&gt;</code> is always available.<a href="#fnref20" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn21" role="doc-endnote"><p>But not <em>all</em> colored fonts, in my experience.<a href="#fnref21" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn22" role="doc-endnote"><p>The colors are fixed though - they come colored in black and filled in grey.<a href="#fnref22" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 <!--radix_placeholder_article_footer-->
