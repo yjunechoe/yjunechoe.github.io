@@ -31,15 +31,15 @@ li::marker {
 
 ### June
 
-- I gave a talk at [RLadies philly](https://www.rladiesphilly.org/) on using icon fonts for data viz (talk link coming soon).
+- I gave a **talk** at [RLadies philly](https://www.rladiesphilly.org/) on using icon fonts for data viz (link to recording coming soon!). I also wrote a follow-up [blog post](https://yjunechoe.github.io/posts/2021-06-24-setting-up-and-debugging-custom-fonts/) that goes deeper into font rendering in R.
 
 ### May
 
-- [SnowGlobe](https://snowglobe.soc.northwestern.edu/), a project started in my undergrad, was featured in an [article](https://sites.northwestern.edu/northwesternlibrary/2021/05/11/student-developed-app-expedites-time-consuming-research-task/) by the NU Library. We also had a [workshop for SnowGlobe](https://www.eventbrite.com/e/an-introduction-to-snowglobe-a-tool-for-systematic-reviews-tickets-149045397797#) which drew participants from over a hundred universities!
+- [SnowGlobe](https://snowglobe.soc.northwestern.edu/), a project started in my undergrad, was featured in an [article](https://sites.northwestern.edu/northwesternlibrary/2021/05/11/student-developed-app-expedites-time-consuming-research-task/) by the Northwestern University Library. We also had a [workshop for SnowGlobe](https://www.eventbrite.com/e/an-introduction-to-snowglobe-a-tool-for-systematic-reviews-tickets-149045397797#) which drew participants from over a hundred universities!
 
 ### January
 
-- I joined [Dr. Nayoun Kim](https://nayounkimlinguist.com/) for a [workshop on experimental syntax](https://skb.skku.edu/bk21english/board/notice.do?mode=view&articleNo=110726&article.offset=0&articleLimit=10) held at Sungkyunkwan University (Korea). I helped design [materials](https://github.com/yjunechoe/IBEX-Workshop-Materials) for a session on scripting online experiments with IBEX, including [interactive slides](https://ibex-workshop-slides.netlify.app/) made with R!
+- I joined [Dr. Nayoun Kim](https://nayounkimlinguist.com/) for a [workshop on experimental syntax](https://skb.skku.edu/bk21english/board/notice.do?mode=view&articleNo=110726&article.offset=0&articleLimit=10) held at Sungkyunkwan University (Korea). I helped design [materials](https://github.com/yjunechoe/IBEX-Workshop-Materials) for a session on **scripting online experiments with IBEX**, including [interactive slides](https://ibex-workshop-slides.netlify.app/) made with R!
 
 
 ## 2020
@@ -62,4 +62,4 @@ li::marker {
 
 ### June
 
-- **I graduated from Northwestern University** with a B.A. in Linguistics! I was also elected into Phi Beta Kappa and appointed as the Senior Marshal for Linguistics.
+- **I graduated from Northwestern University** with a B.A. in Linguistics (with honors)! I was also elected into Phi Beta Kappa and appointed as the Senior Marshal for Linguistics.

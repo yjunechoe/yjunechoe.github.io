@@ -1,19 +1,15 @@
 /* ---------- Global Styles ---------- */
 
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Fira+Mono&display=swap');
 
-@font-face {
-  font-family: 'Chillax';
-  src: url("./static/chillax.css")
-}
-
 html, body, p {
   
-  font-family: 'Chillax';
-  font-weight: 500;
+  font-family: 'Open Sans';
+  font-weight: 400;
   line-height: 1.7; 
   font-size: 1em;
   color: #333333;
@@ -151,7 +147,7 @@ d-title h1 {
 }
 
 d-title p {
-  font-weight: 500;
+  font-weight: 600;
 }
 
 
