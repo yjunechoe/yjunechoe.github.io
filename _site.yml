@@ -31,7 +31,7 @@ navbar:
     - image: static/img/osf.png
       href: https://osf.io/72vrb/
     - icon: fa fa-rss
-      href: index.xml
+      href: sitemap.xml
   search: true
 collections:
   posts:
