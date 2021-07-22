@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
   <channel>
-    <title>June Choe</title>
+    <title/>
     <link>https://yjunechoe.github.io</link>
     <atom:link href="https://yjunechoe.github.io/blog.xml" rel="self" type="application/rss+xml"/>
     <description>Personal Blog
 </description>
     <image>
-      <title>June Choe</title>
+      <title/>
       <url>https://yjunechoe.github.io/static/img/icon.png</url>
       <link>https://yjunechoe.github.io</link>
     </image>

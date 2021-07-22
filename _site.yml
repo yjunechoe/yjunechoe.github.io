@@ -1,5 +1,5 @@
 name: "June Choe"
-title: "June Choe"
+title: ""
 description: |
   Personal Blog
 output_dir: "docs"
@@ -14,11 +14,10 @@ navbar:
       href: blog.html
     - text: "Research"
       href: research.html
+    - text: "News"
+      href: news.html
     - text: "Misc."
       menu:
-        - text: "News"
-          href: news.html
-        - text: "---"
         - text: "Resources"
           href: resources.html
         # - text: "---"

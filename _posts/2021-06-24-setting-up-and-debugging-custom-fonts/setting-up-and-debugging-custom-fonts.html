@@ -1494,6 +1494,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
+<li><a href="#introduction">Introduction</a></li>
 <li><a href="#setting-up-ragg">Setting up <code>{ragg}</code></a>
 <ul>
 <li><a href="#rendering-in-rstudio-plot-pane">1. Rendering in RStudio plot pane</a></li>
@@ -1523,6 +1524,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </ul>
 </nav>
 </div>
+<p><em>This blog post was featured in the <a href="https://share.fireside.fm/episode/87RSVeFz+alD0Og1X?t=247">R Weekly highlights podcast</a>! Thanks to the R Weekly team for the comprehensive review!</em></p>
+<h2 id="introduction">Introduction</h2>
 <p>Getting <strong>custom fonts</strong> to work in R has historically been pretty difficult.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> At a high level, it involves the non-trivial task of unifying the <em>graphics device</em>, the <em>operating system</em>, and <em>text rendering</em>, (and also in our case, R!) to seamlessly work with each other.</p>
 <p>Luckily for us in 2021, we have an amazing solution to this problem thanks to recent developments in the <code>{ragg}</code>, <code>{systemfonts}</code>, and <code>{textshaping}</code> packages by RStudio. This is great news because a lot of the work for getting custom fonts to work in R is already done for us!</p>
 <p>In this blog post, I’ll start with the basics of <strong>setting up custom fonts</strong> followed by a walkthrough of the <strong>font debugging workflow</strong>, concluding with some <strong>practical use-cases</strong> that can spice up your typography game for data viz. </p>
@@ -1549,7 +1552,7 @@ Figure 1: Where to set AGG as the graphic device for RStudio - image from <a hre
 </div>
 </div>
 <h3 id="saving-as-an-external-file">2. Saving as an external file</h3>
-<p>For any bitmap output, use any of the <code>ragg::agg_*()</code> function to render plots using the AGG device.</p>
+<p>For bitmap output, use any of the <code>ragg::agg_*()</code> function to render plots using the AGG device.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Set output path</span>
@@ -1585,7 +1588,7 @@ This long-winded way works for any plot, but if you use <code>{ggplot2}</code> a
 </div>
 </div>
 <h3 id="shiny">4. Shiny</h3>
-<p>Simply set <code>options(shiny.useragg = TRUE)</code> before rendering. Also check out the {<a href="https://rstudio.github.io/thematic/">thematic</a>} package for using custom fonts in shiny plot outputs.</p>
+<p>Simply set <code>options(shiny.useragg = TRUE)</code> before rendering. Also check out the {<a href="https://rstudio.github.io/thematic/">thematic</a>} package for importing/using custom fonts in shiny plot outputs.</p>
 <h2 id="installing-custom-fonts">Installing custom fonts</h2>
 <p>Now that you have <code>{ragg}</code> and <code>{systemfonts}</code> installed, take it for a spin with a custom font! When you’re rendering plots using <code>{ragg}</code>, custom fonts should <em>just work</em> as long as you have them installed on your local machine.</p>
 <p>If you haven’t really worked with custom fonts before, “installing a custom font” simply means finding the font file on the internet, downloading it, and drag-and-drop into a special folder on your local machine. It’s something like <em>Network/Library/Fonts</em> for Macs and <em>Microsoft/Windows/Fonts</em> for Windows. There can actually be a bit more to this process<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>, so make sure to google and check the process for installing fonts on your machine.</p>
@@ -1614,7 +1617,7 @@ Figure 3: Variable font files for Alegreya
 </ol>
 <p>The above two images show the contents of the <em>.zip</em> file that you’d get if you went to <a href="https://fonts.google.com/">Google Fonts</a> (an awesome repository of free and open-source professional fonts) and clicked the <strong>Download family</strong> button on the <a href="https://fonts.google.com/specimen/Alegreya">page for Alegreya</a>. If you want to use the Alegreya font family (<a href="https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&amp;id=OFL">Open Font License</a><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>) in R, then you simply drag-and-drop all the static font files in <em>/static</em> into your system’s font folder (or in Settings &gt; Fonts for Windows 10).</p>
 <h3 id="checking-that-a-font-is-installed-and-available">Checking that a font is installed and available</h3>
-<p>Once you install a custom font on your system, it should also be available elsewhere locally on your machine (this is my first go-to sanity check). For example, I can use Alegreya in Microsoft Word after I download it.</p>
+<p>Once you install a custom font on your system, it should also be available elsewhere locally on your machine. For example, I can use Alegreya in Microsoft Word after I download it (this is actually my first go-to sanity check).</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="figure" style="text-align: center"><span id="fig:word"></span>
 <img src="img/alegreya_word.png" alt="Alegreya in Microsoft Word" width="584" />
@@ -1670,8 +1673,8 @@ Figure 4: Alegreya in Microsoft Word
 </div>
 <h2 id="debugging-custom-fonts">Debugging custom fonts</h2>
 <p>So far we’ve seen that the workflow for setting up and installing fonts is pretty straightforward. But what do we do in times when things inevitable go wrong?</p>
-<p>Consider the case of using <a href="https://fontawesome.com/">Font Awesome</a>, an icon font that renders <em>special character sequences</em> as <em>icon glyphs</em> (check the <strong>Icon fonts</strong> section for more!). Font Awesome has a free version (<a href="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/LICENSE.txt">CC-BY and SIL OFL license</a>), and let’s say we want to use it for personal use for a <a href="https://github.com/rfordatascience/tidytuesday">TidyTuesday</a> submission.</p>
-<p>The first thing we do is locate the font file. Font Awesome is open source, and the free version (Font Awesome 5 Free) is updated on Github. The most recent release as of this blog post is 5.15.3 - follow <a href="https://github.com/FortAwesome/Font-Awesome/releases/tag/5.15.3">this link</a> to download <em>fontawesome-free-5.15.3-desktop.zip</em>. If you unzip the file, you’ll find <em>.otf</em> font files corresponding to the three styles available in the free version: Regular, Solid, and Brands.</p>
+<p>Consider the case of using <a href="https://fontawesome.com/">Font Awesome</a>, an icon font that renders <em>special character sequences</em> as <em>icon glyphs</em> (check the <a href="#icon-fonts"><strong>Icon fonts</strong></a> section for more!). Font Awesome has a free version (<a href="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/LICENSE.txt">CC-BY and SIL OFL license</a>), and let’s say we want to use it for personal use for a <a href="https://github.com/rfordatascience/tidytuesday">TidyTuesday</a> submission.</p>
+<p>The first thing we do is locate the font file. Font Awesome is open source, and the free version (Font Awesome 5 Free) is updated on Github. The most recent release as of this blog post is <a href="https://github.com/FortAwesome/Font-Awesome/releases/tag/5.15.3">v5.15.3</a>. If you unzip the file, you’ll find <em>.otf</em> font files corresponding to the three variants available in the free version: Regular, Solid, and Brands.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="figure" style="text-align: center"><span id="fig:fa-files"></span>
 <img src="img/fa_otf.png" alt="Font Awesome 5 files" width="80%" />
@@ -1700,7 +1703,7 @@ Figure 5: Font Awesome 5 files
   3 Font Awesome 5 Free   Regular Font-Awesome-5-Free-Regular-400.ttf</code></pre>
 </div>
 <p>Now let’s try plotting some icons!</p>
-<p>We see that we can render icons from the Regular style (“<a href="https://fontawesome.com/v5.15/icons/clock?style=regular">clock</a>”) and the Brands style (“<a href="https://fontawesome.com/v5.15/icons/twitter?style=brands">twitter</a>”).</p>
+<p>We see that we can render icons from the Regular variant (“<a href="https://fontawesome.com/v5.15/icons/clock?style=regular">clock</a>”) and the Brands variant (“<a href="https://fontawesome.com/v5.15/icons/twitter?style=brands">twitter</a>”).</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Left plot</span>
@@ -1720,7 +1723,7 @@ Figure 5: Font Awesome 5 files
 </div>
 <p><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/fa-success-1.png" width="50%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/fa-success-2.png" width="50%" /></p>
 </div>
-<p>But what about rendering in the Solid style? Font Awesome tells me that the Solid style has a “<a href="https://fontawesome.com/v5.15/icons/cat?style=solid">cat</a>” icon, so let’s try it.</p>
+<p>But what about rendering in the Solid variant? Font Awesome tells me that the Solid variant has a “<a href="https://fontawesome.com/v5.15/icons/cat?style=solid">cat</a>” icon, so let’s try it.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='cn'>NULL</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
@@ -1729,7 +1732,7 @@ Figure 5: Font Awesome 5 files
 </div>
 <p><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/fa-fail-1.png" width="624" /></p>
 </div>
-<p>Uh oh, that didn’t work. Well that’s because Solid is actually a <strong>style</strong>, not a family. If you go back to the output from <code>system_fonts()</code>, we see that Font Awesome actually consists of two font families: <strong>Font Awesome 5 Brands</strong> which has a “Regular” style, and <strong>Font Awesome 5 Free</strong> with a “Regular” style and a “Solid” style.</p>
+<p>Uh oh, that didn’t work. Well that’s because Solid is actually a <strong>style</strong>, not a family! If you go back to the output from <code>system_fonts()</code>, we see that Font Awesome actually consists of <em>two</em> font families: <strong>Font Awesome 5 Brands</strong> which has a “Regular” style, and <strong>Font Awesome 5 Free</strong> with a “Regular” style and a “Solid” style.</p>
 <p>The structure is roughly like this:</p>
 <pre>
   Font Awesome 5 Free
@@ -1738,8 +1741,8 @@ Figure 5: Font Awesome 5 files
   Font Awesome 5 Brands
   |---  Regular
 </pre>
-<p>In <code>geom_text()</code>, the font style is set by the <code>fontface</code> argument. When we don’t specify <code>fontface</code>, such as in our working example for the clock and twitter icons, it defaults to the regular style.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
-<p>So the solution to our problem is to put in <code>fontface = "solid"</code>, right…?</p>
+<p>In <code>geom_text()</code>, the font style is set by the <code>fontface</code> argument. When we don’t specify <code>fontface</code>, such as in our working example for the clock and twitter icons, it defaults to the Regular style.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
+<p>So the solution to our problem is to put in <code>fontface = "Solid"</code>, right…?</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='cn'>NULL</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
@@ -1761,8 +1764,8 @@ Figure 5: Font Awesome 5 files
 </code></pre>
 </div>
 </div>
-<p>Okay, so then how can we ever access the Solid style of the Font Awesome 5 Free family? Luckily, there’s a solution: use <code>systemfonts::register_font()</code> to register the Solid style as the “plain” style of its own font family!</p>
-<p>We can do this by passing in the name of the new font family in the <code>name</code> argument and then setting the <code>plain</code> argument to the path of the font file.</p>
+<p>Okay, so then how can we ever access the Solid style of the Font Awesome 5 Free family? Luckily, there’s a solution: use <code>systemfonts::register_font()</code> to register the Solid style as the “plain” style of its <strong>own font family</strong>!</p>
+<p>We can do this by passing in the name of the new font family in the <code>name</code> argument, and passing the path of the font file to the <code>plain</code> argument.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>fa_solid_path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/systemfonts/man/system_fonts.html'>system_fonts</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
@@ -1794,7 +1797,7 @@ Figure 5: Font Awesome 5 files
   3 Font Awesome 5 Free Solid Italic      Font-Awesome-5-Free-Solid-900.ttf
   4 Font Awesome 5 Free Solid Bold Italic Font-Awesome-5-Free-Solid-900.ttf</code></pre>
 </div>
-<p>We see that the Solid style is now available as the Regular (a.k.a. “plain”) style of its own font family, <strong>Font Awesome 5 Free Solid</strong>!<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a></p>
+<p>We see that the Solid style is now available as the Regular (a.k.a. “plain”) style of its own font family: <strong>Font Awesome 5 Free Solid</strong>!<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a></p>
 <p>Now we’re back to our cat icon example. Again, because <a href="https://fontawesome.com/v5.15/icons/cat?style=solid">Font Awewsome says there’s a cat icon in the Solid style</a>, we’d expect a cat icon if we render the text “cat” in the Solid style. Let’s set the <code>family</code> argument to our newly registered “Font Awesome 5 Free Solid” family and see what happens:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -1806,10 +1809,10 @@ Figure 5: Font Awesome 5 files
 </div>
 <p>Third time’s the charm !!!</p>
 <h2 id="hoisting-font-styles">Hoisting font styles</h2>
-<p>Hopefully the lesson is now clear: to make a custom font work in R, it must be <strong>visible to <code>systemfonts::system_fonts()</code> in a style that is accessible to <code>grid::gpar()</code></strong>. The nifty trick of registering an inaccessible style as the “plain” member of its own family can be extended and automated as a utility function that is called purely for this side effect. In my <a href="https://github.com/yjunechoe/junebug">experimental package</a>, I have very simple function called <a href="https://github.com/yjunechoe/junebug/blob/master/R/font_helpers.R"><code>font_hoist()</code></a> which “hoists”<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a> <em>all</em> styles of a family as the “plain”/Regular style of their own families. This way, you never have to worry about things going wrong in the <code>fontface</code> argument.</p>
+<p>Hopefully the lesson is now clear: to make a custom font work in R, <strong>the font must be visible to <code>systemfonts::system_fonts()</code> in a style that is accessible to <code>grid::gpar()</code></strong>. The nifty trick of registering an inaccessible style as the “plain” style of its <em>own</em> family can be extended and automated as a utility function that is called purely for this side effect. In my <a href="https://github.com/yjunechoe/junebug">experimental package</a>, I have very simple function called <a href="https://github.com/yjunechoe/junebug/blob/master/R/font_helpers.R"><code>font_hoist()</code></a> which “hoists”<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a> <em>all</em> styles of a family as the “plain”/Regular style of their own families. This way, you never have to worry about things going wrong in the <code>fontface</code> argument.</p>
 <details>
 <summary>
-font_hoist()
+junebug::font_hoist()
 </summary>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -1866,10 +1869,10 @@ font_hoist()
 </div>
 <p><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-1.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-2.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-3.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-4.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-5.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-6.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-7.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-8.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-9.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-10.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-11.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-12.png" width="30%" /></p>
 </div>
-<p>But note that this <strong>registration is not persistent across sessions</strong>. If you restart R and run <code>registry_fonts()</code> again, it will return an empty data frame, indicating that you have no font varieties registered. You have to register font variants for every session, which is why it’s nice to have the <code>register_fonts()</code> workflow wrapped into a function like <code>font_hoist()</code>.</p>
+<p>But note that the <strong>registration of custom font variants is not persistent across sessions</strong>. If you restart R and run <code>registry_fonts()</code> again, it will return an empty data frame, indicating that you have no font variants registered. You have to register font variants for every session, which is why it’s nice to have the <code>register_fonts()</code> workflow wrapped into a function like <code>font_hoist()</code>.</p>
 <h2 id="advanced-font-features">Advanced font features</h2>
 <p>But wait, that’s not all!</p>
-<p>Many modern professional fonts come with <strong>OpenType features</strong>, which mostly consist of stylistic parameters that can be turned on-and-off for a font. Note that despite being called “OpenType” features, it’s not something unique to <em>.otf</em> font formats. <strong>TrueType fonts (<em>.ttf</em>) can have OpenType features as well</strong>. For a fuller picture, you can check out the <a href="https://en.wikipedia.org/wiki/List_of_typographic_features#OpenType_typographic_features">full list of registered features</a> and this <a href="https://typofonderie.com/font-support/opentype-features">article</a> with visual examples for commonly used features.</p>
+<p>Many modern professional fonts come with <strong>OpenType features</strong>, which mostly consist of stylistic parameters that can be turned on-and-off for a font. Note that despite being called “OpenType” features, it’s not something unique to <em>.otf</em> font formats. <strong>TrueType fonts (<em>.ttf</em>) can have OpenType features as well</strong>. For a fuller picture, you can check out the <a href="https://en.wikipedia.org/wiki/List_of_typographic_features#OpenType_typographic_features">full list of registered features</a> and this <a href="https://typofonderie.com/font-support/opentype-features">article with visual examples</a> for commonly used features.</p>
 <p>It looks overwhelming but only a handful are relevant for data visualization. I’ll showcase two features here: <em>lining</em> and <em>ordinals</em>.</p>
 <h3 id="lining">Lining</h3>
 <p>One of the most practical font features is <em>lining</em>, also called <code>"lnum"</code> (the four-letter feature tag), where all numbers share the same height and baseline.<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a></p>
@@ -1982,7 +1985,7 @@ font_hoist()
 </div>
 <pre><code>  [1] TRUE</code></pre>
 </div>
-<p>Then, we register the ordinal variant. Note that “ordn” is not built-in as an option for the <code>letters</code> argument of <code>font_features()</code>, unlike “lnum” which is a built-in option for the <code>numbers</code> argument.<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a> Therefore, we have to set the “ordn” feature inside the <code>...</code> with <code>"ordn" = TRUE</code>. And let’s simultaneously also turn on the lining feature from before as well.</p>
+<p>Then, we register the ordinal variant. Note that “ordn” is not built-in as an option for the <code>letters</code> argument of <code>font_features()</code>, unlike “lnum” which is a built-in option for the <code>numbers</code> argument.<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a> Therefore, we have to set the “ordn” feature inside the <code>...</code> of <code>font_feature()</code> with <code>"ordn" = TRUE</code>. And let’s also simultaneously turn on the lining feature from before as well.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Register variant</span>
@@ -2179,13 +2182,15 @@ Plot Code
 </details>
 <h3 id="icon-fonts">Icon fonts</h3>
 <p>If this blog post was your first time encountering icon fonts in R, you probably have a lot of questions right now about using them in data visualizations. You can check out my <strong>lightning talk on icon fonts</strong> that I gave at <a href="https://www.rladiesphilly.org/">RLadies Philly</a> for a quick overview as well as some tips &amp; tricks!</p>
+<p>
+</p>
 <div class="l-body-outset">
 <iframe height="500" src="https://www.youtube.com/embed/guzjt7xh2Cw?start=3787" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 </div>
 <p>Some extra stuff not mentioned in the talk:</p>
 <ul>
-<li><p><code>{ragg}</code> supports colored fonts like emojis, which also means that it can render <strong>colored icon fonts</strong>.<a href="#fn21" class="footnote-ref" id="fnref21" role="doc-noteref"><sup>21</sup></a> Icons don’t often come in colors, but one example is Google’s <a href="https://fonts.google.com/icons">Material Icons</a> font (<a href="https://github.com/google/material-design-icons/blob/master/LICENSE">Apache 2.0 license</a>), which has a <a href="https://fonts.google.com/icons?selected=Material+Icons+Two+Tone">Two Tone</a> style where icons have a grey fill in addition to a black stroke:<a href="#fn22" class="footnote-ref" id="fnref22" role="doc-noteref"><sup>22</sup></a></p>
+<li><p><code>{ragg}</code> supports the rendering of colored fonts like <a href="https://www.tidyverse.org/blog/2021/02/modern-text-features/#color-fonts">emojis</a>, which also means that it can render <strong>colored <em>icon</em> fonts</strong>.<a href="#fn21" class="footnote-ref" id="fnref21" role="doc-noteref"><sup>21</sup></a> Icons don’t often come in colors, but one example is Google’s <a href="https://fonts.google.com/icons">Material Icons</a> font (<a href="https://github.com/google/material-design-icons/blob/master/LICENSE">Apache 2.0 license</a>), which has a <a href="https://fonts.google.com/icons?selected=Material+Icons+Two+Tone">Two Tone</a> style where icons have a grey fill in addition to a black stroke:<a href="#fn22" class="footnote-ref" id="fnref22" role="doc-noteref"><sup>22</sup></a></p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='cn'>NULL</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
@@ -2198,7 +2203,7 @@ Plot Code
 </div>
 <p><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/unnamed-chunk-9-1.png" width="624" /></p>
 </div></li>
-<li><p>All fonts based on SVG (which is the case for pretty much all icon fonts) should work with <code>{ragg}</code> as long as you can get it installed on your local machine. For example, the <a href="https://github.com/twbs/icons">Bootstrap Icons</a> font (<a href="https://github.com/twbs/icons/blob/main/LICENSE.md">MIT license</a>) only come in <em>.woff</em> and <em>.woff2</em> <a href="https://github.com/twbs/icons/tree/main/font/fonts">files</a> for web use, but it’s fundamentally just a collection of SVGs, so it can be installed on your local machine once you convert to <em>.ttf</em>. Then it should just work right in R out of the box.</p>
+<li><p>All fonts based on SVG (pretty much the case for all icon fonts) should work with <code>{ragg}</code> as long as you can get it installed on your local machine. For example, the <a href="https://github.com/twbs/icons">Bootstrap Icons</a> font (<a href="https://github.com/twbs/icons/blob/main/LICENSE.md">MIT license</a>) only come in <a href="https://github.com/twbs/icons/tree/main/font/fonts"><em>.woff</em> and <em>.woff2</em> formats</a> for web use, but it’s fundamentally just a collection of SVGs, so it can be installed on your local machine once you convert it to <em>.ttf</em>. Then it should just work right out of the box.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='cn'>NULL</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
@@ -2210,7 +2215,7 @@ Plot Code
 </div>
 <p><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/unnamed-chunk-10-1.png" width="624" /></p>
 </div></li>
-<li><p>If you’re design oriented, you can also <strong>make your own icon font</strong> for use in R. In Inkscape, you can do this in File &gt; New From Template &gt; Typography Canvas (<a href="https://inkscape-manuals.readthedocs.io/en/latest/creating-custom-fonts.html">Guide</a>). Once you save your SVG font, you can convert it to <em>.ttf</em> and follow the same installation process, and then it should be available in R if you render with <code>{ragg}</code>.</p>
+<li><p>If you’re design oriented, you can also <strong>make your own icon font</strong> for use in R. In Inkscape, you can do this in File &gt; New From Template &gt; Typography Canvas (here’s a <a href="https://inkscape-manuals.readthedocs.io/en/latest/creating-custom-fonts.html">guide</a>). Once you save your SVG font, you can convert it to <em>.ttf</em> and follow the same installation process, and then it should be available in R if you render with <code>{ragg}</code>.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="figure" style="text-align: center"><span id="fig:inkscape-svg"></span>
 <img src="img/inkscape_svg.png" alt="Making a font in Inkscape" width="652" />
@@ -2219,7 +2224,7 @@ Figure 6: Making a font in Inkscape
 </p>
 </div>
 </div>
-<p>For example, here’s my super quick attempt (took me exactly 1 minute) at a one-glyph font that just contains my signature (and you can imagine a usecase where you put this in a corner of your data viz to sign your work):</p>
+<p>For example, here’s my super quick attempt (took me exactly 1 minute) at a one-glyph font that just contains my signature (and you could imagine a usecase where you put this in a corner of your data viz to sign your work):</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span> <span class='op'>+</span>
@@ -2276,7 +2281,7 @@ Session Info
   
   other attached packages:
   [1] ggtext_0.1.1      textshaping_0.3.4 stringr_1.4.0     dplyr_1.0.7      
-  [5] systemfonts_1.0.2 ggplot2_3.3.4     knitr_1.33       
+  [5] systemfonts_1.0.2 ggplot2_3.3.5     knitr_1.33       
   
   loaded via a namespace (and not attached):
    [1] tidyselect_1.1.1   xfun_0.22          bslib_0.2.5.1      purrr_0.3.4       
@@ -2288,7 +2293,7 @@ Session Info
   [25] labeling_0.4.2     markdown_1.1       fansi_0.4.2        highr_0.8         
   [29] Rcpp_1.0.6         scales_1.1.1       jsonlite_1.7.2     farver_2.1.0      
   [33] distill_1.2        png_0.1-7          digest_0.6.27      stringi_1.6.2     
-  [37] grid_4.1.0         cli_3.0.0          tools_4.1.0        magrittr_2.0.1    
+  [37] grid_4.1.0         cli_3.0.1          tools_4.1.0        magrittr_2.0.1    
   [41] sass_0.4.0         tibble_3.1.2       crayon_1.4.1       pkgconfig_2.0.3   
   [45] downlit_0.2.1      ellipsis_0.3.2     xml2_1.3.2         data.table_1.14.0 
   [49] assertthat_0.2.1   rmarkdown_2.8      rstudioapi_0.13    R6_2.5.0          
@@ -2304,15 +2309,15 @@ Session Info
 <li id="fn3" role="doc-endnote"><p>Check out the discussion on <a href="https://github.com/tidyverse/ggplot2/issues/4347">this issue</a> and <a href="https://github.com/tidyverse/ggplot2/issues/4347">this commit</a>. There’s also been some talk of making AGG the default renderer, though I don’t know if that’s been settled.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4" role="doc-endnote"><p>These are used to calculate DPI (dots per inch). Resolution is in pixels, so <code>res=150</code> and <code>units="inch"</code> is the same as <code>dpi=150</code>. <code>{ragg}</code> devices don’t have a <code>dpi</code> argument like the default device, so you have to specify both resolution and units.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5" role="doc-endnote"><p>in Windows 10, for example, you have to drag and drop fonts onto the “Fonts” section of Settings<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6" role="doc-endnote"><p>Variable fonts are hit-or-miss because while <code>{ragg}</code> and <code>{systemfonts}</code> <em>do</em> support some variable font features (see the section on <strong>Advanced features</strong>), “variable” can mean many different things, some of which are not supported (e.g., variable width). If you install a variable font, it might render with <code>{ragg}</code> but you’re unlikely to be able to tweak its parameters (like change the weight, for example).<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p>Variable fonts are hit-or-miss because while <code>{ragg}</code> and <code>{systemfonts}</code> <em>do</em> support some variable font features (see the section on <a href="#advanced-font-features"><strong>Advanced font features</strong></a>), “variable” can mean many different things, some of which are not supported (e.g., variable width). If you install a variable font, it might render with <code>{ragg}</code> but you’re unlikely to be able to tweak its parameters (like change the weight, for example).<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn7" role="doc-endnote"><p>In my experience, though, static fonts tend to be <em>.ttf</em> and variable fonts tend to be <em>.otf</em>.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8" role="doc-endnote"><p>“You can use them freely in your products &amp; projects - print or digital, commercial or otherwise. However, you can’t sell the fonts on their own.”<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9" role="doc-endnote"><p>Again, YMMV but I’ve had to help a few people with this problem.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10" role="doc-endnote"><p>Technically, it defaults to <code>fontface = "plain"</code>, but <code>{systemfonts}</code> and (also probably your OS) calls it the “Regular” style<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn11" role="doc-endnote"><p>In case you’re wondering, it still errors with “Solid”, capitalized.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9" role="doc-endnote"><p>Again, YMMV, but myself and a couple other folks I’ve talked to share this.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10" role="doc-endnote"><p>Technically, it defaults to <code>fontface = "plain"</code> which is the same thing, but <code>{systemfonts}</code> and (also probably your OS) calls it the “Regular” style<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11" role="doc-endnote"><p>In case you’re wondering, it still errors with “solid”, no caps.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn12" role="doc-endnote"><p><code>options(error = recover)</code> is your friend! And remember to set <code>options(error = NULL)</code> back once you’re done!<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn13" role="doc-endnote"><p>You might wonder: what’s the <code>{grid}</code> package doing here? Well, <code>{grid}</code> is kinda the “backend” for <code>{ggplot2}</code> that handles the actual “drawing to the canvas”, which is why it’s relevant here. For example, <code>geom_text()</code> returns a <strong>Gr</strong>aphical <strong>ob</strong>ject (“Grob”), specifically <code>grid::textGrob()</code>, that inherits arguments like <code>family</code> and <code>fontface</code> (which are in turn passed into <code>grid::gpar()</code>, where <code>gpar</code> stands for <strong>g</strong>raphical <strong>par</strong>ameters).<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn14" role="doc-endnote"><p>The same font file also registered as the Bold, Italic, and Bold Italic styles of the family as well, which is what happens by default if you only supply the <code>plain</code> argument to <code>register_font()</code>. You can of course just ignore this.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13" role="doc-endnote"><p>You might wonder: what’s the <code>{grid}</code> package doing here? Well, <code>{grid}</code> is kinda the “engine” for <code>{ggplot2}</code> that handles the actual “drawing to the canvas”, which is why it’s relevant here. For example, <code>geom_text()</code> returns a <strong>Gr</strong>aphical <strong>ob</strong>ject (“Grob”), specifically <code>grid::textGrob()</code>, that inherits arguments like <code>family</code> and <code>fontface</code> (which are in turn passed into <code>grid::gpar()</code>, where <code>gpar</code> stands for <strong>g</strong>raphical <strong>par</strong>ameters).<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14" role="doc-endnote"><p>The same font file also registered as the Bold, Italic, and Bold Italic styles of the family as well, which is what happens by default if you only supply the <code>plain</code> argument to <code>register_font()</code>.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn15" role="doc-endnote"><p>Borrowing terminology from <code>tidyr::hoist()</code>, the under-appreciated beast of list-column workflows<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn16" role="doc-endnote"><p>Regular as “plain”, Bold as “bold”, Italic as “italic”, and Bold Italic as “bold.italic”.<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn17" role="doc-endnote"><p>Also check out the related “pnum” (proportional numbers) and “tnum” (tabular numbers) features.<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>

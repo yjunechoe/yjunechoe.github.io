@@ -38,6 +38,10 @@ opts_chunk$set(
 )
 ```
 
+_This blog post was featured in the [R Weekly highlights podcast](https://share.fireside.fm/episode/87RSVeFz+alD0Og1X?t=247)! Thanks to the R Weekly team for the comprehensive review!_
+
+## Introduction
+
 Getting **custom fonts** to work in R has historically been pretty difficult.^[In fact, text rendering as a whole is an incredibly complicated task. Check out [Text Rendering Hates You](https://gankra.github.io/blah/text-hates-you/#how-do-you-write-that-you-cant-write) for a fun and informative read.] At a high level, it involves the non-trivial task of unifying the _graphics device_, the _operating system_, and _text rendering_, (and also in our case, R!) to seamlessly work with each other.
 
 Luckily for us in 2021, we have an amazing solution to this problem thanks to recent developments in the `{ragg}`,  `{systemfonts}`, and `{textshaping}` packages by RStudio. This is great news because a lot of the work for getting custom fonts to work in R is already done for us!
@@ -69,7 +73,7 @@ include_graphics("https://i.imgur.com/4XgiPWy.png")
 
 ### 2. Saving as an external file
 
-For any bitmap output, use any of the `ragg::agg_*()` function to render plots using the AGG device.
+For bitmap output, use any of the `ragg::agg_*()` function to render plots using the AGG device.
   
 ```{r, eval = FALSE}
 # Set output path
@@ -105,7 +109,7 @@ opts_chunk$set(dev = "ragg_png")
 
 ### 4. Shiny
 
-Simply set `options(shiny.useragg = TRUE)` before rendering. Also check out the {[thematic](https://rstudio.github.io/thematic/)} package for using custom fonts in shiny plot outputs.
+Simply set `options(shiny.useragg = TRUE)` before rendering. Also check out the {[thematic](https://rstudio.github.io/thematic/)} package for importing/using custom fonts in shiny plot outputs.
 
 ## Installing custom fonts
 
@@ -119,7 +123,7 @@ Font files come in many forms. In general, fonts files that match these two crit
 
 1. **Fonts in _.otf_ (OpenType Font) or _.ttf_ (TrueType Font) formats**. These are font formats that are installable on your local machine. You want to avoid other formats like _.woff_ or _.woff2_, for example, which are designed for use for the web. In theory both _.otf_ and _.ttf_ should work with `{ragg}`, though I've sometimes had trouble with _.otf_. In those cases, I simply converted the _.otf_ font file to _.ttf_ before installing it, using free online conversion tools that you can easily find on Google. I'm of course glossing over the details here and I'm hardly an expert, but you can [read  more about TrueType and OpenType formats here](https://helpx.adobe.com/fonts/using/adobe-type-resources-faq.html).
 
-2. **Static fonts**. In static fonts, each _member_ of the family has their own set of _glyphs_ (i.e., there is a font file for each _style_). This is in contrast to _variable fonts_, where you have a single font file which can take the form of multiple styles (either by having many sets of glyphs or variable parameters).^[Variable fonts are hit-or-miss because while `{ragg}` and `{systemfonts}` _do_ support some variable font features (see the section on **Advanced features**), "variable" can mean many different things, some of which are not supported (e.g., variable width). If you install a variable font, it might render with `{ragg}` but you're unlikely to be able to tweak its parameters (like change the weight, for example).] To illustrate, look at the difference between the static (top) vs. variable (bottom) files for the [Alegreya family](https://fonts.google.com/specimen/Alegreya).
+2. **Static fonts**. In static fonts, each _member_ of the family has their own set of _glyphs_ (i.e., there is a font file for each _style_). This is in contrast to _variable fonts_, where you have a single font file which can take the form of multiple styles (either by having many sets of glyphs or variable parameters).^[Variable fonts are hit-or-miss because while `{ragg}` and `{systemfonts}` _do_ support some variable font features (see the section on [**Advanced font features**](#advanced-font-features)), "variable" can mean many different things, some of which are not supported (e.g., variable width). If you install a variable font, it might render with `{ragg}` but you're unlikely to be able to tweak its parameters (like change the weight, for example).] To illustrate, look at the difference between the static (top) vs. variable (bottom) files for the [Alegreya family](https://fonts.google.com/specimen/Alegreya).
 
     ```{r static, echo = FALSE, fig.cap="Static font files for Alegreya", fig.align='center'}
     include_graphics("https://pbs.twimg.com/media/EzBpmgNXMAUBFfR?format=png&name=900x900")
@@ -135,7 +139,7 @@ The above two images show the contents of the _.zip_ file that you'd get if you 
 
 ### Checking that a font is installed and available
 
-Once you install a custom font on your system, it should also be available elsewhere locally on your machine (this is my first go-to sanity check). For example, I can use Alegreya in Microsoft Word after I download it.
+Once you install a custom font on your system, it should also be available elsewhere locally on your machine. For example, I can use Alegreya in Microsoft Word after I download it (this is actually my first go-to sanity check).
 
 ```{r word, echo = FALSE, fig.cap="Alegreya in Microsoft Word", fig.align='center'}
 include_graphics("img/alegreya_word.png", error = FALSE)
@@ -174,16 +178,16 @@ system_fonts() %>%
 
 So far we've seen that the workflow for setting up and installing fonts is pretty straightforward. But what do we do in times when things inevitable go wrong?
 
-Consider the case of using [Font Awesome](https://fontawesome.com/), an icon font that renders _special character sequences_ as _icon glyphs_ (check the **Icon fonts** section for more!). Font Awesome has a free version ([CC-BY and SIL OFL license](https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/LICENSE.txt)), and let's say we want to use it for personal use for a [TidyTuesday](https://github.com/rfordatascience/tidytuesday) submission.
+Consider the case of using [Font Awesome](https://fontawesome.com/), an icon font that renders _special character sequences_ as _icon glyphs_ (check the [**Icon fonts**](#icon-fonts) section for more!). Font Awesome has a free version ([CC-BY and SIL OFL license](https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/LICENSE.txt)), and let's say we want to use it for personal use for a [TidyTuesday](https://github.com/rfordatascience/tidytuesday) submission.
 
-The first thing we do is locate the font file. Font Awesome is open source, and the free version (Font Awesome 5 Free) is updated on Github. The most recent release as of this blog post is 5.15.3 - follow [this link](https://github.com/FortAwesome/Font-Awesome/releases/tag/5.15.3) to download _fontawesome-free-5.15.3-desktop.zip_. If you unzip the file, you'll find _.otf_ font files corresponding to the three styles available in the free version: Regular, Solid, and Brands.
+The first thing we do is locate the font file. Font Awesome is open source, and the free version (Font Awesome 5 Free) is updated on Github. The most recent release as of this blog post is [v5.15.3](https://github.com/FortAwesome/Font-Awesome/releases/tag/5.15.3). If you unzip the file, you'll find _.otf_ font files corresponding to the three variants available in the free version: Regular, Solid, and Brands.
 
 ```{r fa-files, echo = FALSE, fig.cap="Font Awesome 5 files", fig.align='center', out.width="80%"}
 include_graphics("img/fa_otf.png", error = FALSE)
 ```
 
 
-Remember how I said R tends to play nicer with _.ttf_ than _.otf_ fonts?^[Again, YMMV but I've had to help a few people with this problem.] Lets go ahead and convert the _.otf_ files using an online converter, like [https://convertio.co/otf-ttf](https://convertio.co/otf-ttf). Now, with the three font files in _.ttf_ format, follow the instructions for installing fonts on your OS. 
+Remember how I said R tends to play nicer with _.ttf_ than _.otf_ fonts?^[Again, YMMV, but myself and a couple other folks I've talked to share this.] Lets go ahead and convert the _.otf_ files using an online converter, like [https://convertio.co/otf-ttf](https://convertio.co/otf-ttf). Now, with the three font files in _.ttf_ format, follow the instructions for installing fonts on your OS. 
 
 Once Font Awesome is installed on our local machine, it should be visible to `{systemfonts}`, like this:
 
@@ -198,7 +202,7 @@ system_fonts() %>%
 
 Now let's try plotting some icons!
 
-We see that we can render icons from the Regular style ("[clock](https://fontawesome.com/v5.15/icons/clock?style=regular)") and the Brands style ("[twitter](https://fontawesome.com/v5.15/icons/twitter?style=brands)").
+We see that we can render icons from the Regular variant ("[clock](https://fontawesome.com/v5.15/icons/clock?style=regular)") and the Brands variant ("[twitter](https://fontawesome.com/v5.15/icons/twitter?style=brands)").
 
 ```{r fa-success, out.width='50%', fig.show='hold'}
 # Left plot
@@ -216,14 +220,14 @@ ggplot(NULL, aes(0, 0)) +
   )
 ```
 
-But what about rendering in the Solid style? Font Awesome tells me that the Solid style has a "[cat](https://fontawesome.com/v5.15/icons/cat?style=solid)" icon, so let's try it.
+But what about rendering in the Solid variant? Font Awesome tells me that the Solid variant has a "[cat](https://fontawesome.com/v5.15/icons/cat?style=solid)" icon, so let's try it.
 
 ```{r fa-fail, error=TRUE}
 ggplot(NULL, aes(0, 0)) +
   geom_text(aes(label = "cat"), size = 50, family = "Font Awesome 5 Solid")
 ```
 
-Uh oh, that didn't work. Well that's because Solid is actually a **style**, not a family. If you go back to the output from `system_fonts()`, we see that Font Awesome actually consists of two font families: **Font Awesome 5 Brands** which has a "Regular" style, and **Font Awesome 5 Free** with a "Regular" style and a "Solid" style.
+Uh oh, that didn't work. Well that's because Solid is actually a **style**, not a family! If you go back to the output from `system_fonts()`, we see that Font Awesome actually consists of _two_ font families: **Font Awesome 5 Brands** which has a "Regular" style, and **Font Awesome 5 Free** with a "Regular" style and a "Solid" style.
 
 The structure is roughly like this:
 
@@ -235,9 +239,9 @@ The structure is roughly like this:
   |---  Regular
 </pre>
 
-In `geom_text()`, the font style is set by the `fontface` argument. When we don't specify `fontface`, such as in our working example for the clock and twitter icons, it defaults to the regular style.^[Technically, it defaults to `fontface = "plain"`, but `{systemfonts}` and (also probably your OS) calls it the "Regular" style]
+In `geom_text()`, the font style is set by the `fontface` argument. When we don't specify `fontface`, such as in our working example for the clock and twitter icons, it defaults to the Regular style.^[Technically, it defaults to `fontface = "plain"` which is the same thing, but `{systemfonts}` and (also probably your OS) calls it the "Regular" style]
 
-So the solution to our problem is to put in `fontface = "solid"`, right...?
+So the solution to our problem is to put in `fontface = "Solid"`, right...?
 
 ```{r solid-fail, error = TRUE, fig.show='hide'}
 ggplot(NULL, aes(0, 0)) +
@@ -247,7 +251,7 @@ ggplot(NULL, aes(0, 0)) +
   )
 ```
 
-Well now it just errors!^[In case you're wondering, it still errors with "Solid", capitalized.] The issue here runs a bit deeper: if we track down the error,^[`options(error = recover)` is your friend! And remember to set `options(error = NULL)` back once you're done!] it takes us to a function inside `grid::gpar()` that validates `fontface`. ^[You might wonder: what's the `{grid}` package doing here? Well, `{grid}` is kinda the "backend" for `{ggplot2}` that handles the actual "drawing to the canvas", which is why it's relevant here. For example, `geom_text()` returns a **Gr**aphical **ob**ject ("Grob"), specifically `grid::textGrob()`, that inherits arguments like `family` and `fontface` (which are in turn passed into `grid::gpar()`, where `gpar` stands for **g**raphical **par**ameters).] If we take a look at the code, we see that only a very few font styles are valid, and "solid" isn't one of them.
+Well now it just errors!^[In case you're wondering, it still errors with "solid", no caps.] The issue here runs a bit deeper: if we track down the error,^[`options(error = recover)` is your friend! And remember to set `options(error = NULL)` back once you're done!] it takes us to a function inside `grid::gpar()` that validates `fontface`. ^[You might wonder: what's the `{grid}` package doing here? Well, `{grid}` is kinda the "engine" for `{ggplot2}` that handles the actual "drawing to the canvas", which is why it's relevant here. For example, `geom_text()` returns a **Gr**aphical **ob**ject ("Grob"), specifically `grid::textGrob()`, that inherits arguments like `family` and `fontface` (which are in turn passed into `grid::gpar()`, where `gpar` stands for **g**raphical **par**ameters).] If we take a look at the code, we see that only a very few font styles are valid, and "solid" isn't one of them.
 
 ```{r gpar-fontface, eval = FALSE}
 function (ch) 
@@ -256,9 +260,9 @@ switch(ch, plain = 1L, bold = 2L, italic = , oblique = 3L, bold.italic = 4L,
   stop("invalid fontface ", ch))
 ```
 
-Okay, so then how can we ever access the Solid style of the Font Awesome 5 Free family? Luckily, there's a solution: use `systemfonts::register_font()` to register the Solid style as the "plain" style of its own font family!
+Okay, so then how can we ever access the Solid style of the Font Awesome 5 Free family? Luckily, there's a solution: use `systemfonts::register_font()` to register the Solid style as the "plain" style of its **own font family**!
 
-We can do this by passing in the name of the new font family in the `name` argument and then setting the `plain` argument to the path of the font file.
+We can do this by passing in the name of the new font family in the `name` argument, and passing the path of the font file to the `plain` argument.
 
 ```{r solid-register}
 fa_solid_path <- system_fonts() %>% 
@@ -281,7 +285,7 @@ systemfonts::registry_fonts() %>%
   )
 ```
 
-We see that the Solid style is now available as the Regular (a.k.a. "plain") style of its own font family, **Font Awesome 5 Free Solid**!^[The same font file also registered as the Bold, Italic, and Bold Italic styles of the family as well, which is what happens by default if you only supply the `plain` argument to `register_font()`. You can of course just ignore this.]
+We see that the Solid style is now available as the Regular (a.k.a. "plain") style of its own font family: **Font Awesome 5 Free Solid**!^[The same font file also registered as the Bold, Italic, and Bold Italic styles of the family as well, which is what happens by default if you only supply the `plain` argument to `register_font()`.]
 
 Now we're back to our cat icon example. Again, because [Font Awewsome says there's a cat icon in the Solid style](https://fontawesome.com/v5.15/icons/cat?style=solid), we'd expect a cat icon if we render the text "cat" in the Solid style. Let's set the `family` argument to our newly registered "Font Awesome 5 Free Solid" family and see what happens:
 
@@ -294,10 +298,10 @@ Third time's the charm !!!
 
 ## Hoisting font styles
 
-Hopefully the lesson is now clear: to make a custom font work in R, it must be **visible to `systemfonts::system_fonts()` in a style that is accessible to `grid::gpar()`**. The nifty trick of registering an inaccessible style as the "plain" member of its own family can be extended and automated as a utility function that is called purely for this side effect. In my [experimental package](https://github.com/yjunechoe/junebug), I have very simple function called [`font_hoist()`](https://github.com/yjunechoe/junebug/blob/master/R/font_helpers.R) which "hoists"^[Borrowing terminology from `tidyr::hoist()`, the under-appreciated beast of list-column workflows] _all_ styles of a family as the "plain"/Regular style of their own families. This way, you never have to worry about things going wrong in the `fontface` argument.
+Hopefully the lesson is now clear: to make a custom font work in R, **the font must be visible to `systemfonts::system_fonts()` in a style that is accessible to `grid::gpar()`**. The nifty trick of registering an inaccessible style as the "plain" style of its _own_ family can be extended and automated as a utility function that is called purely for this side effect. In my [experimental package](https://github.com/yjunechoe/junebug), I have very simple function called [`font_hoist()`](https://github.com/yjunechoe/junebug/blob/master/R/font_helpers.R) which "hoists"^[Borrowing terminology from `tidyr::hoist()`, the under-appreciated beast of list-column workflows] _all_ styles of a family as the "plain"/Regular style of their own families. This way, you never have to worry about things going wrong in the `fontface` argument.
 
 <details>
-<summary>font_hoist()</summary>
+<summary>junebug::font_hoist()</summary>
 ```{r, eval = FALSE, echo = TRUE}
 font_hoist <- function(family, silent = FALSE) {
   font_specs <- systemfonts::system_fonts() %>%
@@ -335,13 +339,13 @@ purrr::walk(
 )
 ```
 
-But note that this **registration is not persistent across sessions**. If you restart R and run `registry_fonts()` again, it will return an empty data frame, indicating that you have no font varieties registered. You have to register font variants for every session, which is why it's nice to have the `register_fonts()` workflow wrapped into a function like `font_hoist()`.
+But note that the **registration of custom font variants is not persistent across sessions**. If you restart R and run `registry_fonts()` again, it will return an empty data frame, indicating that you have no font variants registered. You have to register font variants for every session, which is why it's nice to have the `register_fonts()` workflow wrapped into a function like `font_hoist()`.
 
 ## Advanced font features
 
 But wait, that's not all!
 
-Many modern professional fonts come with **OpenType features**, which mostly consist of stylistic parameters that can be turned on-and-off for a font. Note that despite being called "OpenType" features, it's not something unique to _.otf_ font formats. **TrueType fonts (_.ttf_) can have OpenType features as well**. For a fuller picture, you can check out the [full list of registered features](https://en.wikipedia.org/wiki/List_of_typographic_features#OpenType_typographic_features) and this [article](https://typofonderie.com/font-support/opentype-features) with visual examples for commonly used features.
+Many modern professional fonts come with **OpenType features**, which mostly consist of stylistic parameters that can be turned on-and-off for a font. Note that despite being called "OpenType" features, it's not something unique to _.otf_ font formats. **TrueType fonts (_.ttf_) can have OpenType features as well**. For a fuller picture, you can check out the [full list of registered features](https://en.wikipedia.org/wiki/List_of_typographic_features#OpenType_typographic_features) and this [article with visual examples](https://typofonderie.com/font-support/opentype-features) for commonly used features.
 
 It looks overwhelming but only a handful are relevant for data visualization. I'll showcase two features here: _lining_ and _ordinals_.
 
@@ -444,7 +448,7 @@ First, we check that "ordn" is supported for Alegreya:
 "ordn" %in% unlist(get_font_features("Alegreya"))
 ```
 
-Then, we register the ordinal variant. Note that "ordn" is not built-in as an option for the `letters` argument of `font_features()`, unlike "lnum" which is a built-in option for the `numbers` argument.^[check the help page `?systemfonts::font_feature` for details.] Therefore, we have to set the "ordn" feature inside the `...` with `"ordn" = TRUE`. And let's simultaneously also turn on the lining feature from before as well.
+Then, we register the ordinal variant. Note that "ordn" is not built-in as an option for the `letters` argument of `font_features()`, unlike "lnum" which is a built-in option for the `numbers` argument.^[check the help page `?systemfonts::font_feature` for details.] Therefore, we have to set the "ordn" feature inside the `...` of `font_feature()` with `"ordn" = TRUE`. And let's also simultaneously turn on the lining feature from before as well.
 
 ```{r alegreya-ordinal}
 # Register variant
@@ -630,13 +634,15 @@ ggplot(ordinal_data, aes(Quarter, Earnings)) +
 
 If this blog post was your first time encountering icon fonts in R, you probably have a lot of questions right now about using them in data visualizations. You can check out my **lightning talk on icon fonts** that I gave at [RLadies Philly](https://www.rladiesphilly.org/) for a quick overview as well as some tips & tricks!
 
+<p></p>
+
 <div class="l-body-outset">
 <iframe height="500" src="https://www.youtube.com/embed/guzjt7xh2Cw?start=3787" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
 Some extra stuff not mentioned in the talk:
 
-- `{ragg}` supports colored fonts like emojis, which also means that it can render **colored icon fonts**.^[But not _all_ colored fonts, in my experience.] Icons don't often come in colors, but one example is Google's [Material Icons](https://fonts.google.com/icons) font ([Apache 2.0 license](https://github.com/google/material-design-icons/blob/master/LICENSE)), which has a [Two Tone](https://fonts.google.com/icons?selected=Material+Icons+Two+Tone) style where icons have a grey fill in addition to a black stroke:^[The colors are fixed though - they come colored in black and filled in grey.] 
+- `{ragg}` supports the rendering of colored fonts like [emojis](https://www.tidyverse.org/blog/2021/02/modern-text-features/#color-fonts), which also means that it can render **colored _icon_ fonts**.^[But not _all_ colored fonts, in my experience.] Icons don't often come in colors, but one example is Google's [Material Icons](https://fonts.google.com/icons) font ([Apache 2.0 license](https://github.com/google/material-design-icons/blob/master/LICENSE)), which has a [Two Tone](https://fonts.google.com/icons?selected=Material+Icons+Two+Tone) style where icons have a grey fill in addition to a black stroke:^[The colors are fixed though - they come colored in black and filled in grey.] 
 
     ```{r}
     ggplot(NULL, aes(0, 0)) +
@@ -647,7 +653,7 @@ Some extra stuff not mentioned in the talk:
       theme_classic()
     ```
 
-- All fonts based on SVG (which is the case for pretty much all icon fonts) should work with `{ragg}` as long as you can get it installed on your local machine. For example, the [Bootstrap Icons](https://github.com/twbs/icons) font ([MIT license](https://github.com/twbs/icons/blob/main/LICENSE.md)) only come in _.woff_ and _.woff2_ [files](https://github.com/twbs/icons/tree/main/font/fonts) for web use, but it's fundamentally just a collection of SVGs, so it can be installed on your local machine once you convert to _.ttf_. Then it should just work right in R out of the box.
+- All fonts based on SVG (pretty much the case for all icon fonts) should work with `{ragg}` as long as you can get it installed on your local machine. For example, the [Bootstrap Icons](https://github.com/twbs/icons) font ([MIT license](https://github.com/twbs/icons/blob/main/LICENSE.md)) only come in [_.woff_ and _.woff2_ formats](https://github.com/twbs/icons/tree/main/font/fonts) for web use, but it's fundamentally just a collection of SVGs, so it can be installed on your local machine once you convert it to _.ttf_. Then it should just work right out of the box.
 
     ```{r}
     ggplot(NULL, aes(0, 0)) +
@@ -657,13 +663,13 @@ Some extra stuff not mentioned in the talk:
       )
     ```
 
-- If you're design oriented, you can also **make your own icon font** for use in R. In Inkscape, you can do this in File > New From Template > Typography Canvas ([Guide](https://inkscape-manuals.readthedocs.io/en/latest/creating-custom-fonts.html)). Once you save your SVG font, you can convert it to _.ttf_ and follow the same installation process, and then it should be available in R if you render with `{ragg}`.
+- If you're design oriented, you can also **make your own icon font** for use in R. In Inkscape, you can do this in File > New From Template > Typography Canvas (here's a [guide](https://inkscape-manuals.readthedocs.io/en/latest/creating-custom-fonts.html)). Once you save your SVG font, you can convert it to _.ttf_ and follow the same installation process, and then it should be available in R if you render with `{ragg}`.
 
     ```{r inkscape-svg, echo = FALSE, fig.cap="Making a font in Inkscape", fig.align='center'}
     include_graphics("img/inkscape_svg.png", error = FALSE)
     ```
 
-    For example, here's my super quick attempt (took me exactly 1 minute) at a one-glyph font that just contains my signature (and you can imagine a usecase where you put this in a corner of your data viz to sign your work):
+    For example, here's my super quick attempt (took me exactly 1 minute) at a one-glyph font that just contains my signature (and you could imagine a usecase where you put this in a corner of your data viz to sign your work):
 
     ```{r}
     ggplot(NULL) +
