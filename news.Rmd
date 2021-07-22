@@ -31,12 +31,12 @@ li::marker {
 
 ### July
 
-- - My [tutorial on custom fonts in R](https://yjunechoe.github.io/posts/2021-06-24-setting-up-and-debugging-custom-fonts/) was **featured as a highlight** on the [R Weekly podcast](https://share.fireside.fm/episode/87RSVeFz+alD0Og1X?t=247).
+- My [tutorial on custom fonts in R](https://yjunechoe.github.io/posts/2021-06-24-setting-up-and-debugging-custom-fonts/) was **featured as a highlight** on the [R Weekly podcast](https://share.fireside.fm/episode/87RSVeFz+alD0Og1X?t=247)!
 
 
 ### June
 
-- I gave a **talk** at [RLadies philly](https://www.rladiesphilly.org/) on using icon fonts for data viz (link to recording coming soon!). I also wrote a follow-up [blog post](https://yjunechoe.github.io/posts/2021-06-24-setting-up-and-debugging-custom-fonts/) that goes deeper into font rendering in R.
+- I gave a [**talk**](https://www.youtube.com/embed/guzjt7xh2Cw?start=3787) at [RLadies philly](https://www.rladiesphilly.org/) on using icon fonts for data viz! I also wrote a follow-up [blog post](https://yjunechoe.github.io/posts/2021-06-24-setting-up-and-debugging-custom-fonts/) that goes deeper into font rendering in R.
 
 ### May
 
