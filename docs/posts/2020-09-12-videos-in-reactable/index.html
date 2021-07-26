@@ -2355,11 +2355,24 @@ p code {
 /* Code Chunk */
 
 d-article div.sourceCode pre {
+  position: relative;
   background-color: white;
   padding-top: 10px;
   padding-bottom: 10px;
   margin-bottom: 10px;
-  border-left: 5px solid orange;
+  border-left: 5px solid #4D8DC9;
+}
+
+/* R chunk */
+d-article div.sourceCode pre.r:before {
+    position: absolute;
+    font-size: 1rem;
+    content: 'R';
+    font-family: 'Fira Mono';
+    font-weight: 600;
+    left: -20px;
+    top: -5px;
+    color: #59a2e6;
 }
 
 d-article div.sourceCode pre code {
