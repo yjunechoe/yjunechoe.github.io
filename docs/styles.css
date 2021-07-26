@@ -153,7 +153,7 @@ d-title p {
 
 /* General */
 
-d-article h2 {
+d-article > h2 {
   margin: 3rem 0 1.5rem 0;
   border-bottom: 2px solid black;
 }
@@ -162,9 +162,11 @@ div.l-body + h2 {
   margin-top: 0px;
 }
 
-d-article h3 {
+d-article > h3 {
   margin-top: 1em;
   font-size: 28px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid lightgrey;
 }
 
 d-article ol {
