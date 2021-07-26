@@ -5,6 +5,7 @@ title: "Research"
 <style>
 p {
   font-family: Roboto;
+  text-align: justify;
 }
 </style>
 

@@ -118,4 +118,3 @@ Beyond linguistics research, I have interests in data visualization, science com
 
 <div style='text-align: center; font-family: Fira Mono;'><span class="sc" style="font-size:1.2em">contact me: </span> yj<span>choe</span>\@sas.upenn.edu</div>
 
-<p style="font-size: 0.9em; margin-top: 2em;">Siteviews: 13,051</p>
