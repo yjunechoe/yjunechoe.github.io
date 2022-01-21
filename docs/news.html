@@ -84,6 +84,7 @@ code span.vs { color: #4e9a06; } /* VerbatimString */
 code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
   <!--radix_placeholder_meta_tags-->
   <title>June Choe: News</title>
 
@@ -453,7 +454,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 
   </style>
 
-  <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+  <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
   <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
   <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
   <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
@@ -1860,7 +1861,10 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 
       // hoverable references
       $('span.citation[data-cites]').each(function() {
-        var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
+        var refs = $(this).attr('data-cites').split(" ");
+        var refHtml = refs.map(function(ref) {
+          return "<p>" + $('#ref-' + ref).html() + "</p>";
+        }).join("\n");
         window.tippy(this, {
           allowHTML: true,
           content: refHtml,
@@ -2031,7 +2035,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.8/header-attrs.js"></script>
+  <script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2060,7 +2064,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
     
     font-family: 'Atkinson Hyperlegible';
     font-weight: 400;
-    line-height: 1.5; 
+    line-height: 1.7; 
     font-size: 1em;
     color: #333333;
     font-style: normal;
@@ -2341,15 +2345,19 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   }
 
   /* R chunk */
+  d-article div.sourceCode pre.r {
+    background-color: #faffff;
+  }
+
   d-article div.sourceCode pre.r:before {
-      position: absolute;
-      font-size: 1rem;
-      content: 'R';
-      font-family: 'Fira Mono';
-      font-weight: 600;
-      left: -20px;
-      top: -5px;
-      color: #59a2e6;
+    position: absolute;
+    font-size: 1rem;
+    content: 'R';
+    font-family: 'Fira Mono';
+    font-weight: 600;
+    left: -20px;
+    top: -5px;
+    color: #59a2e6;
   }
 
   d-article div.sourceCode pre code {

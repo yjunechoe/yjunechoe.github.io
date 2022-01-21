@@ -27,6 +27,7 @@ knitr::opts_chunk$set(
   warning = TRUE,
   R.options = list(width = 80)
 )
+set.seed(2021)
 ```
 
 To steal the definition from [Wikipedia](https://en.wikipedia.org/wiki/Treemapping), a treemap is used for "displaying hierarchical data using nested figures, usually rectangles." There are lots of ways to make one in R, but I didn't find any one existing solution appealing.

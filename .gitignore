@@ -2,3 +2,5 @@
 .Rhistory
 .RData
 .Ruserdata
+.ggsave_auto
+

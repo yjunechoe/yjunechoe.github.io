@@ -9,7 +9,7 @@ html, body, p {
   
   font-family: 'Atkinson Hyperlegible';
   font-weight: 400;
-  line-height: 1.5; 
+  line-height: 1.7; 
   font-size: 1em;
   color: #333333;
   font-style: normal;
@@ -290,15 +290,19 @@ d-article div.sourceCode pre {
 }
 
 /* R chunk */
+d-article div.sourceCode pre.r {
+  background-color: #faffff;
+}
+
 d-article div.sourceCode pre.r:before {
-    position: absolute;
-    font-size: 1rem;
-    content: 'R';
-    font-family: 'Fira Mono';
-    font-weight: 600;
-    left: -20px;
-    top: -5px;
-    color: #59a2e6;
+  position: absolute;
+  font-size: 1rem;
+  content: 'R';
+  font-family: 'Fira Mono';
+  font-weight: 600;
+  left: -20px;
+  top: -5px;
+  color: #59a2e6;
 }
 
 d-article div.sourceCode pre code {
