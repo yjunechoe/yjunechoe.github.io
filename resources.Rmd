@@ -16,10 +16,21 @@ output:
 
 - {ggplot2} style guide and showcase - [most recent version (2/10/2021)](https://yjunechoe.netlify.app/flipbooks/ggplot2_master/feb_2020_ggplot2.html)
 
+- Cracking open the internals of ggplot: A {ggtrace} showcase - [slides](https://yjunechoe.github.io/ggtrace-talk)
 
-## Software
+
+## Packages and software
+
+- [{ggtrace}](https://yjunechoe.github.io/ggtrace/index.html): R package for exploring, debugging, and manipulating ggplot internals by exposing the underlying object-oriented system in functional programming terms.
+
+- [{penngradlings}](https://github.com/yjunechoe/penngradlings): R package for the University of Pennsylvania Graduate Linguistics Society.
+
+- [{LingWER}](https://github.com/yjunechoe/LingWER): R package for linguistic analysis of Word Error Rate for evaluating transcriptions and other speech-to-text output, using a deterministic matrix-based search algorithm optimized for R.
+
+- [{gridAnnotate}](https://github.com/yjunechoe/gridAnnotate): R package for interactively annotating figures from the plot pane, using {grid} graphical objects.
 
 - [SnowGlobe](https://snowglobe.soc.northwestern.edu/): A tool for meta-analysis research. Developed with Jinnie Choi, Sean McWeeny, and Elizabeth Norton, with funding from the Northwestern University Library. Currently under development but basic features are functional. Validation experiments and guides at [OSF repo](https://osf.io/u25rn/).
+
 
 ## Tutorial Blog Posts
 

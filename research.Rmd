@@ -13,22 +13,28 @@ p {
 
 ### Submitted
 
-**Choe, J.**, Cole, J., and Yoshida, M. (Submitted). The role of prosodic focus in the reanalysis of garden path sentences: Depth of semantic processing impedes the revision of an erroneous local analysis. https://doi.org/10.17605/OSF.IO/U6DQ5
+**Choe, J.**, Cole, J., and Yoshida, M. (Under minor revision). The role of prosodic focus in the reanalysis of garden path sentences: Depth of semantic processing impedes the revision of an erroneous local analysis. https://doi.org/10.17605/OSF.IO/U6DQ5
 
 McWeeny, S., Choi, S. J., LaTourette, A., **Choe, J.**, Roberts, M. Y., & Norton, E. S. (Submitted).
 Rapid automatized naming as a kindergarten predictor of future reading: A meta-analysis.
 
-### Pre-print / in-prep.
+### Pre-print
 
 McWeeny, S., **Choe, J.**, & Norton, E. (2021). SnowGlobe: An Iterative Search Tool for Systematic Reviews and Meta-Analyses. https://doi.org/10.17605/OSF.IO/U25RN
 
 ## Conference Presentations
 
+### 2022
+
+**June Choe**, and Anna Papafragou. *Acquisition of subordinate nouns as pragmatic inference: Semantic alternatives modulate subordinate meanings*. Poster to be presented at the 2nd Experiments in Linguistic Meaning (ELM) conference.
+
+**June Choe**, and Anna Papafragou. *Beyond the basic level: Levels of informativeness and the acquisition of subordinate nouns*. Poster to be presented at the 35th Annual Conference on Human Sentence Processing (HSP), 24-26 March 2022. University of California, Santa Cruz.
+
 ### 2020
 
 **June Choe**, Jennifer Cole, and Masaya Yoshida. *Prosodic Focus Strengthens Semantic Persistence*. [Poster](static/poster/AMLAP2020.pdf) presented at The 26th Architectures and Mechanisms for Language Processing (AMLaP), 3-5 September 2020. Potsdam, Germany. [Abstract](static/abstract/AMLAP_2020_Abstract.pdf) [Video](https://osf.io/fjkp9/) [Slides](static/slides/AMLAP_2020_Slides.pdf)
 
-**June Choe**. *Computer-assisted snowball search for meta-analysis research*. [Poster](static/poster/Snowballer_June_Choe.pdf) presented at The 2020 Undergraduate Research & Arts Exposition. 27-28 May 2020. Northwestern University, Evanston, IL.  **2nd Place Poster Award**. [Abstract](static/abstract/Expo_2020_Abstract.pdf)
+**June Choe**. *Computer-assisted snowball search for meta-analysis research*. [Poster](static/poster/Snowballer_June_Choe.pdf) presented at The 2020 Undergraduate Research & Arts Exposition. 27-28 May 2020. Northwestern University, Evanston, IL. **2nd Place Poster Award**. [Abstract](static/abstract/Expo_2020_Abstract.pdf)
 
 ### 2019
 

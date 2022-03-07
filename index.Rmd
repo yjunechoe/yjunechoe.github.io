@@ -89,7 +89,7 @@ d-title p {
     <strong style="font-family: Roboto Slab; font-size: 1.2em">
       <i class="fa fa-flask" aria-hidden="true" style="padding-right:12.5px"></i> Methods: 
     </strong>
-    Eye-tracking, sentence comprehension, text/speech corpus analysis
+    Web-based experiments, eye-tracking, self-paced reading, corpus analysis
   </p>
   <p style="margin-bottom:1.5em">
     <strong style="font-family:Roboto Slab; font-size:1.2em">
@@ -102,13 +102,13 @@ d-title p {
 </div>
 
 
-<h3 style="margin: 0px 0px 25px 0px; font-variant:small-caps; text-align:center; font-size:2em; letter-spacing:2px">about</h3>
+<h3 style="margin: 0px 0px 25px 0px; font-variant:small-caps; font-size:2em; letter-spacing:2px">about</h3>
 
 <div class="about">
 
-I am a second year PhD student in [Linguistics at the University of Pennsylvania](https://live-sas-www-ling.pantheon.sas.upenn.edu/). I use computational and behavioral methods to study how comprehenders parse linguistic input, both in real time and at different stages of language development.
+I am a second year PhD student in [Linguistics at the University of Pennsylvania](https://live-sas-www-ling.pantheon.sas.upenn.edu/). I am a psycholinguist broadly interested in experimental approaches to studying meaning, of various flavors. I use computational and behavioral methods to study how comprehenders parse linguistic input, both in real time and at different stages of language development. My advisor is Anna Papafragou and I am a member of the [Language & Cognition Lab](https://www.langcoglab.com/).
 
-I received my B.A. in Linguistics from Northwestern University, where I worked with [Jennifer Cole](https://sites.northwestern.edu/cole/), [Masaya Yoshida](https://faculty.wcas.northwestern.edu/~myo507/), and [Annette D'Onofrio](https://faculty.wcas.northwestern.edu/~akd2621/). I also worked as a research assistant for (and still collaborate with) the [Language, Education, and Reading Neuroscience Lab](https://learnlab.northwestern.edu/)) in Communication Sciences and Disorders. I wrote my thesis on the role of prosodic focus in semantic reanalysis in the processing of garden-path sentences with local attachment ambiguity.
+I received my B.A. in Linguistics from Northwestern University, where I worked with [Jennifer Cole](https://sites.northwestern.edu/cole/), [Masaya Yoshida](https://faculty.wcas.northwestern.edu/~myo507/), and [Annette D'Onofrio](https://faculty.wcas.northwestern.edu/~akd2621/). I also worked as a research assistant for (and still collaborate with) the [Language, Education, and Reading Neuroscience Lab](https://learnlab.northwestern.edu/)) in Communication Sciences and Disorders. I wrote my thesis on the role of prosodic focus in the processing of garden-path sentences.
 
 Beyond linguistics research, I have interests in data visualization, science communication, and the R programming language. I read and [blog](https://yjunechoe.github.io/blog.html) about these topics in my spare time as a hobby. I'm especially passionate about improving explanatory data viz in academic research and strongly believe that _style_ is just as important as _content_. I am also a [Penn MindCORE](https://mindcore.sas.upenn.edu/) student affiliate and work as a data science tutor for researchers at Penn.
 
