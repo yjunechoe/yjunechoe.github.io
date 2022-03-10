@@ -24,13 +24,6 @@ em {
   margin-right: 3px;
 }
 
-summary {
-  background-color: lightgrey;
-  padding-left: 5px;
-  border: 1px solid black;
-  border-radius: 5px;
-}
-
 div.opener {
   text-align: justify;
 }
@@ -192,6 +185,16 @@ aside code {
   font-weight: 600;
 }
 
+/* Details */
+summary {
+  padding-left: 5px;
+}
+
+details {
+  background-color: #008bff0f;
+  outline: 2px solid #38566F;
+  padding: 0.5rem;
+}
 
 /* Block Quotes */
 
@@ -266,7 +269,7 @@ d-footnote img {
 
 /* Inline Code */
 
-p code {
+p code, li code {
   border-radius: 4px;
   padding: 3px 2px 2px 2px;
   color: black;

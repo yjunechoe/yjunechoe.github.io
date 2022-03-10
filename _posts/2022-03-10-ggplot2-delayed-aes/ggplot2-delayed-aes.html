@@ -1,0 +1,2000 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ad0000; } /* Alert */
+code span.an { color: #5e5e5e; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bn { color: #ad0000; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007ba5; } /* ControlFlow */
+code span.ch { color: #20794d; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #5e5e5e; } /* Comment */
+code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+code span.dt { color: #ad0000; } /* DataType */
+code span.dv { color: #ad0000; } /* DecVal */
+code span.er { color: #ad0000; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #ad0000; } /* Float */
+code span.fu { color: #4758ab; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #5e5e5e; } /* Information */
+code span.kw { color: #007ba5; } /* Keyword */
+code span.op { color: #5e5e5e; } /* Operator */
+code span.ot { color: #007ba5; } /* Other */
+code span.pp { color: #ad0000; } /* Preprocessor */
+code span.sc { color: #5e5e5e; } /* SpecialChar */
+code span.ss { color: #20794d; } /* SpecialString */
+code span.st { color: #20794d; } /* String */
+code span.va { color: #111111; } /* Variable */
+code span.vs { color: #20794d; } /* VerbatimString */
+code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+</style>
+
+
+  <!--radix_placeholder_meta_tags-->
+  <title>Demystifying delayed aesthetic evaluation</title>
+
+  <meta property="description" itemprop="description" content="An introduction to `stage()`, `after_stat()`, and `after_scale()` with {ggtrace}"/>
+
+
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2022-03-10"/>
+  <meta property="article:created" itemprop="dateCreated" content="2022-03-10"/>
+  <meta name="article:author" content="June Choe"/>
+
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="Demystifying delayed aesthetic evaluation"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:description" content="An introduction to `stage()`, `after_stat()`, and `after_scale()` with {ggtrace}"/>
+  <meta property="og:image" content="https://yjunechoe.github.io/ggplot2-delayed-aes_files/figure-html5/unnamed-chunk-2-1.png"/>
+  <meta property="og:image:width" content="1248"/>
+  <meta property="og:image:height" content="768"/>
+  <meta property="og:locale" content="en_US"/>
+
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:title" content="Demystifying delayed aesthetic evaluation"/>
+  <meta property="twitter:description" content="An introduction to `stage()`, `after_stat()`, and `after_scale()` with {ggtrace}"/>
+  <meta property="twitter:image" content="https://yjunechoe.github.io/ggplot2-delayed-aes_files/figure-html5/unnamed-chunk-2-1.png"/>
+  <meta property="twitter:image:width" content="1248"/>
+  <meta property="twitter:image:height" content="768"/>
+
+  <!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","date","output","editor_options","draft"]}},"value":[{"type":"character","attributes":{},"value":["Demystifying delayed aesthetic evaluation"]},{"type":"character","attributes":{},"value":["An introduction to `stage()`, `after_stat()`, and `after_scale()` with {ggtrace}\n"]},{"type":"character","attributes":{},"value":["data visualization","ggplot2","tutorial"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]},{"type":"character","attributes":{},"value":["0000-0002-0701-921X"]}]}]},{"type":"character","attributes":{},"value":["2022-03-10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained","css"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["../../styles.css"]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["chunk_output_type"]}},"value":[{"type":"character","attributes":{},"value":["console"]}]},{"type":"logical","attributes":{},"value":[true]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["ggplot2-delayed-aes_files/anchor-4.2.2/anchor.min.js","ggplot2-delayed-aes_files/bowser-1.9.3/bowser.min.js","ggplot2-delayed-aes_files/core-js-2.5.3/LICENSE","ggplot2-delayed-aes_files/core-js-2.5.3/package.json","ggplot2-delayed-aes_files/core-js-2.5.3/shim.min.js","ggplot2-delayed-aes_files/distill-2.2.21/template.v2.js","ggplot2-delayed-aes_files/figure-html5/unnamed-chunk-2-1.png","ggplot2-delayed-aes_files/figure-html5/unnamed-chunk-2-2.png","ggplot2-delayed-aes_files/figure-html5/unnamed-chunk-4-1.png","ggplot2-delayed-aes_files/figure-html5/unnamed-chunk-4-2.png","ggplot2-delayed-aes_files/figure-html5/unnamed-chunk-5-1.png","ggplot2-delayed-aes_files/header-attrs-2.11/header-attrs.js","ggplot2-delayed-aes_files/htmlwidgets-1.5.4/htmlwidgets.js","ggplot2-delayed-aes_files/jquery-3.6.0/jquery-3.6.0.js","ggplot2-delayed-aes_files/jquery-3.6.0/jquery-3.6.0.min.js","ggplot2-delayed-aes_files/jquery-3.6.0/jquery-3.6.0.min.map","ggplot2-delayed-aes_files/pagedtable-1.1/css/pagedtable.css","ggplot2-delayed-aes_files/pagedtable-1.1/js/pagedtable.js","ggplot2-delayed-aes_files/popper-2.6.0/popper.min.js","ggplot2-delayed-aes_files/react-16.12.0/AUTHORS","ggplot2-delayed-aes_files/react-16.12.0/LICENSE.txt","ggplot2-delayed-aes_files/react-16.12.0/react-dom.min.js","ggplot2-delayed-aes_files/react-16.12.0/react.min.js","ggplot2-delayed-aes_files/reactable-binding-0.2.3/reactable.js","ggplot2-delayed-aes_files/reactwidget-1.0.0/react-tools.js","ggplot2-delayed-aes_files/reactwidget-1.0.0/react-tools.js.map","ggplot2-delayed-aes_files/tippy-6.2.7/tippy-bundle.umd.min.js","ggplot2-delayed-aes_files/tippy-6.2.7/tippy-light-border.css","ggplot2-delayed-aes_files/tippy-6.2.7/tippy.css","ggplot2-delayed-aes_files/tippy-6.2.7/tippy.umd.min.js","ggplot2-delayed-aes_files/webcomponents-2.0.0/webcomponents.js"]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+  <style type="text/css">
+
+  body {
+    background-color: white;
+  }
+
+  .pandoc-table {
+    width: 100%;
+  }
+
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+
+  d-byline .byline {
+    grid-template-columns: 2fr 2fr;
+  }
+
+  d-byline .byline h3 {
+    margin-block-start: 1.5em;
+  }
+
+  d-byline .byline .authors-affiliations h3 {
+    margin-block-start: 0.5em;
+  }
+
+  .authors-affiliations .orcid-id {
+    width: 16px;
+    height:16px;
+    margin-left: 4px;
+    margin-right: 4px;
+    vertical-align: middle;
+    padding-bottom: 2px;
+  }
+
+  d-title .dt-tags {
+    margin-top: 1em;
+    grid-column: text;
+  }
+
+  .dt-tags .dt-tag {
+    text-decoration: none;
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0em 0.4em;
+    margin-right: 0.5em;
+    margin-bottom: 0.4em;
+    font-size: 70%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  d-article table.gt_table td,
+  d-article table.gt_table th {
+    border-bottom: none;
+  }
+
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .shaded-content {
+    background: white;
+  }
+
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  d-article {
+    padding-top: 2.5rem;
+    padding-bottom: 30px;
+  }
+
+  d-appendix {
+    padding-top: 30px;
+  }
+
+  d-article>p>img {
+    width: 100%;
+  }
+
+  d-article h2 {
+    margin: 1rem 0 1.5rem 0;
+  }
+
+  d-article h3 {
+    margin-top: 1.5rem;
+  }
+
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+
+  /* Tweak code blocks */
+
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: auto;
+  }
+
+  d-article div.sourceCode {
+    background-color: white;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+
+  d-article pre {
+    font-size: 12px;
+    color: black;
+    background: none;
+    margin-top: 0;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  d-article pre a {
+    border-bottom: none;
+  }
+
+  d-article pre a:hover {
+    border-bottom: none;
+    text-decoration: underline;
+  }
+
+  d-article details {
+    grid-column: text;
+    margin-bottom: 0.8em;
+  }
+
+  @media(min-width: 768px) {
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: visible !important;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 18px;
+    font-size: 14px;
+  }
+
+  d-article pre {
+    font-size: 14px;
+  }
+
+  }
+
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  /* CSS for d-contents */
+
+  .d-contents {
+    grid-column: text;
+    color: rgba(0,0,0,0.8);
+    font-size: 0.9em;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    padding-left: 0.25em;
+    justify-self: start;
+  }
+
+  @media(min-width: 1000px) {
+    .d-contents.d-contents-float {
+      height: 0;
+      grid-column-start: 1;
+      grid-column-end: 4;
+      justify-self: center;
+      padding-right: 3em;
+      padding-left: 2em;
+    }
+  }
+
+  .d-contents nav h3 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+
+  .d-contents li {
+    list-style-type: none
+  }
+
+  .d-contents nav > ul {
+    padding-left: 0;
+  }
+
+  .d-contents ul {
+    padding-left: 1em
+  }
+
+  .d-contents nav ul li {
+    margin-top: 0.6em;
+    margin-bottom: 0.2em;
+  }
+
+  .d-contents nav a {
+    font-size: 13px;
+    border-bottom: none;
+    text-decoration: none
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .d-contents nav a:hover {
+    text-decoration: underline solid rgba(0, 0, 0, 0.6)
+  }
+
+  .d-contents nav > ul > li > a {
+    font-weight: 600;
+  }
+
+  .d-contents nav > ul > li > ul {
+    font-weight: inherit;
+  }
+
+  .d-contents nav > ul > li > ul > li {
+    margin-top: 0.2em;
+  }
+
+
+  .d-contents nav ul {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+  }
+
+  .d-article-with-toc h2:nth-child(2) {
+    margin-top: 0;
+  }
+
+
+  /* Figure */
+
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+
+  .figure img {
+    width: 100%;
+  }
+
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+
+  /* Citations */
+
+  d-article .citation {
+    color: inherit;
+    cursor: inherit;
+  }
+
+  div.hanging-indent{
+    margin-left: 1em; text-indent: -1em;
+  }
+
+  /* Citation hover box */
+
+  .tippy-box[data-theme~=light-border] {
+    background-color: rgba(250, 250, 250, 0.95);
+  }
+
+  .tippy-content > p {
+    margin-bottom: 0;
+    padding: 2px;
+  }
+
+
+  /* Tweak 1000px media break to show more text */
+
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+
+    .grid {
+      grid-column-gap: 16px;
+    }
+
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+
+
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  /* Include appendix styles here so they can be overridden */
+
+  d-appendix {
+    contain: layout style;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-top: 60px;
+    margin-bottom: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0,0,0,0.5);
+    padding-top: 60px;
+    padding-bottom: 48px;
+  }
+
+  d-appendix h3 {
+    grid-column: page-start / text-start;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 1em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.65);
+  }
+
+  d-appendix h3 + * {
+    margin-top: 1em;
+  }
+
+  d-appendix ol {
+    padding: 0 0 0 15px;
+  }
+
+  @media (min-width: 768px) {
+    d-appendix ol {
+      padding: 0 0 0 30px;
+      margin-left: -30px;
+    }
+  }
+
+  d-appendix li {
+    margin-bottom: 1em;
+  }
+
+  d-appendix a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  d-appendix > * {
+    grid-column: text;
+  }
+
+  d-appendix > d-footnote-list,
+  d-appendix > d-citation-list,
+  d-appendix > distill-appendix {
+    grid-column: screen;
+  }
+
+  /* Include footnote styles here so they can be overridden */
+
+  d-footnote-list {
+    contain: layout style;
+  }
+
+  d-footnote-list > * {
+    grid-column: text;
+  }
+
+  d-footnote-list a.footnote-backlink {
+    color: rgba(0,0,0,0.3);
+    padding-left: 0.5em;
+  }
+
+
+
+  /* Anchor.js */
+
+  .anchorjs-link {
+    /*transition: all .25s linear; */
+    text-decoration: none;
+    border-bottom: none;
+  }
+  *:hover > .anchorjs-link {
+    margin-left: -1.125em !important;
+    text-decoration: none;
+    border-bottom: none;
+  }
+
+  /* Social footer */
+
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+
+  .disqus-comments {
+    margin-right: 30px;
+  }
+
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+
+  #disqus_thread {
+    margin-top: 30px;
+  }
+
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+
+
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+
+
+  .sidebar-section.custom {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .custom p {
+    margin-bottom: 0.5em;
+  }
+
+  /* Styles for listing layout (hide title) */
+  .layout-listing d-title, .layout-listing .d-title {
+    display: none;
+  }
+
+  /* Styles for posts lists (not auto-injected) */
+
+
+  .posts-with-sidebar {
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+
+  .posts-list .description h2,
+  .posts-list .description p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .posts-list .description h2 {
+    font-weight: 700;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .posts-list h2.post-tag {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 12px;
+  }
+  .posts-list {
+    margin-top: 60px;
+    margin-bottom: 24px;
+  }
+
+  .posts-list .post-preview {
+    text-decoration: none;
+    overflow: hidden;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 24px 0;
+  }
+
+  .post-preview-last {
+    border-bottom: none !important;
+  }
+
+  .posts-list .posts-list-caption {
+    grid-column: screen;
+    font-weight: 400;
+  }
+
+  .posts-list .post-preview h2 {
+    margin: 0 0 6px 0;
+    line-height: 1.2em;
+    font-style: normal;
+    font-size: 24px;
+  }
+
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.4em;
+    font-size: 16px;
+  }
+
+  .posts-list .post-preview .thumbnail {
+    box-sizing: border-box;
+    margin-bottom: 24px;
+    position: relative;
+    max-width: 500px;
+  }
+  .posts-list .post-preview img {
+    width: 100%;
+    display: block;
+  }
+
+  .posts-list .metadata {
+    font-size: 12px;
+    line-height: 1.4em;
+    margin-bottom: 18px;
+  }
+
+  .posts-list .metadata > * {
+    display: inline-block;
+  }
+
+  .posts-list .metadata .publishedDate {
+    margin-right: 2em;
+  }
+
+  .posts-list .metadata .dt-authors {
+    display: block;
+    margin-top: 0.3em;
+    margin-right: 2em;
+  }
+
+  .posts-list .dt-tags {
+    display: block;
+    line-height: 1em;
+  }
+
+  .posts-list .dt-tags .dt-tag {
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0.3em 0.4em;
+    margin-right: 0.2em;
+    margin-bottom: 0.4em;
+    font-size: 60%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .posts-list img {
+    opacity: 1;
+  }
+
+  .posts-list img[data-src] {
+    opacity: 0;
+  }
+
+  .posts-more {
+    clear: both;
+  }
+
+
+  .posts-sidebar {
+    font-size: 16px;
+  }
+
+  .posts-sidebar h3 {
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .sidebar-section {
+    margin-bottom: 30px;
+  }
+
+  .categories ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .categories li {
+    color: rgba(0, 0, 0, 0.8);
+    margin-bottom: 0;
+  }
+
+  .categories li>a {
+    border-bottom: none;
+  }
+
+  .categories li>a:hover {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  }
+
+  .categories .active {
+    font-weight: 600;
+  }
+
+  .categories .category-count {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+
+  @media(min-width: 768px) {
+    .posts-list .post-preview h2 {
+      font-size: 26px;
+    }
+    .posts-list .post-preview .thumbnail {
+      float: right;
+      width: 30%;
+      margin-bottom: 0;
+    }
+    .posts-list .post-preview .description {
+      float: left;
+      width: 45%;
+    }
+    .posts-list .post-preview .metadata {
+      float: left;
+      width: 20%;
+      margin-top: 8px;
+    }
+    .posts-list .post-preview p {
+      margin: 0 0 12px 0;
+      line-height: 1.5em;
+      font-size: 16px;
+    }
+    .posts-with-sidebar .posts-list {
+      float: left;
+      width: 75%;
+    }
+    .posts-with-sidebar .posts-sidebar {
+      float: right;
+      width: 20%;
+      margin-top: 60px;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+  }
+
+
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  .downlevel .posts-list .post-preview {
+    color: inherit;
+  }
+
+
+
+  </style>
+
+  <script type="application/javascript">
+
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+
+  // show body when load is complete
+  function on_load_complete() {
+
+    // add anchors
+    if (window.anchors) {
+      window.anchors.options.placement = 'left';
+      window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+    }
+
+
+    // set body to visible
+    document.body.style.visibility = 'visible';
+
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+
+  function init_distill() {
+
+    init_common();
+
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+
+    // move refs into #references-listing
+    $('#references-listing').replaceWith($('#refs'));
+
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-contents a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+
+      // capture layout
+      var layout = $(this).attr('data-layout');
+
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('details, div.sourceCode, pre, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+
+
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+
+    // remove code block used to force  highlighting css
+    $('.distill-force-highlighting-css').parent().remove();
+
+    // remove empty line numbers inserted by pandoc when using a
+    // custom syntax highlighting theme
+    $('code.sourceCode a:empty').remove();
+
+    // load distill framework
+    load_distill_framework();
+
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+
+      // article with toc class
+      $('.d-contents').parent().addClass('d-article-with-toc');
+
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+      // add orcid ids
+      $('.authors-affiliations').find('.author').each(function(i, el) {
+        var orcid_id = front_matter.authors[i].orcidID;
+        if (orcid_id) {
+          var a = $('<a></a>');
+          a.attr('href', 'https://orcid.org/' + orcid_id);
+          var img = $('<img></img>');
+          img.addClass('orcid-id');
+          img.attr('alt', 'ORCID ID');
+          img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+          a.append(img);
+          $(this).append(a);
+        }
+      });
+
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+
+      // remove d-appendix and d-footnote-list local styles
+      $('d-appendix > style:first-child').remove();
+      $('d-footnote-list > style:first-child').remove();
+
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+
+      // hoverable references
+      $('span.citation[data-cites]').each(function() {
+        var refs = $(this).attr('data-cites').split(" ");
+        var refHtml = refs.map(function(ref) {
+          return "<p>" + $('#ref-' + ref).html() + "</p>";
+        }).join("\n");
+        window.tippy(this, {
+          allowHTML: true,
+          content: refHtml,
+          maxWidth: 500,
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        });
+      });
+
+      // clear polling timer
+      clearInterval(tid);
+
+      // show body now that everything is ready
+      on_load_complete();
+    }
+
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+
+  }
+
+  function init_downlevel() {
+
+    init_common();
+
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+
+    // remove toc
+    $('.d-contents').remove();
+
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+
+
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+
+    $('body').addClass('downlevel');
+
+    on_load_complete();
+  }
+
+
+  function init_common() {
+
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+
+      }
+    });
+
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.distill-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+      });
+    }
+
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+
+  </script>
+
+  <!--/radix_placeholder_distill-->
+  <script src="ggplot2-delayed-aes_files/header-attrs-2.11/header-attrs.js"></script>
+  <link href="ggplot2-delayed-aes_files/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+  <script src="ggplot2-delayed-aes_files/pagedtable-1.1/js/pagedtable.js"></script>
+  <script src="ggplot2-delayed-aes_files/core-js-2.5.3/shim.min.js"></script>
+  <script src="ggplot2-delayed-aes_files/react-16.12.0/react.min.js"></script>
+  <script src="ggplot2-delayed-aes_files/react-16.12.0/react-dom.min.js"></script>
+  <script src="ggplot2-delayed-aes_files/reactwidget-1.0.0/react-tools.js"></script>
+  <script src="ggplot2-delayed-aes_files/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+  <script src="ggplot2-delayed-aes_files/reactable-binding-0.2.3/reactable.js"></script>
+  <script src="ggplot2-delayed-aes_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+  <script src="ggplot2-delayed-aes_files/popper-2.6.0/popper.min.js"></script>
+  <link href="ggplot2-delayed-aes_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="ggplot2-delayed-aes_files/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="ggplot2-delayed-aes_files/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="ggplot2-delayed-aes_files/anchor-4.2.2/anchor.min.js"></script>
+  <script src="ggplot2-delayed-aes_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="ggplot2-delayed-aes_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="ggplot2-delayed-aes_files/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <!--/radix_placeholder_site_in_header-->
+
+  <link rel="stylesheet" href="../../styles.css" type="text/css"/>
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Demystifying delayed aesthetic evaluation","description":"An introduction to `stage()`, `after_stat()`, and `after_scale()` with {ggtrace}","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/","orcidID":"0000-0002-0701-921X"}],"publishedDate":"2022-03-10T00:00:00.000-05:00","citationText":"Choe, 2022"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Demystifying delayed aesthetic evaluation</h1>
+<!--radix_placeholder_categories-->
+<div class="dt-tags">
+<div class="dt=tag">data visualization</div>
+<div class="dt=tag">ggplot2</div>
+<div class="dt=tag">tutorial</div>
+</div>
+<!--/radix_placeholder_categories-->
+<p><p>An introduction to <code>stage()</code>,
+<code>after_stat()</code>, and <code>after_scale()</code> with
+{ggtrace}</p></p>
+</div>
+
+<div class="d-byline">
+  June Choe  (University of Pennsylvania Linguistics)<a
+href="https://live-sas-www-ling.pantheon.sas.upenn.edu/"
+class="uri">https://live-sas-www-ling.pantheon.sas.upenn.edu/</a>
+  
+<br/>2022-03-10
+</div>
+
+<div class="d-article">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#motivating-example-geom_bar">Motivating example:
+<code>geom_bar()</code></a></li>
+<li><a href="#much-of-ggplot-is-delayed-evaluation">Much of ggplot is
+“delayed evaluation”</a></li>
+<li><a href="#in-search-of-count">In search of
+<code>count</code></a></li>
+</ul>
+</nav>
+</div>
+<h2 id="setup">Setup</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://yjunechoe.github.io/ggtrace'>ggtrace</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://purrr.tidyverse.org'>purrr</a></span><span class='op'>)</span>
+
+<span class='va'>penguins</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/na.fail.html'>na.omit</a></span><span class='op'>(</span><span class='fu'>palmerpenguins</span><span class='fu'>::</span><span class='va'><a href='https://allisonhorst.github.io/palmerpenguins/reference/penguins.html'>penguins</a></span><span class='op'>)</span>
+<span class='fu'>rmarkdown</span><span class='fu'>::</span><span class='fu'><a href='https://pkgs.rstudio.com/rmarkdown/reference/paged_table.html'>paged_table</a></span><span class='op'>(</span><span class='va'>penguins</span><span class='op'>)</span>
+</code></pre>
+</div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["species"],"name":[1],"type":["fct"],"align":["left"]},{"label":["island"],"name":[2],"type":["fct"],"align":["left"]},{"label":["bill_length_mm"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["bill_depth_mm"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["flipper_length_mm"],"name":[5],"type":["int"],"align":["right"]},{"label":["body_mass_g"],"name":[6],"type":["int"],"align":["right"]},{"label":["sex"],"name":[7],"type":["fct"],"align":["left"]},{"label":["year"],"name":[8],"type":["int"],"align":["right"]}],"data":[{"1":"Adelie","2":"Torgersen","3":"39.1","4":"18.7","5":"181","6":"3750","7":"male","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"39.5","4":"17.4","5":"186","6":"3800","7":"female","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"40.3","4":"18.0","5":"195","6":"3250","7":"female","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"36.7","4":"19.3","5":"193","6":"3450","7":"female","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"39.3","4":"20.6","5":"190","6":"3650","7":"male","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"38.9","4":"17.8","5":"181","6":"3625","7":"female","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"39.2","4":"19.6","5":"195","6":"4675","7":"male","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"41.1","4":"17.6","5":"182","6":"3200","7":"female","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"38.6","4":"21.2","5":"191","6":"3800","7":"male","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"34.6","4":"21.1","5":"198","6":"4400","7":"male","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"36.6","4":"17.8","5":"185","6":"3700","7":"female","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"38.7","4":"19.0","5":"195","6":"3450","7":"female","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"42.5","4":"20.7","5":"197","6":"4500","7":"male","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"34.4","4":"18.4","5":"184","6":"3325","7":"female","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"46.0","4":"21.5","5":"194","6":"4200","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"37.8","4":"18.3","5":"174","6":"3400","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"37.7","4":"18.7","5":"180","6":"3600","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"35.9","4":"19.2","5":"189","6":"3800","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"38.2","4":"18.1","5":"185","6":"3950","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"38.8","4":"17.2","5":"180","6":"3800","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"35.3","4":"18.9","5":"187","6":"3800","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"40.6","4":"18.6","5":"183","6":"3550","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"40.5","4":"17.9","5":"187","6":"3200","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"37.9","4":"18.6","5":"172","6":"3150","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"40.5","4":"18.9","5":"180","6":"3950","7":"male","8":"2007"},{"1":"Adelie","2":"Dream","3":"39.5","4":"16.7","5":"178","6":"3250","7":"female","8":"2007"},{"1":"Adelie","2":"Dream","3":"37.2","4":"18.1","5":"178","6":"3900","7":"male","8":"2007"},{"1":"Adelie","2":"Dream","3":"39.5","4":"17.8","5":"188","6":"3300","7":"female","8":"2007"},{"1":"Adelie","2":"Dream","3":"40.9","4":"18.9","5":"184","6":"3900","7":"male","8":"2007"},{"1":"Adelie","2":"Dream","3":"36.4","4":"17.0","5":"195","6":"3325","7":"female","8":"2007"},{"1":"Adelie","2":"Dream","3":"39.2","4":"21.1","5":"196","6":"4150","7":"male","8":"2007"},{"1":"Adelie","2":"Dream","3":"38.8","4":"20.0","5":"190","6":"3950","7":"male","8":"2007"},{"1":"Adelie","2":"Dream","3":"42.2","4":"18.5","5":"180","6":"3550","7":"female","8":"2007"},{"1":"Adelie","2":"Dream","3":"37.6","4":"19.3","5":"181","6":"3300","7":"female","8":"2007"},{"1":"Adelie","2":"Dream","3":"39.8","4":"19.1","5":"184","6":"4650","7":"male","8":"2007"},{"1":"Adelie","2":"Dream","3":"36.5","4":"18.0","5":"182","6":"3150","7":"female","8":"2007"},{"1":"Adelie","2":"Dream","3":"40.8","4":"18.4","5":"195","6":"3900","7":"male","8":"2007"},{"1":"Adelie","2":"Dream","3":"36.0","4":"18.5","5":"186","6":"3100","7":"female","8":"2007"},{"1":"Adelie","2":"Dream","3":"44.1","4":"19.7","5":"196","6":"4400","7":"male","8":"2007"},{"1":"Adelie","2":"Dream","3":"37.0","4":"16.9","5":"185","6":"3000","7":"female","8":"2007"},{"1":"Adelie","2":"Dream","3":"39.6","4":"18.8","5":"190","6":"4600","7":"male","8":"2007"},{"1":"Adelie","2":"Dream","3":"41.1","4":"19.0","5":"182","6":"3425","7":"male","8":"2007"},{"1":"Adelie","2":"Dream","3":"36.0","4":"17.9","5":"190","6":"3450","7":"female","8":"2007"},{"1":"Adelie","2":"Dream","3":"42.3","4":"21.2","5":"191","6":"4150","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"39.6","4":"17.7","5":"186","6":"3500","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"40.1","4":"18.9","5":"188","6":"4300","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"35.0","4":"17.9","5":"190","6":"3450","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"42.0","4":"19.5","5":"200","6":"4050","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"34.5","4":"18.1","5":"187","6":"2900","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.4","4":"18.6","5":"191","6":"3700","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"39.0","4":"17.5","5":"186","6":"3550","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"40.6","4":"18.8","5":"193","6":"3800","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"36.5","4":"16.6","5":"181","6":"2850","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"37.6","4":"19.1","5":"194","6":"3750","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"35.7","4":"16.9","5":"185","6":"3150","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.3","4":"21.1","5":"195","6":"4400","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"37.6","4":"17.0","5":"185","6":"3600","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.1","4":"18.2","5":"192","6":"4050","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"36.4","4":"17.1","5":"184","6":"2850","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.6","4":"18.0","5":"192","6":"3950","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"35.5","4":"16.2","5":"195","6":"3350","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.1","4":"19.1","5":"188","6":"4100","7":"male","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"35.9","4":"16.6","5":"190","6":"3050","7":"female","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"41.8","4":"19.4","5":"198","6":"4450","7":"male","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"33.5","4":"19.0","5":"190","6":"3600","7":"female","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"39.7","4":"18.4","5":"190","6":"3900","7":"male","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"39.6","4":"17.2","5":"196","6":"3550","7":"female","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"45.8","4":"18.9","5":"197","6":"4150","7":"male","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"35.5","4":"17.5","5":"190","6":"3700","7":"female","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"42.8","4":"18.5","5":"195","6":"4250","7":"male","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"40.9","4":"16.8","5":"191","6":"3700","7":"female","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"37.2","4":"19.4","5":"184","6":"3900","7":"male","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"36.2","4":"16.1","5":"187","6":"3550","7":"female","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"42.1","4":"19.1","5":"195","6":"4000","7":"male","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"34.6","4":"17.2","5":"189","6":"3200","7":"female","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"42.9","4":"17.6","5":"196","6":"4700","7":"male","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"36.7","4":"18.8","5":"187","6":"3800","7":"female","8":"2008"},{"1":"Adelie","2":"Torgersen","3":"35.1","4":"19.4","5":"193","6":"4200","7":"male","8":"2008"},{"1":"Adelie","2":"Dream","3":"37.3","4":"17.8","5":"191","6":"3350","7":"female","8":"2008"},{"1":"Adelie","2":"Dream","3":"41.3","4":"20.3","5":"194","6":"3550","7":"male","8":"2008"},{"1":"Adelie","2":"Dream","3":"36.3","4":"19.5","5":"190","6":"3800","7":"male","8":"2008"},{"1":"Adelie","2":"Dream","3":"36.9","4":"18.6","5":"189","6":"3500","7":"female","8":"2008"},{"1":"Adelie","2":"Dream","3":"38.3","4":"19.2","5":"189","6":"3950","7":"male","8":"2008"},{"1":"Adelie","2":"Dream","3":"38.9","4":"18.8","5":"190","6":"3600","7":"female","8":"2008"},{"1":"Adelie","2":"Dream","3":"35.7","4":"18.0","5":"202","6":"3550","7":"female","8":"2008"},{"1":"Adelie","2":"Dream","3":"41.1","4":"18.1","5":"205","6":"4300","7":"male","8":"2008"},{"1":"Adelie","2":"Dream","3":"34.0","4":"17.1","5":"185","6":"3400","7":"female","8":"2008"},{"1":"Adelie","2":"Dream","3":"39.6","4":"18.1","5":"186","6":"4450","7":"male","8":"2008"},{"1":"Adelie","2":"Dream","3":"36.2","4":"17.3","5":"187","6":"3300","7":"female","8":"2008"},{"1":"Adelie","2":"Dream","3":"40.8","4":"18.9","5":"208","6":"4300","7":"male","8":"2008"},{"1":"Adelie","2":"Dream","3":"38.1","4":"18.6","5":"190","6":"3700","7":"female","8":"2008"},{"1":"Adelie","2":"Dream","3":"40.3","4":"18.5","5":"196","6":"4350","7":"male","8":"2008"},{"1":"Adelie","2":"Dream","3":"33.1","4":"16.1","5":"178","6":"2900","7":"female","8":"2008"},{"1":"Adelie","2":"Dream","3":"43.2","4":"18.5","5":"192","6":"4100","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"35.0","4":"17.9","5":"192","6":"3725","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"41.0","4":"20.0","5":"203","6":"4725","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"37.7","4":"16.0","5":"183","6":"3075","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"37.8","4":"20.0","5":"190","6":"4250","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"37.9","4":"18.6","5":"193","6":"2925","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"39.7","4":"18.9","5":"184","6":"3550","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"38.6","4":"17.2","5":"199","6":"3750","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"38.2","4":"20.0","5":"190","6":"3900","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"38.1","4":"17.0","5":"181","6":"3175","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"43.2","4":"19.0","5":"197","6":"4775","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"38.1","4":"16.5","5":"198","6":"3825","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"45.6","4":"20.3","5":"191","6":"4600","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"39.7","4":"17.7","5":"193","6":"3200","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"42.2","4":"19.5","5":"197","6":"4275","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"39.6","4":"20.7","5":"191","6":"3900","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"42.7","4":"18.3","5":"196","6":"4075","7":"male","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"38.6","4":"17.0","5":"188","6":"2900","7":"female","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"37.3","4":"20.5","5":"199","6":"3775","7":"male","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"35.7","4":"17.0","5":"189","6":"3350","7":"female","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"41.1","4":"18.6","5":"189","6":"3325","7":"male","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"36.2","4":"17.2","5":"187","6":"3150","7":"female","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"37.7","4":"19.8","5":"198","6":"3500","7":"male","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"40.2","4":"17.0","5":"176","6":"3450","7":"female","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"41.4","4":"18.5","5":"202","6":"3875","7":"male","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"35.2","4":"15.9","5":"186","6":"3050","7":"female","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"40.6","4":"19.0","5":"199","6":"4000","7":"male","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"38.8","4":"17.6","5":"191","6":"3275","7":"female","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"41.5","4":"18.3","5":"195","6":"4300","7":"male","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"39.0","4":"17.1","5":"191","6":"3050","7":"female","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"44.1","4":"18.0","5":"210","6":"4000","7":"male","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"38.5","4":"17.9","5":"190","6":"3325","7":"female","8":"2009"},{"1":"Adelie","2":"Torgersen","3":"43.1","4":"19.2","5":"197","6":"3500","7":"male","8":"2009"},{"1":"Adelie","2":"Dream","3":"36.8","4":"18.5","5":"193","6":"3500","7":"female","8":"2009"},{"1":"Adelie","2":"Dream","3":"37.5","4":"18.5","5":"199","6":"4475","7":"male","8":"2009"},{"1":"Adelie","2":"Dream","3":"38.1","4":"17.6","5":"187","6":"3425","7":"female","8":"2009"},{"1":"Adelie","2":"Dream","3":"41.1","4":"17.5","5":"190","6":"3900","7":"male","8":"2009"},{"1":"Adelie","2":"Dream","3":"35.6","4":"17.5","5":"191","6":"3175","7":"female","8":"2009"},{"1":"Adelie","2":"Dream","3":"40.2","4":"20.1","5":"200","6":"3975","7":"male","8":"2009"},{"1":"Adelie","2":"Dream","3":"37.0","4":"16.5","5":"185","6":"3400","7":"female","8":"2009"},{"1":"Adelie","2":"Dream","3":"39.7","4":"17.9","5":"193","6":"4250","7":"male","8":"2009"},{"1":"Adelie","2":"Dream","3":"40.2","4":"17.1","5":"193","6":"3400","7":"female","8":"2009"},{"1":"Adelie","2":"Dream","3":"40.6","4":"17.2","5":"187","6":"3475","7":"male","8":"2009"},{"1":"Adelie","2":"Dream","3":"32.1","4":"15.5","5":"188","6":"3050","7":"female","8":"2009"},{"1":"Adelie","2":"Dream","3":"40.7","4":"17.0","5":"190","6":"3725","7":"male","8":"2009"},{"1":"Adelie","2":"Dream","3":"37.3","4":"16.8","5":"192","6":"3000","7":"female","8":"2009"},{"1":"Adelie","2":"Dream","3":"39.0","4":"18.7","5":"185","6":"3650","7":"male","8":"2009"},{"1":"Adelie","2":"Dream","3":"39.2","4":"18.6","5":"190","6":"4250","7":"male","8":"2009"},{"1":"Adelie","2":"Dream","3":"36.6","4":"18.4","5":"184","6":"3475","7":"female","8":"2009"},{"1":"Adelie","2":"Dream","3":"36.0","4":"17.8","5":"195","6":"3450","7":"female","8":"2009"},{"1":"Adelie","2":"Dream","3":"37.8","4":"18.1","5":"193","6":"3750","7":"male","8":"2009"},{"1":"Adelie","2":"Dream","3":"36.0","4":"17.1","5":"187","6":"3700","7":"female","8":"2009"},{"1":"Adelie","2":"Dream","3":"41.5","4":"18.5","5":"201","6":"4000","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"46.1","4":"13.2","5":"211","6":"4500","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"50.0","4":"16.3","5":"230","6":"5700","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"48.7","4":"14.1","5":"210","6":"4450","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"50.0","4":"15.2","5":"218","6":"5700","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"47.6","4":"14.5","5":"215","6":"5400","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"46.5","4":"13.5","5":"210","6":"4550","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"45.4","4":"14.6","5":"211","6":"4800","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"46.7","4":"15.3","5":"219","6":"5200","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"43.3","4":"13.4","5":"209","6":"4400","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"46.8","4":"15.4","5":"215","6":"5150","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"40.9","4":"13.7","5":"214","6":"4650","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"49.0","4":"16.1","5":"216","6":"5550","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"45.5","4":"13.7","5":"214","6":"4650","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"48.4","4":"14.6","5":"213","6":"5850","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"45.8","4":"14.6","5":"210","6":"4200","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"49.3","4":"15.7","5":"217","6":"5850","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"42.0","4":"13.5","5":"210","6":"4150","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"49.2","4":"15.2","5":"221","6":"6300","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"46.2","4":"14.5","5":"209","6":"4800","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"48.7","4":"15.1","5":"222","6":"5350","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"50.2","4":"14.3","5":"218","6":"5700","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"45.1","4":"14.5","5":"215","6":"5000","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"46.5","4":"14.5","5":"213","6":"4400","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"46.3","4":"15.8","5":"215","6":"5050","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"42.9","4":"13.1","5":"215","6":"5000","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"46.1","4":"15.1","5":"215","6":"5100","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"47.8","4":"15.0","5":"215","6":"5650","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"48.2","4":"14.3","5":"210","6":"4600","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"50.0","4":"15.3","5":"220","6":"5550","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"47.3","4":"15.3","5":"222","6":"5250","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"42.8","4":"14.2","5":"209","6":"4700","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"45.1","4":"14.5","5":"207","6":"5050","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"59.6","4":"17.0","5":"230","6":"6050","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"49.1","4":"14.8","5":"220","6":"5150","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"48.4","4":"16.3","5":"220","6":"5400","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"42.6","4":"13.7","5":"213","6":"4950","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"44.4","4":"17.3","5":"219","6":"5250","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"44.0","4":"13.6","5":"208","6":"4350","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"48.7","4":"15.7","5":"208","6":"5350","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"42.7","4":"13.7","5":"208","6":"3950","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"49.6","4":"16.0","5":"225","6":"5700","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.3","4":"13.7","5":"210","6":"4300","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"49.6","4":"15.0","5":"216","6":"4750","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"50.5","4":"15.9","5":"222","6":"5550","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"43.6","4":"13.9","5":"217","6":"4900","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.5","4":"13.9","5":"210","6":"4200","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"50.5","4":"15.9","5":"225","6":"5400","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"44.9","4":"13.3","5":"213","6":"5100","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.2","4":"15.8","5":"215","6":"5300","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"46.6","4":"14.2","5":"210","6":"4850","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"48.5","4":"14.1","5":"220","6":"5300","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.1","4":"14.4","5":"210","6":"4400","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"50.1","4":"15.0","5":"225","6":"5000","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"46.5","4":"14.4","5":"217","6":"4900","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.0","4":"15.4","5":"220","6":"5050","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"43.8","4":"13.9","5":"208","6":"4300","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.5","4":"15.0","5":"220","6":"5000","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"43.2","4":"14.5","5":"208","6":"4450","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"50.4","4":"15.3","5":"224","6":"5550","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.3","4":"13.8","5":"208","6":"4200","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"46.2","4":"14.9","5":"221","6":"5300","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.7","4":"13.9","5":"214","6":"4400","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"54.3","4":"15.7","5":"231","6":"5650","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.8","4":"14.2","5":"219","6":"4700","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"49.8","4":"16.8","5":"230","6":"5700","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"49.5","4":"16.2","5":"229","6":"5800","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"43.5","4":"14.2","5":"220","6":"4700","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"50.7","4":"15.0","5":"223","6":"5550","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"47.7","4":"15.0","5":"216","6":"4750","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"46.4","4":"15.6","5":"221","6":"5000","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"48.2","4":"15.6","5":"221","6":"5100","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"46.5","4":"14.8","5":"217","6":"5200","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"46.4","4":"15.0","5":"216","6":"4700","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"48.6","4":"16.0","5":"230","6":"5800","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"47.5","4":"14.2","5":"209","6":"4600","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"51.1","4":"16.3","5":"220","6":"6000","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.2","4":"13.8","5":"215","6":"4750","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.2","4":"16.4","5":"223","6":"5950","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"49.1","4":"14.5","5":"212","6":"4625","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"52.5","4":"15.6","5":"221","6":"5450","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"47.4","4":"14.6","5":"212","6":"4725","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"50.0","4":"15.9","5":"224","6":"5350","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"44.9","4":"13.8","5":"212","6":"4750","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"50.8","4":"17.3","5":"228","6":"5600","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"43.4","4":"14.4","5":"218","6":"4600","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"51.3","4":"14.2","5":"218","6":"5300","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"47.5","4":"14.0","5":"212","6":"4875","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"52.1","4":"17.0","5":"230","6":"5550","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"47.5","4":"15.0","5":"218","6":"4950","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"52.2","4":"17.1","5":"228","6":"5400","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"45.5","4":"14.5","5":"212","6":"4750","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"49.5","4":"16.1","5":"224","6":"5650","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"44.5","4":"14.7","5":"214","6":"4850","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"50.8","4":"15.7","5":"226","6":"5200","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"49.4","4":"15.8","5":"216","6":"4925","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"46.9","4":"14.6","5":"222","6":"4875","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"48.4","4":"14.4","5":"203","6":"4625","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"51.1","4":"16.5","5":"225","6":"5250","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"48.5","4":"15.0","5":"219","6":"4850","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"55.9","4":"17.0","5":"228","6":"5600","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"47.2","4":"15.5","5":"215","6":"4975","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"49.1","4":"15.0","5":"228","6":"5500","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"46.8","4":"16.1","5":"215","6":"5500","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"41.7","4":"14.7","5":"210","6":"4700","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"53.4","4":"15.8","5":"219","6":"5500","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"43.3","4":"14.0","5":"208","6":"4575","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"48.1","4":"15.1","5":"209","6":"5500","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"50.5","4":"15.2","5":"216","6":"5000","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"49.8","4":"15.9","5":"229","6":"5950","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"43.5","4":"15.2","5":"213","6":"4650","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"51.5","4":"16.3","5":"230","6":"5500","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"46.2","4":"14.1","5":"217","6":"4375","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"55.1","4":"16.0","5":"230","6":"5850","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"48.8","4":"16.2","5":"222","6":"6000","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"47.2","4":"13.7","5":"214","6":"4925","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"46.8","4":"14.3","5":"215","6":"4850","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"50.4","4":"15.7","5":"222","6":"5750","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"45.2","4":"14.8","5":"212","6":"5200","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"49.9","4":"16.1","5":"213","6":"5400","7":"male","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"46.5","4":"17.9","5":"192","6":"3500","7":"female","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"50.0","4":"19.5","5":"196","6":"3900","7":"male","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"51.3","4":"19.2","5":"193","6":"3650","7":"male","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"45.4","4":"18.7","5":"188","6":"3525","7":"female","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"52.7","4":"19.8","5":"197","6":"3725","7":"male","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"45.2","4":"17.8","5":"198","6":"3950","7":"female","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"46.1","4":"18.2","5":"178","6":"3250","7":"female","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"51.3","4":"18.2","5":"197","6":"3750","7":"male","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"46.0","4":"18.9","5":"195","6":"4150","7":"female","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"51.3","4":"19.9","5":"198","6":"3700","7":"male","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"46.6","4":"17.8","5":"193","6":"3800","7":"female","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"51.7","4":"20.3","5":"194","6":"3775","7":"male","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"47.0","4":"17.3","5":"185","6":"3700","7":"female","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"52.0","4":"18.1","5":"201","6":"4050","7":"male","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"45.9","4":"17.1","5":"190","6":"3575","7":"female","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"50.5","4":"19.6","5":"201","6":"4050","7":"male","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"50.3","4":"20.0","5":"197","6":"3300","7":"male","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"58.0","4":"17.8","5":"181","6":"3700","7":"female","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"46.4","4":"18.6","5":"190","6":"3450","7":"female","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"49.2","4":"18.2","5":"195","6":"4400","7":"male","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"42.4","4":"17.3","5":"181","6":"3600","7":"female","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"48.5","4":"17.5","5":"191","6":"3400","7":"male","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"43.2","4":"16.6","5":"187","6":"2900","7":"female","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"50.6","4":"19.4","5":"193","6":"3800","7":"male","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"46.7","4":"17.9","5":"195","6":"3300","7":"female","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"52.0","4":"19.0","5":"197","6":"4150","7":"male","8":"2007"},{"1":"Chinstrap","2":"Dream","3":"50.5","4":"18.4","5":"200","6":"3400","7":"female","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"49.5","4":"19.0","5":"200","6":"3800","7":"male","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"46.4","4":"17.8","5":"191","6":"3700","7":"female","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"52.8","4":"20.0","5":"205","6":"4550","7":"male","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"40.9","4":"16.6","5":"187","6":"3200","7":"female","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"54.2","4":"20.8","5":"201","6":"4300","7":"male","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"42.5","4":"16.7","5":"187","6":"3350","7":"female","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"51.0","4":"18.8","5":"203","6":"4100","7":"male","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"49.7","4":"18.6","5":"195","6":"3600","7":"male","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"47.5","4":"16.8","5":"199","6":"3900","7":"female","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"47.6","4":"18.3","5":"195","6":"3850","7":"female","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"52.0","4":"20.7","5":"210","6":"4800","7":"male","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"46.9","4":"16.6","5":"192","6":"2700","7":"female","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"53.5","4":"19.9","5":"205","6":"4500","7":"male","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"49.0","4":"19.5","5":"210","6":"3950","7":"male","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"46.2","4":"17.5","5":"187","6":"3650","7":"female","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"50.9","4":"19.1","5":"196","6":"3550","7":"male","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"45.5","4":"17.0","5":"196","6":"3500","7":"female","8":"2008"},{"1":"Chinstrap","2":"Dream","3":"50.9","4":"17.9","5":"196","6":"3675","7":"female","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"50.8","4":"18.5","5":"201","6":"4450","7":"male","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"50.1","4":"17.9","5":"190","6":"3400","7":"female","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"49.0","4":"19.6","5":"212","6":"4300","7":"male","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"51.5","4":"18.7","5":"187","6":"3250","7":"male","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"49.8","4":"17.3","5":"198","6":"3675","7":"female","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"48.1","4":"16.4","5":"199","6":"3325","7":"female","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"51.4","4":"19.0","5":"201","6":"3950","7":"male","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"45.7","4":"17.3","5":"193","6":"3600","7":"female","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"50.7","4":"19.7","5":"203","6":"4050","7":"male","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"42.5","4":"17.3","5":"187","6":"3350","7":"female","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"52.2","4":"18.8","5":"197","6":"3450","7":"male","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"45.2","4":"16.6","5":"191","6":"3250","7":"female","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"49.3","4":"19.9","5":"203","6":"4050","7":"male","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"50.2","4":"18.8","5":"202","6":"3800","7":"male","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"45.6","4":"19.4","5":"194","6":"3525","7":"female","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"51.9","4":"19.5","5":"206","6":"3950","7":"male","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"46.8","4":"16.5","5":"189","6":"3650","7":"female","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"45.7","4":"17.0","5":"195","6":"3650","7":"female","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"55.8","4":"19.8","5":"207","6":"4000","7":"male","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"43.5","4":"18.1","5":"202","6":"3400","7":"female","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"49.6","4":"18.2","5":"193","6":"3775","7":"male","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"50.8","4":"19.0","5":"210","6":"4100","7":"male","8":"2009"},{"1":"Chinstrap","2":"Dream","3":"50.2","4":"18.7","5":"198","6":"3775","7":"female","8":"2009"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<h2 id="motivating-example-geom_bar">Motivating example:
+<code>geom_bar()</code></h2>
+<p>The <code>geom_bar()</code> layer requires an <code>x</code>
+<em>or</em> <code>y</code> aesthetic, and maps a new variable called
+<code>count</code> to the “un-used” of the two. In other words, if you
+give it a discrete variable, it will derive the count of each category
+in that variable and use that information to determine bar height.</p>
+<p>So depending on whether the variable to be counted is mapped to the
+<code>x</code> or <code>y</code> aesthetic, the bars appear upright
+(count by categories of x) or flipped (count by categories of y):</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>penguins</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_bar</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>species</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>penguins</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_bar</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>species</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="ggplot2-delayed-aes_files/figure-html5/unnamed-chunk-2-1.png" width="50%" /><img src="ggplot2-delayed-aes_files/figure-html5/unnamed-chunk-2-2.png" width="50%" /></p>
+</div>
+<p>But note that there is no variable/column called <code>count</code>
+from our original <code>penguins</code> dataframe:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='st'>"count"</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>penguins</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  [1] FALSE</code></pre>
+</div>
+<p>So where exactly does this <code>count</code> variable come from?
+More specifically…</p>
+<ol type="1">
+<li>Where and how is the new variable <code>count</code>
+<em>computed</em>?</li>
+<li>Where and how is the computed variable <code>count</code>
+<em>mapped</em>?</li>
+</ol>
+<h2 id="much-of-ggplot-is-delayed-evaluation">Much of ggplot is “delayed
+evaluation”</h2>
+<p>To answer these questions, we need to take a detour and first make a
+distinction between “defining” a ggplot and “rendering” a ggplot.</p>
+<p>Most of what we do when we write code and “combine layers” like
+<code>geom_*()</code>, <code>stat_*()</code>, <code>facet_*()</code>,
+etc. with the <code>+</code> operator is actually providing pieces of
+<strong>instructions</strong> for making the plot. Essentially, ggplot
+“collects” the plot specifications strung together with <code>+</code>
+and organizes them following a <em>standardized blueprint</em>
+underlying all ggplot objects.<a href="#fn1" class="footnote-ref"
+id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>This design of ggplot internals is what allows you to swap the order
+of a facet with a geom without consequences to the plot’s appearance,
+for example. The internal blueprint ensures that the Facet will always
+step in to split up the data by panels <em>before</em> the Stat and Geom
+step in to transform the data and make graphical objects.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>penguins</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>island</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_bar</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>species</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>penguins</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_bar</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>species</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>island</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="ggplot2-delayed-aes_files/figure-html5/unnamed-chunk-4-1.png" width="50%" /><img src="ggplot2-delayed-aes_files/figure-html5/unnamed-chunk-4-2.png" width="50%" /></p>
+</div>
+<p>In this sense, the ggplot2 interface is said to have
+<strong>declarative</strong> semantics. Your code makes statements like
+“… this plot should be facetted by <code>island</code>”, rather than “…
+and now facet the plot by <code>island</code>.”<a href="#fn2"
+class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>
+This distinction may be subtle but it’s an integral part of what makes
+the “Grammar of Graphics” a <em>grammar</em>.<a href="#fn3"
+class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> The
+most significant consequence of this separation of defining a ggplot
+vs. rendering a ggplot is that you can continuously add new elements to
+a plot without needing to go back and redraw the plot each time.</p>
+<p>Then when does the ggplot actually get “rendered”?<a href="#fn4"
+class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> It
+happens when the ggplot is printed/plotted, as defined in the S3 methods
+<code>ggplot2:::plot.ggplot</code> and
+<code>ggplot2:::print.ggplot</code> (they’re the same thing).</p>
+<p>And as we might expect, defining a ggplot is quick and cost-less but
+rendering it takes some time:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span><span class='op'>(</span><span class='op'>{</span>
+  <span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>penguins</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>species</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>species</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_bar</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>}</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>     user  system elapsed 
+     0.02    0.00    0.02</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span><span class='op'>(</span><span class='op'>{</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span>
+<span class='op'>}</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="ggplot2-delayed-aes_files/figure-html5/unnamed-chunk-5-1.png" width="624" /></p>
+<pre><code>     user  system elapsed 
+     0.39    0.01    0.42</code></pre>
+</div>
+<p>The bulk of the work in the print/plot method of ggplot is done by
+functions <code>ggplot_build()</code> and <code>ggplot_gtable()</code>,
+which converts the raw data to a transformed data that are relevant for
+drawing, and then makes graphical objects using that data, respectively.
+This happens in Steps 5 and 6 of the print/plot method for ggplot.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/list.html'>as.list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/body.html'>body</a></span><span class='op'>(</span><span class='fu'>ggplot2</span><span class='fu'>:::</span><span class='va'><a href='https://ggplot2.tidyverse.org/reference/print.ggplot.html'>print.ggplot</a></span><span class='op'>)</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>5</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code>  [[1]]
+  data &lt;- ggplot_build(x)
+  
+  [[2]]
+  gtable &lt;- ggplot_gtable(data)</code></pre>
+</div>
+<p>So why do I bring up this high-level description of ggplot internals?
+Well it’s at this print/plot step of a ggplot object’s
+<strong>execution</strong> when the original data is
+<strong>augmented</strong> with internally-computed variables.</p>
+<h2 id="in-search-of-count">In search of <code>count</code></h2>
+<p>Since the <code>count</code> variable from <code>geom_bar()</code> is
+calculated during the execution of the ggplot, it must be from one of
+the two workhorses of the rendering step: <code>ggplot_build()</code> or
+<code>ggplot_gtable()</code>. Generally speaking,
+<code>ggplot_build()</code> deals with the dataframe representation of
+the plot (e.g., mutating variables/columns), and
+<code>ggplot_gtable()</code> deals with the graphical object
+representation of the plot (e.g., adding facet labels/strips to panels),
+so we expect the <code>count</code> variable to appear inside the
+<code>ggplot_build()</code> step.</p>
+<p>Let’s inspect how the plotting data (stored in the internal variable
+called <code>data</code>) gets transformed inside
+<code>ggplot_build()</code>, using the
+<code>ggtrace_inspect_vars()</code> function from <code>{ggtrace}</code>
+which returns a list containing a snapshot of a variable(s)’s value
+whenever it changed:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>internal_data_transformations</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://yjunechoe.github.io/ggtrace/reference/ggtrace_inspect_vars.html'>ggtrace_inspect_vars</a></span><span class='op'>(</span>
+  x <span class='op'>=</span> <span class='va'>p</span>,
+  method <span class='op'>=</span> <span class='fu'>ggplot2</span><span class='fu'>:::</span><span class='va'>ggplot_build.ggplot</span>,
+  vars <span class='op'>=</span> <span class='st'>"data"</span>
+<span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>internal_data_transformations</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  [1] 10</code></pre>
+</div>
+<p>In the course of evaluating our ggplot <code>p</code>, the dataframe
+representation of the layers changed ten times. The first and last
+snapshots of <code>data</code> are equal to the original data and the
+<code>{grid}</code>-ready data that’s shipped off to
+<code>ggplot_gtable()</code>, respectively. Thus, the first snapshot is
+the same as our <code>penguins</code> dataframe and the last snapshot is
+the same as the output of <code>layer_data(p, 1)</code>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Note that `data` is actually a list of dataframes,</span>
+<span class='co'># with each element corresponding to a layer</span>
+<span class='co'># - e.g., data for first layer is `data[[1]]`</span>
+<span class='va'>internal_data_transformations</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code>  [[1]]
+  # A tibble: 333 x 8
+     species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+     &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
+   1 Adelie  Torgersen           39.1          18.7               181        3750
+   2 Adelie  Torgersen           39.5          17.4               186        3800
+   3 Adelie  Torgersen           40.3          18                 195        3250
+   4 Adelie  Torgersen           36.7          19.3               193        3450
+   5 Adelie  Torgersen           39.3          20.6               190        3650
+   6 Adelie  Torgersen           38.9          17.8               181        3625
+   7 Adelie  Torgersen           39.2          19.6               195        4675
+   8 Adelie  Torgersen           41.1          17.6               182        3200
+   9 Adelie  Torgersen           38.6          21.2               191        3800
+  10 Adelie  Torgersen           34.6          21.1               198        4400
+  # ... with 323 more rows, and 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>internal_data_transformations</span><span class='op'>[[</span><span class='fl'>10</span><span class='op'>]</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code>  [[1]]
+       fill   y count prop x flipped_aes PANEL group ymin ymax xmin xmax colour
+  1 #F8766D 146   146    1 1       FALSE     1     1    0  146 0.55 1.45     NA
+  2 #00BA38  68    68    1 2       FALSE     1     2    0   68 1.55 2.45     NA
+  3 #619CFF 119   119    1 3       FALSE     1     3    0  119 2.55 3.45     NA
+    size linetype alpha
+  1  0.5        1    NA
+  2  0.5        1    NA
+  3  0.5        1    NA</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Checking for equality</span>
+<span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span><span class='op'>(</span>
+  <span class='va'>penguins</span>,
+  <span class='va'>internal_data_transformations</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  [1] TRUE</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span><span class='op'>(</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot_build.html'>layer_data</a></span><span class='op'>(</span><span class='va'>p</span>, <span class='fl'>1</span><span class='op'>)</span>,
+  <span class='va'>internal_data_transformations</span><span class='op'>[[</span><span class='fl'>10</span><span class='op'>]</span><span class='op'>]</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  [1] TRUE</code></pre>
+</div>
+<p>By the time we reach the last snapshot of <code>data</code>, the
+<code>count</code> variable is present in the first layer
+<code>data[[1]]</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>internal_data_transformations</span><span class='op'>[[</span><span class='fl'>10</span><span class='op'>]</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code>  [[1]]
+       fill   y count prop x flipped_aes PANEL group ymin ymax xmin xmax colour
+  1 #F8766D 146   146    1 1       FALSE     1     1    0  146 0.55 1.45     NA
+  2 #00BA38  68    68    1 2       FALSE     1     2    0   68 1.55 2.45     NA
+  3 #619CFF 119   119    1 3       FALSE     1     3    0  119 2.55 3.45     NA
+    size linetype alpha
+  1  0.5        1    NA
+  2  0.5        1    NA
+  3  0.5        1    NA</code></pre>
+</div>
+<p>Conveniently, <code>ggtrace_inspect_vars()</code> also returns the
+Steps where the change to a variable’s value was detected. These are
+stored as names of the returned list:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>internal_data_transformations</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>   [1] &quot;Step9&quot;  &quot;Step12&quot; &quot;Step13&quot; &quot;Step18&quot; &quot;Step19&quot; &quot;Step20&quot; &quot;Step22&quot; &quot;Step27&quot;
+   [9] &quot;Step29&quot; &quot;Step30&quot;</code></pre>
+</div>
+<p>Check out the full output of <code>ggtrace_inspect_vars()</code> to
+inspect the state of the data for the first layer every time it changed,
+as well as the preceding call that’s responsible for that change:</p>
+<div class="layout-chunk" data-layout="l-page">
+<div style="padding: 1rem 1rem 0 1rem; border: 1px solid black;">
+<details>
+<summary>Step9</summary>
+<div>
+<strong style="padding-left:5px">Preceding step: </strong>
+<pre style="font-family: &#39;Fira Mono&#39;; padding-left: 15px; background-color: white;">data &lt;- layer_data</pre>
+</div>
+<div>
+<div style="margin-bottom: -10px;">
+<strong>Value at current step:</strong>
+</div>
+<div id="htmlwidget-b95762806c91a46cd198" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-b95762806c91a46cd198">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"species":["Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap"],"island":["Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream"],"bill_length_mm":[39.1,39.5,40.3,36.7,39.3,38.9,39.2,41.1,38.6,34.6,36.6,38.7,42.5,34.4,46,37.8,37.7,35.9,38.2,38.8,35.3,40.6,40.5,37.9,40.5,39.5,37.2,39.5,40.9,36.4,39.2,38.8,42.2,37.6,39.8,36.5,40.8,36,44.1,37,39.6,41.1,36,42.3,39.6,40.1,35,42,34.5,41.4,39,40.6,36.5,37.6,35.7,41.3,37.6,41.1,36.4,41.6,35.5,41.1,35.9,41.8,33.5,39.7,39.6,45.8,35.5,42.8,40.9,37.2,36.2,42.1,34.6,42.9,36.7,35.1,37.3,41.3,36.3,36.9,38.3,38.9,35.7,41.1,34,39.6,36.2,40.8,38.1,40.3,33.1,43.2,35,41,37.7,37.8,37.9,39.7,38.6,38.2,38.1,43.2,38.1,45.6,39.7,42.2,39.6,42.7,38.6,37.3,35.7,41.1,36.2,37.7,40.2,41.4,35.2,40.6,38.8,41.5,39,44.1,38.5,43.1,36.8,37.5,38.1,41.1,35.6,40.2,37,39.7,40.2,40.6,32.1,40.7,37.3,39,39.2,36.6,36,37.8,36,41.5,46.1,50,48.7,50,47.6,46.5,45.4,46.7,43.3,46.8,40.9,49,45.5,48.4,45.8,49.3,42,49.2,46.2,48.7,50.2,45.1,46.5,46.3,42.9,46.1,47.8,48.2,50,47.3,42.8,45.1,59.6,49.1,48.4,42.6,44.4,44,48.7,42.7,49.6,45.3,49.6,50.5,43.6,45.5,50.5,44.9,45.2,46.6,48.5,45.1,50.1,46.5,45,43.8,45.5,43.2,50.4,45.3,46.2,45.7,54.3,45.8,49.8,49.5,43.5,50.7,47.7,46.4,48.2,46.5,46.4,48.6,47.5,51.1,45.2,45.2,49.1,52.5,47.4,50,44.9,50.8,43.4,51.3,47.5,52.1,47.5,52.2,45.5,49.5,44.5,50.8,49.4,46.9,48.4,51.1,48.5,55.9,47.2,49.1,46.8,41.7,53.4,43.3,48.1,50.5,49.8,43.5,51.5,46.2,55.1,48.8,47.2,46.8,50.4,45.2,49.9,46.5,50,51.3,45.4,52.7,45.2,46.1,51.3,46,51.3,46.6,51.7,47,52,45.9,50.5,50.3,58,46.4,49.2,42.4,48.5,43.2,50.6,46.7,52,50.5,49.5,46.4,52.8,40.9,54.2,42.5,51,49.7,47.5,47.6,52,46.9,53.5,49,46.2,50.9,45.5,50.9,50.8,50.1,49,51.5,49.8,48.1,51.4,45.7,50.7,42.5,52.2,45.2,49.3,50.2,45.6,51.9,46.8,45.7,55.8,43.5,49.6,50.8,50.2],"bill_depth_mm":[18.7,17.4,18,19.3,20.6,17.8,19.6,17.6,21.2,21.1,17.8,19,20.7,18.4,21.5,18.3,18.7,19.2,18.1,17.2,18.9,18.6,17.9,18.6,18.9,16.7,18.1,17.8,18.9,17,21.1,20,18.5,19.3,19.1,18,18.4,18.5,19.7,16.9,18.8,19,17.9,21.2,17.7,18.9,17.9,19.5,18.1,18.6,17.5,18.8,16.6,19.1,16.9,21.1,17,18.2,17.1,18,16.2,19.1,16.6,19.4,19,18.4,17.2,18.9,17.5,18.5,16.8,19.4,16.1,19.1,17.2,17.6,18.8,19.4,17.8,20.3,19.5,18.6,19.2,18.8,18,18.1,17.1,18.1,17.3,18.9,18.6,18.5,16.1,18.5,17.9,20,16,20,18.6,18.9,17.2,20,17,19,16.5,20.3,17.7,19.5,20.7,18.3,17,20.5,17,18.6,17.2,19.8,17,18.5,15.9,19,17.6,18.3,17.1,18,17.9,19.2,18.5,18.5,17.6,17.5,17.5,20.1,16.5,17.9,17.1,17.2,15.5,17,16.8,18.7,18.6,18.4,17.8,18.1,17.1,18.5,13.2,16.3,14.1,15.2,14.5,13.5,14.6,15.3,13.4,15.4,13.7,16.1,13.7,14.6,14.6,15.7,13.5,15.2,14.5,15.1,14.3,14.5,14.5,15.8,13.1,15.1,15,14.3,15.3,15.3,14.2,14.5,17,14.8,16.3,13.7,17.3,13.6,15.7,13.7,16,13.7,15,15.9,13.9,13.9,15.9,13.3,15.8,14.2,14.1,14.4,15,14.4,15.4,13.9,15,14.5,15.3,13.8,14.9,13.9,15.7,14.2,16.8,16.2,14.2,15,15,15.6,15.6,14.8,15,16,14.2,16.3,13.8,16.4,14.5,15.6,14.6,15.9,13.8,17.3,14.4,14.2,14,17,15,17.1,14.5,16.1,14.7,15.7,15.8,14.6,14.4,16.5,15,17,15.5,15,16.1,14.7,15.8,14,15.1,15.2,15.9,15.2,16.3,14.1,16,16.2,13.7,14.3,15.7,14.8,16.1,17.9,19.5,19.2,18.7,19.8,17.8,18.2,18.2,18.9,19.9,17.8,20.3,17.3,18.1,17.1,19.6,20,17.8,18.6,18.2,17.3,17.5,16.6,19.4,17.9,19,18.4,19,17.8,20,16.6,20.8,16.7,18.8,18.6,16.8,18.3,20.7,16.6,19.9,19.5,17.5,19.1,17,17.9,18.5,17.9,19.6,18.7,17.3,16.4,19,17.3,19.7,17.3,18.8,16.6,19.9,18.8,19.4,19.5,16.5,17,19.8,18.1,18.2,19,18.7],"flipper_length_mm":[181,186,195,193,190,181,195,182,191,198,185,195,197,184,194,174,180,189,185,180,187,183,187,172,180,178,178,188,184,195,196,190,180,181,184,182,195,186,196,185,190,182,190,191,186,188,190,200,187,191,186,193,181,194,185,195,185,192,184,192,195,188,190,198,190,190,196,197,190,195,191,184,187,195,189,196,187,193,191,194,190,189,189,190,202,205,185,186,187,208,190,196,178,192,192,203,183,190,193,184,199,190,181,197,198,191,193,197,191,196,188,199,189,189,187,198,176,202,186,199,191,195,191,210,190,197,193,199,187,190,191,200,185,193,193,187,188,190,192,185,190,184,195,193,187,201,211,230,210,218,215,210,211,219,209,215,214,216,214,213,210,217,210,221,209,222,218,215,213,215,215,215,215,210,220,222,209,207,230,220,220,213,219,208,208,208,225,210,216,222,217,210,225,213,215,210,220,210,225,217,220,208,220,208,224,208,221,214,231,219,230,229,220,223,216,221,221,217,216,230,209,220,215,223,212,221,212,224,212,228,218,218,212,230,218,228,212,224,214,226,216,222,203,225,219,228,215,228,215,210,219,208,209,216,229,213,230,217,230,222,214,215,222,212,213,192,196,193,188,197,198,178,197,195,198,193,194,185,201,190,201,197,181,190,195,181,191,187,193,195,197,200,200,191,205,187,201,187,203,195,199,195,210,192,205,210,187,196,196,196,201,190,212,187,198,199,201,193,203,187,197,191,203,202,194,206,189,195,207,202,193,210,198],"body_mass_g":[3750,3800,3250,3450,3650,3625,4675,3200,3800,4400,3700,3450,4500,3325,4200,3400,3600,3800,3950,3800,3800,3550,3200,3150,3950,3250,3900,3300,3900,3325,4150,3950,3550,3300,4650,3150,3900,3100,4400,3000,4600,3425,3450,4150,3500,4300,3450,4050,2900,3700,3550,3800,2850,3750,3150,4400,3600,4050,2850,3950,3350,4100,3050,4450,3600,3900,3550,4150,3700,4250,3700,3900,3550,4000,3200,4700,3800,4200,3350,3550,3800,3500,3950,3600,3550,4300,3400,4450,3300,4300,3700,4350,2900,4100,3725,4725,3075,4250,2925,3550,3750,3900,3175,4775,3825,4600,3200,4275,3900,4075,2900,3775,3350,3325,3150,3500,3450,3875,3050,4000,3275,4300,3050,4000,3325,3500,3500,4475,3425,3900,3175,3975,3400,4250,3400,3475,3050,3725,3000,3650,4250,3475,3450,3750,3700,4000,4500,5700,4450,5700,5400,4550,4800,5200,4400,5150,4650,5550,4650,5850,4200,5850,4150,6300,4800,5350,5700,5000,4400,5050,5000,5100,5650,4600,5550,5250,4700,5050,6050,5150,5400,4950,5250,4350,5350,3950,5700,4300,4750,5550,4900,4200,5400,5100,5300,4850,5300,4400,5000,4900,5050,4300,5000,4450,5550,4200,5300,4400,5650,4700,5700,5800,4700,5550,4750,5000,5100,5200,4700,5800,4600,6000,4750,5950,4625,5450,4725,5350,4750,5600,4600,5300,4875,5550,4950,5400,4750,5650,4850,5200,4925,4875,4625,5250,4850,5600,4975,5500,5500,4700,5500,4575,5500,5000,5950,4650,5500,4375,5850,6000,4925,4850,5750,5200,5400,3500,3900,3650,3525,3725,3950,3250,3750,4150,3700,3800,3775,3700,4050,3575,4050,3300,3700,3450,4400,3600,3400,2900,3800,3300,4150,3400,3800,3700,4550,3200,4300,3350,4100,3600,3900,3850,4800,2700,4500,3950,3650,3550,3500,3675,4450,3400,4300,3250,3675,3325,3950,3600,4050,3350,3450,3250,4050,3800,3525,3950,3650,3650,4000,3400,3775,4100,3775],"sex":["male","female","female","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","male","female","male","female","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","male","female","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","male","female","male","male","female","female","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","male","female","male","female","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","male","female","male","female","female","male","female","male","male","female","female","male","female","male","female","male","female","male","male","female","male","female","female","male","female","male","male","female"],"year":[2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009]},"columns":[{"accessor":"species","name":"species","type":"factor"},{"accessor":"island","name":"island","type":"factor"},{"accessor":"bill_length_mm","name":"bill_length_mm","type":"numeric"},{"accessor":"bill_depth_mm","name":"bill_depth_mm","type":"numeric"},{"accessor":"flipper_length_mm","name":"flipper_length_mm","type":"numeric"},{"accessor":"body_mass_g","name":"body_mass_g","type":"numeric"},{"accessor":"sex","name":"sex","type":"factor"},{"accessor":"year","name":"year","type":"numeric"}],"resizable":true,"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"nowrap":true,"dataKey":"b650b7a1a5c792f49c2b2303a0449c36","key":"b650b7a1a5c792f49c2b2303a0449c36"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</details>
+<details>
+<summary>Step12</summary>
+<div>
+<strong style="padding-left:5px">Preceding step: </strong>
+<pre style="font-family: &#39;Fira Mono&#39;; padding-left: 15px; background-color: white;">data &lt;- layout$setup(data, plot$data, plot$plot_env)</pre>
+</div>
+<div>
+<div style="margin-bottom: -10px;">
+<strong>Value at current step:</strong>
+</div>
+<div id="htmlwidget-b681901e1b0bbd91f8fe" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-b681901e1b0bbd91f8fe">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"species":["Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap"],"island":["Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Torgersen","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Biscoe","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream","Dream"],"bill_length_mm":[39.1,39.5,40.3,36.7,39.3,38.9,39.2,41.1,38.6,34.6,36.6,38.7,42.5,34.4,46,37.8,37.7,35.9,38.2,38.8,35.3,40.6,40.5,37.9,40.5,39.5,37.2,39.5,40.9,36.4,39.2,38.8,42.2,37.6,39.8,36.5,40.8,36,44.1,37,39.6,41.1,36,42.3,39.6,40.1,35,42,34.5,41.4,39,40.6,36.5,37.6,35.7,41.3,37.6,41.1,36.4,41.6,35.5,41.1,35.9,41.8,33.5,39.7,39.6,45.8,35.5,42.8,40.9,37.2,36.2,42.1,34.6,42.9,36.7,35.1,37.3,41.3,36.3,36.9,38.3,38.9,35.7,41.1,34,39.6,36.2,40.8,38.1,40.3,33.1,43.2,35,41,37.7,37.8,37.9,39.7,38.6,38.2,38.1,43.2,38.1,45.6,39.7,42.2,39.6,42.7,38.6,37.3,35.7,41.1,36.2,37.7,40.2,41.4,35.2,40.6,38.8,41.5,39,44.1,38.5,43.1,36.8,37.5,38.1,41.1,35.6,40.2,37,39.7,40.2,40.6,32.1,40.7,37.3,39,39.2,36.6,36,37.8,36,41.5,46.1,50,48.7,50,47.6,46.5,45.4,46.7,43.3,46.8,40.9,49,45.5,48.4,45.8,49.3,42,49.2,46.2,48.7,50.2,45.1,46.5,46.3,42.9,46.1,47.8,48.2,50,47.3,42.8,45.1,59.6,49.1,48.4,42.6,44.4,44,48.7,42.7,49.6,45.3,49.6,50.5,43.6,45.5,50.5,44.9,45.2,46.6,48.5,45.1,50.1,46.5,45,43.8,45.5,43.2,50.4,45.3,46.2,45.7,54.3,45.8,49.8,49.5,43.5,50.7,47.7,46.4,48.2,46.5,46.4,48.6,47.5,51.1,45.2,45.2,49.1,52.5,47.4,50,44.9,50.8,43.4,51.3,47.5,52.1,47.5,52.2,45.5,49.5,44.5,50.8,49.4,46.9,48.4,51.1,48.5,55.9,47.2,49.1,46.8,41.7,53.4,43.3,48.1,50.5,49.8,43.5,51.5,46.2,55.1,48.8,47.2,46.8,50.4,45.2,49.9,46.5,50,51.3,45.4,52.7,45.2,46.1,51.3,46,51.3,46.6,51.7,47,52,45.9,50.5,50.3,58,46.4,49.2,42.4,48.5,43.2,50.6,46.7,52,50.5,49.5,46.4,52.8,40.9,54.2,42.5,51,49.7,47.5,47.6,52,46.9,53.5,49,46.2,50.9,45.5,50.9,50.8,50.1,49,51.5,49.8,48.1,51.4,45.7,50.7,42.5,52.2,45.2,49.3,50.2,45.6,51.9,46.8,45.7,55.8,43.5,49.6,50.8,50.2],"bill_depth_mm":[18.7,17.4,18,19.3,20.6,17.8,19.6,17.6,21.2,21.1,17.8,19,20.7,18.4,21.5,18.3,18.7,19.2,18.1,17.2,18.9,18.6,17.9,18.6,18.9,16.7,18.1,17.8,18.9,17,21.1,20,18.5,19.3,19.1,18,18.4,18.5,19.7,16.9,18.8,19,17.9,21.2,17.7,18.9,17.9,19.5,18.1,18.6,17.5,18.8,16.6,19.1,16.9,21.1,17,18.2,17.1,18,16.2,19.1,16.6,19.4,19,18.4,17.2,18.9,17.5,18.5,16.8,19.4,16.1,19.1,17.2,17.6,18.8,19.4,17.8,20.3,19.5,18.6,19.2,18.8,18,18.1,17.1,18.1,17.3,18.9,18.6,18.5,16.1,18.5,17.9,20,16,20,18.6,18.9,17.2,20,17,19,16.5,20.3,17.7,19.5,20.7,18.3,17,20.5,17,18.6,17.2,19.8,17,18.5,15.9,19,17.6,18.3,17.1,18,17.9,19.2,18.5,18.5,17.6,17.5,17.5,20.1,16.5,17.9,17.1,17.2,15.5,17,16.8,18.7,18.6,18.4,17.8,18.1,17.1,18.5,13.2,16.3,14.1,15.2,14.5,13.5,14.6,15.3,13.4,15.4,13.7,16.1,13.7,14.6,14.6,15.7,13.5,15.2,14.5,15.1,14.3,14.5,14.5,15.8,13.1,15.1,15,14.3,15.3,15.3,14.2,14.5,17,14.8,16.3,13.7,17.3,13.6,15.7,13.7,16,13.7,15,15.9,13.9,13.9,15.9,13.3,15.8,14.2,14.1,14.4,15,14.4,15.4,13.9,15,14.5,15.3,13.8,14.9,13.9,15.7,14.2,16.8,16.2,14.2,15,15,15.6,15.6,14.8,15,16,14.2,16.3,13.8,16.4,14.5,15.6,14.6,15.9,13.8,17.3,14.4,14.2,14,17,15,17.1,14.5,16.1,14.7,15.7,15.8,14.6,14.4,16.5,15,17,15.5,15,16.1,14.7,15.8,14,15.1,15.2,15.9,15.2,16.3,14.1,16,16.2,13.7,14.3,15.7,14.8,16.1,17.9,19.5,19.2,18.7,19.8,17.8,18.2,18.2,18.9,19.9,17.8,20.3,17.3,18.1,17.1,19.6,20,17.8,18.6,18.2,17.3,17.5,16.6,19.4,17.9,19,18.4,19,17.8,20,16.6,20.8,16.7,18.8,18.6,16.8,18.3,20.7,16.6,19.9,19.5,17.5,19.1,17,17.9,18.5,17.9,19.6,18.7,17.3,16.4,19,17.3,19.7,17.3,18.8,16.6,19.9,18.8,19.4,19.5,16.5,17,19.8,18.1,18.2,19,18.7],"flipper_length_mm":[181,186,195,193,190,181,195,182,191,198,185,195,197,184,194,174,180,189,185,180,187,183,187,172,180,178,178,188,184,195,196,190,180,181,184,182,195,186,196,185,190,182,190,191,186,188,190,200,187,191,186,193,181,194,185,195,185,192,184,192,195,188,190,198,190,190,196,197,190,195,191,184,187,195,189,196,187,193,191,194,190,189,189,190,202,205,185,186,187,208,190,196,178,192,192,203,183,190,193,184,199,190,181,197,198,191,193,197,191,196,188,199,189,189,187,198,176,202,186,199,191,195,191,210,190,197,193,199,187,190,191,200,185,193,193,187,188,190,192,185,190,184,195,193,187,201,211,230,210,218,215,210,211,219,209,215,214,216,214,213,210,217,210,221,209,222,218,215,213,215,215,215,215,210,220,222,209,207,230,220,220,213,219,208,208,208,225,210,216,222,217,210,225,213,215,210,220,210,225,217,220,208,220,208,224,208,221,214,231,219,230,229,220,223,216,221,221,217,216,230,209,220,215,223,212,221,212,224,212,228,218,218,212,230,218,228,212,224,214,226,216,222,203,225,219,228,215,228,215,210,219,208,209,216,229,213,230,217,230,222,214,215,222,212,213,192,196,193,188,197,198,178,197,195,198,193,194,185,201,190,201,197,181,190,195,181,191,187,193,195,197,200,200,191,205,187,201,187,203,195,199,195,210,192,205,210,187,196,196,196,201,190,212,187,198,199,201,193,203,187,197,191,203,202,194,206,189,195,207,202,193,210,198],"body_mass_g":[3750,3800,3250,3450,3650,3625,4675,3200,3800,4400,3700,3450,4500,3325,4200,3400,3600,3800,3950,3800,3800,3550,3200,3150,3950,3250,3900,3300,3900,3325,4150,3950,3550,3300,4650,3150,3900,3100,4400,3000,4600,3425,3450,4150,3500,4300,3450,4050,2900,3700,3550,3800,2850,3750,3150,4400,3600,4050,2850,3950,3350,4100,3050,4450,3600,3900,3550,4150,3700,4250,3700,3900,3550,4000,3200,4700,3800,4200,3350,3550,3800,3500,3950,3600,3550,4300,3400,4450,3300,4300,3700,4350,2900,4100,3725,4725,3075,4250,2925,3550,3750,3900,3175,4775,3825,4600,3200,4275,3900,4075,2900,3775,3350,3325,3150,3500,3450,3875,3050,4000,3275,4300,3050,4000,3325,3500,3500,4475,3425,3900,3175,3975,3400,4250,3400,3475,3050,3725,3000,3650,4250,3475,3450,3750,3700,4000,4500,5700,4450,5700,5400,4550,4800,5200,4400,5150,4650,5550,4650,5850,4200,5850,4150,6300,4800,5350,5700,5000,4400,5050,5000,5100,5650,4600,5550,5250,4700,5050,6050,5150,5400,4950,5250,4350,5350,3950,5700,4300,4750,5550,4900,4200,5400,5100,5300,4850,5300,4400,5000,4900,5050,4300,5000,4450,5550,4200,5300,4400,5650,4700,5700,5800,4700,5550,4750,5000,5100,5200,4700,5800,4600,6000,4750,5950,4625,5450,4725,5350,4750,5600,4600,5300,4875,5550,4950,5400,4750,5650,4850,5200,4925,4875,4625,5250,4850,5600,4975,5500,5500,4700,5500,4575,5500,5000,5950,4650,5500,4375,5850,6000,4925,4850,5750,5200,5400,3500,3900,3650,3525,3725,3950,3250,3750,4150,3700,3800,3775,3700,4050,3575,4050,3300,3700,3450,4400,3600,3400,2900,3800,3300,4150,3400,3800,3700,4550,3200,4300,3350,4100,3600,3900,3850,4800,2700,4500,3950,3650,3550,3500,3675,4450,3400,4300,3250,3675,3325,3950,3600,4050,3350,3450,3250,4050,3800,3525,3950,3650,3650,4000,3400,3775,4100,3775],"sex":["male","female","female","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","male","female","male","female","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","male","female","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","male","female","male","male","female","female","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","male","female","male","female","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","female","male","female","male","female","male","female","male","female","male","female","male","male","female","female","male","female","male","male","female","male","female","female","male","female","male","male","female","female","male","female","male","female","male","female","male","male","female","male","female","female","male","female","male","male","female"],"year":[2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2007,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2008,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009,2009],"PANEL":["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"]},"columns":[{"accessor":"species","name":"species","type":"factor"},{"accessor":"island","name":"island","type":"factor"},{"accessor":"bill_length_mm","name":"bill_length_mm","type":"numeric"},{"accessor":"bill_depth_mm","name":"bill_depth_mm","type":"numeric"},{"accessor":"flipper_length_mm","name":"flipper_length_mm","type":"numeric"},{"accessor":"body_mass_g","name":"body_mass_g","type":"numeric"},{"accessor":"sex","name":"sex","type":"factor"},{"accessor":"year","name":"year","type":"numeric"},{"accessor":"PANEL","name":"PANEL","type":"factor"}],"resizable":true,"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"nowrap":true,"dataKey":"8b1f3881c6c844cb44b02709b01e4b4a","key":"8b1f3881c6c844cb44b02709b01e4b4a"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</details>
+<details>
+<summary>Step13</summary>
+<div>
+<strong style="padding-left:5px">Preceding step: </strong>
+<pre style="font-family: &#39;Fira Mono&#39;; padding-left: 15px; background-color: white;">data &lt;- by_layer(function(l, d) l$compute_aesthetics(d, plot))</pre>
+</div>
+<div>
+<div style="margin-bottom: -10px;">
+<strong>Value at current step:</strong>
+</div>
+<div id="htmlwidget-bcd130998b7d41fab98d" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-bcd130998b7d41fab98d">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"fill":["Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap"],"x":["Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap"],"PANEL":["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"],"group":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]},"columns":[{"accessor":"fill","name":"fill","type":"factor"},{"accessor":"x","name":"x","type":"factor"},{"accessor":"PANEL","name":"PANEL","type":"factor"},{"accessor":"group","name":"group","type":"numeric"}],"resizable":true,"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"nowrap":true,"dataKey":"79ddd263a198a2eb3f5bf3fc701bbd1b","key":"79ddd263a198a2eb3f5bf3fc701bbd1b"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</details>
+<details>
+<summary>Step18</summary>
+<div>
+<strong style="padding-left:5px">Preceding step: </strong>
+<pre style="font-family: &#39;Fira Mono&#39;; padding-left: 15px; background-color: white;">data &lt;- layout$map_position(data)</pre>
+</div>
+<div>
+<div style="margin-bottom: -10px;">
+<strong>Value at current step:</strong>
+</div>
+<div id="htmlwidget-530d876b40857a9c42f0" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-530d876b40857a9c42f0">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"fill":["Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Adelie","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Gentoo","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap","Chinstrap"],"x":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],"PANEL":["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"],"group":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]},"columns":[{"accessor":"fill","name":"fill","type":"factor"},{"accessor":"x","name":"x","type":"numeric"},{"accessor":"PANEL","name":"PANEL","type":"factor"},{"accessor":"group","name":"group","type":"numeric"}],"resizable":true,"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"nowrap":true,"dataKey":"d74401d742edf7240b8ef5367f7dc31c","key":"d74401d742edf7240b8ef5367f7dc31c"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</details>
+<details>
+<summary>Step19</summary>
+<div>
+<strong style="padding-left:5px">Preceding step: </strong>
+<pre style="font-family: &#39;Fira Mono&#39;; padding-left: 15px; background-color: white;">data &lt;- by_layer(function(l, d) l$compute_statistic(d, layout))</pre>
+</div>
+<div>
+<div style="margin-bottom: -10px;">
+<strong>Value at current step:</strong>
+</div>
+<div id="htmlwidget-87e6502adbbc0263d453" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-87e6502adbbc0263d453">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"count":[146,68,119],"prop":[1,1,1],"x":[1,2,3],"width":[0.9,0.9,0.9],"flipped_aes":[false,false,false],"fill":["Adelie","Chinstrap","Gentoo"],"PANEL":["1","1","1"],"group":[1,2,3]},"columns":[{"accessor":"count","name":"count","type":"numeric"},{"accessor":"prop","name":"prop","type":"numeric"},{"accessor":"x","name":"x","type":"numeric"},{"accessor":"width","name":"width","type":"numeric"},{"accessor":"flipped_aes","name":"flipped_aes","type":"logical"},{"accessor":"fill","name":"fill","type":"factor"},{"accessor":"PANEL","name":"PANEL","type":"factor"},{"accessor":"group","name":"group","type":"numeric"}],"resizable":true,"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"nowrap":true,"dataKey":"083be128d7e6c9a996ca13223635ea77","key":"083be128d7e6c9a996ca13223635ea77"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</details>
+<details>
+<summary>Step20</summary>
+<div>
+<strong style="padding-left:5px">Preceding step: </strong>
+<pre style="font-family: &#39;Fira Mono&#39;; padding-left: 15px; background-color: white;">data &lt;- by_layer(function(l, d) l$map_statistic(d, plot))</pre>
+</div>
+<div>
+<div style="margin-bottom: -10px;">
+<strong>Value at current step:</strong>
+</div>
+<div id="htmlwidget-5c0874bc419d34644819" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-5c0874bc419d34644819">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"y":[146,68,119],"count":[146,68,119],"prop":[1,1,1],"x":[1,2,3],"width":[0.9,0.9,0.9],"flipped_aes":[false,false,false],"fill":["Adelie","Chinstrap","Gentoo"],"PANEL":["1","1","1"],"group":[1,2,3]},"columns":[{"accessor":"y","name":"y","type":"numeric"},{"accessor":"count","name":"count","type":"numeric"},{"accessor":"prop","name":"prop","type":"numeric"},{"accessor":"x","name":"x","type":"numeric"},{"accessor":"width","name":"width","type":"numeric"},{"accessor":"flipped_aes","name":"flipped_aes","type":"logical"},{"accessor":"fill","name":"fill","type":"factor"},{"accessor":"PANEL","name":"PANEL","type":"factor"},{"accessor":"group","name":"group","type":"numeric"}],"resizable":true,"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"nowrap":true,"dataKey":"583ecbeaa138b94fcc9b465dd37a50af","key":"583ecbeaa138b94fcc9b465dd37a50af"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</details>
+<details>
+<summary>Step22</summary>
+<div>
+<strong style="padding-left:5px">Preceding step: </strong>
+<pre style="font-family: &#39;Fira Mono&#39;; padding-left: 15px; background-color: white;">data &lt;- by_layer(function(l, d) l$compute_geom_1(d))</pre>
+</div>
+<div>
+<div style="margin-bottom: -10px;">
+<strong>Value at current step:</strong>
+</div>
+<div id="htmlwidget-91ceabe5fba73b4d1a3d" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-91ceabe5fba73b4d1a3d">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"y":[146,68,119],"count":[146,68,119],"prop":[1,1,1],"x":[1,2,3],"flipped_aes":[false,false,false],"fill":["Adelie","Chinstrap","Gentoo"],"PANEL":["1","1","1"],"group":[1,2,3],"ymin":[0,0,0],"ymax":[146,68,119],"xmin":[0.55,1.55,2.55],"xmax":[1.45,2.45,3.45]},"columns":[{"accessor":"y","name":"y","type":"numeric"},{"accessor":"count","name":"count","type":"numeric"},{"accessor":"prop","name":"prop","type":"numeric"},{"accessor":"x","name":"x","type":"numeric"},{"accessor":"flipped_aes","name":"flipped_aes","type":"logical"},{"accessor":"fill","name":"fill","type":"factor"},{"accessor":"PANEL","name":"PANEL","type":"factor"},{"accessor":"group","name":"group","type":"numeric"},{"accessor":"ymin","name":"ymin","type":"numeric"},{"accessor":"ymax","name":"ymax","type":"numeric"},{"accessor":"xmin","name":"xmin","type":"numeric"},{"accessor":"xmax","name":"xmax","type":"numeric"}],"resizable":true,"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"nowrap":true,"dataKey":"5883e4a5bde16eb88c10497191001555","key":"5883e4a5bde16eb88c10497191001555"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</details>
+<details>
+<summary>Step27</summary>
+<div>
+<strong style="padding-left:5px">Preceding step: </strong>
+<pre style="font-family: &#39;Fira Mono&#39;; padding-left: 15px; background-color: white;">data &lt;- layout$map_position(data)</pre>
+</div>
+<div>
+<div style="margin-bottom: -10px;">
+<strong>Value at current step:</strong>
+</div>
+<div id="htmlwidget-3af1d139e33fc70a771f" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-3af1d139e33fc70a771f">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"y":[146,68,119],"count":[146,68,119],"prop":[1,1,1],"x":[1,2,3],"flipped_aes":[false,false,false],"fill":["Adelie","Chinstrap","Gentoo"],"PANEL":["1","1","1"],"group":[1,2,3],"ymin":[0,0,0],"ymax":[146,68,119],"xmin":[0.55,1.55,2.55],"xmax":[1.45,2.45,3.45]},"columns":[{"accessor":"y","name":"y","type":"numeric"},{"accessor":"count","name":"count","type":"numeric"},{"accessor":"prop","name":"prop","type":"numeric"},{"accessor":"x","name":"x","type":"numeric"},{"accessor":"flipped_aes","name":"flipped_aes","type":"logical"},{"accessor":"fill","name":"fill","type":"factor"},{"accessor":"PANEL","name":"PANEL","type":"factor"},{"accessor":"group","name":"group","type":"numeric"},{"accessor":"ymin","name":"ymin","type":"numeric"},{"accessor":"ymax","name":"ymax","type":"numeric"},{"accessor":"xmin","name":"xmin","type":"numeric"},{"accessor":"xmax","name":"xmax","type":"numeric"}],"resizable":true,"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"nowrap":true,"dataKey":"5883e4a5bde16eb88c10497191001555","key":"5883e4a5bde16eb88c10497191001555"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</details>
+<details>
+<summary>Step29</summary>
+<div>
+<strong style="padding-left:5px">Preceding step: </strong>
+<pre style="font-family: &#39;Fira Mono&#39;; padding-left: 15px; background-color: white;">if (npscales$n() &gt; 0) {
+    lapply(data, scales_train_df, scales = npscales)
+    data &lt;- lapply(data, scales_map_df, scales = npscales)
+}</pre>
+</div>
+<div>
+<div style="margin-bottom: -10px;">
+<strong>Value at current step:</strong>
+</div>
+<div id="htmlwidget-2a0f341dc713de01ea0c" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-2a0f341dc713de01ea0c">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"fill":["#F8766D","#00BA38","#619CFF"],"y":[146,68,119],"count":[146,68,119],"prop":[1,1,1],"x":[1,2,3],"flipped_aes":[false,false,false],"PANEL":["1","1","1"],"group":[1,2,3],"ymin":[0,0,0],"ymax":[146,68,119],"xmin":[0.55,1.55,2.55],"xmax":[1.45,2.45,3.45]},"columns":[{"accessor":"fill","name":"fill","type":"character"},{"accessor":"y","name":"y","type":"numeric"},{"accessor":"count","name":"count","type":"numeric"},{"accessor":"prop","name":"prop","type":"numeric"},{"accessor":"x","name":"x","type":"numeric"},{"accessor":"flipped_aes","name":"flipped_aes","type":"logical"},{"accessor":"PANEL","name":"PANEL","type":"factor"},{"accessor":"group","name":"group","type":"numeric"},{"accessor":"ymin","name":"ymin","type":"numeric"},{"accessor":"ymax","name":"ymax","type":"numeric"},{"accessor":"xmin","name":"xmin","type":"numeric"},{"accessor":"xmax","name":"xmax","type":"numeric"}],"resizable":true,"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"nowrap":true,"dataKey":"1b06c963d1d856b330ed75b3d68878a0","key":"1b06c963d1d856b330ed75b3d68878a0"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</details>
+<details>
+<summary>Step30</summary>
+<div>
+<strong style="padding-left:5px">Preceding step: </strong>
+<pre style="font-family: &#39;Fira Mono&#39;; padding-left: 15px; background-color: white;">data &lt;- by_layer(function(l, d) l$compute_geom_2(d))</pre>
+</div>
+<div>
+<div style="margin-bottom: -10px;">
+<strong>Value at current step:</strong>
+</div>
+<div id="htmlwidget-08e04b5ea3a947f73d6a" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-08e04b5ea3a947f73d6a">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"fill":["#F8766D","#00BA38","#619CFF"],"y":[146,68,119],"count":[146,68,119],"prop":[1,1,1],"x":[1,2,3],"flipped_aes":[false,false,false],"PANEL":["1","1","1"],"group":[1,2,3],"ymin":[0,0,0],"ymax":[146,68,119],"xmin":[0.55,1.55,2.55],"xmax":[1.45,2.45,3.45],"colour":[null,null,null],"size":[0.5,0.5,0.5],"linetype":[1,1,1],"alpha":[null,null,null]},"columns":[{"accessor":"fill","name":"fill","type":"character"},{"accessor":"y","name":"y","type":"numeric"},{"accessor":"count","name":"count","type":"numeric"},{"accessor":"prop","name":"prop","type":"numeric"},{"accessor":"x","name":"x","type":"numeric"},{"accessor":"flipped_aes","name":"flipped_aes","type":"logical"},{"accessor":"PANEL","name":"PANEL","type":"factor"},{"accessor":"group","name":"group","type":"numeric"},{"accessor":"ymin","name":"ymin","type":"numeric"},{"accessor":"ymax","name":"ymax","type":"numeric"},{"accessor":"xmin","name":"xmin","type":"numeric"},{"accessor":"xmax","name":"xmax","type":"numeric"},{"accessor":"colour","name":"colour","type":"logical"},{"accessor":"size","name":"size","type":"numeric"},{"accessor":"linetype","name":"linetype","type":"numeric"},{"accessor":"alpha","name":"alpha","type":"logical"}],"resizable":true,"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"nowrap":true,"dataKey":"f7829ee7388a14f67b16ffea3b821575","key":"f7829ee7388a14f67b16ffea3b821575"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</details>
+</div>
+</div>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<section class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>The <em>standardized</em> part of
+this is what supports the large ecosystem of extension packages that
+integrate smoothly with {ggplot2} itself. For a less practical (but
+conceptually exciting) consequence of this design, check out the
+proof-of-concept package <a
+href="https://github.com/coolbutuseless/ggreverse">{ggreverse}</a> which
+generates (back-forms) ggplot code from a ggplot object.<a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>The distinction clicked for me
+personally after reading the classic <a
+href="https://mastering-shiny.org/basic-reactivity.html#imperative-vs-declarative-programming">sandwich
+example</a>, which I first came across when learning Shiny (another
+declarative system).<a href="#fnref2" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>In a <a
+href="https://youtu.be/rE062dA-pT4?t=1888">recent interview</a> with
+Leland Wilkinson (may he rest in peace), he tells a story of how Tableau
+used to erroneously apply scale transformations faithful to the
+<em>user’s</em> order of execution, instead of the order dictated by the
+<em>grammar</em>, which led to two “geoms” (points and a regression
+line) being drawn with different scales - the points in log space and
+the regression line in untransformed “identity” space. This is
+“ungrammatical” and thus rightly forbidden in ggplot - if multiple
+scales are specified for the same aesthetic, ggplot will resolve the
+conflict by just settling on the last scale with a warning
+<em>before</em> computing or drawing anything.<a href="#fnref3"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>Strictly speaking, it’s
+<code>{grid}</code> that does the rendering with
+<code>grid::grid.newpage()</code> and <code>grid::grid.draw()</code>,
+but I’ll follow the <a
+href="https://ggplot2-book.org/internals.html#the-plot-method">ggplot2
+book</a> in using the term “rendering” here to refer to the step that
+takes you from the data + the plot specifications to a transformed data
+that is drawing-ready.<a href="#fnref4" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>
