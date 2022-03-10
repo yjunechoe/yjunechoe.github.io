@@ -1,0 +1,3450 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ad0000; } /* Alert */
+code span.an { color: #5e5e5e; } /* Annotation */
+code span.at { color: #20794d; } /* Attribute */
+code span.bn { color: #ad0000; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007ba5; } /* ControlFlow */
+code span.ch { color: #20794d; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #5e5e5e; } /* Comment */
+code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+code span.dt { color: #ad0000; } /* DataType */
+code span.dv { color: #ad0000; } /* DecVal */
+code span.er { color: #ad0000; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #ad0000; } /* Float */
+code span.fu { color: #4758ab; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #5e5e5e; } /* Information */
+code span.kw { color: #007ba5; } /* Keyword */
+code span.op { color: #5e5e5e; } /* Operator */
+code span.ot { color: #007ba5; } /* Other */
+code span.pp { color: #ad0000; } /* Preprocessor */
+code span.sc { color: #20794d; } /* SpecialChar */
+code span.ss { color: #20794d; } /* SpecialString */
+code span.st { color: #20794d; } /* String */
+code span.va { color: #111111; } /* Variable */
+code span.vs { color: #20794d; } /* VerbatimString */
+code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+</style>
+
+  <!--radix_placeholder_meta_tags-->
+<title>June Choe: Setting up and debugging custom fonts</title>
+
+<meta property="description" itemprop="description" content="A practical introduction to all (new) things font in R"/>
+
+<link rel="canonical" href="https://yjunechoe.github.io/posts/2021-06-24-setting-up-and-debugging-custom-fonts/"/>
+<link rel="icon" type="image/png" href="../../static/img/icon.png"/>
+
+<!--  https://schema.org/Article -->
+<meta property="article:published" itemprop="datePublished" content="2021-06-24"/>
+<meta property="article:created" itemprop="dateCreated" content="2021-06-24"/>
+<meta name="article:author" content="June Choe"/>
+
+<!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+<meta property="og:title" content="June Choe: Setting up and debugging custom fonts"/>
+<meta property="og:type" content="article"/>
+<meta property="og:description" content="A practical introduction to all (new) things font in R"/>
+<meta property="og:url" content="https://yjunechoe.github.io/posts/2021-06-24-setting-up-and-debugging-custom-fonts/"/>
+<meta property="og:image" content="https://yjunechoe.github.io/posts/2021-06-24-setting-up-and-debugging-custom-fonts/preview.png"/>
+<meta property="og:image:width" content="709"/>
+<meta property="og:image:height" content="612"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:site_name" content="June Choe"/>
+
+<!--  https://dev.twitter.com/cards/types/summary -->
+<meta property="twitter:card" content="summary_large_image"/>
+<meta property="twitter:title" content="June Choe: Setting up and debugging custom fonts"/>
+<meta property="twitter:description" content="A practical introduction to all (new) things font in R"/>
+<meta property="twitter:url" content="https://yjunechoe.github.io/posts/2021-06-24-setting-up-and-debugging-custom-fonts/"/>
+<meta property="twitter:image" content="https://yjunechoe.github.io/posts/2021-06-24-setting-up-and-debugging-custom-fonts/preview.png"/>
+<meta property="twitter:image:width" content="709"/>
+<meta property="twitter:image:height" content="612"/>
+<meta property="twitter:site" content="@yjunechoe"/>
+
+<!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+<script type="text/json" id="radix-rmarkdown-metadata">
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","date","output","editor_options","preview","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["Setting up and debugging custom fonts"]},{"type":"character","attributes":{},"value":["A practical introduction to all (new) things font in R"]},{"type":"character","attributes":{},"value":["data visualization","ggplot2","typography","tutorial"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]},{"type":"character","attributes":{},"value":["0000-0002-0701-921X"]}]}]},{"type":"character","attributes":{},"value":["06-24-2021"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["chunk_output_type"]}},"value":[{"type":"character","attributes":{},"value":["console"]}]},{"type":"character","attributes":{},"value":["preview.png"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io/posts/2021-06-24-setting-up-and-debugging-custom-fonts/"]}]}
+</script>
+<!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["img/alegreya.png","img/alegreya_word.png","img/fa_otf.png","img/inkscape_svg.png","preview.png","setting-up-and-debugging-custom-fonts_files/anchor-4.2.2/anchor.min.js","setting-up-and-debugging-custom-fonts_files/bowser-1.9.3/bowser.min.js","setting-up-and-debugging-custom-fonts_files/distill-2.2.21/template.v2.js","setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-black-italic-lining-1.png","setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-lining-1.png","setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-mixed-1.png","setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-numbers-1.png","setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-ordn-allcap-1.png","setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-ordn-bad-1.png","setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plot-1..png","setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plot-1.png","setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-1.png","setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-10.png","setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-11.png","setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-12.png","setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-2.png","setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-3.png","setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-4.png","setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-5.png","setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-6.png","setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-7.png","setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-8.png","setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-9.png","setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-pre-1.png","setting-up-and-debugging-custom-fonts_files/figure-html5/fa-fail-1..png","setting-up-and-debugging-custom-fonts_files/figure-html5/fa-fail-1.png","setting-up-and-debugging-custom-fonts_files/figure-html5/fa-success-1..png","setting-up-and-debugging-custom-fonts_files/figure-html5/fa-success-1.png","setting-up-and-debugging-custom-fonts_files/figure-html5/fa-success-2..png","setting-up-and-debugging-custom-fonts_files/figure-html5/fa-success-2.png","setting-up-and-debugging-custom-fonts_files/figure-html5/mash-up-1.png","setting-up-and-debugging-custom-fonts_files/figure-html5/solid-fail-1.png","setting-up-and-debugging-custom-fonts_files/figure-html5/solid-success-1.png","setting-up-and-debugging-custom-fonts_files/figure-html5/unnamed-chunk-10-1.png","setting-up-and-debugging-custom-fonts_files/figure-html5/unnamed-chunk-11-1.png","setting-up-and-debugging-custom-fonts_files/figure-html5/unnamed-chunk-4-1..png","setting-up-and-debugging-custom-fonts_files/figure-html5/unnamed-chunk-4-1.png","setting-up-and-debugging-custom-fonts_files/figure-html5/unnamed-chunk-5-1.png","setting-up-and-debugging-custom-fonts_files/figure-html5/unnamed-chunk-6-1.png","setting-up-and-debugging-custom-fonts_files/figure-html5/unnamed-chunk-7-1.png","setting-up-and-debugging-custom-fonts_files/figure-html5/unnamed-chunk-8-1.png","setting-up-and-debugging-custom-fonts_files/figure-html5/unnamed-chunk-9-1.png","setting-up-and-debugging-custom-fonts_files/header-attrs-2.8/header-attrs.js","setting-up-and-debugging-custom-fonts_files/jquery-1.11.3/jquery.min.js","setting-up-and-debugging-custom-fonts_files/panelset-0.2.6/panelset.css","setting-up-and-debugging-custom-fonts_files/panelset-0.2.6/panelset.js","setting-up-and-debugging-custom-fonts_files/popper-2.6.0/popper.min.js","setting-up-and-debugging-custom-fonts_files/tippy-6.2.7/tippy-bundle.umd.min.js","setting-up-and-debugging-custom-fonts_files/tippy-6.2.7/tippy-light-border.css","setting-up-and-debugging-custom-fonts_files/tippy-6.2.7/tippy.css","setting-up-and-debugging-custom-fonts_files/tippy-6.2.7/tippy.umd.min.js","setting-up-and-debugging-custom-fonts_files/webcomponents-2.0.0/webcomponents.js"]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+<meta name="distill:offset" content="../.."/>
+
+<script type="application/javascript">
+
+  window.headroom_prevent_pin = false;
+
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+
+    // initialize headroom for banner
+    var header = $('header').get(0);
+    var headerHeight = header.offsetHeight;
+    var headroom = new Headroom(header, {
+      tolerance: 5,
+      onPin : function() {
+        if (window.headroom_prevent_pin) {
+          window.headroom_prevent_pin = false;
+          headroom.unpin();
+        }
+      }
+    });
+    headroom.init();
+    if(window.location.hash)
+      headroom.unpin();
+    $(header).addClass('headroom--transition');
+
+    // offset scroll location for banner on hash change
+    // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
+    window.addEventListener("hashchange", function(event) {
+      window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
+    });
+
+    // responsive menu
+    $('.distill-site-header').each(function(i, val) {
+      var topnav = $(this);
+      var toggle = topnav.find('.nav-toggle');
+      toggle.on('click', function() {
+        topnav.toggleClass('responsive');
+      });
+    });
+
+    // nav dropdowns
+    $('.nav-dropbtn').click(function(e) {
+      $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
+      $(this).parent().siblings('.nav-dropdown')
+         .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
+    });
+    $("body").click(function(e){
+      $('.nav-dropdown-content').removeClass('nav-dropdown-active');
+    });
+    $(".nav-dropdown").click(function(e){
+      e.stopPropagation();
+    });
+  });
+</script>
+
+<style type="text/css">
+
+/* Theme (user-documented overrideables for nav appearance) */
+
+.distill-site-nav {
+  color: rgba(255, 255, 255, 0.8);
+  background-color: #0F2E3D;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.distill-site-nav a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.distill-site-nav a:hover {
+  color: white;
+}
+
+@media print {
+  .distill-site-nav {
+    display: none;
+  }
+}
+
+.distill-site-header {
+
+}
+
+.distill-site-footer {
+
+}
+
+
+/* Site Header */
+
+.distill-site-header {
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 3;
+}
+
+.distill-site-header .nav-left {
+  display: inline-block;
+  margin-left: 8px;
+}
+
+@media screen and (max-width: 768px) {
+  .distill-site-header .nav-left {
+    margin-left: 0;
+  }
+}
+
+
+.distill-site-header .nav-right {
+  float: right;
+  margin-right: 8px;
+}
+
+.distill-site-header a,
+.distill-site-header .title {
+  display: inline-block;
+  text-align: center;
+  padding: 14px 10px 14px 10px;
+}
+
+.distill-site-header .title {
+  font-size: 18px;
+  min-width: 150px;
+}
+
+.distill-site-header .logo {
+  padding: 0;
+}
+
+.distill-site-header .logo img {
+  display: none;
+  max-height: 20px;
+  width: auto;
+  margin-bottom: -4px;
+}
+
+.distill-site-header .nav-image img {
+  max-height: 18px;
+  width: auto;
+  display: inline-block;
+  margin-bottom: -3px;
+}
+
+
+
+@media screen and (min-width: 1000px) {
+  .distill-site-header .logo img {
+    display: inline-block;
+  }
+  .distill-site-header .nav-left {
+    margin-left: 20px;
+  }
+  .distill-site-header .nav-right {
+    margin-right: 20px;
+  }
+  .distill-site-header .title {
+    padding-left: 12px;
+  }
+}
+
+
+.distill-site-header .nav-toggle {
+  display: none;
+}
+
+.nav-dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.nav-dropdown .nav-dropbtn {
+  border: none;
+  outline: none;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 16px 10px;
+  background-color: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  margin: 0;
+  margin-top: 1px;
+  z-index: 2;
+}
+
+.nav-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 200px;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 4px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+  z-index: 1;
+  margin-top: 2px;
+  white-space: nowrap;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.nav-dropdown-content hr {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.nav-dropdown-active {
+  display: block;
+}
+
+.nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
+  color: black;
+  padding: 6px 24px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.nav-dropdown-content .nav-dropdown-header {
+  display: block;
+  padding: 5px 24px;
+  padding-bottom: 0;
+  text-transform: uppercase;
+  font-size: 14px;
+  color: #999999;
+  white-space: nowrap;
+}
+
+.nav-dropdown:hover .nav-dropbtn {
+  color: white;
+}
+
+.nav-dropdown-content a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.nav-right .nav-dropdown-content {
+  margin-left: -45%;
+  right: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
+  .distill-site-header a.nav-toggle {
+    float: right;
+    display: block;
+  }
+  .distill-site-header .title {
+    margin-left: 0;
+  }
+  .distill-site-header .nav-right {
+    margin-right: 0;
+  }
+  .distill-site-header {
+    overflow: hidden;
+  }
+  .nav-right .nav-dropdown-content {
+    margin-left: 0;
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .distill-site-header.responsive {position: relative; min-height: 500px; }
+  .distill-site-header.responsive a.nav-toggle {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .distill-site-header.responsive a,
+  .distill-site-header.responsive .nav-dropdown {
+    display: block;
+    text-align: left;
+  }
+  .distill-site-header.responsive .nav-left,
+  .distill-site-header.responsive .nav-right {
+    width: 100%;
+  }
+  .distill-site-header.responsive .nav-dropdown {float: none;}
+  .distill-site-header.responsive .nav-dropdown-content {position: relative;}
+  .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+}
+
+/* Site Footer */
+
+.distill-site-footer {
+  width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  z-index: 3;
+  margin-top: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  text-align: center;
+}
+
+/* Headroom */
+
+d-title {
+  padding-top: 6rem;
+}
+
+@media print {
+  d-title {
+    padding-top: 4rem;
+  }
+}
+
+.headroom {
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.headroom--transition {
+  transition: all .4s ease-in-out;
+}
+
+.headroom--unpinned {
+  top: -100px;
+}
+
+.headroom--pinned {
+  top: 0;
+}
+
+/* adjust viewport for navbar height */
+/* helps vertically center bootstrap (non-distill) content */
+.min-vh-100 {
+  min-height: calc(100vh - 100px) !important;
+}
+
+</style>
+
+<script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<link href="../../site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
+<link href="../../site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
+<script src="../../site_libs/headroom-0.9.4/headroom.min.js"></script>
+<script src="../../site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
+<script src="../../site_libs/fuse-6.4.1/fuse.min.js"></script>
+
+<script type="application/javascript">
+
+function getMeta(metaName) {
+  var metas = document.getElementsByTagName('meta');
+  for (let i = 0; i < metas.length; i++) {
+    if (metas[i].getAttribute('name') === metaName) {
+      return metas[i].getAttribute('content');
+    }
+  }
+  return '';
+}
+
+function offsetURL(url) {
+  var offset = getMeta('distill:offset');
+  return offset ? offset + '/' + url : url;
+}
+
+function createFuseIndex() {
+
+  // create fuse index
+  var options = {
+    keys: [
+      { name: 'title', weight: 20 },
+      { name: 'categories', weight: 15 },
+      { name: 'description', weight: 10 },
+      { name: 'contents', weight: 5 },
+    ],
+    ignoreLocation: true,
+    threshold: 0
+  };
+  var fuse = new window.Fuse([], options);
+
+  // fetch the main search.json
+  return fetch(offsetURL('search.json'))
+    .then(function(response) {
+      if (response.status == 200) {
+        return response.json().then(function(json) {
+          // index main articles
+          json.articles.forEach(function(article) {
+            fuse.add(article);
+          });
+          // download collections and index their articles
+          return Promise.all(json.collections.map(function(collection) {
+            return fetch(offsetURL(collection)).then(function(response) {
+              if (response.status === 200) {
+                return response.json().then(function(articles) {
+                  articles.forEach(function(article) {
+                    fuse.add(article);
+                  });
+                })
+              } else {
+                return Promise.reject(
+                  new Error('Unexpected status from search index request: ' +
+                            response.status)
+                );
+              }
+            });
+          })).then(function() {
+            return fuse;
+          });
+        });
+
+      } else {
+        return Promise.reject(
+          new Error('Unexpected status from search index request: ' +
+                      response.status)
+        );
+      }
+    });
+}
+
+window.document.addEventListener("DOMContentLoaded", function (event) {
+
+  // get search element (bail if we don't have one)
+  var searchEl = window.document.getElementById('distill-search');
+  if (!searchEl)
+    return;
+
+  createFuseIndex()
+    .then(function(fuse) {
+
+      // make search box visible
+      searchEl.classList.remove('hidden');
+
+      // initialize autocomplete
+      var options = {
+        autoselect: true,
+        hint: false,
+        minLength: 2,
+      };
+      window.autocomplete(searchEl, options, [{
+        source: function(query, callback) {
+          const searchOptions = {
+            isCaseSensitive: false,
+            shouldSort: true,
+            minMatchCharLength: 2,
+            limit: 10,
+          };
+          var results = fuse.search(query, searchOptions);
+          callback(results
+            .map(function(result) { return result.item; })
+          );
+        },
+        templates: {
+          suggestion: function(suggestion) {
+            var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
+              ? `<img src="${offsetURL(suggestion.preview)}"</img>`
+              : '';
+            var html = `
+              <div class="search-item">
+                <h3>${suggestion.title}</h3>
+                <div class="search-item-description">
+                  ${suggestion.description || ''}
+                </div>
+                <div class="search-item-preview">
+                  ${img}
+                </div>
+              </div>
+            `;
+            return html;
+          }
+        }
+      }]).on('autocomplete:selected', function(event, suggestion) {
+        window.location.href = offsetURL(suggestion.path);
+      });
+      // remove inline display style on autocompleter (we want to
+      // manage responsive display via css)
+      $('.algolia-autocomplete').css("display", "");
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+
+});
+
+</script>
+
+<style type="text/css">
+
+.nav-search {
+  font-size: x-small;
+}
+
+/* Algolioa Autocomplete */
+
+.algolia-autocomplete {
+  display: inline-block;
+  margin-left: 10px;
+  vertical-align: sub;
+  background-color: white;
+  color: black;
+  padding: 6px;
+  padding-top: 8px;
+  padding-bottom: 0;
+  border-radius: 6px;
+  border: 1px #0F2E3D solid;
+  width: 180px;
+}
+
+
+@media screen and (max-width: 768px) {
+  .distill-site-nav .algolia-autocomplete {
+    display: none;
+    visibility: hidden;
+  }
+  .distill-site-nav.responsive .algolia-autocomplete {
+    display: inline-block;
+    visibility: visible;
+  }
+  .distill-site-nav.responsive .algolia-autocomplete .aa-dropdown-menu {
+    margin-left: 0;
+    width: 400px;
+    max-height: 400px;
+  }
+}
+
+.algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
+  width: 90%;
+  outline: none;
+  border: none;
+}
+
+.algolia-autocomplete .aa-hint {
+  color: #999;
+}
+.algolia-autocomplete .aa-dropdown-menu {
+  width: 550px;
+  max-height: 70vh;
+  overflow-x: visible;
+  overflow-y: scroll;
+  padding: 5px;
+  margin-top: 3px;
+  margin-left: -150px;
+  background-color: #fff;
+  border-radius: 5px;
+  border: 1px solid #999;
+  border-top: none;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
+  cursor: pointer;
+  padding: 5px 4px;
+  border-bottom: 1px solid #eee;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion:last-of-type {
+  border-bottom: none;
+  margin-bottom: 2px;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item {
+  overflow: hidden;
+  font-size: 0.8em;
+  line-height: 1.4em;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
+  font-size: 1rem;
+  margin-block-start: 0;
+  margin-block-end: 5px;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-description {
+  display: inline-block;
+  overflow: hidden;
+  height: 2.8em;
+  width: 80%;
+  margin-right: 4%;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview {
+  display: inline-block;
+  width: 15%;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img {
+  height: 3em;
+  width: auto;
+  display: none;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img[src] {
+  display: initial;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
+  background-color: #eee;
+}
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
+  font-weight: bold;
+  font-style: normal;
+}
+
+</style>
+
+
+<!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+<style type="text/css">
+
+body {
+  background-color: white;
+}
+
+.pandoc-table {
+  width: 100%;
+}
+
+.pandoc-table>caption {
+  margin-bottom: 10px;
+}
+
+.pandoc-table th:not([align]) {
+  text-align: left;
+}
+
+.pagedtable-footer {
+  font-size: 15px;
+}
+
+d-byline .byline {
+  grid-template-columns: 2fr 2fr;
+}
+
+d-byline .byline h3 {
+  margin-block-start: 1.5em;
+}
+
+d-byline .byline .authors-affiliations h3 {
+  margin-block-start: 0.5em;
+}
+
+.authors-affiliations .orcid-id {
+  width: 16px;
+  height:16px;
+  margin-left: 4px;
+  margin-right: 4px;
+  vertical-align: middle;
+  padding-bottom: 2px;
+}
+
+d-title .dt-tags {
+  margin-top: 1em;
+  grid-column: text;
+}
+
+.dt-tags .dt-tag {
+  text-decoration: none;
+  display: inline-block;
+  color: rgba(0,0,0,0.6);
+  padding: 0em 0.4em;
+  margin-right: 0.5em;
+  margin-bottom: 0.4em;
+  font-size: 70%;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+d-article table.gt_table td,
+d-article table.gt_table th {
+  border-bottom: none;
+}
+
+.html-widget {
+  margin-bottom: 2.0em;
+}
+
+.l-screen-inset {
+  padding-right: 16px;
+}
+
+.l-screen .caption {
+  margin-left: 10px;
+}
+
+.shaded {
+  background: rgb(247, 247, 247);
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.shaded .html-widget {
+  margin-bottom: 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.shaded .shaded-content {
+  background: white;
+}
+
+.text-output {
+  margin-top: 0;
+  line-height: 1.5em;
+}
+
+.hidden {
+  display: none !important;
+}
+
+d-article {
+  padding-top: 2.5rem;
+  padding-bottom: 30px;
+}
+
+d-appendix {
+  padding-top: 30px;
+}
+
+d-article>p>img {
+  width: 100%;
+}
+
+d-article h2 {
+  margin: 1rem 0 1.5rem 0;
+}
+
+d-article h3 {
+  margin-top: 1.5rem;
+}
+
+d-article iframe {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 2.0em;
+  width: 100%;
+}
+
+/* Tweak code blocks */
+
+d-article div.sourceCode code,
+d-article pre code {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+}
+
+d-article pre,
+d-article div.sourceCode,
+d-article div.sourceCode pre {
+  overflow: auto;
+}
+
+d-article div.sourceCode {
+  background-color: white;
+}
+
+d-article div.sourceCode pre {
+  padding-left: 10px;
+  font-size: 12px;
+  border-left: 2px solid rgba(0,0,0,0.1);
+}
+
+d-article pre {
+  font-size: 12px;
+  color: black;
+  background: none;
+  margin-top: 0;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+d-article pre a {
+  border-bottom: none;
+}
+
+d-article pre a:hover {
+  border-bottom: none;
+  text-decoration: underline;
+}
+
+d-article details {
+  grid-column: text;
+  margin-bottom: 0.8em;
+}
+
+@media(min-width: 768px) {
+
+d-article pre,
+d-article div.sourceCode,
+d-article div.sourceCode pre {
+  overflow: visible !important;
+}
+
+d-article div.sourceCode pre {
+  padding-left: 18px;
+  font-size: 14px;
+}
+
+d-article pre {
+  font-size: 14px;
+}
+
+}
+
+figure img.external {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  padding: 18px;
+  box-sizing: border-box;
+}
+
+/* CSS for d-contents */
+
+.d-contents {
+  grid-column: text;
+  color: rgba(0,0,0,0.8);
+  font-size: 0.9em;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+  padding-bottom: 0.5em;
+  margin-bottom: 1em;
+  padding-left: 0.25em;
+  justify-self: start;
+}
+
+@media(min-width: 1000px) {
+  .d-contents.d-contents-float {
+    height: 0;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    justify-self: center;
+    padding-right: 3em;
+    padding-left: 2em;
+  }
+}
+
+.d-contents nav h3 {
+  font-size: 18px;
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+.d-contents li {
+  list-style-type: none
+}
+
+.d-contents nav > ul {
+  padding-left: 0;
+}
+
+.d-contents ul {
+  padding-left: 1em
+}
+
+.d-contents nav ul li {
+  margin-top: 0.6em;
+  margin-bottom: 0.2em;
+}
+
+.d-contents nav a {
+  font-size: 13px;
+  border-bottom: none;
+  text-decoration: none
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.d-contents nav a:hover {
+  text-decoration: underline solid rgba(0, 0, 0, 0.6)
+}
+
+.d-contents nav > ul > li > a {
+  font-weight: 600;
+}
+
+.d-contents nav > ul > li > ul {
+  font-weight: inherit;
+}
+
+.d-contents nav > ul > li > ul > li {
+  margin-top: 0.2em;
+}
+
+
+.d-contents nav ul {
+  margin-top: 0;
+  margin-bottom: 0.25em;
+}
+
+.d-article-with-toc h2:nth-child(2) {
+  margin-top: 0;
+}
+
+
+/* Figure */
+
+.figure {
+  position: relative;
+  margin-bottom: 2.5em;
+  margin-top: 1.5em;
+}
+
+.figure img {
+  width: 100%;
+}
+
+.figure .caption {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 12px;
+  line-height: 1.5em;
+}
+
+.figure img.external {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  padding: 18px;
+  box-sizing: border-box;
+}
+
+.figure .caption a {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.figure .caption b,
+.figure .caption strong, {
+  font-weight: 600;
+  color: rgba(0, 0, 0, 1.0);
+}
+
+/* Citations */
+
+d-article .citation {
+  color: inherit;
+  cursor: inherit;
+}
+
+div.hanging-indent{
+  margin-left: 1em; text-indent: -1em;
+}
+
+/* Citation hover box */
+
+.tippy-box[data-theme~=light-border] {
+  background-color: rgba(250, 250, 250, 0.95);
+}
+
+.tippy-content > p {
+  margin-bottom: 0;
+  padding: 2px;
+}
+
+
+/* Tweak 1000px media break to show more text */
+
+@media(min-width: 1000px) {
+  .base-grid,
+  distill-header,
+  d-title,
+  d-abstract,
+  d-article,
+  d-appendix,
+  distill-appendix,
+  d-byline,
+  d-footnote-list,
+  d-citation-list,
+  distill-footer {
+    grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+    grid-column-gap: 16px;
+  }
+
+  .grid {
+    grid-column-gap: 16px;
+  }
+
+  d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+  }
+  figure .caption, .figure .caption, figure figcaption {
+    font-size: 13px;
+  }
+}
+
+@media(min-width: 1180px) {
+  .base-grid,
+  distill-header,
+  d-title,
+  d-abstract,
+  d-article,
+  d-appendix,
+  distill-appendix,
+  d-byline,
+  d-footnote-list,
+  d-citation-list,
+  distill-footer {
+    grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+    grid-column-gap: 32px;
+  }
+
+  .grid {
+    grid-column-gap: 32px;
+  }
+}
+
+
+/* Get the citation styles for the appendix (not auto-injected on render since
+   we do our own rendering of the citation appendix) */
+
+d-appendix .citation-appendix,
+.d-appendix .citation-appendix {
+  font-size: 11px;
+  line-height: 15px;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  padding-left: 18px;
+  border: 1px solid rgba(0,0,0,0.1);
+  background: rgba(0, 0, 0, 0.02);
+  padding: 10px 18px;
+  border-radius: 3px;
+  color: rgba(150, 150, 150, 1);
+  overflow: hidden;
+  margin-top: -12px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* Include appendix styles here so they can be overridden */
+
+d-appendix {
+  contain: layout style;
+  font-size: 0.8em;
+  line-height: 1.7em;
+  margin-top: 60px;
+  margin-bottom: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  color: rgba(0,0,0,0.5);
+  padding-top: 60px;
+  padding-bottom: 48px;
+}
+
+d-appendix h3 {
+  grid-column: page-start / text-start;
+  font-size: 15px;
+  font-weight: 500;
+  margin-top: 1em;
+  margin-bottom: 0;
+  color: rgba(0,0,0,0.65);
+}
+
+d-appendix h3 + * {
+  margin-top: 1em;
+}
+
+d-appendix ol {
+  padding: 0 0 0 15px;
+}
+
+@media (min-width: 768px) {
+  d-appendix ol {
+    padding: 0 0 0 30px;
+    margin-left: -30px;
+  }
+}
+
+d-appendix li {
+  margin-bottom: 1em;
+}
+
+d-appendix a {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+d-appendix > * {
+  grid-column: text;
+}
+
+d-appendix > d-footnote-list,
+d-appendix > d-citation-list,
+d-appendix > distill-appendix {
+  grid-column: screen;
+}
+
+/* Include footnote styles here so they can be overridden */
+
+d-footnote-list {
+  contain: layout style;
+}
+
+d-footnote-list > * {
+  grid-column: text;
+}
+
+d-footnote-list a.footnote-backlink {
+  color: rgba(0,0,0,0.3);
+  padding-left: 0.5em;
+}
+
+
+
+/* Anchor.js */
+
+.anchorjs-link {
+  /*transition: all .25s linear; */
+  text-decoration: none;
+  border-bottom: none;
+}
+*:hover > .anchorjs-link {
+  margin-left: -1.125em !important;
+  text-decoration: none;
+  border-bottom: none;
+}
+
+/* Social footer */
+
+.social_footer {
+  margin-top: 30px;
+  margin-bottom: 0;
+  color: rgba(0,0,0,0.67);
+}
+
+.disqus-comments {
+  margin-right: 30px;
+}
+
+.disqus-comment-count {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
+#disqus_thread {
+  margin-top: 30px;
+}
+
+.article-sharing a {
+  border-bottom: none;
+  margin-right: 8px;
+}
+
+.article-sharing a:hover {
+  border-bottom: none;
+}
+
+.sidebar-section.subscribe {
+  font-size: 12px;
+  line-height: 1.6em;
+}
+
+.subscribe p {
+  margin-bottom: 0.5em;
+}
+
+
+.article-footer .subscribe {
+  font-size: 15px;
+  margin-top: 45px;
+}
+
+
+.sidebar-section.custom {
+  font-size: 12px;
+  line-height: 1.6em;
+}
+
+.custom p {
+  margin-bottom: 0.5em;
+}
+
+/* Styles for listing layout (hide title) */
+.layout-listing d-title, .layout-listing .d-title {
+  display: none;
+}
+
+/* Styles for posts lists (not auto-injected) */
+
+
+.posts-with-sidebar {
+  padding-left: 45px;
+  padding-right: 45px;
+}
+
+.posts-list .description h2,
+.posts-list .description p {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+.posts-list .description h2 {
+  font-weight: 700;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.posts-list h2.post-tag {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding-bottom: 12px;
+}
+.posts-list {
+  margin-top: 60px;
+  margin-bottom: 24px;
+}
+
+.posts-list .post-preview {
+  text-decoration: none;
+  overflow: hidden;
+  display: block;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 24px 0;
+}
+
+.post-preview-last {
+  border-bottom: none !important;
+}
+
+.posts-list .posts-list-caption {
+  grid-column: screen;
+  font-weight: 400;
+}
+
+.posts-list .post-preview h2 {
+  margin: 0 0 6px 0;
+  line-height: 1.2em;
+  font-style: normal;
+  font-size: 24px;
+}
+
+.posts-list .post-preview p {
+  margin: 0 0 12px 0;
+  line-height: 1.4em;
+  font-size: 16px;
+}
+
+.posts-list .post-preview .thumbnail {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+  position: relative;
+  max-width: 500px;
+}
+.posts-list .post-preview img {
+  width: 100%;
+  display: block;
+}
+
+.posts-list .metadata {
+  font-size: 12px;
+  line-height: 1.4em;
+  margin-bottom: 18px;
+}
+
+.posts-list .metadata > * {
+  display: inline-block;
+}
+
+.posts-list .metadata .publishedDate {
+  margin-right: 2em;
+}
+
+.posts-list .metadata .dt-authors {
+  display: block;
+  margin-top: 0.3em;
+  margin-right: 2em;
+}
+
+.posts-list .dt-tags {
+  display: block;
+  line-height: 1em;
+}
+
+.posts-list .dt-tags .dt-tag {
+  display: inline-block;
+  color: rgba(0,0,0,0.6);
+  padding: 0.3em 0.4em;
+  margin-right: 0.2em;
+  margin-bottom: 0.4em;
+  font-size: 60%;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.posts-list img {
+  opacity: 1;
+}
+
+.posts-list img[data-src] {
+  opacity: 0;
+}
+
+.posts-more {
+  clear: both;
+}
+
+
+.posts-sidebar {
+  font-size: 16px;
+}
+
+.posts-sidebar h3 {
+  font-size: 16px;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.sidebar-section {
+  margin-bottom: 30px;
+}
+
+.categories ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.categories li {
+  color: rgba(0, 0, 0, 0.8);
+  margin-bottom: 0;
+}
+
+.categories li>a {
+  border-bottom: none;
+}
+
+.categories li>a:hover {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.categories .active {
+  font-weight: 600;
+}
+
+.categories .category-count {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+
+@media(min-width: 768px) {
+  .posts-list .post-preview h2 {
+    font-size: 26px;
+  }
+  .posts-list .post-preview .thumbnail {
+    float: right;
+    width: 30%;
+    margin-bottom: 0;
+  }
+  .posts-list .post-preview .description {
+    float: left;
+    width: 45%;
+  }
+  .posts-list .post-preview .metadata {
+    float: left;
+    width: 20%;
+    margin-top: 8px;
+  }
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.5em;
+    font-size: 16px;
+  }
+  .posts-with-sidebar .posts-list {
+    float: left;
+    width: 75%;
+  }
+  .posts-with-sidebar .posts-sidebar {
+    float: right;
+    width: 20%;
+    margin-top: 60px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+}
+
+
+/* Improve display for browsers without grid (IE/Edge <= 15) */
+
+.downlevel {
+  line-height: 1.6em;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+}
+
+.downlevel .d-title {
+  padding-top: 6rem;
+  padding-bottom: 1.5rem;
+}
+
+.downlevel .d-title h1 {
+  font-size: 50px;
+  font-weight: 700;
+  line-height: 1.1em;
+  margin: 0 0 0.5rem;
+}
+
+.downlevel .d-title p {
+  font-weight: 300;
+  font-size: 1.2rem;
+  line-height: 1.55em;
+  margin-top: 0;
+}
+
+.downlevel .d-byline {
+  padding-top: 0.8em;
+  padding-bottom: 0.8em;
+  font-size: 0.8rem;
+  line-height: 1.8em;
+}
+
+.downlevel .section-separator {
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.downlevel .d-article {
+  font-size: 1.06rem;
+  line-height: 1.7em;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+
+.downlevel .d-appendix {
+  padding-left: 0;
+  padding-right: 0;
+  max-width: none;
+  font-size: 0.8em;
+  line-height: 1.7em;
+  margin-bottom: 0;
+  color: rgba(0,0,0,0.5);
+  padding-top: 40px;
+  padding-bottom: 48px;
+}
+
+.downlevel .footnotes ol {
+  padding-left: 13px;
+}
+
+.downlevel .base-grid,
+.downlevel .distill-header,
+.downlevel .d-title,
+.downlevel .d-abstract,
+.downlevel .d-article,
+.downlevel .d-appendix,
+.downlevel .distill-appendix,
+.downlevel .d-byline,
+.downlevel .d-footnote-list,
+.downlevel .d-citation-list,
+.downlevel .distill-footer,
+.downlevel .appendix-bottom,
+.downlevel .posts-container {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+@media(min-width: 768px) {
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+  padding-left: 150px;
+  padding-right: 150px;
+  max-width: 900px;
+}
+}
+
+.downlevel pre code {
+  display: block;
+  border-left: 2px solid rgba(0, 0, 0, .1);
+  padding: 0 0 0 20px;
+  font-size: 14px;
+}
+
+.downlevel code, .downlevel pre {
+  color: black;
+  background: none;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+.downlevel .posts-list .post-preview {
+  color: inherit;
+}
+
+
+
+</style>
+
+<script type="application/javascript">
+
+function is_downlevel_browser() {
+  if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                 window.navigator.userAgent)) {
+    return true;
+  } else {
+    return window.load_distill_framework === undefined;
+  }
+}
+
+// show body when load is complete
+function on_load_complete() {
+
+  // add anchors
+  if (window.anchors) {
+    window.anchors.options.placement = 'left';
+    window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+  }
+
+
+  // set body to visible
+  document.body.style.visibility = 'visible';
+
+  // force redraw for leaflet widgets
+  if (window.HTMLWidgets) {
+    var maps = window.HTMLWidgets.findAll(".leaflet");
+    $.each(maps, function(i, el) {
+      var map = this.getMap();
+      map.invalidateSize();
+      map.eachLayer(function(layer) {
+        if (layer instanceof L.TileLayer)
+          layer.redraw();
+      });
+    });
+  }
+
+  // trigger 'shown' so htmlwidgets resize
+  $('d-article').trigger('shown');
+}
+
+function init_distill() {
+
+  init_common();
+
+  // create front matter
+  var front_matter = $('<d-front-matter></d-front-matter>');
+  $('#distill-front-matter').wrap(front_matter);
+
+  // create d-title
+  $('.d-title').changeElementType('d-title');
+
+  // create d-byline
+  var byline = $('<d-byline></d-byline>');
+  $('.d-byline').replaceWith(byline);
+
+  // create d-article
+  var article = $('<d-article></d-article>');
+  $('.d-article').wrap(article).children().unwrap();
+
+  // move posts container into article
+  $('.posts-container').appendTo($('d-article'));
+
+  // create d-appendix
+  $('.d-appendix').changeElementType('d-appendix');
+
+  // flag indicating that we have appendix items
+  var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+  // replace footnotes with <d-footnote>
+  $('.footnote-ref').each(function(i, val) {
+    appendix = true;
+    var href = $(this).attr('href');
+    var id = href.replace('#', '');
+    var fn = $('#' + id);
+    var fn_p = $('#' + id + '>p');
+    fn_p.find('.footnote-back').remove();
+    var text = fn_p.html();
+    var dtfn = $('<d-footnote></d-footnote>');
+    dtfn.html(text);
+    $(this).replaceWith(dtfn);
+  });
+  // remove footnotes
+  $('.footnotes').remove();
+
+  // move refs into #references-listing
+  $('#references-listing').replaceWith($('#refs'));
+
+  $('h1.appendix, h2.appendix').each(function(i, val) {
+    $(this).changeElementType('h3');
+  });
+  $('h3.appendix').each(function(i, val) {
+    var id = $(this).attr('id');
+    $('.d-contents a[href="#' + id + '"]').parent().remove();
+    appendix = true;
+    $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+  });
+
+  // show d-appendix if we have appendix content
+  $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+  // localize layout chunks to just output
+  $('.layout-chunk').each(function(i, val) {
+
+    // capture layout
+    var layout = $(this).attr('data-layout');
+
+    // apply layout to markdown level block elements
+    var elements = $(this).children().not('details, div.sourceCode, pre, script');
+    elements.each(function(i, el) {
+      var layout_div = $('<div class="' + layout + '"></div>');
+      if (layout_div.hasClass('shaded')) {
+        var shaded_content = $('<div class="shaded-content"></div>');
+        $(this).wrap(shaded_content);
+        $(this).parent().wrap(layout_div);
+      } else {
+        $(this).wrap(layout_div);
+      }
+    });
+
+
+    // unwrap the layout-chunk div
+    $(this).children().unwrap();
+  });
+
+  // remove code block used to force  highlighting css
+  $('.distill-force-highlighting-css').parent().remove();
+
+  // remove empty line numbers inserted by pandoc when using a
+  // custom syntax highlighting theme
+  $('code.sourceCode a:empty').remove();
+
+  // load distill framework
+  load_distill_framework();
+
+  // wait for window.distillRunlevel == 4 to do post processing
+  function distill_post_process() {
+
+    if (!window.distillRunlevel || window.distillRunlevel < 4)
+      return;
+
+    // hide author/affiliations entirely if we have no authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+    if (!have_authors)
+      $('d-byline').addClass('hidden');
+
+    // article with toc class
+    $('.d-contents').parent().addClass('d-article-with-toc');
+
+    // strip links that point to #
+    $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+    // add orcid ids
+    $('.authors-affiliations').find('.author').each(function(i, el) {
+      var orcid_id = front_matter.authors[i].orcidID;
+      if (orcid_id) {
+        var a = $('<a></a>');
+        a.attr('href', 'https://orcid.org/' + orcid_id);
+        var img = $('<img></img>');
+        img.addClass('orcid-id');
+        img.attr('alt', 'ORCID ID');
+        img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+        a.append(img);
+        $(this).append(a);
+      }
+    });
+
+    // hide elements of author/affiliations grid that have no value
+    function hide_byline_column(caption) {
+      $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+    }
+
+    // affiliations
+    var have_affiliations = false;
+    for (var i = 0; i<front_matter.authors.length; ++i) {
+      var author = front_matter.authors[i];
+      if (author.affiliation !== "&nbsp;") {
+        have_affiliations = true;
+        break;
+      }
+    }
+    if (!have_affiliations)
+      $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+    // published date
+    if (!front_matter.publishedDate)
+      hide_byline_column("Published");
+
+    // document object identifier
+    var doi = $('d-byline').find('h3:contains("DOI")');
+    var doi_p = doi.next().empty();
+    if (!front_matter.doi) {
+      // if we have a citation and valid citationText then link to that
+      if ($('#citation').length > 0 && front_matter.citationText) {
+        doi.html('Citation');
+        $('<a href="#citation"></a>')
+          .text(front_matter.citationText)
+          .appendTo(doi_p);
+      } else {
+        hide_byline_column("DOI");
+      }
+    } else {
+      $('<a></a>')
+         .attr('href', "https://doi.org/" + front_matter.doi)
+         .html(front_matter.doi)
+         .appendTo(doi_p);
+    }
+
+     // change plural form of authors/affiliations
+    if (front_matter.authors.length === 1) {
+      var grid = $('.authors-affiliations');
+      grid.children('h3:contains("Authors")').text('Author');
+      grid.children('h3:contains("Affiliations")').text('Affiliation');
+    }
+
+    // remove d-appendix and d-footnote-list local styles
+    $('d-appendix > style:first-child').remove();
+    $('d-footnote-list > style:first-child').remove();
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // hoverable references
+    $('span.citation[data-cites]').each(function() {
+      var refs = $(this).attr('data-cites').split(" ");
+      var refHtml = refs.map(function(ref) {
+        return "<p>" + $('#ref-' + ref).html() + "</p>";
+      }).join("\n");
+      window.tippy(this, {
+        allowHTML: true,
+        content: refHtml,
+        maxWidth: 500,
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'light-border',
+        placement: 'bottom-start'
+      });
+    });
+
+    // clear polling timer
+    clearInterval(tid);
+
+    // show body now that everything is ready
+    on_load_complete();
+  }
+
+  var tid = setInterval(distill_post_process, 50);
+  distill_post_process();
+
+}
+
+function init_downlevel() {
+
+  init_common();
+
+   // insert hr after d-title
+  $('.d-title').after($('<hr class="section-separator"/>'));
+
+  // check if we have authors
+  var front_matter = JSON.parse($("#distill-front-matter").html());
+  var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+  // manage byline/border
+  if (!have_authors)
+    $('.d-byline').remove();
+  $('.d-byline').after($('<hr class="section-separator"/>'));
+  $('.d-byline a').remove();
+
+  // remove toc
+  $('.d-contents').remove();
+
+  // move appendix elements
+  $('h1.appendix, h2.appendix').each(function(i, val) {
+    $(this).changeElementType('h3');
+  });
+  $('h3.appendix').each(function(i, val) {
+    $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+  });
+
+
+  // inject headers into references and footnotes
+  var refs_header = $('<h3></h3>');
+  refs_header.text('References');
+  $('#refs').prepend(refs_header);
+
+  var footnotes_header = $('<h3></h3');
+  footnotes_header.text('Footnotes');
+  $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+  // move appendix-bottom entries to the bottom
+  $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+  $('.appendix-bottom').remove();
+
+  // remove appendix if it's empty
+  if ($('.d-appendix').children().length === 0)
+    $('.d-appendix').remove();
+
+  // prepend separator above appendix
+  $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+  // trim code
+  $('pre>code').each(function(i, val) {
+    $(this).html($.trim($(this).html()));
+  });
+
+  // move posts-container right before article
+  $('.posts-container').insertBefore($('.d-article'));
+
+  $('body').addClass('downlevel');
+
+  on_load_complete();
+}
+
+
+function init_common() {
+
+  // jquery plugin to change element types
+  (function($) {
+    $.fn.changeElementType = function(newType) {
+      var attrs = {};
+
+      $.each(this[0].attributes, function(idx, attr) {
+        attrs[attr.nodeName] = attr.nodeValue;
+      });
+
+      this.replaceWith(function() {
+        return $("<" + newType + "/>", attrs).append($(this).contents());
+      });
+    };
+  })(jQuery);
+
+  // prevent underline for linked images
+  $('a > img').parent().css({'border-bottom' : 'none'});
+
+  // mark non-body figures created by knitr chunks as 100% width
+  $('.layout-chunk').each(function(i, val) {
+    var figures = $(this).find('img, .html-widget');
+    if ($(this).attr('data-layout') !== "l-body") {
+      figures.css('width', '100%');
+    } else {
+      figures.css('max-width', '100%');
+      figures.filter("[width]").each(function(i, val) {
+        var fig = $(this);
+        fig.css('width', fig.attr('width') + 'px');
+      });
+
+    }
+  });
+
+  // auto-append index.html to post-preview links in file: protocol
+  // and in rstudio ide preview
+  $('.post-preview').each(function(i, val) {
+    if (window.location.protocol === "file:")
+      $(this).attr('href', $(this).attr('href') + "index.html");
+  });
+
+  // get rid of index.html references in header
+  if (window.location.protocol !== "file:") {
+    $('.distill-site-header a[href]').each(function(i,val) {
+      $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+    });
+  }
+
+  // add class to pandoc style tables
+  $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+  $('.kable-table').children('table').addClass('pandoc-table');
+
+  // add figcaption style to table captions
+  $('caption').parent('table').addClass("figcaption");
+
+  // initialize posts list
+  if (window.init_posts_list)
+    window.init_posts_list();
+
+  // implmement disqus comment link
+  $('.disqus-comment-count').click(function() {
+    window.headroom_prevent_pin = true;
+    $('#disqus_thread').toggleClass('hidden');
+    if (!$('#disqus_thread').hasClass('hidden')) {
+      var offset = $(this).offset();
+      $(window).resize();
+      $('html, body').animate({
+        scrollTop: offset.top - 35
+      });
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (is_downlevel_browser())
+    init_downlevel();
+  else
+    window.addEventListener('WebComponentsReady', init_distill);
+});
+
+</script>
+
+<!--/radix_placeholder_distill-->
+  <script src="../../site_libs/header-attrs-2.8/header-attrs.js"></script>
+  <script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
+  <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
+  <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="../../site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="../../site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="../../site_libs/anchor-4.2.2/anchor.min.js"></script>
+  <script src="../../site_libs/bowser-1.9.3/bowser.min.js"></script>
+  <script src="../../site_libs/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="../../site_libs/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+<script type="text/javascript" cookie-consent="tracking" async src="https://www.googletagmanager.com/gtag/js?id=UA-178413324-1"></script>
+<script type="text/javascript" cookie-consent="tracking">
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-178413324-1');
+</script>
+<style type="text/css">
+/* ---------- Global Styles ---------- */
+
+@import url('https://fonts.googleapis.com/css?family=Atkinson+Hyperlegible&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Fira+Mono&display=swap');
+
+html, body, p {
+  
+  font-family: 'Atkinson Hyperlegible';
+  font-weight: 400;
+  line-height: 1.7; 
+  font-size: 1em;
+  color: #333333;
+  font-style: normal;
+  
+}
+
+h2, h3 {
+  font-family: 'Roboto Slab'
+}
+
+em {
+  margin-right: 3px;
+}
+
+div.opener {
+  text-align: justify;
+}
+
+/* Small caps */
+
+.sc {
+  font-variant: small-caps;
+  letter-spacing: 0.1em;
+}
+
+
+/* ---------- Index Page Styles ---------- */
+
+
+/* Name time */
+
+div.nav-left.title {
+  font-family: 'Roboto Slab';
+}
+
+
+/* Search bar */
+
+.angolia-autocomplete {
+  width: 300px;
+}
+
+.nav-search {
+    font-size: inherit;
+}
+
+/* Publication Date */
+
+.publishedDate {
+  font-size: 1.1em;
+}
+
+
+/* Post Description */
+
+.posts-list .description h2 {
+  font-family: 'Roboto Slab';
+}
+
+.description p {
+  font-style: italic;
+  padding-top: 5px;
+}
+
+
+/* Tags */
+
+.posts-list .dt-tags {
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+
+.posts-list .dt-tags .dt-tag {
+  font-family: 'Roboto Slab';
+  font-weight: bold;
+  letter-spacing: 1px;
+  background-color: #565656;
+  color: white;
+}
+
+/* Top & Bot bars */
+
+.distill-site-nav {
+  background-color: #262c2f;
+}
+
+.distill-site-footer p {
+  color: white;
+}
+
+
+
+/* Post published date medatada */
+.posts-list .metadata .publishedDate{
+  font-family: 'Roboto Mono';
+}
+
+
+/* Post list caption */
+.posts-list .posts-list-caption{
+  font-family: 'Fira Mono';
+  border-bottom: 5px solid #f3f3f3;
+  padding-bottom: 2rem;
+}
+
+
+/* Sidebar Categories */
+.posts-sidebar {
+  font-family: 'Fira Mono';
+}
+
+.sidebar-section h3 {
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+
+/* ---------- Article Styles ---------- */
+
+
+/* Title */
+
+d-title {
+  padding-bottom: 0;
+}
+
+d-title h1 {
+  font-family: 'Roboto Slab';
+  line-height: 1.3;
+}
+
+d-title p {
+  font-weight: 600;
+}
+
+
+/* General */
+
+d-article > h2 {
+  margin: 3rem 0 1.5rem 0;
+  border-bottom: 2px solid black;
+}
+
+div.l-body + h2 {
+  margin-top: 0px;
+}
+
+d-article > h3 {
+  margin-top: 1em;
+  font-size: 28px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid lightgrey;
+}
+
+d-article ol {
+  padding-bottom: 15px;
+}
+
+/* Aside */
+
+aside {
+  margin-left: 20px;
+  width: 200px;
+  font-family: 'Roboto Slab';
+}
+
+div.sourceCode + aside {
+  margin-top: 1.5em;
+}
+
+aside code {
+  font-weight: 600;
+}
+
+/* Details */
+summary {
+  padding-left: 5px;
+}
+
+details {
+  background-color: #008bff0f;
+  outline: 2px solid #38566F;
+  padding: 0.5rem;
+}
+
+/* Block Quotes */
+
+d-article blockquote {
+  border-left: 5px solid rgba(0, 0, 0, 0.2);
+  padding-left: 1em;
+}
+
+blockquote p {
+  margin-bottom: 0;
+}
+
+
+/* Footnote margins */
+d-footnote {
+  margin-left: -.2em;
+  margin-right: .1em;
+}
+
+/* Footnote Image */
+
+d-footnote-list ol li img {
+  width: 700px;
+}
+
+d-footnote img {
+  width: 660px;
+  padding: 10px;
+}
+
+
+/* -------- Layout Helpers -------- */
+
+/* 2-column Even */
+
+.pull-left {
+  float: left;
+  width: 47%;
+}
+
+.pull-right {
+  float: right;
+  width: 47%;
+}
+
+/* 2-column Left-skew */
+
+.pull-left-wide {
+  float: left;
+  width: 75%;
+}
+
+.pull-right-narrow {
+  float: right;
+  width: 20%;
+}
+
+/* 2-column Right-skew */
+
+.pull-left-narrow {
+  float: left;
+  width: 20%;
+}
+
+.pull-right-wide {
+  float: right;
+  width: 75%;
+}
+
+
+/* ---------- Code Styles ---------- */
+
+/* Inline Code */
+
+p code, li code {
+  border-radius: 4px;
+  padding: 3px 2px 2px 2px;
+  color: black;
+  background-color: #fbc4ff;
+  font-family: 'Fira Mono';
+  font-weight: 600;
+  font-size: 0.8em;
+}
+
+
+
+/* Code Chunk */
+
+d-article div.sourceCode pre {
+  position: relative;
+  background-color: white;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-left: 5px solid #4D8DC9;
+}
+
+/* R chunk */
+d-article div.sourceCode pre.r {
+  background-color: #faffff;
+}
+
+d-article div.sourceCode pre.r:before {
+  position: absolute;
+  font-size: 1rem;
+  content: 'R';
+  font-family: 'Fira Mono';
+  font-weight: 600;
+  left: -20px;
+  top: -5px;
+  color: #59a2e6;
+}
+
+d-article div.sourceCode pre code {
+  font-family: 'Fira Mono';
+  font-weight: 600;
+}
+
+
+/* overrides some syntax highlighting */
+
+span.va {
+  color: black;
+}
+span.fu {
+  color: #3456cc;
+}
+span.cn {
+  color: #ef3e3a;
+}
+span.fl {
+  color: #c8531d;
+}
+span.kw {
+  color: #9f1eb1;
+}
+span.st {
+  color: #148a14;
+}
+span.co {
+  color: #999999;
+  font-weight: 500;
+}
+
+/* underline auto-linked functions */
+
+span.va a {
+  text-decoration: underline;
+}
+span.fu a {
+  text-decoration: underline;
+}
+
+
+/* Output Chunk */
+
+d-article pre code {
+  font-family: 'Fira Mono';
+  font-weight: 500;
+}
+
+d-article pre {
+  background-color: #f9f9f9;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+  overflow-x: scroll;
+}
+
+
+/* Footnote inline code */
+
+d-footnote-list code {
+  color: rgb(0 0 0 / 0.70);
+  font-weight: 600;
+}
+
+/* ---------- ADD-ONS ---------- */
+
+
+/* {rmarkdown} */
+
+.pagedtable-wrapper {
+  margin-bottom: 20px;
+}
+
+
+/* html widgets */
+
+.html-widget {
+  margin-top: 1.0em;
+  margin-bottom: 1.0em;
+}
+
+
+/* {reactable} */
+
+.ReactTable {
+  font-size: 14px;
+  font-family: 'Roboto Slab';
+  background-color: #fbfbfb;
+}
+
+
+/* {xaringanExtra} */
+
+.panelset {
+  margin-top: 10px;
+  --panel-tabs-border-bottom: black;
+  --panel-tab-font-family: 'Roboto Slab';
+  --panel-tab-hover-background: #ddd;
+  --panel-tab-text-decoration: none;
+  border-bottom: 2px solid black;
+  margin-bottom: 30px;
+}
+
+.panelset section {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+</style>
+<!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Setting up and debugging custom fonts","description":"A practical introduction to all (new) things font in R","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/","orcidID":"0000-0002-0701-921X"}],"publishedDate":"2021-06-24T00:00:00.000-04:00","citationText":"Choe, 2021"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<header class="header header--fixed" role="banner">
+<nav class="distill-site-nav distill-site-header">
+<div class="nav-left">
+<a href="../../index.html" class="title">June Choe</a>
+<input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
+</div>
+<div class="nav-right">
+<a href="../../index.html">Home</a>
+<a href="../../blog.html">Blog</a>
+<a href="../../research.html">Research</a>
+<a href="../../news.html">News</a>
+<div class="nav-dropdown">
+<button class="nav-dropbtn">
+Misc.
+ 
+<span class="down-arrow">&#x25BE;</span>
+</button>
+<div class="nav-dropdown-content">
+<a href="../../resources.html">Resources</a>
+</div>
+</div>
+<a href="https://twitter.com/yjunechoe">
+<i class="fa fa-twitter" aria-hidden="true"></i>
+</a>
+<a href="https://github.com/yjunechoe">
+<i class="fa fa-github" aria-hidden="true"></i>
+</a>
+<a href="https://osf.io/72vrb/" class="nav-image">
+<img src="../../static/img/osf.png"/>
+</a>
+<a href="../../sitemap.xml">
+<i class="fa fa-rss" aria-hidden="true"></i>
+</a>
+<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
+</div>
+</nav>
+</header>
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Setting up and debugging custom fonts</h1>
+<!--radix_placeholder_categories-->
+<div class="dt-tags">
+  <a href="../../blog.html#category:data_visualization" class="dt-tag">data visualization</a>
+  <a href="../../blog.html#category:ggplot2" class="dt-tag">ggplot2</a>
+  <a href="../../blog.html#category:typography" class="dt-tag">typography</a>
+  <a href="../../blog.html#category:tutorial" class="dt-tag">tutorial</a>
+</div>
+<!--/radix_placeholder_categories-->
+<p><p>A practical introduction to all (new) things font in R</p></p>
+</div>
+
+<div class="d-byline">
+  June Choe  (University of Pennsylvania Linguistics)<a href="https://live-sas-www-ling.pantheon.sas.upenn.edu/" class="uri">https://live-sas-www-ling.pantheon.sas.upenn.edu/</a>
+  
+<br/>06-24-2021
+</div>
+
+<div class="d-article">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#setting-up-ragg">Setting up <code>{ragg}</code></a>
+<ul>
+<li><a href="#rendering-in-rstudio-plot-pane">1. Rendering in RStudio plot pane</a></li>
+<li><a href="#saving-as-an-external-file">2. Saving as an external file</a></li>
+<li><a href="#rmarkdown">3. Rmarkdown</a></li>
+<li><a href="#shiny">4. Shiny</a></li>
+</ul></li>
+<li><a href="#installing-custom-fonts">Installing custom fonts</a>
+<ul>
+<li><a href="#finding-the-right-file">Finding the right file</a></li>
+<li><a href="#checking-that-a-font-is-installed-and-available">Checking that a font is installed and available</a></li>
+</ul></li>
+<li><a href="#debugging-custom-fonts">Debugging custom fonts</a></li>
+<li><a href="#hoisting-font-styles">Hoisting font styles</a></li>
+<li><a href="#advanced-font-features">Advanced font features</a>
+<ul>
+<li><a href="#lining">Lining</a></li>
+<li><a href="#ordinals">Ordinals</a></li>
+</ul></li>
+<li><a href="#usecases">Usecases</a>
+<ul>
+<li><a href="#a-mash-up">A mash-up</a></li>
+<li><a href="#icon-fonts">Icon fonts</a></li>
+<li><a href="#more-by-others">More by others</a></li>
+</ul></li>
+<li><a href="#session-info">Session info</a></li>
+</ul>
+</nav>
+</div>
+<div class="opener">
+<p><em>This blog post was featured in the <a href="https://share.fireside.fm/episode/87RSVeFz+alD0Og1X?t=247">R Weekly highlights podcast</a>! Thanks to the <a href="https://rweekly.org/2021-W29.html">R Weekly team</a> for the comprehensive review!</em></p>
+<p><strong>An important point of clarification (30/07/2021)</strong>: Many people are familiar with {showtext} and {extrafont}, and may even have existing workflows centered around those packages. In this blog post, there is no “installing” of fonts of any sort <em>within the R session</em>. The magic here is that {ragg} is designed to directly access the fonts installed on your system (with some caveats as described in detail later). This issue of the graphics device is <em>independent</em> of the kind of things that {showtext} and {extrafont} does, which is why they’re not relevant here.</p>
+<p><strong>tl;dr:</strong> <a href="https://twitter.com/thomasp85/status/1355083725156077571">don’t use {showtext}</a> and <a href="https://twitter.com/thomasp85/status/1261539815960518656">don’t use {extrafont}</a> when following the workflow described in this blog post!<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+</div>
+<h2 id="introduction">Introduction</h2>
+<p>Getting <strong>custom fonts</strong> to work in R has historically been pretty difficult.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> At a high level, it involves the non-trivial task of unifying the <em>graphics device</em>, the <em>operating system</em>, and <em>text rendering</em>, (and also in our case, R!) to seamlessly work with each other.</p>
+<p>Luckily for us in 2021, we have an amazing solution to this problem thanks to recent developments in the <code>{ragg}</code>, <code>{systemfonts}</code>, and <code>{textshaping}</code> packages by RStudio. This is great news because a lot of the work for getting custom fonts to work in R is already done for us!</p>
+<p>In this blog post, I’ll start with the basics of <strong>setting up custom fonts</strong> followed by a walkthrough of the <strong>font debugging workflow</strong>, concluding with some <strong>practical use-cases</strong> that can spice up your typography game for data viz. </p>
+<h2 id="setting-up-ragg">Setting up <code>{ragg}</code></h2>
+<p>The first thing you should do, if you haven’t already, is to install {<a href="https://ragg.r-lib.org/">ragg</a>}, {<a href="https://github.com/r-lib/systemfonts">systemfonts</a>}, and {<a href="https://github.com/r-lib/textshaping">textshaping</a>}.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>'ragg'</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>'systemfonts'</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>'textshaping'</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Next, we want to make sure that whenever we output a plot<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, we do so using the <strong>AGG</strong> graphics device (that’s the “agg” part of “ragg”).</p>
+<p>There are at least four places where this is relevant:</p>
+<h3 id="rendering-in-rstudio-plot-pane">1. Rendering in RStudio plot pane</h3>
+<p>For RStudio &gt;= 1.4, go to <em>Tools</em> &gt; <em>Global Options</em> &gt; <em>General</em> &gt; <em>Graphics</em> and set the <strong>Backend</strong> to AGG.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure" style="text-align: center"><span id="fig:sc"></span>
+<img src="https://i.imgur.com/4XgiPWy.png" alt="Where to set AGG as the graphic device for RStudio - image from https://ragg.r-lib.org"  />
+<p class="caption">
+Figure 1: Where to set AGG as the graphic device for RStudio - image from <a href="https://ragg.r-lib.org" class="uri">https://ragg.r-lib.org</a>
+</p>
+</div>
+</div>
+<h3 id="saving-as-an-external-file">2. Saving as an external file</h3>
+<p>For bitmap output, use any of the <code>ragg::agg_*()</code> function to render plots using the AGG device.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Set output path</span>
+<span class='va'>pngfile</span> <span class='op'>&lt;-</span> <span class='fu'>here</span><span class='fu'>::</span><span class='fu'><a href='https://here.r-lib.org//reference/here.html'>here</a></span><span class='op'>(</span><span class='st'>"img"</span>, <span class='st'>"my_plot.png"</span><span class='op'>)</span>
+<span class='co'># Initialize device</span>
+<span class='fu'>ragg</span><span class='fu'>::</span><span class='fu'><a href='https://ragg.r-lib.org/reference/agg_png.html'>agg_png</a></span><span class='op'>(</span>
+  <span class='va'>pngfile</span>, width <span class='op'>=</span> <span class='fl'>10</span>, height <span class='op'>=</span> <span class='fl'>6</span>, units <span class='op'>=</span> <span class='st'>"in"</span>,
+  res <span class='op'>=</span> <span class='fl'>300</span>, scaling <span class='op'>=</span> <span class='fl'>3</span>
+<span class='op'>)</span>
+<span class='co'># Plot</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>$</span><span class='va'>mpg</span><span class='op'>)</span><span class='op'>)</span>
+<span class='co'># Close device</span>
+<span class='fu'><a href='https://rdrr.io/r/base/invisible.html'>invisible</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/grDevices/dev.html'>dev.off</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>For <strong>ggplot2 figures</strong>: as of the new <a href="https://github.com/tidyverse/ggplot2/releases/tag/v3.3.4">ggplot2 v3.3.4 release</a> (released 06-16-2021), <code>ggsave()</code> automatically defaults to rendering the output using <code>agg_*()</code> devices!</p>
+<details>
+<summary>
+Old disclaimer for {ggplot2} &lt; v.3.3.4
+</summary>
+This long-winded way works for any plot, but if you use <code>{ggplot2}</code> and <code>ggplot2::ggsave()</code> a lot, you might wonder whether you can just pass in <code>ragg::agg_png()</code> into the <code>device</code> argument and specify the arguments in <code>ggsave()</code> instead. This turns out to actually not be so straightforward, but will likely be patched in the next update (v3.3.4?). <a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>
+</details>
+<h3 id="rmarkdown">3. Rmarkdown</h3>
+<p>Pass in a <code>{ragg}</code> device has <code>res</code> and <code>units</code> specified to the <code>dev</code> argument of <code>knitr::chunk_opts$set()</code> at the top of the script.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>ragg_png</span> <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>...</span>, <span class='va'>res</span> <span class='op'>=</span> <span class='fl'>150</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'>ragg</span><span class='fu'>::</span><span class='fu'><a href='https://ragg.r-lib.org/reference/agg_png.html'>agg_png</a></span><span class='op'>(</span><span class='va'>...</span>, res <span class='op'>=</span> <span class='va'>res</span>, units <span class='op'>=</span> <span class='st'>"in"</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='va'>opts_chunk</span><span class='op'>$</span><span class='fu'>set</span><span class='op'>(</span>dev <span class='op'>=</span> <span class='st'>"ragg_png"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h3 id="shiny">4. Shiny</h3>
+<p>Simply set <code>options(shiny.useragg = TRUE)</code> before rendering. Also check out the {<a href="https://rstudio.github.io/thematic/">thematic</a>} package for importing/using custom fonts in shiny plot outputs.</p>
+<h2 id="installing-custom-fonts">Installing custom fonts</h2>
+<p>Now that you have <code>{ragg}</code> and <code>{systemfonts}</code> installed, take it for a spin with a custom font! When you’re rendering plots using <code>{ragg}</code>, custom fonts should <em>just work</em> as long as you have them installed on your local machine.</p>
+<p>If you haven’t really worked with custom fonts before, “installing a custom font” simply means finding the font file on the internet, downloading it, and drag-and-drop into a special folder on your local machine. It’s something like <em>Network/Library/Fonts</em> for Macs and <em>Microsoft/Windows/Fonts</em> for Windows. There can actually be a bit more to this process<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>, so make sure to google and check the process for installing fonts on your machine.</p>
+<h3 id="finding-the-right-file">Finding the right file</h3>
+<p>Font files come in many forms. In general, fonts files that match these two criteria tend to work the best:</p>
+<ol type="1">
+<li><p><strong>Fonts in <em>.otf</em> (OpenType Font) or <em>.ttf</em> (TrueType Font) formats</strong>. These are font formats that are installable on your local machine. You want to avoid other formats like <em>.woff</em> or <em>.woff2</em>, for example, which are designed for use for the web. In theory both <em>.otf</em> and <em>.ttf</em> should work with <code>{ragg}</code>, though I’ve sometimes had trouble with <em>.otf</em>. In those cases, I simply converted the <em>.otf</em> font file to <em>.ttf</em> before installing it, using free online conversion tools that you can easily find on Google. I’m of course glossing over the details here and I’m hardly an expert, but you can <a href="https://helpx.adobe.com/fonts/using/adobe-type-resources-faq.html">read more about TrueType and OpenType formats here</a>.</p></li>
+<li><p><strong>Static fonts</strong>. In static fonts, each <em>member</em> of the family has their own set of <em>glyphs</em> (i.e., there is a font file for each <em>style</em>). This is in contrast to <em>variable fonts</em>, where you have a single font file which can take the form of multiple styles (either by having many sets of glyphs or variable parameters).<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> To illustrate, look at the difference between the static (top) vs. variable (bottom) files for the <a href="https://fonts.google.com/specimen/Alegreya">Alegreya family</a>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure" style="text-align: center"><span id="fig:static"></span>
+<img src="https://pbs.twimg.com/media/EzBpmgNXMAUBFfR?format=png&name=900x900" alt="Static font files for Alegreya"  />
+<p class="caption">
+Figure 2: Static font files for Alegreya
+</p>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure" style="text-align: center"><span id="fig:variable"></span>
+<img src="https://pbs.twimg.com/media/EzBphU4WQAE6mFs?format=png&name=900x900" alt="Variable font files for Alegreya"  />
+<p class="caption">
+Figure 3: Variable font files for Alegreya
+</p>
+</div>
+</div>
+<p>We see that static fonts are differentiated from variable fonts by having a distinct file for each style, like <em>Alegreya-Black.ttf</em>. On the other hand, variable fonts usually say “variable” somewhere in the file name, and are slightly larger in size than any individual static member. Note that not all fonts have both static and variable files, and not all static font files are <em>.ttf</em> (there can be static <em>.otf</em> and variable <em>.ttf</em> files).<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p></li>
+</ol>
+<p>The above two images show the contents of the <em>.zip</em> file that you’d get if you went to <a href="https://fonts.google.com/">Google Fonts</a> (an awesome repository of free and open-source professional fonts) and clicked the <strong>Download family</strong> button on the <a href="https://fonts.google.com/specimen/Alegreya">page for Alegreya</a>. If you want to use the Alegreya font family (<a href="https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&amp;id=OFL">Open Font License</a><a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>) in R, then you simply drag-and-drop all the static font files in <em>/static</em> into your system’s font folder (or in Settings &gt; Fonts for Windows 10).</p>
+<h3 id="checking-that-a-font-is-installed-and-available">Checking that a font is installed and available</h3>
+<p>Once you install a custom font on your system, it should also be available elsewhere locally on your machine. For example, I can use Alegreya in Microsoft Word after I download it (this is actually my first go-to sanity check).</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure" style="text-align: center"><span id="fig:word"></span>
+<img src="img/alegreya_word.png" alt="Alegreya in Microsoft Word" width="584" />
+<p class="caption">
+Figure 4: Alegreya in Microsoft Word
+</p>
+</div>
+</div>
+<p>And by extension Alegreya should now be available for figures rendered with <code>{ragg}</code>. Let’s try using Alegreya in ggplot by passing it to the <code>family</code> argument of <code>geom_text()</code></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='cn'>NULL</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='st'>"The Alegreya font"</span><span class='op'>)</span>,
+    size <span class='op'>=</span> <span class='fl'>18</span>, family <span class='op'>=</span> <span class='st'>"Alegreya"</span>
+  <span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plot-1.png" width="624" /></p>
+</div>
+<p>It <em>just</em> works!</p>
+<p>More specifically, it works because Alegreya is visible to <code>{systemfonts}</code>, which handles text rendering for <code>{ragg}</code>. If we filter list of fonts from <code>systemfonts::system_fonts()</code>, we indeed find the 12 styles of Alegreya from the static <em>.ttf</em> files that we installed!</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/r-lib/systemfonts'>systemfonts</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://stringr.tidyverse.org'>stringr</a></span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/pkg/systemfonts/man/system_fonts.html'>system_fonts</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>family</span> <span class='op'>==</span> <span class='st'>"Alegreya"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span><span class='op'>(</span>
+    <span class='va'>family</span>, <span class='va'>style</span>,
+    file <span class='op'>=</span> <span class='fu'><a href='https://stringr.tidyverse.org/reference/str_extract.html'>str_extract</a></span><span class='op'>(</span><span class='va'>path</span>, <span class='st'>"[\\w-]+\\.ttf$"</span><span class='op'>)</span>
+  <span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  # A tibble: 12 x 3
+     family   style            file                        
+     &lt;chr&gt;    &lt;chr&gt;            &lt;chr&gt;                       
+   1 Alegreya Black Italic     Alegreya-BlackItalic.ttf    
+   2 Alegreya Bold             Alegreya-Bold.ttf           
+   3 Alegreya Bold Italic      Alegreya-BoldItalic.ttf     
+   4 Alegreya ExtraBold        Alegreya-ExtraBold.ttf      
+   5 Alegreya ExtraBold Italic Alegreya-ExtraBoldItalic.ttf
+   6 Alegreya Italic           Alegreya-Italic.ttf         
+   7 Alegreya Medium           Alegreya-Medium.ttf         
+   8 Alegreya Medium Italic    Alegreya-MediumItalic.ttf   
+   9 Alegreya Regular          Alegreya-Regular.ttf        
+  10 Alegreya SemiBold         Alegreya-SemiBold.ttf       
+  11 Alegreya SemiBold Italic  Alegreya-SemiBoldItalic.ttf 
+  12 Alegreya Black            Alegreya-Black.ttf</code></pre>
+</div>
+<h2 id="debugging-custom-fonts">Debugging custom fonts</h2>
+<p>So far we’ve seen that the workflow for setting up and installing fonts is pretty straightforward. But what do we do in times when things inevitable go wrong?</p>
+<p>Consider the case of using <a href="https://fontawesome.com/">Font Awesome</a>, an icon font that renders <em>special character sequences</em> as <em>icon glyphs</em> (check the <a href="#icon-fonts"><strong>Icon fonts</strong></a> section for more!). Font Awesome has a free version (<a href="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/LICENSE.txt">CC-BY and SIL OFL license</a>), and let’s say we want to use it for personal use for a <a href="https://github.com/rfordatascience/tidytuesday">TidyTuesday</a> submission.</p>
+<p>The first thing we do is locate the font file. Font Awesome is open source, and the free version (Font Awesome 5 Free) is updated on Github. The most recent release as of this blog post is <a href="https://github.com/FortAwesome/Font-Awesome/releases/tag/5.15.3">v5.15.3</a>. If you unzip the file, you’ll find <em>.otf</em> font files corresponding to the three variants available in the free version: Regular, Solid, and Brands.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure" style="text-align: center"><span id="fig:fa-files"></span>
+<img src="img/fa_otf.png" alt="Font Awesome 5 files" width="80%" />
+<p class="caption">
+Figure 5: Font Awesome 5 files
+</p>
+</div>
+</div>
+<p>Remember how I said R tends to play nicer with <em>.ttf</em> than <em>.otf</em> fonts?<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> Lets go ahead and convert the <em>.otf</em> files using an online converter, like <a href="https://convertio.co/otf-ttf">https://convertio.co/otf-ttf</a>. Now, with the three font files in <em>.ttf</em> format, follow the instructions for installing fonts on your OS.</p>
+<p>Once Font Awesome is installed on our local machine, it should be visible to <code>{systemfonts}</code>, like this:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/systemfonts/man/system_fonts.html'>system_fonts</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_detect.html'>str_detect</a></span><span class='op'>(</span><span class='va'>family</span>, <span class='st'>"Font Awesome 5"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span><span class='op'>(</span>
+    <span class='va'>family</span>, <span class='va'>style</span>,
+    file <span class='op'>=</span> <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_extract.html'>str_extract</a></span><span class='op'>(</span><span class='va'>path</span>, <span class='st'>"[\\w-]+\\.ttf$"</span><span class='op'>)</span>
+  <span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  # A tibble: 3 x 3
+    family                style   file                                 
+    &lt;chr&gt;                 &lt;chr&gt;   &lt;chr&gt;                                
+  1 Font Awesome 5 Free   Solid   Font-Awesome-5-Free-Solid-900.ttf    
+  2 Font Awesome 5 Brands Regular Font-Awesome-5-Brands-Regular-400.ttf
+  3 Font Awesome 5 Free   Regular Font-Awesome-5-Free-Regular-400.ttf</code></pre>
+</div>
+<p>Now let’s try plotting some icons!</p>
+<p>We see that we can render icons from the Regular variant (“<a href="https://fontawesome.com/v5.15/icons/clock?style=regular">clock</a>”) and the Brands variant (“<a href="https://fontawesome.com/v5.15/icons/twitter?style=brands">twitter</a>”).</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Left plot</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='cn'>NULL</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='st'>"clock"</span><span class='op'>)</span>,
+    size <span class='op'>=</span> <span class='fl'>50</span>, family <span class='op'>=</span> <span class='st'>"Font Awesome 5 Free"</span>
+  <span class='op'>)</span>
+
+<span class='co'># Right plot</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='cn'>NULL</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='st'>"twitter"</span><span class='op'>)</span>,
+    size <span class='op'>=</span> <span class='fl'>50</span>, family <span class='op'>=</span> <span class='st'>"Font Awesome 5 Brands"</span>
+  <span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/fa-success-1.png" width="50%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/fa-success-2.png" width="50%" /></p>
+</div>
+<p>But what about rendering in the Solid variant? Font Awesome tells me that the Solid variant has a “<a href="https://fontawesome.com/v5.15/icons/cat?style=solid">cat</a>” icon, so let’s try it.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='cn'>NULL</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='st'>"cat"</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fl'>50</span>, family <span class='op'>=</span> <span class='st'>"Font Awesome 5 Solid"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/fa-fail-1.png" width="624" /></p>
+</div>
+<p>Uh oh, that didn’t work. Well that’s because Solid is actually a <strong>style</strong>, not a family! If you go back to the output from <code>system_fonts()</code>, we see that Font Awesome actually consists of <em>two</em> font families: <strong>Font Awesome 5 Brands</strong> which has a “Regular” style, and <strong>Font Awesome 5 Free</strong> with a “Regular” style and a “Solid” style.</p>
+<p>The structure is roughly like this:</p>
+<pre>
+  Font Awesome 5 Free
+  |---  Regular
+  |---  Solid
+  Font Awesome 5 Brands
+  |---  Regular
+</pre>
+<p>In <code>geom_text()</code>, the font style is set by the <code>fontface</code> argument. When we don’t specify <code>fontface</code>, such as in our working example for the clock and twitter icons, it defaults to the Regular style.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a></p>
+<p>So the solution to our problem is to put in <code>fontface = "Solid"</code>, right…?</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='cn'>NULL</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='st'>"cat"</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fl'>50</span>,
+    family <span class='op'>=</span> <span class='st'>"Font Awesome 5 Free"</span>, fontface <span class='op'>=</span> <span class='st'>"solid"</span>
+  <span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  Error in FUN(X[[i]], ...): invalid fontface solid</code></pre>
+</div>
+<p>Well now it just errors!<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a> The issue here runs a bit deeper: if we track down the error,<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a> it takes us to a function inside <code>grid::gpar()</code> that validates <code>fontface</code>. <a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a> If we take a look at the code, we see that only a very few font styles are valid, and “solid” isn’t one of them.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'>function</span> <span class='op'>(</span><span class='va'>ch</span><span class='op'>)</span> 
+<span class='kw'><a href='https://rdrr.io/r/base/switch.html'>switch</a></span><span class='op'>(</span><span class='va'>ch</span>, plain <span class='op'>=</span> <span class='fl'>1L</span>, bold <span class='op'>=</span> <span class='fl'>2L</span>, italic <span class='op'>=</span> , oblique <span class='op'>=</span> <span class='fl'>3L</span>, bold.italic <span class='op'>=</span> <span class='fl'>4L</span>, 
+  symbol <span class='op'>=</span> <span class='fl'>5L</span>, cyrillic <span class='op'>=</span> <span class='fl'>5L</span>, cyrillic.oblique <span class='op'>=</span> <span class='fl'>6L</span>, EUC <span class='op'>=</span> <span class='fl'>7L</span>, 
+  <span class='kw'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span><span class='op'>(</span><span class='st'>"invalid fontface "</span>, <span class='va'>ch</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Okay, so then how can we ever access the Solid style of the Font Awesome 5 Free family? Luckily, there’s a solution: use <code>systemfonts::register_font()</code> to register the Solid style as the “plain” style of its <strong>own font family</strong>!</p>
+<p>We can do this by passing in the name of the new font family in the <code>name</code> argument, and passing the path of the font file to the <code>plain</code> argument.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>fa_solid_path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/systemfonts/man/system_fonts.html'>system_fonts</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>family</span> <span class='op'>==</span> <span class='st'>"Font Awesome 5 Free"</span>, <span class='va'>style</span> <span class='op'>==</span> <span class='st'>"Solid"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span><span class='op'>(</span><span class='va'>path</span><span class='op'>)</span>
+
+<span class='fu'>systemfonts</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/systemfonts/man/register_font.html'>register_font</a></span><span class='op'>(</span>
+  name <span class='op'>=</span> <span class='st'>"Font Awesome 5 Free Solid"</span>,
+  plain <span class='op'>=</span> <span class='va'>fa_solid_path</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>To check if we were successful in registering this new font variant, we can call <code>systemfonts::registry_fonts()</code> which returns all registered custom fonts in the current session:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>systemfonts</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/systemfonts/man/register_font.html'>registry_fonts</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span><span class='op'>(</span>
+    <span class='va'>family</span>, <span class='va'>style</span>,
+    file <span class='op'>=</span> <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_extract.html'>str_extract</a></span><span class='op'>(</span><span class='va'>path</span>, <span class='st'>"[\\w-]+\\.ttf$"</span><span class='op'>)</span>
+  <span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  # A tibble: 4 x 3
+    family                    style       file                             
+    &lt;chr&gt;                     &lt;chr&gt;       &lt;chr&gt;                            
+  1 Font Awesome 5 Free Solid Regular     Font-Awesome-5-Free-Solid-900.ttf
+  2 Font Awesome 5 Free Solid Bold        Font-Awesome-5-Free-Solid-900.ttf
+  3 Font Awesome 5 Free Solid Italic      Font-Awesome-5-Free-Solid-900.ttf
+  4 Font Awesome 5 Free Solid Bold Italic Font-Awesome-5-Free-Solid-900.ttf</code></pre>
+</div>
+<p>We see that the Solid style is now available as the Regular (a.k.a. “plain”) style of its own font family: <strong>Font Awesome 5 Free Solid</strong>!<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a></p>
+<p>Now we’re back to our cat icon example. Again, because <a href="https://fontawesome.com/v5.15/icons/cat?style=solid">Font Awewsome says there’s a cat icon in the Solid style</a>, we’d expect a cat icon if we render the text “cat” in the Solid style. Let’s set the <code>family</code> argument to our newly registered “Font Awesome 5 Free Solid” family and see what happens:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='cn'>NULL</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='st'>"cat"</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fl'>50</span>, family <span class='op'>=</span> <span class='st'>"Font Awesome 5 Free Solid"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/solid-success-1.png" width="624" /></p>
+</div>
+<p>Third time’s the charm !!!</p>
+<h2 id="hoisting-font-styles">Hoisting font styles</h2>
+<p>Hopefully the lesson is now clear: to make a custom font work in R, <strong>the font must be visible to <code>systemfonts::system_fonts()</code> in a style that is accessible to <code>grid::gpar()</code></strong>. The nifty trick of registering an inaccessible style as the “plain” style of its <em>own</em> family can be extended and automated as a utility function that is called purely for this side effect. In my <a href="https://github.com/yjunechoe/junebug">experimental package</a>, I have very simple function called <a href="https://github.com/yjunechoe/junebug/blob/master/R/font_helpers.R"><code>font_hoist()</code></a> which “hoists”<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a> <em>all</em> styles of a family as the “plain”/Regular style of their own families. This way, you never have to worry about things going wrong in the <code>fontface</code> argument.</p>
+<details>
+<summary>
+junebug::font_hoist()
+</summary>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>font_hoist</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>family</span>, <span class='va'>silent</span> <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>font_specs</span> <span class='op'>&lt;-</span> <span class='fu'>systemfonts</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/systemfonts/man/system_fonts.html'>system_fonts</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>family</span> <span class='op'>==</span> <span class='va'>.env</span><span class='op'>[[</span><span class='st'>"family"</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>.data</span><span class='op'>[[</span><span class='st'>"family"</span><span class='op'>]</span><span class='op'>]</span>, <span class='va'>.data</span><span class='op'>[[</span><span class='st'>"style"</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span>plain <span class='op'>=</span> <span class='va'>.data</span><span class='op'>[[</span><span class='st'>"path"</span><span class='op'>]</span><span class='op'>]</span>, name <span class='op'>=</span> <span class='va'>.data</span><span class='op'>[[</span><span class='st'>"family"</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
+
+  <span class='fu'>purrr</span><span class='fu'>::</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/map2.html'>pwalk</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>as.list</a></span><span class='op'>(</span><span class='va'>font_specs</span><span class='op'>)</span>, <span class='fu'>systemfonts</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/systemfonts/man/register_font.html'>register_font</a></span><span class='op'>)</span>
+
+  <span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='va'>silent</span><span class='op'>)</span>  <span class='fu'><a href='https://rdrr.io/r/base/message.html'>message</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"Hoisted "</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>font_specs</span><span class='op'>)</span>, <span class='st'>" variants:\n"</span>,
+                               <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>font_specs</span><span class='op'>$</span><span class='va'>name</span>, collapse <span class='op'>=</span> <span class='st'>"\n"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
+</code></pre>
+</div>
+</div>
+</details>
+<p>Let’s apply this to our Alegreya family. As we saw earlier, it has 12 styles, but only 4 can be accessed by <code>grid::gpar()</code>.<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a> But once we hoist the styles, we can access them all!</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># install_github("yjunechoe/junebug")</span>
+<span class='fu'>junebug</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/junebug/man/font_hoist.html'>font_hoist</a></span><span class='op'>(</span><span class='st'>"Alegreya"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  Hoisted 12 variants:
+  Alegreya Black Italic
+  Alegreya Bold
+  Alegreya Bold Italic
+  Alegreya ExtraBold
+  Alegreya ExtraBold Italic
+  Alegreya Italic
+  Alegreya Medium
+  Alegreya Medium Italic
+  Alegreya Regular
+  Alegreya SemiBold
+  Alegreya SemiBold Italic
+  Alegreya Black</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Grab the newly registered font families</span>
+<span class='va'>alegreya_styles</span> <span class='op'>&lt;-</span> <span class='fu'>systemfonts</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/systemfonts/man/register_font.html'>registry_fonts</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_detect.html'>str_detect</a></span><span class='op'>(</span><span class='va'>family</span>, <span class='st'>"Alegreya"</span><span class='op'>)</span>, <span class='va'>style</span> <span class='op'>==</span> <span class='st'>"Regular"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span><span class='op'>(</span><span class='va'>family</span><span class='op'>)</span>
+
+<span class='co'># Render a plot for all 12 styles</span>
+<span class='fu'>purrr</span><span class='fu'>::</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>walk</a></span><span class='op'>(</span>
+  <span class='va'>alegreya_styles</span>,
+  <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='cn'>NULL</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+      <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='va'>.x</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fl'>14</span>, family <span class='op'>=</span> <span class='va'>.x</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-1.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-2.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-3.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-4.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-5.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-6.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-7.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-8.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-9.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-10.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-11.png" width="30%" /><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-plots-12.png" width="30%" /></p>
+</div>
+<p>But note that the <strong>registration of custom font variants is not persistent across sessions</strong>. If you restart R and run <code>registry_fonts()</code> again, it will return an empty data frame, indicating that you have no font variants registered. You have to register font variants for every session, which is why it’s nice to have the <code>register_fonts()</code> workflow wrapped into a function like <code>font_hoist()</code>.</p>
+<h2 id="advanced-font-features">Advanced font features</h2>
+<p>But wait, that’s not all!</p>
+<p>Many modern professional fonts come with <strong>OpenType features</strong>, which mostly consist of stylistic parameters that can be turned on-and-off for a font. Note that despite being called “OpenType” features, it’s not something unique to <em>.otf</em> font formats. <strong>TrueType fonts (<em>.ttf</em>) can have OpenType features as well</strong>. For a fuller picture, you can check out the <a href="https://en.wikipedia.org/wiki/List_of_typographic_features#OpenType_typographic_features">full list of registered features</a> and this <a href="https://typofonderie.com/font-support/opentype-features">article with visual examples</a> for commonly used features.</p>
+<p>It looks overwhelming but only a handful are relevant for data visualization. I’ll showcase two features here: <em>lining</em> and <em>ordinals</em>.</p>
+<h3 id="lining">Lining</h3>
+<p>One of the most practical font features is <em>lining</em>, also called <code>"lnum"</code> (the four-letter feature tag), where all numbers share the same height and baseline.<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a></p>
+<p>Let’s use our Alegreya font as an example again. By default, Alegreya has what are called “old style” numbers, where number glyphs have ascending and descending strokes which can make a string of numbers look unbalanced. Notice how the digits share different baselines here:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='cn'>NULL</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='st'>"123456789"</span><span class='op'>)</span>,
+    size <span class='op'>=</span> <span class='fl'>35</span>, family <span class='op'>=</span> <span class='st'>"Alegreya"</span>
+  <span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-numbers-1.png" width="624" /></p>
+</div>
+<p>Luckily, Alegreya supports the “lining” feature. We know this because the <code>get_font_features()</code> function from the <code>{textshaping}</code> package returns a lists of OpenType features supported by Alegreya, one of which is “lnum”.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/r-lib/textshaping'>textshaping</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/textshaping/man/get_font_features.html'>get_font_features</a></span><span class='op'>(</span><span class='st'>"Alegreya"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  [[1]]
+   [1] &quot;cpsp&quot; &quot;kern&quot; &quot;mark&quot; &quot;mkmk&quot; &quot;aalt&quot; &quot;c2sc&quot; &quot;case&quot; &quot;ccmp&quot; &quot;dlig&quot; &quot;dnom&quot;
+  [11] &quot;frac&quot; &quot;liga&quot; &quot;lnum&quot; &quot;locl&quot; &quot;numr&quot; &quot;onum&quot; &quot;ordn&quot; &quot;pnum&quot; &quot;sinf&quot; &quot;smcp&quot;
+  [21] &quot;ss01&quot; &quot;ss02&quot; &quot;ss03&quot; &quot;ss04&quot; &quot;ss05&quot; &quot;subs&quot; &quot;sups&quot; &quot;tnum&quot;</code></pre>
+</div>
+<p>To access the lining feature, we can use the <code>systemfonts::register_variant()</code> function, which works similarly to <code>systemfonts::register_font()</code>. The former is simply a wrapper around the latter, and we use it here for convenience because “Alegreya” (as in, the default Regular style) is already accessible without us having to point to the font file.</p>
+<p>To turn the lining feature on, we need to set the <code>features</code> argument of <code>register_variant()</code> using the helper function <code>systemfonts::font_feature()</code>. The full code looks like this:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>systemfonts</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/systemfonts/man/register_variant.html'>register_variant</a></span><span class='op'>(</span>
+  name <span class='op'>=</span> <span class='st'>"Alegreya-lining"</span>,
+  family <span class='op'>=</span> <span class='st'>"Alegreya"</span>,
+  features <span class='op'>=</span> <span class='fu'>systemfonts</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/systemfonts/man/font_feature.html'>font_feature</a></span><span class='op'>(</span>numbers <span class='op'>=</span> <span class='st'>"lining"</span><span class='op'>)</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>And again, we can see if the font variant was successfully registered by checking <code>registry_fonts()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/systemfonts/man/register_font.html'>registry_fonts</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>family</span> <span class='op'>==</span> <span class='st'>"Alegreya-lining"</span>, <span class='va'>style</span> <span class='op'>==</span> <span class='st'>"Regular"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span><span class='op'>(</span>
+    <span class='va'>family</span>, <span class='va'>style</span>,
+    features <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>features</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
+  <span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  # A tibble: 1 x 3
+    family          style   features
+    &lt;chr&gt;           &lt;chr&gt;   &lt;chr&gt;   
+  1 Alegreya-lining Regular lnum</code></pre>
+</div>
+<p>And that’s it! Let’s try rendering the numbers again with the original “Alegreya” font (top) and the new “Alegreya-lining” variant (bottom):</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, label <span class='op'>=</span> <span class='st'>"123456789"</span><span class='op'>)</span>,
+    size <span class='op'>=</span> <span class='fl'>35</span>, family <span class='op'>=</span> <span class='st'>"Alegreya"</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, label <span class='op'>=</span> <span class='st'>"123456789"</span><span class='op'>)</span>,
+    size <span class='op'>=</span> <span class='fl'>35</span>, family <span class='op'>=</span> <span class='st'>"Alegreya-lining"</span>
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_continuous</a></span><span class='op'>(</span>expand <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/expansion.html'>expansion</a></span><span class='op'>(</span>add <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-lining-1.png" width="624" /></p>
+</div>
+<p>A subtle but noticeable difference!</p>
+<p>If we want a font variant to have a mix of different style <em>and</em> OpenType features, we have to go back to <code>register_font()</code> (where we register styles as their own families by pointing to the files) and set the <code>features</code> argument there.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Get file path</span>
+<span class='va'>AlegreyaBlackItalic_path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/systemfonts/man/system_fonts.html'>system_fonts</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>family</span> <span class='op'>==</span> <span class='st'>"Alegreya"</span>, <span class='va'>style</span> <span class='op'>==</span> <span class='st'>"Black Italic"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span><span class='op'>(</span><span class='va'>path</span><span class='op'>)</span>
+
+<span class='co'># Register variant</span>
+<span class='fu'><a href='https://rdrr.io/pkg/systemfonts/man/register_font.html'>register_font</a></span><span class='op'>(</span>
+  name <span class='op'>=</span> <span class='st'>"Alegreya Black Italic-lining"</span>,
+  plain <span class='op'>=</span> <span class='va'>AlegreyaBlackItalic_path</span>,
+  features <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/systemfonts/man/font_feature.html'>font_feature</a></span><span class='op'>(</span>numbers <span class='op'>=</span> <span class='st'>"lining"</span><span class='op'>)</span>
+<span class='op'>)</span>
+
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, label <span class='op'>=</span> <span class='st'>"123456789"</span><span class='op'>)</span>,
+    size <span class='op'>=</span> <span class='fl'>35</span>, family <span class='op'>=</span> <span class='st'>"Alegreya Black Italic"</span>
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, label <span class='op'>=</span> <span class='st'>"123456789"</span><span class='op'>)</span>,
+    size <span class='op'>=</span> <span class='fl'>35</span>, family <span class='op'>=</span> <span class='st'>"Alegreya Black Italic-lining"</span>
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_continuous</a></span><span class='op'>(</span>expand <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/expansion.html'>expansion</a></span><span class='op'>(</span>add <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-black-italic-lining-1.png" width="624" /></p>
+</div>
+<h3 id="ordinals">Ordinals</h3>
+<p>Ordinals (or “ordn”) is a font feature which works almost like a superscript. It targets <em>all lower case letters</em>, and is intended for formatting ordinals like <strong>1<sup>st</sup></strong>, <strong>2<sup>nd</sup></strong>, <strong>3<sup>rd</sup></strong>.</p>
+<p>Let’s try it out!</p>
+<p>First, we check that “ordn” is supported for Alegreya:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='st'>"ordn"</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/textshaping/man/get_font_features.html'>get_font_features</a></span><span class='op'>(</span><span class='st'>"Alegreya"</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  [1] TRUE</code></pre>
+</div>
+<p>Then, we register the ordinal variant. Note that “ordn” is not built-in as an option for the <code>letters</code> argument of <code>font_features()</code>, unlike “lnum” which is a built-in option for the <code>numbers</code> argument.<a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a> Therefore, we have to set the “ordn” feature inside the <code>...</code> of <code>font_feature()</code> with <code>"ordn" = TRUE</code>. And let’s also simultaneously turn on the lining feature from before as well.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Register variant</span>
+<span class='fu'><a href='https://rdrr.io/pkg/systemfonts/man/register_variant.html'>register_variant</a></span><span class='op'>(</span>
+  name <span class='op'>=</span> <span class='st'>"Alegreya-lnum_ordn"</span>,
+  family <span class='op'>=</span> <span class='st'>"Alegreya"</span>,
+  features <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/systemfonts/man/font_feature.html'>font_feature</a></span><span class='op'>(</span>numbers <span class='op'>=</span> <span class='st'>"lining"</span>, <span class='st'>"ordn"</span> <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='op'>)</span>
+
+<span class='co'># Double check registration</span>
+<span class='fu'><a href='https://rdrr.io/pkg/systemfonts/man/register_font.html'>registry_fonts</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>family</span> <span class='op'>==</span> <span class='st'>"Alegreya-lnum_ordn"</span>, <span class='va'>style</span> <span class='op'>==</span> <span class='st'>"Regular"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span><span class='op'>(</span><span class='va'>features</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  [[1]]
+  ordn lnum 
+     1    1</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, label <span class='op'>=</span> <span class='st'>"1st 2nd 3rd 4th"</span><span class='op'>)</span>,
+    size <span class='op'>=</span> <span class='fl'>20</span>, family <span class='op'>=</span> <span class='st'>"Alegreya"</span>
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, label <span class='op'>=</span> <span class='st'>"1st 2nd 3rd 4th"</span><span class='op'>)</span>,
+    size <span class='op'>=</span> <span class='fl'>20</span>, family <span class='op'>=</span> <span class='st'>"Alegreya-lnum_ordn"</span>
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_continuous</a></span><span class='op'>(</span>expand <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/expansion.html'>expansion</a></span><span class='op'>(</span>add <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/unnamed-chunk-6-1.png" width="624" /></p>
+</div>
+<p>Again, it’s important to note that this targets <strong>all lower case letters</strong>. So something like this renders awkwardly:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, label <span class='op'>=</span> <span class='st'>"June 16th 2021"</span><span class='op'>)</span>,
+    size <span class='op'>=</span> <span class='fl'>20</span>, family <span class='op'>=</span> <span class='st'>"Alegreya-lnum_ordn"</span>
+  <span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-ordn-bad-1.png" width="624" /></p>
+</div>
+<p>We could turn “June” into all caps, but that still looks pretty ugly:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, label <span class='op'>=</span> <span class='st'>"JUNE 16th 2021"</span><span class='op'>)</span>,
+    size <span class='op'>=</span> <span class='fl'>20</span>, family <span class='op'>=</span> <span class='st'>"Alegreya-lnum_ordn"</span>
+  <span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-ordn-allcap-1.png" width="624" /></p>
+</div>
+<p>One solution is to render the month in the Regular style and the rest in the ordinal variant.<a href="#fn20" class="footnote-ref" id="fnref20" role="doc-noteref"><sup>20</sup></a> We can combine text in multiple fonts in-line with html syntax supported by <code>geom_richtext()</code> from <code>{ggtext}</code>. If you’re already familiar with <code>{ggtext}</code>, this example shows that it works the same for registered custom font variants!</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://wilkelab.org/ggtext/'>ggtext</a></span><span class='op'>)</span>
+
+<span class='va'>formatted_date</span> <span class='op'>&lt;-</span> <span class='st'>"&lt;span style='font-family:Alegreya-lnum_ordn'&gt;16th 2021&lt;/span&gt;"</span>
+
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://wilkelab.org/ggtext/reference/geom_richtext.html'>geom_richtext</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, label <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"June"</span>, <span class='va'>formatted_date</span><span class='op'>)</span><span class='op'>)</span>,
+    size <span class='op'>=</span> <span class='fl'>20</span>, family <span class='op'>=</span> <span class='st'>"Alegreya"</span>,
+    fill <span class='op'>=</span> <span class='cn'>NA</span>, label.color <span class='op'>=</span> <span class='cn'>NA</span>
+  <span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/alegreya-mixed-1.png" width="624" /></p>
+</div>
+<p>What’s extra nice about this is that while <code>{ggtext}</code> already supports the <code>&lt;sup&gt;</code> html tag (which formats text as superscript), it’s not as good as the ordinals <em>font feature</em>. Look how the generic <code>&lt;sup&gt;</code> solution (top) doesn’t look as aesthetically pleasing in comparison:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>sups</span> <span class='op'>&lt;-</span> <span class='st'>"1&lt;sup&gt;st&lt;/sup&gt; 2&lt;sup&gt;nd&lt;/sup&gt; 3&lt;sup&gt;rd&lt;/sup&gt; 4&lt;sup&gt;th&lt;/sup&gt;"</span>
+
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://wilkelab.org/ggtext/reference/geom_richtext.html'>geom_richtext</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, label <span class='op'>=</span> <span class='va'>sups</span><span class='op'>)</span>,
+    size <span class='op'>=</span> <span class='fl'>25</span>, family <span class='op'>=</span> <span class='st'>"Alegreya-lining"</span>,
+    fill <span class='op'>=</span> <span class='cn'>NA</span>, label.color <span class='op'>=</span> <span class='cn'>NA</span>
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, label <span class='op'>=</span> <span class='st'>"1st 2nd 3rd 4th"</span><span class='op'>)</span>,
+    size <span class='op'>=</span> <span class='fl'>25</span>, family <span class='op'>=</span> <span class='st'>"Alegreya-lnum_ordn"</span>
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_continuous</a></span><span class='op'>(</span>expand <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/expansion.html'>expansion</a></span><span class='op'>(</span>add <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/unnamed-chunk-7-1.png" width="624" /></p>
+</div>
+<p>In my opinion, <strong>you should always err towards using the supported font features</strong> because they are designed with the particular aesthetics of the font in mind.<a href="#fn21" class="footnote-ref" id="fnref21" role="doc-noteref"><sup>21</sup></a> Hopefully this example has convinced you!</p>
+<h2 id="usecases">Usecases</h2>
+<h3 id="a-mash-up">A mash-up</h3>
+<p>Here’s a made up plot that mashes up everything we went over so far:</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/mash-up-1.png" width="624" /></p>
+</div>
+<details>
+<summary>
+Plot Code
+</summary>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Setting up fonts (repeat from above)</span>
+<span class='fu'>junebug</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/junebug/man/font_hoist.html'>font_hoist</a></span><span class='op'>(</span><span class='st'>"Font Awesome 5 Free"</span><span class='op'>)</span>
+<span class='fu'>junebug</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/junebug/man/font_hoist.html'>font_hoist</a></span><span class='op'>(</span><span class='st'>"Alegreya"</span><span class='op'>)</span>
+
+<span class='fu'>systemfonts</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/systemfonts/man/register_variant.html'>register_variant</a></span><span class='op'>(</span>
+  name <span class='op'>=</span> <span class='st'>"Alegreya-lining"</span>,
+  family <span class='op'>=</span> <span class='st'>"Alegreya"</span>,
+  features <span class='op'>=</span> <span class='fu'>systemfonts</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/systemfonts/man/font_feature.html'>font_feature</a></span><span class='op'>(</span>numbers <span class='op'>=</span> <span class='st'>"lining"</span><span class='op'>)</span>
+<span class='op'>)</span>
+<span class='fu'>systemfonts</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/systemfonts/man/register_variant.html'>register_variant</a></span><span class='op'>(</span>
+  name <span class='op'>=</span> <span class='st'>"Alegreya-lnum_ordn"</span>,
+  family <span class='op'>=</span> <span class='st'>"Alegreya"</span>,
+  features <span class='op'>=</span> <span class='fu'>systemfonts</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/systemfonts/man/font_feature.html'>font_feature</a></span><span class='op'>(</span>numbers <span class='op'>=</span> <span class='st'>"lining"</span>, <span class='st'>"ordn"</span> <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='op'>)</span>
+
+<span class='co'># labelling function for ordinal format</span>
+<span class='va'>ordinal_style</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>ordn</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='kw'>function</span> <span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span>
+    <span class='fu'>scales</span><span class='fu'>::</span><span class='fu'><a href='https://scales.r-lib.org/reference/label_ordinal.html'>ordinal_format</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+      <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace</a></span><span class='op'>(</span>
+        <span class='st'>"([a-z]+)$"</span>,
+        <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_glue.html'>str_glue</a></span><span class='op'>(</span><span class='st'>"&lt;span style='font-family:{ordn}'&gt;\\1&lt;/span&gt;"</span><span class='op'>)</span>
+      <span class='op'>)</span>
+  <span class='op'>}</span>
+<span class='op'>}</span>
+
+<span class='co'># data</span>
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>2021</span><span class='op'>)</span>
+<span class='va'>ordinal_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>
+  Quarter <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span>,
+  Earnings <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>9</span>, <span class='fl'>7</span>, <span class='fl'>6</span>, <span class='fl'>3</span><span class='op'>)</span> <span class='op'>*</span> <span class='fl'>1e6</span>
+<span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span><span class='op'>(</span><span class='va'>Earnings</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>
+    Mood <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"smile-beam"</span>, <span class='st'>"meh-blank"</span>, <span class='st'>"meh"</span>, <span class='st'>"dizzy"</span><span class='op'>)</span>,
+    color <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"forestgreen"</span>, <span class='st'>"goldenrod"</span>, <span class='st'>"goldenrod"</span>, <span class='st'>"firebrick"</span><span class='op'>)</span>
+  <span class='op'>)</span>
+
+<span class='co'># plot</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>ordinal_data</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>Quarter</span>, <span class='va'>Earnings</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='va'>Mood</span>, color <span class='op'>=</span> <span class='va'>color</span><span class='op'>)</span>,
+    size <span class='op'>=</span> <span class='fl'>18</span>, family <span class='op'>=</span> <span class='st'>"Font Awesome 5 Free Solid"</span>
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_identity.html'>scale_color_identity</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_continuous</a></span><span class='op'>(</span>
+    name <span class='op'>=</span> <span class='cn'>NULL</span>,
+    labels <span class='op'>=</span> <span class='fu'>scales</span><span class='fu'>::</span><span class='fu'><a href='https://scales.r-lib.org/reference/label_dollar.html'>label_dollar</a></span><span class='op'>(</span><span class='op'>)</span>,
+    expand <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/expansion.html'>expansion</a></span><span class='op'>(</span><span class='fl'>0.3</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_discrete.html'>scale_x_discrete</a></span><span class='op'>(</span>
+    labels <span class='op'>=</span> <span class='fu'>ordinal_style</span><span class='op'>(</span><span class='st'>"Alegreya-lnum_ordn"</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Quarterly Earnings"</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_classic</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>
+    text <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_text</a></span><span class='op'>(</span>
+      size <span class='op'>=</span> <span class='fl'>14</span>,
+      family <span class='op'>=</span> <span class='st'>"Alegreya"</span>
+    <span class='op'>)</span>,
+    axis.text.x <span class='op'>=</span> <span class='fu'>ggtext</span><span class='fu'>::</span><span class='fu'><a href='https://wilkelab.org/ggtext/reference/element_markdown.html'>element_markdown</a></span><span class='op'>(</span>
+      size <span class='op'>=</span> <span class='fl'>18</span>,
+      color <span class='op'>=</span> <span class='st'>"black"</span>,
+      family <span class='op'>=</span> <span class='st'>"Alegreya-lining"</span>
+    <span class='op'>)</span>,
+    axis.text.y <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_text</a></span><span class='op'>(</span>
+      size<span class='op'>=</span> <span class='fl'>14</span>,
+      color <span class='op'>=</span> <span class='st'>"black"</span>,
+      family <span class='op'>=</span> <span class='st'>"Alegreya-lining"</span>
+    <span class='op'>)</span>,
+    axis.ticks.x <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_blank</a></span><span class='op'>(</span><span class='op'>)</span>,
+    axis.title.x <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_text</a></span><span class='op'>(</span>
+      size <span class='op'>=</span> <span class='fl'>18</span>,
+      family <span class='op'>=</span> <span class='st'>"Alegreya Medium"</span>
+    <span class='op'>)</span>,
+    plot.title <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_text</a></span><span class='op'>(</span>
+      size <span class='op'>=</span> <span class='fl'>24</span>,
+      family <span class='op'>=</span> <span class='st'>"Alegreya Black"</span>,
+      margin <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>margin</a></span><span class='op'>(</span>b <span class='op'>=</span> <span class='fl'>5</span>, unit <span class='op'>=</span> <span class='st'>"mm"</span><span class='op'>)</span>
+    <span class='op'>)</span>
+  <span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+</details>
+<h3 id="icon-fonts">Icon fonts</h3>
+<p>If this blog post was your first time encountering icon fonts in R, you probably have a lot of questions right now about using them in data visualizations. You can check out my <strong>lightning talk on icon fonts</strong> that I gave at <a href="https://www.rladiesphilly.org/">RLadies Philly</a> for a quick overview as well as some tips &amp; tricks!</p>
+<p>
+</p>
+<div class="l-body-outset">
+<iframe height="500" src="https://www.youtube.com/embed/guzjt7xh2Cw?start=3787" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+</div>
+<p>Some extra stuff not mentioned in the talk:</p>
+<ul>
+<li><p><code>{ragg}</code> supports the rendering of colored fonts like <a href="https://www.tidyverse.org/blog/2021/02/modern-text-features/#color-fonts">emojis</a>, which also means that it can render <strong>colored <em>icon</em> fonts</strong>.<a href="#fn22" class="footnote-ref" id="fnref22" role="doc-noteref"><sup>22</sup></a> Icons don’t often come in colors, but one example is Google’s <a href="https://fonts.google.com/icons">Material Icons</a> font (<a href="https://github.com/google/material-design-icons/blob/master/LICENSE">Apache 2.0 license</a>), which has a <a href="https://fonts.google.com/icons?selected=Material+Icons+Two+Tone">Two Tone</a> style where icons have a grey fill in addition to a black stroke:<a href="#fn23" class="footnote-ref" id="fnref23" role="doc-noteref"><sup>23</sup></a></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='cn'>NULL</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></span><span class='op'>(</span>
+      <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='st'>"real_estate_agent"</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fl'>80</span>,
+      family <span class='op'>=</span> <span class='st'>"Material Icons Two Tone"</span>
+    <span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_classic</a></span><span class='op'>(</span><span class='op'>)</span>
+  </code></pre>
+</div>
+<p><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/unnamed-chunk-9-1.png" width="624" /></p>
+</div></li>
+<li><p>All fonts based on SVG (pretty much the case for all icon fonts) should work with <code>{ragg}</code> as long as you can get it installed on your local machine. For example, the <a href="https://github.com/twbs/icons">Bootstrap Icons</a> font (<a href="https://github.com/twbs/icons/blob/main/LICENSE.md">MIT license</a>) only come in <a href="https://github.com/twbs/icons/tree/main/font/fonts"><em>.woff</em> and <em>.woff2</em> formats</a> for web use, but it’s fundamentally just a collection of SVGs, so it can be installed on your local machine once you convert it to <em>.ttf</em>. Then it should just work right out of the box.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='cn'>NULL</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></span><span class='op'>(</span>
+      <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='st'>"bootstrap-fill"</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"purple"</span>,
+      size <span class='op'>=</span> <span class='fl'>80</span>, family <span class='op'>=</span> <span class='st'>"bootstrap-icons"</span>
+    <span class='op'>)</span>
+  </code></pre>
+</div>
+<p><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/unnamed-chunk-10-1.png" width="624" /></p>
+</div></li>
+<li><p>If you’re design oriented, you can also <strong>make your own icon font</strong> for use in R. In Inkscape, you can do this in File &gt; New From Template &gt; Typography Canvas (here’s a <a href="https://inkscape-manuals.readthedocs.io/en/latest/creating-custom-fonts.html">guide</a>). Once you save your SVG font, you can convert it to <em>.ttf</em> and follow the same installation process, and then it should be available in R if you render with <code>{ragg}</code>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure" style="text-align: center"><span id="fig:inkscape-svg"></span>
+<img src="img/inkscape_svg.png" alt="Making a font in Inkscape" width="652" />
+<p class="caption">
+Figure 6: Making a font in Inkscape
+</p>
+</div>
+</div>
+<p>For example, here’s my super quick attempt (took me exactly 1 minute) at a one-glyph font that just contains my signature (and you could imagine a usecase where you put this in a corner of your data viz to sign your work):</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></span><span class='op'>(</span>
+      <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, label <span class='op'>=</span> <span class='st'>"a"</span><span class='op'>)</span>,
+      size <span class='op'>=</span> <span class='fl'>90</span>, family <span class='op'>=</span> <span class='st'>"SVGFont 1"</span>
+    <span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></span><span class='op'>(</span>
+      <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, label <span class='op'>=</span> <span class='st'>"a"</span><span class='op'>)</span>,
+      color <span class='op'>=</span> <span class='st'>"red"</span>, angle <span class='op'>=</span> <span class='fl'>15</span>,
+      size <span class='op'>=</span> <span class='fl'>90</span>, family <span class='op'>=</span> <span class='st'>"SVGFont 1"</span>
+    <span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_continuous</a></span><span class='op'>(</span>expand <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/expansion.html'>expansion</a></span><span class='op'>(</span>add <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.5</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+  </code></pre>
+</div>
+<p><img src="setting-up-and-debugging-custom-fonts_files/figure-html5/unnamed-chunk-11-1.png" width="624" /></p>
+</div></li>
+</ul>
+<h3 id="more-by-others">More by others</h3>
+<ul>
+<li><p>An extremely detailed step-by-step <a href="https://www.youtube.com/watch?v=EIOo6T-Z1Qw">video walkthrough</a> of using custom fonts in R by <a href="https://twitter.com/dgkeyes">@dgkeyes</a>.</p></li>
+<li><p>The {<a href="https://github.com/hrbrmstr/hrbragg/">hrbragg</a>} package by <a href="https://twitter.com/hrbrmstr">@hrbrmstr</a> for more utility functions for registering font variants and typography-centered ggplot2 themes.</p></li>
+<li><p>The <a href="https://practicaltypography.com/text-formatting.html">text formatting</a> chapter of <a href="https://practicaltypography.com">Practical Typography by Matthew Butterick</a> for a general guideline on using different font features.</p></li>
+<li><p>Everything from <a href="https://twitter.com/thomasp85">Thomas Lin Pedersen</a>, the main person responsible for these developments.</p></li>
+<li><p>Many <a href="https://twitter.com/search?q=%23TidyTuesday">#TidyTuesday</a> submissions.</p></li>
+</ul>
+<p>Official RStudio blog posts:</p>
+<ul>
+<li><p><a href="https://www.tidyverse.org/blog/2021/02/modern-text-features/">Modern Text Features in R</a></p></li>
+<li><p><a href="https://www.tidyverse.org/blog/2020/05/updates-to-ragg-and-systemfonts/">Updates to ragg and systemfonts</a></p></li>
+<li><p><a href="https://www.tidyverse.org/blog/2021/02/svglite-2-0-0/">svglite 2.0.0</a></p></li>
+</ul>
+<h2 id="session-info">Session info</h2>
+<details>
+<summary>
+Session Info
+</summary>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>  R version 4.1.0 (2021-05-18)
+  Platform: x86_64-w64-mingw32/x64 (64-bit)
+  Running under: Windows 10 x64 (build 19042)
+  
+  Matrix products: default
+  
+  locale:
+  [1] LC_COLLATE=English_United States.1252 
+  [2] LC_CTYPE=English_United States.1252   
+  [3] LC_MONETARY=English_United States.1252
+  [4] LC_NUMERIC=C                          
+  [5] LC_TIME=English_United States.1252    
+  
+  attached base packages:
+  [1] stats     graphics  grDevices utils     datasets  methods   base     
+  
+  other attached packages:
+  [1] ggtext_0.1.1      textshaping_0.3.4 stringr_1.4.0     dplyr_1.0.7      
+  [5] systemfonts_1.0.2 ggplot2_3.3.5     knitr_1.33       
+  
+  loaded via a namespace (and not attached):
+   [1] tidyselect_1.1.1   xfun_0.22          bslib_0.2.5.1      purrr_0.3.4       
+   [5] colorspace_2.0-2   vctrs_0.3.8        generics_0.1.0     htmltools_0.5.1.1 
+   [9] yaml_2.2.1         utf8_1.1.4         rlang_0.4.11       gridtext_0.1.4    
+  [13] jquerylib_0.1.3    pillar_1.6.1       glue_1.4.2         withr_2.4.2       
+  [17] DBI_1.1.1          fortunes_1.5-4     lifecycle_1.0.0    munsell_0.5.0     
+  [21] junebug_0.0.0.9000 gtable_0.3.0       ragg_1.1.3         evaluate_0.14     
+  [25] labeling_0.4.2     markdown_1.1       fansi_0.4.2        highr_0.8         
+  [29] Rcpp_1.0.6         scales_1.1.1       jsonlite_1.7.2     farver_2.1.0      
+  [33] distill_1.2        png_0.1-7          digest_0.6.27      stringi_1.6.2     
+  [37] grid_4.1.0         cli_3.0.1          tools_4.1.0        magrittr_2.0.1    
+  [41] sass_0.4.0         tibble_3.1.2       crayon_1.4.1       pkgconfig_2.0.3   
+  [45] downlit_0.2.1      ellipsis_0.3.2     xml2_1.3.2         data.table_1.14.0 
+  [49] assertthat_0.2.1   rmarkdown_2.8      rstudioapi_0.13    R6_2.5.0          
+  [53] compiler_4.1.0</code></pre>
+</div>
+</details>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>And I can also personally attest that I used to use them until {ragg} was developed, and I never loaded these packages since. But this isn’t a value judgment - if these packages continue to work for you, then great! But do know that there are some <a href="https://twitter.com/CedScherer/status/1238532616564998148">known issues with reliability</a> (though to be fair, {extrafont} and {showtext} were one of the first attempts at solving the font rendering issue in R and they’ve actually done a great job over the years!).<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>In fact, text rendering as a whole is an incredibly complicated task. Check out <a href="https://gankra.github.io/blah/text-hates-you/#how-do-you-write-that-you-cant-write">Text Rendering Hates You</a> for a fun and informative read.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>I’m focusing on outputing to <em>bitmap</em> (e.g., <code>.png</code>, <code>.jpeg</code>, <code>.tiff</code>). For other formats like SVG (which I often default to for online material), you can use <code>svglite</code> - read more on the <a href="https://svglite.r-lib.org/">package website</a>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>Check out the discussion on <a href="https://github.com/tidyverse/ggplot2/issues/4347">this issue</a> and <a href="https://github.com/tidyverse/ggplot2/issues/4347">this commit</a>. There’s also been some talk of making AGG the default renderer, though I don’t know if that’s been settled.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>These are used to calculate DPI (dots per inch). Resolution is in pixels, so <code>res=150</code> and <code>units="inch"</code> is the same as <code>dpi=150</code>. <code>{ragg}</code> devices don’t have a <code>dpi</code> argument like the default device, so you have to specify both resolution and units.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p>in Windows 10, for example, you have to drag and drop fonts onto the “Fonts” section of Settings<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7" role="doc-endnote"><p>Variable fonts are hit-or-miss because while <code>{ragg}</code> and <code>{systemfonts}</code> <em>do</em> support some variable font features (see the section on <a href="#advanced-font-features"><strong>Advanced font features</strong></a>), “variable” can mean many different things, some of which are not supported (e.g., variable width). If you install a variable font, it might render with <code>{ragg}</code> but you’re unlikely to be able to tweak its parameters (like change the weight, for example).<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8" role="doc-endnote"><p>In my experience, though, static fonts tend to be <em>.ttf</em> and variable fonts tend to be <em>.otf</em>.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9" role="doc-endnote"><p>“You can use them freely in your products &amp; projects - print or digital, commercial or otherwise. However, you can’t sell the fonts on their own.”<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10" role="doc-endnote"><p>Again, YMMV, but myself and a couple other folks I’ve talked to share this.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11" role="doc-endnote"><p>Technically, it defaults to <code>fontface = "plain"</code> which is the same thing, but <code>{systemfonts}</code> and (also probably your OS) calls it the “Regular” style<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12" role="doc-endnote"><p>In case you’re wondering, it still errors with “solid”, no caps.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13" role="doc-endnote"><p><code>options(error = recover)</code> is your friend! And remember to set <code>options(error = NULL)</code> back once you’re done!<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14" role="doc-endnote"><p>You might wonder: what’s the <code>{grid}</code> package doing here? Well, <code>{grid}</code> is kinda the “engine” for <code>{ggplot2}</code> that handles the actual “drawing to the canvas”, which is why it’s relevant here. For example, <code>geom_text()</code> returns a <strong>Gr</strong>aphical <strong>ob</strong>ject (“Grob”), specifically <code>grid::textGrob()</code>, that inherits arguments like <code>family</code> and <code>fontface</code> (which are in turn passed into <code>grid::gpar()</code>, where <code>gpar</code> stands for <strong>g</strong>raphical <strong>par</strong>ameters).<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15" role="doc-endnote"><p>The same font file also registered as the Bold, Italic, and Bold Italic styles of the family as well, which is what happens by default if you only supply the <code>plain</code> argument to <code>register_font()</code>.<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16" role="doc-endnote"><p>Borrowing terminology from <code>tidyr::hoist()</code>, the under-appreciated beast of list-column workflows<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn17" role="doc-endnote"><p>Regular as “plain”, Bold as “bold”, Italic as “italic”, and Bold Italic as “bold.italic”.<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn18" role="doc-endnote"><p>Also check out the related “pnum” (proportional numbers) and “tnum” (tabular numbers) features.<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn19" role="doc-endnote"><p>check the help page <code>?systemfonts::font_feature</code> for details.<a href="#fnref19" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn20" role="doc-endnote"><p>Another solution would be to use the small-cap variant (the “smcp” feature) for “une”.<a href="#fnref20" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn21" role="doc-endnote"><p>But this also means that not all fonts support “ordn”, while <code>&lt;sup&gt;</code> is always available.<a href="#fnref21" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn22" role="doc-endnote"><p>But not <em>all</em> colored fonts, in my experience.<a href="#fnref22" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn23" role="doc-endnote"><p>The colors are fixed though - they come colored in black and filled in grey.<a href="#fnref23" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+<!--radix_placeholder_article_footer-->
+<div class="article-footer">
+  <p class="social_footer">
+    <span class="article-sharing">
+      Share: &nbsp;
+      <a href="https://twitter.com/share?text=Setting%20up%20and%20debugging%20custom%20fonts&amp;url=https%3A%2F%2Fyjunechoe.github.io%2Fposts%2F2021-06-24-setting-up-and-debugging-custom-fonts%2F">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </span>
+  </p>
+</div>
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!--radix_placeholder_navigation_after_body--><html><body>
+<div class="distill-site-nav distill-site-footer">
+<p><span style="font-family: 'Open Sans'"> June Choe | Created with
+{<a href="https://github.com/rstudio/distill" style="color: #24addb">distill</a>}
+</span></p>
+</div>
+<!--/radix_placeholder_navigation_after_body-->
+</body></html>
+
+
+</body>
+
+</html>
