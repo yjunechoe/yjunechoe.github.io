@@ -82,7 +82,7 @@ To answer these questions, we need to take a detour and first make a distinction
 
 Most of what we do when we write code and "combine layers" like `geom_*()`, `stat_*()`, `facet_*()`, etc. with the `+` operator is actually providing pieces of **instructions** for making the plot. Essentially, ggplot "collects" the plot specifications strung together with `+` and organizes them following a _standardized blueprint_ underlying all ggplot objects.^[The _standardized_ part of this is what supports the large ecosystem of extension packages that integrate smoothly with {ggplot2} itself. For a less practical (but conceptually exciting) consequence of this design, check out the proof-of-concept package [{ggreverse}](https://github.com/coolbutuseless/ggreverse) which generates (back-forms) ggplot code from a ggplot object.]
 
-This design of ggplot internals is what allows you to swap the order of a facet with a geom without consequences to the plot's appearance, for example. The internal blueprint ensures that the Facet will always step in to split up the data by panels _before_ the Stat and Geom step in to transform the data and make graphical objects.
+This design of ggplot internals is what allows you to swap the order of a facet with a geom without consequences to the plot's appearance, for example. The internal blueprint ensures that the Facet will always step in to split up the data by panels _before_ the Stat and Geom step in to transform the data and make graphical objects:
 
 ```{r, out.width="50%", fig.show="hold"}
 ggplot(penguins) +
@@ -96,9 +96,21 @@ ggplot(penguins) +
 
 In this sense, the ggplot2 interface is said to have **declarative** semantics. Your code makes statements like "... this plot should be facetted by `island`", rather than "... and now facet the plot by `island`."^[The distinction clicked for me personally after reading the classic [sandwich example](https://mastering-shiny.org/basic-reactivity.html#imperative-vs-declarative-programming), which I first came across when learning Shiny (another declarative system).] This distinction may be subtle but it's an integral part of what makes the "Grammar of Graphics" a _grammar_.^[In a [recent interview](https://youtu.be/rE062dA-pT4?t=1888) with Leland Wilkinson (may he rest in peace), he tells a story of how Tableau used to erroneously apply scale transformations faithful to the _user's_ order of execution, instead of the order dictated by the _grammar_, which led to two "geoms" (points and a regression line) being drawn with different scales - the points in log space and the regression line in untransformed "identity" space. This is "ungrammatical" and thus rightly forbidden in ggplot - if multiple scales are specified for the same aesthetic, ggplot will resolve the conflict by just settling on the last scale with a warning _before_ computing or drawing anything.] The most significant consequence of this separation of defining a ggplot vs. rendering a ggplot is that you can continuously add new elements to a plot without needing to go back and redraw the plot each time.
 
-Then when does the ggplot actually get "rendered"?^[Strictly speaking, it's `{grid}` that does the rendering with `grid::grid.newpage()` and `grid::grid.draw()`, but I'll follow the [ggplot2 book](https://ggplot2-book.org/internals.html#the-plot-method) in using the term "rendering" here to refer to the step that takes you from the data + the plot specifications to a transformed data that is drawing-ready.] It happens when the ggplot is printed/plotted, as defined in the S3 methods `ggplot2:::plot.ggplot` and `ggplot2:::print.ggplot` (they're the same thing).
+Then when does the ggplot actually get "rendered"?^[Strictly speaking, it's `{grid}` that does the rendering with `grid::grid.newpage()` and `grid::grid.draw()`, but I'll follow the [ggplot2 book](https://ggplot2-book.org/internals.html#the-plot-method) in using the term "rendering" here to refer to the step that takes you from the data + the plot specifications to a transformed data that is drawing-ready.] It happens when the ggplot is printed/plotted, as defined in the S3 methods `ggplot2:::plot.ggplot` and `ggplot2:::print.ggplot` (they're the same thing). Take a quick look at the function body below:
 
-And as we might expect, defining a ggplot is quick and cost-less but rendering it takes some time:
+<details>
+<summary>ggplot2 print/plot method</summary>
+```{r}
+body(ggplot2:::print.ggplot)
+identical(
+  body(ggplot2:::print.ggplot),
+  body(ggplot2:::plot.ggplot)
+)
+```
+
+</details>
+
+As we might expect, a quick benchmark test reveals that defining a ggplot (with user-facing code) is quick and cost-less while rendering it (via the print/plot method) takes some time:^[A quick caveat: things still get evaluated in the step of defining a ggplot. After all, the `+` infix is an operator/function (more specifically, [a method of `+` for class `<gg>`](https://github.com/tidyverse/ggplot2/blob/87e9b85dd9f2a294f339d88a353d0c11c851489d/R/plot-construction.r#L24-L56) in a form of what's called _operator overloading_), and layers like `geom_*()` and `stat_*()` are functions that gets called with the parantheses `()`. But the computation that goes on during the "definition" step mostly deals with making the instructions conform to the standardized blueprint, and thus is relatively costless. But of course, this doesn't _have_ to be the case: there are extension packages like [{gghighlight}](https://yutannihilation.github.io/gghighlight/) which add [more functionalities to the `+`](https://github.com/yutannihilation/gghighlight/blob/4bc54b152796a0631c6557ef936c328bcbf9b5b9/R/gghighlight.R#L108-L229). ]
 
 ```{r}
 system.time({
@@ -112,19 +124,36 @@ system.time({
 })
 ```
 
-The bulk of the work in the print/plot method of ggplot is done by functions `ggplot_build()` and `ggplot_gtable()`, which converts the raw data to a transformed data that are relevant for drawing, and then makes graphical objects using that data, respectively. This happens in Steps 5 and 6 of the print/plot method for ggplot.
+The bulk of the work in the print/plot method of ggplot is done by functions `ggplot_build()` and `ggplot_gtable()`, which converts the raw data to a transformed data that contains variables relevant for drawing, and then makes graphical objects using that data, respectively. This happens in Steps 5 and 6 of the print/plot method for ggplot, repeated below:
 
 ```{r}
 as.list(body(ggplot2:::print.ggplot))[5:6]
 ```
 
-So why do I bring up this high-level description of ggplot internals? Well it's at this print/plot step of a ggplot object's **execution** when the original data is **augmented** with internally-computed variables.
+So why do I bring up this high-level overview of ggplot internals? Well it's at this print/plot step of a ggplot object's **execution** when the original data is **augmented** with internally-computed variables like `count` from `geom_bar()`.
+
+Again, the common theme here is **delayed evaluation**. Keep this in mind as we continue working through our `geom_bar()` example.
 
 ## In search of `count`
 
-Since the `count` variable from `geom_bar()` is calculated during the execution of the ggplot, it must be from one of the two workhorses of the rendering step: `ggplot_build()` or `ggplot_gtable()`. Generally speaking, `ggplot_build()` deals with the dataframe representation of the plot (e.g., mutating variables/columns), and `ggplot_gtable()` deals with the graphical object representation of the plot (e.g., adding facet labels/strips to panels), so we expect the `count` variable to appear inside the `ggplot_build()` step.
+We have good reasons to think that the `count` variable from `geom_bar()` was calculated during the execution of the ggplot, in which case it must be from one of the two workhorses of the rendering step: `ggplot_build()` and `ggplot_gtable()`.
 
-Let's inspect how the plotting data (stored in the internal variable called `data`) gets transformed inside `ggplot_build()`, using the `ggtrace_inspect_vars()` function from `{ggtrace}` which returns a list containing a snapshot of a variable(s)'s value whenever it changed:
+Generally speaking, `ggplot_build()` deals with the dataframe representation of the plot/layers (e.g., mutating variables/columns), and `ggplot_gtable()` deals with the graphical object representation of the plot (e.g., adding facet labels/strips to panels). So we expect the `count` variable to appear inside the `ggplot_build()` step.
+
+Take a quick skim at what `ggplot_build()` looks like if you aren't familiar. There's a lot going on here, but what should stand out is the repeated assignment to this internal variable called `data`. This looks very much like our familiar data-wrangling workflow, minus the pipe!
+
+<details>
+<summary>Body of `ggplot_build()`</summary>
+Note that `ggplot_build()` is actually what's called a <a href="https://adv-r.hadley.nz/s3.html#s3-methods">_generic_</a>, much like `print()` and `plot()`, so we have to look at the method as defined for the `<ggplot>` class:
+```{r}
+# S3 Generic
+body(ggplot2::ggplot_build)
+# Method for class <ggplot>
+body(ggplot2:::ggplot_build.ggplot)
+```
+</details>
+
+Let's inspect how the plotting data (stored in the internal variable called `data`) gets transformed inside `ggplot_build()`, using the `ggtrace_inspect_vars()` function from `{ggtrace}` which returns a list containing a snapshot of a variable(s)'s value every time it changes:
 
 ```{r}
 internal_data_transformations <- ggtrace_inspect_vars(
@@ -135,16 +164,18 @@ internal_data_transformations <- ggtrace_inspect_vars(
 length(internal_data_transformations)
 ```
 
-In the course of evaluating our ggplot `p`, the dataframe representation of the layers changed ten times. The first and last snapshots of `data` are equal to the original data and the `{grid}`-ready data that's shipped off to `ggplot_gtable()`, respectively. Thus, the first snapshot is the same as our `penguins` dataframe and the last snapshot is the same as the output of `layer_data(p, 1)`.
+In the course of evaluating our ggplot `p`, the dataframe representation of the layers changed ten times. The first and last snapshots of `data` are equal to the original data and the `{grid}`-ready data that's shipped off to `ggplot_gtable()`, respectively.
 
 ```{r}
 # Note that `data` is actually a list of dataframes,
-# with each element corresponding to a layer
+# with each element corresponding to a layer.
 # - e.g., data for first layer is `data[[1]]`
-internal_data_transformations[[1]]
-internal_data_transformations[[10]]
+internal_data_transformations[c(1, 10)]
+```
 
-# Checking for equality
+In other words, the first snapshot is the same as our `penguins` dataframe and the last snapshot is the same as the output of `layer_data(p, 1)`.
+
+```{r}
 identical(
   penguins,
   internal_data_transformations[[1]][[1]]
@@ -155,21 +186,30 @@ identical(
 )
 ```
 
-By the time we reach the last snapshot of `data`, the `count` variable is present in the first layer `data[[1]]`:
+By the time we reach the last snapshot of `data`, the `count` variable is present in our plot's first (and only) layer `data[[1]]`:
 
 ```{r}
 internal_data_transformations[[10]]
 ```
 
-Conveniently, `ggtrace_inspect_vars()` also returns the Steps where the change to a variable's value was detected. These are stored as names of the returned list:
+But what _code_ is responsible for introducing this new `count` variable?
+
+Conveniently, the output of `ggtrace_inspect_vars()` also contains information about the **Steps** where the change to a variable's value was detected. These are stored as names of the returned list:
 
 ```{r}
 names(internal_data_transformations)
 ```
 
-Check out the full output of `ggtrace_inspect_vars()` to inspect the state of the data for the first layer every time it changed, as well as the preceding call that's responsible for that change:
+Check out the full output of `ggtrace_inspect_vars()` below to inspect the state of the data for the first layer `data[[1]]` every time it changed, as well as the preceding call that's responsible for that change. Don't try to understand the logic behind each data transformation step, but do appreciate the fact that these transformations can be understood in familiar data-wrangling/{dplyr} terms!
 
-```{r, layout="l-page", echo = FALSE}
+If you need more guidance, focus on answering these two questions:
+
+- When does `count` first appear in the data frame?
+- When does the value of `y` become equal to the value of `count`?
+
+<!-- TODO: add a note that they should take some time to get familiar with this, and that they should spot 1) when count appears and 2) when count gets mapped to count -->
+
+```{r, layout="l-body-outset", echo = FALSE}
 library(htmltools)
 library(reactable)
 idf <- map(internal_data_transformations, 1)
@@ -186,7 +226,7 @@ div(
         )
       ),
       tags$div(
-        tags$div(tags$strong("Value at current step:", style = "padding-left:5px;"), style = "margin-bottom: -10px;"),
+        tags$div(tags$strong("Value of ", tags$code("data[[1]]"), " at current step:", style = "padding-left:5px;"), style = "margin-bottom: -10px;"),
         reactable(
           .x,
           bordered = TRUE,
@@ -199,4 +239,23 @@ div(
   }))
 ```
 
+Are you ready for the answer?
 
+The `count` variable is added to the data by this line 
+
+
+```{r, include = FALSE}
+ggplot(mtcars, aes(as.factor(cyl), mpg)) + stat_boxplot(aes(ymin = after_stat(lower), y = stage(mpg, after_stat = middle), ymax = after_stat(upper)), geom = GeomPointrange, position = position_identity())
+```
+
+
+
+## Computation in the Stat
+
+
+
+## Mappings can be delayed too
+
+As far as ggplot internals is concerned, "mapping a variable to an aesthetic" basically just means "make sure that a column with the same name as the aesthetic exists with some value"
+
+## The How
