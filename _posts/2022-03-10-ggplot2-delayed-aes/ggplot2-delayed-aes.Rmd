@@ -537,25 +537,26 @@ The line of code responsible for this was the following:
 ggbody(ggplot2:::ggplot_build.ggplot)[[19]]
 ```
 
-We won't do another dive into the implementational details here because it involves some complicated metaprogramming. It suffices to just know that the mapping of the variable `count` calculated by the Stat to the aesthetic `y` is handled by the `Layer$map_statistic` method.
+We won't do another dive into the implementational details here because it involves some complicated metaprogramming. It suffices to know that the mapping of the variable `count` calculated by the Stat to the aesthetic `y` is handled by the `Layer$map_statistic` method.
 
-Instead, let's focus on the higher-level question of how ggplot knew that it should first wait after the Stat has transformed the data and then map the new `count` variable to `y`.
+Let's instead focus on the higher-level question of how ggplot knew that it should first _wait_ after the Stat has transformed the data and then map the new `count` variable to `y`.
 
-The answer, as you might have guessed, is `after_stat()`! The `after_stat()` function takes one argument `x` which is captured as an expression, to be evaluated _after the Stat has stepped in and transformed the data_.
+The answer, as you might have guessed, is `after_stat()`! This function takes one argument `x` which is captured as an expression, to be evaluated _after the Stat has stepped in and transformed the data_.
 
-So in our case, the fact that `count` is mapped to `y` after the stat gets applied suggests that `y` is mapped to `after_stat(count)`. And indeed this is the case, as we can see from the `default_aes` property of `StatCount`:
+So in our case, the fact that `count` is mapped to `y` after the stat gets applied suggests that `y` is mapped to `after_stat(count)`. And indeed this is the case, as we can see from the `default_aes` property of `StatCount`, where default values for aesthetic mappings are specified:
 
 ```{r}
 StatCount$default_aes
 ```
 
-Note that both `x` and `y` are mapped to `after_stat(count)` by default. It might seem odd, but you can appreciate that is kind of a clever design when you see it in conjunction with the `required_aes` property of `StatCount`:
+Note that both `x` and `y` are mapped to `after_stat(count)` by default. It might seem odd, but you can appreciate its clever design when you see it in conjunction with the `required_aes` property of `StatCount`, where mandatory aesthetic mappings are specified in regex syntax:
 
 ```{r}
+# `|` operator in regex means "or"
 StatCount$required_aes
 ```
 
-Basically, `required_aes` forces the user to override the aesthetic mapping for either `x` or `y`, which naturally leads to the other of the two being mapped to `after_stat(count)`. Neat!
+Basically, `required_aes` forces the user to override the aesthetic mapping for either `x` or `y`, which naturally leads to leftover of the two defaulting to `after_stat(count)`. Neat!
 
 So to go back to our plot, there was an implicit `aes(y = after_stat(count))` all along:
 
@@ -574,11 +575,11 @@ Let's test this hypothesis out with an example output from the stat, using `ggtr
 ggtrace_inspect_return(p, Stat$compute_layer)
 ```
 
-All of these variables should theoretically be accessible by `after_stat()`, and indeed this is the case. Here are examples of mapping `y` to each variable in the data after the Stat transformation, converting to numeric as needed to conform to the bar plot's continuous y scale.^[But before I get sacked let me make it clear that just because you _can_, doesn't mean you _should_.]
+All of these variables should theoretically be accessible by `after_stat()`, and indeed this is the case. Here are examples of mapping `y` to each variable in the data after the Stat transformation, converting to numeric as needed to conform to the bar plot's continuous y scale.
 
-```{r, out.width='25%', fig.show='hold', layout='l-page'}
-# Plots are printed left->right and top->bottom
-# matrix(1:8, nrow = 2, byrow = TRUE)
+```{r, out.width="50%", fig.show='hold'}
+# Plots are printed left -> right and top -> bottom
+# in order of `matrix(1:8, ncol = 2, byrow = TRUE)`
 p + aes(y = after_stat(count))
 p + aes(y = after_stat(prop))
 p + aes(y = after_stat(x))
@@ -589,12 +590,113 @@ p + aes(y = after_stat(as.numeric(PANEL)))
 p + aes(y = after_stat(group))
 ```
 
-## `after_stat()` - for developers
+Before I get sacked, I should add that these are demonstrations for a concept - just because you _can_, doesn't mean you _should_! But hopefully this is a clear demonstration of the point that `after_stat()` gives you access to columns from the data after it has been transformed by the Stat.
+
+#### Another practice with computed variable `prop`
+
+Let's quickly look at another example. You might have noticed how the new `prop` column that's added to the data by `StatCount` has just been 1, which isn't too informative. What is `prop` and when is it ever useful?
+
+If you look at the documentation for `geom_bar()` under "Computed variables", you will see the following descriptions for the two computed variables `count` and `prop`:
+
+- **count**: number of points in the bin
+- **prop**: groupwise proportion
+
+The value of `prop` was 1 in our previous plot because each bar was assigned a unique `group`, so `StatCount$compute_group` was only ever computing over 1-row data.
+
+If we wanted to change that, we'd need to specify an explicit `group`-ing that creates fewer groups than the number of bars (i.e., the interaction of all discrete variables).
+
+In this example, we make `geom_bar()` make a bar for each category of `species` as mapped to `x`, but internally represent the three bars as belonging to two groups: 
+
+```{r}
+p_bar_prop <- ggplot(penguins) +
+  geom_bar(aes(x = species, group = species == "Adelie"))
+p_bar_prop
+```
+
+It doesn't _look_ like there are two groups underlyingly, but let's see what happens when we inspect the data transformed by the Stat:
+
+```{r}
+ggtrace_inspect_return(p_bar_prop, Stat$compute_layer)
+```
+
+We see only two groups, and where we have two bars (rows) belonging to the same group, the values of `prop` add up to 1!
+
+Our `p_bar_prop` has grey fill for all bars that make its grouping structure ambiguous, but this was for expository purposes only. If we wanted to fill the bars by group, we could do it in at least two ways.
+
+A hacky way that is 100% not recommended but possible is to mark the groupings post-hoc, by grabbing the `group` variable in the `after_stat()` and mapping that to something like `fill`:
+
+```{r}
+p_bar_prop +
+  aes(fill = after_stat(as.factor(group)))
+```
+
+Not only does this hacky post-hoc way add unnecessary steps, it's also dangerous because of the use of the `aes()` function outside of a layer that is mapping `after_stat()` variables _globally_. You should avoid this because a variable returned by the `Stat` can have different values and mean different things across layers, which can lead to some surprising behavior like this:^[The label geom, by virtue of not having any groupings specified, is assigned a group value of -1 (see `ggplot2:::NO_GROUP`). This introduces another group category to the pre-existing groups 1 and 2 created by the bar layer, and so this has consequences for when the fill scale steps in to derive values of `fill` from the levels of `group`. ]
+
+```{r}
+p_bar_prop +
+  aes(fill = after_stat(as.factor(group))) +
+  geom_label(aes(x = 2, y = 100, label = "Hello"), stat = "unique")
+```
+
+A more principled way is to go back to the aes specifications for the bar layer and visually mark the underlying grouping for the bars with a non-positional discrete aesthetic, like `fill`:
+
+```{r}
+p_bar_group_fill <- ggplot(penguins) +
+  geom_bar(
+    aes(
+      x = species,
+      group = species == "Adelie",
+      fill = species == "Adelie"
+    )
+  )
+p_bar_group_fill
+```
+
+For a quick experiment, note what happens if you only map `species == "Adelie"` to `fill`:
+
+```{r}
+p_bar_fill <- ggplot(penguins) +
+  geom_bar(
+    aes(
+      x = species,
+      # group = species == "Adelie",
+      fill = species == "Adelie"
+    )
+  )
+p_bar_fill
+```
+
+The two look the same where `count` is concerned, but notice that `prop` is calculated differently:
+
+```{r, out.width="50%", fig.show='hold'}
+p_bar_group_fill + aes(y = after_stat(prop))
+p_bar_fill + aes(y = after_stat(prop))
+```
+
+As you might have guessed, this is because the underlying grouping structure is different:
+
+```{r}
+ggtrace_inspect_return(p_bar_group_fill, Stat$compute_layer)
+ggtrace_inspect_return(p_bar_fill, Stat$compute_layer)
+```
+
+**Section Fin.**
+
+## Another practice: `geom_boxplot()`
 
 ## `after_scale()` and usecases
 
 ## `stage()` and hacks
 
-```{r, include = FALSE}
-ggplot(mtcars, aes(as.factor(cyl), mpg)) + stat_boxplot(aes(ymin = after_stat(lower), y = stage(mpg, after_stat = middle), ymax = after_stat(upper)), geom = GeomPointrange, position = position_identity())
+```{r}
+ggplot(mtcars, aes(as.factor(cyl), mpg)) +
+  stat_boxplot(
+    aes(
+      y = stage(mpg, after_stat = middle),
+      ymin = after_stat(lower),
+      ymax = after_stat(upper)
+    ),
+    geom = GeomPointrange,
+    position = position_identity()
+  )
 ```
