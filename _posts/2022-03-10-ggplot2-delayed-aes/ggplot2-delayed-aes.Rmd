@@ -1,7 +1,7 @@
 ---
 title: "Demystifying delayed aesthetic evaluation"
 description: |
-  An introduction to `stage()`, `after_stat()`, and `after_scale()` with {ggtrace}
+  Exploring the logic of `after_stat()` with {ggtrace}
 categories:
   - data visualization
   - ggplot2
@@ -94,6 +94,21 @@ ggplot(penguins) +
   facet_wrap(~ island)
 ```
 
+As another case in point, we can save the output of layer functions to a variable, and add that to two different ggplots. Here, although `geom_bar_obj` causes different bars to be drawn between the two plots, it's "doing the same thing" of carrying out the instruction to count up by categories of `x` and mapping the count to `y`:
+
+```{r, out.width="50%", fig.show="hold"}
+geom_bar_obj <- geom_bar()
+
+ggplot(penguins) + 
+  aes(x = species) +
+  geom_bar_obj
+
+ggplot(penguins) +
+  aes(x = island) +
+  geom_bar_obj
+```
+
+
 In this sense, the ggplot2 interface is said to have **declarative** semantics. Your code makes statements like "... this plot should be facetted by `island`", rather than "... and now facet the plot by `island`."^[The distinction clicked for me personally after reading the classic [sandwich example](https://mastering-shiny.org/basic-reactivity.html#imperative-vs-declarative-programming), which I first came across when learning Shiny (another declarative system).] This distinction may be subtle but it's an integral part of what makes the "Grammar of Graphics" a _grammar_.^[In a [recent interview](https://youtu.be/rE062dA-pT4?t=1888) with Leland Wilkinson (may he rest in peace), he tells a story of how Tableau used to erroneously apply scale transformations faithful to the _user's_ order of execution, instead of the order dictated by the _grammar_, which led to two "geoms" (points and a regression line) being drawn with different scales - the points in log space and the regression line in untransformed "identity" space. This is "ungrammatical" and thus rightly forbidden in ggplot - if multiple scales are specified for the same aesthetic, ggplot will resolve the conflict by just settling on the last scale with a warning _before_ computing or drawing anything.] The most significant consequence of this separation of defining a ggplot vs. rendering a ggplot is that you can continuously add new elements to a plot without needing to go back and redraw the plot each time.
 
 Then when does the ggplot actually get "rendered"?^[Strictly speaking, it's `{grid}` that does the rendering with `grid::grid.newpage()` and `grid::grid.draw()`, but I'll follow the [ggplot2 book](https://ggplot2-book.org/internals.html#the-plot-method) in using the term "rendering" here to refer to the step that takes you from the data + the plot specifications to a transformed data that is drawing-ready.] It happens when the ggplot is printed/plotted, as defined in the S3 methods `ggplot2:::plot.ggplot` and `ggplot2:::print.ggplot` (they're the same thing). Take a quick look at the function body below:
@@ -134,11 +149,11 @@ So why do I bring up this high-level overview of ggplot internals? Well it's at 
 
 Again, the common theme here is **delayed evaluation**. Keep this in mind as we continue working through our `geom_bar()` example.
 
-## In search of `count`
+## The _When_ - in search of `count`
 
 We have good reasons to think that the `count` variable from `geom_bar()` was calculated during the execution of the ggplot, in which case it must be from one of the two workhorses of the rendering step: `ggplot_build()` and `ggplot_gtable()`.
 
-Generally speaking, `ggplot_build()` deals with the dataframe representation of the plot/layers (e.g., mutating variables/columns), and `ggplot_gtable()` deals with the graphical object representation of the plot (e.g., adding facet labels/strips to panels). So we expect the `count` variable to appear inside the `ggplot_build()` step.
+Generally speaking, `ggplot_build()` deals with the dataframe representation of the plot layers (e.g., mutating variables/columns), and `ggplot_gtable()` deals with the graphical object representation of the plot components (e.g., adding facet labels/strips to panels). So we expect the `count` variable to appear inside the `ggplot_build()` step.
 
 Take a quick skim at what `ggplot_build()` looks like if you aren't familiar. There's a lot going on here, but what should stand out is the repeated assignment to this internal variable called `data`. This looks very much like our familiar data-wrangling workflow, minus the pipe!
 
@@ -153,7 +168,7 @@ body(ggplot2:::ggplot_build.ggplot)
 ```
 </details>
 
-Let's inspect how the plotting data (stored in the internal variable called `data`) gets transformed inside `ggplot_build()`, using the `ggtrace_inspect_vars()` function from `{ggtrace}` which returns a list containing a snapshot of a variable(s)'s value every time it changes:
+Let's inspect how the plotting data (stored in the internal variable called `data`) gets transformed inside `ggplot_build()`, using the `ggtrace_inspect_vars()` function from `{ggtrace}` which returns a list containing a snapshot of a variable(s)'s value **every time it changes**:
 
 ```{r}
 internal_data_transformations <- ggtrace_inspect_vars(
@@ -164,7 +179,7 @@ internal_data_transformations <- ggtrace_inspect_vars(
 length(internal_data_transformations)
 ```
 
-In the course of evaluating our ggplot `p`, the dataframe representation of the layers changed ten times. The first and last snapshots of `data` are equal to the original data and the `{grid}`-ready data that's shipped off to `ggplot_gtable()`, respectively.
+In the course of evaluating our ggplot `p`, the dataframe representation of the layers **changed ten times**. The first snapshot is the same as our `penguins` dataframe (the original data) and the last snapshot is the same as the output of `layer_data(p, 1)` (the `{grid}`-ready data that's shipped off to `ggplot_gtable()`).^[If you aren't familiar with the `layer_data()` function, I introduce it in a [previous blog post on stat layers](https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/).]
 
 ```{r}
 # Note that `data` is actually a list of dataframes,
@@ -173,20 +188,7 @@ In the course of evaluating our ggplot `p`, the dataframe representation of the 
 internal_data_transformations[c(1, 10)]
 ```
 
-In other words, the first snapshot is the same as our `penguins` dataframe and the last snapshot is the same as the output of `layer_data(p, 1)`.
-
-```{r}
-identical(
-  penguins,
-  internal_data_transformations[[1]][[1]]
-)
-identical(
-  layer_data(p, 1),
-  internal_data_transformations[[10]][[1]]
-)
-```
-
-By the time we reach the last snapshot of `data`, the `count` variable is present in our plot's first (and only) layer `data[[1]]`:
+By the time we reach the last snapshot of `data`, we see that the `count` variable is present in our plot's first (and only) layer, in `data[[1]]`:
 
 ```{r}
 internal_data_transformations[[10]]
@@ -194,7 +196,7 @@ internal_data_transformations[[10]]
 
 But what _code_ is responsible for introducing this new `count` variable?
 
-Conveniently, the output of `ggtrace_inspect_vars()` also contains information about the **Steps** where the change to a variable's value was detected. These are stored as names of the returned list:
+As you saw briefly above, the names of the list returned by `ggtrace_inspect_vars()` record the **Steps** in the method body where changes were detected:
 
 ```{r}
 names(internal_data_transformations)
@@ -239,23 +241,360 @@ div(
   }))
 ```
 
-Are you ready for the answer?
+<br>
 
-The `count` variable is added to the data by this line 
+Are you ready for the answers?
 
+The `count` column is first added to the data by this line:
+
+```{r}
+body(ggplot2:::ggplot_build.ggplot)[[18]]
+```
+
+Then, the `y` column is created with the same value as `count` by this line:
+
+```{r}
+body(ggplot2:::ggplot_build.ggplot)[[19]]
+```
+
+The functions `compute_statistic` and `map_statistic` that you see above are called **methods**. Specifically, they are **ggproto methods** of the **ggproto** object `Layer`.
+
+The `Layer` ggproto is actually not crucial to our story, but if you'd like to understand it better you can read a bit more below:
+
+<details>
+<summary>An aside on the `Layer` ggproto</summary>
+A `Layer` is an object returned by `ggplot2::layer()`. You don't see that function often, but it's what gets called by `geom_*()` and `stat_*()` functions, so you've actually seen this a lot.
+
+For example, if you call `geom_bar()` on its own, you'll get back an object of class `LayerInstance`/`Layer`
+
+```{r}
+geom_bar()
+class(geom_bar())
+```
+
+The body of `geom_bar()` just calls `ggplot::layer()` with some defaults optimized for drawing bar plots.
+
+```{r}
+body(geom_bar)
+```
+
+So these two are practically the same:
+
+```{r}
+geom_bar()
+layer(
+  geom = GeomBar, stat = StatCount, position = PositionStack,
+  params = list(width = NULL, na.rm = FALSE, orientation = NA)
+)
+```
+
+These `Layer` objects have various "methods" (functions) and "properties" (non-functions), such as `compute_statistic`.
+
+```{r}
+sapply(as.list(geom_bar()), is.function)
+```
+
+The `compute_statistic` method is defined in the `Layer` ggproto, which is unexported. The `LayerInstance` ggproto class returned by `geom_bar()` simply inherits this method from the parent `Layer` ggproto:
+
+```{r}
+inherits(geom_bar(), "Layer")
+get_method_inheritance(geom_bar())
+```
+
+Note that `base::body()` does not work for ggproto methods out of the box:
+
+```{r}
+body(ggplot2:::Layer$compute_statistic)
+```
+
+Thus, we'll use the `ggbody()` function from the `{ggtrace}` package moving forward:
+
+```{r}
+ggtrace::ggbody(ggplot2:::Layer$compute_statistic, as.list = FALSE)
+```
+</details>
+
+So we've figured out "when" things happen. Let's now move on to explore "what" exactly happens in these steps
+
+## The _What_ - computation by the Stat
+
+### 1. Inspecting `Layer$compute_statistics`
+
+The `compute_statistics` method of the `Layer` ggproto looks like the following:
+
+```{r}
+ggtrace::get_method(ggplot2:::Layer$compute_statistic)
+```
+
+As the name suggests, the `compute_statistics` method calls several methods from the `Layer`'s (`self`'s) [`Stat` ggproto](https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html#stats).
+
+In the case of `geom_bar()`, the specific `Stat` ggproto is the `StatCount` ggproto by default. By the same token, the `self$stat` inside the `Layer$compute_statistic` method is evalauted as `StatCount`.
+
+```{r}
+class(geom_bar()$stat)
+inherits(StatCount, "Stat")
+```
+
+The most important piece of `Layer$compute_statistic` is the call to `self$stat$compute_layer` in the last line, which, again, evaluates to `StatCount$compute_layer` for the bar layer. This method is responsible for adding the `count` column, among other things, to the dataframe representation of our bar layer - let's see how.
+
+### 2. Inspecting the Stat's `compute_*` methods
+
+An internal design of `Stat` ggprotos that is not transparent but nevertheless very important is that they come with a family of _compute_ methods - `compute_layer`, `compute_panel`, and `compute_group` - which are called once per layer, panel, and group, respectively. 
+
+```{r}
+grep("^compute_", names(Stat), value = TRUE)
+```
+
+Specifically, `StatCount` inherits the `compute_layer` and `compute_panel` methods from the parent `Stat` ggproto but uses its own `compute_group` method:
+
+```{r}
+lapply(get_method_inheritance(StatCount), grep, pattern = "^compute_", value = TRUE)
+```
+
+Let's revisit our bar plot which we haven't seen in a while. How do we know how many layers, panels, and groups there are?
+
+```{r}
+p
+```
+
+We can get the layers of a ggplot by subsetting the `layers` element of the plot. Here, we see that we have one layer, created by `geom_bar()`:
+
+```{r}
+p$layers
+```
+
+We can get the panels and groups involved in a layer using `layer_data()` and inspecting the columns `PANEL` and `group`. For our first (and only) layer. We see 3 groups belonging to 1 panel:
+
+```{r}
+layer_data(p, 1)[c("PANEL", "group")]
+```
+
+We use the `ggtrace_inspect_n()` function from `ggtrace()` to confirm that these _compute_ methods are called once per layer/panel/group of our bar plot:
+
+```{r}
+ggtrace_inspect_n(x = p, method = Stat$compute_layer) # Inherited from `Stat`
+ggtrace_inspect_n(x = p, method = Stat$compute_panel) # Inherited from `Stat`
+ggtrace_inspect_n(x = p, method = StatCount$compute_group) # Defined in `StatCount`
+```
+
+And what do these methods return?
+
+Let's first inspect the output of `StatCount$compute_group` each time it is called:^[The `cond` argument takes an expression to be evaluated to TRUE/FALSE inside of the method's execution environment. The `._counter_` variable is an internal variable that `ggtrace_*` functions updates to keep track of how many times the method has been called so far. You can read more in the [Tracing context section](https://yjunechoe.github.io/ggtrace/reference/ggtrace_inspect_return.html#tracing-context) of the docs. ]
+
+```{r}
+list(
+  ggtrace_inspect_return(p, StatCount$compute_group, cond = quote(._counter_ == 1)),
+  ggtrace_inspect_return(p, StatCount$compute_group, cond = quote(._counter_ == 2)),
+  ggtrace_inspect_return(p, StatCount$compute_group, cond = quote(._counter_ == 3))
+)
+```
+
+Then, the output of `Stat$compute_panel` for the one panel that exists in our bar layer:
+
+```{r}
+ggtrace_inspect_return(x = p, method = Stat$compute_panel)
+```
+
+And finally, the output of `Stat$compute_layer` for the entire bar layer:
+
+```{r}
+ggtrace_inspect_return(x = p, method = Stat$compute_layer)
+```
+
+To sum up, the `compute_layer` method splits up the data by _panel_ and calls the `compute_panel` method for each panel, at which point the `compute_panel` method splits up the data by _group_ and calls `compute_group` for each group.
+
+In fact, this split-combine-apply design of the compute methods is how `StatCount` can get away with overriding just the `compute_group` method of the parent `Stat` ggproto: the narrower `compute_group` method calculates new variables at the group-level, while the `compute_panel` and `compute_layer` methods just do their default job of combining information about each group (binding rows, basically).
+
+And this is precisely how the `Stat` ggproto is designed - it defines generic `compute_layer` and `compute_panel` methods that do the _split_ and _combine_, but the actual _apply_ step is reserved for the `compute_group` method.^[But sometimes, child Stats may override a compute method at a higher level. For example, `StatSummary` overrides `compute_panel` to do the _apply_ step there, by panel, and does not pass data down to `compute_group` at all. Another (extreme) example is `StatIdentity` which rewrites `compute_layer` to just return the data as it received it, without passing it down to `compute_panel`/`compute_group`.] In fact, we find that `Stat$compute_group` is actually just a placeholder:
+
+```{r}
+get_method(Stat$compute_group)
+```
+
+### 3. Inspecting `StatCount$compute_group`
+
+Okay, so let's return to `StatCount`: what exactly does `StatCount$compute_group` _do_?
+
+```{r}
+get_method(StatCount$compute_group)
+```
+
+It looks like a pretty standard function, and it's clear now how `count` gets defined. In Steps 5-7, a new variable called `count` is created, then its `NA`s are handled by being turned into `0`, and then the variable is added to a new dataframe that gets returned at the end:
+
+```{r}
+ggbody(StatCount$compute_group)[5:7]
+```
+
+Once we strip ggplot internals down to the basics, it's now starting to look like good ol' functional programming!
+
+But we still can't quite interact with it. The tricky part of ggproto methods is that they often take obligatory arguments that are only available internally, like `scales` which is an object that contains information about the x/y-scales of the plot.
+
+One work-around is to use the `ggtrace_capture_fn()` from the `{ggtrace}` package, which returns a snapshot of a ggproto method when it was called (when it was _first_ called, by default):
+
+```{r}
+StatCount_compute_group_1 <- ggtrace_capture_fn(
+  x = p,
+  method = StatCount$compute_group
+)
+```
+
+The body of the captured function is the same as the ggproto method itself:
+
+```{r}
+identical(
+  body(StatCount_compute_group_1),
+  ggbody(StatCount$compute_group, as.list = FALSE)
+)
+```
+
+But what makes this captured function special is that it is **pre-filled** with the value of its arguments when it was called. This allows `StatCount_compute_group_1` to just be called as-is.
+
+```{r}
+StatCount_compute_group_1()
+```
+
+The arguments of the captured functions can be inspected with the `formals()` function. There's quite a bit of info in there so it's collapsed below and you can just take what you need:
+
+<details>
+<summary>Captured argument values for `StatCount$compute_group`</summary>
+```{r}
+formals(StatCount_compute_group_1)
+```
+</details>
+
+But just to make the "functional programming" aspect of this a bit more transparent, the input data looks like this:
+
+```{r}
+rmarkdown::paged_table(formals(StatCount_compute_group_1)$data)
+```
+
+And the output data looks like this:
+
+```{r}
+StatCount_compute_group_1()
+```
+
+### 4. Wrapping up
+
+So far, we have discovered the following about the output of `StatCount$compute_group`:
+
+- The `count` column is calculated from `data$x` and (`data$weight` if it exists)
+- The `prop` column is derived from `count`
+- The `x` column is the unique values of `x` in the input `data`
+
+The last piece of the puzzle are the `width` and `flipped_aes` columns. These are actually straightforward - they are parameters first passed into `Stat$compute_layer` and then passed down to the other compute methods from there. When `StatCount$compute_group` receives them, it uses that information to inform how it should transform the data (in this case, they're just added as columns).
+
+As such, `width` and `flipped_aes` exist in the formals of our captured function from above:
+
+```{r}
+formals(StatCount_compute_group_1)[c("width", "flipped_aes")]
+```
+
+If you're wondering about their origin, they're retrieved/calculated in the `StatCount$setup_params` method. If you're interested you can open the details below, but it's not critical information for keeping up with this blog post.
+
+<details>
+<summary>`StatCount$setup_params`</summary>
+`StatCount$setup_params`, is another Stat method that's called in an earlier step of `Layer$compute_statistic` .
+
+It's called in Step 3, and the output is assigned to `self$computed_stat_params`:
+
+```{r}
+ggbody(ggplot2:::Layer$compute_statistic)[[3]]
+```
+
+`self$computed_stat_params` is then passed in as an argument to `self$stat$compute_layer` in the last step:
+
+```{r}
+ggbody(ggplot2:::Layer$compute_statistic)[[5]]
+```
+
+When we look inside `StatCount$setup_params`, we see that `width` defaults to 0.9 and `flipped_aes` is computed from the internal function `ggplot2:::has_flipped_aes()` which figures out whether a layer is "flipped" (from setting `orientation = "y"` inside `geom_bar()`, for example)
+
+```{r}
+get_method(StatCount$setup_params)
+```
+</details>
+
+So there we have it! Hopefully this provides a better sense of what was happening at the step inside `ggplot_build()` which added the `count` column in the dataframe representation of our bar layer. The relevant line of code is repeated again below:
+
+```{r}
+ggbody(ggplot2:::ggplot_build.ggplot)[[18]]
+```
+
+Next, let's explore _how_ this new `count` variable got mapped to the `y` aesthetic, even though we never said anything about the `y` when we created our bar plot.
+
+## The _How_ - delayed aesthetic mapping
+
+Recall that Step 19 of `ggplot_build()` was responsible for the changing the data such that a new variable `count` was added with the same value as `count`, as detected in Step 20:
+
+```{r}
+internal_data_transformations$Step20
+```
+
+The line of code responsible for this was the following:
+
+```{r}
+ggbody(ggplot2:::ggplot_build.ggplot)[[19]]
+```
+
+We won't do another dive into the implementational details here because it involves some complicated metaprogramming. It suffices to just know that the mapping of the variable `count` calculated by the Stat to the aesthetic `y` is handled by the `Layer$map_statistic` method.
+
+Instead, let's focus on the higher-level question of how ggplot knew that it should first wait after the Stat has transformed the data and then map the new `count` variable to `y`.
+
+The answer, as you might have guessed, is `after_stat()`! The `after_stat()` function takes one argument `x` which is captured as an expression, to be evaluated _after the Stat has stepped in and transformed the data_.
+
+So in our case, the fact that `count` is mapped to `y` after the stat gets applied suggests that `y` is mapped to `after_stat(count)`. And indeed this is the case, as we can see from the `default_aes` property of `StatCount`:
+
+```{r}
+StatCount$default_aes
+```
+
+Note that both `x` and `y` are mapped to `after_stat(count)` by default. It might seem odd, but you can appreciate that is kind of a clever design when you see it in conjunction with the `required_aes` property of `StatCount`:
+
+```{r}
+StatCount$required_aes
+```
+
+Basically, `required_aes` forces the user to override the aesthetic mapping for either `x` or `y`, which naturally leads to the other of the two being mapped to `after_stat(count)`. Neat!
+
+So to go back to our plot, there was an implicit `aes(y = after_stat(count))` all along:
+
+```{r}
+ggplot(penguins) +
+  aes(x = species) +
+  aes(fill = species) +
+  geom_bar(aes(y = after_stat(count)))
+```
+
+The expression inside `after_stat()` is evaluated in a **data-masking** context, much like `aes()` or `{dplyr}` verbs like `mutate()` and `summarize()`. This is why you can just refer to `count` and it will grab the column vector from the data transformed by the stat.
+
+Let's test this hypothesis out with an example output from the stat, using `ggtrace_inspect_return()` on `Stat$compute_layer` again:
+
+```{r}
+ggtrace_inspect_return(p, Stat$compute_layer)
+```
+
+All of these variables should theoretically be accessible by `after_stat()`, and indeed this is the case. Here are examples of mapping `y` to each variable in the data after the Stat transformation, converting to numeric as needed to conform to the bar plot's continuous y scale.^[But before I get sacked let me make it clear that just because you _can_, doesn't mean you _should_.]
+
+```{r, out.width='25%', fig.show='hold', layout='l-page'}
+# Plots are printed left->right and top->bottom
+# matrix(1:8, nrow = 2, byrow = TRUE)
+p + aes(y = after_stat(count))
+p + aes(y = after_stat(prop))
+p + aes(y = after_stat(x))
+p + aes(y = after_stat(width))
+p + aes(y = after_stat(as.numeric(flipped_aes)))
+p + aes(y = after_stat(nchar(as.character(fill))))
+p + aes(y = after_stat(as.numeric(PANEL)))
+p + aes(y = after_stat(group))
+```
+
+## `after_stat()` - for developers
+
+## `after_scale()` and usecases
+
+## `stage()` and hacks
 
 ```{r, include = FALSE}
 ggplot(mtcars, aes(as.factor(cyl), mpg)) + stat_boxplot(aes(ymin = after_stat(lower), y = stage(mpg, after_stat = middle), ymax = after_stat(upper)), geom = GeomPointrange, position = position_identity())
 ```
-
-
-
-## Computation in the Stat
-
-
-
-## Mappings can be delayed too
-
-As far as ggplot internals is concerned, "mapping a variable to an aesthetic" basically just means "make sure that a column with the same name as the aesthetic exists with some value"
-
-## The How
