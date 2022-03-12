@@ -1,0 +1,67 @@
+---
+title: "Demystifying delayed aesthetic evaluation: Part 3"
+description: |
+  Completing the picture with `after_scale()` and `stage()`
+categories:
+  - data visualization
+  - ggplot2
+  - tutorial
+base_url: https://yjunechoe.github.io
+author:
+  - name: June Choe
+    affiliation: University of Pennsylvania Linguistics
+    affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+    orcid_id: 0000-0002-0701-921X
+date: "`r Sys.Date()`"
+output:
+  distill::distill_article:
+    toc: true
+    self_contained: false
+    css: "../../styles.css"
+editor_options: 
+  chunk_output_type: console
+draft: true
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+ragg_png = function(..., res = 150) {
+  ragg::agg_png(..., res = res, units = "in")
+}
+opts_chunk$set(
+  comment = " ",
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  dev = "ragg_png",
+  R.options = list(width = 80)
+)
+```
+
+## Setup
+
+```{r, message = FALSE}
+library(ggtrace)
+library(ggplot2)
+library(dplyr)
+
+penguins <- na.omit(palmerpenguins::penguins)
+rmarkdown::paged_table(penguins)
+```
+
+## `after_scale()` and usecases
+
+## `stage()` and hacks
+
+```{r}
+ggplot(mtcars, aes(as.factor(cyl), mpg)) +
+  stat_boxplot(
+    aes(
+      y = stage(mpg, after_stat = middle),
+      ymin = after_stat(lower),
+      ymax = after_stat(upper)
+    ),
+    geom = GeomPointrange,
+    position = position_identity()
+  )
+```

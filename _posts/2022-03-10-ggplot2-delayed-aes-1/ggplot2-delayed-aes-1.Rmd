@@ -1,0 +1,461 @@
+---
+title: "Demystifying delayed aesthetic evaluation: Part 1"
+description: |
+  Exploring the logic of `after_stat()` to peek inside ggplot internals
+categories:
+  - data visualization
+  - ggplot2
+  - tutorial
+base_url: https://yjunechoe.github.io
+author:
+  - name: June Choe
+    affiliation: University of Pennsylvania Linguistics
+    affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+    orcid_id: 0000-0002-0701-921X
+date: "03-12-2022"
+output:
+  distill::distill_article:
+    toc: true
+    self_contained: false
+    css: "../../styles.css"
+editor_options: 
+  chunk_output_type: console
+draft: true
+---
+
+```{r setup, include=FALSE}
+ragg_png = function(..., res = 150) {
+  ragg::agg_png(..., res = res, units = "in")
+}
+knitr::opts_chunk$set(
+  comment = " ",
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  dev = "ragg_png",
+  R.options = list(width = 80)
+)
+```
+
+_This is a developing series of blog posts, scheduled for three parts:_
+
+- _[Part 1: Exploring the logic of `after_stat()` to peek inside ggplot internals]()_ (you are here)
+- _Part 2: Exposing the `Stat` ggproto in functional programming terms_ (TBD)
+- _Part 3: Completing the picture with `after_scale()` and `stage()`_ (TBD)
+
+## Introduction
+
+The [version 3.3.0 of {ggplot2}](https://www.tidyverse.org/blog/2020/03/ggplot2-3-3-0/) released back in early 2020 introduced a family of functions for finer control over mapping variables to aesthetics: `after_stat()`, `after_scale()`, and `stage()`.
+
+The big idea behind these functions is that layers sometimes derive new variables from the raw data that they receive, and so ggplot should offer a way of letting the user access with these internally-computed variables inside the `aes()`.
+
+While this may sound esoteric, the mapping of an _internal variable_ to an aesthetic is ubiquitous, both in `{ggplot2}` itself as well as in many extension packages. For example, we take it for granted that layers like `geom_bar()` and `geom_histogram()` draw bars in the x/y-coordinate space and yet require just a single mapping to one of the two positional aesthetics.
+
+```{r, out.width='50%', fig.show='hold'}
+library(ggplot2)
+library(dplyr)
+
+penguins <- na.omit(palmerpenguins::penguins)
+rmarkdown::paged_table(penguins)
+ggplot(penguins, aes(bill_depth_mm)) +
+  geom_histogram()
+ggplot(penguins, aes(species)) +
+  geom_bar()
+```
+
+Despite only specifying a mapping to the `x` aesthetic, there is clearly also a variable mapped to the `y` aesthetic in both cases - a variable called **count**. So where does this variable come from and how does ggplot know that it should wait until this variable has been calculated to do the mapping?
+
+## In search of `count`
+
+The technical details of how and where the `count` variable is computed will be covered in the [Part 2]() of this series. For now, all we need to know is that layers like `geom_bar()` and `geom_histogram()` perform additional computations on the data that we pass it, to derive new values like `count`. 
+
+The important thing to note here is that even though `count` is _eventually_ calculated, it is not originally present in the data:
+
+```{r}
+"count" %in% colnames(penguins)
+```
+
+So if we try to use `count` in `aes()` like we would any other column names, we get an error:
+
+```{r, error=TRUE, fig.show='hide'}
+ggplot(penguins, aes(species, y = count)) +
+  geom_bar()
+```
+
+Thus, we need to make it explicit that we're referencing the variable `count` from our data _after the statistical transformation has taken place internally_. And as you can see from the helpful error message, we can do this with the transparently-named function `after_stat()`! This function takes one argument `x` which is captured as an expression, to be evaluated later.
+
+So in our case, the fact that `count` is mapped to `y` _after the statistical transformation takes place_ suggests that `y` is mapped to `after_stat(count)`. This is indeed the case, and we can make this default mapping explicit in the `aes()`:
+
+```{r}
+ggplot(penguins, aes(species, y = after_stat(count))) +
+  geom_bar()
+```
+
+The expression inside `after_stat()` is evaluated in what's called a [**data-masked** context](https://rlang.r-lib.org/reference/topic-data-mask.html), much like `aes()` or `{dplyr}` verbs like `mutate()` and `summarize()`. This is why you can just refer to `count` as if it were a variable name and `after_stat()` will grab that column vector from the transformed data.
+
+But now we're faced with another question: **what is the transformed data that `after_stat()` looks for variables in**? We know it's a version of our original data after it undergoes a statistical transformation, but what does the output actually _look like_?
+
+To make this more concrete, I'm going to introduce a function called `inspect_after_stat()` which will help us answer this question. I'll leave the code here for reproducibility purposes and return to explain parts of it in [Part 2]().
+
+<details>
+<summary>`inspect_after_stat`</summary>
+```{r}
+#' Inspect a layer's data after computation by the Stat
+#'
+#' @param p `ggplot` object
+#' @param i An integer. The position of the layer's data to return.
+#'
+#' @return A dataframe
+inspect_after_stat <- function(p, i = 1L) {
+  ._env <- environment()
+  .out <- NULL
+  suppressMessages({
+    trace(
+      what = ggplot2:::ggplot_build.ggplot,
+      tracer = rlang::expr(rlang::env_bind(!!._env, ".out" = data)),
+      at = 19L,
+      print = FALSE
+    )
+    ggplot_build(p)
+    untrace(ggplot2:::ggplot_build.ggplot)
+  })
+  .out[[i]]
+}
+```
+</details>
+
+We'll use `inspect_after_stat()` to "peak inside" ggplot internals and inspect the state of a layer's data after the statistical computations have taken place. 
+
+Let's start with a simple example of `geom_bar()`:
+
+```{r}
+p_bar <- ggplot(penguins, aes(species)) +
+  geom_bar(aes(fill = species))
+p_bar
+```
+
+When we inspect the state of the data for our first layer after the statistical transformation, it looks like the following:
+
+```{r}
+inspect_after_stat(p_bar)
+```
+
+We see that the data gets collapsed such that each row contains information about each bar that is drawn. You'll notice that the statistical transformation done by `geom_bar()` is essentially just `dplyr::count()`:
+
+```{r}
+penguins %>% 
+  count(species)
+```
+
+Again, [Part 2]() will go over the statistical transformation step a lot more in detail and we'll continue to emphasize these connections to data wrangling to help make ggplot internals more accessible. But what's important for our purposes right now is that when we reference variables with `after_stat()`, they are done in context of this transformed data frame. 
+
+This means that all of the columns in the data returned by `inspect_after_stat()` can be accessed with `after_stat()`. To demonstrate, I can map `y` to each variable in the transformed data, converting to numeric as needed to conform to the plot's continuous y scale.
+
+```{r, out.width="50%", fig.show='hold'}
+# Plots are printed left -> right and top -> bottom
+# in order of `matrix(1:8, ncol = 2, byrow = TRUE)`
+p_bar + aes(y = after_stat(count))
+p_bar + aes(y = after_stat(prop))
+p_bar + aes(y = after_stat(x))
+p_bar + aes(y = after_stat(width))
+p_bar + aes(y = after_stat(as.numeric(flipped_aes)))
+p_bar + aes(y = after_stat(nchar(as.character(fill))))
+p_bar + aes(y = after_stat(as.numeric(PANEL)))
+p_bar + aes(y = after_stat(group))
+```
+
+Before I get sacked, I should add that just because you _can_, doesn't mean you _should_! But hopefully this is a clear demonstration of how `after_stat()` gives you access to columns from the data after it has undergone the internal statistical transformation.
+
+## Another practice with `prop`
+
+Let's look at another example to drive the point home.
+
+You might have noticed how the internally computed `prop` column just has the value 1, which isn't too informative. What is `prop` and when does it ever take on a different value?
+
+If you look at the documentation for `geom_bar()` under the section "Computed variables", you will see the following descriptions for the two computed variables `count` and `prop`:
+
+- **count**: number of points in the bin
+- **prop**: groupwise proportion
+
+The value of `prop` was 1 for `p_bar` because each bar was assigned a unique group as indicated by the values of the `group` column, so of course the computation of _groupwise_ proportion was uninteresting!
+
+If we want to change that, we'd need to explicitly specify a `group`-ing that creates fewer groups than the number of bars present (i.e., the interaction of all discrete variables).
+
+In this example, we have `geom_bar()` make a bar for each category of `species` as mapped to `x`, but internally represent the three bars as belonging to one of two groups - the "Adelie group" and the "not-Adelie group": 
+
+```{r}
+p_bar_prop <- ggplot(penguins, aes(species)) +
+  geom_bar(aes(group = species == "Adelie"))
+p_bar_prop
+```
+
+It doesn't _look_ like there are two groups underlyingly, but let's see what happens when we inspect the data transformed by the Stat:
+
+```{r}
+inspect_after_stat(p_bar_prop)
+```
+
+We see only two groups (values of group are either 1 or 2), as we expect. And where there are two bars (rows) belonging to the same group, the values of `prop` _add up to 1_!
+
+Our `p_bar_prop` has grey fill for all bars that make its grouping structure visually ambiguous, but this was for expository purposes only. If we wanted to fill the bars by group, we could do it in at least two ways.
+
+A hacky way that is 100% not recommended but possible is to mark the groupings post-hoc, by grabbing the `group` variable in the `after_stat()` and mapping that to something like `fill`:
+
+```{r}
+p_bar_prop +
+  aes(fill = after_stat(as.factor(group)))
+```
+
+But not only does this hacky post-hoc way add unnecessary steps, it's also dangerous because it uses `aes()` to map a `after_stat()` variable _globally_. You should avoid this because different layers do different statistical transformations (we'll discuss this shortly in the next section), which can lead to surprising behaviors like this:^[The label geom, by virtue of not having any groupings specified, is assigned a group value of -1 (see `ggplot2:::NO_GROUP`). This introduces another group category to the pre-existing groups 1 and 2 created by the bar layer, and so this has consequences for when the fill scale steps in to derive values of `fill` from the levels of `group`. ]
+
+```{r}
+p_bar_prop +
+  aes(fill = after_stat(as.factor(group))) +
+  # This next line does something unexpected to the fill!
+  geom_label(aes(x = 2, y = 100, label = "Hello"), stat = "unique")
+```
+
+A safer, more principled way is to go back inside the `aes()` for the bar layer and visually mark the underlying grouping for the bars there:
+
+```{r}
+p_bar_group_fill <- ggplot(penguins, aes(species)) +
+  geom_bar(
+    aes(
+      group = species == "Adelie",
+      fill = species == "Adelie"
+    )
+  )
+p_bar_group_fill
+```
+
+For a quick experiment, note what happens if you only map `species == "Adelie"` to `fill`:
+
+```{r}
+p_bar_only_fill <- ggplot(penguins, aes(species)) +
+  geom_bar(
+    aes(
+      # group = species == "Adelie",
+      fill = species == "Adelie"
+    )
+  )
+p_bar_only_fill
+```
+
+We can see that the two plots above look the same with `y` mapped to `count`, but notice that `prop` is calculated differently:
+
+```{r, out.width="50%", fig.show='hold'}
+p_bar_group_fill + aes(y = after_stat(prop))
+p_bar_only_fill + aes(y = after_stat(prop))
+```
+
+As you might have guessed, this is because the underlying grouping structure is different:^[Note also how `group` appears in different column positions. When `group` is explicitly supplied, it appears to the **left** of `PANEL`, and when `group` is derived it appears to the **right** of `PANEL`. Where and how does this happen? I'll leave this question as an exercise (hint: look at `Layer$compute_aesthetics` and `ggplot2:::add_group()`). ]
+
+```{r}
+# 2 groups present
+inspect_after_stat(p_bar_group_fill)
+# 3 groups present
+inspect_after_stat(p_bar_only_fill)
+```
+
+So far we've been looking at contrived examples, so let's conclude this section by putting the issue of practicality back on the table.
+
+The most common usecase for `prop` is to use it in conjunction with something like `group = 1` to "normalize" the y-scale within each facet. This can be useful especially if the data has unbalanced samples across panels but you want to emphasize the _relative_ distribution of categories in the x-axis within each panel:
+
+```{r}
+# Absolute value `count` mapped to `y`
+ggplot(penguins, aes(species)) +
+  geom_bar(aes(y = after_stat(count))) +
+  facet_wrap(~ island)
+# Relative value `prop` mapped to `y`
+ggplot(penguins, aes(species)) +
+  geom_bar(aes(y = after_stat(prop), group = 1)) +
+  facet_wrap(~ island)
+```
+
+You can see that `aes(group = 1)` had the effect of making sure that `prop` adds up to 1 within each group and within each facet.^[Why not within each group _across_ facets? That's a good question and has to do with how by-panel and by-group computations are done inside ggplot. We'll look at this more in detail in [Part 2]()!] We can also double-check with `inspect_after_stat()`:
+
+```{r}
+inspect_after_stat(last_plot())
+inspect_after_stat(last_plot()) %>% 
+  group_by(PANEL, group) %>% 
+  summarize(prop = sum(prop), .groups = 'drop')
+```
+
+## Baby steps to the Stat ggproto
+
+### Same geom, different stats
+
+One thing that you might have noticed throughout this exercise is that it's not transparent from the name `geom_bar()` that this layer is going to compute internal variables like `count` and `prop` and use a default y-aesthetic of `after_stat(count)`.
+
+This is responsible for one of the most enduring points of confusion in ggplot: the difference between `geom_col()` and `geom_bar()`.
+
+Whether you call the rectangle a "column" or a "bar" sounds like silly semantics, so why do they behave so differently?
+
+```{r, error = TRUE, fig.show='hide'}
+ggplot(penguins, aes(species)) +
+  geom_col() # but works with `geom_bar()`
+penguins %>% 
+  count(species) %>% 
+  ggplot(aes(species, n)) +
+  geom_bar() # but works with `geom_col()`
+```
+
+You get a small hint in the error message for the `geom_bar()` example - it complains that `stat_count()` can only have an x or y aesthetic.
+
+But we've never said anything about `stat_count()` - all we have is a layer for `geom_bar()`!
+
+Well it turns out that `geom_bar()` and `stat_count()` are two sides of the same coin. Both these functions return a _layer_ that has a "bar" **geom** a "count" **stat**.^[As well as a "stack" **position**, but we won't go into that in this blog post series.]
+
+```{r}
+geom_bar()
+stat_count()
+```
+
+With that in mind, let's return to the code for our penguin species bar plot:
+
+```{r}
+ggplot(penguins, aes(species)) +
+  geom_bar()
+```
+
+We've said that `geom_bar()`, by default, has a mapping of `aes(y = after_stat(count))`, so let's make that explicit again:
+
+```{r, eval = FALSE}
+ggplot(penguins, aes(species)) +
+  geom_bar(
+    aes(y = after_stat(count))
+  )
+```
+
+And as we just saw, `geom_bar()` also uses a "count" stat by default, so let's make that explicit as well:
+
+```{r, eval = FALSE}
+ggplot(penguins, aes(species)) +
+  geom_bar(
+    aes(y = after_stat(count)),
+    stat = "count"
+  )
+```
+
+Hopefully the pieces are starting to come together: **the computation of the internal variable `count` isn't about the "bar" geom - it's about the "count" stat.**
+
+So `geom_col()` errors with `after_stat(count)` not because it's drawing something different ([it's not!](https://github.com/tidyverse/ggplot2/issues/3798)), it's just _calculating_ something different. In more technical terms, `geom_col()` doesn't use `stat = "count"` like `geom_bar()` does. It uses `stat = "identity"` instead, which does an "identity" transformation on the data (i.e., leaves it alone):
+
+```{r}
+geom_col()
+```
+
+Therefore, no new variables get calculated inside `geom_col()`. In fact, the data before and after the statistical transformation look nearly identical:
+
+```{r}
+penguins_counted <- penguins %>% 
+  count(species)
+
+# The raw data
+penguins_counted
+```
+
+```{r}
+p_col <- penguins_counted %>% 
+  ggplot(aes(species, n)) +
+  geom_col()
+
+# The data after transformation
+inspect_after_stat(p_col)
+```
+
+What's more, by overriding the `stat`, you can make `geom_bar()` behave like `geom_col()`:
+
+```{r, out.width='50%', fig.show='hold'}
+p_bar_identity <- penguins_counted %>% 
+  ggplot(aes(species, n)) +
+  geom_bar(stat = "identity") # `geom_bar()` no longer errors
+
+# The data after transformation
+inspect_after_stat(p_bar_identity)
+```
+
+In sum, the variables that are available in the `after_stat()` is determined by what kind of `stat` a layer uses. And as we just saw, even if a layer is called a `geom_*()` it still has a `stat`. In fact, **every layer has a stat and a geom**, even though the functions that generate these layers are called `stat_*()` or `geom_*()`.
+
+It should be noted that the choice of a default `stat` for `geom_*()` layers can range from more transparent (like the pairing of `geom = "smooth"` and `stat = "smooth"` in `geom/stat_smooth()`) to less transparent (like `geom_col(stat = "identity")`). But it's also worth keeping in mind that all defaults are carefully curated by the developers to improve user experience (don't you appreciate how you can just use `geom_histogram()` to draw a histogram without having to think about `stat = "bin"` every time?)
+
+### Same stat, different geoms
+
+If all layers have a stat and a geom, and if `geom_*()` layers have default stats, then `stat_*()` layers must have defaults geoms.
+
+Indeed, this is the case. Remember the `stat_count()` layer from the error message earlier? Because it has a default geom of "bar", it works like `geom_bar()` right out of the box:
+
+```{r}
+ggplot(penguins, aes(species)) +
+  stat_count()
+```
+
+And here are _IT'S_ defaults spelled out:
+
+```{r, eval = FALSE}
+ggplot(penguins, aes(species)) +
+  stat_count(
+    aes(y = after_stat(count)),  # default mapping to `y`
+    geom = "bar"                 # default `geom`
+  )
+```
+
+You might be wondering: why are there two ways of doing the same thing? Some people think its a design mistake but I appreciate the option because it can improve readability.
+
+For example, we talked about how we can supply a different `stat` to a `geom_*()` layer like `geom_bar(stat = "identity")`. Actually, **we can override the default geom/stat for _any layer_ as long as we satisfy the required set of aesthetic mappings for that layer**.
+
+This allows us to do some nifty things like setting the stat of `geom_text()` to "count", and then mapping the internally computed variable `count` to the `y` and `label` aesthetics to show the number of counts at the top of each bar:
+
+```{r}
+ggplot(penguins, aes(species)) +
+  geom_bar() +
+  geom_text(
+    aes(y = after_stat(count), label = after_stat(count)),
+    stat = "count", vjust = -.5 # little vertical nudging with `vjust`
+  )
+```
+
+But notice that you can do the same with two calls to `stat_count()`:
+
+```{r}
+ggplot(penguins, aes(species)) +
+  stat_count(geom = "bar") +
+  stat_count(
+    aes(label = after_stat(count)),
+    geom = "text", vjust = -.5
+  )
+```
+
+They make the exact same plot, but are read differently.
+
+I'm personally starting to grow into the second style with `stat_count()` for two reasons:
+
+1. When we read `stat_count()`, we know going in that the variable `count` is going to be available in the `after_stat()`, so we aren't surprised to see `label = after_stat(count)` in the `aes()` of our second layer.
+
+2. It makes the code tell a coherent story - the theme of this plot is about visualizing _counts_, and _how_ they get visually represented through the geoms is almost like an afterthought. And this actually aligns pretty well with my thought process. If I'm making a bar plot of counts with the number of counts written on top, I'm not thinking, "I need to draw bars and texts". I'm thinking, "I need to visualize counts."
+
+Which do you prefer?
+
+### Sneak peak of Part 2
+
+I've tried my best to split up this topic to keep it manageable, so hopefully this wasn't too overwhelming!
+
+Part 2 will pick up where we left off by talking about how the data actually undergoes the statistical transformation. We will do a lot more "peaking inside" of the internals similar to what we did with our custom function `inspect_after_stat()`, except in Part 2 we will use functions from my package `{ggtrace}` to interact with the internals. It's a package partly designed as a pedagogical tool for folks in the stage of the user-to-developer transition, and I'm very excited to showcase its potentials.
+
+One last note/warning is that Part 2 will introduce the [**ggproto**](https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html) system which powers ggplot internals. It's notoriously difficult to grasp, and has a big learning curve even if you're an experienced user of ggplot. But fear not, because we already got a little taste of ggproto! Remember how we were just passing strings into the `geom` and `stat` argument of the layer functions? That's actually just a shorthand for specifying ggproto objects:
+
+```{r, eval = FALSE}
+ggplot(penguins, aes(species)) +
+  geom_bar(stat = StatCount) # same as `stat = "count"`
+ggplot(penguins, aes(species)) +
+  stat_count(geom = GeomBar) # same as `geom = "bar"`
+```
+
+We'll talk more about these ggproto objects, especially `Stat` ggprotos like `StatCount`, in Part 2!
+
+## Session Info
+
+```{r}
+sessionInfo()
+```
+

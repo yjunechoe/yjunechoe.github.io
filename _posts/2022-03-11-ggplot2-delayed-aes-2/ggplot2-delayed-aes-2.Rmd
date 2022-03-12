@@ -1,7 +1,7 @@
 ---
-title: "Demystifying delayed aesthetic evaluation"
+title: "Demystifying delayed aesthetic evaluation: Part 2"
 description: |
-  Exploring the logic of `after_stat()` with {ggtrace}
+  Exposing the `Stat` ggproto in functional programming terms
 categories:
   - data visualization
   - ggplot2
@@ -38,14 +38,12 @@ opts_chunk$set(
 )
 ```
 
-
 ## Setup
 
 ```{r, message = FALSE}
 library(ggtrace)
 library(ggplot2)
 library(dplyr)
-library(purrr)
 
 penguins <- na.omit(palmerpenguins::penguins)
 rmarkdown::paged_table(penguins)
@@ -71,16 +69,18 @@ But note that there is no variable/column called `count` from our original `peng
 "count" %in% colnames(penguins)
 ```
 
-So where exactly does this `count` variable come from? More specifically...
+So where exactly does this `count` variable come from? In this two-part blog post
 
-1. Where and how is the new variable `count` _computed_?
-2. Where and how is the computed variable `count` _mapped_? 
+1. Where and how is the computed variable `count` _mapped_?
+
+2. Where and how is the new variable `count` _computed_?
+
 
 ## Much of ggplot is "delayed evaluation"
 
 To answer these questions, we need to take a detour and first make a distinction between "defining" a ggplot and "rendering" a ggplot.
 
-Most of what we do when we write code and "combine layers" like `geom_*()`, `stat_*()`, `facet_*()`, etc. with the `+` operator is actually providing pieces of **instructions** for making the plot. Essentially, ggplot "collects" the plot specifications strung together with `+` and organizes them following a _standardized blueprint_ underlying all ggplot objects.^[The _standardized_ part of this is what supports the large ecosystem of extension packages that integrate smoothly with {ggplot2} itself. For a less practical (but conceptually exciting) consequence of this design, check out the proof-of-concept package [{ggreverse}](https://github.com/coolbutuseless/ggreverse) which generates (back-forms) ggplot code from a ggplot object.]
+Most of what we do when we write code and "combine layers" like `geom_*()`, `stat_*()`, `facet_*()`, etc. with the `+` operator is actually providing pieces of **instructions** for making the plot. Essentially, ggplot "collects" the plot specifications strung together with `+` and organizes them following a _standardized blueprint_ underlying all ggplot objects.^[The _standardized_ part of this is what supports the large ecosystem of extension packages that integrate smoothly with `{ggplot2}` itself. For a less practical (but conceptually exciting) consequence of this design, check out the proof-of-concept package [`{ggreverse}`](https://github.com/coolbutuseless/ggreverse) which generates (back-forms) ggplot code from a ggplot object.]
 
 This design of ggplot internals is what allows you to swap the order of a facet with a geom without consequences to the plot's appearance, for example. The internal blueprint ensures that the Facet will always step in to split up the data by panels _before_ the Stat and Geom step in to transform the data and make graphical objects:
 
@@ -109,7 +109,7 @@ ggplot(penguins) +
 ```
 
 
-In this sense, the ggplot2 interface is said to have **declarative** semantics. Your code makes statements like "... this plot should be facetted by `island`", rather than "... and now facet the plot by `island`."^[The distinction clicked for me personally after reading the classic [sandwich example](https://mastering-shiny.org/basic-reactivity.html#imperative-vs-declarative-programming), which I first came across when learning Shiny (another declarative system).] This distinction may be subtle but it's an integral part of what makes the "Grammar of Graphics" a _grammar_.^[In a [recent interview](https://youtu.be/rE062dA-pT4?t=1888) with Leland Wilkinson (may he rest in peace), he tells a story of how Tableau used to erroneously apply scale transformations faithful to the _user's_ order of execution, instead of the order dictated by the _grammar_, which led to two "geoms" (points and a regression line) being drawn with different scales - the points in log space and the regression line in untransformed "identity" space. This is "ungrammatical" and thus rightly forbidden in ggplot - if multiple scales are specified for the same aesthetic, ggplot will resolve the conflict by just settling on the last scale with a warning _before_ computing or drawing anything.] The most significant consequence of this separation of defining a ggplot vs. rendering a ggplot is that you can continuously add new elements to a plot without needing to go back and redraw the plot each time.
+In this sense, the ggplot2 interface is said to have **declarative** semantics. Your code makes statements like "... this plot should be facetted by `island`", rather than "... and now facet the plot by `island`."^[The distinction clicked for me personally after reading the classic [sandwich example](https://mastering-shiny.org/basic-reactivity.html#imperative-vs-declarative-programming), which I first came across when learning Shiny (another declarative system).] This distinction may be subtle but it's an integral part of what makes the "Grammar of Graphics" a _grammar_.^[In a [recent interview](https://youtu.be/rE062dA-pT4?t=1888) with Leland Wilkinson (may he rest in peace), he tells a story of how Tableau used to erroneously apply scale transformations faithful to the _user's_ order of execution, instead of the order dictated by the _grammar_, which led to two "geoms" (points and a regression line) being drawn with different scales - the points in log space and the regression line in untransformed identity space. This is "ungrammatical" and thus rightly forbidden in ggplot - if multiple scales are specified for the same aesthetic, ggplot will resolve the conflict by just settling on the last scale with a warning _before_ computing or drawing anything.] The most significant consequence of this separation of defining a ggplot vs. rendering a ggplot is that you can continuously add new elements to a plot without needing to go back and redraw the plot each time.
 
 Then when does the ggplot actually get "rendered"?^[Strictly speaking, it's `{grid}` that does the rendering with `grid::grid.newpage()` and `grid::grid.draw()`, but I'll follow the [ggplot2 book](https://ggplot2-book.org/internals.html#the-plot-method) in using the term "rendering" here to refer to the step that takes you from the data + the plot specifications to a transformed data that is drawing-ready.] It happens when the ggplot is printed/plotted, as defined in the S3 methods `ggplot2:::plot.ggplot` and `ggplot2:::print.ggplot` (they're the same thing). Take a quick look at the function body below:
 
@@ -125,7 +125,7 @@ identical(
 
 </details>
 
-As we might expect, a quick benchmark test reveals that defining a ggplot (with user-facing code) is quick and cost-less while rendering it (via the print/plot method) takes some time:^[A quick caveat: things still get evaluated in the step of defining a ggplot. After all, the `+` infix is an operator/function (more specifically, [a method of `+` for class `<gg>`](https://github.com/tidyverse/ggplot2/blob/87e9b85dd9f2a294f339d88a353d0c11c851489d/R/plot-construction.r#L24-L56) in a form of what's called _operator overloading_), and layers like `geom_*()` and `stat_*()` are functions that gets called with the parantheses `()`. But the computation that goes on during the "definition" step mostly deals with making the instructions conform to the standardized blueprint, and thus is relatively costless. But of course, this doesn't _have_ to be the case: there are extension packages like [{gghighlight}](https://yutannihilation.github.io/gghighlight/) which add [more functionalities to the `+`](https://github.com/yutannihilation/gghighlight/blob/4bc54b152796a0631c6557ef936c328bcbf9b5b9/R/gghighlight.R#L108-L229). ]
+As we might expect, a quick benchmark test reveals that defining a ggplot (with user-facing code) is quick and cost-less while rendering it (via the print/plot method) takes some time:^[A quick caveat: things still get evaluated in the step of defining a ggplot. After all, the `+` infix is an operator/function (more specifically, it's [a method of `+` for class `<gg>`](https://github.com/tidyverse/ggplot2/blob/87e9b85dd9f2a294f339d88a353d0c11c851489d/R/plot-construction.r#L24-L56). This is an example of what's called [operator overloading](https://www.techopedia.com/definition/24294/operator-overloading), and while it's popular in other languages, Hadley himself [regrets](https://youtu.be/vYwXMnC03I4?t=325) using the `+` instead of the pipe in the design of ggplot2), and layers like `geom_*()` and `stat_*()` are functions that get called on the spot with the parantheses `()`. But the computation that goes on during the "definition" step mostly deals with making the instructions conform to the standardized blueprint (e.g., resolving conflicting scales), and is thus relatively costless. But of course, this doesn't _have_ to be the case: there are extension packages like [{gghighlight}](https://yutannihilation.github.io/gghighlight/) which add [more functionalities to the `+`](https://github.com/yutannihilation/gghighlight/blob/4bc54b152796a0631c6557ef936c328bcbf9b5b9/R/gghighlight.R#L108-L229). ]
 
 ```{r}
 system.time({
@@ -209,9 +209,8 @@ If you need more guidance, focus on answering these two questions:
 - When does `count` first appear in the data frame?
 - When does the value of `y` become equal to the value of `count`?
 
-<!-- TODO: add a note that they should take some time to get familiar with this, and that they should spot 1) when count appears and 2) when count gets mapped to count -->
-
 ```{r, layout="l-body-outset", echo = FALSE}
+library(purrr)
 library(htmltools)
 library(reactable)
 idf <- map(internal_data_transformations, 1)
@@ -301,6 +300,12 @@ inherits(geom_bar(), "Layer")
 get_method_inheritance(geom_bar())
 ```
 
+The `Layer` ggproto is unexported, so you need to use the `:::` to grab it first when inspecting its methods.
+
+```{r}
+ggplot2:::Layer$compute_statistic
+```
+
 Note that `base::body()` does not work for ggproto methods out of the box:
 
 ```{r}
@@ -379,7 +384,7 @@ ggtrace_inspect_n(x = p, method = StatCount$compute_group) # Defined in `StatCou
 
 And what do these methods return?
 
-Let's first inspect the output of `StatCount$compute_group` each time it is called:^[The `cond` argument takes an expression to be evaluated to TRUE/FALSE inside of the method's execution environment. The `._counter_` variable is an internal variable that `ggtrace_*` functions updates to keep track of how many times the method has been called so far. You can read more in the [Tracing context section](https://yjunechoe.github.io/ggtrace/reference/ggtrace_inspect_return.html#tracing-context) of the docs. ]
+Let's first inspect the output of `StatCount$compute_group` each time it is called using the function `ggtrace_inspect_return()` from the `{ggtrace}` package:^[The `cond` argument takes an expression to be evaluated to TRUE/FALSE inside of the method's execution environment. The `._counter_` variable is an internal variable that `ggtrace_*` functions updates to keep track of how many times the method has been called so far. You can read more in the [Tracing context section](https://yjunechoe.github.io/ggtrace/reference/ggtrace_inspect_return.html#tracing-context) of the docs. ]
 
 ```{r}
 list(
@@ -474,15 +479,17 @@ And the output data looks like this:
 StatCount_compute_group_1()
 ```
 
+It just boils down to `group_by()` + `sumarize()` !
+
 ### 4. Wrapping up
 
 So far, we have discovered the following about the output of `StatCount$compute_group`:
 
-- The `count` column is calculated from `data$x` and (`data$weight` if it exists)
+- The `count` column is calculated from `data$x` and `data$weight` (if it exists)
 - The `prop` column is derived from `count`
-- The `x` column is the unique values of `x` in the input `data`
+- The `x` column is the unique values of `x` from the input `data`
 
-The last piece of the puzzle are the `width` and `flipped_aes` columns. These are actually straightforward - they are parameters first passed into `Stat$compute_layer` and then passed down to the other compute methods from there. When `StatCount$compute_group` receives them, it uses that information to inform how it should transform the data (in this case, they're just added as columns).
+The last piece of the puzzle are the `width` and `flipped_aes` columns. These are actually straightforward - they are parameters first passed into `Stat$compute_layer` and then passed down to the other compute methods from there. When `StatCount$compute_group` receives them, it uses that information to inform how it should transform the data (here, they're just added as columns).
 
 As such, `width` and `flipped_aes` exist in the formals of our captured function from above:
 
@@ -490,7 +497,7 @@ As such, `width` and `flipped_aes` exist in the formals of our captured function
 formals(StatCount_compute_group_1)[c("width", "flipped_aes")]
 ```
 
-If you're wondering about their origin, they're retrieved/calculated in the `StatCount$setup_params` method. If you're interested you can open the details below, but it's not critical information for keeping up with this blog post.
+If you're wondering about their origin, they're retrieved/calculated in the `StatCount$setup_params` method. If you're interested you can open the details below, but it's not critical information for moving forward.
 
 <details>
 <summary>`StatCount$setup_params`</summary>
@@ -521,11 +528,11 @@ So there we have it! Hopefully this provides a better sense of what was happenin
 ggbody(ggplot2:::ggplot_build.ggplot)[[18]]
 ```
 
-Next, let's explore _how_ this new `count` variable got mapped to the `y` aesthetic, even though we never said anything about the `y` when we created our bar plot.
+Next, let's explore _how_ this new `count` variable got mapped to the `y` aesthetic. We never said anything about the `y` when we created our bar plot, so how does ggplot know what to do?
 
 ## The _How_ - delayed aesthetic mapping
 
-Recall that Step 19 of `ggplot_build()` was responsible for the changing the data such that a new variable `count` was added with the same value as `count`, as detected in Step 20:
+Recall that Step 19 of `ggplot_build()` was responsible for the changing the data such that a new column `y` was added with the same value as `count`, as detected in Step 20:
 
 ```{r}
 internal_data_transformations$Step20
@@ -556,9 +563,9 @@ Note that both `x` and `y` are mapped to `after_stat(count)` by default. It migh
 StatCount$required_aes
 ```
 
-Basically, `required_aes` forces the user to override the aesthetic mapping for either `x` or `y`, which naturally leads to leftover of the two defaulting to `after_stat(count)`. Neat!
+Basically, `required_aes` forces the user to override the aesthetic mapping for either `x` or `y`, which naturally leads to the other defaulting to `after_stat(count)`. Neat!
 
-So to go back to our plot, there was an implicit `aes(y = after_stat(count))` all along:
+So to go back to our plot, there was an implicit `aes(y = after_stat(count))` all along, which we now make explicit here:
 
 ```{r}
 ggplot(penguins) +
@@ -567,15 +574,15 @@ ggplot(penguins) +
   geom_bar(aes(y = after_stat(count)))
 ```
 
-The expression inside `after_stat()` is evaluated in a **data-masking** context, much like `aes()` or `{dplyr}` verbs like `mutate()` and `summarize()`. This is why you can just refer to `count` and it will grab the column vector from the data transformed by the stat.
+The expression inside `after_stat()` is evaluated in what's called a [**data-masked** context](https://rlang.r-lib.org/reference/topic-data-mask.html), much like `aes()` or `{dplyr}` verbs like `mutate()` and `summarize()`. This is why you can just refer to `count` as if it were a variable name and `after_stat()` will grab that column vector from the data transformed by the stat.
 
-Let's test this hypothesis out with an example output from the stat, using `ggtrace_inspect_return()` on `Stat$compute_layer` again:
+Let's test this hypothesis out with an example output from the stat, again using `ggtrace_inspect_return()` on `Stat$compute_layer`:
 
 ```{r}
 ggtrace_inspect_return(p, Stat$compute_layer)
 ```
 
-All of these variables should theoretically be accessible by `after_stat()`, and indeed this is the case. Here are examples of mapping `y` to each variable in the data after the Stat transformation, converting to numeric as needed to conform to the bar plot's continuous y scale.
+All of these variables should theoretically be accessible by `after_stat()`, and indeed this is the case. Here we map `y` to each variable in the data after the Stat transformation, converting to numeric as needed to conform to the plot's continuous y scale.
 
 ```{r, out.width="50%", fig.show='hold'}
 # Plots are printed left -> right and top -> bottom
@@ -590,20 +597,20 @@ p + aes(y = after_stat(as.numeric(PANEL)))
 p + aes(y = after_stat(group))
 ```
 
-Before I get sacked, I should add that these are demonstrations for a concept - just because you _can_, doesn't mean you _should_! But hopefully this is a clear demonstration of the point that `after_stat()` gives you access to columns from the data after it has been transformed by the Stat.
+Before I get sacked, I should add that just because you _can_, doesn't mean you _should_! But hopefully this is a clear demonstration of the point that `after_stat()` gives you access to columns from the data after it has been transformed by the Stat.
 
 #### Another practice with computed variable `prop`
 
-Let's quickly look at another example. You might have noticed how the new `prop` column that's added to the data by `StatCount` has just been 1, which isn't too informative. What is `prop` and when is it ever useful?
+Let's quickly look at another example. You might have noticed how the new `prop` column that's added to the data by `StatCount` has just been 1, which isn't too useful. What is `prop` and when does it ever take on a different value?
 
-If you look at the documentation for `geom_bar()` under "Computed variables", you will see the following descriptions for the two computed variables `count` and `prop`:
+If you look at the documentation for `geom_bar()` under the section "Computed variables", you will see the following descriptions for the two computed variables `count` and `prop`:
 
 - **count**: number of points in the bin
 - **prop**: groupwise proportion
 
 The value of `prop` was 1 in our previous plot because each bar was assigned a unique `group`, so `StatCount$compute_group` was only ever computing over 1-row data.
 
-If we wanted to change that, we'd need to specify an explicit `group`-ing that creates fewer groups than the number of bars (i.e., the interaction of all discrete variables).
+If we wanted to change that, we'd need to specify an explicit grouping that creates fewer groups than the number of bars (i.e., the interaction of all discrete variables).
 
 In this example, we make `geom_bar()` make a bar for each category of `species` as mapped to `x`, but internally represent the three bars as belonging to two groups: 
 
@@ -630,7 +637,7 @@ p_bar_prop +
   aes(fill = after_stat(as.factor(group)))
 ```
 
-Not only does this hacky post-hoc way add unnecessary steps, it's also dangerous because of the use of the `aes()` function outside of a layer that is mapping `after_stat()` variables _globally_. You should avoid this because a variable returned by the `Stat` can have different values and mean different things across layers, which can lead to some surprising behavior like this:^[The label geom, by virtue of not having any groupings specified, is assigned a group value of -1 (see `ggplot2:::NO_GROUP`). This introduces another group category to the pre-existing groups 1 and 2 created by the bar layer, and so this has consequences for when the fill scale steps in to derive values of `fill` from the levels of `group`. ]
+But not only does this hacky post-hoc way add unnecessary steps, it's also dangerous because of the use of the `aes()` to map a `after_stat()` variable _globally_. You should avoid this because different layers can have different stats, so the same computed variable can have different values and mean different things across layers, which can lead to some surprising behavior like this:^[The label geom, by virtue of not having any groupings specified, is assigned a group value of -1 (see `ggplot2:::NO_GROUP`). This introduces another group category to the pre-existing groups 1 and 2 created by the bar layer, and so this has consequences for when the fill scale steps in to derive values of `fill` from the levels of `group`. ]
 
 ```{r}
 p_bar_prop +
@@ -638,7 +645,7 @@ p_bar_prop +
   geom_label(aes(x = 2, y = 100, label = "Hello"), stat = "unique")
 ```
 
-A more principled way is to go back to the aes specifications for the bar layer and visually mark the underlying grouping for the bars with a non-positional discrete aesthetic, like `fill`:
+A safer, more principled way is to go back inside the `aes()` for the bar layer and visually mark the underlying grouping for the bars with a non-positional discrete aesthetic, like `fill`:
 
 ```{r}
 p_bar_group_fill <- ggplot(penguins) +
@@ -655,7 +662,7 @@ p_bar_group_fill
 For a quick experiment, note what happens if you only map `species == "Adelie"` to `fill`:
 
 ```{r}
-p_bar_fill <- ggplot(penguins) +
+p_bar_only_fill <- ggplot(penguins) +
   geom_bar(
     aes(
       x = species,
@@ -663,21 +670,21 @@ p_bar_fill <- ggplot(penguins) +
       fill = species == "Adelie"
     )
   )
-p_bar_fill
+p_bar_only_fill
 ```
 
 The two look the same where `count` is concerned, but notice that `prop` is calculated differently:
 
 ```{r, out.width="50%", fig.show='hold'}
 p_bar_group_fill + aes(y = after_stat(prop))
-p_bar_fill + aes(y = after_stat(prop))
+p_bar_only_fill + aes(y = after_stat(prop))
 ```
 
-As you might have guessed, this is because the underlying grouping structure is different:
+As you might have guessed, this is because the underlying grouping structure is different:^[Note also how `group` appears in different column positions. When `group` is explicitly supplied, it appears to the **left** of `PANEL`, and when `group` is derived it appears to the **right** of `PANEL`. Where and how does this happen? I'll leave this question as an exercise (hint: look at `Layer$compute_aesthetics` and `ggplot2:::add_group()`). ]
 
 ```{r}
 ggtrace_inspect_return(p_bar_group_fill, Stat$compute_layer)
-ggtrace_inspect_return(p_bar_fill, Stat$compute_layer)
+ggtrace_inspect_return(p_bar_only_fill, Stat$compute_layer)
 ```
 
 **Section Fin.**
