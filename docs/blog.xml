@@ -12,7 +12,20 @@
       <link>https://yjunechoe.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Thu, 24 Jun 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 17 Mar 2022 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Demystifying delayed aesthetic evaluation: Part 1</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>https://yjunechoe.github.io/posts/2022-03-10-ggplot2-delayed-aes-1</link>
+      <description>Exploring the logic of `after_stat()` to peek inside ggplot internals</description>
+      <category>data visualization</category>
+      <category>ggplot2</category>
+      <category>ggplot internals</category>
+      <category>tutorial</category>
+      <guid>https://yjunechoe.github.io/posts/2022-03-10-ggplot2-delayed-aes-1</guid>
+      <pubDate>Thu, 17 Mar 2022 00:00:00 +0000</pubDate>
+      <media:content url="https://yjunechoe.github.io/posts/2022-03-10-ggplot2-delayed-aes-1/ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-1-1.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
     <item>
       <title>Setting up and debugging custom fonts</title>
       <dc:creator>June Choe</dc:creator>

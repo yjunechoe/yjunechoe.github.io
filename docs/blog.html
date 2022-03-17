@@ -2084,6 +2084,12 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
     outline: 1px solid black;
   }
 
+  d-article h5 {
+    font-size: 18px;
+    text-decoration: underline;
+    margin-bottom: 0.5em;
+  }
+
   em {
     margin-right: 3px;
   }
@@ -2257,7 +2263,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   details {
     background-color: #008bff0f;
     outline: 2px solid #38566F;
-    padding: 0.5rem;
+    padding: 1rem;
   }
 
   /* Block Quotes */
@@ -2343,6 +2349,9 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
     font-size: 0.8em;
   }
 
+  a > code {
+      font-weight: bold;
+  }
 
 
   /* Code Chunk */
@@ -2359,6 +2368,10 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   /* R chunk */
   d-article div.sourceCode pre.r {
     background-color: #faffff;
+  }
+
+  d-article details div.sourceCode pre.r {
+      background-color: white;
   }
 
   /*
@@ -2674,6 +2687,25 @@ function init_posts_list() {
 <div class="posts-container posts-with-sidebar posts-apply-limit l-screen-inset">
 <div class="posts-list">
 <h1 class="posts-list-caption" data-caption="Blog Posts">Blog Posts</h1>
+<a href="posts/2022-03-10-ggplot2-delayed-aes-1/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["data visualization","ggplot2","ggplot internals","tutorial"]}</script>
+<div class="metadata">
+<div class="publishedDate">March 17, 2022</div>
+</div>
+<div class="thumbnail">
+<img src="posts/2022-03-10-ggplot2-delayed-aes-1/ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-1-1.png"/>
+</div>
+<div class="description">
+<h2>Demystifying delayed aesthetic evaluation: Part 1</h2>
+<div class="dt-tags">
+<div class="dt-tag">data visualization</div>
+<div class="dt-tag">ggplot2</div>
+<div class="dt-tag">ggplot internals</div>
+<div class="dt-tag">tutorial</div>
+</div>
+<p>Exploring the logic of `after_stat()` to peek inside ggplot internals</p>
+</div>
+</a>
 <a href="posts/2021-06-24-setting-up-and-debugging-custom-fonts/" class="post-preview">
 <script class="post-metadata" type="text/json">{"categories":["data visualization","ggplot2","typography","tutorial"]}</script>
 <div class="metadata">
@@ -2751,7 +2783,7 @@ function init_posts_list() {
 <div class="publishedDate">Nov. 3, 2020</div>
 </div>
 <div class="thumbnail">
-<img src="posts/2020-11-03-tidytuesday-2020-week-45/preview.png"/>
+<img data-src="posts/2020-11-03-tidytuesday-2020-week-45/preview.png"/>
 </div>
 <div class="description">
 <h2>TidyTuesday 2020 week 45</h2>
@@ -3095,7 +3127,7 @@ function init_posts_list() {
 <ul>
 <li>
 <a href="#category:Articles">Articles</a>
-<span class="category-count">(23)</span>
+<span class="category-count">(24)</span>
 </li>
 <li>
 <a href="#category:colors">colors</a>
@@ -3103,7 +3135,7 @@ function init_posts_list() {
 </li>
 <li>
 <a href="#category:data_visualization">data visualization</a>
-<span class="category-count">(17)</span>
+<span class="category-count">(18)</span>
 </li>
 <li>
 <a href="#category:data_wrangling">data wrangling</a>
@@ -3118,8 +3150,12 @@ function init_posts_list() {
 <span class="category-count">(3)</span>
 </li>
 <li>
+<a href="#category:ggplot_internals">ggplot internals</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
 <a href="#category:ggplot2">ggplot2</a>
-<span class="category-count">(14)</span>
+<span class="category-count">(15)</span>
 </li>
 <li>
 <a href="#category:mixed-effects_models">mixed-effects models</a>
@@ -3171,7 +3207,7 @@ function init_posts_list() {
 </li>
 <li>
 <a href="#category:tutorial">tutorial</a>
-<span class="category-count">(6)</span>
+<span class="category-count">(7)</span>
 </li>
 <li>
 <a href="#category:typography">typography</a>
