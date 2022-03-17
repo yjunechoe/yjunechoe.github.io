@@ -104,9 +104,9 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <meta property="og:type" content="article"/>
 <meta property="og:description" content="Exploring the logic of `after_stat()` to peek inside ggplot internals"/>
 <meta property="og:url" content="https://yjunechoe.github.io/posts/2022-03-10-ggplot2-delayed-aes-1/"/>
-<meta property="og:image" content="https://yjunechoe.github.io/posts/2022-03-10-ggplot2-delayed-aes-1/ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-1-1.png"/>
-<meta property="og:image:width" content="1248"/>
-<meta property="og:image:height" content="768"/>
+<meta property="og:image" content="https://yjunechoe.github.io/posts/2022-03-10-ggplot2-delayed-aes-1/preview.png"/>
+<meta property="og:image:width" content="1457"/>
+<meta property="og:image:height" content="872"/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:site_name" content="June Choe"/>
 
@@ -115,21 +115,21 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <meta property="twitter:title" content="June Choe: Demystifying delayed aesthetic evaluation: Part 1"/>
 <meta property="twitter:description" content="Exploring the logic of `after_stat()` to peek inside ggplot internals"/>
 <meta property="twitter:url" content="https://yjunechoe.github.io/posts/2022-03-10-ggplot2-delayed-aes-1/"/>
-<meta property="twitter:image" content="https://yjunechoe.github.io/posts/2022-03-10-ggplot2-delayed-aes-1/ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-1-1.png"/>
-<meta property="twitter:image:width" content="1248"/>
-<meta property="twitter:image:height" content="768"/>
+<meta property="twitter:image" content="https://yjunechoe.github.io/posts/2022-03-10-ggplot2-delayed-aes-1/preview.png"/>
+<meta property="twitter:image:width" content="1457"/>
+<meta property="twitter:image:height" content="872"/>
 <meta property="twitter:site" content="@yjunechoe"/>
 
 <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","date","output","editor_options","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["Demystifying delayed aesthetic evaluation: Part 1"]},{"type":"character","attributes":{},"value":["Exploring the logic of `after_stat()` to peek inside ggplot internals"]},{"type":"character","attributes":{},"value":["data visualization","ggplot2","ggplot internals","tutorial"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]},{"type":"character","attributes":{},"value":["0000-0002-0701-921X"]}]}]},{"type":"character","attributes":{},"value":["03-17-2022"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained","css"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["styles.css"]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["chunk_output_type"]}},"value":[{"type":"character","attributes":{},"value":["console"]}]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io/posts/2022-03-10-ggplot2-delayed-aes-1/"]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","date","output","editor_options","preview","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["Demystifying delayed aesthetic evaluation: Part 1"]},{"type":"character","attributes":{},"value":["Exploring the logic of `after_stat()` to peek inside ggplot internals"]},{"type":"character","attributes":{},"value":["data visualization","ggplot2","ggplot internals","tutorial"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]},{"type":"character","attributes":{},"value":["0000-0002-0701-921X"]}]}]},{"type":"character","attributes":{},"value":["03-17-2022"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained","css"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["styles.css"]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["chunk_output_type"]}},"value":[{"type":"character","attributes":{},"value":["console"]}]},{"type":"character","attributes":{},"value":["preview.png"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io/posts/2022-03-10-ggplot2-delayed-aes-1/"]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["ggplot2-delayed-aes-1_files/anchor-4.2.2/anchor.min.js","ggplot2-delayed-aes-1_files/bowser-1.9.3/bowser.min.js","ggplot2-delayed-aes-1_files/distill-2.2.21/template.v2.js","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-1-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-1-2.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-10-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-10-2.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-10-3.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-10-4.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-10-5.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-10-6.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-10-7.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-10-8.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-11-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-11-2.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-11-3.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-11-4.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-11-5.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-11-6.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-11-7.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-11-8.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-12-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-12-2.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-12-3.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-12-4.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-12-5.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-12-6.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-12-7.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-12-8.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-13-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-14-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-15-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-16-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-16-2.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-17-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-17-2.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-18-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-18-2.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-19-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-19-2.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-20-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-20-2.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-21-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-21-2.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-22-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-23-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-23-2.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-24-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-24-2.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-25-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-26-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-27-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-27-2.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-28-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-29-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-3-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-30-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-31-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-32-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-33-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-34-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-35-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-36-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-37-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-38-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-4-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-5-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-6-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-7-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-8-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-9-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-9-2.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-9-3.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-9-4.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-9-5.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-9-6.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-9-7.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-9-8.png","ggplot2-delayed-aes-1_files/header-attrs-2.11/header-attrs.js","ggplot2-delayed-aes-1_files/jquery-3.6.0/jquery-3.6.0.js","ggplot2-delayed-aes-1_files/jquery-3.6.0/jquery-3.6.0.min.js","ggplot2-delayed-aes-1_files/jquery-3.6.0/jquery-3.6.0.min.map","ggplot2-delayed-aes-1_files/pagedtable-1.1/css/pagedtable.css","ggplot2-delayed-aes-1_files/pagedtable-1.1/js/pagedtable.js","ggplot2-delayed-aes-1_files/popper-2.6.0/popper.min.js","ggplot2-delayed-aes-1_files/tippy-6.2.7/tippy-bundle.umd.min.js","ggplot2-delayed-aes-1_files/tippy-6.2.7/tippy-light-border.css","ggplot2-delayed-aes-1_files/tippy-6.2.7/tippy.css","ggplot2-delayed-aes-1_files/tippy-6.2.7/tippy.umd.min.js","ggplot2-delayed-aes-1_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["ggplot2-delayed-aes-1_files/anchor-4.2.2/anchor.min.js","ggplot2-delayed-aes-1_files/bowser-1.9.3/bowser.min.js","ggplot2-delayed-aes-1_files/distill-2.2.21/template.v2.js","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-1-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-1-2.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-10-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-10-2.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-10-3.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-10-4.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-10-5.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-10-6.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-10-7.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-10-8.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-11-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-11-2.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-11-3.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-11-4.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-11-5.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-11-6.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-11-7.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-11-8.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-12-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-12-2.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-12-3.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-12-4.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-12-5.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-12-6.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-12-7.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-12-8.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-13-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-14-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-15-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-16-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-16-2.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-17-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-17-2.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-18-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-18-2.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-19-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-19-2.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-20-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-20-2.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-21-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-21-2.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-22-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-23-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-23-2.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-24-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-24-2.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-25-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-26-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-27-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-27-2.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-28-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-29-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-3-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-30-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-31-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-32-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-33-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-34-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-35-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-36-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-37-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-38-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-4-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-5-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-6-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-7-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-8-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-9-1.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-9-2.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-9-3.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-9-4.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-9-5.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-9-6.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-9-7.png","ggplot2-delayed-aes-1_files/figure-html5/unnamed-chunk-9-8.png","ggplot2-delayed-aes-1_files/header-attrs-2.11/header-attrs.js","ggplot2-delayed-aes-1_files/jquery-3.6.0/jquery-3.6.0.js","ggplot2-delayed-aes-1_files/jquery-3.6.0/jquery-3.6.0.min.js","ggplot2-delayed-aes-1_files/jquery-3.6.0/jquery-3.6.0.min.map","ggplot2-delayed-aes-1_files/pagedtable-1.1/css/pagedtable.css","ggplot2-delayed-aes-1_files/pagedtable-1.1/js/pagedtable.js","ggplot2-delayed-aes-1_files/popper-2.6.0/popper.min.js","ggplot2-delayed-aes-1_files/tippy-6.2.7/tippy-bundle.umd.min.js","ggplot2-delayed-aes-1_files/tippy-6.2.7/tippy-light-border.css","ggplot2-delayed-aes-1_files/tippy-6.2.7/tippy.css","ggplot2-delayed-aes-1_files/tippy-6.2.7/tippy.umd.min.js","ggplot2-delayed-aes-1_files/webcomponents-2.0.0/webcomponents.js","preview.png"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2697,9 +2697,10 @@ error:</p>
 <p>But we don’t just have to <em>infer</em> that <code>count</code> is
 computed by the layer. We can see it from the output of a layer’s data
 transformation pipeline, which we can get with
-<code>layer_data()</code>. Here, we pass <code>layer_data()</code> our
-bar plot, which by default returns us the data for the <em>first</em>
-layer:</p>
+<code>layer_data()</code>.<a href="#fn1" class="footnote-ref"
+id="fnref1" role="doc-noteref"><sup>1</sup></a> Here, we pass
+<code>layer_data()</code> our bar plot, which by default returns us the
+data for the <em>first</em> layer:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>penguins</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>species</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
@@ -2893,8 +2894,8 @@ information about one bar.</p>
   2 Chinstrap    68
   3 Gentoo      119</code></pre>
 </div>
-<p>It’s <code>{dplyr}</code> all the way down!<a href="#fn1"
-class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>It’s <code>{dplyr}</code> all the way down!<a href="#fn2"
+class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <p>If we take the notion of delayed aesthetic evaluation seriously, then
 <em>all columns</em> in the dataframe returned by
 <code>inspect_after_stat()</code> should be accessible with
@@ -3062,8 +3063,8 @@ groupings post-hoc, by grabbing the <code>group</code> variable in the
 to map an <code>after_stat()</code> variable <em>globally</em>. You
 should avoid this because different layers do different statistical
 transformations (we’ll discuss this shortly in the next section), and
-that can lead to surprising behaviors like this:<a href="#fn2"
-class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+that can lead to surprising behaviors like this:<a href="#fn3"
+class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>p_bar_prop</span> <span class='op'>+</span>
@@ -3112,8 +3113,8 @@ grouping there:</p>
 <p>As you might have guessed, we get a different plot because the
 underlying grouping structure is different. See how this does not change
 the value of <code>count</code> (absolute) but does change the value of
-<code>prop</code> (relative):<a href="#fn3" class="footnote-ref"
-id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<code>prop</code> (relative):<a href="#fn4" class="footnote-ref"
+id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># 2 groups present</span>
@@ -3137,8 +3138,8 @@ id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <p>Let’s conclude this section by putting the issue of practicality back
 on the table.</p>
 <p>The most common usecase for <code>prop</code> is to use it in
-conjunction with something like <code>group = 1</code><a href="#fn4"
-class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> to
+conjunction with something like <code>group = 1</code><a href="#fn5"
+class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> to
 “normalize” the y-scale within each facet. This is useful when the data
 has unbalanced samples across panels but you want to <em>emphasize the
 relative distribution of categories</em> in the x-axis within each
@@ -3163,8 +3164,8 @@ panel:</p>
 </div>
 <p>We see that <code>aes(group = 1)</code> had the effect of making sure
 that <code>prop</code> adds up to 1 <em>within each facet</em> because
-all bars in a panel share the same group.<a href="#fn5"
-class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+all bars in a panel share the same group.<a href="#fn6"
+class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
 <h2 id="baby-steps-to-the-stat-ggproto">Baby steps to the Stat
 ggproto</h2>
 <h3 id="same-geom-different-stats">Same geom, different stats</h3>
@@ -3204,8 +3205,8 @@ we have is a layer for <code>geom_bar()</code>!</p>
 <p>Well it turns out that <code>geom_bar()</code> and
 <code>stat_count()</code> are two sides of the same coin. Both these
 functions return a <em>layer</em> that has a “bar” <strong>geom</strong>
-a “count” <strong>stat</strong>.<a href="#fn6" class="footnote-ref"
-id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+a “count” <strong>stat</strong>.<a href="#fn7" class="footnote-ref"
+id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_bar</a></span><span class='op'>(</span><span class='op'>)</span>
@@ -3341,8 +3342,8 @@ the functions that generate these layers have names like
 <em>less transparent</em> (like
 <code>geom_col(stat = "identity")</code>). But it’s also worth keeping
 in mind that all defaults are carefully curated by the developers to
-improve user experience.<a href="#fn7" class="footnote-ref" id="fnref7"
-role="doc-noteref"><sup>7</sup></a></p>
+improve user experience.<a href="#fn8" class="footnote-ref" id="fnref8"
+role="doc-noteref"><sup>8</sup></a></p>
 <h3 id="same-stat-different-geoms">Same stat, different geoms</h3>
 <p>If all layers have a stat and a geom, and if <code>geom_*()</code>
 layers have default stats, then <code>stat_*()</code> layers must also
@@ -3511,42 +3512,47 @@ class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"><
 role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>Okay, not quite <em>all</em> the way
+<li id="fn1" role="doc-endnote"><p>I introduce <code>layer_data()</code>
+in a <a
+href="https://yjunechoe.github.io/posts/2021-01-17-random-sampling-a-table-animation/">previous
+blog post on stat layers</a><a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>Okay, not quite <em>all</em> the way
 down because you still have to make and draw graphical objects that
 actually make up the figure, but this is a substantial part of the
-internals and you get the point.<a href="#fnref1" class="footnote-back"
+internals and you get the point.<a href="#fnref2" class="footnote-back"
 role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>The label geom, by virtue of not
+<li id="fn3" role="doc-endnote"><p>The label geom, by virtue of not
 having any groupings specified, is assigned a group value of -1 (see
 <code>ggplot2:::NO_GROUP</code>). This introduces another group category
 to the pre-existing groups 1 and 2 created by the bar layer, and so this
 has consequences for when the fill scale steps in to derive values of
 <code>fill</code> from the levels of <code>group</code>. <a
-href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p>Note also how <code>group</code>
+href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>Note also how <code>group</code>
 appears in different column positions. When <code>group</code> is
 explicitly supplied, it appears to the <strong>left</strong> of
 <code>PANEL</code>, and when <code>group</code> is derived it appears to
 the <strong>right</strong> of <code>PANEL</code>. Where and how does
 this happen? I’ll leave this question as an exercise (hint: look at
 <code>Layer$compute_aesthetics</code> and
-<code>ggplot2:::add_group()</code>). <a href="#fnref3"
+<code>ggplot2:::add_group()</code>). <a href="#fnref4"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4" role="doc-endnote"><p>You can replace <code>1</code> with
+<li id="fn5" role="doc-endnote"><p>You can replace <code>1</code> with
 any length-1 value - the point is to just not create any groupings.<a
-href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5" role="doc-endnote"><p>Why not <em>across</em> facets?
+href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p>Why not <em>across</em> facets?
 That’s a good question and has to do with how by-panel and by-group
 computations are done inside ggplot. We’ll look at this more in detail
-in <a href="">Part 2</a>!<a href="#fnref5" class="footnote-back"
+in <a href="">Part 2</a>!<a href="#fnref6" class="footnote-back"
 role="doc-backlink">↩︎</a></p></li>
-<li id="fn6" role="doc-endnote"><p>As well as a “stack”
+<li id="fn7" role="doc-endnote"><p>As well as a “stack”
 <strong>position</strong>, but we won’t go into that in this blog post
-series.<a href="#fnref6" class="footnote-back"
+series.<a href="#fnref7" class="footnote-back"
 role="doc-backlink">↩︎</a></p></li>
-<li id="fn7" role="doc-endnote"><p>don’t you appreciate how you can just
+<li id="fn8" role="doc-endnote"><p>Don’t you appreciate how you can just
 use <code>geom_histogram()</code> to draw a histogram without having to
-think about <code>stat = "bin"</code> every time?<a href="#fnref7"
+think about <code>stat = "bin"</code> every time?<a href="#fnref8"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>

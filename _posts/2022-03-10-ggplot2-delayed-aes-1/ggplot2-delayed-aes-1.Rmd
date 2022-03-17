@@ -21,6 +21,7 @@ output:
     css: "styles.css"
 editor_options: 
   chunk_output_type: console
+preview: preview.png
 ---
 
 ```{r setup, include=FALSE}
@@ -78,7 +79,7 @@ ggplot(penguins, aes(species, y = count)) +
   geom_bar()
 ```
 
-But we don't just have to _infer_ that `count` is computed by the layer. We can see it from the output of a layer's data transformation pipeline, which we can get with `layer_data()`. Here, we pass `layer_data()` our bar plot, which by default returns us the data for the _first_ layer:
+But we don't just have to _infer_ that `count` is computed by the layer. We can see it from the output of a layer's data transformation pipeline, which we can get with `layer_data()`.^[I introduce `layer_data()` in a [previous blog post on stat layers](https://yjunechoe.github.io/posts/2021-01-17-random-sampling-a-table-animation/)] Here, we pass `layer_data()` our bar plot, which by default returns us the data for the _first_ layer:
 
 ```{r}
 p <- ggplot(penguins, aes(x = species)) +
@@ -455,7 +456,7 @@ inspect_after_stat(p_bar_identity)
 
 In sum, the variables that are available in the `after_stat()` is determined by what kind of `stat` a layer uses. And as we just saw, even if a layer is called a `geom_*()` it still has a `stat`. In fact, **every layer has a stat and a geom**, even though the functions that generate these layers have names like `stat_*()` and `geom_*()`.
 
-It should be noted that the choice of a default `stat` for `geom_*()` layers can range from _more transparent_ (like the pairing of `geom = "smooth"` and `stat = "smooth"` in `geom/stat_smooth()`) to _less transparent_ (like `geom_col(stat = "identity")`). But it's also worth keeping in mind that all defaults are carefully curated by the developers to improve user experience.^[don't you appreciate how you can just use `geom_histogram()` to draw a histogram without having to think about `stat = "bin"` every time?]
+It should be noted that the choice of a default `stat` for `geom_*()` layers can range from _more transparent_ (like the pairing of `geom = "smooth"` and `stat = "smooth"` in `geom/stat_smooth()`) to _less transparent_ (like `geom_col(stat = "identity")`). But it's also worth keeping in mind that all defaults are carefully curated by the developers to improve user experience.^[Don't you appreciate how you can just use `geom_histogram()` to draw a histogram without having to think about `stat = "bin"` every time?]
 
 ### Same stat, different geoms
 
