@@ -24,11 +24,10 @@ draft: true
 ---
 
 ```{r setup, include=FALSE}
-library(knitr)
 ragg_png = function(..., res = 150) {
   ragg::agg_png(..., res = res, units = "in")
 }
-opts_chunk$set(
+knitr::opts_chunk$set(
   comment = " ",
   echo = TRUE,
   message = FALSE,
@@ -36,7 +35,198 @@ opts_chunk$set(
   dev = "ragg_png",
   R.options = list(width = 80)
 )
+
+inspect_after_stat <- function(p, i = 1L) {
+  ._env <- environment()
+  .out <- NULL
+  suppressMessages({
+    trace(
+      what = "ggplot_build.ggplot",
+      tracer = substitute(assign(".out", data[[i]], envir = ._env), ._env),
+      at = 19L,
+      print = FALSE,
+      where = asNamespace("ggplot2")
+    )
+  })
+  ggplot_build(p)
+  suppressMessages({
+    untrace("ggplot_build.ggplot", where = asNamespace("ggplot2"))
+  })
+  .out
+}
 ```
+
+_This is a developing series of blog posts, scheduled for three parts:_
+
+- _[Part 1: Exploring the logic of `after_stat()` to peek inside ggplot internals](https://yjunechoe.github.io/posts/2022-03-10-ggplot2-delayed-aes-1/)_
+- _[Part 2: Exposing the `Stat` ggproto in functional programming terms]()_ (you are here)
+- _Part 3: Completing the picture with `after_scale()` and `stage()`_ (TBD)
+
+## Introduction
+
+Let's pick up where we left off in [Part 1](). If you'd like to follow along without going back to re-read it, the relevant code that we'll carry over here is provided below:
+
+<details>
+<summary>Setup from Part 1</summary>
+
+```{r}
+# Top-level setup
+library(ggplot2)
+library(dplyr)
+theme_set(theme_classic(14))
+penguins <- na.omit(palmerpenguins::penguins)
+
+# `p_bar` from Part 1
+p_bar <- ggplot(penguins, aes(species)) +
+  geom_bar(aes(fill = species))
+
+# Custom function to inspect `after_stat()`
+inspect_after_stat <- function(p, i = 1L) {
+  ._env <- environment()
+  .out <- NULL
+  suppressMessages({
+    trace(
+      what = "ggplot_build.ggplot",
+      tracer = substitute(assign(".out", data[[i]], envir = ._env), ._env),
+      at = 19L,
+      print = FALSE,
+      where = asNamespace("ggplot2")
+    )
+  })
+  ggplot_build(p)
+  suppressMessages({
+    untrace("ggplot_build.ggplot", where = asNamespace("ggplot2"))
+  })
+  .out
+}
+```
+
+</details>
+
+To recap, the big theme of [Part 1]() was about how _layers_ transform the raw data under the hood to return a version of the data that is _drawing-ready_ (the data returned by `layer_data()`). We saw that a lot happens over the course of this data transformation pipeline, one of which is the **statistical transformation**. We also saw how `after_stat()` allows users to _declare_ an aesthetic that waits to be mapped to the data until after this step.
+
+In this Part 2 of the series, we'll dig into the nitty-gritty details of the internal statistical transformation step and expose it in familiar functional programming terms. We'll work through the **What** (what are the inputs/outputs involved), and the **How** (how output is computed from the input). 
+
+In doing so, we'll learn that...
+
+1. Much of the work required for _rendering_ a ggplot2 (computation, drawing) happens _after_ the plot is defined
+
+2. ggproto objects are essentially _lists_, and ggproto methods are essentially _functions_
+
+Let's dive in!
+
+
+### Where it all happens: the `compute_statistic()` method
+
+If you got a chance to peak inside the collapsible details where `inspect_after_stat()` was defined in [Part 1](), you would have seen how the function was taking a snapshot of the internal variable `data` right after this line runs inside `ggplot_build()`:
+
+```{r}
+body(ggplot2:::ggplot_build.ggplot)[[18L]]
+```
+
+We don't have to understand what `ggplot_build()` or `by_layer()` is (yet!). In plain English, what happens in this line is that this function called `l$compute_static()` **applies the statistical transformation to the data associated with each layer, according to each layer's special instructions for doing so**.
+
+If you're wondering about the `l$` part of `l$compute_static()`, the `l` represents a `Layer` object created by `geom_*()` and `stat_*()` functions. You can read a bit more on this in the collapsible below:
+
+<details>
+<summary> Quick aside on `Layer` </summary>
+
+A ggplot object is essentially a list:
+
+```{r}
+typeof( unclass(p_bar) )
+```
+
+One of the elements in this list is called `layers`, and it contains all layers of a plot:
+
+```{r}
+p_bar$layers
+```
+
+We often add layers to a ggplot with `+`, like this:
+
+```{r}
+p_bar_text <- p_bar + 
+  geom_text(
+    aes(y = after_stat(count), label = after_stat(count)),
+    stat = "count", vjust = -0.4
+  )
+
+p_bar_text
+```
+
+This essentially _updates_ the `layers` element via appending^[For full details, see `ggplot2:::ggplot_add.Layer`.
+]:
+
+```{r}
+p_bar_text$layers
+```
+
+Each element of `layers` are `Layer` objects, which themselves are also [essentially lists](https://adv-r.hadley.nz/environments.html?#env-basics). The `compute_statistic()` function is simply one of the elements that live inside `Layer`, which we can reference with `ggplot2:::Layer$compute_statistic`:
+
+```{r}
+ggplot2:::Layer$compute_statistic
+```
+
+So, for now, whenever you see a piece of code in the form `{left}${right}()`, just think of the left-hand side as a **list** and the right-hand side as a **function**.
+
+In fact, 99% of ggplot internals is calling functions (ggproto methods) that are bundled up together in lists (ggproto objects). This is what ggproto boils down to if you remove the "gg" and the "proto" part of the "ggproto":
+
+```{r}
+Number <- list(
+  add = function(x, y) { x + y },
+  subtract = function(x, y) { x - y }
+)
+Number$add(1, 2)
+Number$subtract(12, 1)
+
+String <- list(
+  add = function(x, y) { paste0(x, y) },
+  subtract = function(x, y) { gsub(y, "", x) }
+)
+String$add(1, 2)
+String$subtract("12", "1")
+```
+
+In the toy example above, the _grammar_ specifies abstract operations like `add` and `subtract`, and the implementational details are left to _objects_ like `Number` and `String`.
+
+</details>
+
+Okay, so `l$compute_statistic()` or `Layer$compute_statistic()` (or `compute_statistic` for short) is a function that does the statistical transformation, but what is its input and output?
+
+
+
+For example, in the case of our `p_bar` example from [Part 1](), this function `compute_static` applies the statistical transformation according to the **stat** of our bar layer (`stat = "count"`), as well as some other parameters like `width`, which takes the default value of `0.9`. That's where `count`, `prop`, and `width` comes from:
+
+```{r}
+inspect_after_stat(p_bar, i = 1L)
+```
+
+
+
+
+
+```{r}
+inspect_before_stat <- function(p, i = 1L) {
+  ._env <- environment()
+  .out <- NULL
+  suppressMessages({
+    trace(
+      what = "ggplot_build.ggplot",
+      tracer = substitute(assign(".out", data[[i]], envir = ._env), ._env),
+      at = 18L,
+      print = FALSE,
+      where = asNamespace("ggplot2")
+    )
+  })
+  ggplot_build(p)
+  suppressMessages({
+    untrace("ggplot_build.ggplot", where = asNamespace("ggplot2"))
+  })
+  .out
+}
+```
+
 
 ## Setup
 

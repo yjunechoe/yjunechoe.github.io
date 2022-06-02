@@ -11,24 +11,30 @@ p {
 
 ## Publications
 
-### Submitted
+McWeeny, S., Choi, S. J., LaTourette, A., **Choe, J.**, Roberts, M. Y., & Norton, E. S. (2022). Rapid automatized naming (RAN) as a kindergarten predictor of future reading in English: A systematic review and meta-analysis. _Reading Research Quarterly_.
 
-**Choe, J.**, Cole, J., and Yoshida, M. (Under minor revision). The role of prosodic focus in the reanalysis of garden path sentences: Depth of semantic processing impedes the revision of an erroneous local analysis. https://doi.org/10.17605/OSF.IO/U6DQ5
-
-McWeeny, S., Choi, S. J., LaTourette, A., **Choe, J.**, Roberts, M. Y., & Norton, E. S. (Submitted).
-Rapid automatized naming as a kindergarten predictor of future reading: A meta-analysis.
+**Choe, J.**, Cole, J., and Yoshida, M. (Under revision). The role of prosodic focus in the reanalysis of garden path sentences: Depth of semantic processing impedes the revision of an erroneous local analysis. https://doi.org/10.17605/OSF.IO/U6DQ5
 
 ### Pre-print
 
 McWeeny, S., **Choe, J.**, & Norton, E. (2021). SnowGlobe: An Iterative Search Tool for Systematic Reviews and Meta-Analyses. https://doi.org/10.17605/OSF.IO/U25RN
 
+## Conference Proceedings
+
+### 2022
+
+**June Choe** and Anna Papafragou. (2022). Acquisition of subordinate nouns as pragmatic inference: Semantic alternatives modulate subordinate meanings. Proceedings of the 44th Annual Cognitive Science Society.
+
+May Pik Yu Chan, **June Choe**, Aini Li, Yiran Chen, Xin Gao and Nicole Holliday. (Submitted). Training and typological bias in ASR performance for world Englishes.
+
+
 ## Conference Presentations
 
 ### 2022
 
-**June Choe**, and Anna Papafragou. *Acquisition of subordinate nouns as pragmatic inference: Semantic alternatives modulate subordinate meanings*. Poster to be presented at the 2nd Experiments in Linguistic Meaning (ELM) conference.
+**June Choe**, and Anna Papafragou. *Acquisition of subordinate nouns as pragmatic inference: Semantic alternatives modulate subordinate meanings*. Poster presented at the 2nd Experiments in Linguistic Meaning (ELM) conference.
 
-**June Choe**, and Anna Papafragou. *Beyond the basic level: Levels of informativeness and the acquisition of subordinate nouns*. Poster to be presented at the 35th Annual Conference on Human Sentence Processing (HSP), 24-26 March 2022. University of California, Santa Cruz.
+**June Choe**, and Anna Papafragou. *Beyond the basic level: Levels of informativeness and the acquisition of subordinate nouns*. Poster presented at the 35th Annual Conference on Human Sentence Processing (HSP), 24-26 March 2022. University of California, Santa Cruz.
 
 ### 2020
 

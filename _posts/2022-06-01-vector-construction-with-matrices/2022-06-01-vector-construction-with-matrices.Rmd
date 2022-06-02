@@ -1,0 +1,116 @@
+---
+title: "Vector construction with matrices"
+description: |
+  Kidnapping multidimensional space
+categories:
+  - data visualization
+  - ggplot2
+  - tutorial
+base_url: https://yjunechoe.github.io
+author:
+  - name: June Choe
+    affiliation: University of Pennsylvania Linguistics
+    affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+    orcid_id: 0000-0002-0701-921X
+date: "`r Sys.Date()`"
+output:
+  distill::distill_article:
+    toc: true
+    self_contained: false
+    css: "../../styles.css"
+editor_options: 
+  chunk_output_type: console
+draft: true
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+ragg_png = function(..., res = 150) {
+  ragg::agg_png(..., res = res, units = "in")
+}
+opts_chunk$set(
+  comment = " ",
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  dev = "ragg_png",
+  R.options = list(width = 80)
+)
+```
+
+## Introduction
+
+Generate number sequences
+
+Sequentially:
+
+```{r}
+rep(1:3, 3)
+```
+
+Algebraically:
+
+```{r}
+0:8 %% 3 + 1
+```
+
+Geometrically:
+
+```{r}
+as.integer( matrix(rep(1:3, 3), ncol = 3) )
+```
+
+When sequences are understood as the "interweaving of multiple vectors":
+
+```{r}
+c(1, 3, 7, 2, 4, 8, 3, 6, 9)
+```
+
+Which contains members from three vectors:
+
+```{r}
+c(1, 2, 3)
+c(3, 4, 5)
+c(7, 8, 9)
+```
+
+This looks oddly like a matrix:
+
+```{r}
+matrix(1:9, ncol = 3)
+```
+
+The primary axis of matrices are columns (much like dataframes), so when we "collapse" a matrix into a vector, you "collect" the cell values starting from the top-left cell and zig zag top-to-bottom, left-to-right until you hit the bottom-right cell. 
+
+```{r}
+as.integer( matrix(1:9, ncol = 3) )
+```
+
+Exploiting this fact, it'd be nice if we could generate our number sequence via the use of a matrix:
+
+```{r}
+matrix(c(1, 3, 7, 2, 4, 8, 3, 6, 9), ncol = 3)
+```
+
+You'd be surprised to know that this is just our boring matrix that has been rotated:
+
+```{r}
+t( matrix(1:9, ncol = 3) )
+```
+
+We get our complex sequence if we collapse this rotated matrix:
+
+```{r}
+as.integer( t( matrix(1:9, ncol = 3) ) )
+```
+
+What are some other fun things we can do with matrices?
+
+```{r}
+library(dplyr)
+
+mtcars %>% 
+  mutate(across(vs:carb, identity, .names = "{.col}_copy"))
+```
+
+

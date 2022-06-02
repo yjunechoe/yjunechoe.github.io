@@ -1028,10 +1028,6 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
     margin-top: 1.5em;
   }
 
-  .figure img {
-    width: 100%;
-  }
-
   .figure .caption {
     color: rgba(0, 0, 0, 0.6);
     font-size: 12px;
@@ -1861,6 +1857,12 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 
       // hoverable references
       $('span.citation[data-cites]').each(function() {
+        if ($(this).children()[0].nodeName == "D-FOOTNOTE") {
+          var fn = $(this).children()[0]
+          $(this).html(fn.shadowRoot.querySelector("sup"))
+          $(this).id = fn.id
+          fn.remove()
+        }
         var refs = $(this).attr('data-cites').split(" ");
         var refHtml = refs.map(function(ref) {
           return "<p>" + $('#ref-' + ref).html() + "</p>";
@@ -1875,6 +1877,31 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
           placement: 'bottom-start'
         });
       });
+
+      // fix footnotes in tables (#411)
+      // replacing broken distill.pub feature
+      $('table d-footnote').each(function() {
+        // we replace internal showAtNode methode which is triggered when hovering a footnote
+        this.hoverBox.showAtNode = function(node) {
+          // ported from https://github.com/distillpub/template/pull/105/files
+          calcOffset = function(elem) {
+              let x = elem.offsetLeft;
+              let y = elem.offsetTop;
+              // Traverse upwards until an `absolute` element is found or `elem`
+              // becomes null.
+              while (elem = elem.offsetParent && elem.style.position != 'absolute') {
+                  x += elem.offsetLeft;
+                  y += elem.offsetTop;
+              }
+
+              return { left: x, top: y };
+          }
+          // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetTop
+          const bbox = node.getBoundingClientRect();
+          const offset = calcOffset(node);
+          this.show([offset.left + bbox.width, offset.top + bbox.height]);
+        }
+      })
 
       // clear polling timer
       clearInterval(tid);
@@ -1974,6 +2001,8 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
     // mark non-body figures created by knitr chunks as 100% width
     $('.layout-chunk').each(function(i, val) {
       var figures = $(this).find('img, .html-widget');
+      // ignore leaflet img layers (#106)
+      figures = figures.filter(':not(img[class*="leaflet"])')
       if ($(this).attr('data-layout') !== "l-body") {
         figures.css('width', '100%');
       } else {
@@ -1996,7 +2025,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
     // get rid of index.html references in header
     if (window.location.protocol !== "file:") {
       $('.distill-site-header a[href]').each(function(i,val) {
-        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+        $(this).attr('href', $(this).attr('href').replace(/^index[.]html/, "./"));
       });
     }
 
@@ -2035,7 +2064,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+  <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2566,14 +2595,17 @@ Misc.
 <ul>
 <li><a href="#publications">Publications</a>
 <ul>
-<li><a href="#submitted">Submitted</a></li>
 <li><a href="#pre-print">Pre-print</a></li>
+</ul></li>
+<li><a href="#conference-proceedings">Conference Proceedings</a>
+<ul>
+<li><a href="#section">2022</a></li>
 </ul></li>
 <li><a href="#conference-presentations">Conference Presentations</a>
 <ul>
-<li><a href="#section">2022</a></li>
-<li><a href="#section-1">2020</a></li>
-<li><a href="#section-2">2019</a></li>
+<li><a href="#section-1">2022</a></li>
+<li><a href="#section-2">2020</a></li>
+<li><a href="#section-3">2019</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -2585,34 +2617,43 @@ p {
 }
 </style>
 <h2 id="publications">Publications</h2>
-<h3 id="submitted">Submitted</h3>
-<p><strong>Choe, J.</strong>, Cole, J., and Yoshida, M. (Under minor
+<p>McWeeny, S., Choi, S. J., LaTourette, A., <strong>Choe, J.</strong>,
+Roberts, M. Y., &amp; Norton, E. S. (2022). Rapid automatized naming
+(RAN) as a kindergarten predictor of future reading in English: A
+systematic review and meta-analysis. <em>Reading Research
+Quarterly</em>.</p>
+<p><strong>Choe, J.</strong>, Cole, J., and Yoshida, M. (Under
 revision). The role of prosodic focus in the reanalysis of garden path
 sentences: Depth of semantic processing impedes the revision of an
 erroneous local analysis. <a
 href="https://doi.org/10.17605/OSF.IO/U6DQ5"
 class="uri">https://doi.org/10.17605/OSF.IO/U6DQ5</a></p>
-<p>McWeeny, S., Choi, S. J., LaTourette, A., <strong>Choe, J.</strong>,
-Roberts, M. Y., &amp; Norton, E. S. (Submitted). Rapid automatized
-naming as a kindergarten predictor of future reading: A
-meta-analysis.</p>
 <h3 id="pre-print">Pre-print</h3>
 <p>McWeeny, S., <strong>Choe, J.</strong>, &amp; Norton, E. (2021).
 SnowGlobe: An Iterative Search Tool for Systematic Reviews and
 Meta-Analyses. <a href="https://doi.org/10.17605/OSF.IO/U25RN"
 class="uri">https://doi.org/10.17605/OSF.IO/U25RN</a></p>
-<h2 id="conference-presentations">Conference Presentations</h2>
+<h2 id="conference-proceedings">Conference Proceedings</h2>
 <h3 id="section">2022</h3>
+<p><strong>June Choe</strong> and Anna Papafragou. (2022). Acquisition
+of subordinate nouns as pragmatic inference: Semantic alternatives
+modulate subordinate meanings. Proceedings of the 44th Annual Cognitive
+Science Society.</p>
+<p>May Pik Yu Chan, <strong>June Choe</strong>, Aini Li, Yiran Chen, Xin
+Gao and Nicole Holliday. (Submitted). Training and typological bias in
+ASR performance for world Englishes.</p>
+<h2 id="conference-presentations">Conference Presentations</h2>
+<h3 id="section-1">2022</h3>
 <p><strong>June Choe</strong>, and Anna Papafragou. <em>Acquisition of
 subordinate nouns as pragmatic inference: Semantic alternatives modulate
-subordinate meanings</em>. Poster to be presented at the 2nd Experiments
-in Linguistic Meaning (ELM) conference.</p>
+subordinate meanings</em>. Poster presented at the 2nd Experiments in
+Linguistic Meaning (ELM) conference.</p>
 <p><strong>June Choe</strong>, and Anna Papafragou. <em>Beyond the basic
 level: Levels of informativeness and the acquisition of subordinate
-nouns</em>. Poster to be presented at the 35th Annual Conference on
-Human Sentence Processing (HSP), 24-26 March 2022. University of
-California, Santa Cruz.</p>
-<h3 id="section-1">2020</h3>
+nouns</em>. Poster presented at the 35th Annual Conference on Human
+Sentence Processing (HSP), 24-26 March 2022. University of California,
+Santa Cruz.</p>
+<h3 id="section-2">2020</h3>
 <p><strong>June Choe</strong>, Jennifer Cole, and Masaya Yoshida.
 <em>Prosodic Focus Strengthens Semantic Persistence</em>. <a
 href="static/poster/AMLAP2020.pdf">Poster</a> presented at The 26th
@@ -2628,7 +2669,7 @@ The 2020 Undergraduate Research &amp; Arts Exposition. 27-28 May 2020.
 Northwestern University, Evanston, IL. <strong>2nd Place Poster
 Award</strong>. <a
 href="static/abstract/Expo_2020_Abstract.pdf">Abstract</a></p>
-<h3 id="section-2">2019</h3>
+<h3 id="section-3">2019</h3>
 <p><strong>June Choe</strong>. <em>Social Information in Sentence
 Processing</em>. Talk at The 2019 Undergraduate Research &amp; Arts
 Exposition. 29 May 2019. Northwestern University, Evanston, IL. <a
