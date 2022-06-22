@@ -42,10 +42,6 @@ opts_chunk$set(
 
 _This blog post was featured in the [R Weekly highlights podcast](https://share.fireside.fm/episode/87RSVeFz+alD0Og1X?t=247)! Thanks to the [R Weekly team](https://rweekly.org/2021-W29.html) for the comprehensive review!_
 
-**An important point of clarification (30/07/2021)**: Many people are familiar with {showtext} and {extrafont}, and may even have existing workflows centered around those packages. In this blog post, there is no "installing" of fonts of any sort _within the R session_. The magic here is that {ragg} is designed to directly access the fonts installed on your system (with some caveats as described in detail later). This issue of the graphics device is _independent_ of the kind of things that {showtext} and {extrafont} does, which is why they're not relevant here.
-
-**tl;dr:** [don't use {showtext}](https://twitter.com/thomasp85/status/1355083725156077571) and [don't use {extrafont}](https://twitter.com/thomasp85/status/1261539815960518656) when following the workflow described in this blog post!^[And I can also personally attest that I used to use them until {ragg} was developed, and I never loaded these packages since. But this isn't a value judgment - if these packages continue to work for you, then great! But do know that there are some [known issues with reliability](https://twitter.com/CedScherer/status/1238532616564998148) (though to be fair, {extrafont} and {showtext} were one of the first attempts at solving the font rendering issue in R and they've actually done a great job over the years!).]
-
 </div>
 
 ## Introduction
@@ -55,6 +51,14 @@ Getting **custom fonts** to work in R has historically been pretty difficult.^[I
 Luckily for us in 2021, we have an amazing solution to this problem thanks to recent developments in the `{ragg}`,  `{systemfonts}`, and `{textshaping}` packages by RStudio. This is great news because a lot of the work for getting custom fonts to work in R is already done for us!
 
 In this blog post, I'll start with the basics of **setting up custom fonts** followed by a walkthrough of the **font debugging workflow**, concluding with some **practical use-cases** that can spice up your typography game for data viz.  
+
+
+## Disclaimer for `{showtext}` and `{extrafont}` users
+
+Many people are familiar with {showtext} and {extrafont}, and may even have existing workflows centered around those packages. In this blog post, there is no "installing" of fonts of any sort _within the R session_. The magic here is that {ragg} is designed to directly access the fonts installed on your system (with some caveats which I'll discuss later). This issue of the graphics device is _independent_ of the kind of things that {showtext} and {extrafont} does, which is why they're not relevant here.
+
+So if you want to adopt this font workflow [don't use {showtext}](https://twitter.com/thomasp85/status/1355083725156077571) and [don't use {extrafont}](https://twitter.com/thomasp85/status/1261539815960518656).
+
 
 ## Setting up `{ragg}`
 
@@ -68,7 +72,7 @@ install.packages('textshaping')
 
 Next, we want to make sure that whenever we output a plot^[I'm focusing on outputing to _bitmap_ (e.g., `.png`, `.jpeg`, `.tiff`). For other formats like SVG (which I often default to for online material), you can use `svglite` - read more on the [package website](https://svglite.r-lib.org/).], we do so using the **AGG** graphics device (that's the "agg" part of "ragg").
 
-There are at least four places where this is relevant:
+There are a couple places where this is relevant:
 
 ### 1. Rendering in RStudio plot pane
 
@@ -100,22 +104,40 @@ invisible(dev.off())
 For **ggplot2 figures**: as of the new [ggplot2 v3.3.4 release](https://github.com/tidyverse/ggplot2/releases/tag/v3.3.4) (released 06-16-2021), `ggsave()` automatically defaults to rendering the output using `agg_*()` devices!
 
 <details>
-<summary>Old disclaimer for {ggplot2} < v.3.3.4</summary>
+<summary>Old disclaimer for {ggplot2} < v3.3.4</summary>
 This long-winded way works for any plot, but if you use `{ggplot2}` and `ggplot2::ggsave()` a lot, you might wonder whether you can just pass in `ragg::agg_png()` into the `device` argument and specify the arguments in `ggsave()` instead. This turns out to actually not be so straightforward, but will likely be patched in the next update (v3.3.4?). ^[Check out the discussion on [this issue](https://github.com/tidyverse/ggplot2/issues/4347) and [this commit](https://github.com/tidyverse/ggplot2/issues/4347). There's also been some talk of making AGG the default renderer, though I don't know if that's been settled.]
 </details>
 
 ### 3. Rmarkdown
 
-Pass in a `{ragg}` device has `res` and `units` specified to the `dev` argument of `knitr::chunk_opts$set()` at the top of the script.^[These are used to calculate DPI (dots per inch). Resolution is in pixels, so `res=150` and `units="inch"` is the same as `dpi=150`. `{ragg}` devices don't have a `dpi` argument like the default device, so you have to specify both resolution and units.]
+To render figures with `{ragg}` in knitted files, pass in a ragg device has `res` and `units` specified to the `dev` argument of `knitr::chunk_opts$set()` at the top of the script.^[These are used to calculate DPI (dots per inch). Resolution is in pixels, so `res=150` and `units="inch"` is the same as `dpi=150`. `{ragg}` devices don't have a `dpi` argument like the default device, so you have to specify both resolution and units.]
 
 ```{r, eval=FALSE}
-ragg_png = function(..., res = 150) {
+ragg_png <- function(..., res = 150) {
   ragg::agg_png(..., res = res, units = "in")
 }
-opts_chunk$set(dev = "ragg_png")
+knitr::opts_chunk$$set(dev = "ragg_png")
 ```
 
-### 4. Shiny
+For rmarkdown chunks that are executed inline (i.e., figures under code chunks), there's unfortunately no straightforward solution to get them rendered with ragg. My current suggestion is to set chunk output option to "Chunk Output in Console", instead of "Chunk Output inline" under the gear icon next to the knit button in the rmarkdown toolbar. 
+
+If you're a diehard fan of inline-ing your plots as you work with your rmarkdown document, keep an eye out on [issue #10412](https://github.com/rstudio/rstudio/issues/10412) on the RStudio IDE github repo. If you want a hacky workaround in the meantime, try out some of the suggestions from [issue #9931](https://github.com/rstudio/rstudio/issues/9931#issuecomment-970796321).
+
+### 4. Quarto
+
+In quarto, you can set the custom `ragg_png` device (defined above) in the YAML, like so:
+
+<pre>
+  knitr:
+    opts_chunk: 
+      dev: "ragg_png"
+</pre>
+
+This essentially calls `knitr::opts_chunk$set(dev = "ragg_png")`.
+
+Note that the `dev` argument does not go under `execute`, which instead controls chunk execution options like `echo` and `eval`.
+
+### 5. Shiny
 
 Simply set `options(shiny.useragg = TRUE)` before rendering. Also check out the {[thematic](https://rstudio.github.io/thematic/)} package for importing/using custom fonts in shiny plot outputs.
 
@@ -693,6 +715,36 @@ Some extra stuff not mentioned in the talk:
       scale_y_continuous(expand = expansion(add = c(.5, 1)))
     ```
 
+### WTF?
+
+[@yutannihilat_en](https://twitter.com/yutannihilat_en) has a [thread](https://twitter.com/yutannihilat_en/status/1493237440043126785) about how if you pass in a character to the `shape` argument of `geom_point()`, it acts like `geom_text()`: 
+
+```{r}
+ggplot(NULL, aes(x = 0, y = 0)) +
+  geom_point(
+    shape = "あ",
+    size = 50
+  )
+```
+
+Naturally, I wondered if changing the font family affects how the character glyph is rendered. `geom_point()` doesn't take a `family` argument, but we can try it out directly in grid by setting `fontfamily` to a custom font:
+
+```{r}
+ggplot(NULL, aes(x = 0, y = 0)) +
+  geom_point(
+    shape = "あ",
+    size = 50
+  ) +
+  expand_limits(x = c(-.2, .5)) +
+  annotation_custom(
+    grid::textGrob(
+      label = "あ",
+      x = .7,
+      gp = grid::gpar(fontfamily = "Noto Sans JP", fontsize = 50 * .pt))
+  )
+```
+
+ Note sure what you'd use this for but and hey it works
 
 ### More by others
 
