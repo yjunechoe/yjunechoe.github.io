@@ -717,7 +717,7 @@ Some extra stuff not mentioned in the talk:
 
 ### WTF?
 
-[@yutannihilat_en](https://twitter.com/yutannihilat_en) has a [thread](https://twitter.com/yutannihilat_en/status/1493237440043126785) about how if you pass in a character to the `shape` argument of `geom_point()`, it acts like `geom_text()`: 
+[\@yutannihilat_en](https://twitter.com/yutannihilat_en) has a [thread](https://twitter.com/yutannihilat_en/status/1493237440043126785) about how if you pass in a character to the `shape` argument of `geom_point()`, it acts like `geom_text()`: 
 
 ```{r}
 ggplot(NULL, aes(x = 0, y = 0)) +
