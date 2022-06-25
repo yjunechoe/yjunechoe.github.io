@@ -20,10 +20,6 @@ d-title p {
   text-align: center;
 }
 
-.about p {
-  text-align: justify;
-}
-
 .hero-left img {
   width: 100%;
   border-radius: 15%;
@@ -110,7 +106,7 @@ I am a second year PhD student in [Linguistics at the University of Pennsylvania
 
 I received my B.A. in Linguistics from Northwestern University, where I worked with [Jennifer Cole](https://sites.northwestern.edu/cole/), [Masaya Yoshida](https://faculty.wcas.northwestern.edu/~myo507/), and [Annette D'Onofrio](https://faculty.wcas.northwestern.edu/~akd2621/). I also worked as a research assistant for (and still collaborate with) the [Language, Education, and Reading Neuroscience Lab](https://learnlab.northwestern.edu/)) in Communication Sciences and Disorders. I wrote my thesis on the role of prosodic focus in the processing of garden-path sentences.
 
-Beyond linguistics research, I have interests in data visualization, science communication, and the R programming language. I read and [blog](https://yjunechoe.github.io/blog.html) about these topics in my spare time as a hobby. I'm especially passionate about improving explanatory data viz in academic research and strongly believe that _style_ is just as important as _content_. I am also a [Penn MindCORE](https://mindcore.sas.upenn.edu/) student affiliate and work as a data science tutor for researchers at Penn.
+Beyond linguistics research, I have interests in data visualization, science communication, and the R programming language. I [blog](https://yjunechoe.github.io/blog.html) about these topics in my spare time as a hobby. I'm especially passionate about improving explanatory data viz in academic research and strongly believe that _style_ is just as important as _content_. I am also a [Penn MindCORE](https://mindcore.sas.upenn.edu/) student affiliate and work as a data science tutor for researchers at Penn.
 
 </div>
 

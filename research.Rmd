@@ -13,11 +13,7 @@ p {
 
 McWeeny, S., Choi, S. J., LaTourette, A., **Choe, J.**, Roberts, M. Y., & Norton, E. S. (2022). Rapid automatized naming (RAN) as a kindergarten predictor of future reading in English: A systematic review and meta-analysis. _Reading Research Quarterly_.
 
-**Choe, J.**, Cole, J., and Yoshida, M. (Under revision). The role of prosodic focus in the reanalysis of garden path sentences: Depth of semantic processing impedes the revision of an erroneous local analysis. https://doi.org/10.17605/OSF.IO/U6DQ5
-
-### Pre-print
-
-McWeeny, S., **Choe, J.**, & Norton, E. (2021). SnowGlobe: An Iterative Search Tool for Systematic Reviews and Meta-Analyses. https://doi.org/10.17605/OSF.IO/U25RN
+**Choe, J.**, Cole, J., and Yoshida, M. (Under review). The role of prosodic focus in the reanalysis of garden path sentences: Depth of semantic processing impedes the revision of an erroneous local analysis. https://doi.org/10.17605/OSF.IO/U6DQ5
 
 ## Conference Proceedings
 
@@ -25,7 +21,7 @@ McWeeny, S., **Choe, J.**, & Norton, E. (2021). SnowGlobe: An Iterative Search T
 
 **June Choe** and Anna Papafragou. (2022). Acquisition of subordinate nouns as pragmatic inference: Semantic alternatives modulate subordinate meanings. Proceedings of the 44th Annual Cognitive Science Society.
 
-May Pik Yu Chan, **June Choe**, Aini Li, Yiran Chen, Xin Gao and Nicole Holliday. (Submitted). Training and typological bias in ASR performance for world Englishes.
+May Pik Yu Chan, **June Choe**, Aini Li, Yiran Chen, Xin Gao and Nicole Holliday. (2022). Training and typological bias in ASR performance for world Englishes. Proceedings of Interspeech 2022.
 
 
 ## Conference Presentations

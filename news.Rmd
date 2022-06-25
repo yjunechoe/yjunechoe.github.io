@@ -27,12 +27,19 @@ li::marker {
 ```
 
 
+## 2022
+
+### June
+
+- I gave a talk on my package [`{ggtrace}`](https://yjunechoe.github.io/ggtrace/) at the [useR! 2022 conference](https://user2022.r-project.org/).
+
+- I gave a [**talk**](https://www.youtube.com/embed/guzjt7xh2Cw?start=3787) at [RLadies philly](https://www.rladiesphilly.org/) on using extending `dplyr::slice()` for workflows beyond simple row-selection.
+
 ## 2021
 
 ### July
 
 - My [tutorial on custom fonts in R](https://yjunechoe.github.io/posts/2021-06-24-setting-up-and-debugging-custom-fonts/) was **featured as a highlight** on the [R Weekly podcast](https://share.fireside.fm/episode/87RSVeFz+alD0Og1X?t=247)!
-
 
 ### June
 

@@ -737,14 +737,40 @@ ggplot(NULL, aes(x = 0, y = 0)) +
   ) +
   expand_limits(x = c(-.2, .5)) +
   annotation_custom(
-    grid::textGrob(
-      label = "あ",
-      x = .7,
+    grid::pointsGrob(
+      pch = "あ",
+      x = .7, y = .5,
       gp = grid::gpar(fontfamily = "Noto Sans JP", fontsize = 50 * .pt))
   )
 ```
 
- Note sure what you'd use this for but and hey it works
+Emojis work this way:
+
+```{r}
+ggplot(NULL, aes(x = 0, y = 0)) +
+  geom_point(
+    shape = emo::ji("smile"),
+    size = 50
+  )
+```
+
+And so do icon fonts, when shape/pch is supplied as Unicode:
+
+```{r}
+ggplot(NULL) +
+  annotation_custom(
+    grid::pointsGrob(
+      pch = "\UF118",
+      x = .5, y = .5,
+      gp = grid::gpar(
+        fontfamily = "Font Awesome 5 Free",
+        fontsize = 50 * .pt
+      )
+    )
+  )
+```
+
+Note sure what you'd use this for but and hey it works
 
 ### More by others
 
