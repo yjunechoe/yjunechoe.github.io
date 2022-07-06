@@ -35,50 +35,27 @@ knitr::opts_chunk$set(
   dev = "ragg_png",
   R.options = list(width = 80)
 )
-
-inspect_after_stat <- function(p, i = 1L) {
-  ._env <- environment()
-  .out <- NULL
-  suppressMessages({
-    trace(
-      what = "ggplot_build.ggplot",
-      tracer = substitute(assign(".out", data[[i]], envir = ._env), ._env),
-      at = 19L,
-      print = FALSE,
-      where = asNamespace("ggplot2")
-    )
-  })
-  ggplot_build(p)
-  suppressMessages({
-    untrace("ggplot_build.ggplot", where = asNamespace("ggplot2"))
-  })
-  .out
-}
 ```
 
 _This is a developing series of blog posts, scheduled for three parts:_
 
-- _[Part 1: Exploring the logic of `after_stat()` to peek inside ggplot internals](https://yjunechoe.github.io/posts/2022-03-10-ggplot2-delayed-aes-1/)_
+- _[Part 1: Exploring the logic of `after_stat()` to peek inside ggplot internals](https://yjunechoe.github.io/posts/2022-03-10-ggplot2-delayed-aes-1)_
 - _[Part 2: Exposing the `Stat` ggproto in functional programming terms]()_ (you are here)
 - _Part 3: Completing the picture with `after_scale()` and `stage()`_ (TBD)
 
 ## Introduction
 
-Let's pick up where we left off in [Part 1](). If you'd like to follow along without going back to re-read it, the relevant code that we'll carry over here is provided below:
+Let's pick up where we left off in [Part 1](https://yjunechoe.github.io/posts/2022-03-10-ggplot2-delayed-aes-1). If you'd like to follow along without going back to re-read it, the relevant code that we'll carry over here is provided below:
 
 <details>
 <summary>Setup from Part 1</summary>
 
-```{r}
+```{r setup}
 # Top-level setup
 library(ggplot2)
 library(dplyr)
+library(palmerpenguins)
 theme_set(theme_classic(14))
-penguins <- na.omit(palmerpenguins::penguins)
-
-# `p_bar` from Part 1
-p_bar <- ggplot(penguins, aes(species)) +
-  geom_bar(aes(fill = species))
 
 # Custom function to inspect `after_stat()`
 inspect_after_stat <- function(p, i = 1L) {
@@ -103,9 +80,134 @@ inspect_after_stat <- function(p, i = 1L) {
 
 </details>
 
-To recap, the big theme of [Part 1]() was about how _layers_ transform the raw data under the hood to return a version of the data that is _drawing-ready_ (the data returned by `layer_data()`). We saw that a lot happens over the course of this data transformation pipeline, one of which is the **statistical transformation**. We also saw how `after_stat()` allows users to _declare_ an aesthetic that waits to be mapped to the data until after this step.
+To recap, the big theme of [Part 1](https://yjunechoe.github.io/posts/2022-03-10-ggplot2-delayed-aes-1) was about how _each layer_ of a ggplot transforms the raw data under the hood to make it _"drawing ready"_ (i.e., the dataframe returned by `layer_data()`). We saw that a lot happens over the course of this data transformation pipeline, one of which is the **statistical transformation step**. For example, the `geom_bar()` layer uses `stat = "count"` by default, which computes new variables like `count` and `prop` internally.
 
-In this Part 2 of the series, we'll dig into the nitty-gritty details of the internal statistical transformation step and expose it in familiar functional programming terms. We'll work through the **What** (what are the inputs/outputs involved), and the **How** (how output is computed from the input). 
+We also saw how `after_stat()` allows users to declare a **delayed aesthetic mapping**, which waits to be applied until after this statistical transformation step. For example, the specific stat used by `geom_bar()` - `StatCount` (which the `"count"` stands for in `stat = "count"`) - does maps to `after_stat(count)` by default, implicitly.
+
+<details>
+<summary>How is the implicit `after_stat(count)` mapping implemented in `StatCount`?</summary>
+
+    First, the default aesthetic mappings are specified such that _both_ `x` and `y` are mapped to `after_stat(count)`
+    
+    ```{r statcount-default-aes}
+    # or `geom_bar()$stat$default_aes`
+    StatCount$default_aes
+    ```
+
+
+    
+    ```{r statcount-required-aes}
+    # or `geom_bar()$stat$required_aes`
+    StatCount$required_aes
+    ```
+
+    So by requiring the user to supply one of the two aesthetics, the leftover of the two takes on the "implicit" value of `after_stat(count)`. This is (mostly but not entirely) handled inside `StatCount$setup_params` which is called pretty early in the pipeline:
+    
+    ```{r statcount-setup-params}
+    # Lots of code here but it does 3 things:
+    # 1) Check if user supplied `y`, not `x` (+ track this in `flipped_aes`)
+    # 2) Make sure user supplied exactly one of `x` or `y`
+    # 3) If `flipped_aes` (= `y` is supplied), pretend that it's `x` but
+    #    keep that for later (reverted in `StatCount$compute_group()`)
+    StatCount$setup_params
+    ```
+</details>
+
+In this Part 2 of the series, we'll dig into the nitty-gritty details of the internal statistical transformation step. Along the way, we'll encounter some funny looking functions in the form of `obj$method()`. These are called **ggproto methods** - they're pretty scary ([you can judge for yourself](https://ggplot2-book.org/internals.html#introducing-ggproto)), but needlessly so for our purposes: aside from their odd syntax, most of them are essentially just data wrangling functions.
+
+Let's dive right in!
+
+## Another bar plot
+
+We're again going to visualize counts of penguin species in our `penguins` dataset with `geom_bar()`, except this time we'll give the bars `width = 0.7` and also facet by island:
+
+```{r p-bar-facetted, eval=FALSE}
+library(palmerpenguins)
+p_bar_facetted <- ggplot(penguins, aes(x = species)) +
+  geom_bar(aes(fill = species), width = 0.7) +
+  facet_wrap(~ island)
+p_bar_facetted
+```
+
+As expected, it maps the internally computed `count` variable to the `y` aesthetic by default. We suspect that something like `{dplyr}`'s `group_by()` and `summarize()` (or just `count()`) is happening in the statistical transformation stage:
+
+```{r dplyr-compute}
+penguins %>% 
+  group_by(island, species) %>% 
+  summarize(count = n(), .groups = "drop")
+```
+
+In [Part 1](), I introduced this mystery function called `inspect_after_stat()` to show you that this is indeed the case:
+
+```{r custom-inspect-after-stat}
+inspect_after_stat(p_bar_facetted, i = 1)
+```
+
+Now it's time to unveil the mystery behind this function - it was essentially giving us the return value of the ggproto method `Stat$compute_layer()` when it was called for the first layer of our plot.^[So `i = 1` was targetting our one and only layer, `geom_boxplot()`.]
+
+Using the function `ggtrace_inspect_return()` from my package [`{ggtrace}`](https://yjunechoe.github.io/ggtrace/articles/intro.html), we can achieve this more explicitly. We pass the function our plot and the ggproto method we want to inspect, and it gives us what the method returned:
+
+```{r inspect-return-layer}
+# install.packages("remotes")
+# remotes::install_github("yjunechoe/ggtrace")
+library(ggtrace)
+compute_layer_output <- ggtrace_inspect_return(p_bar_facetted, method = Stat$compute_layer)
+compute_layer_output
+```
+
+If ggproto methods are like functions, they should have inputs and outputs. We just saw the output of `Stat$compute_layer()`, but what's its input?
+
+We can simply swap out `ggtrace_inspect_return()` with `ggtrace_inspect_args()` to look at the arguments it was called with:
+
+```{r inspect-args-layer}
+compute_layer_input <- ggtrace_inspect_args(p_bar_facetted, method = Stat$compute_layer)
+names( compute_layer_input )
+```
+
+We see that it was called with several arguments, but we can ignore the `self` and `layout` arguments for the moment. The crucial ones are the `data` and `params` arguments, which look like this:
+
+```{r inspect-args-layer, eval=FALSE}
+compute_layer_input$data
+```
+
+```{r inspect-args-layer-paged, echo=FALSE}
+rmarkdown::paged_table(compute_layer_input$data)
+```
+
+```{r inspect-args-layer}
+compute_layer_input$params
+```
+
+Remember how I said ggproto methods are essentially data-wrangling functions? 
+
+
+
+For example, remember the `inspect_after_stat()` function introduced in [Part 1](https://yjunechoe.github.io/posts/2022-03-10-ggplot2-delayed-aes-1)?
+
+```{r}
+inspect_after_stat(p_bar)
+```
+
+As a sneak peek, that function was essentially grabbing the output of the `Stat$compute_layer()` ggproto method. We can do this more explicitly and dynamically with the function `ggtrace_inspect_return()` from my package [`{ggtrace}`](https://yjunechoe.github.io/ggtrace/articles/intro.html). We pass it our plot and the ggproto method we want to inspect, and it gives us back what it returns:
+
+```{r}
+ggtrace_inspect_return(p_bar, method = Stat$compute_layer)
+```
+
+As the name suggests, internally computed variables like `count` and `prop` are calculated inside the `Stat$compute_layer()` method. It might look scary but it's actually just a data wrangling function. As a sneak peek, this is the input data to the stat stage:
+
+```{r}
+rmarkdown::paged_table(ggtrace_inspect_args(p_bar, method = Stat$compute_layer)$data)
+```
+
+
+As the name suggests, the `compute_layer()` method computes the variables necessary to draw the layer. 
+
+
+We're going to encounter these things called ggproto methods in the way
+
+
+and expose it in familiar functional programming terms. We'll work through the **What** (what are the inputs/outputs involved), and the **How** (how output is computed from the input). 
 
 In doing so, we'll learn that...
 

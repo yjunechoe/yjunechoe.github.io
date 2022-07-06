@@ -2251,7 +2251,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   /* General */
 
   d-article > h2 {
-    margin: 3rem 0 1.5rem 0;
+    margin: 2.5rem 0 1.5rem 0;
     border-bottom: 2px solid black;
   }
 
@@ -2295,6 +2295,10 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
     background-color: #008bff0f;
     outline: 2px solid #38566F;
     padding: 1rem;
+  }
+
+  d-article details[open] summary {
+    margin-bottom: 1em;
   }
 
   /* Block Quotes */
@@ -2396,13 +2400,19 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
     border-left: 5px solid #4D8DC9;
   }
 
+  d-article pre.out-extended {
+    width: fit-content;
+    max-width: fit-content;
+    padding-right: 10px;
+  }
+
   /* R chunk */
   d-article div.sourceCode pre.r {
     background-color: #faffff;
   }
 
   d-article details div.sourceCode pre.r {
-      background-color: white;
+    background-color: white;
   }
 
   /*
@@ -2447,6 +2457,15 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   span.co {
     color: #999999;
     font-weight: 500;
+  }
+
+  i.code-hl {
+    font-style: normal;
+    font-weight: bold;
+    background-color: #acf120;
+    padding: 2px 5px;
+    font-size: 1.1em;
+    outline: 1px solid lightgrey;
   }
 
   /* underline auto-linked functions */
@@ -2525,6 +2544,11 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
       margin-top: 30px;
       margin-bottom: 20px;
   }
+
+  .panel > pre {
+    overflow-x: auto !important;
+  }
+
   </style>
   <!--/radix_placeholder_site_in_header-->
 
@@ -2700,33 +2724,34 @@ about
 <div class="about">
 <p>I am a second year PhD student in <a
 href="https://live-sas-www-ling.pantheon.sas.upenn.edu/">Linguistics at
-the University of Pennsylvania</a>. I am a psycholinguist broadly
-interested in experimental approaches to studying meaning, of various
-flavors. I use computational and behavioral methods to study how
-comprehenders parse linguistic input, both in real time and at different
-stages of language development. My advisor is Anna Papafragou and I am a
-member of the <a href="https://www.langcoglab.com/">Language &amp;
-Cognition Lab</a>.</p>
+the University of Pennsylvania</a>, and a student affiliate of <a
+href="https://mindcore.sas.upenn.edu/">Penn MindCORE</a> and the <a
+href="https://web.sas.upenn.edu/lcs/">Language and Communication
+Sciences</a> program. I am a psycholinguist broadly interested in
+experimental approaches to studying meaning, of various flavors. I use
+computational and behavioral methods to study how comprehenders parse
+linguistic input, both in real time and at different stages of language
+development. My advisor is Anna Papafragou and I am a member of the <a
+href="https://www.langcoglab.com/">Language &amp; Cognition Lab</a>.</p>
 <p>I received my B.A. in Linguistics from Northwestern University, where
 I worked with <a href="https://sites.northwestern.edu/cole/">Jennifer
 Cole</a>, <a
 href="https://faculty.wcas.northwestern.edu/~myo507/">Masaya
 Yoshida</a>, and <a
 href="https://faculty.wcas.northwestern.edu/~akd2621/">Annette
-D’Onofrio</a>. I also worked as a research assistant for (and still
-collaborate with) the <a
+D’Onofrio</a>. I also worked as a research assistant for the <a
 href="https://learnlab.northwestern.edu/">Language, Education, and
-Reading Neuroscience Lab</a>) in Communication Sciences and Disorders. I
-wrote my thesis on the role of prosodic focus in the processing of
-garden-path sentences.</p>
+Reading Neuroscience Lab</a>). I wrote my thesis on the role of
+prosodically-marked semantic focus in the reanalysis of garden-path
+sentences.</p>
 <p>Beyond linguistics research, I have interests in data visualization,
-science communication, and the R programming language. I <a
+science communication, and the R programming language. I develop <a
+href="https://github.com/yjunechoe">R packages</a> and <a
 href="https://yjunechoe.github.io/blog.html">blog</a> about these topics
 in my spare time as a hobby. I’m especially passionate about improving
 explanatory data viz in academic research and strongly believe that
-<em>style</em> is just as important as <em>content</em>. I am also a <a
-href="https://mindcore.sas.upenn.edu/">Penn MindCORE</a> student
-affiliate and work as a data science tutor for researchers at Penn.</p>
+<em>style</em> is just as important as <em>content</em>. I am also work
+as a data science tutor for researchers at Penn.</p>
 </div>
 <p>
 </p>

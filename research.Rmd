@@ -11,7 +11,7 @@ p {
 
 ## Publications
 
-McWeeny, S., Choi, S. J., LaTourette, A., **Choe, J.**, Roberts, M. Y., & Norton, E. S. (2022). Rapid automatized naming (RAN) as a kindergarten predictor of future reading in English: A systematic review and meta-analysis. _Reading Research Quarterly_.
+McWeeny, S., Choi, S. J., **Choe, J.**, LaTourette, A., Roberts, M. Y., & Norton, E. S. (2022). Rapid automatized naming (RAN) as a kindergarten predictor of future reading in English: A systematic review and meta-analysis. _Reading Research Quarterly_. https://doi.org/10.1002/rrq.467
 
 **Choe, J.**, Cole, J., and Yoshida, M. (Under review). The role of prosodic focus in the reanalysis of garden path sentences: Depth of semantic processing impedes the revision of an erroneous local analysis. https://doi.org/10.17605/OSF.IO/U6DQ5
 

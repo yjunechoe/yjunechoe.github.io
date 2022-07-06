@@ -103,20 +103,14 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <meta property="og:type" content="article"/>
 <meta property="og:description" content="Making a dodged-stacked hybrid bar plot in {ggplot2}"/>
 <meta property="og:url" content="https://yjunechoe.github.io/posts/2020-11-08-plot-makeover-2/"/>
-<meta property="og:image" content="https://yjunechoe.github.io/posts/2020-11-08-plot-makeover-2/plot-makeover-2_files/figure-html5/final-1.png"/>
-<meta property="og:image:width" content="1344"/>
-<meta property="og:image:height" content="1152"/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:site_name" content="June Choe"/>
 
 <!--  https://dev.twitter.com/cards/types/summary -->
-<meta property="twitter:card" content="summary_large_image"/>
+<meta property="twitter:card" content="summary"/>
 <meta property="twitter:title" content="June Choe: Plot Makeover #2"/>
 <meta property="twitter:description" content="Making a dodged-stacked hybrid bar plot in {ggplot2}"/>
 <meta property="twitter:url" content="https://yjunechoe.github.io/posts/2020-11-08-plot-makeover-2/"/>
-<meta property="twitter:image" content="https://yjunechoe.github.io/posts/2020-11-08-plot-makeover-2/plot-makeover-2_files/figure-html5/final-1.png"/>
-<meta property="twitter:image:width" content="1344"/>
-<meta property="twitter:image:height" content="1152"/>
 <meta property="twitter:site" content="@yjunechoe"/>
 
 <!--/radix_placeholder_meta_tags-->
@@ -2277,7 +2271,7 @@ d-title p {
 /* General */
 
 d-article > h2 {
-  margin: 3rem 0 1.5rem 0;
+  margin: 2.5rem 0 1.5rem 0;
   border-bottom: 2px solid black;
 }
 
@@ -2321,6 +2315,10 @@ details {
   background-color: #008bff0f;
   outline: 2px solid #38566F;
   padding: 1rem;
+}
+
+d-article details[open] summary {
+  margin-bottom: 1em;
 }
 
 /* Block Quotes */
@@ -2422,13 +2420,19 @@ d-article div.sourceCode pre {
   border-left: 5px solid #4D8DC9;
 }
 
+d-article pre.out-extended {
+  width: fit-content;
+  max-width: fit-content;
+  padding-right: 10px;
+}
+
 /* R chunk */
 d-article div.sourceCode pre.r {
   background-color: #faffff;
 }
 
 d-article details div.sourceCode pre.r {
-    background-color: white;
+  background-color: white;
 }
 
 /*
@@ -2473,6 +2477,15 @@ span.st {
 span.co {
   color: #999999;
   font-weight: 500;
+}
+
+i.code-hl {
+  font-style: normal;
+  font-weight: bold;
+  background-color: #acf120;
+  padding: 2px 5px;
+  font-size: 1.1em;
+  outline: 1px solid lightgrey;
 }
 
 /* underline auto-linked functions */
@@ -2551,6 +2564,11 @@ d-footnote-list code {
     margin-top: 30px;
     margin-bottom: 20px;
 }
+
+.panel > pre {
+  overflow-x: auto !important;
+}
+
 </style>
 <!--/radix_placeholder_site_in_header-->
 

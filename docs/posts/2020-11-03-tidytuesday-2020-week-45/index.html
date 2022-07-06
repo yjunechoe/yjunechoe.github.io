@@ -2264,7 +2264,7 @@ d-title p {
 /* General */
 
 d-article > h2 {
-  margin: 3rem 0 1.5rem 0;
+  margin: 2.5rem 0 1.5rem 0;
   border-bottom: 2px solid black;
 }
 
@@ -2308,6 +2308,10 @@ details {
   background-color: #008bff0f;
   outline: 2px solid #38566F;
   padding: 1rem;
+}
+
+d-article details[open] summary {
+  margin-bottom: 1em;
 }
 
 /* Block Quotes */
@@ -2409,13 +2413,19 @@ d-article div.sourceCode pre {
   border-left: 5px solid #4D8DC9;
 }
 
+d-article pre.out-extended {
+  width: fit-content;
+  max-width: fit-content;
+  padding-right: 10px;
+}
+
 /* R chunk */
 d-article div.sourceCode pre.r {
   background-color: #faffff;
 }
 
 d-article details div.sourceCode pre.r {
-    background-color: white;
+  background-color: white;
 }
 
 /*
@@ -2460,6 +2470,15 @@ span.st {
 span.co {
   color: #999999;
   font-weight: 500;
+}
+
+i.code-hl {
+  font-style: normal;
+  font-weight: bold;
+  background-color: #acf120;
+  padding: 2px 5px;
+  font-size: 1.1em;
+  outline: 1px solid lightgrey;
 }
 
 /* underline auto-linked functions */
@@ -2538,6 +2557,11 @@ d-footnote-list code {
     margin-top: 30px;
     margin-bottom: 20px;
 }
+
+.panel > pre {
+  overflow-x: auto !important;
+}
+
 </style>
 <!--/radix_placeholder_site_in_header-->
 
