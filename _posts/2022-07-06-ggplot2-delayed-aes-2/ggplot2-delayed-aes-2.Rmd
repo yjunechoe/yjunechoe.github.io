@@ -935,8 +935,8 @@ p_boxplot
 
 Example 2: `stage()` allows you to re-map to the same aesthetic using variables from different points in the build pipeline.
 
-```{r stage-example, warning = FALSE}
-# Generates warning; fixed in dev version (PR #4707)
+```{r stage-example}
+# Generates warning in v3.3.6; fixed in dev version (PR #4707)
 p_boxplot +
   geom_text(
     aes(y = stage(flipper_length_mm, c(lower, middle, upper)),
@@ -971,7 +971,7 @@ StatRowID <- ggplot2::ggproto(
   },
   
   # Extension point: map the computed `rowid` variable to `label`
-  default_aes = aes(label = after_stat(rowid)),
+  default_aes = aes(label = after_stat(rowid))
   
 )
 

@@ -2825,12 +2825,12 @@ case:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>inspect_after_stat</span><span class='op'>(</span><span class='va'>p_bar2</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>      y count prop x width flipped_aes PANEL group
-  1  44    44    1 1   0.7       FALSE     1     1
-  2 124   124    1 3   0.7       FALSE     1     3
-  3  56    56    1 1   0.7       FALSE     2     1
-  4  68    68    1 2   0.7       FALSE     2     2
-  5  52    52    1 1   0.7       FALSE     3     1
+<pre><code>    count prop x width flipped_aes PANEL group
+  1    44    1 1   0.7       FALSE     1     1
+  2   124    1 3   0.7       FALSE     1     3
+  3    56    1 1   0.7       FALSE     2     1
+  4    68    1 2   0.7       FALSE     2     2
+  5    52    1 1   0.7       FALSE     3     1
 </code></pre>
 </div>
 <p>Now it’s time to unveil the mystery behind this function -
@@ -2984,14 +2984,13 @@ directly reflect this. Nothing about the code for
           params)
       dapply(data, "PANEL", function(data) {
           scales &lt;- layout$get_scales(data$PANEL[1])
-          try_fetch(do.call(self$compute_panel, args), error = function(cnd) {
-              cli::cli_warn("Computation failed in {.fn {snake_class(self)}}", 
-                  parent = cnd)
+          tryCatch(do.call(self$compute_panel, args), error = function(e) {
+              warn(glue("Computation failed in `{snake_class(self)}()`:\n{e$message}"))
               new_data_frame()
           })
       })
   }
-  &lt;bytecode: 0x000001ab768fe210&gt;
+  &lt;bytecode: 0x000002e49ae09aa0&gt;
   &lt;environment: namespace:ggplot2&gt;
 </code></pre>
 </div>
@@ -3021,7 +3020,7 @@ another ggproto method called
           n = length(count))
       flip_data(bars, flipped_aes)
   }
-  &lt;bytecode: 0x000001ab773179d0&gt;
+  &lt;bytecode: 0x000002e49b824e38&gt;
   &lt;environment: namespace:ggplot2&gt;
 </code></pre>
 </div>
@@ -3127,7 +3126,7 @@ aware of this when you go exploring ggproto methods yourself:</p>
   {
       data
   }
-  &lt;bytecode: 0x000001ab768e73d0&gt;
+  &lt;bytecode: 0x000002e49adde200&gt;
   &lt;environment: namespace:ggplot2&gt;
 </code></pre>
 </div>
@@ -3141,7 +3140,7 @@ aware of this when you go exploring ggproto methods yourself:</p>
 <pre><code>  &lt;ggproto method&gt;
     &lt;Wrapper function&gt;
       function (...) 
-  setup_data(...)
+  f(...)
   
     &lt;Inner function (f)&gt;
       function (data, params) 
@@ -3265,14 +3264,13 @@ In fact, <code>StatCount$compute_layer()</code> does “exist”:</p>
           params)
       dapply(data, "PANEL", function(data) {
           scales &lt;- layout$get_scales(data$PANEL[1])
-          try_fetch(do.call(self$compute_panel, args), error = function(cnd) {
-              cli::cli_warn("Computation failed in {.fn {snake_class(self)}}", 
-                  parent = cnd)
+          tryCatch(do.call(self$compute_panel, args), error = function(e) {
+              warn(glue("Computation failed in `{snake_class(self)}()`:\n{e$message}"))
               new_data_frame()
           })
       })
   }
-  &lt;bytecode: 0x000001ab768fe210&gt;
+  &lt;bytecode: 0x000002e49ae09aa0&gt;
   &lt;environment: namespace:ggplot2&gt;
 </code></pre>
 </div>
@@ -3521,9 +3519,9 @@ out how <code>Stat$compute_group()</code> is defined:</p>
 <div class="layout-chunk" data-layout="l-body">
 <pre><code>  function (self, data, scales) 
   {
-      cli::cli_abort("Not implemented")
+      abort("Not implemented")
   }
-  &lt;bytecode: 0x000001ab768fdf00&gt;
+  &lt;bytecode: 0x000002e49ae09838&gt;
   &lt;environment: namespace:ggplot2&gt;
 </code></pre>
 </div>
@@ -3563,14 +3561,13 @@ called on each split.</p>
           params)
       <i class='code-hl'>dapply</i>(data, "PANEL", function(data) {
           scales &lt;- layout$get_scales(data$PANEL[1])
-          try_fetch(do.call(<i class='code-hl'>self$compute_panel</i>, args), error = function(cnd) {
-              cli::cli_warn("Computation failed in {.fn {snake_class(self)}}", 
-                  parent = cnd)
+          tryCatch(do.call(<i class='code-hl'>self$compute_panel</i>, args), error = function(e) {
+              warn(glue("Computation failed in `{snake_class(self)}()`:\n{e$message}"))
               new_data_frame()
           })
       })
   }
-  &lt;bytecode: 0x000001ab768fe210&gt;
+  &lt;bytecode: 0x000002e49ae09aa0&gt;
   &lt;environment: namespace:ggplot2&gt;
 </code></pre>
 </div>
@@ -3602,7 +3599,7 @@ inside <code>lapply()</code>.</p>
       }, stats, groups, SIMPLIFY = FALSE)
       rbind_dfs(stats)
   }
-  &lt;bytecode: 0x000001ab768de848&gt;
+  &lt;bytecode: 0x000002e49ade76f0&gt;
   &lt;environment: namespace:ggplot2&gt;
 </code></pre>
 </div>
@@ -3697,16 +3694,16 @@ left over takes on the “implicit” value of
 </div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<pre><code>  function (self, data, params) 
+<pre><code>  function (data, params) 
   {
       params$flipped_aes &lt;- has_flipped_aes(data, params, main_is_orthogonal = FALSE)
       has_x &lt;- !(is.null(data$x) &amp;&amp; is.null(params$x))
       has_y &lt;- !(is.null(data$y) &amp;&amp; is.null(params$y))
       if (!has_x &amp;&amp; !has_y) {
-          cli::cli_abort("{.fn {snake_class(self)}} requires an {.field x} or {.field y} aesthetic.")
+          abort("stat_count() requires an x or y aesthetic.")
       }
       if (has_x &amp;&amp; has_y) {
-          cli::cli_abort("{.fn {snake_class(self)}} must only have an {.field x} {.emph or} {.field y} aesthetic.")
+          abort("stat_count() can only have an x or y aesthetic.")
       }
       if (is.null(params$width)) {
           x &lt;- if (params$flipped_aes) 
@@ -3716,7 +3713,7 @@ left over takes on the “implicit” value of
       }
       params
   }
-  &lt;bytecode: 0x000001ab76910070&gt;
+  &lt;bytecode: 0x000002e49b8212e8&gt;
   &lt;environment: namespace:ggplot2&gt;
 </code></pre>
 </div>
@@ -3955,12 +3952,12 @@ working up to its final drawing-ready form that we can see using
   3  56    56    1 1       FALSE     2     1    0   56 0.65 1.35     NA grey35
   4  68    68    1 2       FALSE     2     2    0   68 1.65 2.35     NA grey35
   5  52    52    1 1       FALSE     3     1    0   52 0.65 1.35     NA grey35
-    linewidth linetype alpha
-  1       0.5        1    NA
-  2       0.5        1    NA
-  3       0.5        1    NA
-  4       0.5        1    NA
-  5       0.5        1    NA
+    size linetype alpha
+  1  0.5        1    NA
+  2  0.5        1    NA
+  3  0.5        1    NA
+  4  0.5        1    NA
+  5  0.5        1    NA
 </code></pre>
 </div>
 <p>In this sense, ggproto methods are like functions that intervene at
@@ -4036,7 +4033,7 @@ and <code>$compute_group()</code>. Indeed, that’s how
   {
       data
   }
-  &lt;bytecode: 0x000001ab7f909a18&gt;
+  &lt;bytecode: 0x000002e4a4084350&gt;
   &lt;environment: namespace:ggplot2&gt;
 </code></pre>
 </div>
@@ -4141,7 +4138,7 @@ goal of preventing visually overlapping text.</p>
 <div class="layout-chunk" data-layout="l-body">
 <pre><code>  function (data, scales) 
   unique(data)
-  &lt;bytecode: 0x000001ab7cc203c8&gt;
+  &lt;bytecode: 0x000002e4a28c4838&gt;
   &lt;environment: namespace:ggplot2&gt;
 </code></pre>
 </div>
@@ -4254,7 +4251,7 @@ aesthetic using variables from different points in the build
 pipeline.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Generates warning; fixed in dev version (PR #4707)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Generates warning in v3.3.6; fixed in dev version (PR #4707)</span>
 <span class='va'>p_boxplot</span> <span class='op'>+</span>
   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_text</a></span><span class='op'>(</span>
     <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes_eval.html'>stage</a></span><span class='op'>(</span><span class='va'>flipper_length_mm</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>lower</span>, <span class='va'>middle</span>, <span class='va'>upper</span><span class='op'>)</span><span class='op'>)</span>,
@@ -4301,7 +4298,7 @@ of <code>label = after_stat(rowid)</code> in
   <span class='op'>}</span>,
   
   <span class='co'># Extension point: map the computed `rowid` variable to `label`</span>
-  default_aes <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes_eval.html'>after_stat</a></span><span class='op'>(</span><span class='va'>rowid</span><span class='op'>)</span><span class='op'>)</span>,
+  default_aes <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes_eval.html'>after_stat</a></span><span class='op'>(</span><span class='va'>rowid</span><span class='op'>)</span><span class='op'>)</span>
   
 <span class='op'>)</span>
 
