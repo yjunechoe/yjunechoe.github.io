@@ -234,9 +234,9 @@ We see that the return value is actually just one row of the return value of `St
 ggtrace_inspect_return(p_bar2, StatCount$compute_group)
 ```
 
-As the name suggests, `$compute_group()` is called for each group (in this case, bar) in the `geom_bar()` layer. The method is called _after the layer's data is split by facet and group_, much like how we used `group_by(PANEL, group)` to simulate it in `$compute_layer_fn()` above.
+As the name suggests, `$compute_group()` is called for each group (in this case, bar) in the `geom_bar()` layer. The method is called _after the layer's data is split by facet and group_, much like how we used `group_by(PANEL, group)` to simulate `compute_layer_fn()` above.
 
-Using `ggtrace_inspect_n()`, we confirm that `StatCount$compute_group()` was indeed called five times, once for each bar in the plot:
+Using `ggtrace_inspect_n()` which returns how many times a ggproto method was called in a plot, we confirm that `StatCount$compute_group()` was indeed called five times, once for each bar in the plot:
 
 ```{r inspect-statcount-compute-group-n}
 ggtrace_inspect_n(p_bar2, StatCount$compute_group)
@@ -254,7 +254,7 @@ bind_rows(
 )
 ```
 
-So we get a sense that `Stat$compute_layer()` simply splits the layer's data by panel and group, while `StatCount$compute_group()` does the actual by-group computation that's relevant for the layer.
+So we get a sense that `Stat$compute_layer()` simply splits the layer's data by panel and group, while `StatCount$compute_group()` does the heavy lifting.
 
 But what's the relationship between these two ggproto methods? How does `Stat$compute_layer()` know to use `StatCount$compute_group()`?
 
@@ -270,19 +270,32 @@ There are existing resources for learning how ggproto works, such as [Chapter 20
 <details>
 <summary>On notations and conventions</summary>
 
+### My conventions
+
 In this blog post, I'll refer to ggproto methods like `$method()` to distinguish it from normal functions. I'll refer to properties (non-function elements of ggproto objects) like `$property` to distinguish it from variables.
 
-You might have also noticed how ggproto methods follow the standard snake case like `compute_layer`, but ggproto objects are written in upper camel case like `StatCount`. These are by convention (nothing stops you from breaking these patterns), but they're very important to know and follow.
+Also, whenever I'm printing ggproto methods, I'm actually using `get("method", object)` behind the scenes. I do this to bring attention to the method body - printing ggproto methods as-is comes with extra baggage that distracts from the topic of this blog post. Just be aware of this when you go exploring ggproto methods yourself:
 
-On the side of ggproto methods and properties, there are only a finite set that are used in the internals. So while you _can_ define your own `$my_method()` method for a ggproto object, the internals would not know of its existence and wouldn't know when and where to call it. You'll rarely encounter a method or property that doesn't exist in the top-level `Stat` ggproto, though it happens in some very specific cases like `StatDensity2d$contour_type`.
+```{r ggproto-get}
+# This just prints the method body
+get("setup_data", Stat)
+```
 
-On the side of ggproto objects, things are a bit more complicated. The upper camel case convention is closely related to two other conventions.
+```{r ggproto-print}
+# Prints extra stuff we don't care about
+# - see: `ggplot2:::format.ggproto_method`
+Stat$setup_data
+```
+
+### {ggplot2} conventions
+
+You might have noticed how ggproto objects are written in upper camel case like `StatCount`. This is by convention, but they're very important to know and follow. The upper camel case convention for ggproto objects is closely related to two other conventions:
 
 - The first is in the naming of the layer functions we use to write ggplot code and chain with the `+` operator, like `geom_bar()` and `stat_count()`. These names are derived from ggproto objects like `GeomBar` and `StatCount` through the internal function `ggplot2:::snake_class()`. Thus, the camel case convention is used to distinguish ggproto objects like `StatCount` from constructor functions like `stat_count()`, while maintaining a predictable connection between the two.
 
 - The second is in the use of character shorthands to refer to ggproto objects inside layer functions, like `geom_bar(stat = "count")`. These shorthands work by turning the string into upper camel case using the internal function `ggplot2:::camelize(x, first = TRUE)` and then prefixing that with `"Stat"` (or `"Geom"` or `"Position"`). So `"count"` gets converted into `"StatCount"`, which then gets looked up in the caller environment. If a ggproto object breaks this convention, the character shorthand would not work.
 
-Lastly, note how variable names like `StatCount` match the class name `class(StatCount)[1]`:
+Relatedly, note how variable names like `StatCount` match the class name `class(StatCount)[1]`:
 
 ```{r statcount-first-class}
 class(StatCount)[1]
@@ -342,6 +355,9 @@ StatCount <- list(
 
 In object-orientated programming terms, this is called **inheritance** - the `StatCount` ggproto is a **child** of the **parent** `Stat` ggproto that inherits some of the parent's methods (like `$compute_layer()`) while overriding and defining some of its own (like `$compute_group()`).
 
+<details>
+<summary>A note on class inheritance</summary>
+
 Class inheritance is reflected in the output of `class()`, where order of elements matter:
 
 ```{r class-stat}
@@ -363,6 +379,8 @@ Sometimes, an inheritance chain can be more complex - for example, `StatDensity2
 ```{r class-statdensity2dfilled}
 class( StatDensity2dFilled )
 ```
+
+</details>
 
 But what's the point of all this? Why do we bother with these clunky ggproto objects instead of having a single function that does all bar-related things, all boxplot-related things, etc.?
 
@@ -456,7 +474,7 @@ get_method_inheritance(StatContour)
 :::::
 
 
-Did you notice how all these `Stat*` extensions define their own `$compute_group()` method while inheriting `Stat$compute_layer()` and `Stat$compute_panel()` methods? This is the intended design - check out how `Stat$compute_group()` is defined:
+Did you notice how all these `Stat*` extensions define their own `$compute_group()` method while inheriting the `$compute_layer()` and `$compute_panel()` methods from the parent `stat`? This is the intended design - check out how `Stat$compute_group()` is defined:
 
 ```{r stat-compute-group-show, eval=FALSE}
 Stat$compute_group
@@ -466,7 +484,7 @@ Stat$compute_group
 get("compute_group", Stat)
 ```
 
-And this is what I mean by "the top-level `Stat` ggproto is a template". The `Stat` provides an infrastructure that splits the data up by layer (`Stat$compute_layer()`) and panel (`Stat$compute_panel()`), but leaves it to a child `Stat*` ggproto to fill in the details about what statistical summaries are computed by group, after this splitting takes place.
+And this is what I mean by "the top-level `Stat` ggproto is a template". The `Stat` provides an infrastructure that splits the data up by layer (`Stat$compute_layer()`) and panel (`Stat$compute_panel()`), but leaves it to the child `Stat*` ggprotos to fill in the details about what statistical summaries are computed by group, after this splitting takes place.
 
 <details>
 <summary>How are `Stat$compute_layer()` and `Stat$compute_panel()` implemented?</summary>
@@ -506,7 +524,7 @@ In other words, `self` is `StatCount` because the method `$compute_layer()` is "
 In the next section, we'll look at how the `$compute_*()` family of methods behave in the internals.
 
 <details>
-<summary>What are some other common extension points?</summary>
+<summary>Wait - what about the other common extension points?</summary>
 
 You might have also noticed a few more repeated extension points other than `$compute_group()`. They usually form some subset of `$default_aes`, `$required_aes`, `$setup_data()`, `$setup_params()`, and `$extra_params`. These are also like a family - their job is to prepare the layer's data before it's sent off to the `$compute_*()` family of methods.
 
@@ -715,7 +733,7 @@ modified_compute_layer_output <- compute_layer_output %>%
 modified_compute_layer_output
 ```
 
-Then, we force `Stat$compute_layer()` to return that modified dataframe instead when it's called for `p_bar2`, using `ggtrace_highjack_return()`:
+Then, we force `Stat$compute_layer()` to return that modified dataframe instead when it's called for `p_bar2`, by passing it to the `value` argument of `ggtrace_highjack_return()`:
 
 ```{r highjacked-compute-layer-output}
 ggtrace_highjack_return(
@@ -746,9 +764,9 @@ The lesson here is that **the dataframe representation of the layer undergoes in
 layer_data(p_bar2)
 ```
 
-In this sense, ggproto methods are like functions that intervene at different steps of what is essentially a data wrangling pipeline, to make piecemeal changes to the layer data. Consequently, **the work of a single ggproto method can have far reaching consequences for the plot down the line**.
+In this sense, ggproto methods are like functions that intervene at different steps of what is essentially a data wrangling pipeline, making piecemeal changes to the layer data. Consequently, **the work of a single ggproto method can have far reaching consequences for the plot down the line**.
 
-I promise this is the end of the `{ggtrace}` self-promo, but I encourage you to play around with the internals using the workflow functions from the package - it can help refine your intuitions about how ggplot internals work, with low barrier and no risk.
+I promise this is the end of the `{ggtrace}` self-promo, but I encourage you to play around with the internals using the workflow functions from the package - it can help refine your intuitions about how ggplot internals work, with low barrier and no risk. Check out the [package website](https://yjunechoe.github.io/ggtrace/) if you'd like to know more.
 
 
 ## Other `$compute_*()` extensions
