@@ -23,6 +23,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -49,85 +50,87 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {   }
+  { color: #00769e; background-color: #f1f3f5; }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #545454; font-weight: bold; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #a1024a; } /* BaseN */
+code span { color: #00769e; } /* Normal */
+code span.al { color: #ad0000; } /* Alert */
+code span.an { color: #5e5e5e; } /* Annotation */
+code span.at { color: #657422; } /* Attribute */
+code span.bn { color: #ad0000; } /* BaseN */
 code span.bu { } /* BuiltIn */
-code span.cf { color: #007faa; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #008000; } /* Char */
-code span.cn { color: #d91e18; } /* Constant */
-code span.co { color: #545454; } /* Comment */
-code span.cv { color: #545454; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #aa5d00; } /* DataType */
-code span.dv { color: #a1024a; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.cf { color: #00769e; } /* ControlFlow */
+code span.ch { color: #20794d; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #5e5e5e; } /* Comment */
+code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+code span.dt { color: #ad0000; } /* DataType */
+code span.dv { color: #ad0000; } /* DecVal */
+code span.er { color: #ad0000; } /* Error */
 code span.ex { } /* Extension */
-code span.fl { color: #a1024a; } /* Float */
-code span.fu { color: #4254a7; } /* Function */
+code span.fl { color: #ad0000; } /* Float */
+code span.fu { color: #4758ab; } /* Function */
 code span.im { } /* Import */
-code span.in { color: #545454; font-weight: bold; } /* Information */
-code span.kw { color: #007faa; font-weight: bold; } /* Keyword */
-code span.op { color: #696969; } /* Operator */
-code span.ot { color: #007faa; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #008000; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #008000; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #008000; } /* VerbatimString */
-code span.wa { color: #545454; font-weight: bold; font-style: italic; } /* Warning */
+code span.in { color: #5e5e5e; } /* Information */
+code span.kw { color: #00769e; } /* Keyword */
+code span.op { color: #5e5e5e; } /* Operator */
+code span.ot { color: #00769e; } /* Other */
+code span.pp { color: #ad0000; } /* Preprocessor */
+code span.sc { color: #5e5e5e; } /* SpecialChar */
+code span.ss { color: #20794d; } /* SpecialString */
+code span.st { color: #20794d; } /* String */
+code span.va { color: #111111; } /* Variable */
+code span.vs { color: #20794d; } /* VerbatimString */
+code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </style>
 
+
   <!--radix_placeholder_meta_tags-->
-<title>June Choe: Plotting treemaps with {treemap} and {ggplot2}</title>
+<title>June Choe: Reflections on useR! 2022</title>
 
-<meta property="description" itemprop="description" content="Using underlying plot data for maximum customization"/>
+<meta property="description" itemprop="description" content="Notes from attending and speaking at my first R conference"/>
 
-<link rel="canonical" href="https://yjunechoe.github.io/posts/2020-06-30-treemap-with-ggplot/"/>
+<link rel="canonical" href="https://yjunechoe.github.io/posts/2022-07-30-user2022/"/>
 <link rel="icon" type="image/png" href="../../static/img/icon.png"/>
 
 <!--  https://schema.org/Article -->
-<meta property="article:published" itemprop="datePublished" content="2020-06-30"/>
-<meta property="article:created" itemprop="dateCreated" content="2020-06-30"/>
+<meta property="article:published" itemprop="datePublished" content="2022-08-01"/>
+<meta property="article:created" itemprop="dateCreated" content="2022-08-01"/>
 <meta name="article:author" content="June Choe"/>
 
 <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-<meta property="og:title" content="June Choe: Plotting treemaps with {treemap} and {ggplot2}"/>
+<meta property="og:title" content="June Choe: Reflections on useR! 2022"/>
 <meta property="og:type" content="article"/>
-<meta property="og:description" content="Using underlying plot data for maximum customization"/>
-<meta property="og:url" content="https://yjunechoe.github.io/posts/2020-06-30-treemap-with-ggplot/"/>
-<meta property="og:image" content="https://yjunechoe.github.io/posts/2020-06-30-treemap-with-ggplot/2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-12-1.png"/>
-<meta property="og:image:width" content="1920"/>
-<meta property="og:image:height" content="768"/>
+<meta property="og:description" content="Notes from attending and speaking at my first R conference"/>
+<meta property="og:url" content="https://yjunechoe.github.io/posts/2022-07-30-user2022/"/>
+<meta property="og:image" content="https://yjunechoe.github.io/posts/2022-07-30-user2022/preview.png"/>
+<meta property="og:image:width" content="520"/>
+<meta property="og:image:height" content="260"/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:site_name" content="June Choe"/>
 
 <!--  https://dev.twitter.com/cards/types/summary -->
 <meta property="twitter:card" content="summary_large_image"/>
-<meta property="twitter:title" content="June Choe: Plotting treemaps with {treemap} and {ggplot2}"/>
-<meta property="twitter:description" content="Using underlying plot data for maximum customization"/>
-<meta property="twitter:url" content="https://yjunechoe.github.io/posts/2020-06-30-treemap-with-ggplot/"/>
-<meta property="twitter:image" content="https://yjunechoe.github.io/posts/2020-06-30-treemap-with-ggplot/2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-12-1.png"/>
-<meta property="twitter:image:width" content="1920"/>
-<meta property="twitter:image:height" content="768"/>
+<meta property="twitter:title" content="June Choe: Reflections on useR! 2022"/>
+<meta property="twitter:description" content="Notes from attending and speaking at my first R conference"/>
+<meta property="twitter:url" content="https://yjunechoe.github.io/posts/2022-07-30-user2022/"/>
+<meta property="twitter:image" content="https://yjunechoe.github.io/posts/2022-07-30-user2022/preview.png"/>
+<meta property="twitter:image:width" content="520"/>
+<meta property="twitter:image:height" content="260"/>
 <meta property="twitter:site" content="@yjunechoe"/>
 
 <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","date","output","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["Plotting treemaps with {treemap} and {ggplot2}"]},{"type":"character","attributes":{},"value":["Using underlying plot data for maximum customization"]},{"type":"character","attributes":{},"value":["data visualization","treemap","ggplot2","tutorial"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]},{"type":"character","attributes":{},"value":["0000-0002-0701-921X"]}]}]},{"type":"character","attributes":{},"value":["06-30-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io/posts/2020-06-30-treemap-with-ggplot/"]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","date","output","editor_options","preview","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["Reflections on useR! 2022"]},{"type":"character","attributes":{},"value":["Notes from attending and speaking at my first R conference"]},{"type":"character","attributes":{},"value":["conference","ggtrace"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]},{"type":"character","attributes":{},"value":["0000-0002-0701-921X"]}]}]},{"type":"character","attributes":{},"value":["2022-08-01"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained","css"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["../../styles.css"]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["chunk_output_type"]}},"value":[{"type":"character","attributes":{},"value":["console"]}]},{"type":"character","attributes":{},"value":["preview.png"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io/posts/2022-07-30-user2022/"]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["2020-06-30-treemap-with-ggplot_files/anchor-4.2.2/anchor.min.js","2020-06-30-treemap-with-ggplot_files/bowser-1.9.3/bowser.min.js","2020-06-30-treemap-with-ggplot_files/distill-2.2.21/template.v2.js","2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-11-1.png","2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-12-1.png","2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-3-1.png","2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-5-1.png","2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-6-1.png","2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-7-1.png","2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-8-1.png","2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-9-1.png","2020-06-30-treemap-with-ggplot_files/header-attrs-2.3/header-attrs.js","2020-06-30-treemap-with-ggplot_files/header-attrs-2.5/header-attrs.js","2020-06-30-treemap-with-ggplot_files/jquery-1.11.3/jquery.min.js","2020-06-30-treemap-with-ggplot_files/webcomponents-2.0.0/webcomponents.js","highcharter_pokemon.png"]}
+  {"type":"character","attributes":{},"value":["preview.png","user2022_files/anchor-4.2.2/anchor.min.js","user2022_files/bowser-1.9.3/bowser.min.js","user2022_files/distill-2.2.21/template.v2.js","user2022_files/header-attrs-2.14/header-attrs.js","user2022_files/jquery-3.6.0/jquery-3.6.0.js","user2022_files/jquery-3.6.0/jquery-3.6.0.min.js","user2022_files/jquery-3.6.0/jquery-3.6.0.min.map","user2022_files/popper-2.6.0/popper.min.js","user2022_files/tippy-6.2.7/tippy-bundle.umd.min.js","user2022_files/tippy-6.2.7/tippy-light-border.css","user2022_files/tippy-6.2.7/tippy.css","user2022_files/tippy-6.2.7/tippy.umd.min.js","user2022_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2083,8 +2086,12 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <!--/radix_placeholder_distill-->
-  <script src="../../site_libs/header-attrs-2.5/header-attrs.js"></script>
-  <script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
+  <script src="../../site_libs/header-attrs-2.14/header-attrs.js"></script>
+  <script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+  <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
+  <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="../../site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="../../site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
   <script src="../../site_libs/anchor-4.2.2/anchor.min.js"></script>
   <script src="../../site_libs/bowser-1.9.3/bowser.min.js"></script>
   <script src="../../site_libs/webcomponents-2.0.0/webcomponents.js"></script>
@@ -2565,6 +2572,7 @@ d-footnote-list code {
 </style>
 <!--/radix_placeholder_site_in_header-->
 
+  <link rel="stylesheet" href="../../styles.css" type="text/css"/>
 
 </head>
 
@@ -2573,7 +2581,7 @@ d-footnote-list code {
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Plotting treemaps with {treemap} and {ggplot2}","description":"Using underlying plot data for maximum customization","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/","orcidID":"0000-0002-0701-921X"}],"publishedDate":"2020-06-30T00:00:00.000-04:00","citationText":"Choe, 2020"}
+{"title":"Reflections on useR! 2022","description":"Notes from attending and speaking at my first R conference","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/","orcidID":"0000-0002-0701-921X"}],"publishedDate":"2022-08-01T00:00:00.000-04:00","citationText":"Choe, 2022"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2620,630 +2628,484 @@ Misc.
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Plotting treemaps with {treemap} and {ggplot2}</h1>
+<h1>Reflections on useR! 2022</h1>
 <!--radix_placeholder_categories-->
 <div class="dt-tags">
-  <a href="../../blog.html#category:data_visualization" class="dt-tag">data visualization</a>
-  <a href="../../blog.html#category:treemap" class="dt-tag">treemap</a>
-  <a href="../../blog.html#category:ggplot2" class="dt-tag">ggplot2</a>
-  <a href="../../blog.html#category:tutorial" class="dt-tag">tutorial</a>
+  <a href="../../blog.html#category:conference" class="dt-tag">conference</a>
+  <a href="../../blog.html#category:ggtrace" class="dt-tag">ggtrace</a>
 </div>
 <!--/radix_placeholder_categories-->
-<p><p>Using underlying plot data for maximum customization</p></p>
+<p><p>Notes from attending and speaking at my first R conference</p></p>
 </div>
 
 <div class="d-byline">
-  June Choe  (University of Pennsylvania Linguistics)<a href="https://live-sas-www-ling.pantheon.sas.upenn.edu/" class="uri">https://live-sas-www-ling.pantheon.sas.upenn.edu/</a>
+  June Choe  (University of Pennsylvania Linguistics)<a
+href="https://live-sas-www-ling.pantheon.sas.upenn.edu/"
+class="uri">https://live-sas-www-ling.pantheon.sas.upenn.edu/</a>
   
-<br/>06-30-2020
+<br/>2022-08-01
 </div>
 
 <div class="d-article">
-<div class="layout-chunk" data-layout="l-body">
-
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#context">Context</a></li>
+<li><a href="#submission-process">Submission process</a></li>
+<li><a href="#walkshops-and-talks-i-attended">Walkshops and talks I
+attended</a>
+<ul>
+<li><a href="#workshops">Workshops</a></li>
+<li><a href="#keynotes">Keynotes</a></li>
+<li><a href="#r-in-teaching"><span>R in Teaching</span></a></li>
+<li><a href="#building-the-r-community-1"><span>Building the R Community
+1</span></a></li>
+<li><a href="#interfaces-with-c-c-rust-and-v"><span>Interfaces with C,
+C++, Rust, and V</span></a></li>
+<li><a href="#expanding-tidyverse"><span>Expanding
+Tidyverse</span></a></li>
+<li><a href="#learning-ggplot2"><span>Learning
+<code>ggplot2</code></span></a></li>
+</ul></li>
+</ul>
+</nav>
 </div>
-<p>To steal the definition from <a href="https://en.wikipedia.org/wiki/Treemapping">Wikipedia</a>, a treemap is used for “displaying hierarchical data using nested figures, usually rectangles.” There are lots of ways to make one in R, but I didn’t find any one existing solution appealing.</p>
-<p>For illustration, let’s take the <code>pokemon</code> dataset from <code>{highcharter}</code> and plot a treemap with it using different methods.</p>
-<div class="layout-chunk" data-layout="l-body">
-
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre><code><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"pokemon"</span>, package <span class='op'>=</span> <span class='st'>"highcharter"</span><span class='op'>)</span>
-
-<span class='co'># Cleaning up data for a treemap</span>
-<span class='va'>data</span> <span class='op'>&lt;-</span> <span class='va'>pokemon</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>select</span><span class='op'>(</span><span class='va'>pokemon</span>, <span class='va'>type_1</span>, <span class='va'>type_2</span>, <span class='va'>color_f</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>type_2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>type_2</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"only"</span>, <span class='va'>type_1</span><span class='op'>)</span>, <span class='va'>type_2</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>type_1</span>, <span class='va'>type_2</span>, <span class='va'>color_f</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>count</span><span class='op'>(</span><span class='va'>type_1</span>, <span class='va'>type_2</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>ungroup</span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>data</span>, <span class='fl'>5</span><span class='op'>)</span>
-</code></pre>
-</div>
-<table>
-<thead>
-<tr>
-<th style="text-align:left;">
-type_1
-</th>
-<th style="text-align:left;">
-type_2
-</th>
-<th style="text-align:left;">
-color_f
-</th>
-<th style="text-align:right;">
-n
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-bug
-</td>
-<td style="text-align:left;">
-electric
-</td>
-<td style="text-align:left;">
-#BBBD23
-</td>
-<td style="text-align:right;">
-2
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-bug
-</td>
-<td style="text-align:left;">
-fighting
-</td>
-<td style="text-align:left;">
-#AD9721
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-bug
-</td>
-<td style="text-align:left;">
-fire
-</td>
-<td style="text-align:left;">
-#B9AA23
-</td>
-<td style="text-align:right;">
-2
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-bug
-</td>
-<td style="text-align:left;">
-flying
-</td>
-<td style="text-align:left;">
-#A8AE52
-</td>
-<td style="text-align:right;">
-13
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-bug
-</td>
-<td style="text-align:left;">
-ghost
-</td>
-<td style="text-align:left;">
-#9AA03D
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p> </p>
-<h2 id="treemap"><strong>1. <code>{treemap}</code></strong></h2>
-<p>Here’s a plot made from the <code>{treemap}</code> package:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre><code><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>treemap</span><span class='op'>)</span>
-
-<span class='fu'><a href='https://rdrr.io/pkg/treemap/man/treemap.html'>treemap</a></span><span class='op'>(</span>dtf <span class='op'>=</span> <span class='va'>data</span>,
-        index <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"type_1"</span>, <span class='st'>"type_2"</span><span class='op'>)</span>,
-        vSize <span class='op'>=</span> <span class='st'>"n"</span>,
-        vColor <span class='op'>=</span> <span class='st'>"type_1"</span><span class='op'>)</span>
-</code></pre>
-</div>
-<p><img src="2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
-</div>
-<p>It actually doesn’t look too bad, but this package hasn’t been updated for 3 years and there aren’t a lot of options for customization. For the options that do exist, they’re a big list of additional arguments to the main workhorse function, <code>treemap()</code>, which feels a bit restrictive if you’re used to <code>{ggplot}</code>’s modular and layered grammar. So while it’s very simple to use, I’d probably use it only for exploring the data for myself.</p>
-<p> </p>
-<h2 id="highcharter"><strong>2. <code>{highcharter}</code></strong></h2>
-<p>All the way on the other side of this ease&lt;—&gt;customizability spectrum is <code>{highcharter}</code> which is arguably the most powerful data visualization package in R.</p>
-<p>With highcharter, you can turn the previous graph into the following:</p>
-<p><img src="highcharter_pokemon.png" /></p>
-<p>This looks much better, and it’s even interactive (although this particular one isn’t because I just copy pasted the image from <a href="https://www.datacamp.com/community/tutorials/data-visualization-highcharter-r">this blog post from 2018</a>). I’d use <code>{highcharter}</code> except that there isn’t a great documentation on plotting treemaps, and it definitely doesn’t help that <code>{highcharter}</code> has a pretty steep learning curve, even if you have a lot of experience with <code>{ggplot2}</code>.</p>
-<p>The main problem I ran into is that the function <code>hc_add_series_treemap()</code> that was used to create the above graph is now depreciated. It redirects you to use <code>hctreemap()</code> which itself is <em>also</em> depreciated. That finally redirects you to use <code>hctreemap2()</code> which is pretty sparse in documentation and use-cases, and overall not very transparent IMO.</p>
-<p> </p>
-<h2 id="treemapify"><strong>3. <code>{treemapify}</code></strong></h2>
-<p><code>{treemapify}</code> is a ggplot solution to plotting treemaps.</p>
-<p>Here’s a plot of the <code>pokemon</code> dataset, adopting the example code from the <a href="https://cran.r-project.org/web/packages/treemapify/vignettes/introduction-to-treemapify.html">vignette</a>. Since it follows the layered grammar of ggplot, I figured I’d show what each of the four layers outlined in the code does:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre><code><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/wilkox/treemapify'>treemapify</a></span><span class='op'>)</span>
-
-<span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>data</span>, <span class='fu'>aes</span><span class='op'>(</span>area <span class='op'>=</span> <span class='va'>n</span>, fill <span class='op'>=</span> <span class='va'>color_f</span>, label <span class='op'>=</span> <span class='va'>type_2</span>,
-                subgroup <span class='op'>=</span> <span class='va'>type_1</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='co'># 1. Draw type_2 borders and fill colors</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/treemapify/man/geom_treemap.html'>geom_treemap</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='co'># 2. Draw type_1 borders</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/treemapify/man/geom_treemap_subgroup_border.html'>geom_treemap_subgroup_border</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='co'># 3. Print type_1 text</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/treemapify/man/geom_treemap_subgroup_text.html'>geom_treemap_subgroup_text</a></span><span class='op'>(</span>place <span class='op'>=</span> <span class='st'>"centre"</span>, grow <span class='op'>=</span> <span class='cn'>T</span>, alpha <span class='op'>=</span> <span class='fl'>0.5</span>, colour <span class='op'>=</span> <span class='st'>"black"</span>,
-                             fontface <span class='op'>=</span> <span class='st'>"italic"</span>, min.size <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='co'># 4. Print type_2 text</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/treemapify/man/geom_treemap_text.html'>geom_treemap_text</a></span><span class='op'>(</span>colour <span class='op'>=</span> <span class='st'>"white"</span>, place <span class='op'>=</span> <span class='st'>"topleft"</span>, reflow <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>theme</span><span class='op'>(</span>legend.position <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
-</code></pre>
-</div>
-</div>
-<p><strong><code>geom_treemap()</code> draws type_2 borders and fill colors</strong></p>
-<div class="layout-chunk" data-layout="l-body">
-<p><img src="2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-5-1.png" width="624" /></p>
-</div>
-<p><strong><code>geom_treemap_subgroup_border()</code> draws type_1 borders</strong></p>
-<div class="layout-chunk" data-layout="l-body">
-<p><img src="2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-6-1.png" width="624" /></p>
-</div>
-<p><strong><code>geom_treemap_subgroup_text()</code> prints type_1 text</strong></p>
-<div class="layout-chunk" data-layout="l-body">
-<p><img src="2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-7-1.png" width="624" /></p>
-</div>
-<p><strong><code>geom_treemap_text()</code> prints type_2 text</strong></p>
-<div class="layout-chunk" data-layout="l-body">
-<p><img src="2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
-</div>
-<p>I find this the most appealing out of the three options and I do recommend this package, but I’m personally a bit hesistant to use it for three reasons:</p>
-<ol type="1">
-<li><p>I don’t want to learn a whole ’nother family of <code>geom_*</code>s just to plot treemaps.</p></li>
-<li><p>Some of the ggplot “add-ons” that I like don’t really transfer over. For example, I can’t use <code>geom_text_repel()</code> from <code>{ggrepel}</code> because I have to use <code>{treemapify}</code>’s own text geoms like <code>geom_treemap_subgroup_text()</code> and <code>geom_treemap_text()</code>.</p></li>
-<li><p>Customization options are <a href="https://www.rdocumentation.org/packages/treemapify/versions/2.5.3/topics/geom_treemap_text">kind of a mouthful</a>, and I’ve yet to see a nice-looking treemap that was plotted using this package. There are a couple example treemaps in the <a href="https://cran.r-project.org/web/packages/treemapify/vignettes/introduction-to-treemapify.html">vignette</a> but none of them look particularly good. An independently produced example <a href="http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html#Treemap">here</a> doesn’t look super great either.</p></li>
-</ol>
-<p> </p>
-<h2 id="a-mixed-hack-ish-solution"><strong>A Mixed (Hack-ish?) Solution</strong></h2>
-<p>Basically, I’m very lazy and I want to avoid learning any new packages or functions as much as possible.</p>
-<p>I’ve come up with a very simple solution to my self-created problem, which is to draw treemaps using <code>geom_rect()</code> with a little help from the <code>{treemap}</code> package introduced earlier.</p>
-<p>So apparently, there’s a cool feature in <code>treemap::treemap()</code> where you can extract the plotting data.</p>
-<p>You can do this by pulling the <code>tm</code> object from the plot function side-effect, and the underlying dataframe used for plotting looks like this.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>:</p>
-<div class="layout-chunk" data-layout="l-body-outset">
-<div class="sourceCode">
-<pre><code><span class='va'>tm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/treemap/man/treemap.html'>treemap</a></span><span class='op'>(</span>
-  dtf <span class='op'>=</span> <span class='va'>data</span>,
-  index <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"type_1"</span>, <span class='st'>"type_2"</span><span class='op'>)</span>,
-  vSize <span class='op'>=</span> <span class='st'>"n"</span>,
-  vColor <span class='op'>=</span> <span class='st'>"color_f"</span>,
-  type <span class='op'>=</span> <span class='st'>'color'</span> <span class='co'># {treemap}'s equivalent of scale_fill_identity()</span>
-<span class='op'>)</span>
-</code></pre>
-</div>
-<div class="sourceCode">
-<pre><code><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>tm</span><span class='op'>$</span><span class='va'>tm</span><span class='op'>)</span>
-</code></pre>
-</div>
-<table>
-<thead>
-<tr>
-<th style="text-align:left;">
-type_1
-</th>
-<th style="text-align:left;">
-type_2
-</th>
-<th style="text-align:right;">
-vSize
-</th>
-<th style="text-align:left;">
-vColor
-</th>
-<th style="text-align:right;">
-stdErr
-</th>
-<th style="text-align:left;">
-vColorValue
-</th>
-<th style="text-align:right;">
-level
-</th>
-<th style="text-align:right;">
-x0
-</th>
-<th style="text-align:right;">
-y0
-</th>
-<th style="text-align:right;">
-w
-</th>
-<th style="text-align:right;">
-h
-</th>
-<th style="text-align:left;">
-color
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-bug
-</td>
-<td style="text-align:left;">
-electric
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-#BBBD23
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0.4556639
-</td>
-<td style="text-align:right;">
-0.3501299
-</td>
-<td style="text-align:right;">
-0.0319174
-</td>
-<td style="text-align:right;">
-0.0872727
-</td>
-<td style="text-align:left;">
-#BBBD23
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-bug
-</td>
-<td style="text-align:left;">
-fighting
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-#AD9721
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0.4556639
-</td>
-<td style="text-align:right;">
-0.3064935
-</td>
-<td style="text-align:right;">
-0.0319174
-</td>
-<td style="text-align:right;">
-0.0436364
-</td>
-<td style="text-align:left;">
-#AD9721
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-bug
-</td>
-<td style="text-align:left;">
-fire
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-#B9AA23
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0.4875812
-</td>
-<td style="text-align:right;">
-0.3501299
-</td>
-<td style="text-align:right;">
-0.0319174
-</td>
-<td style="text-align:right;">
-0.0872727
-</td>
-<td style="text-align:left;">
-#B9AA23
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-bug
-</td>
-<td style="text-align:left;">
-flying
-</td>
-<td style="text-align:right;">
-13
-</td>
-<td style="text-align:left;">
-#A8AE52
-</td>
-<td style="text-align:right;">
-13
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0.2757660
-</td>
-<td style="text-align:right;">
-0.2628571
-</td>
-<td style="text-align:right;">
-0.1160631
-</td>
-<td style="text-align:right;">
-0.1560000
-</td>
-<td style="text-align:left;">
-#A8AE52
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-bug
-</td>
-<td style="text-align:left;">
-ghost
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-#9AA03D
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0.4556639
-</td>
-<td style="text-align:right;">
-0.2628571
-</td>
-<td style="text-align:right;">
-0.0319174
-</td>
-<td style="text-align:right;">
-0.0436364
-</td>
-<td style="text-align:left;">
-#9AA03D
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-bug
-</td>
-<td style="text-align:left;">
-grass
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:left;">
-#9CBB2B
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0.4744388
-</td>
-<td style="text-align:right;">
-0.4374026
-</td>
-<td style="text-align:right;">
-0.0450598
-</td>
-<td style="text-align:right;">
-0.1854545
-</td>
-<td style="text-align:left;">
-#9CBB2B
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>We can simply use this data to recreate the treemap that was made with <code>{treemapify}</code> - except this time we have more flexibility!</p>
-<p>First, we do some data cleaning:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre><code><span class='va'>tm_plot_data</span> <span class='op'>&lt;-</span> <span class='va'>tm</span><span class='op'>$</span><span class='va'>tm</span> <span class='op'>%&gt;%</span> 
-  <span class='co'># calculate end coordinates with height and width</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>x1 <span class='op'>=</span> <span class='va'>x0</span> <span class='op'>+</span> <span class='va'>w</span>,
-         y1 <span class='op'>=</span> <span class='va'>y0</span> <span class='op'>+</span> <span class='va'>h</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='co'># get center coordinates for labels</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>x <span class='op'>=</span> <span class='op'>(</span><span class='va'>x0</span><span class='op'>+</span><span class='va'>x1</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>2</span>,
-         y <span class='op'>=</span> <span class='op'>(</span><span class='va'>y0</span><span class='op'>+</span><span class='va'>y1</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>2</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='co'># mark primary groupings and set boundary thickness</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>primary_group <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>type_2</span><span class='op'>)</span>, <span class='fl'>1.2</span>, <span class='fl'>.5</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='co'># remove colors from primary groupings (since secondary is already colored)</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>color <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>type_2</span><span class='op'>)</span>, <span class='cn'>NA</span>, <span class='va'>color</span><span class='op'>)</span><span class='op'>)</span>
-</code></pre>
-</div>
-</div>
-<p>Then we plot. It looks like I can recreate a lot of it with a little help from the <code>{ggfittext}</code> package that was in the source code<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre><code><span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>tm_plot_data</span>, <span class='fu'>aes</span><span class='op'>(</span>xmin <span class='op'>=</span> <span class='va'>x0</span>, ymin <span class='op'>=</span> <span class='va'>y0</span>, xmax <span class='op'>=</span> <span class='va'>x1</span>, ymax <span class='op'>=</span> <span class='va'>y1</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
-  <span class='co'># add fill and borders for groups and subgroups</span>
-  <span class='fu'>geom_rect</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>color</span>, size <span class='op'>=</span> <span class='va'>primary_group</span><span class='op'>)</span>,
-            show.legend <span class='op'>=</span> <span class='cn'>FALSE</span>, color <span class='op'>=</span> <span class='st'>"black"</span>, alpha <span class='op'>=</span> <span class='fl'>.3</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>scale_fill_identity</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='co'># set thicker lines for group borders</span>
-  <span class='fu'>scale_size</span><span class='op'>(</span>range <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span><span class='op'>(</span><span class='va'>tm_plot_data</span><span class='op'>$</span><span class='va'>primary_group</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='co'># add labels</span>
-  <span class='fu'>ggfittext</span><span class='fu'>::</span><span class='fu'><a href='https://wilkox.org/ggfittext/reference/geom_fit_text.html'>geom_fit_text</a></span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>label <span class='op'>=</span> <span class='va'>type_2</span><span class='op'>)</span>, min.size <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='co'># options</span>
-  <span class='fu'>scale_x_continuous</span><span class='op'>(</span>expand <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>scale_y_continuous</span><span class='op'>(</span>expand <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>theme_void</span><span class='op'>(</span><span class='op'>)</span>
-</code></pre>
-</div>
-<p><img src="2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-11-1.png" width="960" /></p>
-</div>
-<p>Now, I can be <strong>a lot more flexible with my customizations</strong>.</p>
-<p>For example, let’s say I wanted to isolate and emphasize the <em>secondary types</em> that have <em>unique</em> type-combinations with steel, AND also provide the <em>name</em> of the corresponding pokemon.</p>
-<p>I can do this by using <code>geom_text_repel()</code> for a subset of the labels while keeping the same <code>geom_fit_text()</code> setting for the rest of the labels.</p>
-<div class="layout-chunk" data-layout="l-page">
-<div class="sourceCode">
-<pre><code><span class='va'>tm_plot_data</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>ggplot</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>xmin <span class='op'>=</span> <span class='va'>x0</span>, ymin <span class='op'>=</span> <span class='va'>y0</span>, xmax <span class='op'>=</span> <span class='va'>x1</span>, ymax <span class='op'>=</span> <span class='va'>y1</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
-  <span class='fu'>geom_rect</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>color</span>, size <span class='op'>=</span> <span class='va'>primary_group</span><span class='op'>)</span>,
-            show.legend <span class='op'>=</span> <span class='cn'>FALSE</span>, color <span class='op'>=</span> <span class='st'>"black"</span>, alpha <span class='op'>=</span> <span class='fl'>.3</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>scale_fill_identity</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>scale_size</span><span class='op'>(</span>range <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span><span class='op'>(</span><span class='va'>tm_plot_data</span><span class='op'>$</span><span class='va'>primary_group</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>ggfittext</span><span class='fu'>::</span><span class='fu'><a href='https://wilkox.org/ggfittext/reference/geom_fit_text.html'>geom_fit_text</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>tm_plot_data</span>, <span class='va'>type_1</span> <span class='op'>!=</span> <span class='st'>"steel"</span> <span class='op'>|</span> <span class='va'>vSize</span> <span class='op'>&gt;</span> <span class='fl'>1</span><span class='op'>)</span>,
-                           <span class='fu'>aes</span><span class='op'>(</span>label <span class='op'>=</span> <span class='va'>type_2</span><span class='op'>)</span>, min.size <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='co'># pick out observations of interest and annotate with geom_text_repel</span>
-  <span class='fu'>ggrepel</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ggrepel/man/geom_text_repel.html'>geom_text_repel</a></span><span class='op'>(</span>
-    data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>tm_plot_data</span>, <span class='va'>vSize</span> <span class='op'>==</span> <span class='fl'>1</span>, <span class='va'>type_1</span> <span class='op'>==</span> <span class='st'>"steel"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-      <span class='fu'>inner_join</span><span class='op'>(</span><span class='va'>pokemon</span>, by <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"type_1"</span>, <span class='st'>"type_2"</span><span class='op'>)</span><span class='op'>)</span>,
-    <span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>x</span>, y <span class='op'>=</span> <span class='va'>y</span>, label <span class='op'>=</span> <span class='fu'>glue</span><span class='fu'>::</span><span class='fu'><a href='https://glue.tidyverse.org/reference/glue.html'>glue</a></span><span class='op'>(</span><span class='st'>"{type_2} ({pokemon})"</span><span class='op'>)</span><span class='op'>)</span>,
-    color <span class='op'>=</span> <span class='st'>"black"</span>, xlim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1.02</span>, <span class='cn'>NA</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fl'>4</span>,
-    direction <span class='op'>=</span> <span class='st'>"y"</span>, vjust <span class='op'>=</span> <span class='fl'>.5</span>, force <span class='op'>=</span> <span class='fl'>3</span>
-  <span class='op'>)</span> <span class='op'>+</span>
-  <span class='co'># expand x-axis limits to make room for test annotations</span>
-  <span class='fu'>scale_x_continuous</span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1.2</span><span class='op'>)</span>, expand <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>scale_y_continuous</span><span class='op'>(</span>expand <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>theme_void</span><span class='op'>(</span><span class='op'>)</span>
-</code></pre>
-</div>
-<p><img src="2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-12-1.png" width="960" data-distill-preview=1 /></p>
-</div>
-<p>And that’s our final product! This would’ve been pretty difficult to do with any of the three options I reviewed at the top!</p>
-<p><strong>tl;dr</strong> - Use <code>treemap()</code> from the <code>{treemap}</code> package to get positions for <code>geom_rect()</code>s and you’re 90% of the way there to plotting a treemap! Apply your favorite styles (especially <code>_text()</code> geoms) from the <code>{ggplot2}</code> ecosystem for finishing touches!</p>
-<p> </p>
-<h3 id="session-info">Session Info</h3>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre><code><span class='fu'><a href='https://rdrr.io/r/utils/sessionInfo.html'>sessionInfo</a></span><span class='op'>(</span><span class='op'>)</span>
-</code></pre>
-</div>
-<pre><code>  R version 4.0.3 (2020-10-10)
-  Platform: x86_64-w64-mingw32/x64 (64-bit)
-  Running under: Windows 10 x64 (build 18363)
-  
-  Matrix products: default
-  
-  locale:
-  [1] LC_COLLATE=English_United States.1252 
-  [2] LC_CTYPE=English_United States.1252   
-  [3] LC_MONETARY=English_United States.1252
-  [4] LC_NUMERIC=C                          
-  [5] LC_TIME=English_United States.1252    
-  
-  attached base packages:
-  [1] stats     graphics  grDevices datasets  utils     methods   base     
-  
-  other attached packages:
-   [1] treemapify_2.5.3 treemap_2.4-2    printr_0.1       forcats_0.5.0   
-   [5] stringr_1.4.0    dplyr_1.0.2      purrr_0.3.4      readr_1.4.0     
-   [9] tidyr_1.1.2      tibble_3.0.4     ggplot2_3.3.2    tidyverse_1.3.0 
-  
-  loaded via a namespace (and not attached):
-   [1] httr_1.4.2          jsonlite_1.7.1      modelr_0.1.8       
-   [4] shiny_1.5.0         assertthat_0.2.1    highr_0.8          
-   [7] blob_1.2.1          renv_0.12.0         cellranger_1.1.0   
-  [10] ggrepel_0.8.2       yaml_2.2.1          pillar_1.4.6       
-  [13] backports_1.1.10    glue_1.4.2          digest_0.6.26      
-  [16] RColorBrewer_1.1-2  promises_1.1.1      rvest_0.3.6        
-  [19] colorspace_1.4-1    htmltools_0.5.0     httpuv_1.5.4       
-  [22] pkgconfig_2.0.3     broom_0.7.2         haven_2.3.1        
-  [25] xtable_1.8-4        scales_1.1.1        later_1.1.0.1      
-  [28] distill_1.0.1       downlit_0.2.0       generics_0.0.2     
-  [31] farver_2.0.3        ellipsis_0.3.1      withr_2.2.0        
-  [34] cli_2.1.0           magrittr_1.5.0.9000 crayon_1.3.4       
-  [37] readxl_1.3.1        mime_0.9            evaluate_0.14      
-  [40] fs_1.5.0            fansi_0.4.1         xml2_1.3.2         
-  [43] tools_4.0.3         data.table_1.13.2   hms_0.5.3          
-  [46] lifecycle_0.2.0     gridBase_0.4-7      munsell_0.5.0      
-  [49] reprex_0.3.0        compiler_4.0.3      rlang_0.4.8        
-  [52] grid_4.0.3          gt_0.2.2            rstudioapi_0.11    
-  [55] igraph_1.2.6        labeling_0.4.2      rmarkdown_2.5      
-  [58] gtable_0.3.0        DBI_1.1.0           R6_2.4.1           
-  [61] lubridate_1.7.9     knitr_1.30          fastmap_1.0.1      
-  [64] prismatic_0.2.0     stringi_1.5.3       Rcpp_1.0.5         
-  [67] vctrs_0.3.4         ggfittext_0.9.0     dbplyr_1.4.4       
-  [70] tidyselect_1.1.0    xfun_0.18</code></pre>
-</div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
-<section class="footnotes" role="doc-endnotes">
+<h2 id="context">Context</h2>
+<p>I’ve had my eyes on <a href="https://user2022.r-project.org">useR!
+2022</a> ever since they announced it - I had my package <a
+href="https://yjunechoe.github.io/ggtrace/"><code>{ggtrace}</code></a>
+that I’d been developing for about half a year by the time calls for
+abstracts were announced, and thought that it’d make a good submission
+for my “debut” into the “academic” R world. I’ve built up a bit of a
+resistance against going to online conferences over the covid years but
+I’ve never been to an R conference before and I’ve heard good things
+about the last virtual <a href="https://user2021.r-project.org/">useR!
+2021</a>, so I was actually very excited about the prospect of
+attending.</p>
+<p>In short I’m very very glad I did and it was very educational! It was
+a great first R conference for me.</p>
+<p>Also if you’re wondering why I’m writing this over a month after the
+conference ended, it’s because I had to immediately switch gears to <a
+href="https://rstudioconf2022.sched.com/event/11ibT/cracking-open-ggplot-internals-with-ggtrace">rstudioconf</a>
+prep (sorry!).</p>
+<h2 id="submission-process">Submission process</h2>
+<p>The submission process was <em>incredibly simple</em>,<a href="#fn1"
+class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> and
+that low barrier to entry was part of the reason that convinced me to
+apply. The submission form consisted of a <a
+href="https://user2022.r-project.org/program/talks/#session-14-learning-ggplot2">250-word
+abstract</a> that I typed up into a textbox input field, along with
+relevant links about my project.<a href="#fn2" class="footnote-ref"
+id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>I also applied for the diversity scholarship, which was a separate
+form sent to me after I got accepted for a talk. I’ve never applied for
+these kind of things before, but when it came to R I felt like I could
+really use this to advocate for myself and others who share my
+background (students in traditionally “humanities” and “soft science”
+departments) to convince their programs about the benefits of students
+being involved in the R community. I’m fortunate enough to be in a
+program that’s recently been making a lot of effort to incorporate
+R/programming into doing science,<a href="#fn3" class="footnote-ref"
+id="fnref3" role="doc-noteref"><sup>3</sup></a> but me, being selfish,
+wanted even more R in my life. The conference generously <a
+href="https://twitter.com/_useRconf/status/1536926786872741888">offered
+me the diversity scholarship</a> and I am incredibly honored! It covered
+my registration fee and allowed me to attend two workshops, which I’ll
+talk about later.</p>
+<p>Here’s the timeline of how things went for me:</p>
+<ul>
+<li>March 4: I submitted my abstract for a talk</li>
+<li>March 15: Abstract deadline for talks and elevator pitches</li>
+<li>April 19: Notification of acceptance</li>
+<li>April 27: Invitation to apply for the diversity scholarship</li>
+<li>May 13: Notification of diversity scholarship offer</li>
+</ul>
+<h2 id="walkshops-and-talks-i-attended">Walkshops and talks I
+attended</h2>
+<p>Here are my notes from the workshops and some of the talks I
+attended, in no particular order. Keep in mind that I was attending from
+home in Korea, so I missed a few live talks and didn’t have great notes
+for others (I’ll be catching up through the recordings).</p>
+<p><a
+href="https://www.youtube.com/channel/UCv_a9ZGZOH588wUZHZl6T_g"><strong>Recordings
+are available on the conference youtube channel</strong></a></p>
+<h3 id="workshops">Workshops</h3>
+<ul>
+<li><p><a
+href="https://www.youtube.com/watch?v=SucCRTwYaTk&amp;list=PL77T87Q0eoJhQDXzG2Viq3uHf5YyJfw0L&amp;index=4"><strong>Isabella
+Bicalho Frazeto</strong> <em>Introduction to dimensional reduction in
+R</em></a>: First off, big respect to Isabella for leading a 3.5 hour
+workshop all by herself. Content-wise, the workshop was a balanced,
+not-too-overwhelming overview of dimensional reduction,<a href="#fn4"
+class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>
+starting with a mini lecture of dimensional reduction methods in Part 1,
+followed by a hands-on walkthrough of packages and functions in R
+implementing these methods in Parts 2 and 3. I knew only very little
+about dimensional reduction going in, and I came away from it with at
+least a conceptual understanding of PCA and ICA, as well as the
+important difference between the two in theory and practice. Getting an
+answer to “what the heck is PCA/ICA?” was my main goal going into the
+workshop, so I’m very satisfied with what I learned. Isabella was also
+nice enough to answer my question about the difference between PCA and
+<a
+href="https://en.wikipedia.org/wiki/Functional_principal_component_analysis">fPCA</a>
+during break time - she had never heard about it before,<a href="#fn5"
+class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> but
+she did a quick research on it live, read a whole wikipedia article
+about fPCA, and then dumb-ed it down for me all in the span of like 3
+minutes.</p></li>
+<li><p><a
+href="https://www.youtube.com/watch?v=gK50hCPy2Cc&amp;list=PL77T87Q0eoJhQDXzG2Viq3uHf5YyJfw0L&amp;index=8"><strong>Danielle
+Navarro, Jonathan Keane, &amp; Stephanie Hazlitt</strong>
+<em>Larger-than-memory data workflows with Apache Arrow</em></a>: I
+don’t personally work with big data much but a lot of people around me
+do. And when they do, they often have run into issues trying to analyze
+their data in-memory, so I figured I’d learn Arrow and “spread the
+word,” so to speak. The workshop was AWESOME and used a ton of <a
+href="https://arrow-user2022.netlify.app/">carefully crafted learning
+materials</a>, which are also available online. To be honest I took this
+live in the middle of the night for me in Korea time, so I wasn’t that
+engaged with the live exercises, but the online materials are so well
+organized that I feel like I didn’t miss much between that and the
+workshop recording. Beyond the actual content of workshop exercises, I
+especially liked that a good chunk of time was spent going through the
+design of Arrow and where Arrow fits in the data-analysis pipeline and
+how it compares to alternatives in the data storage ecosystem. Also
+<code>{arrow}</code> + <code>{duckdb}</code> looks very cool - I’m now
+an official convert!</p></li>
+</ul>
+<h3 id="keynotes">Keynotes</h3>
+<ul>
+<li><p><a
+href="https://www.youtube.com/watch?v=wif3dmkUs5o"><strong>Paula
+Moraga</strong></a>: This was so interesting even for me knowing nothing
+about public health and spatial statistics going in, and I learned a lot
+from the talk. It was very information-packed and really showed how you
+could use R in literally all aspects of research. I was especially
+impressed by the idea that you could analyze your uncertainty about a
+measure (e.g., %vaccinated in a region) as data itself, and use that to
+inform future data collection decisions. It was refreshing to hear
+uncertainty being talked about in that way because I often only hear
+people talking about <em>proactive solutions</em> for minimizing
+uncertainty, or about improving <em>precision in quantifying</em>
+uncertainty. Paula’s work was like a special kind of applied statistics
+which explicitly leverages the fact that you can drive future data
+collection practices using properties of uncertainty in current/prior
+data.</p></li>
+<li><p><a
+href="https://www.youtube.com/watch?v=1FFqsub_okM&amp;list=PL77T87Q0eoJi2VLI8HHVA08m1d5zfQsWJ&amp;index=2"><strong>Amanda
+Cox</strong></a>: Words cannot express how good this talk was. Amanda
+Cox is a force of nature. I was super looking forward to this given my
+interests in data viz and data journalism, and I was not disappointed.
+There were so many “mind = blown” moments but to keep things short, here
+are my two favorites:</p>
+<ul>
+<li><p><a
+href="https://www.nytimes.com/interactive/2015/05/28/upshot/you-draw-it-how-family-income-affects-childrens-college-chances.html">You
+Draw It: How Family Income Predicts Children’s College Chances</a>:
+Everyone knows that income and education are highly linked, but just how
+tight is the connection? Turns out that when the NYT team was
+investigating this question, they ended up with data that showed a
+suspiciously linear trend to the point of appearing almost uninteresting
+and sterile. But they turned this mundaneness of the data into a
+surprise factor by testing it against people’s expectations, allowing
+readers to draw their own trend line to compare to the data. Not only
+did that get people engaged, people got creative with what they drew<a
+href="#fn6" class="footnote-ref" id="fnref6"
+role="doc-noteref"><sup>6</sup></a> resulting in the piece creating a
+very rich interactive experience. The team correctly determined that the
+data was boring and uninteresting to plot, but then they turned it
+around and made something magnificent out of the situation.</p></li>
+<li><p><a
+href="http://archive.nytimes.com/www.nytimes.com/interactive/2012/08/05/sports/olympics/the-100-meter-dash-one-race-every-medalist-ever.html">One
+Race, Every Medalist Ever</a>: Amanda introduced this piece as an
+example of how R could be used anywhere, even in places where it didn’t
+need to be used.<a href="#fn7" class="footnote-ref" id="fnref7"
+role="doc-noteref"><sup>7</sup></a> She made us watch a whooping 2:30
+minute video about olympic sprinters, only to reveal that R was involved
+in something seemingly trivial.<a href="#fn8" class="footnote-ref"
+id="fnref8" role="doc-noteref"><sup>8</sup></a> I love the fact that she
+did this build-up in the talk though - I wouldn’t have fully appreciated
+the point if she just said it outright.</p></li>
+</ul></li>
+</ul>
+<h3 id="r-in-teaching"><a
+href="https://www.youtube.com/watch?v=xYTocuK927k&amp;list=PL77T87Q0eoJjvKVFHuJZ5_BGVbPPpB8LL&amp;index=2">R
+in Teaching</a></h3>
+<ul>
+<li><p><strong>Amelia McNamara</strong> <em>Teaching modeling in
+introductory statistics: A comparison of formula and tidyverse
+syntaxes</em>: I’ve been hearing about this project on twitter for a
+while and this was my first time listening to a talk about it. I think
+this is super neat and this kind of “meta” research on R use, with R, is
+something that I’ve been interested in as well<a href="#fn9"
+class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>. A
+lot of thought went into the design of the teaching and I admired the
+robustness in the experimental design and how much thought went into it.
+It’s also just always interesting to hear about how things are like to
+novices - you don’t get that from introspection anymore as experienced
+users.</p></li>
+<li><p><strong>Jonathan Love</strong> <em><code>jamovi</code>: An
+R-based statistical spreadsheet for the masses</em>: I’ve actually never
+seen a WYSIWYG-style statistical program in action. I was fortunate
+enough to go through school during the R revolution in university intro
+stats courses,<a href="#fn10" class="footnote-ref" id="fnref10"
+role="doc-noteref"><sup>10</sup></a> but I always appreciated people who
+worked on these GUI-based tools for beginners because boy learning R at
+first was so hard! I was really surprised at the fact that jamovi could
+produce full reports and that it also had like 40-50
+community-contributed modules. Also TIL jamovi’s sister program jasp
+stands for “Jonathan’s Awesome Statistical Program,”</p></li>
+<li><p><strong>Carsten Lange</strong> <em>A better way to teach
+histograms, using the TeachHist package</em>: I love it when a package
+just aims to do one thing and does that one thing well.
+<code>{TeachHist}</code> is that package - it runs a shiny app that
+teaches intro stats students the motivation and intuition behind
+histograms as a data viz tool, and how to read statistical properties of
+the data off of histograms. Purists will not like the design of the
+functions in the package (e.g., you have big functions with lots of
+arguments vs. modules composing a histogram like in
+<code>{ggplot2}</code>) but I really liked how this was designed with
+non-programmer students in mind.<a href="#fn11" class="footnote-ref"
+id="fnref11" role="doc-noteref"><sup>11</sup></a> I also really liked
+that the talk live-demoed the package/app, since that also demos the
+real-world case of when you’d be using it (live, in front of
+students).</p></li>
+<li><p><strong>Kirsten B. Gorman et al.</strong> <em>The untold story of
+<code>palmerpenguins</code></em>: This talk was actually a call for a
+lot of self-reflection for me, because to be honest when
+<code>{palmerpenguins}</code> first came out and there was big hype
+around it on twitter, I didn’t understand really understand why. I
+thought, “it’s just a data package,” and found the dataset to be
+underwhelming (as in, it’s not exactly a big dataset). Of course, I’ve
+done a complete 180° since then and I adore this package now - the data
+<em>just works</em> for many different kinds of simple reprexes that I
+make for teaching and answering questions.<a href="#fn12"
+class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>
+But also there’s the side of the “story of palmerpenguins” that’s not at
+all about the data itself, which was the focus of this talk - the side
+about the people and the community around this project and all the
+effort they put in to make <code>palmerpenguins</code> dethrone the
+<code>iris</code> dataset and get representation in other big-name
+places like <a
+href="https://www.tensorflow.org/datasets/catalog/penguins">tensorflow</a>.
+Because, you know what? If someone asked me to make a data package go
+viral I’d have no idea where to even start, and that thought racing past
+my head while I was listening to this talk was really humbling. I guess
+that’s really what a lot of what making a good data package for
+pedagogical purposes is, right?<a href="#fn13" class="footnote-ref"
+id="fnref13" role="doc-noteref"><sup>13</sup></a> Its partly about the
+actual data, but it’s also about the framing, the <a
+href="https://yihui.org/en/2018/12/social-media-marketing/">“marketing”</a>,
+the cuteness factor of penguins, all the hand-made art, the awesome
+pkgdown website (which I embarassingly never visited before this talk),
+and more. The fact that you can get people excited about a data package
+is insane, and I really liked hearing about all the small-to-big issues
+the <code>{palmerpenguins}</code> team had to think through<a
+href="#fn14" class="footnote-ref" id="fnref14"
+role="doc-noteref"><sup>14</sup></a>. Like, did you know about
+<code>palmerpenguins::path_to_file()</code> for teaching students how to
+read in files from a path?</p></li>
+</ul>
+<h3 id="building-the-r-community-1"><a
+href="https://www.youtube.com/watch?v=_83Beqac5SI&amp;list=PL77T87Q0eoJjvKVFHuJZ5_BGVbPPpB8LL&amp;index=10">Building
+the R Community 1</a></h3>
+<ul>
+<li><strong>Njoki Lucy et al.</strong> <em>Building an R-Ladies
+community during the Covid-19 pandemic</em>: I had been hearing A LOT
+about the RLadies Nairobi team on twitter (from <a
+href="https://twitter.com/lucy_njokinjuki">Njoki</a>, <a
+href="https://twitter.com/Shel_Kariuki">Shel</a>, and others) leading up
+to this talk, and I’ve always been super impressed at their efforts.
+They’re so innovative and social-media-savvy despite being a new group.
+For example, a while back they hosted a Twitter Space (I didn’t even
+know that was a thing before this) and invited <a
+href="https://twitter.com/PipingHotData">Shannon Pileggi</a> for a chat,
+and I attended it and thought it was so impressive and creative - they
+have practically mastered the art of getting people together online. One
+big wow moment from the talk was that they apparently started planning
+the chapter <em>before</em> covid, and had to pivot to starting it
+online (all in like half a year!).</li>
+</ul>
+<h3 id="interfaces-with-c-c-rust-and-v"><a
+href="https://www.youtube.com/watch?v=fkXPfDxv3AU&amp;list=PL77T87Q0eoJjvKVFHuJZ5_BGVbPPpB8LL&amp;index=5">Interfaces
+with C, C++, Rust, and V</a></h3>
+<ul>
+<li><strong>David B. Dahl</strong> <em>Writing R extensions in
+Rust</em>: I’m not familiar with any “low level” programming languages,
+but Rust has been catching my eye recently because a few R folks were
+doing cool stuff in it (e.g., <a
+href="https://github.com/r-rust/gifski"><code>{gifski}</code></a>, <a
+href="https://github.com/clauswilke/sinab"><code>{sinab}</code></a>, <a
+href="https://github.com/yutannihilation/string2path"><code>{string2path}</code></a>).
+As expected, all the technical details of the talk went over my head,
+but it was well-motivated and I was made aware of the fact that there
+are competing frameworks for R-Rust interoperability (<a
+href="https://extendr.github.io/rextendr/"><code>rextender</code></a>
+and <a
+href="https://github.com/dbdahl/cargo-framework"><code>cargo</code></a>).
+I wasn’t planning on picking up Rust anytime soon, so I guess I’ll watch
+out for a Cran taskview or something.</li>
+</ul>
+<h3 id="expanding-tidyverse"><a
+href="https://www.youtube.com/watch?v=Cv3e-kyu6YA&amp;list=PL77T87Q0eoJhayMV5-dRZHiGPqJVM1WnB&amp;index=11">Expanding
+Tidyverse</a></h3>
+<ul>
+<li><p><strong>Patrick Weiss et al.</strong> <em>Tidy Finance with
+R</em>: You know those projects that you stumble upon and it’s your
+first time hearing about it but it’s had years of work behind it and
+you’re like “how did I not know about this before”? Well this is one of
+those, and the <a href="https://www.tidy-finance.org/">Tidy Finance with
+R</a> project deserves more love! I’m not in this field but it’s always
+exciting when people write intro R/data science books because there are
+always hidden gems in there, even if you’re an experienced R user and
+not from that field. For example, there’s a lot of cool
+timeseries/<code>{lubridate}</code> stuff in the book, so I’ll probably
+be using this as reference for those at least.</p></li>
+<li><p><strong>Bryan Shalloway</strong> <em>Five ways to do “tidy”
+pairwise operations</em>: I’ve actually been following this project for
+a while as <a href="https://twitter.com/brshallo">Bryan</a> has been
+tweeting about it, and I think it’s really neat. We don’t often do
+operations over pairs of vectors, but this kind of workflow is such a
+well-defined class of problems to tackle that it’s definitely worthwhile
+spending time to figure out the right design for implementing it (kind
+of like how <a
+href="https://github.com/DavisVaughan/slider"><code>{slider}</code></a>
+does that for the class of sliding-window functions). The talk was a
+great overview of something I knew close to nothing about, like the fact
+that <code>{corrr}</code> has the <code>colpair_map()</code> functional
+for arbitrary pairwise operations.</p></li>
+</ul>
+<h3 id="learning-ggplot2"><a
+href="https://www.youtube.com/watch?v=2JX8zu4QxMg&amp;list=PL77T87Q0eoJjvKVFHuJZ5_BGVbPPpB8LL&amp;index=4">Learning
+<code>ggplot2</code></a></h3>
+<ul>
+<li><p><strong>Jonathan Carroll</strong> <em><code>ggeasy</code>: Easy
+access to <code>ggplot2</code> commands</em>: I’ve been hearing about
+this package a lot and I think it’s one-of-a-kind package addresses a
+very common need among ggplot users. It works surprisingly well since
+<code>theme()</code> is modular to begin with,<a href="#fn15"
+class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a>
+so you can layer the shorthand <code>ggeasy::easy_*()</code> functions
+as if you’re adding layers - no extra overhead for learners/users! I
+asked a question about dealing with vocabulary differences (e.g.,
+“panel” = “facet” = “small multiple”) and Jonathan answered that the aim
+is to support all variants, so go open that PR if your dialect/idiolect
+isn’t represented!</p></li>
+<li><p><strong>Nicola Rennie</strong> <em>Learning <code>ggplot2</code>
+with generative art</em>: I LOVED this talk! The talk started with a
+great point about how it’s kinda intimidating/hard for people to get
+into generative art because you don’t just start by copying code for
+generative art - art is about the <em>process</em>, so it doesn’t lend
+itself to how people normally learn things in programming, which is by
+copying code just to get something working first and then going from
+there. I totally related to that because that was my case too. I feel
+more confident about it now, after seeing examples from the talk about
+how code can inform art and vice-versa. For example, there was a really
+handy trick of “adding arbitrary layers” in a plot by just adding whole
+ggplots with transparent backgrounds on top of each other using <a
+href="https://patchwork.data-imaginist.com/articles/patchwork.html"><code>{patchwork}</code></a>.
+I’m definitely stealing this idea, for art or not.</p></li>
+<li><p><strong>James Otto (&amp; David Kahle)</strong>
+<em><code>ggdensity</code>: Improved bivariate density visualization in
+R</em>: <a
+href="https://github.com/jamesotto852/ggdensity"><code>{ggdensity}</code></a>
+is an example of my favorite kind of packages. It offers a drop-in
+replacement for a function that improves upon the defaults of a standard
+function (<code>ggplot2::geom_density_2d_filled()</code> -&gt;
+<code>ggdensity::geom_hdr()</code>), while providing additional
+capabilities that satisfies folks who want/need to do more complicated
+things. Like I’ve never thought more than 30 seconds about the design
+choices of making a density plot - “It’s just a density plot, what more
+do I need?” And then now I’m like “okay I want all of those cool new
+features.” I’m gonna take this moment to put it on record that I
+actually used <code>{ggdensity}</code> the DAY that its CRAN release was
+announced, to make a plot in a conference proceedings paper which
+(fingers crossed) will get accepted soon. We got reviews back recently
+and the reviewers LOVED the plot, so this talk was extra
+special.</p></li>
+<li><p><strong>Me</strong> <em>Stepping into <code>ggplot2</code>
+internals with <code>ggtrace</code></em>: I spoke in this session and
+here’s the repo to the <a
+href="https://github.com/yjunechoe/ggtrace-user2022">talk materials</a>
+if you want to check it out. I don’t know what to say for my own talk
+but I’ll just mention that I prepped this talk with the rstudioconf talk
+in mind, so the two talks touch on different aspects of <a
+href="https://yjunechoe.github.io/ggtrace/"><code>{ggtrace}</code></a>/ggplot
+internals. For this talk, I focused more on giving a walkthrough of how
+the Stat and Geom ggprotos work under the hood, exposing its
+functional-programming nature. I’ll probably have more to say about
+<code>{ggtrace}</code> when I write my rstudioconf reflection, so stay
+tuned!</p></li>
+</ul>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<section class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>You might get a warning referencing something about <code>data.table</code> here. No worries if this happens. The outdated <code>{treemap}</code> source code is built on <code>{data.table}</code> and contains a deprecated argument.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>I highly recommend checking <code>{ggfittext}</code> out! Here’s the <a href="https://github.com/wilkox/ggfittext">github repo</a>. Also, this is more of a note to myself but I had some trouble getting this to work at first because the <code>min.size</code> argument defaults to 4, meaning that all fitted text smaller than size 4 are simply not plotted (so I couldn’t get <code>geom_fit_text()</code> to print anything in my treemap at first). You can compare and see the threshold by looking at the <code>geom_text_repel()</code> texts in my second example which also has a size of 4.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1" role="doc-endnote"><p>Nothing like the 1-2 page length,
+properly formatted abstracts like in academic conferences.<a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>I linked to the <a
+href="https://github.com/yjunechoe/ggtrace-user2022">Github
+repository</a> and <a
+href="https://yjunechoe.github.io/ggtrace/">package website</a>.<a
+href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>For example, our department offered
+its first data science course for undergrads last year, which I was the
+head TA for.<a href="#fnref3" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>Actually I still haven’t figures out
+the proper(?) term between dimension/dimension-al/dimension-ality
+reduction.<a href="#fnref4" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>Which makes sense - turns out that
+fPCA is kinda domain-specific and designed for the analysis of
+<em>acoustic</em> data specifically.<a href="#fnref5"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p>A move that the team <em>also</em>
+pre-empted with semi-customized feedback.<a href="#fnref6"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7" role="doc-endnote"><p>Big mood - me too.<a href="#fnref7"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8" role="doc-endnote"><p>It was used for the last few seconds
+of the video to create the bell sound effect to “show” what the finish
+times would “sound” like, to emphasize the point that all sprinters are
+similarly fast in the grand scheme of things.<a href="#fnref8"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9" role="doc-endnote"><p>When I TA-ed for an undergrad data
+science course last year, we used Google Colab, and I wondered the pros
+and cons of that vs. RStudio Cloud.<a href="#fnref9"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10" role="doc-endnote"><p>When I was a junior, my alma mater
+Northwestern University started a data science program with a handful of
+teaching professor hires to focus on educating undergrads.<a
+href="#fnref10" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn11" role="doc-endnote"><p>Like, do you know what all the
+possible arguments to <code>geom_histogram()</code> is? You probably
+don’t and they’re actually pretty hard to find, but you wouldn’t have
+that problem if you had one function with a bunch of arguments that you
+can find on just the function’s help page with no redirects.<a
+href="#fnref11" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn12" role="doc-endnote"><p>And it has a lot of “data lessons”
+built-in, like you can use it to demonstrate the Simpson’s paradox and
+k-means clustering.<a href="#fnref12" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn13" role="doc-endnote"><p>In fact, one of the really
+insightful parts of the talk was Alison talking on the slide “Why has it
+been so popular?”.<a href="#fnref13" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn14" role="doc-endnote"><p>e.g., Adelie is always capitalized
+because it’s named after a person, but optional for chinstraps and
+gentoos. The data itself capitalizes all of them.<a href="#fnref14"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15" role="doc-endnote"><p>You can chain
+<code>+ theme()</code>’s.<a href="#fnref15" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 <!--radix_placeholder_article_footer-->
@@ -3251,7 +3113,7 @@ NA
   <p class="social_footer">
     <span class="article-sharing">
       Share: &nbsp;
-      <a href="https://twitter.com/share?text=Plotting%20treemaps%20with%20%7Btreemap%7D%20and%20%7Bggplot2%7D&amp;url=https%3A%2F%2Fyjunechoe.github.io%2Fposts%2F2020-06-30-treemap-with-ggplot%2F" aria-label="share on twitter">
+      <a href="https://twitter.com/share?text=Reflections%20on%20useR%21%202022&amp;url=https%3A%2F%2Fyjunechoe.github.io%2Fposts%2F2022-07-30-user2022%2F" aria-label="share on twitter">
         <i class="fab fa-twitter" aria-hidden="true"></i>
       </a>
     </span>
