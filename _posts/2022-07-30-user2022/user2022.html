@@ -1777,14 +1777,14 @@ id="fnref13" role="doc-noteref"><sup>13</sup></a> Its partly about the
 actual data, but it’s also about the framing, the <a
 href="https://yihui.org/en/2018/12/social-media-marketing/">“marketing”</a>,
 the cuteness factor of penguins, all the hand-made art, the awesome
-pkgdown website (which I embarassingly never visited before this talk),
-and more. The fact that you can get people excited about a data package
-is insane, and I really liked hearing about all the small-to-big issues
-the <code>{palmerpenguins}</code> team had to think through<a
-href="#fn14" class="footnote-ref" id="fnref14"
-role="doc-noteref"><sup>14</sup></a>. Like, did you know about
-<code>palmerpenguins::path_to_file()</code> for teaching students how to
-read in files from a path?</p></li>
+pkgdown website,<a href="#fn14" class="footnote-ref" id="fnref14"
+role="doc-noteref"><sup>14</sup></a> and more. The fact that you can get
+people excited about a data package is insane, and I really liked
+hearing about all the small-to-big issues the
+<code>{palmerpenguins}</code> team had to think through.<a href="#fn15"
+class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a>
+Like, did you know about <code>palmerpenguins::path_to_file()</code> for
+teaching students how to read in files from a path?</p></li>
 </ul>
 <h3 id="building-the-r-community-1"><a
 href="https://www.youtube.com/watch?v=_83Beqac5SI&amp;list=PL77T87Q0eoJjvKVFHuJZ5_BGVbPPpB8LL&amp;index=10">Building
@@ -1797,14 +1797,15 @@ href="https://twitter.com/lucy_njokinjuki">Njoki</a>, <a
 href="https://twitter.com/Shel_Kariuki">Shel</a>, and others) leading up
 to this talk, and I’ve always been super impressed at their efforts.
 They’re so innovative and social-media-savvy despite being a new group.
-For example, a while back they hosted a Twitter Space (I didn’t even
-know that was a thing before this) and invited <a
-href="https://twitter.com/PipingHotData">Shannon Pileggi</a> for a chat,
-and I attended it and thought it was so impressive and creative - they
-have practically mastered the art of getting people together online. One
-big wow moment from the talk was that they apparently started planning
-the chapter <em>before</em> covid, and had to pivot to starting it
-online (all in like half a year!).</li>
+For example, a while back they hosted a Twitter Space<a href="#fn16"
+class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a>
+and invited <a href="https://twitter.com/PipingHotData">Shannon
+Pileggi</a> for a chat. I I attended that and thought it was so
+impressive and creative - they have practically mastered the art of
+getting people together online. One big wow moment from the talk was
+that they apparently started planning the chapter <em>before</em> covid,
+and had to pivot to starting it online, all in the span of like half a
+year!</li>
 </ul>
 <h3 id="interfaces-with-c-c-rust-and-v"><a
 href="https://www.youtube.com/watch?v=fkXPfDxv3AU&amp;list=PL77T87Q0eoJjvKVFHuJZ5_BGVbPPpB8LL&amp;index=5">Interfaces
@@ -1824,7 +1825,7 @@ href="https://extendr.github.io/rextendr/"><code>rextender</code></a>
 and <a
 href="https://github.com/dbdahl/cargo-framework"><code>cargo</code></a>).
 I wasn’t planning on picking up Rust anytime soon, so I guess I’ll watch
-out for a Cran taskview or something.</li>
+out for a CRAN taskview or something.</li>
 </ul>
 <h3 id="expanding-tidyverse"><a
 href="https://www.youtube.com/watch?v=Cv3e-kyu6YA&amp;list=PL77T87Q0eoJhayMV5-dRZHiGPqJVM1WnB&amp;index=11">Expanding
@@ -1863,8 +1864,8 @@ href="https://www.youtube.com/watch?v=2JX8zu4QxMg&amp;list=PL77T87Q0eoJjvKVFHuJZ
 access to <code>ggplot2</code> commands</em>: I’ve been hearing about
 this package a lot and I think it’s one-of-a-kind package addresses a
 very common need among ggplot users. It works surprisingly well since
-<code>theme()</code> is modular to begin with,<a href="#fn15"
-class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a>
+<code>theme()</code> is modular to begin with,<a href="#fn17"
+class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a>
 so you can layer the shorthand <code>ggeasy::easy_*()</code> functions
 as if you’re adding layers - no extra overhead for learners/users! I
 asked a question about dealing with vocabulary differences (e.g.,
@@ -1890,8 +1891,8 @@ I’m definitely stealing this idea, for art or not.</p></li>
 R</em>: <a
 href="https://github.com/jamesotto852/ggdensity"><code>{ggdensity}</code></a>
 is an example of my favorite kind of packages. It offers a drop-in
-replacement for a function that improves upon the defaults of a standard
-function (<code>ggplot2::geom_density_2d_filled()</code> -&gt;
+replacement for a standard function that improves upon its defaults
+(from <code>ggplot2::geom_density_2d_filled()</code> to
 <code>ggdensity::geom_hdr()</code>), while providing additional
 capabilities that satisfies folks who want/need to do more complicated
 things. Like I’ve never thought more than 30 seconds about the design
@@ -1901,7 +1902,7 @@ features.” I’m gonna take this moment to put it on record that I
 actually used <code>{ggdensity}</code> the DAY that its CRAN release was
 announced, to make a plot in a conference proceedings paper which
 (fingers crossed) will get accepted soon. We got reviews back recently
-and the reviewers LOVED the plot, so this talk was extra
+and the reviewers really liked the plot, so this talk was extra
 special.</p></li>
 <li><p><strong>Me</strong> <em>Stepping into <code>ggplot2</code>
 internals with <code>ggtrace</code></em>: I spoke in this session and
@@ -1977,12 +1978,19 @@ role="doc-backlink">↩︎</a></p></li>
 insightful parts of the talk was Alison talking on the slide “Why has it
 been so popular?”.<a href="#fnref13" class="footnote-back"
 role="doc-backlink">↩︎</a></p></li>
-<li id="fn14" role="doc-endnote"><p>e.g., Adelie is always capitalized
+<li id="fn14" role="doc-endnote"><p>Which I embarassingly never visited
+before this talk.<a href="#fnref14" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn15" role="doc-endnote"><p>e.g., Adelie is always capitalized
 because it’s named after a person, but optional for chinstraps and
-gentoos. The data itself capitalizes all of them.<a href="#fnref14"
+gentoos. The data itself capitalizes all of them.<a href="#fnref15"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn15" role="doc-endnote"><p>You can chain
-<code>+ theme()</code>’s.<a href="#fnref15" class="footnote-back"
+<li id="fn16" role="doc-endnote"><p>I didn’t even know Twitter Space was
+a thing before this, despite spending a lot of time on Twitter.<a
+href="#fnref16" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn17" role="doc-endnote"><p>You can chain
+<code>+ theme()</code>’s.<a href="#fnref17" class="footnote-back"
 role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
