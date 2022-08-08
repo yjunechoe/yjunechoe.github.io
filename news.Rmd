@@ -29,11 +29,15 @@ li::marker {
 
 ## 2022
 
+### July
+
+- I attended my first in-person R conference at [rstudio::conf(2022)](https://rstudioconf2022.sched.com/?iframe=no) and gave a [talk on ggplot internals](https://rstudioconf2022.sched.com/event/11ibT/cracking-open-ggplot-internals-with-ggtrace).
+
 ### June
 
-- I gave a talk on my package [`{ggtrace}`](https://yjunechoe.github.io/ggtrace/) at the [useR! 2022 conference](https://user2022.r-project.org/).
+- I gave a [talk](https://www.youtube.com/watch?v=2JX8zu4QxMg&t=2959s) on my package [`{ggtrace}`](https://yjunechoe.github.io/ggtrace/) at the [useR! 2022 conference](https://user2022.r-project.org/).
 
-- I gave a [**talk**](https://www.youtube.com/embed/guzjt7xh2Cw?start=3787) at [RLadies philly](https://www.rladiesphilly.org/) on using extending `dplyr::slice()` for workflows beyond simple row-selection.
+- I gave a [**talk**](https://www.youtube.com/embed/guzjt7xh2Cw?start=3787) at [RLadies philly](https://www.rladiesphilly.org/) on using `dplyr::slice()` for row-relational operations.
 
 ## 2021
 

@@ -4,3 +4,14 @@ site: distill::distill_website
 listing: posts
 link-citations: true
 ---
+
+<!--
+Scheduled blog posts:
+- rstudioconf reflections
+- principled aesthetic mappings
+- delayed aes eval part 3
+- slice() row-relational operations
+- constructing vectors with matrices
+- debugging with trace()
+- ggtrace: design and motivation
+-->
