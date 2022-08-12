@@ -29,21 +29,25 @@ li::marker {
 
 ## 2022
 
+### August
+
+- I gave a [**workshop** on IBEX and PCIbex](https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2022-ibex-pcibex-workshop-slides.pdf) with [Nayoun Kim](https://nayounkimlinguist.com/) at the Seoul International Conference on Linguistics (SICOL 2022). 
+
 ### July
 
-- I attended my first in-person R conference at [rstudio::conf(2022)](https://rstudioconf2022.sched.com/?iframe=no) and gave a [talk on ggplot internals](https://rstudioconf2022.sched.com/event/11ibT/cracking-open-ggplot-internals-with-ggtrace).
+- I attended my first in-person R conference at [rstudio::conf(2022)](https://rstudioconf2022.sched.com/?iframe=no) and gave a [**talk** on ggplot internals](https://rstudioconf2022.sched.com/event/11ibT/cracking-open-ggplot-internals-with-ggtrace).
 
 ### June
 
-- I gave a [talk](https://www.youtube.com/watch?v=2JX8zu4QxMg&t=2959s) on my package [`{ggtrace}`](https://yjunechoe.github.io/ggtrace/) at the [useR! 2022 conference](https://user2022.r-project.org/).
+- I gave a [**talk**](https://www.youtube.com/watch?v=2JX8zu4QxMg&t=2959s) on my package [`{ggtrace}`](https://yjunechoe.github.io/ggtrace/) at the [useR! 2022 conference](https://user2022.r-project.org/). I was awarded the diversity scholarship which covered my registration and workshop fees.
 
-- I gave a [**talk**](https://www.youtube.com/embed/guzjt7xh2Cw?start=3787) at [RLadies philly](https://www.rladiesphilly.org/) on using `dplyr::slice()` for row-relational operations.
+- I gave a [**talk**](https://www.youtube.com/embed/guzjt7xh2Cw?start=3787) at [RLadies philly](https://www.rladiesphilly.org/) on using dplyr's slice() function for row-relational operations.
 
 ## 2021
 
 ### July
 
-- My [tutorial on custom fonts in R](https://yjunechoe.github.io/posts/2021-06-24-setting-up-and-debugging-custom-fonts/) was **featured as a highlight** on the [R Weekly podcast](https://share.fireside.fm/episode/87RSVeFz+alD0Og1X?t=247)!
+- My [**tutorial** on custom fonts in R](https://yjunechoe.github.io/posts/2021-06-24-setting-up-and-debugging-custom-fonts/) was **featured as a highlight** on the [R Weekly podcast](https://share.fireside.fm/episode/87RSVeFz+alD0Og1X?t=247)!
 
 ### June
 
@@ -51,22 +55,22 @@ li::marker {
 
 ### May
 
-- [SnowGlobe](https://snowglobe.soc.northwestern.edu/), a project started in my undergrad, was featured in an [article](https://sites.northwestern.edu/northwesternlibrary/2021/05/11/student-developed-app-expedites-time-consuming-research-task/) by the Northwestern University Library. We also had a [workshop for SnowGlobe](https://www.eventbrite.com/e/an-introduction-to-snowglobe-a-tool-for-systematic-reviews-tickets-149045397797#) which drew participants from over a hundred universities!
+- [SnowGlobe](https://snowglobe.soc.northwestern.edu/), a project started in my undergrad, was featured in an [article](https://sites.northwestern.edu/northwesternlibrary/2021/05/11/student-developed-app-expedites-time-consuming-research-task/) by the Northwestern University Library. We also had a [**workshop** for SnowGlobe](https://www.eventbrite.com/e/an-introduction-to-snowglobe-a-tool-for-systematic-reviews-tickets-149045397797#) which drew participants from over a hundred universities!
 
 ### January
 
-- I joined [Dr. Nayoun Kim](https://nayounkimlinguist.com/) for a [workshop on experimental syntax](https://skb.skku.edu/bk21english/board/notice.do?mode=view&articleNo=110726&article.offset=0&articleLimit=10) held at Sungkyunkwan University (Korea). I helped design [materials](https://github.com/yjunechoe/IBEX-Workshop-Materials) for a session on **scripting online experiments with IBEX**, including [interactive slides](https://ibex-workshop-slides.netlify.app/) made with R!
+- I joined [Nayoun Kim](https://nayounkimlinguist.com/) for a [**workshop** on experimental syntax](https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2021-ibex-workshop-slides.pdf) conducted in Korean and held at Sungkyunkwan University (Korea). I helped design [materials](https://github.com/yjunechoe/IBEX-Workshop-Materials) for a session on **scripting online experiments with IBEX**, including [interactive slides](https://ibex-workshop-slides.netlify.app/) made with R!
 
 
 ## 2020
 
 ### November
 
-- I joined designer [Will Chase](https://www.williamrchase.com/) on his [stream](https://www.youtube.com/watch?v=Z0NVmQXYjac) to talk about the psycholinguistics of speech production for a data viz project on Michael's speech errors in The Office. It was a very cool and unique opportunity to bring my two interests together!
+- I joined designer [Will Chase](https://www.williamrchase.com/) on his [**stream**](https://www.youtube.com/watch?v=Z0NVmQXYjac) to talk about the psycholinguistics of speech production for a data viz project on Michael's speech errors in The Office. It was a very cool and unique opportunity to bring my two interests together!
 
 ### October
 
-- My [tutorial on {ggplot2} stat_*() functions](https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/) was **featured as a highlight** on the [R Weekly podcast](https://rweekly.fireside.fm/8?t=251), which curates weekly updates from the R community.
+- My [**tutorial** on {ggplot2} stat_*() functions](https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/) was **featured as a highlight** on the [R Weekly podcast](https://rweekly.fireside.fm/8?t=251), which curates weekly updates from the R community.
 
 - I became a **data science tutor** at [MindCORE](https://mindcore.sas.upenn.edu/) to help researchers at Penn with data visualization and R programming.
 
