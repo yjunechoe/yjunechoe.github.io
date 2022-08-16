@@ -44,19 +44,13 @@ May Pik Yu Chan, **June Choe**, Aini Li, Yiran Chen, Xin Gao and Nicole Holliday
 
 ## Conference Presentations
 
-### 2022
-
 **June Choe**, and Anna Papafragou. *Acquisition of subordinate nouns as pragmatic inference: Semantic alternatives modulate subordinate meanings*. Poster at the 2nd Experiments in Linguistic Meaning (ELM) conference, 18-20 May 2022. University of Pennsylvania, Philadelphia, PA.
 
 **June Choe**, and Anna Papafragou. *Beyond the basic level: Levels of informativeness and the acquisition of subordinate nouns*. Poster at the 35th Annual Conference on Human Sentence Processing (HSP), 24-26 March 2022. University of California, Santa Cruz, CA.
 
-### 2020
-
 **June Choe**, Jennifer Cole, and Masaya Yoshida. *Prosodic Focus Strengthens Semantic Persistence*. [Poster](static/poster/AMLAP2020.pdf) at The 26th Architectures and Mechanisms for Language Processing (AMLaP), 3-5 September 2020. Potsdam, Germany. [Abstract](static/abstract/AMLAP_2020_Abstract.pdf) [Video](https://osf.io/fjkp9/) [Slides](static/slides/AMLAP_2020_Slides.pdf)
 
 **June Choe**. *Computer-assisted snowball search for meta-analysis research*. [Poster](static/poster/Snowballer_June_Choe.pdf) at The 2020 Undergraduate Research & Arts Exposition. 27-28 May 2020. Northwestern University, Evanston, IL. **2nd Place Poster Award**. [Abstract](static/abstract/Expo_2020_Abstract.pdf)
-
-### 2019
 
 **June Choe**. *Social Information in Sentence Processing*. Talk at The 2019 Undergraduate Research & Arts Exposition. 29 May 2019. Northwestern University, Evanston, IL. [Abstract](static/abstract/Expo_2019_Abstract.pdf)
 
@@ -68,6 +62,6 @@ D’Onofrio, Annette, **June Choe** and Masaya Yoshida. *Personae in syntactic p
 
 ### R
 
-June Choe. Cracking open ggplot internals with {gtrace}. Talk at the 2022 RStudio Conference, 25-28 July 2022. Washington D.C. [https://github.com/yjunechoe/ggtrace-rstudioconf2022](https://github.com/yjunechoe/ggtrace-rstudioconf2022)
+June Choe. Cracking open ggplot internals with {ggtrace}. Talk at the 2022 RStudio Conference, 25-28 July 2022. Washington D.C. [https://github.com/yjunechoe/ggtrace-rstudioconf2022](https://github.com/yjunechoe/ggtrace-rstudioconf2022)
 
 June Choe. [Stepping into {ggplot2} internals with {ggtrace}](https://www.youtube.com/watch?v=2JX8zu4QxMg&t=2959s). Talk at the 2022 useR! Conference, 20-23 June 2022. Vanderbilt University, TN. [https://github.com/yjunechoe/ggtrace-user2022](https://github.com/yjunechoe/ggtrace-user2022)
