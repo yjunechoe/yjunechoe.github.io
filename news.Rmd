@@ -22,7 +22,7 @@ d-article h3 {
 }
 
 li::marker {
-    font-size: 1.2em;
+  font-size: 1.2em;
 }
 ```
 

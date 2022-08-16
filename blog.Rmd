@@ -8,6 +8,7 @@ link-citations: true
 <!--
 Scheduled blog posts:
 - rstudioconf reflections
+- across(scale()) vs. scale(across())
 - principled aesthetic mappings
 - delayed aes eval part 3
 - slice() row-relational operations
