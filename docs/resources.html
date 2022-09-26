@@ -788,6 +788,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   d-article table.gt_table td,
   d-article table.gt_table th {
     border-bottom: none;
+    font-size: 100%;
   }
 
   .html-widget {
@@ -1860,15 +1861,21 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 
       // hoverable references
       $('span.citation[data-cites]').each(function() {
-        if ($(this).children()[0].nodeName == "D-FOOTNOTE") {
-          var fn = $(this).children()[0]
+        const citeChild = $(this).children()[0]
+        // Do not process if @xyz has been used without escaping and without bibliography activated
+        // https://github.com/rstudio/distill/issues/466
+        if (citeChild === undefined) return true
+
+        if (citeChild.nodeName == "D-FOOTNOTE") {
+          var fn = citeChild
           $(this).html(fn.shadowRoot.querySelector("sup"))
           $(this).id = fn.id
           fn.remove()
         }
         var refs = $(this).attr('data-cites').split(" ");
         var refHtml = refs.map(function(ref) {
-          return "<p>" + $('#ref-' + ref).html() + "</p>";
+          // Could use CSS.escape too here, we insure backward compatibility in navigator
+          return "<p>" + $('div[id="ref-' + ref + '"]').html() + "</p>";
         }).join("\n");
         window.tippy(this, {
           allowHTML: true,
@@ -2067,7 +2074,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+  <script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2630,94 +2637,47 @@ Misc.
 </div>
 <h2 id="linguistics">Linguistics</h2>
 <ul>
-<li>Scripting online experiments with IBEX (workshop <a
-href="https://ibex-workshop-slides.netlify.app/">slides</a> &amp; <a
-href="https://github.com/yjunechoe/IBEX-Workshop-Materials">materials</a>
-with Nayoun Kim)</li>
+<li>Scripting online experiments with IBEX (workshop <a href="https://ibex-workshop-slides.netlify.app/">slides</a> &amp; <a href="https://github.com/yjunechoe/IBEX-Workshop-Materials">materials</a> with Nayoun Kim)</li>
 </ul>
 <h2 id="data-visualization">Data Visualization</h2>
 <ul>
-<li><p>{ggplot2} style guide and showcase - <a
-href="https://yjunechoe.netlify.app/flipbooks/ggplot2_master/feb_2020_ggplot2.html">most
-recent version (2/10/2021)</a></p></li>
-<li><p>Cracking open the internals of ggplot: A {ggtrace} showcase - <a
-href="https://yjunechoe.github.io/ggtrace-talk">slides</a></p></li>
+<li><p>{ggplot2} style guide and showcase - <a href="https://yjunechoe.netlify.app/flipbooks/ggplot2_master/feb_2020_ggplot2.html">most recent version (2/10/2021)</a></p></li>
+<li><p>Cracking open the internals of ggplot: A {ggtrace} showcase - <a href="https://yjunechoe.github.io/ggtrace-talk">slides</a></p></li>
 </ul>
 <h2 id="packages-and-software">Packages and software</h2>
 <ul>
-<li><p><a
-href="https://yjunechoe.github.io/ggtrace/index.html">{ggtrace}</a>: R
-package for exploring, debugging, and manipulating ggplot internals by
-exposing the underlying object-oriented system in functional programming
-terms.</p></li>
-<li><p><a
-href="https://github.com/yjunechoe/penngradlings">{penngradlings}</a>: R
-package for the University of Pennsylvania Graduate Linguistics
-Society.</p></li>
-<li><p><a href="https://github.com/yjunechoe/LingWER">{LingWER}</a>: R
-package for linguistic analysis of Word Error Rate for evaluating
-transcriptions and other speech-to-text output, using a deterministic
-matrix-based search algorithm optimized for R.</p></li>
-<li><p><a
-href="https://github.com/yjunechoe/gridAnnotate">{gridAnnotate}</a>: R
-package for interactively annotating figures from the plot pane, using
-{grid} graphical objects.</p></li>
-<li><p><a href="https://snowglobe.soc.northwestern.edu/">SnowGlobe</a>:
-A tool for meta-analysis research. Developed with Jinnie Choi, Sean
-McWeeny, and Elizabeth Norton, with funding from the Northwestern
-University Library. Currently under development but basic features are
-functional. Validation experiments and guides at <a
-href="https://osf.io/u25rn/">OSF repo</a>.</p></li>
+<li><p><a href="https://yjunechoe.github.io/ggtrace/index.html">{ggtrace}</a>: R package for exploring, debugging, and manipulating ggplot internals by exposing the underlying object-oriented system in functional programming terms.</p></li>
+<li><p><a href="https://github.com/yjunechoe/penngradlings">{penngradlings}</a>: R package for the University of Pennsylvania Graduate Linguistics Society.</p></li>
+<li><p><a href="https://github.com/yjunechoe/LingWER">{LingWER}</a>: R package for linguistic analysis of Word Error Rate for evaluating transcriptions and other speech-to-text output, using a deterministic matrix-based search algorithm optimized for R.</p></li>
+<li><p><a href="https://github.com/yjunechoe/gridAnnotate">{gridAnnotate}</a>: R package for interactively annotating figures from the plot pane, using {grid} graphical objects.</p></li>
+<li><p><a href="https://snowglobe.soc.northwestern.edu/">SnowGlobe</a>: A tool for meta-analysis research. Developed with Jinnie Choi, Sean McWeeny, and Elizabeth Norton, with funding from the Northwestern University Library. Currently under development but basic features are functional. Validation experiments and guides at <a href="https://osf.io/u25rn/">OSF repo</a>.</p></li>
 </ul>
 <h2 id="tutorial-blog-posts">Tutorial Blog Posts</h2>
 <ul>
-<li><p>{ggplot2} stat_*() functions [<a
-href="https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/">post</a>]</p></li>
-<li><p>Custom fonts in R [<a
-href="https://yjunechoe.github.io/posts/2021-06-24-setting-up-and-debugging-custom-fonts/">post</a>]</p></li>
-<li><p>{purrr} reduce() family [<a
-href="https://yjunechoe.github.io/posts/2020-12-13-collapse-repetitive-piping-with-reduce/">post1</a>,
-<a
-href="https://yjunechoe.github.io/posts/2021-01-17-random-sampling-a-table-animation/">post2</a>]</p></li>
-<li><p>The correlation parameter in {lme4} mixed effects models [<a
-href="https://yjunechoe.github.io/posts/2020-06-07-correlation-parameter-mem/">post</a>]</p></li>
-<li><p>Shortcuts for common chain of {dplyr} functions [<a
-href="https://yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/">post</a>]</p></li>
-<li><p>Plotting highly-customizable treemaps with {treemap} and
-{ggplot2} [<a
-href="https://yjunechoe.github.io/posts/2020-06-30-treemap-with-ggplot/">post</a>]</p></li>
+<li><p>{ggplot2} stat_*() functions [<a href="https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/">post</a>]</p></li>
+<li><p>Custom fonts in R [<a href="https://yjunechoe.github.io/posts/2021-06-24-setting-up-and-debugging-custom-fonts/">post</a>]</p></li>
+<li><p>{purrr} reduce() family [<a href="https://yjunechoe.github.io/posts/2020-12-13-collapse-repetitive-piping-with-reduce/">post1</a>, <a href="https://yjunechoe.github.io/posts/2021-01-17-random-sampling-a-table-animation/">post2</a>]</p></li>
+<li><p>The correlation parameter in {lme4} mixed effects models [<a href="https://yjunechoe.github.io/posts/2020-06-07-correlation-parameter-mem/">post</a>]</p></li>
+<li><p>Shortcuts for common chain of {dplyr} functions [<a href="https://yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/">post</a>]</p></li>
+<li><p>Plotting highly-customizable treemaps with {treemap} and {ggplot2} [<a href="https://yjunechoe.github.io/posts/2020-06-30-treemap-with-ggplot/">post</a>]</p></li>
 </ul>
 <h2 id="by-others">By others</h2>
 <p><strong>Tutorials</strong>:</p>
 <ul>
-<li><p><a
-href="https://cedricscherer.netlify.app/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/">A
-ggplot2 Tutorial for Beautiful Plotting in R</a> by Cédric
-Scherer</p></li>
-<li><p><a href="https://z3tt.github.io/OutlierConf2021/">ggplot2
-Wizardry Hands-On</a> by Cédric Scherer</p></li>
-<li><p><a href="https://www.youtube.com/watch?v=h29g21z0a68">ggplot2
-workshop</a> by Thomas Lin Pedersen</p></li>
+<li><p><a href="https://cedricscherer.netlify.app/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/">A ggplot2 Tutorial for Beautiful Plotting in R</a> by Cédric Scherer</p></li>
+<li><p><a href="https://z3tt.github.io/OutlierConf2021/">ggplot2 Wizardry Hands-On</a> by Cédric Scherer</p></li>
+<li><p><a href="https://www.youtube.com/watch?v=h29g21z0a68">ggplot2 workshop</a> by Thomas Lin Pedersen</p></li>
 </ul>
 <p><strong>Books</strong>:</p>
 <ul>
-<li><p><a href="https://r4ds.had.co.nz/">R for Data Science</a> by
-Hadley Wickham and Garrett Grolemund</p></li>
-<li><p><a href="https://bookdown.org/yihui/rmarkdown/">R Markdown: The
-Definitive Guide</a> by Yihui Xie, J. J. Allaire, and Garrett
-Grolemund</p></li>
-<li><p><a href="https://ggplot2-book.org/">ggplot2: elegant graphics for
-data analysis</a> by Hadley Wickham, Danielle Navarro, and Thomas Lin
-Pedersen</p></li>
-<li><p><a href="https://clauswilke.com/dataviz/">Fundamentals of Data
-Visualization</a> by Claus O. Wilke</p></li>
-<li><p><a href="https://csgillespie.github.io/efficientR/">Efficient R
-Programming</a> by Colin Gillespie and Robin Lovelace</p></li>
-<li><p><a href="https://adv-r.hadley.nz/">Advanced R</a> by Hadley
-Wickham</p></li>
+<li><p><a href="https://r4ds.had.co.nz/">R for Data Science</a> by Hadley Wickham and Garrett Grolemund</p></li>
+<li><p><a href="https://bookdown.org/yihui/rmarkdown/">R Markdown: The Definitive Guide</a> by Yihui Xie, J. J. Allaire, and Garrett Grolemund</p></li>
+<li><p><a href="https://ggplot2-book.org/">ggplot2: elegant graphics for data analysis</a> by Hadley Wickham, Danielle Navarro, and Thomas Lin Pedersen</p></li>
+<li><p><a href="https://clauswilke.com/dataviz/">Fundamentals of Data Visualization</a> by Claus O. Wilke</p></li>
+<li><p><a href="https://csgillespie.github.io/efficientR/">Efficient R Programming</a> by Colin Gillespie and Robin Lovelace</p></li>
+<li><p><a href="https://adv-r.hadley.nz/">Advanced R</a> by Hadley Wickham</p></li>
 </ul>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

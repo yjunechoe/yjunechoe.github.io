@@ -8,31 +8,23 @@ p {
 }
 </style>
 
-## Publications
+## Peer-reviewed Papers
 
-**June Choe**, Masaya Yoshida, and Jennifer Cole. (in press). The role of prosodic focus in the reanalysis of garden path sentences: Depth of semantic processing impedes the revision of an erroneous local analysis. _Glossa Psycholinguistics_. https://doi.org/10.17605/OSF.IO/U6DQ5
-
-Sean McWeeny, Jinnie S. Choi, **June Choe**, Alexander LaTourette, Megan Y. Roberts, and Elizabeth S. Norton. (2022). [Rapid automatized naming (RAN) as a kindergarten predictor of future reading in English: A systematic review and meta-analysis](https://doi.org/10.1002/rrq.467). _Reading Research Quarterly_. DOI: 10.1002/rrq.467
-
-### in prep. and pre-print
-
-Sean McWeeny, June Choe, & Elizabeth S. Norton. (2021). SnowGlobe: An Iterative Search Tool for Systematic Reviews and Meta-Analyses. https://doi.org/10.17605/OSF.IO/U25RN
-
-## Workshops led
-
-_Experimental syntax using IBEX/PCIBEX_ with Dr. Nayoun Kim. Workshop at the 2022 Seoul International Conference on Linguistics. 11-12 August 2022. Seoul, South Korea. [PDF](https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2022-ibex-pcibex-workshop-slides.pdf)
-
-_An introduction to SnowGlobe, a tool for systematic reviews_ with Dr. Sean McWeeny. Workshop at Northwestern University IT Research Computing Services, 18 May 2021. Evanston, IL.
-
-_Experimental syntax using IBEX: a walkthrough_ with Dr. Nayoun Kim. 2021 BK Winter School-Workshop on Experimental Linguistics/Syntax at Sungkyunkwan University, 19-22 January 2021. Seoul, South Korea. [PDF](https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2021-ibex-workshop-slides.pdf)
-
-## Conference Papers
+**June Choe**, Masaya Yoshida, and Jennifer Cole. (2022). [The role of prosodic focus in the reanalysis of garden path sentences: Depth of semantic processing impedes the revision of an erroneous local analysis](https://escholarship.org/uc/item/5d84n2x7). _Glossa Psycholinguistics 1_(1). DOI: 10.5070/G601136
 
 **June Choe**, Yiran Chen, May Pik Yu Chan, Aini Li, Xin Gao, and Nicole Holliday. (2022). *Language-specific Effects on Automatic Speech Recognition Errors in American English*. Proceedings of the 28th International Conference on Computational Linguistics.
 
-May Pik Yu Chan, **June Choe**, Aini Li, Yiran Chen, Xin Gao, and Nicole Holliday. (2022). *Training and typological bias in ASR performance for world Englishes*. Proceedings of the 23rd Conference of the International Speech Communication Association.
+May Pik Yu Chan, **June Choe**, Aini Li, Yiran Chen, Xin Gao, and Nicole Holliday. (2022). [Training and typological bias in ASR performance for world Englishes](https://www.dropbox.com/s/q76b1v8dx5ipx9s/chan%20et%20al_Interspeeech2022_ASR.pdf?dl=0). Proceedings of the 23rd Conference of the International Speech Communication Association.
 
 **June Choe**, and Anna Papafragou. (2022). [The acquisition of subordinate nouns as pragmatic inference: Semantic alternatives modulate subordinate meanings](https://escholarship.org/uc/item/2m87n4ht). *Proceedings of the Annual Meeting of the Cognitive Science Society*, 44, 2745-2752.
+
+Sean McWeeny, Jinnie S. Choi, **June Choe**, Alexander LaTourette, Megan Y. Roberts, and Elizabeth S. Norton. (2022). [Rapid automatized naming (RAN) as a kindergarten predictor of future reading in English: A systematic review and meta-analysis](https://doi.org/10.1002/rrq.467). _Reading Research Quarterly_. DOI: 10.1002/rrq.467
+
+## in prep.
+
+June Choe & Anna Papafrgou. The acquisition of subordinate nouns as pragmatic inference. [OSF](https://osf.io/x8cuf/?view_only=14a975d3618e4838b6cc7681b2ecf692)
+
+Sean McWeeny, June Choe, & Elizabeth S. Norton. (2021). SnowGlobe: An Iterative Search Tool for Systematic Reviews and Meta-Analyses. [OSF](https://doi.org/10.17605/OSF.IO/U25RN)
 
 ## Conference Talks
 
@@ -58,10 +50,18 @@ May Pik Yu Chan, **June Choe**, Aini Li, Yiran Chen, Xin Gao and Nicole Holliday
 
 D’Onofrio, Annette, **June Choe** and Masaya Yoshida. *Personae in syntactic processing: Socially-specific agents bias expectations of verb transitivity*. Poster at The 93rd Annual Meeting of the Linguistics Society of America. 3-6 January 2019. New York City, NY.
 
-## Other conference activities
+### Other research activities
 
-### R
+## Workshops led
 
-June Choe. Cracking open ggplot internals with {ggtrace}. Talk at the 2022 RStudio Conference, 25-28 July 2022. Washington D.C. [https://github.com/yjunechoe/ggtrace-rstudioconf2022](https://github.com/yjunechoe/ggtrace-rstudioconf2022)
+_Experimental syntax using IBEX/PCIBEX_ with Dr. Nayoun Kim. Workshop at the 2022 Seoul International Conference on Linguistics. 11-12 August 2022. Seoul, South Korea. [PDF](https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2022-ibex-pcibex-workshop-slides.pdf)
+
+_An introduction to SnowGlobe, a tool for systematic reviews_ with Dr. Sean McWeeny. Workshop at Northwestern University IT Research Computing Services, 18 May 2021. Evanston, IL.
+
+_Experimental syntax using IBEX: a walkthrough_ with Dr. Nayoun Kim. 2021 BK Winter School-Workshop on Experimental Linguistics/Syntax at Sungkyunkwan University, 19-22 January 2021. Seoul, South Korea. [PDF](https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2021-ibex-workshop-slides.pdf)
+
+### R programming
+
+June Choe. [Cracking open ggplot internals with {ggtrace}](https://www.rstudio.com/conference/2022/talks/cracking-open-ggplot-internals-ggtrace/). Talk at the 2022 RStudio Conference, 25-28 July 2022. Washington D.C. [https://github.com/yjunechoe/ggtrace-rstudioconf2022](https://github.com/yjunechoe/ggtrace-rstudioconf2022)
 
 June Choe. [Stepping into {ggplot2} internals with {ggtrace}](https://www.youtube.com/watch?v=2JX8zu4QxMg&t=2959s). Talk at the 2022 useR! Conference, 20-23 June 2022. Vanderbilt University, TN. [https://github.com/yjunechoe/ggtrace-user2022](https://github.com/yjunechoe/ggtrace-user2022)

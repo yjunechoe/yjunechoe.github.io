@@ -29,9 +29,13 @@ li::marker {
 
 ## 2022
 
+### September
+
+- I was invited to a Korean data science podcast [dataholic (데이터홀릭)](https://www.youtube.com/c/dataholic4) to talk about my experience presenting at the RStudio and useR conferences! [Part 1](https://www.youtube.com/watch?v=Avagxy2PNhg), [Part 2](https://www.youtube.com/watch?v=S4APUKuDUtM)
+
 ### August
 
-- I gave a [**workshop** on IBEX and PCIbex](https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2022-ibex-pcibex-workshop-slides.pdf) with [Nayoun Kim](https://nayounkimlinguist.com/) at the Seoul International Conference on Linguistics (SICOL 2022). 
+- I led a [**workshop** on IBEX and PCIbex](https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2022-ibex-pcibex-workshop-slides.pdf) with [Nayoun Kim](https://nayounkimlinguist.com/) at the [Seoul International Conference on Linguistics (SICOL 2022)](https://sicol2022.creatorlink.net/). 
 
 ### July
 
@@ -39,7 +43,7 @@ li::marker {
 
 ### June
 
-- I gave a [**talk**](https://www.youtube.com/watch?v=2JX8zu4QxMg&t=2959s) on my package [`{ggtrace}`](https://yjunechoe.github.io/ggtrace/) at the [useR! 2022 conference](https://user2022.r-project.org/). I was awarded the diversity scholarship which covered my registration and workshop fees.
+- I gave a [**talk**](https://www.youtube.com/watch?v=2JX8zu4QxMg&t=2959s) on my package [`{ggtrace}`](https://yjunechoe.github.io/ggtrace/) at the [useR! 2022 conference](https://user2022.r-project.org/). I was awarded the diversity scholarship which covered my registration and workshop fees. [My reflections](https://yjunechoe.github.io/posts/2022-07-30-user2022/)
 
 - I gave a [**talk**](https://www.youtube.com/embed/guzjt7xh2Cw?start=3787) at [RLadies philly](https://www.rladiesphilly.org/) on using dplyr's slice() function for row-relational operations.
 
@@ -77,8 +81,6 @@ li::marker {
 ### September
 
 - I have moved to Philadelphia to **start my PhD in Linguistics at the University of Pennsylvania**!
-
-- I presented a **poster at AMLaP** on my undergrad thesis research with my advisors Jennifer Cole and Masaya Yoshida.
 
 ### June
 

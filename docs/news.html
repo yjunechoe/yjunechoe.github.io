@@ -785,6 +785,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   d-article table.gt_table td,
   d-article table.gt_table th {
     border-bottom: none;
+    font-size: 100%;
   }
 
   .html-widget {
@@ -1857,15 +1858,21 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 
       // hoverable references
       $('span.citation[data-cites]').each(function() {
-        if ($(this).children()[0].nodeName == "D-FOOTNOTE") {
-          var fn = $(this).children()[0]
+        const citeChild = $(this).children()[0]
+        // Do not process if @xyz has been used without escaping and without bibliography activated
+        // https://github.com/rstudio/distill/issues/466
+        if (citeChild === undefined) return true
+
+        if (citeChild.nodeName == "D-FOOTNOTE") {
+          var fn = citeChild
           $(this).html(fn.shadowRoot.querySelector("sup"))
           $(this).id = fn.id
           fn.remove()
         }
         var refs = $(this).attr('data-cites').split(" ");
         var refHtml = refs.map(function(ref) {
-          return "<p>" + $('#ref-' + ref).html() + "</p>";
+          // Could use CSS.escape too here, we insure backward compatibility in navigator
+          return "<p>" + $('div[id="ref-' + ref + '"]').html() + "</p>";
         }).join("\n");
         window.tippy(this, {
           allowHTML: true,
@@ -2064,7 +2071,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+  <script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2631,121 +2638,64 @@ d-article h3 {
 }
 
 li::marker {
-    font-size: 1.2em;
+  font-size: 1.2em;
 }
 </style>
 </div>
 <h2 id="section">2022</h2>
+<h3 id="september">September</h3>
+<ul>
+<li>I was invited to a Korean data science podcast <a href="https://www.youtube.com/c/dataholic4">dataholic (데이터홀릭)</a> to talk about my experience presenting at the RStudio and useR conferences! <a href="https://www.youtube.com/watch?v=Avagxy2PNhg">Part 1</a>, <a href="https://www.youtube.com/watch?v=S4APUKuDUtM">Part 2</a></li>
+</ul>
 <h3 id="august">August</h3>
 <ul>
-<li>I gave a <a
-href="https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2022-ibex-pcibex-workshop-slides.pdf"><strong>workshop</strong>
-on IBEX and PCIbex</a> with <a
-href="https://nayounkimlinguist.com/">Nayoun Kim</a> at the Seoul
-International Conference on Linguistics (SICOL 2022).</li>
+<li>I led a <a href="https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2022-ibex-pcibex-workshop-slides.pdf"><strong>workshop</strong> on IBEX and PCIbex</a> with <a href="https://nayounkimlinguist.com/">Nayoun Kim</a> at the <a href="https://sicol2022.creatorlink.net/">Seoul International Conference on Linguistics (SICOL 2022)</a>.</li>
 </ul>
 <h3 id="july">July</h3>
 <ul>
-<li>I attended my first in-person R conference at <a
-href="https://rstudioconf2022.sched.com/?iframe=no">rstudio::conf(2022)</a>
-and gave a <a
-href="https://rstudioconf2022.sched.com/event/11ibT/cracking-open-ggplot-internals-with-ggtrace"><strong>talk</strong>
-on ggplot internals</a>.</li>
+<li>I attended my first in-person R conference at <a href="https://rstudioconf2022.sched.com/?iframe=no">rstudio::conf(2022)</a> and gave a <a href="https://rstudioconf2022.sched.com/event/11ibT/cracking-open-ggplot-internals-with-ggtrace"><strong>talk</strong> on ggplot internals</a>.</li>
 </ul>
 <h3 id="june">June</h3>
 <ul>
-<li><p>I gave a <a
-href="https://www.youtube.com/watch?v=2JX8zu4QxMg&amp;t=2959s"><strong>talk</strong></a>
-on my package <a
-href="https://yjunechoe.github.io/ggtrace/"><code>{ggtrace}</code></a>
-at the <a href="https://user2022.r-project.org/">useR! 2022
-conference</a>. I was awarded the diversity scholarship which covered my
-registration and workshop fees.</p></li>
-<li><p>I gave a <a
-href="https://www.youtube.com/embed/guzjt7xh2Cw?start=3787"><strong>talk</strong></a>
-at <a href="https://www.rladiesphilly.org/">RLadies philly</a> on using
-dplyr’s slice() function for row-relational operations.</p></li>
+<li><p>I gave a <a href="https://www.youtube.com/watch?v=2JX8zu4QxMg&amp;t=2959s"><strong>talk</strong></a> on my package <a href="https://yjunechoe.github.io/ggtrace/"><code>{ggtrace}</code></a> at the <a href="https://user2022.r-project.org/">useR! 2022 conference</a>. I was awarded the diversity scholarship which covered my registration and workshop fees. <a href="https://yjunechoe.github.io/posts/2022-07-30-user2022/">My reflections</a></p></li>
+<li><p>I gave a <a href="https://www.youtube.com/embed/guzjt7xh2Cw?start=3787"><strong>talk</strong></a> at <a href="https://www.rladiesphilly.org/">RLadies philly</a> on using dplyr’s slice() function for row-relational operations.</p></li>
 </ul>
 <h2 id="section-1">2021</h2>
 <h3 id="july-1">July</h3>
 <ul>
-<li>My <a
-href="https://yjunechoe.github.io/posts/2021-06-24-setting-up-and-debugging-custom-fonts/"><strong>tutorial</strong>
-on custom fonts in R</a> was <strong>featured as a highlight</strong> on
-the <a
-href="https://share.fireside.fm/episode/87RSVeFz+alD0Og1X?t=247">R
-Weekly podcast</a>!</li>
+<li>My <a href="https://yjunechoe.github.io/posts/2021-06-24-setting-up-and-debugging-custom-fonts/"><strong>tutorial</strong> on custom fonts in R</a> was <strong>featured as a highlight</strong> on the <a href="https://share.fireside.fm/episode/87RSVeFz+alD0Og1X?t=247">R Weekly podcast</a>!</li>
 </ul>
 <h3 id="june-1">June</h3>
 <ul>
-<li>I gave a <a
-href="https://www.youtube.com/embed/guzjt7xh2Cw?start=3787"><strong>talk</strong></a>
-at <a href="https://www.rladiesphilly.org/">RLadies philly</a> on using
-icon fonts for data viz! I also wrote a follow-up <a
-href="https://yjunechoe.github.io/posts/2021-06-24-setting-up-and-debugging-custom-fonts/">blog
-post</a> that goes deeper into font rendering in R.</li>
+<li>I gave a <a href="https://www.youtube.com/embed/guzjt7xh2Cw?start=3787"><strong>talk</strong></a> at <a href="https://www.rladiesphilly.org/">RLadies philly</a> on using icon fonts for data viz! I also wrote a follow-up <a href="https://yjunechoe.github.io/posts/2021-06-24-setting-up-and-debugging-custom-fonts/">blog post</a> that goes deeper into font rendering in R.</li>
 </ul>
 <h3 id="may">May</h3>
 <ul>
-<li><a href="https://snowglobe.soc.northwestern.edu/">SnowGlobe</a>, a
-project started in my undergrad, was featured in an <a
-href="https://sites.northwestern.edu/northwesternlibrary/2021/05/11/student-developed-app-expedites-time-consuming-research-task/">article</a>
-by the Northwestern University Library. We also had a <a
-href="https://www.eventbrite.com/e/an-introduction-to-snowglobe-a-tool-for-systematic-reviews-tickets-149045397797#"><strong>workshop</strong>
-for SnowGlobe</a> which drew participants from over a hundred
-universities!</li>
+<li><a href="https://snowglobe.soc.northwestern.edu/">SnowGlobe</a>, a project started in my undergrad, was featured in an <a href="https://sites.northwestern.edu/northwesternlibrary/2021/05/11/student-developed-app-expedites-time-consuming-research-task/">article</a> by the Northwestern University Library. We also had a <a href="https://www.eventbrite.com/e/an-introduction-to-snowglobe-a-tool-for-systematic-reviews-tickets-149045397797#"><strong>workshop</strong> for SnowGlobe</a> which drew participants from over a hundred universities!</li>
 </ul>
 <h3 id="january">January</h3>
 <ul>
-<li>I joined <a href="https://nayounkimlinguist.com/">Nayoun Kim</a> for
-a <a
-href="https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2021-ibex-workshop-slides.pdf"><strong>workshop</strong>
-on experimental syntax</a> conducted in Korean and held at Sungkyunkwan
-University (Korea). I helped design <a
-href="https://github.com/yjunechoe/IBEX-Workshop-Materials">materials</a>
-for a session on <strong>scripting online experiments with
-IBEX</strong>, including <a
-href="https://ibex-workshop-slides.netlify.app/">interactive slides</a>
-made with R!</li>
+<li>I joined <a href="https://nayounkimlinguist.com/">Nayoun Kim</a> for a <a href="https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2021-ibex-workshop-slides.pdf"><strong>workshop</strong> on experimental syntax</a> conducted in Korean and held at Sungkyunkwan University (Korea). I helped design <a href="https://github.com/yjunechoe/IBEX-Workshop-Materials">materials</a> for a session on <strong>scripting online experiments with IBEX</strong>, including <a href="https://ibex-workshop-slides.netlify.app/">interactive slides</a> made with R!</li>
 </ul>
 <h2 id="section-2">2020</h2>
 <h3 id="november">November</h3>
 <ul>
-<li>I joined designer <a href="https://www.williamrchase.com/">Will
-Chase</a> on his <a
-href="https://www.youtube.com/watch?v=Z0NVmQXYjac"><strong>stream</strong></a>
-to talk about the psycholinguistics of speech production for a data viz
-project on Michael’s speech errors in The Office. It was a very cool and
-unique opportunity to bring my two interests together!</li>
+<li>I joined designer <a href="https://www.williamrchase.com/">Will Chase</a> on his <a href="https://www.youtube.com/watch?v=Z0NVmQXYjac"><strong>stream</strong></a> to talk about the psycholinguistics of speech production for a data viz project on Michael’s speech errors in The Office. It was a very cool and unique opportunity to bring my two interests together!</li>
 </ul>
 <h3 id="october">October</h3>
 <ul>
-<li><p>My <a
-href="https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/"><strong>tutorial</strong>
-on {ggplot2} stat_*() functions</a> was <strong>featured as a
-highlight</strong> on the <a
-href="https://rweekly.fireside.fm/8?t=251">R Weekly podcast</a>, which
-curates weekly updates from the R community.</p></li>
-<li><p>I became a <strong>data science tutor</strong> at <a
-href="https://mindcore.sas.upenn.edu/">MindCORE</a> to help researchers
-at Penn with data visualization and R programming.</p></li>
+<li><p>My <a href="https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/"><strong>tutorial</strong> on {ggplot2} stat_*() functions</a> was <strong>featured as a highlight</strong> on the <a href="https://rweekly.fireside.fm/8?t=251">R Weekly podcast</a>, which curates weekly updates from the R community.</p></li>
+<li><p>I became a <strong>data science tutor</strong> at <a href="https://mindcore.sas.upenn.edu/">MindCORE</a> to help researchers at Penn with data visualization and R programming.</p></li>
 </ul>
-<h3 id="september">September</h3>
+<h3 id="september-1">September</h3>
 <ul>
-<li><p>I have moved to Philadelphia to <strong>start my PhD in
-Linguistics at the University of Pennsylvania</strong>!</p></li>
-<li><p>I presented a <strong>poster at AMLaP</strong> on my undergrad
-thesis research with my advisors Jennifer Cole and Masaya
-Yoshida.</p></li>
+<li>I have moved to Philadelphia to <strong>start my PhD in Linguistics at the University of Pennsylvania</strong>!</li>
 </ul>
 <h3 id="june-2">June</h3>
 <ul>
-<li><strong>I graduated from Northwestern University</strong> with a
-B.A. in Linguistics (with honors)! I was also elected into Phi Beta
-Kappa and appointed as the Senior Marshal for Linguistics.</li>
+<li><strong>I graduated from Northwestern University</strong> with a B.A. in Linguistics (with honors)! I was also elected into Phi Beta Kappa and appointed as the Senior Marshal for Linguistics.</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

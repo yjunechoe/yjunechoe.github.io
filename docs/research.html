@@ -785,6 +785,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   d-article table.gt_table td,
   d-article table.gt_table th {
     border-bottom: none;
+    font-size: 100%;
   }
 
   .html-widget {
@@ -1857,15 +1858,21 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 
       // hoverable references
       $('span.citation[data-cites]').each(function() {
-        if ($(this).children()[0].nodeName == "D-FOOTNOTE") {
-          var fn = $(this).children()[0]
+        const citeChild = $(this).children()[0]
+        // Do not process if @xyz has been used without escaping and without bibliography activated
+        // https://github.com/rstudio/distill/issues/466
+        if (citeChild === undefined) return true
+
+        if (citeChild.nodeName == "D-FOOTNOTE") {
+          var fn = citeChild
           $(this).html(fn.shadowRoot.querySelector("sup"))
           $(this).id = fn.id
           fn.remove()
         }
         var refs = $(this).attr('data-cites').split(" ");
         var refHtml = refs.map(function(ref) {
-          return "<p>" + $('#ref-' + ref).html() + "</p>";
+          // Could use CSS.escape too here, we insure backward compatibility in navigator
+          return "<p>" + $('div[id="ref-' + ref + '"]').html() + "</p>";
         }).join("\n");
         window.tippy(this, {
           allowHTML: true,
@@ -2064,7 +2071,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+  <script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2617,19 +2624,16 @@ Misc.
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#publications">Publications</a>
-<ul>
-<li><a href="#in-prep.-and-pre-print">in prep. and pre-print</a></li>
-</ul></li>
-<li><a href="#workshops-led">Workshops led</a></li>
-<li><a href="#conference-papers">Conference Papers</a></li>
+<li><a href="#peer-reviewed-papers">Peer-reviewed Papers</a></li>
+<li><a href="#in-prep.">in prep.</a></li>
 <li><a href="#conference-talks">Conference Talks</a></li>
-<li><a href="#conference-presentations">Conference
-Presentations</a></li>
-<li><a href="#other-conference-activities">Other conference
-activities</a>
+<li><a href="#conference-presentations">Conference Presentations</a>
 <ul>
-<li><a href="#r">R</a></li>
+<li><a href="#other-research-activities">Other research activities</a></li>
+</ul></li>
+<li><a href="#workshops-led">Workshops led</a>
+<ul>
+<li><a href="#r-programming">R programming</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -2639,119 +2643,36 @@ p {
   font-family: Roboto;
 }
 </style>
-<h2 id="publications">Publications</h2>
-<p><strong>June Choe</strong>, Masaya Yoshida, and Jennifer Cole. (in
-press). The role of prosodic focus in the reanalysis of garden path
-sentences: Depth of semantic processing impedes the revision of an
-erroneous local analysis. <em>Glossa Psycholinguistics</em>. <a
-href="https://doi.org/10.17605/OSF.IO/U6DQ5"
-class="uri">https://doi.org/10.17605/OSF.IO/U6DQ5</a></p>
-<p>Sean McWeeny, Jinnie S. Choi, <strong>June Choe</strong>, Alexander
-LaTourette, Megan Y. Roberts, and Elizabeth S. Norton. (2022). <a
-href="https://doi.org/10.1002/rrq.467">Rapid automatized naming (RAN) as
-a kindergarten predictor of future reading in English: A systematic
-review and meta-analysis</a>. <em>Reading Research Quarterly</em>. DOI:
-10.1002/rrq.467</p>
-<h3 id="in-prep.-and-pre-print">in prep. and pre-print</h3>
-<p>Sean McWeeny, June Choe, &amp; Elizabeth S. Norton. (2021).
-SnowGlobe: An Iterative Search Tool for Systematic Reviews and
-Meta-Analyses. <a href="https://doi.org/10.17605/OSF.IO/U25RN"
-class="uri">https://doi.org/10.17605/OSF.IO/U25RN</a></p>
-<h2 id="workshops-led">Workshops led</h2>
-<p><em>Experimental syntax using IBEX/PCIBEX</em> with Dr. Nayoun Kim.
-Workshop at the 2022 Seoul International Conference on Linguistics.
-11-12 August 2022. Seoul, South Korea. <a
-href="https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2022-ibex-pcibex-workshop-slides.pdf">PDF</a></p>
-<p><em>An introduction to SnowGlobe, a tool for systematic reviews</em>
-with Dr. Sean McWeeny. Workshop at Northwestern University IT Research
-Computing Services, 18 May 2021. Evanston, IL.</p>
-<p><em>Experimental syntax using IBEX: a walkthrough</em> with
-Dr. Nayoun Kim. 2021 BK Winter School-Workshop on Experimental
-Linguistics/Syntax at Sungkyunkwan University, 19-22 January 2021.
-Seoul, South Korea. <a
-href="https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2021-ibex-workshop-slides.pdf">PDF</a></p>
-<h2 id="conference-papers">Conference Papers</h2>
-<p><strong>June Choe</strong>, Yiran Chen, May Pik Yu Chan, Aini Li, Xin
-Gao, and Nicole Holliday. (2022). <em>Language-specific Effects on
-Automatic Speech Recognition Errors in American English</em>.
-Proceedings of the 28th International Conference on Computational
-Linguistics.</p>
-<p>May Pik Yu Chan, <strong>June Choe</strong>, Aini Li, Yiran Chen, Xin
-Gao, and Nicole Holliday. (2022). <em>Training and typological bias in
-ASR performance for world Englishes</em>. Proceedings of the 23rd
-Conference of the International Speech Communication Association.</p>
-<p><strong>June Choe</strong>, and Anna Papafragou. (2022). <a
-href="https://escholarship.org/uc/item/2m87n4ht">The acquisition of
-subordinate nouns as pragmatic inference: Semantic alternatives modulate
-subordinate meanings</a>. <em>Proceedings of the Annual Meeting of the
-Cognitive Science Society</em>, 44, 2745-2752.</p>
+<h2 id="peer-reviewed-papers">Peer-reviewed Papers</h2>
+<p><strong>June Choe</strong>, Masaya Yoshida, and Jennifer Cole. (2022). <a href="https://escholarship.org/uc/item/5d84n2x7">The role of prosodic focus in the reanalysis of garden path sentences: Depth of semantic processing impedes the revision of an erroneous local analysis</a>. <em>Glossa Psycholinguistics 1</em>(1). DOI: 10.5070/G601136</p>
+<p><strong>June Choe</strong>, Yiran Chen, May Pik Yu Chan, Aini Li, Xin Gao, and Nicole Holliday. (2022). <em>Language-specific Effects on Automatic Speech Recognition Errors in American English</em>. Proceedings of the 28th International Conference on Computational Linguistics.</p>
+<p>May Pik Yu Chan, <strong>June Choe</strong>, Aini Li, Yiran Chen, Xin Gao, and Nicole Holliday. (2022). <a href="https://www.dropbox.com/s/q76b1v8dx5ipx9s/chan%20et%20al_Interspeeech2022_ASR.pdf?dl=0">Training and typological bias in ASR performance for world Englishes</a>. Proceedings of the 23rd Conference of the International Speech Communication Association.</p>
+<p><strong>June Choe</strong>, and Anna Papafragou. (2022). <a href="https://escholarship.org/uc/item/2m87n4ht">The acquisition of subordinate nouns as pragmatic inference: Semantic alternatives modulate subordinate meanings</a>. <em>Proceedings of the Annual Meeting of the Cognitive Science Society</em>, 44, 2745-2752.</p>
+<p>Sean McWeeny, Jinnie S. Choi, <strong>June Choe</strong>, Alexander LaTourette, Megan Y. Roberts, and Elizabeth S. Norton. (2022). <a href="https://doi.org/10.1002/rrq.467">Rapid automatized naming (RAN) as a kindergarten predictor of future reading in English: A systematic review and meta-analysis</a>. <em>Reading Research Quarterly</em>. DOI: 10.1002/rrq.467</p>
+<h2 id="in-prep.">in prep.</h2>
+<p>June Choe &amp; Anna Papafrgou. The acquisition of subordinate nouns as pragmatic inference. <a href="https://osf.io/x8cuf/?view_only=14a975d3618e4838b6cc7681b2ecf692">OSF</a></p>
+<p>Sean McWeeny, June Choe, &amp; Elizabeth S. Norton. (2021). SnowGlobe: An Iterative Search Tool for Systematic Reviews and Meta-Analyses. <a href="https://doi.org/10.17605/OSF.IO/U25RN">OSF</a></p>
 <h2 id="conference-talks">Conference Talks</h2>
-<p><strong>June Choe</strong>, and Anna Papafragou. <em>Lexical
-alternatives and the acquisition of subordinate nouns</em>. Talk at the
-47th Boston University Conference on Language Development (BUCLD), 3-6
-November, 2022. Boston University, Boston, MA.</p>
-<p><strong>June Choe</strong>, Yiran Chen, May Pik Yu Chan, Aini Li, Xin
-Gao and Nicole Holliday. (2022). <em>Language-specific Effects on
-Automatic Speech Recognition Errors in American English</em>. Talk at
-the 28th International Conference on Computational Linguistics (CoLing),
-12-17 October, 2022. Gyeongju, South Korea.</p>
-<p>May Pik Yu Chan, <strong>June Choe</strong>, Aini Li, Yiran Chen, Xin
-Gao and Nicole Holliday. (2022). <em>Training and typological bias in
-ASR performance for world Englishes</em>. Talk at the 23rd Conference of
-the International Speech Communication Association (INTERSPEECH), 18-22
-September, 2022. Incheon, South Korea.</p>
+<p><strong>June Choe</strong>, and Anna Papafragou. <em>Lexical alternatives and the acquisition of subordinate nouns</em>. Talk at the 47th Boston University Conference on Language Development (BUCLD), 3-6 November, 2022. Boston University, Boston, MA.</p>
+<p><strong>June Choe</strong>, Yiran Chen, May Pik Yu Chan, Aini Li, Xin Gao and Nicole Holliday. (2022). <em>Language-specific Effects on Automatic Speech Recognition Errors in American English</em>. Talk at the 28th International Conference on Computational Linguistics (CoLing), 12-17 October, 2022. Gyeongju, South Korea.</p>
+<p>May Pik Yu Chan, <strong>June Choe</strong>, Aini Li, Yiran Chen, Xin Gao and Nicole Holliday. (2022). <em>Training and typological bias in ASR performance for world Englishes</em>. Talk at the 23rd Conference of the International Speech Communication Association (INTERSPEECH), 18-22 September, 2022. Incheon, South Korea.</p>
 <h2 id="conference-presentations">Conference Presentations</h2>
-<p><strong>June Choe</strong>, and Anna Papafragou. <em>Acquisition of
-subordinate nouns as pragmatic inference: Semantic alternatives modulate
-subordinate meanings</em>. Poster at the 2nd Experiments in Linguistic
-Meaning (ELM) conference, 18-20 May 2022. University of Pennsylvania,
-Philadelphia, PA.</p>
-<p><strong>June Choe</strong>, and Anna Papafragou. <em>Beyond the basic
-level: Levels of informativeness and the acquisition of subordinate
-nouns</em>. Poster at the 35th Annual Conference on Human Sentence
-Processing (HSP), 24-26 March 2022. University of California, Santa
-Cruz, CA.</p>
-<p><strong>June Choe</strong>, Jennifer Cole, and Masaya Yoshida.
-<em>Prosodic Focus Strengthens Semantic Persistence</em>. <a
-href="static/poster/AMLAP2020.pdf">Poster</a> at The 26th Architectures
-and Mechanisms for Language Processing (AMLaP), 3-5 September 2020.
-Potsdam, Germany. <a
-href="static/abstract/AMLAP_2020_Abstract.pdf">Abstract</a> <a
-href="https://osf.io/fjkp9/">Video</a> <a
-href="static/slides/AMLAP_2020_Slides.pdf">Slides</a></p>
-<p><strong>June Choe</strong>. <em>Computer-assisted snowball search for
-meta-analysis research</em>. <a
-href="static/poster/Snowballer_June_Choe.pdf">Poster</a> at The 2020
-Undergraduate Research &amp; Arts Exposition. 27-28 May 2020.
-Northwestern University, Evanston, IL. <strong>2nd Place Poster
-Award</strong>. <a
-href="static/abstract/Expo_2020_Abstract.pdf">Abstract</a></p>
-<p><strong>June Choe</strong>. <em>Social Information in Sentence
-Processing</em>. Talk at The 2019 Undergraduate Research &amp; Arts
-Exposition. 29 May 2019. Northwestern University, Evanston, IL. <a
-href="static/abstract/Expo_2019_Abstract.pdf">Abstract</a></p>
-<p><strong>June Choe</strong>, Shayne Sloggett, Masaya Yoshida and
-Annette D’Onofrio. <em>Personae in syntactic processing:
-Socially-specific agents bias expectations of verb transitivity</em>.
-Poster at The 32nd CUNY Conference on Human Sentence Processing. 29-31
-March 2019. University of Colorado, Boulder, CO.</p>
-<p>D’Onofrio, Annette, <strong>June Choe</strong> and Masaya Yoshida.
-<em>Personae in syntactic processing: Socially-specific agents bias
-expectations of verb transitivity</em>. Poster at The 93rd Annual
-Meeting of the Linguistics Society of America. 3-6 January 2019. New
-York City, NY.</p>
-<h2 id="other-conference-activities">Other conference activities</h2>
-<h3 id="r">R</h3>
-<p>June Choe. Cracking open ggplot internals with {ggtrace}. Talk at the
-2022 RStudio Conference, 25-28 July 2022. Washington D.C. <a
-href="https://github.com/yjunechoe/ggtrace-rstudioconf2022">https://github.com/yjunechoe/ggtrace-rstudioconf2022</a></p>
-<p>June Choe. <a
-href="https://www.youtube.com/watch?v=2JX8zu4QxMg&amp;t=2959s">Stepping
-into {ggplot2} internals with {ggtrace}</a>. Talk at the 2022 useR!
-Conference, 20-23 June 2022. Vanderbilt University, TN. <a
-href="https://github.com/yjunechoe/ggtrace-user2022">https://github.com/yjunechoe/ggtrace-user2022</a></p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p><strong>June Choe</strong>, and Anna Papafragou. <em>Acquisition of subordinate nouns as pragmatic inference: Semantic alternatives modulate subordinate meanings</em>. Poster at the 2nd Experiments in Linguistic Meaning (ELM) conference, 18-20 May 2022. University of Pennsylvania, Philadelphia, PA.</p>
+<p><strong>June Choe</strong>, and Anna Papafragou. <em>Beyond the basic level: Levels of informativeness and the acquisition of subordinate nouns</em>. Poster at the 35th Annual Conference on Human Sentence Processing (HSP), 24-26 March 2022. University of California, Santa Cruz, CA.</p>
+<p><strong>June Choe</strong>, Jennifer Cole, and Masaya Yoshida. <em>Prosodic Focus Strengthens Semantic Persistence</em>. <a href="static/poster/AMLAP2020.pdf">Poster</a> at The 26th Architectures and Mechanisms for Language Processing (AMLaP), 3-5 September 2020. Potsdam, Germany. <a href="static/abstract/AMLAP_2020_Abstract.pdf">Abstract</a> <a href="https://osf.io/fjkp9/">Video</a> <a href="static/slides/AMLAP_2020_Slides.pdf">Slides</a></p>
+<p><strong>June Choe</strong>. <em>Computer-assisted snowball search for meta-analysis research</em>. <a href="static/poster/Snowballer_June_Choe.pdf">Poster</a> at The 2020 Undergraduate Research &amp; Arts Exposition. 27-28 May 2020. Northwestern University, Evanston, IL. <strong>2nd Place Poster Award</strong>. <a href="static/abstract/Expo_2020_Abstract.pdf">Abstract</a></p>
+<p><strong>June Choe</strong>. <em>Social Information in Sentence Processing</em>. Talk at The 2019 Undergraduate Research &amp; Arts Exposition. 29 May 2019. Northwestern University, Evanston, IL. <a href="static/abstract/Expo_2019_Abstract.pdf">Abstract</a></p>
+<p><strong>June Choe</strong>, Shayne Sloggett, Masaya Yoshida and Annette D’Onofrio. <em>Personae in syntactic processing: Socially-specific agents bias expectations of verb transitivity</em>. Poster at The 32nd CUNY Conference on Human Sentence Processing. 29-31 March 2019. University of Colorado, Boulder, CO.</p>
+<p>D’Onofrio, Annette, <strong>June Choe</strong> and Masaya Yoshida. <em>Personae in syntactic processing: Socially-specific agents bias expectations of verb transitivity</em>. Poster at The 93rd Annual Meeting of the Linguistics Society of America. 3-6 January 2019. New York City, NY.</p>
+<h3 id="other-research-activities">Other research activities</h3>
+<h2 id="workshops-led">Workshops led</h2>
+<p><em>Experimental syntax using IBEX/PCIBEX</em> with Dr. Nayoun Kim. Workshop at the 2022 Seoul International Conference on Linguistics. 11-12 August 2022. Seoul, South Korea. <a href="https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2022-ibex-pcibex-workshop-slides.pdf">PDF</a></p>
+<p><em>An introduction to SnowGlobe, a tool for systematic reviews</em> with Dr. Sean McWeeny. Workshop at Northwestern University IT Research Computing Services, 18 May 2021. Evanston, IL.</p>
+<p><em>Experimental syntax using IBEX: a walkthrough</em> with Dr. Nayoun Kim. 2021 BK Winter School-Workshop on Experimental Linguistics/Syntax at Sungkyunkwan University, 19-22 January 2021. Seoul, South Korea. <a href="https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2021-ibex-workshop-slides.pdf">PDF</a></p>
+<h3 id="r-programming">R programming</h3>
+<p>June Choe. <a href="https://www.rstudio.com/conference/2022/talks/cracking-open-ggplot-internals-ggtrace/">Cracking open ggplot internals with {ggtrace}</a>. Talk at the 2022 RStudio Conference, 25-28 July 2022. Washington D.C. <a href="https://github.com/yjunechoe/ggtrace-rstudioconf2022">https://github.com/yjunechoe/ggtrace-rstudioconf2022</a></p>
+<p>June Choe. <a href="https://www.youtube.com/watch?v=2JX8zu4QxMg&amp;t=2959s">Stepping into {ggplot2} internals with {ggtrace}</a>. Talk at the 2022 useR! Conference, 20-23 June 2022. Vanderbilt University, TN. <a href="https://github.com/yjunechoe/ggtrace-user2022">https://github.com/yjunechoe/ggtrace-user2022</a></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
