@@ -14,6 +14,8 @@ navbar:
       href: blog.html
     - text: "Research"
       href: research.html
+    - text: "CV"
+    - href: static/cv.html
     - text: "News"
       href: news.html
     - text: "Misc."

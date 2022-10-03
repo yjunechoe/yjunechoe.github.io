@@ -1,7 +1,13 @@
 ---
 title: "Blog Posts"
 site: distill::distill_website
-listing: posts
+listing:
+  posts:
+    - 2022-03-10-ggplot2-delayed-aes-1
+    - 2021-06-24-setting-up-and-debugging-custom-fonts
+    - 2020-12-13-collapse-repetitive-piping-with-reduce
+    - 2020-09-26-demystifying-stat-layers-ggplot2
+    - 2020-06-07-correlation-parameter-mem
 link-citations: true
 ---
 

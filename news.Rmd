@@ -31,7 +31,7 @@ li::marker {
 
 ### September
 
-- I was invited to a Korean data science podcast [dataholic (데이터홀릭)](https://www.youtube.com/c/dataholic4) to talk about my experience presenting at the RStudio and useR conferences! [Part 1](https://www.youtube.com/watch?v=Avagxy2PNhg), [Part 2](https://www.youtube.com/watch?v=S4APUKuDUtM)
+- I was invited to a Korean data science **podcast** [dataholic (데이터홀릭)](https://www.youtube.com/c/dataholic4) to talk about my experience presenting at the RStudio and useR conferences! [Part 1](https://www.youtube.com/watch?v=Avagxy2PNhg), [Part 2](https://www.youtube.com/watch?v=S4APUKuDUtM)
 
 ### August
 
