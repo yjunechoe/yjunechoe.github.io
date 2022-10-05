@@ -120,6 +120,7 @@ penguins %>%
   )
 ```
 
+
 ## Case #2 - "cell"-operations
 
 ```{r}
@@ -193,6 +194,11 @@ billboard %>%
 billboard %>% 
   filter( do.call(pmin, c(across(starts_with("wk")), na.rm = TRUE)) == 1 ) %>% 
   select(artist, track)
+
+billboard %>% 
+  mutate(best = do.call(pmin, c(across(starts_with("wk")), na.rm = TRUE)) ) %>% 
+  select(artist, track, best) %>% 
+  arrange(best)
 ```
 
 ```{r}
