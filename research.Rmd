@@ -12,9 +12,9 @@ p {
 
 **June Choe**, Masaya Yoshida, and Jennifer Cole. (2022). [The role of prosodic focus in the reanalysis of garden path sentences: Depth of semantic processing impedes the revision of an erroneous local analysis](https://escholarship.org/uc/item/5d84n2x7). _Glossa Psycholinguistics 1_(1). DOI: 10.5070/G601136
 
-**June Choe**, Yiran Chen, May Pik Yu Chan, Aini Li, Xin Gao, and Nicole Holliday. (2022). [Language-specific Effects on Automatic Speech Recognition Errors for World Englishes](static/papers/Choe et_al 2022 COLING.pdf). _Proceedings of the 28th International Conference on Computational Linguistics_.
+**June Choe**, Yiran Chen, May Pik Yu Chan, Aini Li, Xin Gao, and Nicole Holliday. (2022). [Language-specific Effects on Automatic Speech Recognition Errors for World Englishes](https://aclanthology.org/2022.coling-1.628/). _In Proceedings of the 29th International Conference on Computational Linguistics_, 7177–7186.
 
-May Pik Yu Chan, **June Choe**, Aini Li, Yiran Chen, Xin Gao, and Nicole Holliday. (2022). [Training and typological bias in ASR performance for world Englishes](static/papers/Chan et_al 2022 INTERSPEECH.pdf). _Proceedings of the 23rd Conference of the International Speech Communication Association_.
+May Pik Yu Chan, **June Choe**, Aini Li, Yiran Chen, Xin Gao, and Nicole Holliday. (2022). [Training and typological bias in ASR performance for world Englishes](https://www.isca-speech.org/archive/interspeech_2022/chan22b_interspeech.html). _In Proceedings of Interspeech 2022_, 1273-1277. DOI: 10.21437/Interspeech.2022-10869
 
 **June Choe**, and Anna Papafragou. (2022). [The acquisition of subordinate nouns as pragmatic inference: Semantic alternatives modulate subordinate meanings](https://escholarship.org/uc/item/2m87n4ht). _Proceedings of the Annual Meeting of the Cognitive Science Society_, 44, 2745-2752.
 
