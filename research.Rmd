@@ -30,7 +30,7 @@ Sean McWeeny, June Choe, & Elizabeth S. Norton. (2021). SnowGlobe: An Iterative 
 
 **June Choe**, and Anna Papafragou. *Lexical alternatives and the acquisition of subordinate nouns*. Talk at the 47th Boston University Conference on Language Development (BUCLD), 3-6 November, 2022. Boston University, Boston, MA.
 
-**June Choe**, Yiran Chen, May Pik Yu Chan, Aini Li, Xin Gao and Nicole Holliday. (2022). *Language-specific Effects on Automatic Speech Recognition Errors in American English*. Talk at the 28th International Conference on Computational Linguistics (CoLing), 12-17 October, 2022. Gyeongju, South Korea.
+**June Choe**, Yiran Chen, May Pik Yu Chan, Aini Li, Xin Gao and Nicole Holliday. (2022). *Language-specific Effects on Automatic Speech Recognition Errors in American English*. Talk at the 28th International Conference on Computational Linguistics (CoLing), 12-17 October, 2022. Gyeongju, South Korea. [Slides](static/slides/COLING_2022_Choe_et_al.pdf)
 
 May Pik Yu Chan, **June Choe**, Aini Li, Yiran Chen, Xin Gao and Nicole Holliday. (2022). *Training and typological bias in ASR performance for world Englishes*. Talk at the 23rd Conference of the International Speech Communication Association (INTERSPEECH), 18-22 September, 2022. Incheon, South Korea.
 
