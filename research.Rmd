@@ -10,7 +10,7 @@ p {
 
 ## Peer-reviewed Papers
 
-**June Choe**, Masaya Yoshida, and Jennifer Cole. (2022). [The role of prosodic focus in the reanalysis of garden path sentences: Depth of semantic processing impedes the revision of an erroneous local analysis](https://escholarship.org/uc/item/5d84n2x7). _Glossa Psycholinguistics 1_(1). DOI: 10.5070/G601136
+**June Choe**, Masaya Yoshida, and Jennifer Cole. (2022). [The role of prosodic focus in the reanalysis of garden path sentences: Depth of semantic processing impedes the revision of an erroneous local analysis](https://escholarship.org/uc/item/5d84n2x7). _Glossa Psycholinguistics, 1_(1). DOI: 10.5070/G601136
 
 **June Choe**, Yiran Chen, May Pik Yu Chan, Aini Li, Xin Gao, and Nicole Holliday. (2022). [Language-specific Effects on Automatic Speech Recognition Errors for World Englishes](https://aclanthology.org/2022.coling-1.628/). _In Proceedings of the 29th International Conference on Computational Linguistics_, 7177–7186.
 
@@ -18,11 +18,11 @@ May Pik Yu Chan, **June Choe**, Aini Li, Yiran Chen, Xin Gao, and Nicole Hollida
 
 **June Choe**, and Anna Papafragou. (2022). [The acquisition of subordinate nouns as pragmatic inference: Semantic alternatives modulate subordinate meanings](https://escholarship.org/uc/item/2m87n4ht). _Proceedings of the Annual Meeting of the Cognitive Science Society_, 44, 2745-2752.
 
-Sean McWeeny, Jinnie S. Choi, **June Choe**, Alexander LaTourette, Megan Y. Roberts, and Elizabeth S. Norton. (2022). [Rapid automatized naming (RAN) as a kindergarten predictor of future reading in English: A systematic review and meta-analysis](https://doi.org/10.1002/rrq.467). _Reading Research Quarterly_. DOI: 10.1002/rrq.467
+Sean McWeeny, Jinnie S. Choi, **June Choe**, Alexander LaTourette, Megan Y. Roberts, and Elizabeth S. Norton. (2022). [Rapid automatized naming (RAN) as a kindergarten predictor of future reading in English: A systematic review and meta-analysis](https://doi.org/10.1002/rrq.467). _Reading Research Quarterly, 57_(4), 1187–1211. DOI: 10.1002/rrq.467
 
-## in prep.
+### submitted / in prep.
 
-June Choe & Anna Papafrgou. The acquisition of subordinate nouns as pragmatic inference. [OSF](https://osf.io/x8cuf/?view_only=14a975d3618e4838b6cc7681b2ecf692)
+June Choe & Anna Papafrgou. (Submitted). The acquisition of subordinate nouns as pragmatic inference. [OSF](https://osf.io/x8cuf/?view_only=14a975d3618e4838b6cc7681b2ecf692)
 
 Sean McWeeny, June Choe, & Elizabeth S. Norton. (2021). SnowGlobe: An Iterative Search Tool for Systematic Reviews and Meta-Analyses. [OSF](https://doi.org/10.17605/OSF.IO/U25RN)
 
@@ -55,8 +55,6 @@ D’Onofrio, Annette, **June Choe** and Masaya Yoshida. *Personae in syntactic p
 ### Workshops led
 
 _Experimental syntax using IBEX/PCIBEX_ with Dr. Nayoun Kim. Workshop at the 2022 Seoul International Conference on Linguistics. 11-12 August 2022. Seoul, South Korea. [PDF](https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2022-ibex-pcibex-workshop-slides.pdf)
-
-_An introduction to SnowGlobe, a tool for systematic reviews_ with Dr. Sean McWeeny. Workshop at Northwestern University IT Research Computing Services, 18 May 2021. Evanston, IL.
 
 _Experimental syntax using IBEX: a walkthrough_ with Dr. Nayoun Kim. 2021 BK Winter School-Workshop on Experimental Linguistics/Syntax at Sungkyunkwan University, 19-22 January 2021. Seoul, South Korea. [PDF](https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2021-ibex-workshop-slides.pdf)
 
