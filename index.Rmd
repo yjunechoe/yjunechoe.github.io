@@ -114,3 +114,14 @@ Beyond linguistics research, I have interests in data visualization, science com
 
 <div style='text-align: center; font-family: Fira Mono;'><span class="sc" style="font-size:1.2em">contact me: </span> yj<span>choe</span>\@sas.upenn.edu</div>
 
+
+
+<!-- 
+Projects:
+
+1) Acquisition of subordinate nouns as pragmatic inference
+2) Prosodic focus in garden-path reanalysis
+3) Computer-assisted snowball search for meta-analysis research
+4) {ggplot2} internals for users
+
+-->
