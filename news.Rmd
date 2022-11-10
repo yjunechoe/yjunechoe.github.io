@@ -39,13 +39,13 @@ li::marker {
 
 ### July
 
-- I attended my first in-person R conference at [rstudio::conf(2022)](https://rstudioconf2022.sched.com/?iframe=no) and gave a [**talk** on ggplot internals](https://rstudioconf2022.sched.com/event/11ibT/cracking-open-ggplot-internals-with-ggtrace).
+- I attended my first in-person R conference at [rstudio::conf(2022)](https://rstudioconf2022.sched.com/?iframe=no) and gave a [**talk** on ggplot internals](https://www.youtube.com/watch?v=dUBnitXf5mk&list=PL9HYL-VRX0oTOwqzVtL_q5T8MNrzn0mdH&index=38).
 
 ### June
 
 - I gave a [**talk**](https://www.youtube.com/watch?v=2JX8zu4QxMg&t=2959s) on my package [`{ggtrace}`](https://yjunechoe.github.io/ggtrace/) at the [useR! 2022 conference](https://user2022.r-project.org/). I was awarded the diversity scholarship which covered my registration and workshop fees. [My reflections](https://yjunechoe.github.io/posts/2022-07-30-user2022/)
 
-- I gave a [**talk**](https://www.youtube.com/embed/guzjt7xh2Cw?start=3787) at [RLadies philly](https://www.rladiesphilly.org/) on using dplyr's slice() function for row-relational operations.
+- I gave a [**talk**](https://www.youtube.com/watch?v=c5ydz-Ha61I&t=1190s) at [RLadies philly](https://www.rladiesphilly.org/) on using dplyr's slice() function for row-relational operations.
 
 ## 2021
 

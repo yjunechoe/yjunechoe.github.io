@@ -14,11 +14,12 @@ link-citations: true
 <!--
 Scheduled blog posts:
 - rstudioconf reflections
-- across(scale()) vs. scale(across())
+- across(scale()) vs. scale(across()) (NVM dplyr::pick())
 - principled aesthetic mappings
 - delayed aes eval part 3
 - slice() row-relational operations
 - constructing vectors with matrices
 - debugging with trace()
 - ggtrace: design and motivation
+- julia
 -->

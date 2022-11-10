@@ -60,6 +60,6 @@ _Experimental syntax using IBEX: a walkthrough_ with Dr. Nayoun Kim. 2021 BK Win
 
 ### R conferences
 
-June Choe. [Cracking open ggplot internals with {ggtrace}](https://www.rstudio.com/conference/2022/talks/cracking-open-ggplot-internals-ggtrace/). Talk at the 2022 RStudio Conference, 25-28 July 2022. Washington D.C. [https://github.com/yjunechoe/ggtrace-rstudioconf2022](https://github.com/yjunechoe/ggtrace-rstudioconf2022)
+June Choe. [Cracking open ggplot internals with {ggtrace}](https://www.youtube.com/watch?v=dUBnitXf5mk&list=PL9HYL-VRX0oTOwqzVtL_q5T8MNrzn0mdH&index=38). Talk at the 2022 RStudio Conference, 25-28 July 2022. Washington D.C. [https://github.com/yjunechoe/ggtrace-rstudioconf2022](https://github.com/yjunechoe/ggtrace-rstudioconf2022)
 
 June Choe. [Stepping into {ggplot2} internals with {ggtrace}](https://www.youtube.com/watch?v=2JX8zu4QxMg&t=2959s). Talk at the 2022 useR! Conference, 20-23 June 2022. Vanderbilt University, TN. [https://github.com/yjunechoe/ggtrace-user2022](https://github.com/yjunechoe/ggtrace-user2022)
