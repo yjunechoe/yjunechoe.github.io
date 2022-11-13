@@ -1,0 +1,2394 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { color: #00769e; background-color: #f1f3f5; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #00769e; } /* Normal */
+code span.al { color: #ad0000; } /* Alert */
+code span.an { color: #5e5e5e; } /* Annotation */
+code span.at { color: #657422; } /* Attribute */
+code span.bn { color: #ad0000; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #00769e; } /* ControlFlow */
+code span.ch { color: #20794d; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #5e5e5e; } /* Comment */
+code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+code span.dt { color: #ad0000; } /* DataType */
+code span.dv { color: #ad0000; } /* DecVal */
+code span.er { color: #ad0000; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #ad0000; } /* Float */
+code span.fu { color: #4758ab; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #5e5e5e; } /* Information */
+code span.kw { color: #00769e; } /* Keyword */
+code span.op { color: #5e5e5e; } /* Operator */
+code span.ot { color: #00769e; } /* Other */
+code span.pp { color: #ad0000; } /* Preprocessor */
+code span.sc { color: #5e5e5e; } /* SpecialChar */
+code span.ss { color: #20794d; } /* SpecialString */
+code span.st { color: #20794d; } /* String */
+code span.va { color: #111111; } /* Variable */
+code span.vs { color: #20794d; } /* VerbatimString */
+code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+</style>
+
+
+  <!--radix_placeholder_meta_tags-->
+  <title>First impressions of DataFrames.jl and accessories</title>
+
+  <meta property="description" itemprop="description" content="Perspectives from a {dplyr} and {data.table} useR"/>
+
+
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2022-11-13"/>
+  <meta property="article:created" itemprop="dateCreated" content="2022-11-13"/>
+  <meta name="article:author" content="June Choe"/>
+
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="First impressions of DataFrames.jl and accessories"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:description" content="Perspectives from a {dplyr} and {data.table} useR"/>
+  <meta property="og:image" content="https://yjunechoe.github.io/preview.jpg"/>
+  <meta property="og:locale" content="en_US"/>
+
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:title" content="First impressions of DataFrames.jl and accessories"/>
+  <meta property="twitter:description" content="Perspectives from a {dplyr} and {data.table} useR"/>
+  <meta property="twitter:image" content="https://yjunechoe.github.io/preview.jpg"/>
+
+  <!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","date","output","editor_options","preview"]}},"value":[{"type":"character","attributes":{},"value":["First impressions of DataFrames.jl and accessories"]},{"type":"character","attributes":{},"value":["Perspectives from a {dplyr} and {data.table} useR\n"]},{"type":"character","attributes":{},"value":["julia","data wrangling","DataFrames.jl","dplyr","data.table"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]},{"type":"character","attributes":{},"value":["0000-0002-0701-921X"]}]}]},{"type":"character","attributes":{},"value":["2022-11-13"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["include-after-body","toc","self_contained","css"]}},"value":[{"type":"character","attributes":{},"value":["highlighting.html"]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["../../styles.css"]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["chunk_output_type"]}},"value":[{"type":"character","attributes":{},"value":["console"]}]},{"type":"character","attributes":{},"value":["preview.jpg"]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["dataframes-jl-and-accessories_files/anchor-4.2.2/anchor.min.js","dataframes-jl-and-accessories_files/bowser-1.9.3/bowser.min.js","dataframes-jl-and-accessories_files/clipboard-2.0.6/clipboard.min.js","dataframes-jl-and-accessories_files/distill-2.2.21/template.v2.js","dataframes-jl-and-accessories_files/header-attrs-2.17/header-attrs.js","dataframes-jl-and-accessories_files/jquery-3.6.0/jquery-3.6.0.js","dataframes-jl-and-accessories_files/jquery-3.6.0/jquery-3.6.0.min.js","dataframes-jl-and-accessories_files/jquery-3.6.0/jquery-3.6.0.min.map","dataframes-jl-and-accessories_files/panelset-0.2.6/panelset.css","dataframes-jl-and-accessories_files/panelset-0.2.6/panelset.js","dataframes-jl-and-accessories_files/popper-2.6.0/popper.min.js","dataframes-jl-and-accessories_files/tippy-6.2.7/tippy-bundle.umd.min.js","dataframes-jl-and-accessories_files/tippy-6.2.7/tippy-light-border.css","dataframes-jl-and-accessories_files/tippy-6.2.7/tippy.css","dataframes-jl-and-accessories_files/tippy-6.2.7/tippy.umd.min.js","dataframes-jl-and-accessories_files/webcomponents-2.0.0/webcomponents.js","dataframes-jl-and-accessories_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css","dataframes-jl-and-accessories_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js","Manifest.toml","preview.jpg","Project.toml","src/datawrangling-r-julia.jl"]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+  <style type="text/css">
+
+  body {
+    background-color: white;
+  }
+
+  .pandoc-table {
+    width: 100%;
+  }
+
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+
+  d-byline .byline {
+    grid-template-columns: 2fr 2fr;
+  }
+
+  d-byline .byline h3 {
+    margin-block-start: 1.5em;
+  }
+
+  d-byline .byline .authors-affiliations h3 {
+    margin-block-start: 0.5em;
+  }
+
+  .authors-affiliations .orcid-id {
+    width: 16px;
+    height:16px;
+    margin-left: 4px;
+    margin-right: 4px;
+    vertical-align: middle;
+    padding-bottom: 2px;
+  }
+
+  d-title .dt-tags {
+    margin-top: 1em;
+    grid-column: text;
+  }
+
+  .dt-tags .dt-tag {
+    text-decoration: none;
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0em 0.4em;
+    margin-right: 0.5em;
+    margin-bottom: 0.4em;
+    font-size: 70%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  d-article table.gt_table td,
+  d-article table.gt_table th {
+    border-bottom: none;
+    font-size: 100%;
+  }
+
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .shaded-content {
+    background: white;
+  }
+
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  d-article {
+    padding-top: 2.5rem;
+    padding-bottom: 30px;
+  }
+
+  d-appendix {
+    padding-top: 30px;
+  }
+
+  d-article>p>img {
+    width: 100%;
+  }
+
+  d-article h2 {
+    margin: 1rem 0 1.5rem 0;
+  }
+
+  d-article h3 {
+    margin-top: 1.5rem;
+  }
+
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+
+  /* Tweak code blocks */
+
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: auto;
+  }
+
+  d-article div.sourceCode {
+    background-color: white;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+
+  d-article pre {
+    font-size: 12px;
+    color: black;
+    background: none;
+    margin-top: 0;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  d-article pre a {
+    border-bottom: none;
+  }
+
+  d-article pre a:hover {
+    border-bottom: none;
+    text-decoration: underline;
+  }
+
+  d-article details {
+    grid-column: text;
+    margin-bottom: 0.8em;
+  }
+
+  @media(min-width: 768px) {
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: visible !important;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 18px;
+    font-size: 14px;
+  }
+
+  d-article pre {
+    font-size: 14px;
+  }
+
+  }
+
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  /* CSS for d-contents */
+
+  .d-contents {
+    grid-column: text;
+    color: rgba(0,0,0,0.8);
+    font-size: 0.9em;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    padding-left: 0.25em;
+    justify-self: start;
+  }
+
+  @media(min-width: 1000px) {
+    .d-contents.d-contents-float {
+      height: 0;
+      grid-column-start: 1;
+      grid-column-end: 4;
+      justify-self: center;
+      padding-right: 3em;
+      padding-left: 2em;
+    }
+  }
+
+  .d-contents nav h3 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+
+  .d-contents li {
+    list-style-type: none
+  }
+
+  .d-contents nav > ul {
+    padding-left: 0;
+  }
+
+  .d-contents ul {
+    padding-left: 1em
+  }
+
+  .d-contents nav ul li {
+    margin-top: 0.6em;
+    margin-bottom: 0.2em;
+  }
+
+  .d-contents nav a {
+    font-size: 13px;
+    border-bottom: none;
+    text-decoration: none
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .d-contents nav a:hover {
+    text-decoration: underline solid rgba(0, 0, 0, 0.6)
+  }
+
+  .d-contents nav > ul > li > a {
+    font-weight: 600;
+  }
+
+  .d-contents nav > ul > li > ul {
+    font-weight: inherit;
+  }
+
+  .d-contents nav > ul > li > ul > li {
+    margin-top: 0.2em;
+  }
+
+
+  .d-contents nav ul {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+  }
+
+  .d-article-with-toc h2:nth-child(2) {
+    margin-top: 0;
+  }
+
+
+  /* Figure */
+
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+
+  /* Citations */
+
+  d-article .citation {
+    color: inherit;
+    cursor: inherit;
+  }
+
+  div.hanging-indent{
+    margin-left: 1em; text-indent: -1em;
+  }
+
+  /* Citation hover box */
+
+  .tippy-box[data-theme~=light-border] {
+    background-color: rgba(250, 250, 250, 0.95);
+  }
+
+  .tippy-content > p {
+    margin-bottom: 0;
+    padding: 2px;
+  }
+
+
+  /* Tweak 1000px media break to show more text */
+
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+
+    .grid {
+      grid-column-gap: 16px;
+    }
+
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+
+
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  /* Include appendix styles here so they can be overridden */
+
+  d-appendix {
+    contain: layout style;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-top: 60px;
+    margin-bottom: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0,0,0,0.5);
+    padding-top: 60px;
+    padding-bottom: 48px;
+  }
+
+  d-appendix h3 {
+    grid-column: page-start / text-start;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 1em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.65);
+  }
+
+  d-appendix h3 + * {
+    margin-top: 1em;
+  }
+
+  d-appendix ol {
+    padding: 0 0 0 15px;
+  }
+
+  @media (min-width: 768px) {
+    d-appendix ol {
+      padding: 0 0 0 30px;
+      margin-left: -30px;
+    }
+  }
+
+  d-appendix li {
+    margin-bottom: 1em;
+  }
+
+  d-appendix a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  d-appendix > * {
+    grid-column: text;
+  }
+
+  d-appendix > d-footnote-list,
+  d-appendix > d-citation-list,
+  d-appendix > distill-appendix {
+    grid-column: screen;
+  }
+
+  /* Include footnote styles here so they can be overridden */
+
+  d-footnote-list {
+    contain: layout style;
+  }
+
+  d-footnote-list > * {
+    grid-column: text;
+  }
+
+  d-footnote-list a.footnote-backlink {
+    color: rgba(0,0,0,0.3);
+    padding-left: 0.5em;
+  }
+
+
+
+  /* Anchor.js */
+
+  .anchorjs-link {
+    /*transition: all .25s linear; */
+    text-decoration: none;
+    border-bottom: none;
+  }
+  *:hover > .anchorjs-link {
+    margin-left: -1.125em !important;
+    text-decoration: none;
+    border-bottom: none;
+  }
+
+  /* Social footer */
+
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+
+  .disqus-comments {
+    margin-right: 30px;
+  }
+
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+
+  #disqus_thread {
+    margin-top: 30px;
+  }
+
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+
+
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+
+
+  .sidebar-section.custom {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .custom p {
+    margin-bottom: 0.5em;
+  }
+
+  /* Styles for listing layout (hide title) */
+  .layout-listing d-title, .layout-listing .d-title {
+    display: none;
+  }
+
+  /* Styles for posts lists (not auto-injected) */
+
+
+  .posts-with-sidebar {
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+
+  .posts-list .description h2,
+  .posts-list .description p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .posts-list .description h2 {
+    font-weight: 700;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .posts-list h2.post-tag {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 12px;
+  }
+  .posts-list {
+    margin-top: 60px;
+    margin-bottom: 24px;
+  }
+
+  .posts-list .post-preview {
+    text-decoration: none;
+    overflow: hidden;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 24px 0;
+  }
+
+  .post-preview-last {
+    border-bottom: none !important;
+  }
+
+  .posts-list .posts-list-caption {
+    grid-column: screen;
+    font-weight: 400;
+  }
+
+  .posts-list .post-preview h2 {
+    margin: 0 0 6px 0;
+    line-height: 1.2em;
+    font-style: normal;
+    font-size: 24px;
+  }
+
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.4em;
+    font-size: 16px;
+  }
+
+  .posts-list .post-preview .thumbnail {
+    box-sizing: border-box;
+    margin-bottom: 24px;
+    position: relative;
+    max-width: 500px;
+  }
+  .posts-list .post-preview img {
+    width: 100%;
+    display: block;
+  }
+
+  .posts-list .metadata {
+    font-size: 12px;
+    line-height: 1.4em;
+    margin-bottom: 18px;
+  }
+
+  .posts-list .metadata > * {
+    display: inline-block;
+  }
+
+  .posts-list .metadata .publishedDate {
+    margin-right: 2em;
+  }
+
+  .posts-list .metadata .dt-authors {
+    display: block;
+    margin-top: 0.3em;
+    margin-right: 2em;
+  }
+
+  .posts-list .dt-tags {
+    display: block;
+    line-height: 1em;
+  }
+
+  .posts-list .dt-tags .dt-tag {
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0.3em 0.4em;
+    margin-right: 0.2em;
+    margin-bottom: 0.4em;
+    font-size: 60%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .posts-list img {
+    opacity: 1;
+  }
+
+  .posts-list img[data-src] {
+    opacity: 0;
+  }
+
+  .posts-more {
+    clear: both;
+  }
+
+
+  .posts-sidebar {
+    font-size: 16px;
+  }
+
+  .posts-sidebar h3 {
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .sidebar-section {
+    margin-bottom: 30px;
+  }
+
+  .categories ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .categories li {
+    color: rgba(0, 0, 0, 0.8);
+    margin-bottom: 0;
+  }
+
+  .categories li>a {
+    border-bottom: none;
+  }
+
+  .categories li>a:hover {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  }
+
+  .categories .active {
+    font-weight: 600;
+  }
+
+  .categories .category-count {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+
+  @media(min-width: 768px) {
+    .posts-list .post-preview h2 {
+      font-size: 26px;
+    }
+    .posts-list .post-preview .thumbnail {
+      float: right;
+      width: 30%;
+      margin-bottom: 0;
+    }
+    .posts-list .post-preview .description {
+      float: left;
+      width: 45%;
+    }
+    .posts-list .post-preview .metadata {
+      float: left;
+      width: 20%;
+      margin-top: 8px;
+    }
+    .posts-list .post-preview p {
+      margin: 0 0 12px 0;
+      line-height: 1.5em;
+      font-size: 16px;
+    }
+    .posts-with-sidebar .posts-list {
+      float: left;
+      width: 75%;
+    }
+    .posts-with-sidebar .posts-sidebar {
+      float: right;
+      width: 20%;
+      margin-top: 60px;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+  }
+
+
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  .downlevel .posts-list .post-preview {
+    color: inherit;
+  }
+
+
+
+  </style>
+
+  <script type="application/javascript">
+
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+
+  // show body when load is complete
+  function on_load_complete() {
+
+    // add anchors
+    if (window.anchors) {
+      window.anchors.options.placement = 'left';
+      window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+    }
+
+
+    // set body to visible
+    document.body.style.visibility = 'visible';
+
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+
+  function init_distill() {
+
+    init_common();
+
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+
+    // move refs into #references-listing
+    $('#references-listing').replaceWith($('#refs'));
+
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-contents a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+
+      // capture layout
+      var layout = $(this).attr('data-layout');
+
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('details, div.sourceCode, pre, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+
+
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+
+    // remove code block used to force  highlighting css
+    $('.distill-force-highlighting-css').parent().remove();
+
+    // remove empty line numbers inserted by pandoc when using a
+    // custom syntax highlighting theme
+    $('code.sourceCode a:empty').remove();
+
+    // load distill framework
+    load_distill_framework();
+
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+
+      // article with toc class
+      $('.d-contents').parent().addClass('d-article-with-toc');
+
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+      // add orcid ids
+      $('.authors-affiliations').find('.author').each(function(i, el) {
+        var orcid_id = front_matter.authors[i].orcidID;
+        if (orcid_id) {
+          var a = $('<a></a>');
+          a.attr('href', 'https://orcid.org/' + orcid_id);
+          var img = $('<img></img>');
+          img.addClass('orcid-id');
+          img.attr('alt', 'ORCID ID');
+          img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+          a.append(img);
+          $(this).append(a);
+        }
+      });
+
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+
+      // remove d-appendix and d-footnote-list local styles
+      $('d-appendix > style:first-child').remove();
+      $('d-footnote-list > style:first-child').remove();
+
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+
+      // hoverable references
+      $('span.citation[data-cites]').each(function() {
+        const citeChild = $(this).children()[0]
+        // Do not process if @xyz has been used without escaping and without bibliography activated
+        // https://github.com/rstudio/distill/issues/466
+        if (citeChild === undefined) return true
+
+        if (citeChild.nodeName == "D-FOOTNOTE") {
+          var fn = citeChild
+          $(this).html(fn.shadowRoot.querySelector("sup"))
+          $(this).id = fn.id
+          fn.remove()
+        }
+        var refs = $(this).attr('data-cites').split(" ");
+        var refHtml = refs.map(function(ref) {
+          // Could use CSS.escape too here, we insure backward compatibility in navigator
+          return "<p>" + $('div[id="ref-' + ref + '"]').html() + "</p>";
+        }).join("\n");
+        window.tippy(this, {
+          allowHTML: true,
+          content: refHtml,
+          maxWidth: 500,
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        });
+      });
+
+      // fix footnotes in tables (#411)
+      // replacing broken distill.pub feature
+      $('table d-footnote').each(function() {
+        // we replace internal showAtNode methode which is triggered when hovering a footnote
+        this.hoverBox.showAtNode = function(node) {
+          // ported from https://github.com/distillpub/template/pull/105/files
+          calcOffset = function(elem) {
+              let x = elem.offsetLeft;
+              let y = elem.offsetTop;
+              // Traverse upwards until an `absolute` element is found or `elem`
+              // becomes null.
+              while (elem = elem.offsetParent && elem.style.position != 'absolute') {
+                  x += elem.offsetLeft;
+                  y += elem.offsetTop;
+              }
+
+              return { left: x, top: y };
+          }
+          // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetTop
+          const bbox = node.getBoundingClientRect();
+          const offset = calcOffset(node);
+          this.show([offset.left + bbox.width, offset.top + bbox.height]);
+        }
+      })
+
+      // clear polling timer
+      clearInterval(tid);
+
+      // show body now that everything is ready
+      on_load_complete();
+    }
+
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+
+  }
+
+  function init_downlevel() {
+
+    init_common();
+
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+
+    // remove toc
+    $('.d-contents').remove();
+
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+
+
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+
+    $('body').addClass('downlevel');
+
+    on_load_complete();
+  }
+
+
+  function init_common() {
+
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      // ignore leaflet img layers (#106)
+      figures = figures.filter(':not(img[class*="leaflet"])')
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+
+      }
+    });
+
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.distill-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace(/^index[.]html/, "./"));
+      });
+    }
+
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+
+  </script>
+
+  <!--/radix_placeholder_distill-->
+  <script src="dataframes-jl-and-accessories_files/header-attrs-2.17/header-attrs.js"></script>
+  <link href="dataframes-jl-and-accessories_files/panelset-0.2.6/panelset.css" rel="stylesheet" />
+  <script src="dataframes-jl-and-accessories_files/panelset-0.2.6/panelset.js"></script>
+  <script src="dataframes-jl-and-accessories_files/clipboard-2.0.6/clipboard.min.js"></script>
+  <link href="dataframes-jl-and-accessories_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
+  <script src="dataframes-jl-and-accessories_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
+  <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+  <script src="dataframes-jl-and-accessories_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+  <script src="dataframes-jl-and-accessories_files/popper-2.6.0/popper.min.js"></script>
+  <link href="dataframes-jl-and-accessories_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="dataframes-jl-and-accessories_files/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="dataframes-jl-and-accessories_files/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="dataframes-jl-and-accessories_files/anchor-4.2.2/anchor.min.js"></script>
+  <script src="dataframes-jl-and-accessories_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="dataframes-jl-and-accessories_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="dataframes-jl-and-accessories_files/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <!--/radix_placeholder_site_in_header-->
+
+  <link rel="stylesheet" href="../../styles.css" type="text/css"/>
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"First impressions of DataFrames.jl and accessories","description":"Perspectives from a {dplyr} and {data.table} useR","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/","orcidID":"0000-0002-0701-921X"}],"publishedDate":"2022-11-13T00:00:00.000-05:00","citationText":"Choe, 2022"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>First impressions of DataFrames.jl and accessories</h1>
+<!--radix_placeholder_categories-->
+<div class="dt-tags">
+<div class="dt-tag">julia</div>
+<div class="dt-tag">data wrangling</div>
+<div class="dt-tag">DataFrames.jl</div>
+<div class="dt-tag">dplyr</div>
+<div class="dt-tag">data.table</div>
+</div>
+<!--/radix_placeholder_categories-->
+<p><p>Perspectives from a {dplyr} and {data.table} useR</p></p>
+</div>
+
+<div class="d-byline">
+  June Choe  (University of Pennsylvania Linguistics)<a href="https://live-sas-www-ling.pantheon.sas.upenn.edu/" class="uri">https://live-sas-www-ling.pantheon.sas.upenn.edu/</a>
+  
+<br/>2022-11-13
+</div>
+
+<div class="d-article">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#intro" id="toc-intro">Intro</a></li>
+<li><a href="#tldr---big-takeaways" id="toc-tldr---big-takeaways">TL;DR - Big takeaways</a></li>
+<li><a href="#setup" id="toc-setup">Setup</a></li>
+<li><a href="#quick-example" id="toc-quick-example">Quick example</a></li>
+<li><a href="#list-of-s-and-s" id="toc-list-of-s-and-s">List of 💜s and 💔s</a>
+<ul>
+<li><a href="#the-distinctness-of-the-grouped-df-type" id="toc-the-distinctness-of-the-grouped-df-type">1) 💜 The distinctness of the “grouped df” type</a></li>
+<li><a href="#the-imperative---variants" id="toc-the-imperative---variants">2) 💜 The imperative <code>-!</code> variants</a></li>
+<li><a href="#competition-between-base.filter-and-dataframes.subset" id="toc-competition-between-base.filter-and-dataframes.subset">3) 💔 Competition between <code>Base.filter()</code> and <code>DataFrames.subset()</code></a></li>
+<li><a href="#the-operation-specification-syntax-is-like-data.tables-j-on-steroids" id="toc-the-operation-specification-syntax-is-like-data.tables-j-on-steroids">4) 💜 The <strong>operation specification syntax</strong> is like {data.table}’s <code>j</code> on steroids</a></li>
+<li><a href="#rowwise-operations-with-byrow-and-eachrow" id="toc-rowwise-operations-with-byrow-and-eachrow">5) 💜 Rowwise operations with <code>ByRow()</code> and <code>eachrow()</code></a></li>
+<li><a href="#confusingly-select-is-more-like-dplyrtransmute-than-dplyrselect" id="toc-confusingly-select-is-more-like-dplyrtransmute-than-dplyrselect">6) 💔 Confusingly, <code>select()</code> is more like <code>dplyr::transmute()</code> than <code>dplyr::select()</code></a></li>
+<li><a href="#selection-helpers-are-not-powered-by-boolean-algebra" id="toc-selection-helpers-are-not-powered-by-boolean-algebra">7) 💔 Selection helpers are not powered by boolean algebra</a></li>
+<li><a href="#groupby-has-select-semantics" id="toc-groupby-has-select-semantics">8) 💜 <code>groupby()</code> has select-semantics</a></li>
+<li><a href="#no-special-marking-of-context-dependent-expressions" id="toc-no-special-marking-of-context-dependent-expressions">9) 💔 No special marking of context-dependent expressions</a></li>
+<li><a href="#the-op-spec-syntax-gives-you-dplyracrossc_across-for-free" id="toc-the-op-spec-syntax-gives-you-dplyracrossc_across-for-free">10) 💜 The op-spec syntax gives you <code>dplyr::across()/c_across()</code> for free</a></li>
+</ul></li>
+<li><a href="#concluding-thoughts" id="toc-concluding-thoughts">Concluding thoughts</a>
+<ul>
+<li><a href="#overall-impression" id="toc-overall-impression">Overall impression</a></li>
+<li><a href="#next-steps" id="toc-next-steps">Next steps</a></li>
+</ul></li>
+</ul>
+</nav>
+</div>
+<h2 id="intro">Intro</h2>
+<p><a href="https://dataframes.juliadata.org/stable/">DataFrames.jl</a> is a Julia package for data wrangling.
+As of this writing it is at <a href="https://dataframes.juliadata.org/v1.4/">v1.4.x</a> - it’s a mature library that’s been in active development for over a decade.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>For some background, I comfortably switch between <a href="https://dplyr.tidyverse.org/">{dplyr}</a> and <a href="https://rdatatable.gitlab.io/data.table/">{data.table}</a>, having used both for nearly 5 years.
+I love digging into the implementational details of both - I really appreciate the thoughtfulness behind {dplyr}’s <a href="https://rlang.r-lib.org/reference/topic-data-mask-programming.html">tidyeval/tidyselect semantics</a>, as well as {data.table}’s <a href="https://rdatatable.gitlab.io/data.table/articles/datatable-intro.html#g-why-keep-j-so-flexible">conciseness and abstraction in the <code>j</code></a>.
+I have not been exposed to any other data wrangling frameworks but was recently compelled to learn Julia for independent reasons,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> so I decided why not pick up Julia-flavored data wrangling while I’m at it?</p>
+<p>This blog post is a rough (and possibly evolving?) list of my first impressions of DataFrames.jl and “DataFrames.jl accessories”, namely <a href="https://github.com/jkrumbiegel/Chain.jl">Chain.jl</a> and <a href="https://juliadata.github.io/DataFramesMeta.jl/stable/">DataFramesMeta.jl</a>.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>If you’re Julia-curious and/or just want to hear an R person talk about how another language does data wrangling differently, you’re the target audience!</p>
+<p>However, this blog post is <strong>NOT</strong>:</p>
+<ul>
+<li><p>My first impressions of the <a href="https://julialang.org/">Julia language</a> or a pitch for <a href="https://juliadatascience.io/programmers#sec:programmers">why you should use Julia</a>. If you want that from an R user’s perspective, check out <a href="https://trang.page/2021/12/28/10-things-i-love-about-julia/">Trang Le’s blog post</a> - I agree with everything said in there.</p></li>
+<li><p>A DataFrames.jl tutorial. I don’t know many but aside from the docs, I learned almost exclusively from <a href="https://github.com/bkamins/JuliaCon2022-DataFrames-Tutorial">Bogumił Kamiński’s JuliaCon 2022 workshop</a>, the <a href="https://juliadatascience.io/">Julia Data Science</a> book, and the <a href="https://www.manning.com/books/julia-for-data-analysis">Julia for Data Analysis</a> book.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p></li>
+<li><p>A {dplyr}/{data.table} to DataFrames.jl <a href="https://dataframes.juliadata.org/stable/man/comparisons">translation cheatsheet since that already exists</a>, though I’ll be doing some of that myself when it helps illustrate a point.</p></li>
+</ul>
+<p>All of this to say that I have no skin in the game and I don’t endorse or represent anything I write here.
+In fact I’m a Julia noob myself (it’s only been like 3 months) so take everything with a grain of salt and <a href="https://github.com/yjunechoe/yjunechoe.github.io/issues">feel free to let me know</a> if I do anything wrong/inefficiently!</p>
+<h2 id="tldr---big-takeaways">TL;DR - Big takeaways</h2>
+<ul>
+<li><p>The syntax mimics {dplyr} but works more like {data.table} under the hood. There’s a bit of unlearning to do for {dplyr} users.</p></li>
+<li><p>There are not as many idiomatic ways of doing things like in {dplyr}. Whereas you can get very far in {dplyr} without thinking much about base R, learning DataFrames.jl requires a good amount of “base” Julia first (especially distinctions between data types, which R lacks).</p></li>
+<li><p>I love Chain.jl but I’m not drawn to DataFramesMeta.jl because it’s kinda like <a href="https://dtplyr.tidyverse.org/">{dtplyr}</a><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> - I’d personally rather just focus on learning the thing itself.</p></li>
+<li><p>Some aspects of DataFrames.jl are relatively underdeveloped IMO (e.g., context dependent expressions) but it’s in active development and I plan to stick around to see more.</p></li>
+</ul>
+<h2 id="setup">Setup</h2>
+<div class="panelset">
+<div class="panel">
+<p><span class="panel-name">R</span></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># R v4.2.1</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>      <span class='co'># v1.0.10</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://r-datatable.com'>data.table</a></span><span class='op'>)</span> <span class='co'># v1.14.5</span></span>
+<span><span class='va'>mtcars_df</span> <span class='op'>&lt;-</span> <span class='va'>mtcars</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://tibble.tidyverse.org/reference/as_tibble.html'>as_tibble</a></span><span class='op'>(</span>rownames <span class='op'>=</span> <span class='st'>"model"</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/utils/type.convert.html'>type.convert</a></span><span class='op'>(</span>as.is <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span><span class='va'>mtcars_dt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html'>as.data.table</a></span><span class='op'>(</span><span class='va'>mtcars_df</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+</div>
+<div class="panel">
+<p><span class="panel-name">Julia</span></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb1"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Julia v1.8.2</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DataFrames </span><span class="co"># (v1.4.2)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DataFramesMeta </span><span class="co"># (v0.12.0) Also imports Chain.jl</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># using Chain.jl (v0.5.0)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">StatsBase </span><span class="co"># (v0.33.21) Like base R {stats}</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">RDatasets </span><span class="co"># (v0.7.7) Self-explanatory; like the {Rdatasets} package</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>mtcars <span class="op">=</span> RDatasets.<span class="fu">dataset</span>(<span class="st">&quot;datasets&quot;</span>, <span class="st">&quot;mtcars&quot;</span>)</span></code></pre></div>
+<pre><code>  32×12 DataFrame
+   Row │ Model              MPG      Cyl    Disp     HP     DRat     WT       QS ⋯
+       │ String31           Float64  Int64  Float64  Int64  Float64  Float64  Fl ⋯
+  ─────┼──────────────────────────────────────────────────────────────────────────
+     1 │ Mazda RX4             21.0      6    160.0    110     3.9     2.62      ⋯
+     2 │ Mazda RX4 Wag         21.0      6    160.0    110     3.9     2.875
+     3 │ Datsun 710            22.8      4    108.0     93     3.85    2.32
+     4 │ Hornet 4 Drive        21.4      6    258.0    110     3.08    3.215
+     5 │ Hornet Sportabout     18.7      8    360.0    175     3.15    3.44      ⋯
+     6 │ Valiant               18.1      6    225.0    105     2.76    3.46
+     7 │ Duster 360            14.3      8    360.0    245     3.21    3.57
+     8 │ Merc 240D             24.4      4    146.7     62     3.69    3.19
+    ⋮  │         ⋮             ⋮       ⋮       ⋮       ⋮       ⋮        ⋮        ⋱
+    26 │ Fiat X1-9             27.3      4     79.0     66     4.08    1.935     ⋯
+    27 │ Porsche 914-2         26.0      4    120.3     91     4.43    2.14
+    28 │ Lotus Europa          30.4      4     95.1    113     3.77    1.513
+    29 │ Ford Pantera L        15.8      8    351.0    264     4.22    3.17
+    30 │ Ferrari Dino          19.7      6    145.0    175     3.62    2.77      ⋯
+    31 │ Maserati Bora         15.0      8    301.0    335     3.54    3.57
+    32 │ Volvo 142E            21.4      4    121.0    109     4.11    2.78
+                                                     5 columns and 17 rows omitted</code></pre>
+</div>
+</div>
+</div>
+<h2 id="quick-example">Quick example</h2>
+<p>From mtcars…</p>
+<ol type="1">
+<li><p>Filter for rows that represent <code>"Merc"</code><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> car models</p></li>
+<li><p>Calculate the average <code>mpg</code> by <code>cyl</code></p></li>
+<li><p>Return a new column called <code>kmpg</code> that converts miles to kilometers (1:1.61)</p></li>
+</ol>
+<div class="panelset">
+<div class="panel">
+<p><span class="panel-name">{dplyr}</span></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>mtcars_df</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_detect.html'>str_detect</a></span><span class='op'>(</span><span class='va'>model</span>, <span class='st'>"^Merc "</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>cyl</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>kmpg <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>)</span> <span class='op'>*</span> <span class='fl'>1.61</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 3 × 2
+      cyl  kmpg
+    &lt;int&gt; &lt;dbl&gt;
+  1     4  38.0
+  2     6  29.8
+  3     8  26.2</code></pre>
+</div>
+</div>
+<div class="panel">
+<p><span class="panel-name">{data.table}</span></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>mtcars_dt</span><span class='op'>[</span><span class='va'>model</span> <span class='op'><a href='https://Rdatatable.gitlab.io/data.table/reference/like.html'>%like%</a></span> <span class='st'>"^Merc "</span>, <span class='fu'>.</span><span class='op'>(</span>kmpg <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>)</span> <span class='op'>*</span> <span class='fl'>1.61</span><span class='op'>)</span>, by <span class='op'>=</span> <span class='va'>cyl</span><span class='op'>]</span></span></code></pre>
+</div>
+<pre><code>       cyl   kmpg
+     &lt;int&gt;  &lt;num&gt;
+  1:     4 37.996
+  2:     6 29.785
+  3:     8 26.243</code></pre>
+</div>
+</div>
+<div class="panel">
+<p><span class="panel-name">DataFrames.jl</span></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb5"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@chain</span> mtcars <span class="cf">begin</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(<span class="op">:</span>Model <span class="op">=&gt;</span> x <span class="op">-&gt;</span> <span class="fu">occursin</span>.(<span class="st">r&quot;^Merc &quot;</span>, x))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">groupby</span>(<span class="op">:</span>Cyl)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">combine</span>(<span class="op">:</span>MPG <span class="op">=&gt;</span> (x <span class="op">-&gt;</span> <span class="fu">mean</span>(x) <span class="op">*</span> <span class="fl">1.61</span>) <span class="op">=&gt;</span> <span class="op">:</span>kmpg)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div>
+<pre><code>  3×2 DataFrame
+   Row │ Cyl    kmpg
+       │ Int64  Float64
+  ─────┼────────────────
+     1 │     4   37.996
+     2 │     6   29.785
+     3 │     8   26.243</code></pre>
+</div>
+</div>
+<div class="panel">
+<p><span class="panel-name">DataFramesMeta.jl</span></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb7"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@chain</span> mtcars <span class="cf">begin</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="pp">@rsubset</span>(<span class="fu">occursin</span>(<span class="st">r&quot;^Merc &quot;</span>, <span class="op">:</span>Model))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">groupby</span>(<span class="op">:</span>Cyl)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="pp">@combine</span>(<span class="op">:</span>kmpg <span class="op">=</span> <span class="fu">mean</span>(<span class="op">:</span>MPG) <span class="op">*</span> <span class="fl">1.61</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div>
+<pre><code>  3×2 DataFrame
+   Row │ Cyl    kmpg
+       │ Int64  Float64
+  ─────┼────────────────
+     1 │     4   37.996
+     2 │     6   29.785
+     3 │     8   26.243</code></pre>
+</div>
+</div>
+</div>
+<h2 id="list-of-s-and-s">List of 💜s and 💔s</h2>
+<p><strong>Disclaimer</strong>: These are not a list of like/dislike or approve/disapprove. The 💜s and 💔s are just <em>vibes</em> - you know what I mean?</p>
+<h3 id="the-distinctness-of-the-grouped-df-type">1) 💜 The distinctness of the “grouped df” type</h3>
+<p>In {dplyr}, it’s easy to think of grouping as a transient operation.
+We don’t really think about <code>group_by()</code> as a data-wrangling function because the returned <code>&lt;grouped_df&gt;</code> object is visually very similar to the input.
+Coupled with the general expectation that <a href="https://adv-r.hadley.nz/vectors-chap.html?q=attriburte#getting-and-setting">object attributes in R tend to be ephemeral</a>, <code>group_by()</code> often gets treated like a second-class citizen even though grouping is sticky, <a href="https://github.com/tidyverse/ggplot2/issues/2378">making it a frequent culprit of subtle bugs</a>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>mtcars_df</span>, <span class='va'>cyl</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 32 × 12
+  # Groups:   cyl [3]
+     model         mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+     &lt;chr&gt;       &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+   1 Mazda RX4    21       6  160    110  3.9   2.62  16.5     0     1     4     4
+   2 Mazda RX4 …  21       6  160    110  3.9   2.88  17.0     0     1     4     4
+   3 Datsun 710   22.8     4  108     93  3.85  2.32  18.6     1     1     4     1
+   4 Hornet 4 D…  21.4     6  258    110  3.08  3.22  19.4     1     0     3     1
+   5 Hornet Spo…  18.7     8  360    175  3.15  3.44  17.0     0     0     3     2
+   6 Valiant      18.1     6  225    105  2.76  3.46  20.2     1     0     3     1
+   7 Duster 360   14.3     8  360    245  3.21  3.57  15.8     0     0     3     4
+   8 Merc 240D    24.4     4  147.    62  3.69  3.19  20       1     0     4     2
+   9 Merc 230     22.8     4  141.    95  3.92  3.15  22.9     1     0     4     2
+  10 Merc 280     19.2     6  168.   123  3.92  3.44  18.3     1     0     4     4
+  # … with 22 more rows</code></pre>
+</div>
+<p>In {data.table}, it’s at the opposite extreme.
+Grouping via <code>by=</code> is right there in the slogan <code>dt[i,j,by]</code>, sharing a privileged status with row selection <code>i</code> and column manipulation <code>j</code>.
+Grouping as an operation is very prominent in the code but that also makes it feel a bit too integrated for my taste.
+It feels too similar to SQL, whereas I like my data wrangling operations to be more modular and portable.</p>
+<p>I think that DataFrames.jl hits a good middle ground.
+It keeps <code>groupby()</code> as a stand-alone operation while marking the output as very clearly distinct from the input.
+The returned <code>GroupedDataFrame</code> type, when printed, visually splits the dataframe by groups:<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb10"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">groupby</span>(mtcars, <span class="op">:</span>Cyl)</span></code></pre></div>
+<pre><code>  GroupedDataFrame with 3 groups based on key: Cyl
+  First Group (11 rows): Cyl = 4
+   Row │ Model          MPG      Cyl    Disp     HP     DRat     WT       QSec   ⋯
+       │ String31       Float64  Int64  Float64  Int64  Float64  Float64  Float6 ⋯
+  ─────┼──────────────────────────────────────────────────────────────────────────
+     1 │ Datsun 710        22.8      4    108.0     93     3.85    2.32     18.6 ⋯
+     2 │ Merc 240D         24.4      4    146.7     62     3.69    3.19     20.0
+    ⋮  │       ⋮           ⋮       ⋮       ⋮       ⋮       ⋮        ⋮        ⋮   ⋱
+    10 │ Lotus Europa      30.4      4     95.1    113     3.77    1.513    16.9
+    11 │ Volvo 142E        21.4      4    121.0    109     4.11    2.78     18.6
+                                                      5 columns and 7 rows omitted
+  ⋮
+  Last Group (14 rows): Cyl = 8
+   Row │ Model              MPG      Cyl    Disp     HP     DRat     WT       QS ⋯
+       │ String31           Float64  Int64  Float64  Int64  Float64  Float64  Fl ⋯
+  ─────┼──────────────────────────────────────────────────────────────────────────
+     1 │ Hornet Sportabout     18.7      8    360.0    175     3.15    3.44      ⋯
+     2 │ Duster 360            14.3      8    360.0    245     3.21    3.57
+    ⋮  │         ⋮             ⋮       ⋮       ⋮       ⋮       ⋮        ⋮        ⋱
+    14 │ Maserati Bora         15.0      8    301.0    335     3.54    3.57
+                                                     5 columns and 11 rows omitted</code></pre>
+</div>
+<h3 id="the-imperative---variants">2) 💜 The imperative <code>-!</code> variants</h3>
+<p>Many verbs in DataFrames.jl have a <code>-!</code> suffix counterpart, like <code>transform()</code>/<code>transform!()</code>.
+These <code>-!</code> forms indicate a mutate-in-place operation, which modifies an object it’s called with as a side-effect.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>
+It’s conceptually like {data.table}’s <code>set()</code> or the walrus operator <code>:=</code> in the <code>j</code>, with no equivalent in {dplyr}.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p>
+<p>I love <a href="https://en.wikipedia.org/wiki/Pure_function">pure functions</a> and I’m a sucker for functional programming, but one place where I can really see myself using the <code>-!</code> form a lot is for <code>rename!()</code> and <code>sort!()</code>, latter being equivalent to <code>dplyr::arrange()</code>:<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>mtcars_sorted <span class="ot">=</span> <span class="fu">copy</span>(mtcars); <span class="co"># Make a copy</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sort<span class="sc">!</span>(mtcars_sorted, <span class="sc">:</span>MPG);   <span class="co"># Sort the copy by ascending MPG value, in-place</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>mtcars_sorted[ [begin, end], [<span class="sc">:</span>Model, <span class="sc">:</span>MPG] ] <span class="co"># Check in first and last row</span></span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>  2×2 DataFrame
+   Row │ Model               MPG
+       │ String31            Float64
+  ─────┼─────────────────────────────
+     1 │ Cadillac Fleetwood     10.4
+     2 │ Toyota Corolla         33.9</code></pre>
+</div>
+<p>This is also an efficient way of dropping columns that you know you won’t use.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> In <code>{data.table}</code>, you can do this with <code>:=</code> but in the funky form of assigning columns to <code>NULL</code> which I never really liked.<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>mtcars_dropcol</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/copy.html'>copy</a></span><span class='op'>(</span><span class='va'>mtcars_dt</span><span class='op'>)</span></span>
+<span><span class='va'>mtcars_dropcol</span><span class='op'>[</span>, <span class='va'>mpg</span> <span class='op'>:=</span> <span class='cn'>NULL</span><span class='op'>]</span>                <span class='co'># drop single column</span></span>
+<span><span class='va'>mtcars_dropcol</span><span class='op'>[</span>, <span class='fu'>`:=`</span><span class='op'>(</span>wt <span class='op'>=</span> <span class='cn'>NULL</span>, vs <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span><span class='op'>]</span> <span class='co'># drop multiple columns in function form</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>mtcars_dropcol</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  [1] &quot;model&quot; &quot;cyl&quot;   &quot;disp&quot;  &quot;hp&quot;    &quot;drat&quot;  &quot;qsec&quot;  &quot;am&quot;    &quot;gear&quot;  &quot;carb&quot;</code></pre>
+</div>
+<p>In DataFrames.jl that’s just <code>select!()</code> instead of <code>select()</code>. No copies are created in the calls to <code>select!()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb15"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>mtcars_dropcol <span class="op">=</span> <span class="fu">copy</span>(mtcars);</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">select!</span>(mtcars_dropcol, <span class="fu">Not</span>(<span class="op">:</span>MPG));</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">select!</span>(mtcars_dropcol, <span class="fu">Not</span>([<span class="op">:</span>WT, <span class="op">:</span>VS]));</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mtcars_dropcol)</span></code></pre></div>
+<pre><code>  9-element Vector{String}:
+   &quot;Model&quot;
+   &quot;Cyl&quot;
+   &quot;Disp&quot;
+   &quot;HP&quot;
+   &quot;DRat&quot;
+   &quot;QSec&quot;
+   &quot;AM&quot;
+   &quot;Gear&quot;
+   &quot;Carb&quot;</code></pre>
+</div>
+<h3 id="competition-between-base.filter-and-dataframes.subset">3) 💔 Competition between <code>Base.filter()</code> and <code>DataFrames.subset()</code></h3>
+<p>In DataFrames.jl, there are two ways of subsetting rows:</p>
+<ol type="1">
+<li><p>The <code>Base.filter()</code> generic which has been extended with a <code>DataFrame</code> method. It works kind of like base R’s <code>Filter()</code> in that it takes the object to filter as its second argument:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb17"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(<span class="op">:</span>Gear <span class="op">=&gt;</span> x <span class="op">-&gt;</span> x <span class="op">.==</span> <span class="fl">5</span>, mtcars)</span></code></pre></div>
+<pre><code>  5×12 DataFrame
+   Row │ Model           MPG      Cyl    Disp     HP     DRat     WT       QSec  ⋯
+       │ String31        Float64  Int64  Float64  Int64  Float64  Float64  Float ⋯
+  ─────┼──────────────────────────────────────────────────────────────────────────
+     1 │ Porsche 914-2      26.0      4    120.3     91     4.43    2.14      16 ⋯
+     2 │ Lotus Europa       30.4      4     95.1    113     3.77    1.513     16
+     3 │ Ford Pantera L     15.8      8    351.0    264     4.22    3.17      14
+     4 │ Ferrari Dino       19.7      6    145.0    175     3.62    2.77      15
+     5 │ Maserati Bora      15.0      8    301.0    335     3.54    3.57      14 ⋯
+                                                                 5 columns omitted</code></pre>
+</div></li>
+<li><p>The <code>DataFrames.subset()</code> function which, like other <code>DataFrame</code> transformation verbs, takes the dataframe as its first argument similar to <code>dplyr::filter()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb19"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(mtcars, <span class="op">:</span>Gear <span class="op">=&gt;</span> x <span class="op">-&gt;</span> x <span class="op">.==</span> <span class="fl">5</span>)</span></code></pre></div>
+<pre><code>  5×12 DataFrame
+   Row │ Model           MPG      Cyl    Disp     HP     DRat     WT       QSec  ⋯
+       │ String31        Float64  Int64  Float64  Int64  Float64  Float64  Float ⋯
+  ─────┼──────────────────────────────────────────────────────────────────────────
+     1 │ Porsche 914-2      26.0      4    120.3     91     4.43    2.14      16 ⋯
+     2 │ Lotus Europa       30.4      4     95.1    113     3.77    1.513     16
+     3 │ Ford Pantera L     15.8      8    351.0    264     4.22    3.17      14
+     4 │ Ferrari Dino       19.7      6    145.0    175     3.62    2.77      15
+     5 │ Maserati Bora      15.0      8    301.0    335     3.54    3.57      14 ⋯
+                                                                 5 columns omitted</code></pre>
+</div></li>
+</ol>
+<p>I <a href="https://www.juliabloggers.com/dataframes-jl-why-do-we-have-both-subset-and-filter-functions/">understand the rationale</a> for supporting Julia’s standard <code>filter()</code> function for <code>DataFrame</code> types, but I feel like it’s something that the average DataFrames.jl user shouldn’t encounter unless they specifically go looking for it.</p>
+<p>In my experience this hasn’t been the case, and it’s caused me a lot of confusion when I was first learning DataFrames.jl - I consider the simultaneous teaching of <code>filter()</code> and <code>subset()</code> in the same chapter as <a href="https://juliadatascience.io/filter_subset">the one flaw in the otherwise flawless book <strong>Julia Data Science</strong></a>.</p>
+<h3 id="the-operation-specification-syntax-is-like-data.tables-j-on-steroids">4) 💜 The <strong>operation specification syntax</strong> is like {data.table}’s <code>j</code> on steroids</h3>
+<p><a href="https://bkamins.github.io/julialang/2020/12/24/minilanguage.html">The “operation specification syntax”, also called the “transformation mini language”</a><a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a> refers to the templatic form:</p>
+<pre style="text-align:center;background-color:transparent;"><code style="font-weight:bold;font-size:1.2em;">
+[input columns] => [transformation function] => [output columns]
+</code></pre>
+<p>… available inside verbs like <code>select()</code>, <code>transform()</code>, <code>combine()</code>, and <code>subset()</code>.</p>
+<p>If I say “take the MPG column, multiply it by 1.61 and make that to create a new KMPG column”, then in DataFrames.jl that’s:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb21"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@chain</span> mtcars <span class="cf">begin</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform</span>( <span class="op">:</span>MPG <span class="op">=&gt;</span> (x <span class="op">-&gt;</span> x <span class="op">*</span> <span class="fl">1.61</span>) <span class="op">=&gt;</span> <span class="op">:</span>KMPG )</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Below operations cut down rows and cols to save printing space</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="op">:</span>MPG, <span class="op">:</span>KMPG)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">first</span>(<span class="fl">5</span>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div>
+<pre><code>  5×2 DataFrame
+   Row │ MPG      KMPG
+       │ Float64  Float64
+  ─────┼──────────────────
+     1 │    21.0   33.81
+     2 │    21.0   33.81
+     3 │    22.8   36.708
+     4 │    21.4   34.454
+     5 │    18.7   30.107</code></pre>
+</div>
+<p>… where <code>x -&gt; x * 1.61</code> inside <code>transform()</code> is an anonymous function<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a> like R’s <code>\(x) x * 1.61</code>.</p>
+<p>I make the comparison to {data.table}’s <code>j</code> because of the flexibility with what you can compute and return inside that special environment.</p>
+<p>For example, let’s say you want to treat <code>cyl</code> like a categorical variable and do a one-hot encoding for <code>cyl==4</code>, <code>cyl==6</code>, and <code>cyl==8</code>. To comply with R/Julia’s variable naming rules, let’s name these new columns <code>cyl_4</code>, <code>cyl_6</code>, and <code>cyl_8</code>.</p>
+<p>In {data.table} it just takes an <code>lapply()</code> inside the <code>j</code> - you can rely on the invariant that as long as an expression in <code>j</code> evaluates to a list, you will get columns back:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>mtcars_onehot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/copy.html'>copy</a></span><span class='op'>(</span><span class='va'>mtcars_dt</span><span class='op'>)</span></span>
+<span><span class='va'>cyl_vals</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sort.html'>sort</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>mtcars_onehot</span><span class='op'>$</span><span class='va'>cyl</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># [1] 4 6 8</span></span>
+<span><span class='va'>cyl_cols</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"cyl_"</span>, <span class='va'>cyl_vals</span><span class='op'>)</span>        <span class='co'># [1] "cyl_4" "cyl_6" "cyl_8"</span></span>
+<span><span class='va'>mtcars_onehot</span><span class='op'>[</span>, <span class='op'>(</span><span class='va'>cyl_cols</span><span class='op'>)</span> <span class='op'>:=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>cyl_vals</span>, \<span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='va'>cyl</span> <span class='op'>==</span> <span class='va'>x</span><span class='op'>)</span><span class='op'>]</span></span>
+<span><span class='va'>mtcars_onehot</span><span class='op'>[</span>, <span class='op'>(</span><span class='fu'><a href='https://generics.r-lib.org/reference/setops.html'>setdiff</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>mtcars_onehot</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"model"</span>, <span class='va'>cyl_cols</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>:=</span> <span class='cn'>NULL</span><span class='op'>]</span></span>
+<span><span class='va'>mtcars_onehot</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>,<span class='op'>]</span></span></code></pre>
+</div>
+<pre><code>                 model  cyl_4  cyl_6  cyl_8
+                &lt;char&gt; &lt;lgcl&gt; &lt;lgcl&gt; &lt;lgcl&gt;
+  1:         Mazda RX4  FALSE   TRUE  FALSE
+  2:     Mazda RX4 Wag  FALSE   TRUE  FALSE
+  3:        Datsun 710   TRUE  FALSE  FALSE
+  4:    Hornet 4 Drive  FALSE   TRUE  FALSE
+  5: Hornet Sportabout  FALSE  FALSE   TRUE</code></pre>
+</div>
+<p>Likewise, in DataFrames.jl, you can rely on the invariant that as long as you’re complying with the op-spec and returning certain data types,<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a> they will become columns in the table:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb24"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mtcars_onehot <span class="op">=</span> <span class="fu">copy</span>(mtcars);</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>cyl_vals <span class="op">=</span> <span class="fu">sort</span>(<span class="fu">unique</span>(mtcars_onehot.Cyl));</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>cyl_cols <span class="op">=</span> <span class="st">&quot;cyl_&quot;</span> <span class="op">.*</span> <span class="fu">string</span>.(cyl_vals);</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="pp">@chain</span> mtcars_onehot <span class="cf">begin</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform!</span>( <span class="op">:</span>Cyl <span class="op">.=&gt;</span> <span class="fu">ByRow</span>(x <span class="op">-&gt;</span> cyl_vals <span class="op">.==</span> x) <span class="op">=&gt;</span> cyl_cols )</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select!</span>(<span class="op">:</span>Model, <span class="fu">Cols</span>(<span class="st">r&quot;^cyl_&quot;</span>))</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span>;</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>mtcars_onehot[<span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">:</span>]</span></code></pre></div>
+<pre><code>  5×4 DataFrame
+   Row │ Model              cyl_4  cyl_6  cyl_8
+       │ String31           Bool   Bool   Bool
+  ─────┼────────────────────────────────────────
+     1 │ Mazda RX4          false   true  false
+     2 │ Mazda RX4 Wag      false   true  false
+     3 │ Datsun 710          true  false  false
+     4 │ Hornet 4 Drive     false   true  false
+     5 │ Hornet Sportabout  false  false   true</code></pre>
+</div>
+<p>Read on for more about the <code>ByRow()</code> function wrapping the anonymous function inside <code>transform!()</code>.</p>
+<h3 id="rowwise-operations-with-byrow-and-eachrow">5) 💜 Rowwise operations with <code>ByRow()</code> and <code>eachrow()</code></h3>
+<p>I mentioned at the beginning that DataFrames.jl doesn’t have a lot of idiomatic ways of doing things but one rare case that I really appreciate is <code>ByRow()</code>.</p>
+<p>Under the hood, <code>ByRow()</code> is actually just a <a href="https://adv-r.hadley.nz/function-factories.html">function factory</a> that takes a function as input and a broadcasted version of the function as output, kind of like R’s <code>Vectorize()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb26"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ByRow</span>(round)([<span class="fl">1.2</span>, <span class="fl">3.3</span>]) <span class="co"># same as round.([1.2, 3.3])</span></span></code></pre></div>
+<pre><code>  2-element Vector{Float64}:
+   1.0
+   3.0</code></pre>
+</div>
+<p>I call <code>ByRow()</code> idiomatic because, as you can see, it doesn’t have anything to do with <code>DataFrame</code> rows.
+Nevertheless it goes perfectly hand in hand with the op-spec syntax because you can just wrap the middle “[transformation function]” component in <code>ByRow()</code> and call it a day:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb28"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(mtcars, <span class="op">:</span>MPG <span class="op">=&gt;</span> <span class="fu">ByRow</span>( x <span class="op">-&gt;</span> <span class="fu">Integer</span>(<span class="fu">round</span>(x)) ) <span class="op">=&gt;</span> <span class="op">:</span>MPG_whole )[<span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,<span class="op">:</span>]</span></code></pre></div>
+<pre><code>  3×1 DataFrame
+   Row │ MPG_whole
+       │ Int64
+  ─────┼───────────
+     1 │        21
+     2 │        21
+     3 │        23</code></pre>
+</div>
+<p>Whereas the equivalent using the <code>.</code> would take two broadcasted functions:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb30"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(mtcars, <span class="op">:</span>MPG <span class="op">=&gt;</span> ( x <span class="op">-&gt;</span> <span class="fu">Integer</span>.(<span class="fu">round</span>.(x)) ) <span class="op">=&gt;</span> <span class="op">:</span>MPG_whole )[<span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,<span class="op">:</span>]</span></code></pre></div>
+<pre><code>  3×1 DataFrame
+   Row │ MPG_whole
+       │ Int64
+  ─────┼───────────
+     1 │        21
+     2 │        21
+     3 │        23</code></pre>
+</div>
+<p>I especially like <code>ByRow()</code> in these cases because I can use Julia’s <a href="https://docs.julialang.org/en/v1/manual/functions/#Function-composition-and-piping">function composition operator <code>∘</code></a> (<code>\circ</code>) to re-write <code>x -&gt; Integer(round(x))</code> into <code>Integer ∘ round</code>, which just looks sooo clean:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb32"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(mtcars, <span class="op">:</span>MPG <span class="op">=&gt;</span> <span class="fu">ByRow</span>(<span class="dt">Integer</span> <span class="op">∘</span> round) <span class="op">=&gt;</span> <span class="op">:</span>MPG_whole )[<span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,<span class="op">:</span>]</span></code></pre></div>
+<pre><code>  3×1 DataFrame
+   Row │ MPG_whole
+       │ Int64
+  ─────┼───────────
+     1 │        21
+     2 │        21
+     3 │        23</code></pre>
+</div>
+<p>The one small qualm I have with <code>ByRow()</code> though is that the <a href="https://dataframes.juliadata.org/stable/man/comparisons/#Comparison-with-the-R-package-dplyr">docs</a> equate it to <code>dplyr::rowwise()</code> when really it’s more comparable to <code>purrr::map_*()</code>.</p>
+<p><code>dplyr::rowwise()</code> is unlike <code>ByRow()</code> because it’s a function that takes a dataframe as input and returns an object of class <code>&lt;rowwise_df&gt;</code>.
+In that sense, it’s actually more similar to <code>Base.eachrow()</code> which you use to convert a <code>DataFrame</code> into a <code>DataFrameRow</code> object:<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb34"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>mtcars_rowwise <span class="op">=</span> <span class="fu">eachrow</span>(mtcars[<span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>])</span></code></pre></div>
+<pre><code>  5×3 DataFrameRows
+   Row │ Model              MPG      Cyl
+       │ String31           Float64  Int64
+  ─────┼───────────────────────────────────
+     1 │ Mazda RX4             21.0      6
+     2 │ Mazda RX4 Wag         21.0      6
+     3 │ Datsun 710            22.8      4
+     4 │ Hornet 4 Drive        21.4      6
+     5 │ Hornet Sportabout     18.7      8</code></pre>
+</div>
+<p>Similar to how column-major dataframes are essentially a list of vectors representing each column, the row-major <code>DataFrameRow</code> object is essentially a vector of <code>NamedTuple</code>s representing each row under the hood:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb36"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">copy</span>.(mtcars_rowwise)</span></code></pre></div>
+<pre><code>  5-element Vector{NamedTuple{(:Model, :MPG, :Cyl), Tuple{InlineStrings.String31, Float64, Int64}}}:
+   (Model = InlineStrings.String31(&quot;Mazda RX4&quot;), MPG = 21.0, Cyl = 6)
+   (Model = InlineStrings.String31(&quot;Mazda RX4 Wag&quot;), MPG = 21.0, Cyl = 6)
+   (Model = InlineStrings.String31(&quot;Datsun 710&quot;), MPG = 22.8, Cyl = 4)
+   (Model = InlineStrings.String31(&quot;Hornet 4 Drive&quot;), MPG = 21.4, Cyl = 6)
+   (Model = InlineStrings.String31(&quot;Hornet Sportabout&quot;), MPG = 18.7, Cyl = 8)</code></pre>
+</div>
+<h3 id="confusingly-select-is-more-like-dplyrtransmute-than-dplyrselect">6) 💔 Confusingly, <code>select()</code> is more like <code>dplyr::transmute()</code> than <code>dplyr::select()</code></h3>
+<p>Interestingly, <code>select()</code> isn’t just for selecting columns - it can <em>modify</em> columns too:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb38"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@chain</span> mtcars <span class="cf">begin</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="op">:</span>Model, <span class="op">:</span>MPG <span class="op">=&gt;</span> (x <span class="op">-&gt;</span> x <span class="op">.*</span> <span class="fl">1.61</span>) <span class="op">=&gt;</span> <span class="op">:</span>KMPG)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">first</span>(<span class="fl">3</span>)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div>
+<pre><code>  3×2 DataFrame
+   Row │ Model          KMPG
+       │ String31       Float64
+  ─────┼────────────────────────
+     1 │ Mazda RX4       33.81
+     2 │ Mazda RX4 Wag   33.81
+     3 │ Datsun 710      36.708</code></pre>
+</div>
+<p>In this sense <code>DataFrames.select()</code> feels more like <code>dplyr::transmute()</code> rather than the identically named <code>dplyr::select()</code>:<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>mtcars_df</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span><span class='op'>(</span><span class='va'>model</span>, kmpg <span class='op'>=</span> <span class='va'>mpg</span> <span class='op'>*</span> <span class='fl'>1.61</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 3 × 2
+    model          kmpg
+    &lt;chr&gt;         &lt;dbl&gt;
+  1 Mazda RX4      33.8
+  2 Mazda RX4 Wag  33.8
+  3 Datsun 710     36.7</code></pre>
+</div>
+<p>I think it’s misleading that <code>select()</code> can also <code>transform()</code> in DataFrames.jl, although I don’t complain that <code>dplyr::select()</code> can also <code>dplyr::rename()</code> so idk:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>mtcars_df</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span>car_model <span class='op'>=</span> <span class='va'>model</span>, <span class='va'>mpg</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 3 × 2
+    car_model       mpg
+    &lt;chr&gt;         &lt;dbl&gt;
+  1 Mazda RX4      21  
+  2 Mazda RX4 Wag  21  
+  3 Datsun 710     22.8</code></pre>
+</div>
+<h3 id="selection-helpers-are-not-powered-by-boolean-algebra">7) 💔 Selection helpers are not powered by boolean algebra</h3>
+<p>The fact that <code>DataFrames.select()</code> behaves like <code>dplyr::transmute()</code> might explain why you don’t really get a rich <a href="https://tidyselect.r-lib.org/">{tidyselect}</a>-esque interface to column selection.<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a>
+This has been very challenging as someone who loves {tidyselect}, but DataFrames.jl has been getting <a href="https://dataframes.juliadata.org/stable/man/basics/#Not,-Between,-Cols,-and-All-Column-Selectors">new column selection helpers</a> like <code>Cols()</code>, <code>Not()</code>, <code>Between()</code>, etc. which makes things a bit easier compared to {data.table} at least.</p>
+<p>But I don’t really vibe with the implementation of column selection helpers as <em>set operation</em>, as opposed to <em>boolean algebra</em>.<a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a></p>
+<p>I wish I’m told that I’m wrong, but it feels really clunky to do something like “select columns that are numeric <em>and</em> has a name that’s two characters long”. In DataFrames.jl that’s:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb42"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@chain</span> mtcars <span class="cf">begin</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(_, <span class="fu">intersect</span>( <span class="fu">names</span>(_, <span class="dt">Float64</span>), <span class="fu">names</span>(_, <span class="st">r&quot;^</span><span class="sc">..$</span><span class="st">&quot;) ) )</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="st">  </span>first<span class="ch">(</span><span class="st">1</span><span class="ch">)</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div>
+<pre><code>  1×1 DataFrame
+   Row │ WT
+       │ Float64
+  ─────┼─────────
+     1 │    2.62</code></pre>
+</div>
+<p>Whereas in {dplyr} you just write each condition as a predicate joined by <code>&amp;</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>mtcars_df</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span> <span class='fu'>where</span><span class='op'>(</span><span class='va'>is.double</span><span class='op'>)</span> <span class='op'>&amp;</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches</a></span><span class='op'>(</span><span class='st'>"^..$"</span><span class='op'>)</span> <span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 1 × 1
+       wt
+    &lt;dbl&gt;
+  1  2.62</code></pre>
+</div>
+<h3 id="groupby-has-select-semantics">8) 💜 <code>groupby()</code> has select-semantics</h3>
+<p>One thing that’s always bugged me a little in {dplyr} is the fact that <code>dplyr::group_by()</code> has mutate-semantics.</p>
+<p>So like, despite the fact that people pretty much only ever<a href="#fn20" class="footnote-ref" id="fnref20" role="doc-noteref"><sup>20</sup></a> use <code>group_by()</code> like <code>select()</code> in the form of <code>group_by(col1, col2, col3)</code>, you can’t use {tidyselect} helpers:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>mtcars_df</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span> <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches</a></span><span class='op'>(</span><span class='st'>"^[va]"</span><span class='op'>)</span> <span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>mpg <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>)</span>, .groups <span class='op'>=</span> <span class='st'>'drop'</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  Error in `group_by()`:
+  ! Problem adding computed columns.
+  Caused by error in `mutate()`:
+  ! Problem while computing `..1 = matches(&quot;^[va]&quot;)`.
+  Caused by error:
+  ! `matches()` must be used within a *selecting* function.
+  ℹ See &lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&gt; for
+    details.</code></pre>
+</div>
+<p>Instead you need to <a href="https://rlang.r-lib.org/reference/topic-data-mask-programming.html#bridge-patterns">bridge select-semantics and mutate-semantics</a> using <code>across()</code><a href="#fn21" class="footnote-ref" id="fnref21" role="doc-noteref"><sup>21</sup></a>, which ensures that <code>group_by()</code> receives column <em>vectors</em>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>mtcars_df</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/across.html'>across</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches</a></span><span class='op'>(</span><span class='st'>"^[va]"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>mpg <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>)</span>, .groups <span class='op'>=</span> <span class='st'>'drop'</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 4 × 3
+       vs    am   mpg
+    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
+  1     0     0  15.0
+  2     0     1  19.8
+  3     1     0  20.7
+  4     1     1  28.4</code></pre>
+</div>
+<p>In DataFrames.jl, however, <code>groupby()</code> has select-semantics.<a href="#fn22" class="footnote-ref" id="fnref22" role="doc-noteref"><sup>22</sup></a>
+That lets you use column selection helpers like <code>Cols()</code> to dynamically choose columns like:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb47"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@chain</span> mtcars <span class="cf">begin</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">groupby</span>( <span class="fu">Cols</span>(<span class="st">r&quot;^</span><span class="ch">[</span><span class="st">VA</span><span class="ch">]</span><span class="st">&quot;</span>) )</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">combine</span>(<span class="op">:</span>MPG <span class="op">=&gt;</span> mean, renamecols <span class="op">=</span> <span class="cn">false</span>)</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div>
+<pre><code>  4×3 DataFrame
+   Row │ VS     AM     MPG
+       │ Int64  Int64  Float64
+  ─────┼───────────────────────
+     1 │     0      0  15.05
+     2 │     0      1  19.75
+     3 │     1      0  20.7429
+     4 │     1      1  28.3714</code></pre>
+</div>
+<h3 id="no-special-marking-of-context-dependent-expressions">9) 💔 No special marking of context-dependent expressions</h3>
+<p>In {dplyr} and {data.table} you get “context dependent expressions” like <a href="https://dplyr.tidyverse.org/reference/context.html"><code>n()</code></a> and <a href="https://rdatatable.gitlab.io/data.table/reference/special-symbols.html"><code>.N</code></a> which returns information about the dataframe that you’re currently manipulating.</p>
+<p>So for example if I want to calculate counts by group, in {dplyr} I can do:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>mtcars_df</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>cyl</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 3 × 2
+      cyl     n
+    &lt;int&gt; &lt;int&gt;
+  1     4    11
+  2     6     7
+  3     8    14</code></pre>
+</div>
+<p>And in {data.table} I can do:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>mtcars_dt</span><span class='op'>[</span>, <span class='fu'>.</span><span class='op'>(</span>n <span class='op'>=</span> <span class='va'>.N</span><span class='op'>)</span>, by <span class='op'>=</span> <span class='va'>cyl</span><span class='op'>]</span></span></code></pre>
+</div>
+<pre><code>       cyl     n
+     &lt;int&gt; &lt;int&gt;
+  1:     6     7
+  2:     4    11
+  3:     8    14</code></pre>
+</div>
+<p>Likewise in DataFrames.jl, I can use <code>nrow</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb51"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@chain</span> mtcars <span class="cf">begin</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">groupby</span>(<span class="op">:</span>Cyl)</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">combine</span>(nrow <span class="op">=&gt;</span> <span class="op">:</span>n)</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div>
+<pre><code>  3×2 DataFrame
+   Row │ Cyl    n
+       │ Int64  Int64
+  ─────┼──────────────
+     1 │     4     11
+     2 │     6      7
+     3 │     8     14</code></pre>
+</div>
+<p>Special keywords like <code>nrow</code> can be used in the op-spec syntax, and they essentially take up the first and middle “[input columns] =&gt; [transformation function]” component.</p>
+<p>But here’s a thing that’s super confusing about <code>nrow</code> as a context dependent expression.
+Unlike {dplyr}’s <code>n()</code> or {data.table}’s <code>.N</code>, Julia’s <code>nrow()</code><a href="#fn23" class="footnote-ref" id="fnref23" role="doc-noteref"><sup>23</sup></a> is also a stand-alone function:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb53"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(mtcars)</span></code></pre></div>
+<pre><code>  32</code></pre>
+</div>
+<p>Now imagine I wrote a <code>nrow2()</code> function which does the same thing but with <code>Base.size()</code>, the equivalent of base R’s <code>dim()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb55"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>nrow2 <span class="op">=</span> <span class="kw">function</span>(x)</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">size</span>(x, <span class="fl">1</span>) <span class="co"># returns the first dimension (row)</span></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span>;</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow2</span>(mtcars)</span></code></pre></div>
+<pre><code>  32</code></pre>
+</div>
+<p>You might expect our new <code>nrow2</code> to behave like <code>nrow</code> in the context we just saw, but it doesn’t!</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb57"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@chain</span> mtcars <span class="cf">begin</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">groupby</span>(<span class="op">:</span>Cyl)</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">combine</span>(nrow2 <span class="op">=&gt;</span> <span class="op">:</span>n)</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>  ArgumentError: Unrecognized column selector var&quot;#101#102&quot;() =&gt; :n in AsTable constructor</code></pre>
+</div>
+<p>Because <code>nrow2()</code> is not a special operator like <code>nrow</code>, <code>nrow2</code> gets evaluated in the first component of the op-spec syntax (“[input columns]”), throwing a rather unhelpful error message about an unrecognized column selector.
+But it’s really difficult to figure out this exceptionalism of <code>nrow</code> because it also works expectedly outside!</p>
+<p>Now compare this to the treatment of {data.table}’s <code>.N</code> and {dplyr}’s <code>n()</code>, where the former isn’t exported (it’s not even defined in the package) and the latter throws a helpful error message:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  Error in `n()`:
+  ! Must be used inside dplyr verbs.</code></pre>
+</div>
+<p>But thankfully, this is an area of ongoing development in DataFrames.jl so I’m hopeful that the documentation will catch up too.</p>
+<p>For example, <a href="https://bkamins.github.io/julialang/2022/11/04/minilanguage.html">v1.4 recently added a couple more context dependent expressions</a> like <code>groupindices</code>, which is equivalent to {dplyr}’s <code>cur_group_id()</code> and {data.table}’s <code>.GRP</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb60"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@chain</span> mtcars <span class="cf">begin</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">groupby</span>(<span class="op">:</span>Cyl)</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">combine</span>(groupindices)</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div>
+<pre><code>  3×2 DataFrame
+   Row │ Cyl    groupindices
+       │ Int64  Int64
+  ─────┼─────────────────────
+     1 │     4             1
+     2 │     6             2
+     3 │     8             3</code></pre>
+</div>
+<p>However, I still feel like there’s ways to go on the clarity front.
+Like, if the user doesn’t already have a mental model of context dependent expressions, then it might be confusing that you can use <code>groupindices</code> like this:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb62"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">groupindices</span>( <span class="fu">groupby</span>(mtcars[<span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">:</span>], <span class="op">:</span>Cyl) )</span></code></pre></div>
+<pre><code>  5-element Vector{Union{Missing, Int64}}:
+   2
+   2
+   1
+   2
+   3</code></pre>
+</div>
+<p>But you can’t use <code>nrow</code> in the same way:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb64"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>( <span class="fu">groupby</span>(mtcars[<span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">:</span>], <span class="op">:</span>Cyl) )</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>  MethodError: no method matching nrow(::GroupedDataFrame{DataFrame})
+  Closest candidates are:
+    nrow(!Matched::SubDataFrame) at C:\Users\jchoe\.julia\packages\DataFrames\bza1S\src\subdataframe\subdataframe.jl:157
+    nrow(!Matched::DataFrame) at C:\Users\jchoe\.julia\packages\DataFrames\bza1S\src\dataframe\dataframe.jl:459</code></pre>
+</div>
+<p>Because, independently of their shared status as context dependent expressions in the op-spec syntax, <code>groupindices</code> and <code>nrow</code> differ as stand-alone functions (only the former has a method defined for <code>GroupedDataFrame</code> types).</p>
+<h3 id="the-op-spec-syntax-gives-you-dplyracrossc_across-for-free">10) 💜 The op-spec syntax gives you <code>dplyr::across()/c_across()</code> for free</h3>
+<p>So probably my favorite thing about the op-spec syntax is that the leftmost “[input columns]” component can be a vector of <em>multiple</em> columns.
+When combined with the broadcasted version of the <code>=&gt;</code> operator, you get <code>dplyr::across()</code> for free:<a href="#fn24" class="footnote-ref" id="fnref24" role="doc-noteref"><sup>24</sup></a></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb66"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(mtcars, [<span class="op">:</span>DRat, <span class="op">:</span>QSec] <span class="op">.=&gt;</span> <span class="fu">ByRow</span>(<span class="dt">Integer</span> <span class="op">∘</span> round) <span class="op">=&gt;</span> uppercase)[<span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">:</span>]</span></code></pre></div>
+<pre><code>  5×2 DataFrame
+   Row │ DRAT   QSEC
+       │ Int64  Int64
+  ─────┼──────────────
+     1 │     4     16
+     2 │     4     17
+     3 │     4     19
+     4 │     3     19
+     5 │     3     17</code></pre>
+</div>
+<p>In {dplyr}, the above would be:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>mtcars_df</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span><span class='op'>(</span></span>
+<span>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/across.html'>across</a></span><span class='op'>(</span></span>
+<span>      .cols <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>drat</span>, <span class='va'>wt</span><span class='op'>)</span>,</span>
+<span>      .fns <span class='op'>=</span> \<span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span>      .names <span class='op'>=</span> <span class='st'>"{toupper(.col)}"</span></span>
+<span>    <span class='op'>)</span></span>
+<span>  <span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 5 × 2
+     DRAT    WT
+    &lt;int&gt; &lt;int&gt;
+  1     4     3
+  2     4     3
+  3     4     2
+  4     3     3
+  5     3     3</code></pre>
+</div>
+<p>Here’s another fun one replicating {dplyr}’s <code>rowwise()</code> + <code>c_across()</code> workflow.</p>
+<p>As a very contrived example, let’s say I want to make two new columns, calculating the min/max across float/double columns by-row.
+In DataFrames.jl that can be done by selecting multiple columns and sending them in batch to an anonymous <a href="https://docs.julialang.org/en/v1/manual/functions/#Varargs-Functions">vararg function</a>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb69"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@chain</span> mtcars <span class="cf">begin</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(_,</span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>Model,</span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">names</span>(_, <span class="dt">Float64</span>) <span class="op">=&gt;</span> <span class="fu">ByRow</span>( (x<span class="op">...</span>) <span class="op">-&gt;</span> <span class="fu">extrema</span>(x) ) <span class="op">=&gt;</span> [<span class="op">:</span>min, <span class="op">:</span>max]</span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">first</span>(<span class="fl">5</span>)</span>
+<span id="cb69-7"><a href="#cb69-7" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>  5×3 DataFrame
+   Row │ Model              min      max
+       │ String             Float64  Float64
+  ─────┼─────────────────────────────────────
+     1 │ Mazda RX4            2.62     160.0
+     2 │ Mazda RX4 Wag        2.875    160.0
+     3 │ Datsun 710           2.32     108.0
+     4 │ Hornet 4 Drive       3.08     258.0
+     5 │ Hornet Sportabout    3.15     360.0</code></pre>
+</div>
+<p>That kind of operation is costly in {dplyr} because it requires a <code>rowwise()</code> context to operate on columns selected by <code>c_across()</code>, the result of which must then be converted to dataframe:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>mtcars_df</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rowwise.html'>rowwise</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span><span class='op'>(</span></span>
+<span>    <span class='va'>model</span>,</span>
+<span>    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/c_across.html'>c_across</a></span><span class='op'>(</span><span class='fu'>where</span><span class='op'>(</span><span class='va'>is.double</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>      <span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>      <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame.list</a></span><span class='op'>(</span>col.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"min"</span>, <span class='st'>"max"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span>  <span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 5 × 3
+    model               min   max
+    &lt;chr&gt;             &lt;dbl&gt; &lt;dbl&gt;
+  1 Mazda RX4          2.62   160
+  2 Mazda RX4 Wag      2.88   160
+  3 Datsun 710         2.32   108
+  4 Hornet 4 Drive     3.08   258
+  5 Hornet Sportabout  3.15   360</code></pre>
+</div>
+<p>For this particular problem you can use <code>pmax</code> and <code>pmin</code>, but that’s of course not generalizable to other arbitrary operations:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>mtcars_df</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span><span class='op'>(</span></span>
+<span>    <span class='va'>model</span>,</span>
+<span>    min <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/do.call.html'>do.call</a></span><span class='op'>(</span><span class='va'>pmin</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/across.html'>across</a></span><span class='op'>(</span><span class='fu'>where</span><span class='op'>(</span><span class='va'>is.double</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span>    max <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/do.call.html'>do.call</a></span><span class='op'>(</span><span class='va'>pmax</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/across.html'>across</a></span><span class='op'>(</span><span class='fu'>where</span><span class='op'>(</span><span class='va'>is.double</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span>  <span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 5 × 3
+    model               min   max
+    &lt;chr&gt;             &lt;dbl&gt; &lt;dbl&gt;
+  1 Mazda RX4          2.62   160
+  2 Mazda RX4 Wag      2.88   160
+  3 Datsun 710         2.32   108
+  4 Hornet 4 Drive     3.08   258
+  5 Hornet Sportabout  3.15   360</code></pre>
+</div>
+<p>Take this benchmarking with a grain of salt but on my machine the DataFrames.jl solution takes ~0.1ms, {dplyr}’s <code>rowwise()</code> + <code>c_across()</code> solution takes ~30ms and {dplyr}’s <code>across()</code> + <code>pmin()/pmax()</code> solution takes ~3ms.</p>
+<h2 id="concluding-thoughts">Concluding thoughts</h2>
+<h3 id="overall-impression">Overall impression</h3>
+<p>Overall, DataFrames.jl has a cool design.
+Learning it has been mostly painless, and writing this blog post has been super fun.</p>
+<p>I personally found it to be a great entry point from R to Julia as someone who primarily uses R for data analysis, and would recommend this route if you’re Julia-curious and you like learning by doing.</p>
+<p>I was also pleasantly surprised by how much of my experience with {dplyr} and {data.table} transferred over to me learning an entirely different data wrangling framework.
+And this goes the other way as well - DataFrames.jl helps me appreciate many aspects of {dplyr} and {data.table} that I used to take for granted.</p>
+<h3 id="next-steps">Next steps</h3>
+<p>A list of other things that I want to explore in DataFrames.jl but haven’t had the chance to:</p>
+<ul>
+<li><p>I hear that Julia and DataFrames.jl have interesting ways of <a href="https://docs.julialang.org/en/v1/manual/missing/">representing</a> and <a href="https://dataframes.juliadata.org/stable/lib/functions/#Working-with-missing-values">operating on vectors/columns with missing values</a>.
+Unlike R where you have <code>NA_character_</code>, <code>NA_integer_</code>, and so on, Julia just has one <code>Missing</code> type and vectors with <code>missing</code> values get a mixed type like <code>Union{Missing, Int64}</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb73"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>[<span class="fl">1</span>, <span class="fl">2</span>, <span class="cn">missing</span>]</span></code></pre></div>
+<pre><code>  3-element Vector{Union{Missing, Int64}}:
+   1
+   2
+    missing</code></pre>
+</div></li>
+<li><p><a href="https://bkamins.github.io/julialang/2022/03/11/unnesting.html">Nesting/unnesting</a> which looks amazing but I need to learn more about Julia’s data types first, and the pros and cons of each for different nested column workflows.</p></li>
+<li><p><a href="https://dataframes.juliadata.org/stable/lib/functions/#Joining">Joins</a> and <a href="https://dataframes.juliadata.org/stable/lib/functions/#Reshaping-data-frames-between-tall-and-wide-formats">pivoting</a>. You have the usual set of <code>*join()</code> verbs and <code>stack()</code>/<code>unstack()</code> which correspond to base R functions of the same name. Haven’t tried them out yet but looks pretty straightforward from skimming the docs.</p></li>
+<li><p>Row manipulation operations like <code>append()!</code>/<code>prepend!()</code> which seems to works more like {data.table} than {dplyr}’s <a href="https://dplyr.tidyverse.org/reference/rows.html">eternally-experimental <code>row_*()</code> functions</a>.</p></li>
+<li><p>The whole <a href="https://dataframes.juliadata.org/stable/lib/metadata/"><strong>Metadata</strong> section of the docs</a>. That includes stuff like keys I think.</p></li>
+<li><p>Interaction with <a href="https://arrow.juliadata.org/stable/">Arrow.jl</a>, which is apparently written in pure Julia!</p></li>
+<li><p>Just more <a href="https://juliaci.github.io/BenchmarkTools.jl/stable/">benchmarking</a> and experimentation so I can <del>contribute to the language-wars discourse with hot takes</del> optimize my bilingual R &amp; Julia workflows.</p></li>
+</ul>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Making it slightly younger than {plyr}/{dplyr} and {data.table} by a few years<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>I’m doing a semester of independent study on simulation-based power analysis for mixed effects models, where speed is crucial. For that I decided to switch over from {lme4} and pick up <a href="https://juliastats.org/MixedModels.jl/stable/">MixedModels.jl</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>There’s also the relatively newer <a href="https://github.com/jkrumbiegel/DataFrameMacros.jl">DataFramesMacros.jl</a> that makes DataFrames.jl code even closer to {dplyr}, namely by making the transformation verbs <a href="https://github.com/JuliaData/DataFrames.jl/issues/2793#issuecomment-876735726">rowwise by default</a> to save you from reasoning about broadcasting, for better or for worse.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>The Julia for Data Analysis book is estimated for Jan 2023 but I’ve been reading the previews and recommend it very strongly. Bogumił Kamiński, the author of the book and the JuliaCon 2022 workshop (and also a core developer of DataFrames.jl) also has a <a href="https://bkamins.github.io/">blog</a> full of DataFrames.jl tutorial goodies.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Although <code>@macroexpand</code> is very cool and works like <code>dplyr::show_query()</code>, so learning DataFramesMeta.jl shouldn’t interfere with learning DataFrames.jl.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Abbreviation of Mercedes-Benz, apparently.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>The visual effect here is similar to what you get from <a href="https://dplyr.tidyverse.org/reference/group_split.html"><code>dplyr::group_split()</code></a>, a costly operation that returns the input dataframe split into a list of dataframes.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>The <code>-!</code> suffix is a convention for side-effect (or “imperative”) functions also found in other programming languages, like my first language <a href="https://racket-lang.org/">Racket</a>.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>Though you can mimic it in {dplyr} with {magrittr}’s <a href="https://magrittr.tidyverse.org/reference/compound.html"><code>%&lt;&gt;%</code></a> pipe.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p><code>sort!()</code> probably because I consider row order to be more like a dataframe’s metadata, <a href="https://github.com/tidyverse/dplyr/blob/50c58dd9980b9216c60a1de4da521ee5aa16e2de/NEWS.md?plain=1#L248-L259">given how fragile and not-guaranteed-to-be-stable it is</a>. This is not to say that row order isn’t useful because <a href="https://www.youtube.com/watch?v=c5ydz-Ha61I&amp;t=1190s">it is!</a>, and that’s where I see myself using <code>sort!()</code>.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>Although I usually do that inside the file-reading step, like in <code>read_csv(file, col_select = ...)</code>.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>Famously the 8.1.55-56th circle of the <a href="https://www.burns-stat.com/pages/Tutor/R_inferno.pdf">R inferno</a>.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>I’m just gonna call it <strong>op-spec syntax</strong> from now on because these names are way too long.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14"><p>Wrapped in parantheses in the code to make sure that the right-side <code>=&gt;</code> operator is not parsed as part of the function.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15"><p><code>NamedTuple</code>, <code>AbstractDataFrame</code>, <code>DataFrameRow</code>, <code>AbstractMatrix</code>, to name a few.<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16"><p>Also see the <a href="https://bkamins.github.io/julialang/2022/07/08/iteration.html#using-dataframesmetajl"><code>@eachrow!</code> macro</a> from DataFramesMeta.jl for a modify-in-place version.<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn17"><p>Or, keeping up with the current <a href="https://github.com/tidyverse/dplyr/blob/50c58dd9980b9216c60a1de4da521ee5aa16e2de/NEWS.md?plain=1#L59">dev version {dplyr}</a> which superceded <code>transmute()</code>, it’d be <code>mutate(..., .keep = "none")</code>.<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn18"><p>Although I feel like you totally could since the “[input columns]” component of the op-spec gets evaluated in its own separate environment anyways (unlike {data.table}’s j where the three components are mashed together). There was an <a href="https://github.com/JuliaData/DataFrames.jl/issues/1936">attempt at integrating the now-stale(?) Selections.jl</a> which looked interesting, but alas…<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn19"><p>The {tidyselect} backend of {dplyr} supports both, namely with <code>!</code> and <code>-</code> variants, though they recently <a href="https://github.com/r-lib/tidyselect/commit/9550f038ae82b4a9d59491f8887c4715183d4820">switched to emphasizing the boolean algebra technique with <code>!</code></a>.<a href="#fnref19" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn20"><p>Though the mutate-semantics lets you do things like <a href="https://www.youtube.com/watch?v=NDHSBUN_rVU&amp;t=292s"><code>group_by(decade = 10 * (year %/% 10))</code></a>.<a href="#fnref20" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn21"><p>Or the new <a href="https://github.com/tidyverse/dplyr/blob/50c58dd9980b9216c60a1de4da521ee5aa16e2de/NEWS.md?plain=1#L20-L23"><code>pick()</code></a> function in the upcoming version.<a href="#fnref21" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn22"><p>But not mutate-semantics, although I won’t miss that.<a href="#fnref22" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn23"><p>Which is not part of Base but instead comes from <a href="https://juliapackages.com/p/dataapi"><code>DataAPI.jl</code></a>.<a href="#fnref23" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn24"><p>Actually, <code>dplyr::across(.cols = c(col1, col2))</code> is more like <code>AsTable([:col1, :col2]) =&gt; ... =&gt; ...</code> in op-spec, but I’ve found that distinction to be seldom important.<a href="#fnref24" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>

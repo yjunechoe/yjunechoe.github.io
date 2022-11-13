@@ -2074,7 +2074,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+  <script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2398,7 +2398,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 
   /* Code Chunk */
 
-  d-article div.sourceCode pre {
+  d-article div.sourceCode pre.sourceCode {
     position: relative;
     background-color: white;
     padding-top: 10px;
@@ -2414,8 +2414,14 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   }
 
   /* R chunk */
-  d-article div.sourceCode pre.r {
+  d-article div.sourceCode pre.sourceCode.r {
     background-color: #faffff;
+  }
+
+  /* Julia chunk */
+  d-article div.sourceCode pre.sourceCode.julia {
+    background-color: #f8fffb;
+    border-left: 5px solid #4A916B;
   }
 
   d-article details div.sourceCode pre.r {

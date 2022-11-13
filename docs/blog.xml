@@ -12,7 +12,21 @@
       <link>https://yjunechoe.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Mon, 01 Aug 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 13 Nov 2022 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>First impressions of DataFrames.jl and accessories</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>https://yjunechoe.github.io/posts/2022-11-13-dataframes-jl-and-accessories</link>
+      <description>Perspectives from a {dplyr} and {data.table} useR</description>
+      <category>julia</category>
+      <category>data wrangling</category>
+      <category>DataFrames.jl</category>
+      <category>dplyr</category>
+      <category>data.table</category>
+      <guid>https://yjunechoe.github.io/posts/2022-11-13-dataframes-jl-and-accessories</guid>
+      <pubDate>Sun, 13 Nov 2022 00:00:00 +0000</pubDate>
+      <media:content url="https://yjunechoe.github.io/posts/2022-11-13-dataframes-jl-and-accessories/preview.jpg" medium="image" type="image/jpeg"/>
+    </item>
     <item>
       <title>Reflections on useR! 2022</title>
       <dc:creator>June Choe</dc:creator>
@@ -94,7 +108,6 @@
       <category>ggplot2</category>
       <guid>https://yjunechoe.github.io/posts/2020-11-08-plot-makeover-2</guid>
       <pubDate>Sun, 08 Nov 2020 00:00:00 +0000</pubDate>
-      <media:content url="https://yjunechoe.github.io/posts/2020-11-08-plot-makeover-2/plot-makeover-2_files/figure-html5/final-1.png" medium="image" type="image/png" width="1344" height="1152"/>
     </item>
     <item>
       <title>TidyTuesday 2020 week 45</title>
@@ -181,7 +194,7 @@
       <category>ggplot2</category>
       <guid>https://yjunechoe.github.io/posts/2020-09-20-plot-makeover-1</guid>
       <pubDate>Sun, 20 Sep 2020 00:00:00 +0000</pubDate>
-      <media:content url="https://yjunechoe.github.io/posts/2020-09-20-plot-makeover-1/plot-makeover-1_files/figure-html5/after_bar_plot-1.png" medium="image" type="image/png" width="1248" height="768"/>
+      <media:content url="https://yjunechoe.github.io/posts/2020-09-20-plot-makeover-1/plot.png" medium="image" type="image/png" width="597" height="815"/>
     </item>
     <item>
       <title>TidyTuesday 2020 week 38</title>
@@ -299,7 +312,6 @@
       <category>tutorial</category>
       <guid>https://yjunechoe.github.io/posts/2020-06-30-treemap-with-ggplot</guid>
       <pubDate>Tue, 30 Jun 2020 00:00:00 +0000</pubDate>
-      <media:content url="https://yjunechoe.github.io/posts/2020-06-30-treemap-with-ggplot/2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-12-1.png" medium="image" type="image/png" width="1920" height="768"/>
     </item>
     <item>
       <title>Indexing tip for {spacyr}</title>

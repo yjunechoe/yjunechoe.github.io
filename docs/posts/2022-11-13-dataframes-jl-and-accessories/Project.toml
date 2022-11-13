@@ -1,0 +1,12 @@
+name = "datawrangling-r-julia"
+uuid = "78477d67-5ea4-4284-bafb-e3fa210d7109"
+authors = ["June Choe <yjchoe@sas.upenn.edu>"]
+version = "0.1.0"
+
+[deps]
+BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
+Chain = "8be319e6-bccf-4806-a6f7-6fae938471bc"
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+DataFramesMeta = "1313f7d8-7da2-5740-9ea0-a2ca25f37964"
+RDatasets = "ce6b1742-4840-55fa-b093-852dadbb1d8b"
+StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"

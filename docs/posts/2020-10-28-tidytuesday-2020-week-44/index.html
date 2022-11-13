@@ -2411,7 +2411,7 @@ a > code {
 
 /* Code Chunk */
 
-d-article div.sourceCode pre {
+d-article div.sourceCode pre.sourceCode {
   position: relative;
   background-color: white;
   padding-top: 10px;
@@ -2427,8 +2427,14 @@ d-article pre.out-extended {
 }
 
 /* R chunk */
-d-article div.sourceCode pre.r {
+d-article div.sourceCode pre.sourceCode.r {
   background-color: #faffff;
+}
+
+/* Julia chunk */
+d-article div.sourceCode pre.sourceCode.julia {
+  background-color: #f8fffb;
+  border-left: 5px solid #4A916B;
 }
 
 d-article details div.sourceCode pre.r {

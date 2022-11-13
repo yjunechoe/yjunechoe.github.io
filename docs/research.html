@@ -2071,7 +2071,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+  <script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2395,7 +2395,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 
   /* Code Chunk */
 
-  d-article div.sourceCode pre {
+  d-article div.sourceCode pre.sourceCode {
     position: relative;
     background-color: white;
     padding-top: 10px;
@@ -2411,8 +2411,14 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   }
 
   /* R chunk */
-  d-article div.sourceCode pre.r {
+  d-article div.sourceCode pre.sourceCode.r {
     background-color: #faffff;
+  }
+
+  /* Julia chunk */
+  d-article div.sourceCode pre.sourceCode.julia {
+    background-color: #f8fffb;
+    border-left: 5px solid #4A916B;
   }
 
   d-article details div.sourceCode pre.r {
@@ -2625,16 +2631,16 @@ Misc.
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#peer-reviewed-papers">Peer-reviewed Papers</a>
+<li><a href="#peer-reviewed-papers" id="toc-peer-reviewed-papers">Peer-reviewed Papers</a>
 <ul>
-<li><a href="#submitted-in-prep.">submitted / in prep.</a></li>
+<li><a href="#submitted-in-prep." id="toc-submitted-in-prep.">submitted / in prep.</a></li>
 </ul></li>
-<li><a href="#conference-talks">Conference Talks</a></li>
-<li><a href="#conference-presentations">Conference Presentations</a></li>
-<li><a href="#other-conference-activities">Other conference activities</a>
+<li><a href="#conference-talks" id="toc-conference-talks">Conference Talks</a></li>
+<li><a href="#conference-presentations" id="toc-conference-presentations">Conference Presentations</a></li>
+<li><a href="#other-conference-activities" id="toc-other-conference-activities">Other conference activities</a>
 <ul>
-<li><a href="#workshops-led">Workshops led</a></li>
-<li><a href="#r-conferences">R conferences</a></li>
+<li><a href="#workshops-led" id="toc-workshops-led">Workshops led</a></li>
+<li><a href="#r-conferences" id="toc-r-conferences">R conferences</a></li>
 </ul></li>
 </ul>
 </nav>

@@ -1,0 +1,683 @@
+---
+title: "First impressions of DataFrames.jl and accessories"
+description: |
+  Perspectives from a {dplyr} and {data.table} useR
+categories:
+  - julia
+  - data wrangling
+  - DataFrames.jl
+  - dplyr
+  - data.table
+base_url: https://yjunechoe.github.io
+author:
+  - name: June Choe
+    affiliation: University of Pennsylvania Linguistics
+    affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+    orcid_id: 0000-0002-0701-921X
+date: "`r Sys.Date()`"
+output:
+  distill::distill_article:
+    include-after-body: "highlighting.html"
+    toc: true
+    self_contained: false
+    css: "../../styles.css"
+editor_options: 
+  chunk_output_type: console
+preview: preview.jpg
+---
+
+```{r setup, include=FALSE}
+ragg_png = function(..., res = 150) {
+  ragg::agg_png(..., res = res, units = "in")
+}
+knitr::opts_chunk$set(
+  comment = " ",
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  dev = "ragg_png",
+  R.options = list(width = 80)
+)
+xaringanExtra::use_panelset()
+xaringanExtra::use_clipboard()
+```
+
+## Intro
+
+[DataFrames.jl](https://dataframes.juliadata.org/stable/) is a Julia package for data wrangling.
+As of this writing it is at [v1.4.x](https://dataframes.juliadata.org/v1.4/) - it's a mature library that's been in active development for over a decade.^[Making it slightly younger than {plyr}/{dplyr} and {data.table} by a few years]
+
+For some background, I comfortably switch between [{dplyr}](https://dplyr.tidyverse.org/) and [{data.table}](https://rdatatable.gitlab.io/data.table/), having used both for nearly 5 years.
+I love digging into the implementational details of both - I really appreciate the thoughtfulness behind {dplyr}'s [tidyeval/tidyselect semantics](https://rlang.r-lib.org/reference/topic-data-mask-programming.html), as well as {data.table}'s [conciseness and abstraction in the `j`](https://rdatatable.gitlab.io/data.table/articles/datatable-intro.html#g-why-keep-j-so-flexible).
+I have not been exposed to any other data wrangling frameworks but was recently compelled to learn Julia for independent reasons,^[I'm doing a semester of independent study on simulation-based power analysis for mixed effects models, where speed is crucial. For that I decided to switch over from {lme4} and pick up [MixedModels.jl](https://juliastats.org/MixedModels.jl/stable/).] so I decided why not pick up Julia-flavored data wrangling while I'm at it?
+
+This blog post is a rough (and possibly evolving?) list of my first impressions of DataFrames.jl and "DataFrames.jl accessories", namely [Chain.jl](https://github.com/jkrumbiegel/Chain.jl) and [DataFramesMeta.jl](https://juliadata.github.io/DataFramesMeta.jl/stable/).^[There's also the relatively newer [DataFramesMacros.jl](https://github.com/jkrumbiegel/DataFrameMacros.jl) that makes DataFrames.jl code even closer to {dplyr}, namely by making the transformation verbs [rowwise by default](https://github.com/JuliaData/DataFrames.jl/issues/2793#issuecomment-876735726) to save you from reasoning about broadcasting, for better or for worse.]
+
+If you're Julia-curious and/or just want to hear an R person talk about how another language does data wrangling differently, you're the target audience!
+
+However, this blog post is **NOT**:
+
+- My first impressions of the [Julia language](https://julialang.org/) or a pitch for [why you should use Julia](https://juliadatascience.io/programmers#sec:programmers). If you want that from an R user's perspective, check out [Trang Le's blog post](https://trang.page/2021/12/28/10-things-i-love-about-julia/) - I agree with everything said in there.
+
+- A DataFrames.jl tutorial. I don't know many but aside from the docs, I learned almost exclusively from [Bogumił Kamiński's JuliaCon 2022 workshop](https://github.com/bkamins/JuliaCon2022-DataFrames-Tutorial), the [Julia Data Science](https://juliadatascience.io/) book, and the [Julia for Data Analysis](https://www.manning.com/books/julia-for-data-analysis) book.^[The Julia for Data Analysis book is estimated for Jan 2023 but I've been reading the previews and recommend it very strongly. Bogumił Kamiński, the author of the book and the JuliaCon 2022 workshop (and also a core developer of DataFrames.jl) also has a [blog](https://bkamins.github.io/) full of DataFrames.jl tutorial goodies.]
+
+- A {dplyr}/{data.table} to DataFrames.jl [translation cheatsheet since that already exists](https://dataframes.juliadata.org/stable/man/comparisons), though I'll be doing some of that myself when it helps illustrate a point.
+
+All of this to say that I have no skin in the game and I don't endorse or represent anything I write here.
+In fact I'm a Julia noob myself (it's only been like 3 months) so take everything with a grain of salt and [feel free to let me know](https://github.com/yjunechoe/yjunechoe.github.io/issues) if I do anything wrong/inefficiently!
+
+## TL;DR - Big takeaways
+
+- The syntax mimics {dplyr} but works more like {data.table} under the hood. There's a bit of unlearning to do for {dplyr} users.
+
+- There are not as many idiomatic ways of doing things like in {dplyr}. Whereas you can get very far in {dplyr} without thinking much about base R, learning DataFrames.jl requires a good amount of "base" Julia first (especially distinctions between data types, which R lacks).
+
+- I love Chain.jl but I'm not drawn to DataFramesMeta.jl because it's kinda like [{dtplyr}](https://dtplyr.tidyverse.org/)^[Although `@macroexpand` is very cool and works like `dplyr::show_query()`, so learning DataFramesMeta.jl shouldn't interfere with learning DataFrames.jl.] - I'd personally rather just focus on learning the thing itself.
+
+- Some aspects of DataFrames.jl are relatively underdeveloped IMO (e.g., context dependent expressions) but it's in active development and I plan to stick around to see more.
+
+## Setup
+
+::::: {.panelset}
+
+::: {.panel}
+[R]{.panel-name}
+
+```{r r-setup}
+#| message: false
+#| warning: false
+# R v4.2.1
+library(dplyr)      # v1.0.10
+library(data.table) # v1.14.5
+mtcars_df <- mtcars |>
+  as_tibble(rownames = "model") |>
+  type.convert(as.is = TRUE)
+mtcars_dt <- as.data.table(mtcars_df)
+```
+
+:::
+
+::: {.panel}
+[Julia]{.panel-name}
+
+```{r r-julia-activate}
+#| include: false
+library(JuliaCall)
+julia_eval('using Pkg; Pkg.activate(".")')
+# julia_eval("using DataFrames; pathof(DataFrames)") # For debugging; had some issue with pkg path
+```
+
+```{julia julia-setup}
+# Julia v1.8.2
+using DataFrames # (v1.4.2)
+using DataFramesMeta # (v0.12.0) Also imports Chain.jl
+# using Chain.jl (v0.5.0)
+using StatsBase # (v0.33.21) Like base R {stats}
+using RDatasets # (v0.7.7) Self-explanatory; like the {Rdatasets} package
+mtcars = RDatasets.dataset("datasets", "mtcars")
+```
+
+:::
+
+:::::
+
+## Quick example
+
+From mtcars...
+
+1) Filter for rows that represent `"Merc"`^[Abbreviation of Mercedes-Benz, apparently.] car models
+
+2) Calculate the average `mpg` by `cyl`
+
+3) Return a new column called `kmpg` that converts miles to kilometers (1:1.61)
+
+::::: {.panelset}
+
+::: {.panel}
+[{dplyr}]{.panel-name}
+
+```{r dplyr-quick-example}
+mtcars_df |>
+  filter(stringr::str_detect(model, "^Merc ")) |>
+  group_by(cyl) |>
+  summarize(kmpg = mean(mpg) * 1.61)
+```
+
+:::
+
+::: {.panel}
+[{data.table}]{.panel-name}
+
+```{r dt-quick-example}
+mtcars_dt[model %like% "^Merc ", .(kmpg = mean(mpg) * 1.61), by = cyl]
+```
+
+:::
+
+::: {.panel}
+[DataFrames.jl]{.panel-name}
+
+```{julia df-quick-example}
+@chain mtcars begin
+  subset(:Model => x -> occursin.(r"^Merc ", x))
+  groupby(:Cyl)
+  combine(:MPG => (x -> mean(x) * 1.61) => :kmpg)
+end
+```
+
+:::
+
+::: {.panel}
+[DataFramesMeta.jl]{.panel-name}
+
+```{julia dfm-quick-example}
+@chain mtcars begin
+  @rsubset(occursin(r"^Merc ", :Model))
+  groupby(:Cyl)
+  @combine(:kmpg = mean(:MPG) * 1.61)
+end
+```
+
+:::
+
+:::::
+
+
+## List of 💜s and 💔s
+
+**Disclaimer**: These are not a list of like/dislike or approve/disapprove. The 💜s and 💔s are just _vibes_ - you know what I mean?
+
+### 1) 💜 The distinctness of the "grouped df" type
+
+In {dplyr}, it's easy to think of grouping as a transient operation.
+We don't really think about `group_by()` as a data-wrangling function because the returned `<grouped_df>` object is visually very similar to the input.
+Coupled with the general expectation that [object attributes in R tend to be ephemeral](https://adv-r.hadley.nz/vectors-chap.html?q=attriburte#getting-and-setting), `group_by()` often gets treated like a second-class citizen even though grouping is sticky, [making it a frequent culprit of subtle bugs](https://github.com/tidyverse/ggplot2/issues/2378).
+
+```{r dplyr-groupby}
+group_by(mtcars_df, cyl)
+```
+
+In {data.table}, it's at the opposite extreme.
+Grouping via `by=` is right there in the slogan `dt[i,j,by]`, sharing a privileged status with row selection `i` and column manipulation `j`.
+Grouping as an operation is very prominent in the code but that also makes it feel a bit too integrated for my taste.
+It feels too similar to SQL, whereas I like my data wrangling operations to be more modular and portable.
+
+I think that DataFrames.jl hits a good middle ground.
+It keeps `groupby()` as a stand-alone operation while marking the output as very clearly distinct from the input.
+The returned `GroupedDataFrame` type, when printed, visually splits the dataframe by groups:^[The visual effect here is similar to what you get from [`dplyr::group_split()`](https://dplyr.tidyverse.org/reference/group_split.html), a costly operation that returns the input dataframe split into a list of dataframes.]
+
+```{julia df-groupby}
+groupby(mtcars, :Cyl)
+```
+
+### 2) 💜 The imperative `-!` variants
+
+Many verbs in DataFrames.jl have a `-!` suffix counterpart, like `transform()`/`transform!()`.
+These `-!` forms indicate a mutate-in-place operation, which modifies an object it's called with as a side-effect.^[The `-!` suffix is a convention for side-effect (or "imperative") functions also found in other programming languages, like my first language [Racket](https://racket-lang.org/).]
+It's conceptually like {data.table}'s `set()` or the walrus operator `:=` in the `j`, with no equivalent in {dplyr}.^[Though you can mimic it in {dplyr} with {magrittr}'s [`%<>%`](https://magrittr.tidyverse.org/reference/compound.html) pipe.] 
+
+I love [pure functions](https://en.wikipedia.org/wiki/Pure_function) and I'm a sucker for functional programming, but one place where I can really see myself using the `-!` form a lot is for `rename!()` and `sort!()`, latter being equivalent to `dplyr::arrange()`:^[`sort!()` probably because I consider row order to be more like a dataframe's metadata, [given how fragile and not-guaranteed-to-be-stable it is](https://github.com/tidyverse/dplyr/blob/50c58dd9980b9216c60a1de4da521ee5aa16e2de/NEWS.md?plain=1#L248-L259). This is not to say that row order isn't useful because [it is!](https://www.youtube.com/watch?v=c5ydz-Ha61I&t=1190s), and that's where I see myself using `sort!()`.]
+
+```{julia df-sort}
+#| include: false
+mtcars_sorted = copy(mtcars); # Make a copy
+sort!(mtcars_sorted, :MPG);   # Sort the copy by ascending MPG value, in-place
+mtcars_sorted[ [begin, end], [:Model, :MPG] ] # Check in first and last row
+```
+
+```{r df-sort}
+#| echo: true
+#| eval: false
+```
+
+```{julia df-sort--out}
+#| echo: false
+# For some reason semicolon doesn't suppress non-last line, so eval separately here
+mtcars_sorted[ [begin, end], [:Model, :MPG] ]
+```
+
+This is also an efficient way of dropping columns that you know you won't use.^[Although I usually do that inside the file-reading step, like in `read_csv(file, col_select = ...)`.] In `{data.table}`, you can do this with `:=` but in the funky form of assigning columns to `NULL` which I never really liked.^[Famously the 8.1.55-56th circle of the [R inferno](https://www.burns-stat.com/pages/Tutor/R_inferno.pdf).]
+
+```{r dt-dropcol}
+mtcars_dropcol <- copy(mtcars_dt)
+mtcars_dropcol[, mpg := NULL]                # drop single column
+mtcars_dropcol[, `:=`(wt = NULL, vs = NULL)] # drop multiple columns in function form
+names(mtcars_dropcol)
+```
+
+In DataFrames.jl that's just `select!()` instead of `select()`. No copies are created in the calls to `select!()`:
+
+```{julia df-dropcol}
+mtcars_dropcol = copy(mtcars);
+select!(mtcars_dropcol, Not(:MPG));
+select!(mtcars_dropcol, Not([:WT, :VS]));
+names(mtcars_dropcol)
+```
+
+### 3) 💔 Competition between `Base.filter()` and `DataFrames.subset()`
+
+In DataFrames.jl, there are two ways of subsetting rows:
+
+1) The `Base.filter()` generic which has been extended with a `DataFrame` method. It works kind of like base R's `Filter()` in that it takes the object to filter as its second argument:
+
+    ```{julia df-filter}
+    filter(:Gear => x -> x .== 5, mtcars)
+    ```
+
+2) The `DataFrames.subset()` function which, like other `DataFrame` transformation verbs, takes the dataframe as its first argument similar to `dplyr::filter()`:
+
+    ```{julia df-subset}
+    subset(mtcars, :Gear => x -> x .== 5)
+    ```
+
+I [understand the rationale](https://www.juliabloggers.com/dataframes-jl-why-do-we-have-both-subset-and-filter-functions/) for supporting Julia's standard `filter()` function for `DataFrame` types, but I feel like it's something that the average DataFrames.jl user shouldn't encounter unless they specifically go looking for it.
+
+In my experience this hasn't been the case, and it's caused me a lot of confusion when I was first learning DataFrames.jl - I consider the simultaneous teaching of `filter()` and `subset()` in the same chapter as [the one flaw in the otherwise flawless book **Julia Data Science**](https://juliadatascience.io/filter_subset).
+
+### 4) 💜 The **operation specification syntax** is like {data.table}'s `j` on steroids
+
+[The "operation specification syntax", also called the "transformation mini language"](https://bkamins.github.io/julialang/2020/12/24/minilanguage.html)^[I'm just gonna call it **op-spec syntax** from now on because these names are way too long.] refers to the templatic form:
+
+<pre style="text-align:center;background-color:transparent;"><code style="font-weight:bold;font-size:1.2em;">
+[input columns] => [transformation function] => [output columns]
+</code></pre>
+
+... available inside verbs like `select()`, `transform()`, `combine()`, and `subset()`.
+
+If I say "take the MPG column, multiply it by 1.61 and make that to create a new KMPG column", then in DataFrames.jl that's:
+
+```{julia df-op-spec}
+@chain mtcars begin
+  transform( :MPG => (x -> x * 1.61) => :KMPG )
+  # Below operations cut down rows and cols to save printing space
+  select(:MPG, :KMPG)
+  first(5)
+end
+```
+
+... where `x -> x * 1.61` inside `transform()` is an anonymous function^[Wrapped in parantheses in the code to make sure that the right-side `=>` operator is not parsed as part of the function.] like R's `\(x) x * 1.61`.
+
+I make the comparison to {data.table}'s `j` because of the flexibility with what you can compute and return inside that special environment.
+
+For example, let's say you want to treat `cyl` like a categorical variable and do a one-hot encoding for `cyl==4`, `cyl==6`, and `cyl==8`. To comply with R/Julia's variable naming rules, let's name these new columns `cyl_4`, `cyl_6`, and `cyl_8`.
+
+In {data.table} it just takes an `lapply()` inside the `j` - you can rely on the invariant that as long as an expression in `j` evaluates to a list, you will get columns back:
+
+```{r dt-onehot}
+mtcars_onehot <- copy(mtcars_dt)
+cyl_vals <- sort(unique(mtcars_onehot$cyl)) # [1] 4 6 8
+cyl_cols <- paste0("cyl_", cyl_vals)        # [1] "cyl_4" "cyl_6" "cyl_8"
+mtcars_onehot[, (cyl_cols) := lapply(cyl_vals, \(x) cyl == x)]
+mtcars_onehot[, (setdiff(names(mtcars_onehot), c("model", cyl_cols))) := NULL]
+mtcars_onehot[1:5,]
+```
+
+Likewise, in DataFrames.jl, you can rely on the invariant that as long as you're complying with the op-spec and returning certain data types,^[`NamedTuple`, `AbstractDataFrame`, `DataFrameRow`, `AbstractMatrix`, to name a few.] they will become columns in the table:
+
+```{julia df-onehot}
+mtcars_onehot = copy(mtcars);
+cyl_vals = sort(unique(mtcars_onehot.Cyl));
+cyl_cols = "cyl_" .* string.(cyl_vals);
+@chain mtcars_onehot begin
+  transform!( :Cyl .=> ByRow(x -> cyl_vals .== x) => cyl_cols )
+  select!(:Model, Cols(r"^cyl_"))
+end;
+mtcars_onehot[1:5,:]
+```
+
+Read on for more about the `ByRow()` function wrapping the anonymous function inside `transform!()`.
+
+### 5) 💜 Rowwise operations with `ByRow()` and `eachrow()`
+
+I mentioned at the beginning that DataFrames.jl doesn't have a lot of idiomatic ways of doing things but one rare case that I really appreciate is `ByRow()`. 
+
+Under the hood, `ByRow()` is actually just a [function factory](https://adv-r.hadley.nz/function-factories.html) that takes a function as input and a broadcasted version of the function as output, kind of like R's `Vectorize()`:
+
+```{julia df-byrow-idiom}
+ByRow(round)([1.2, 3.3]) # same as round.([1.2, 3.3])
+```
+
+I call `ByRow()` idiomatic because, as you can see, it doesn't have anything to do with `DataFrame` rows.
+Nevertheless it goes perfectly hand in hand with the op-spec syntax because you can just wrap the middle "[transformation function]" component in `ByRow()` and call it a day:
+
+```{julia df-rowwise-byrow}
+select(mtcars, :MPG => ByRow( x -> Integer(round(x)) ) => :MPG_whole )[1:3,:]
+```
+
+Whereas the equivalent using the `.` would take two broadcasted functions:
+
+```{julia df-rowwise-broadcast}
+select(mtcars, :MPG => ( x -> Integer.(round.(x)) ) => :MPG_whole )[1:3,:]
+```
+
+I especially like `ByRow()` in these cases because I can use Julia's [function composition operator `∘`](https://docs.julialang.org/en/v1/manual/functions/#Function-composition-and-piping) (`\circ`) to re-write `x -> Integer(round(x))` into `Integer ∘ round`, which just looks sooo clean:
+
+```{julia df-rowwise-byrow-composite}
+select(mtcars, :MPG => ByRow(Integer ∘ round) => :MPG_whole )[1:3,:]
+```
+
+The one small qualm I have with `ByRow()` though is that the [docs](https://dataframes.juliadata.org/stable/man/comparisons/#Comparison-with-the-R-package-dplyr) equate it to `dplyr::rowwise()` when really it's more comparable to `purrr::map_*()`.
+
+`dplyr::rowwise()` is unlike `ByRow()` because it's a function that takes a dataframe as input and returns an object of class `<rowwise_df>`.
+In that sense, it's actually more similar to `Base.eachrow()` which you use to convert a `DataFrame` into a `DataFrameRow` object:^[Also see the [`@eachrow!` macro](https://bkamins.github.io/julialang/2022/07/08/iteration.html#using-dataframesmetajl) from DataFramesMeta.jl for a modify-in-place version.]
+
+```{julia eachrow}
+mtcars_rowwise = eachrow(mtcars[1:5, 1:3])
+```
+
+Similar to how column-major dataframes are essentially a list of vectors representing each column, the row-major `DataFrameRow` object is essentially a vector of `NamedTuple`s representing each row under the hood:
+
+```{julia eachrow-tuple}
+copy.(mtcars_rowwise)
+```
+
+### 6) 💔 Confusingly, `select()` is more like `dplyr::transmute()` than `dplyr::select()`
+
+Interestingly, `select()` isn't just for selecting columns - it can _modify_ columns too:
+
+```{julia df-select-weirdness}
+@chain mtcars begin
+  select(:Model, :MPG => (x -> x .* 1.61) => :KMPG)
+  first(3)
+end
+```
+
+In this sense `DataFrames.select()` feels more like `dplyr::transmute()` rather than the identically named `dplyr::select()`:^[Or, keeping up with the current [dev version {dplyr}](https://github.com/tidyverse/dplyr/blob/50c58dd9980b9216c60a1de4da521ee5aa16e2de/NEWS.md?plain=1#L59) which superceded `transmute()`, it'd be `mutate(..., .keep = "none")`.]
+
+```{r dplyr-transmute}
+mtcars_df |>
+  transmute(model, kmpg = mpg * 1.61) |>
+  head(3)
+```
+
+I think it's misleading that `select()` can also `transform()` in DataFrames.jl, although I don't complain that `dplyr::select()` can also `dplyr::rename()` so idk:
+
+```{r dplyr-select-rename}
+mtcars_df |>
+  select(car_model = model, mpg) |>
+  head(3)
+```
+
+
+### 7) 💔 Selection helpers are not powered by boolean algebra
+
+The fact that `DataFrames.select()` behaves like `dplyr::transmute()` might explain why you don't really get a rich [{tidyselect}](https://tidyselect.r-lib.org/)-esque interface to column selection.^[Although I feel like you totally could since the "[input columns]" component of the op-spec gets evaluated in its own separate environment anyways (unlike {data.table}'s j where the three components are mashed together). There was an [attempt at integrating the now-stale(?) Selections.jl](https://github.com/JuliaData/DataFrames.jl/issues/1936) which looked interesting, but alas...]
+This has been very challenging as someone who loves {tidyselect}, but DataFrames.jl has been getting [new column selection helpers](https://dataframes.juliadata.org/stable/man/basics/#Not,-Between,-Cols,-and-All-Column-Selectors) like `Cols()`, `Not()`, `Between()`, etc. which makes things a bit easier compared to {data.table} at least.
+
+But I don't really vibe with the implementation of column selection helpers as _set operation_, as opposed to _boolean algebra_.^[The {tidyselect} backend of {dplyr} supports both, namely with `!` and `-` variants, though they recently [switched to emphasizing the boolean algebra technique with `!`](https://github.com/r-lib/tidyselect/commit/9550f038ae82b4a9d59491f8887c4715183d4820).]
+
+I wish I'm told that I'm wrong, but it feels really clunky to do something like "select columns that are numeric _and_ has a name that's two characters long". In DataFrames.jl that's:
+
+```{julia df-val-nm-select}
+@chain mtcars begin
+  select(_, intersect( names(_, Float64), names(_, r"^..$") ) )
+  first(1)
+end
+```
+
+Whereas in {dplyr} you just write each condition as a predicate joined by `&`:
+
+```{r dplyr-val-nm-select}
+mtcars_df |>
+  select( where(is.double) & matches("^..$") ) |>
+  head(1)
+```
+
+### 8) 💜 `groupby()` has select-semantics
+
+One thing that's always bugged me a little in {dplyr} is the fact that `dplyr::group_by()` has mutate-semantics.
+
+So like, despite the fact that people pretty much only ever^[Though the mutate-semantics lets you do things like [`group_by(decade = 10 * (year %/% 10))`](https://www.youtube.com/watch?v=NDHSBUN_rVU&t=292s).] use `group_by()` like `select()` in the form of `group_by(col1, col2, col3)`, you can't use {tidyselect} helpers:
+
+```{r dplyr-groupby-mutates}
+#| error: true
+mtcars_df |>
+  group_by( matches("^[va]") ) |>
+  summarize(mpg = mean(mpg), .groups = 'drop')
+```
+
+Instead you need to [bridge select-semantics and mutate-semantics](https://rlang.r-lib.org/reference/topic-data-mask-programming.html#bridge-patterns) using `across()`^[Or the new [`pick()`](https://github.com/tidyverse/dplyr/blob/50c58dd9980b9216c60a1de4da521ee5aa16e2de/NEWS.md?plain=1#L20-L23) function in the upcoming version.], which ensures that `group_by()` receives column _vectors_:
+
+```{r dplyr-groupby-bridge}
+mtcars_df |>
+  group_by( across(matches("^[va]")) ) |>
+  summarize(mpg = mean(mpg), .groups = 'drop')
+```
+
+In DataFrames.jl, however, `groupby()` has select-semantics.^[But not mutate-semantics, although I won't miss that.]
+That lets you use column selection helpers like `Cols()` to dynamically choose columns like: 
+
+```{julia df-groupby-selects}
+#| error: true
+@chain mtcars begin
+  groupby( Cols(r"^[VA]") )
+  combine(:MPG => mean, renamecols = false)
+end
+```
+
+### 9) 💔 No special marking of context-dependent expressions
+
+In {dplyr} and {data.table} you get "context dependent expressions" like [`n()`](https://dplyr.tidyverse.org/reference/context.html) and [`.N`](https://rdatatable.gitlab.io/data.table/reference/special-symbols.html) which returns information about the dataframe that you're currently manipulating.
+
+So for example if I want to calculate counts by group, in {dplyr} I can do:
+
+```{r dplyr-n}
+mtcars_df |>
+  group_by(cyl) |>
+  summarize(n = n())
+```
+
+And in {data.table} I can do:
+
+```{r dt-n}
+mtcars_dt[, .(n = .N), by = cyl]
+```
+
+Likewise in DataFrames.jl, I can use `nrow`:
+
+```{julia df-nrow}
+@chain mtcars begin
+  groupby(:Cyl)
+  combine(nrow => :n)
+end
+```
+
+Special keywords like `nrow` can be used in the op-spec syntax, and they essentially take up the first and middle "[input columns] => [transformation function]" component.
+
+But here's a thing that's super confusing about `nrow` as a context dependent expression.
+Unlike {dplyr}'s `n()` or {data.table}'s `.N`, Julia's `nrow()`^[Which is not part of Base but instead comes from [`DataAPI.jl`](https://juliapackages.com/p/dataapi).] is also a stand-alone function:
+
+```{julia nrow}
+nrow(mtcars)
+```
+
+Now imagine I wrote a `nrow2()` function which does the same thing but with `Base.size()`, the equivalent of base R's `dim()`:
+
+```{julia nrow2}
+nrow2 = function(x)
+  size(x, 1) # returns the first dimension (row)
+end;
+nrow2(mtcars)
+```
+
+You might expect our new `nrow2` to behave like `nrow` in the context we just saw, but it doesn't!
+
+```{julia df-nrow2}
+#| eval: false
+@chain mtcars begin
+  groupby(:Cyl)
+  combine(nrow2 => :n)
+end
+```
+
+```{julia df-nrow2--err}
+#| echo: false
+try
+  @chain mtcars begin
+    groupby(:Cyl)
+    combine(nrow2 => :n)
+  end
+catch e
+  showerror(stdout, e)
+end
+```
+
+Because `nrow2()` is not a special operator like `nrow`, `nrow2` gets evaluated in the first component of the op-spec syntax ("[input columns]"), throwing a rather unhelpful error message about an unrecognized column selector.
+But it's really difficult to figure out this exceptionalism of `nrow` because it also works expectedly outside!
+
+Now compare this to the treatment of {data.table}'s `.N` and {dplyr}'s `n()`, where the former isn't exported (it's not even defined in the package) and the latter throws a helpful error message:
+
+```{r n-special}
+#| error: true
+dplyr::n()
+```
+
+But thankfully, this is an area of ongoing development in DataFrames.jl so I'm hopeful that the documentation will catch up too.
+
+For example, [v1.4 recently added a couple more context dependent expressions](https://bkamins.github.io/julialang/2022/11/04/minilanguage.html) like `groupindices`, which is equivalent to {dplyr}'s `cur_group_id()` and {data.table}'s `.GRP`:
+
+```{julia df-groupindices}
+@chain mtcars begin
+  groupby(:Cyl)
+  combine(groupindices)
+end
+```
+
+However, I still feel like there's ways to go on the clarity front.
+Like, if the user doesn't already have a mental model of context dependent expressions, then it might be confusing that you can use `groupindices` like this:
+
+```{julia grpdf-outside-groupindices}
+groupindices( groupby(mtcars[1:5,:], :Cyl) )
+```
+
+But you can't use `nrow` in the same way:
+
+```{julia grpdf-outside-nrow}
+#| eval: false
+nrow( groupby(mtcars[1:5,:], :Cyl) )
+```
+
+```{julia grpdf-outside-nrow--err}
+#| echo: false
+try
+  nrow(groupby(mtcars[1:5,:], :Cyl))
+catch e
+  showerror(stdout, e)
+end
+```
+
+Because, independently of their shared status as context dependent expressions in the op-spec syntax, `groupindices` and `nrow` differ as stand-alone functions (only the former has a method defined for `GroupedDataFrame` types).
+
+### 10) 💜 The op-spec syntax gives you `dplyr::across()/c_across()` for free
+
+So probably my favorite thing about the op-spec syntax is that the leftmost "[input columns]" component can be a vector of _multiple_ columns.
+When combined with the broadcasted version of the `=>` operator, you get `dplyr::across()` for free:^[Actually, `dplyr::across(.cols = c(col1, col2))` is more like `AsTable([:col1, :col2]) => ... => ...` in op-spec, but I've found that distinction to be seldom important.]
+
+```{julia broadcast-first-arrow}
+select(mtcars, [:DRat, :QSec] .=> ByRow(Integer ∘ round) => uppercase)[1:5,:]
+```
+
+In {dplyr}, the above would be:
+
+```{r dplyr-across}
+mtcars_df |>
+  transmute(
+    across(
+      .cols = c(drat, wt),
+      .fns = \(x) as.integer(round(x)),
+      .names = "{toupper(.col)}"
+    )
+  ) |>
+  head(5)
+```
+
+Here's another fun one replicating {dplyr}'s `rowwise()` + `c_across()` workflow.
+
+As a very contrived example, let's say I want to make two new columns, calculating the min/max across float/double columns by-row.
+In DataFrames.jl that can be done by selecting multiple columns and sending them in batch to an anonymous [vararg function](https://docs.julialang.org/en/v1/manual/functions/#Varargs-Functions):
+
+```{julia nonbroadcast-first-arrow}
+#| eval: false
+@chain mtcars begin
+  select(_,
+    :Model,
+    names(_, Float64) => ByRow( (x...) -> extrema(x) ) => [:min, :max]
+  )
+  first(5)
+end
+```
+
+```{julia nonbroadcast-first-arrow--out}
+#| echo: false
+# For some reason {JuliaCall} fails to parse the code, so output is hardcoded here
+# -- `Base.Meta.ParseError("missing comma or ) in argument list")`
+DataFrame(
+  Model = ["Mazda RX4", "Mazda RX4 Wag", "Datsun 710", "Hornet 4 Drive", "Hornet Sportabout"],
+  min = [2.62, 2.875, 2.32, 3.08, 3.15],
+  max = [160.0, 160.0, 108.0, 258.0, 360.0]
+)
+```
+
+That kind of operation is costly in {dplyr} because it requires a `rowwise()` context to operate on columns selected by `c_across()`, the result of which must then be converted to dataframe:
+
+```{r rowwise-cacross}
+mtcars_df |>
+  rowwise() |>
+  transmute(
+    model,
+    c_across(where(is.double)) |>
+      range() |>
+      as.data.frame.list(col.names = c("min", "max"))
+  ) |>
+  ungroup() |>
+  head(5)
+```
+
+For this particular problem you can use `pmax` and `pmin`, but that's of course not generalizable to other arbitrary operations:
+
+```{r pmin-pmax}
+mtcars_df |>
+  transmute(
+    model,
+    min = do.call(pmin, across(where(is.double))),
+    max = do.call(pmax, across(where(is.double)))
+  ) |>
+  head(5)
+```
+
+Take this benchmarking with a grain of salt but on my machine the DataFrames.jl solution takes ~0.1ms, {dplyr}'s `rowwise()` + `c_across()` solution takes ~30ms and {dplyr}'s `across()` + `pmin()/pmax()` solution takes ~3ms.
+
+## Concluding thoughts
+
+### Overall impression
+
+Overall, DataFrames.jl has a cool design. 
+Learning it has been mostly painless, and writing this blog post has been super fun.
+
+I personally found it to be a great entry point from R to Julia as someone who primarily uses R for data analysis, and would recommend this route if you're Julia-curious and you like learning by doing.
+
+I was also pleasantly surprised by how much of my experience with {dplyr} and {data.table} transferred over to me learning an entirely different data wrangling framework.
+And this goes the other way as well - DataFrames.jl helps me appreciate many aspects of {dplyr} and {data.table} that I used to take for granted.
+
+### Next steps
+
+A list of other things that I want to explore in DataFrames.jl but haven't had the chance to:
+
+- I hear that Julia and DataFrames.jl have interesting ways of [representing](https://docs.julialang.org/en/v1/manual/missing/) and [operating on vectors/columns with missing values](https://dataframes.juliadata.org/stable/lib/functions/#Working-with-missing-values).
+Unlike R where you have `NA_character_`, `NA_integer_`, and so on, Julia just has one `Missing` type and vectors with `missing` values get a mixed type like `Union{Missing, Int64}`:
+
+    ```{julia missing}
+    [1, 2, missing]
+    ```
+
+- [Nesting/unnesting](https://bkamins.github.io/julialang/2022/03/11/unnesting.html) which looks amazing but I need to learn more about Julia's data types first, and the pros and cons of each for different nested column workflows.
+
+- [Joins](https://dataframes.juliadata.org/stable/lib/functions/#Joining) and [pivoting](https://dataframes.juliadata.org/stable/lib/functions/#Reshaping-data-frames-between-tall-and-wide-formats). You have the usual set of `*join()` verbs and `stack()`/`unstack()` which correspond to base R functions of the same name. Haven't tried them out yet but looks pretty straightforward from skimming the docs.
+
+- Row manipulation operations like `append()!`/`prepend!()` which seems to works more like {data.table} than {dplyr}'s [eternally-experimental `row_*()` functions](https://dplyr.tidyverse.org/reference/rows.html).
+
+- The whole [**Metadata** section of the docs](https://dataframes.juliadata.org/stable/lib/metadata/). That includes stuff like keys I think.
+
+- Interaction with [Arrow.jl](https://arrow.juliadata.org/stable/), which is apparently written in pure Julia!
+
+- Just more [benchmarking](https://juliaci.github.io/BenchmarkTools.jl/stable/) and experimentation so I can ~~contribute to the language-wars discourse with hot takes~~ optimize my bilingual R & Julia workflows.
