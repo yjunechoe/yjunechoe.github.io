@@ -72,7 +72,7 @@ In fact I'm a Julia noob myself (it's only been like 3 months) so take everythin
 
 - There are not as many idiomatic ways of doing things like in {dplyr}. Whereas you can get very far in {dplyr} without thinking much about base R, learning DataFrames.jl requires a good amount of "base" Julia first (especially distinctions between data types, which R lacks).
 
-- I love Chain.jl but I'm not drawn to DataFramesMeta.jl because it's kinda like [{dtplyr}](https://dtplyr.tidyverse.org/)^[Although `@macroexpand` is very cool and works like `dplyr::show_query()`, so learning DataFramesMeta.jl shouldn't interfere with learning DataFrames.jl.] - I'd personally rather just focus on learning the thing itself.
+- I love Chain.jl but I'm not that drawn to DataFramesMeta.jl because it feels like [{dtplyr}](https://dtplyr.tidyverse.org/)^[Although `@macroexpand` is very cool and works like `dplyr::show_query()`, so learning DataFramesMeta.jl shouldn't interfere with learning DataFrames.jl.] - I'd personally rather just focus on learning the thing itself.
 
 - Some aspects of DataFrames.jl are relatively underdeveloped IMO (e.g., context dependent expressions) but it's in active development and I plan to stick around to see more.
 
@@ -185,7 +185,7 @@ end
 
 ## List of 💜s and 💔s
 
-**Disclaimer**: These are not a list of like/dislike or approve/disapprove. The 💜s and 💔s are just _vibes_ - you know what I mean?
+**Disclaimer**: These are not a list of like/dislike or approve/disapprove. The 💜 and 💔 are just _vibes_ - you know what I mean?
 
 ### 1) 💜 The distinctness of the "grouped df" type
 
@@ -225,7 +225,7 @@ sort!(mtcars_sorted, :MPG);   # Sort the copy by ascending MPG value, in-place
 mtcars_sorted[ [begin, end], [:Model, :MPG] ] # Check in first and last row
 ```
 
-```{r df-sort}
+```{julia df-sort}
 #| echo: true
 #| eval: false
 ```
@@ -583,7 +583,7 @@ In {dplyr}, the above would be:
 mtcars_df |>
   transmute(
     across(
-      .cols = c(drat, wt),
+      .cols = c(drat, qsec),
       .fns = \(x) as.integer(round(x)),
       .names = "{toupper(.col)}"
     )
@@ -633,7 +633,7 @@ mtcars_df |>
   head(5)
 ```
 
-For this particular problem you can use `pmax` and `pmin`, but that's of course not generalizable to other arbitrary operations:
+For this particular problem you can use `pmax` and `pmin`, but that's of course not generalizable to other arbitrary operations:^[Although see [@mariviere](https://twitter.com/mariviere1)'s [solution using `pmap_dfr()`](https://twitter.com/mariviere1/status/1592095139815882752).]
 
 ```{r pmin-pmax}
 mtcars_df |>
@@ -646,6 +646,14 @@ mtcars_df |>
 ```
 
 Take this benchmarking with a grain of salt but on my machine the DataFrames.jl solution takes ~0.1ms, {dplyr}'s `rowwise()` + `c_across()` solution takes ~30ms and {dplyr}'s `across()` + `pmin()/pmax()` solution takes ~3ms.
+
+_Update - adding a {data.table} solution (~3ms) that's probably not the most efficient it could be_:
+
+```{r dt-rowwise}
+mtcars_dt_rowwise <- copy(mtcars_dt)
+mtcars_dt_rowwise[, c("min", "max") := as.list(range(.SD)), by = .I, .SDcols = is.double]
+mtcars_dt_rowwise[1:5, .(model, min, max)]
+```
 
 ## Concluding thoughts
 
