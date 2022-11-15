@@ -27,15 +27,11 @@ preview: preview.jpg
 ---
 
 ```{r setup, include=FALSE}
-ragg_png = function(..., res = 150) {
-  ragg::agg_png(..., res = res, units = "in")
-}
 knitr::opts_chunk$set(
   comment = " ",
   echo = TRUE,
   message = FALSE,
   warning = FALSE,
-  dev = "ragg_png",
   R.options = list(width = 80)
 )
 xaringanExtra::use_panelset()
@@ -57,14 +53,14 @@ If you're Julia-curious and/or just want to hear an R person talk about how anot
 
 However, this blog post is **NOT**:
 
-- My first impressions of the [Julia language](https://julialang.org/) or a pitch for [why you should use Julia](https://juliadatascience.io/programmers#sec:programmers). If you want that from an R user's perspective, check out [Trang Le's blog post](https://trang.page/2021/12/28/10-things-i-love-about-julia/) - I agree with everything said in there.
+- My first impressions of the [Julia language](https://julialang.org/) or a pitch for [why you should use Julia](https://juliadatascience.io/programmers#sec:programmers). If you want that from an R user's perspective, check out [Trang Le's blog post](https://trang.page/2021/12/28/10-things-i-love-about-julia/) and the Julia documentation on ["Noteworthy differences from R"](https://docs.julialang.org/en/v1/manual/noteworthy-differences/#Noteworthy-differences-from-R).
 
-- A DataFrames.jl tutorial. I don't know many but aside from the docs, I learned almost exclusively from [Bogumił Kamiński's JuliaCon 2022 workshop](https://github.com/bkamins/JuliaCon2022-DataFrames-Tutorial), the [Julia Data Science](https://juliadatascience.io/) book, and the [Julia for Data Analysis](https://www.manning.com/books/julia-for-data-analysis) book.^[The Julia for Data Analysis book is estimated for Jan 2023 but I've been reading the previews and recommend it very strongly. Bogumił Kamiński, the author of the book and the JuliaCon 2022 workshop (and also a core developer of DataFrames.jl) also has a [blog](https://bkamins.github.io/) full of DataFrames.jl tutorial goodies.]
+- A DataFrames.jl tutorial. But if you're curious, aside from the [docs](https://dataframes.juliadata.org/stable/) I learned almost exclusively from [Bogumił Kamiński's JuliaCon 2022 workshop](https://github.com/bkamins/JuliaCon2022-DataFrames-Tutorial), the [Julia Data Science](https://juliadatascience.io/) book, and the [Julia for Data Analysis](https://www.manning.com/books/julia-for-data-analysis) book.^[The Julia for Data Analysis book is estimated for Jan 2023 but I've been reading the previews and recommend it very strongly. Bogumił Kamiński, the author of the book and the JuliaCon 2022 workshop (also a core developer of DataFrames.jl) also has a [blog](https://bkamins.github.io/) full of DataFrames.jl goodies.]
 
-- A {dplyr}/{data.table} to DataFrames.jl [translation cheatsheet since that already exists](https://dataframes.juliadata.org/stable/man/comparisons), though I'll be doing some of that myself when it helps illustrate a point.
+- A {dplyr}/{data.table} to DataFrames.jl translation cheatsheet since those [already](https://github.com/TerseTears/dplyr-DataFrames.jl-cheatsheet) [exist](https://dataframes.juliadata.org/stable/man/comparisons), though I'll be doing some of that myself when it helps illustrate a point.
 
 All of this to say that I have no skin in the game and I don't endorse or represent anything I write here.
-In fact I'm a Julia noob myself (it's only been like 3 months) so take everything with a grain of salt and [feel free to let me know](https://github.com/yjunechoe/yjunechoe.github.io/issues) if I do anything wrong/inefficiently!
+In fact I'm a Julia noob myself (it's only been like 3 months) so take everything with a grain of salt and please feel free to [let me know](https://github.com/yjunechoe/yjunechoe.github.io/issues) if I [did anything wrong or inefficiently](https://github.com/yjunechoe/yjunechoe.github.io/blob/master/_posts/2022-11-13-dataframes-jl-and-accessories/dataframes-jl-and-accessories.Rmd)!
 
 ## TL;DR - Big takeaways
 
@@ -109,7 +105,7 @@ julia_eval('using Pkg; Pkg.activate(".")')
 
 ```{julia julia-setup}
 # Julia v1.8.2
-using DataFrames # (v1.4.2)
+using DataFrames # (v1.4.3)
 using DataFramesMeta # (v0.12.0) Also imports Chain.jl
 # using Chain.jl (v0.5.0)
 using StatsBase # (v0.33.21) Like base R {stats}
@@ -200,7 +196,7 @@ group_by(mtcars_df, cyl)
 In {data.table}, it's at the opposite extreme.
 Grouping via `by=` is right there in the slogan `dt[i,j,by]`, sharing a privileged status with row selection `i` and column manipulation `j`.
 Grouping as an operation is very prominent in the code but that also makes it feel a bit too integrated for my taste.
-It feels too similar to SQL, whereas I like my data wrangling operations to be more modular and portable.
+It feels too close to SQL, whereas I like my data wrangling operations to be more modular and portable.
 
 I think that DataFrames.jl hits a good middle ground.
 It keeps `groupby()` as a stand-alone operation while marking the output as very clearly distinct from the input.
@@ -216,7 +212,7 @@ Many verbs in DataFrames.jl have a `-!` suffix counterpart, like `transform()`/`
 These `-!` forms indicate a mutate-in-place operation, which modifies an object it's called with as a side-effect.^[The `-!` suffix is a convention for side-effect (or "imperative") functions also found in other programming languages, like my first language [Racket](https://racket-lang.org/).]
 It's conceptually like {data.table}'s `set()` or the walrus operator `:=` in the `j`, with no equivalent in {dplyr}.^[Though you can mimic it in {dplyr} with {magrittr}'s [`%<>%`](https://magrittr.tidyverse.org/reference/compound.html) pipe.] 
 
-I love [pure functions](https://en.wikipedia.org/wiki/Pure_function) and I'm a sucker for functional programming, but one place where I can really see myself using the `-!` form a lot is for `rename!()` and `sort!()`, latter being equivalent to `dplyr::arrange()`:^[`sort!()` probably because I consider row order to be more like a dataframe's metadata, [given how fragile and not-guaranteed-to-be-stable it is](https://github.com/tidyverse/dplyr/blob/50c58dd9980b9216c60a1de4da521ee5aa16e2de/NEWS.md?plain=1#L248-L259). This is not to say that row order isn't useful because [it is!](https://www.youtube.com/watch?v=c5ydz-Ha61I&t=1190s), and that's where I see myself using `sort!()`.]
+I love [pure functions](https://en.wikipedia.org/wiki/Pure_function) and I'm a sucker for functional programming, but one place where I can really see myself using the `-!` form a lot is for `rename!()` and `sort!()`, latter being equivalent to `dplyr::arrange()`:^[`sort!()` probably because I consider row order to be more like a dataframe's metadata, [given how fragile and not-guaranteed-to-be-stable it is](https://github.com/tidyverse/dplyr/blob/50c58dd9980b9216c60a1de4da521ee5aa16e2de/NEWS.md?plain=1#L248-L259).]
 
 ```{julia df-sort}
 #| include: false
@@ -284,7 +280,7 @@ In my experience this hasn't been the case, and it's caused me a lot of confusio
 
 ... available inside verbs like `select()`, `transform()`, `combine()`, and `subset()`.
 
-If I say "take the MPG column, multiply it by 1.61 and make that to create a new KMPG column", then in DataFrames.jl that's:
+If I say "take the MPG column and multiply it by 1.61 to create a new column called KMPG", then in DataFrames.jl that's:
 
 ```{julia df-op-spec}
 @chain mtcars begin
@@ -482,7 +478,7 @@ Likewise in DataFrames.jl, I can use `nrow`:
 end
 ```
 
-Special keywords like `nrow` can be used in the op-spec syntax, and they essentially take up the first and middle "[input columns] => [transformation function]" component.
+Special keywords like `nrow` can be used in the op-spec syntax, and they essentially take up the first and middle "[input columns] => [transformation function]" slots.
 
 But here's a thing that's super confusing about `nrow` as a context dependent expression.
 Unlike {dplyr}'s `n()` or {data.table}'s `.N`, Julia's `nrow()`^[Which is not part of Base but instead comes from [`DataAPI.jl`](https://juliapackages.com/p/dataapi).] is also a stand-alone function:
@@ -522,7 +518,7 @@ catch e
 end
 ```
 
-Because `nrow2()` is not a special operator like `nrow`, `nrow2` gets evaluated in the first component of the op-spec syntax ("[input columns]"), throwing a rather unhelpful error message about an unrecognized column selector.
+Because `nrow2()` is not a special operator like `nrow`, it gets evaluated ordinarily in the first component of the op-spec syntax ("[input columns]"), throwing a rather unhelpful error message about an unrecognized column selector.
 But it's really difficult to figure out this exceptionalism of `nrow` because it also works expectedly outside!
 
 Now compare this to the treatment of {data.table}'s `.N` and {dplyr}'s `n()`, where the former isn't exported (it's not even defined in the package) and the latter throws a helpful error message:
@@ -594,7 +590,7 @@ mtcars_df |>
 Here's another fun one replicating {dplyr}'s `rowwise()` + `c_across()` workflow.
 
 As a very contrived example, let's say I want to make two new columns, calculating the min/max across float/double columns by-row.
-In DataFrames.jl that can be done by selecting multiple columns and sending them in batch to an anonymous [vararg function](https://docs.julialang.org/en/v1/manual/functions/#Varargs-Functions):
+In DataFrames.jl that can be done by selecting multiple columns and sending them in batch to a [vararg function](https://docs.julialang.org/en/v1/manual/functions/#Varargs-Functions):
 
 ```{julia nonbroadcast-first-arrow}
 #| eval: false
@@ -633,7 +629,7 @@ mtcars_df |>
   head(5)
 ```
 
-For this particular problem you can use `pmax` and `pmin`, but that's of course not generalizable to other arbitrary operations:^[Although see [@mariviere](https://twitter.com/mariviere1)'s [solution using `pmap_dfr()`](https://twitter.com/mariviere1/status/1592095139815882752).]
+For this particular problem you can use `pmax` and `pmin`, but that's of course not generalizable to other arbitrary operations:^[Also see [@mariviere](https://twitter.com/mariviere1)'s [solution using `pmap_dfr()`](https://twitter.com/mariviere1/status/1592095139815882752).]
 
 ```{r pmin-pmax}
 mtcars_df |>
@@ -647,7 +643,7 @@ mtcars_df |>
 
 Take this benchmarking with a grain of salt but on my machine the DataFrames.jl solution takes ~0.1ms, {dplyr}'s `rowwise()` + `c_across()` solution takes ~30ms and {dplyr}'s `across()` + `pmin()/pmax()` solution takes ~3ms.
 
-_Update - adding a {data.table} solution (~3ms) that's probably not the most efficient it could be_:
+_Update: a {data.table} solution that's probably not the most efficient it could be_
 
 ```{r dt-rowwise}
 mtcars_dt_rowwise <- copy(mtcars_dt)
@@ -678,13 +674,13 @@ Unlike R where you have `NA_character_`, `NA_integer_`, and so on, Julia just ha
     [1, 2, missing]
     ```
 
-- [Nesting/unnesting](https://bkamins.github.io/julialang/2022/03/11/unnesting.html) which looks amazing but I need to learn more about Julia's data types first, and the pros and cons of each for different nested column workflows.
+- [Nesting/unnesting](https://bkamins.github.io/julialang/2022/03/11/unnesting.html) looks amazing but I need to learn more about Julia's data types first, and the pros and cons of each for different nested column workflows.
 
 - [Joins](https://dataframes.juliadata.org/stable/lib/functions/#Joining) and [pivoting](https://dataframes.juliadata.org/stable/lib/functions/#Reshaping-data-frames-between-tall-and-wide-formats). You have the usual set of `*join()` verbs and `stack()`/`unstack()` which correspond to base R functions of the same name. Haven't tried them out yet but looks pretty straightforward from skimming the docs.
 
 - Row manipulation operations like `append()!`/`prepend!()` which seems to works more like {data.table} than {dplyr}'s [eternally-experimental `row_*()` functions](https://dplyr.tidyverse.org/reference/rows.html).
 
-- The whole [**Metadata** section of the docs](https://dataframes.juliadata.org/stable/lib/metadata/). That includes stuff like keys I think.
+- The whole [**Metadata** section of the docs](https://dataframes.juliadata.org/stable/lib/metadata/). That includes stuff like keys I think.^[Update: Bogumił reached out to let me know of the WIP [TableMetadataTools.jl](https://github.com/JuliaData/TableMetadataTools.jl) package designed to "make the most common operations on metadata convenient". I didn't know about this but apparently metadata is [a big topic](https://discourse.julialang.org/t/dataframes-jl-metadata/84544) in the DataFrames.jl world - exciting!]
 
 - Interaction with [Arrow.jl](https://arrow.juliadata.org/stable/), which is apparently written in pure Julia!
 

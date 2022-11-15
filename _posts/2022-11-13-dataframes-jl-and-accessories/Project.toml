@@ -1,4 +1,4 @@
-name = "datawrangling-r-julia"
+name = "2022-11-13-dataframes-jl-and-accessories"
 uuid = "78477d67-5ea4-4284-bafb-e3fa210d7109"
 authors = ["June Choe <yjchoe@sas.upenn.edu>"]
 version = "0.1.0"
