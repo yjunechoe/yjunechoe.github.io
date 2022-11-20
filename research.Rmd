@@ -12,19 +12,19 @@ p {
 
 **June Choe**, Masaya Yoshida, and Jennifer Cole. (2022). [The role of prosodic focus in the reanalysis of garden path sentences: Depth of semantic processing impedes the revision of an erroneous local analysis](https://escholarship.org/uc/item/5d84n2x7). _Glossa Psycholinguistics, 1_(1). DOI: 10.5070/G601136
 
-**June Choe**, Yiran Chen, May Pik Yu Chan, Aini Li, Xin Gao, and Nicole Holliday. (2022). [Language-specific Effects on Automatic Speech Recognition Errors for World Englishes](https://aclanthology.org/2022.coling-1.628/). _In Proceedings of the 29th International Conference on Computational Linguistics_, 7177–7186.
+**June Choe**, Yiran Chen, May Pik Yu Chan, Aini Li, Xin Gao, and Nicole Holliday. (2022). [Language-specific Effects on Automatic Speech Recognition Errors for World Englishes](https://aclanthology.org/2022.coling-1.628/). In _Proceedings of the 29th International Conference on Computational Linguistics_, 7177–7186.
 
-May Pik Yu Chan, **June Choe**, Aini Li, Yiran Chen, Xin Gao, and Nicole Holliday. (2022). [Training and typological bias in ASR performance for world Englishes](https://www.isca-speech.org/archive/interspeech_2022/chan22b_interspeech.html). _In Proceedings of Interspeech 2022_, 1273-1277. DOI: 10.21437/Interspeech.2022-10869
+May Pik Yu Chan, **June Choe**, Aini Li, Yiran Chen, Xin Gao, and Nicole Holliday. (2022). [Training and typological bias in ASR performance for world Englishes](https://www.isca-speech.org/archive/interspeech_2022/chan22b_interspeech.html). In _Proceedings of Interspeech 2022_, 1273-1277. DOI: 10.21437/Interspeech.2022-10869
 
-**June Choe**, and Anna Papafragou. (2022). [The acquisition of subordinate nouns as pragmatic inference: Semantic alternatives modulate subordinate meanings](https://escholarship.org/uc/item/2m87n4ht). _Proceedings of the Annual Meeting of the Cognitive Science Society_, 44, 2745-2752.
+**June Choe**, and Anna Papafragou. (2022). [The acquisition of subordinate nouns as pragmatic inference: Semantic alternatives modulate subordinate meanings](https://escholarship.org/uc/item/2m87n4ht). In _Proceedings of the Annual Meeting of the Cognitive Science Society_, 44, 2745-2752.
 
 Sean McWeeny, Jinnie S. Choi, **June Choe**, Alexander LaTourette, Megan Y. Roberts, and Elizabeth S. Norton. (2022). [Rapid automatized naming (RAN) as a kindergarten predictor of future reading in English: A systematic review and meta-analysis](https://doi.org/10.1002/rrq.467). _Reading Research Quarterly, 57_(4), 1187–1211. DOI: 10.1002/rrq.467
 
 ### submitted / in prep.
 
-June Choe & Anna Papafrgou. (Submitted). The acquisition of subordinate nouns as pragmatic inference. [OSF](https://osf.io/x8cuf/?view_only=14a975d3618e4838b6cc7681b2ecf692)
+June Choe & Anna Papafrgou. (under review). The acquisition of subordinate nouns as pragmatic inference. [OSF](https://osf.io/x8cuf/?view_only=14a975d3618e4838b6cc7681b2ecf692)
 
-Sean McWeeny, June Choe, & Elizabeth S. Norton. (2021). SnowGlobe: An Iterative Search Tool for Systematic Reviews and Meta-Analyses. [OSF](https://doi.org/10.17605/OSF.IO/U25RN)
+Sean McWeeny, June Choe, & Elizabeth S. Norton. (2021). SnowGlobe: An Iterative Search Tool for Systematic Reviews and Meta-Analyses. [Computer Software]. [OSF](https://doi.org/10.17605/OSF.IO/U25RN)
 
 ## Conference Talks
 

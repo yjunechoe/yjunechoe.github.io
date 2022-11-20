@@ -260,7 +260,7 @@ In DataFrames.jl, there are two ways of subsetting rows:
     filter(:Gear => x -> x .== 5, mtcars)
     ```
 
-2) The `DataFrames.subset()` function which, like other `DataFrame` transformation verbs, takes the dataframe as its first argument similar to `dplyr::filter()`:
+2) The `DataFrames.subset()` function which, like other transformation verbs in DataFrames.jl, takes the dataframe as its first argument similar to `dplyr::filter()`:
 
     ```{julia df-subset}
     subset(mtcars, :Gear => x -> x .== 5)
@@ -386,7 +386,7 @@ mtcars_df |>
   head(3)
 ```
 
-I think it's misleading that `select()` can also `transform()` in DataFrames.jl, although I don't complain that `dplyr::select()` can also `dplyr::rename()` so idk:
+I think it's misleading that `select()` can also `transform()` in DataFrames.jl, although I don't complain that `dplyr::select()` can also `dplyr::rename()` and such so idk:
 
 ```{r dplyr-select-rename}
 mtcars_df |>
@@ -394,6 +394,11 @@ mtcars_df |>
   head(3)
 ```
 
+Also turns out you can also use `DataFrames.select()` to `DataFrames.rename()` if you just set the transformation function to `identity`, which I think is adorable:
+
+```{julia select-rename}
+select(mtcars, :Model => identity => :CarModel, :MPG)[1:3, :]
+```
 
 ### 7) 💔 Selection helpers are not powered by boolean algebra
 
