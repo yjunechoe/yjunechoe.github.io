@@ -315,7 +315,7 @@ mtcars_onehot = copy(mtcars);
 cyl_vals = sort(unique(mtcars_onehot.Cyl));
 cyl_cols = "cyl_" .* string.(cyl_vals);
 @chain mtcars_onehot begin
-  transform!( :Cyl .=> ByRow(x -> cyl_vals .== x) => cyl_cols )
+  transform!( :Cyl => ByRow(x -> cyl_vals .== x) => cyl_cols )
   select!(:Model, Cols(r"^cyl_"))
 end;
 mtcars_onehot[1:5,:]
@@ -648,7 +648,7 @@ mtcars_df |>
 
 Take this benchmarking with a grain of salt but on my machine the DataFrames.jl solution takes ~0.1ms, {dplyr}'s `rowwise()` + `c_across()` solution takes ~30ms and {dplyr}'s `across()` + `pmin()/pmax()` solution takes ~3ms.
 
-_Update: a {data.table} solution that's probably not the most efficient it could be_
+_Update: a {data.table} solution that's probably not the most efficient it could be, but just here for comparison_
 
 ```{r dt-rowwise}
 mtcars_dt_rowwise <- copy(mtcars_dt)
