@@ -26,6 +26,11 @@ li::marker {
 }
 ```
 
+## 2023
+
+### January
+
+- I received the ASA Statistical Computing and Graphics student [award](https://community.amstat.org/jointscsg-section/awards/student-paper-competition) for my paper [Sublayer modularity in the Grammar of Graphics](static/papers/Choe_2022_SublayerGG.pdf)! I will be presenting my work at the 2023 Joint Statistical Meetings in Toronto in August.
 
 ## 2022
 
