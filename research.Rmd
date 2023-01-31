@@ -20,11 +20,9 @@ May Pik Yu Chan, **June Choe**, Aini Li, Yiran Chen, Xin Gao, and Nicole Hollida
 
 Sean McWeeny, Jinnie S. Choi, **June Choe**, Alexander LaTourette, Megan Y. Roberts, and Elizabeth S. Norton. (2022). [Rapid automatized naming (RAN) as a kindergarten predictor of future reading in English: A systematic review and meta-analysis](https://doi.org/10.1002/rrq.467). _Reading Research Quarterly, 57_(4), 1187–1211. DOI: 10.1002/rrq.467
 
-### submitted / in prep.
+### submitted / pre-print
 
 June Choe & Anna Papafrgou. (under review). The acquisition of subordinate nouns as pragmatic inference. [OSF](https://osf.io/x8cuf/?view_only=14a975d3618e4838b6cc7681b2ecf692)
-
-Sean McWeeny, June Choe, & Elizabeth S. Norton. (2021). SnowGlobe: An Iterative Search Tool for Systematic Reviews and Meta-Analyses. [Computer Software]. [OSF](https://doi.org/10.17605/OSF.IO/U25RN)
 
 ## Conference Talks
 
@@ -35,6 +33,8 @@ Sean McWeeny, June Choe, & Elizabeth S. Norton. (2021). SnowGlobe: An Iterative 
 May Pik Yu Chan, **June Choe**, Aini Li, Yiran Chen, Xin Gao and Nicole Holliday. (2022). *Training and typological bias in ASR performance for world Englishes*. Talk at the 23rd Conference of the International Speech Communication Association (INTERSPEECH), 18-22 September, 2022. Incheon, South Korea.
 
 ## Conference Presentations
+
+**June Choe** and Anna Papafragou. *Discourse effects on the acquisition of subordinate nouns*. Poster presented at the 36th Annual Conference on Human Sentence Processing, 9-11 March 2022. University of Pittsburg, PA. [Abstract](static/poster/HSP_2023_Abstract.pdf)
 
 **June Choe**, and Anna Papafragou. *Acquisition of subordinate nouns as pragmatic inference: Semantic alternatives modulate subordinate meanings*. Poster at the 2nd Experiments in Linguistic Meaning (ELM) conference, 18-20 May 2022. University of Pennsylvania, Philadelphia, PA.
 
@@ -50,15 +50,25 @@ May Pik Yu Chan, **June Choe**, Aini Li, Yiran Chen, Xin Gao and Nicole Holliday
 
 D’Onofrio, Annette, **June Choe** and Masaya Yoshida. *Personae in syntactic processing: Socially-specific agents bias expectations of verb transitivity*. Poster at The 93rd Annual Meeting of the Linguistics Society of America. 3-6 January 2019. New York City, NY.
 
-## Other conference activities
-
 ### Workshops led
 
 _Experimental syntax using IBEX/PCIBEX_ with Dr. Nayoun Kim. Workshop at the 2022 Seoul International Conference on Linguistics. 11-12 August 2022. Seoul, South Korea. [PDF](https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2022-ibex-pcibex-workshop-slides.pdf)
 
 _Experimental syntax using IBEX: a walkthrough_ with Dr. Nayoun Kim. 2021 BK Winter School-Workshop on Experimental Linguistics/Syntax at Sungkyunkwan University, 19-22 January 2021. Seoul, South Korea. [PDF](https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2021-ibex-workshop-slides.pdf)
 
-### R conferences
+## Research activities in FOSS
+
+### Software
+
+Massimo Aria, Trang Le, Corrado Cuccurullo, Alessandra Belfiore, and **June Choe**. (Submitted). openalexR: An R-tool for collecting bibliometric data from OpenAlex. [Github](https://github.com/massimoaria/openalexR)
+
+**June Choe**. (2022). [Sub-layer modularity in the Grammar of Graphics](static/papers/Choe_2022_SublayerGG.pdf). American Statistical Association (ASA) student paper award in Statistical Computing and Graphics. [Github](https://github.com/yjunechoe/ggtrace/)
+
+Sean McWeeny, **June Choe**, & Elizabeth S. Norton. (2021). SnowGlobe: An Iterative Search Tool for Systematic Reviews and Meta-Analyses. [Computer Software]. [OSF](https://doi.org/10.17605/OSF.IO/U25RN)
+
+### Talks
+
+June Choe. [Sub-layer modularity in the Grammar of Graphics](https://ww2.aievolution.com/JSMAnnual/index.cfm?do=ev.viewEv&ev=2860). Talk at the 2023 Joint Statistical Meetings, 5-10 August 2023. Toronto, Canada.
 
 June Choe. [Cracking open ggplot internals with {ggtrace}](https://www.youtube.com/watch?v=dUBnitXf5mk&list=PL9HYL-VRX0oTOwqzVtL_q5T8MNrzn0mdH&index=38). Talk at the 2022 RStudio Conference, 25-28 July 2022. Washington D.C. [https://github.com/yjunechoe/ggtrace-rstudioconf2022](https://github.com/yjunechoe/ggtrace-rstudioconf2022)
 
