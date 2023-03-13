@@ -629,7 +629,7 @@ gapminder_harder_df |>
   group_by(year) |> 
   mutate(
     Germany_anchored_to_2 = row_number() - which(country == "Germany") + 2,
-    grp = forcats::fct_inorder(c("lo", "is", "hi"))[Germany_is_2]
+    grp = forcats::fct_inorder(c("lo", "is", "hi"))[Germany_anchored_to_2]
   )
 ```
 
@@ -1101,151 +1101,151 @@ stroop_with_fillers |>
   slice( rshuffle(trial, shuffle_within = TRUE) )
 ```
 
-## Split-arrange-combine
+<!-- ## Split-arrange-combine -->
 
-Let's say we want to arrange the rows of this data frame *conditionally*, such that:
+<!-- Let's say we want to arrange the rows of this data frame *conditionally*, such that: -->
 
-- Category "A" is ordered by values of `orderA`, "B" by `orderC`, and "C" by `orderC`.
+<!-- - Category "A" is ordered by values of `orderA`, "B" by `orderC`, and "C" by `orderC`. -->
 
-- Any ties within categories are broken by values of the `tiebreak` column.
+<!-- - Any ties within categories are broken by values of the `tiebreak` column. -->
 
-- Overall, rows should be sorted by Category "A", then "B", then "C".
+<!-- - Overall, rows should be sorted by Category "A", then "B", then "C". -->
 
-```{r}
-conditional_arrange1 <- tibble(
-  rowid = letters[1:10],
-  category = LETTERS[sample(3, 10, replace = TRUE)],
-  orderA = sample(5, 10, replace = TRUE),
-  orderB = sample(5, 10, replace = TRUE),
-  orderC = sample(5, 10, replace = TRUE),
-  tiebreak = sample(10)
-)
-conditional_arrange1
-```
+<!-- ```{r} -->
+<!-- conditional_arrange1 <- tibble( -->
+<!--   rowid = letters[1:10], -->
+<!--   category = LETTERS[sample(3, 10, replace = TRUE)], -->
+<!--   orderA = sample(5, 10, replace = TRUE), -->
+<!--   orderB = sample(5, 10, replace = TRUE), -->
+<!--   orderC = sample(5, 10, replace = TRUE), -->
+<!--   tiebreak = sample(10) -->
+<!-- ) -->
+<!-- conditional_arrange1 -->
+<!-- ``` -->
 
-We can do this straightforwardly in arrange: 
+<!-- We can do this straightforwardly in arrange:  -->
 
-```{r}
-conditional_arrange1 |> 
-  arrange(
-    category,
-    desc(case_match(
-      category,
-      "A" ~ orderA,
-      "B" ~ orderB,
-      "C" ~ orderC
-    )),
-    tiebreak
-  )
-```
+<!-- ```{r} -->
+<!-- conditional_arrange1 |>  -->
+<!--   arrange( -->
+<!--     category, -->
+<!--     desc(case_match( -->
+<!--       category, -->
+<!--       "A" ~ orderA, -->
+<!--       "B" ~ orderB, -->
+<!--       "C" ~ orderC -->
+<!--     )), -->
+<!--     tiebreak -->
+<!--   ) -->
+<!-- ``` -->
 
-And as we saw at the beginning, we can also apply the same logic inside `slice()` using `order()`:
+<!-- And as we saw at the beginning, we can also apply the same logic inside `slice()` using `order()`: -->
 
-```{r}
-conditional_arrange1 |> 
-  slice(order(
-    category,
-    -case_match(
-      category,
-      "A" ~ orderA,
-      "B" ~ orderB,
-      "C" ~ orderC
-    ),
-    tiebreak
-  ))
-```
+<!-- ```{r} -->
+<!-- conditional_arrange1 |>  -->
+<!--   slice(order( -->
+<!--     category, -->
+<!--     -case_match( -->
+<!--       category, -->
+<!--       "A" ~ orderA, -->
+<!--       "B" ~ orderB, -->
+<!--       "C" ~ orderC -->
+<!--     ), -->
+<!--     tiebreak -->
+<!--   )) -->
+<!-- ``` -->
 
-But now suppose that we have a slightly more complex problem - the columns also specify which *direction* each category should be sorted by:
+<!-- But now suppose that we have a slightly more complex problem - the columns also specify which *direction* each category should be sorted by: -->
 
-```{r}
-conditional_arrange2 <- conditional_arrange1 |> 
-  rename(
-    asceA = orderA, # Category A in ascending order
-    descB = orderB, # Category B in descending order
-    asceC = orderC  # Category C in ascending order
-  )
-conditional_arrange2
-```
+<!-- ```{r} -->
+<!-- conditional_arrange2 <- conditional_arrange1 |>  -->
+<!--   rename( -->
+<!--     asceA = orderA, # Category A in ascending order -->
+<!--     descB = orderB, # Category B in descending order -->
+<!--     asceC = orderC  # Category C in ascending order -->
+<!--   ) -->
+<!-- conditional_arrange2 -->
+<!-- ``` -->
 
-This fundamentally breaks how `arrange()` handles sorting:
+<!-- This fundamentally breaks how `arrange()` handles sorting: -->
 
-```{r}
-conditional_arrange2 |> 
-  arrange(
-    category,
-    case_match(
-      category,
-      "A" ~ asceA,
-      "B" ~ desc(descB),
-      "C" ~ asceC
-    ),
-    tiebreak
-  )
-```
-
-
-`slice()` can also let you do this a bit more programmatically:
-
-```{r}
-input |> 
-  slice(
-    mapply(
-      FUN = \(x, y) x[order(category[x], -y[x], tiebreak[x])],
-      x = split(row_number(), category),
-      y = pick(starts_with("order"))
-    ) |> 
-      unlist()
-  )
-```
-
-```{r}
-input |> 
-  arrange(
-    category,
-    desc(case_match(
-      category,
-      "A" ~ orderA,
-      "B" ~ orderB,
-      "C" ~ orderC
-    )),
-    tiebreak
-  )
-```
-
-```{r}
-input |> 
-  arrange(
-    category,
-    desc(case_match(
-      category,
-      "A" ~ orderA,
-      "B" ~ orderB,
-      "C" ~ orderC
-    )),
-    tiebreak
-  )
-```
+<!-- ```{r} -->
+<!-- conditional_arrange2 |>  -->
+<!--   arrange( -->
+<!--     category, -->
+<!--     case_match( -->
+<!--       category, -->
+<!--       "A" ~ asceA, -->
+<!--       "B" ~ desc(descB), -->
+<!--       "C" ~ asceC -->
+<!--     ), -->
+<!--     tiebreak -->
+<!--   ) -->
+<!-- ``` -->
 
 
-Generalizes to a matrix normalized to size x
+<!-- `slice()` can also let you do this a bit more programmatically: -->
 
-Assigning student groups (by school_year col)
+<!-- ```{r} -->
+<!-- input |>  -->
+<!--   slice( -->
+<!--     mapply( -->
+<!--       FUN = \(x, y) x[order(category[x], -y[x], tiebreak[x])], -->
+<!--       x = split(row_number(), category), -->
+<!--       y = pick(starts_with("order")) -->
+<!--     ) |>  -->
+<!--       unlist() -->
+<!--   ) -->
+<!-- ``` -->
 
-For otter stuff... (multiple cols)
+<!-- ```{r} -->
+<!-- input |>  -->
+<!--   arrange( -->
+<!--     category, -->
+<!--     desc(case_match( -->
+<!--       category, -->
+<!--       "A" ~ orderA, -->
+<!--       "B" ~ orderB, -->
+<!--       "C" ~ orderC -->
+<!--     )), -->
+<!--     tiebreak -->
+<!--   ) -->
+<!-- ``` -->
 
-Back to experiment template:
-- adding filler trials every once in a while
-- adding comprehension questions (sample AND refer to properties of preceding row - slice() logit in mutate with ifelse(..., col[which(...)], ""))
+<!-- ```{r} -->
+<!-- input |>  -->
+<!--   arrange( -->
+<!--     category, -->
+<!--     desc(case_match( -->
+<!--       category, -->
+<!--       "A" ~ orderA, -->
+<!--       "B" ~ orderB, -->
+<!--       "C" ~ orderC -->
+<!--     )), -->
+<!--     tiebreak -->
+<!--   ) -->
+<!-- ``` -->
+
+
+<!-- Generalizes to a matrix normalized to size x -->
+
+<!-- Assigning student groups (by school_year col) -->
+
+<!-- For otter stuff... (multiple cols) -->
+
+<!-- Back to experiment template: -->
+<!-- - adding filler trials every once in a while -->
+<!-- - adding comprehension questions (sample AND refer to properties of preceding row - slice() logit in mutate with ifelse(..., col[which(...)], "")) -->
 
 
 
-Experiment template conditions (add link to pcibex demo)
-- shuffling within condition => apply shuffle row-wise
-- between-participant => zig-zagging the matrix
-- breaks/resting time every N trials (i.e., separator trial)? make the interleaving matrix and add a row to matrix that's filled with same value (like `n()` after adding the separator to last col), then collapse col-wise.
+<!-- Experiment template conditions (add link to pcibex demo) -->
+<!-- - shuffling within condition => apply shuffle row-wise -->
+<!-- - between-participant => zig-zagging the matrix -->
+<!-- - breaks/resting time every N trials (i.e., separator trial)? make the interleaving matrix and add a row to matrix that's filled with same value (like `n()` after adding the separator to last col), then collapse col-wise. -->
 
-For plotting (order of drawn onto canvas determined by row)
-- one way to address overplotting/overlap in scatterplot cloud (not elegant but yeah... slice/row-order matters here - may be unexpected!)
+<!-- For plotting (order of drawn onto canvas determined by row) -->
+<!-- - one way to address overplotting/overlap in scatterplot cloud (not elegant but yeah... slice/row-order matters here - may be unexpected!) -->
 
 <!-- ## Integer sequences in higher dimensions -->
 
