@@ -34,7 +34,7 @@ May Pik Yu Chan, **June Choe**, Aini Li, Yiran Chen, Xin Gao and Nicole Holliday
 
 ## Conference Presentations
 
-**June Choe** and Anna Papafragou. *Discourse effects on the acquisition of subordinate nouns*. Poster presented at the 36th Annual Conference on Human Sentence Processing, 9-11 March 2022. University of Pittsburg, PA. [Abstract](static/abstract/HSP_2023_Abstract.pdf)
+**June Choe** and Anna Papafragou. *Discourse effects on the acquisition of subordinate nouns*. Poster presented at the 36th Annual Conference on Human Sentence Processing, 9-11 March 2022. University of Pittsburg, PA. [Abstract](static/abstract/HSP_2023_Abstract.pdf) [Poster](static/poster/HSP2023.png)
 
 **June Choe**, and Anna Papafragou. *Acquisition of subordinate nouns as pragmatic inference: Semantic alternatives modulate subordinate meanings*. Poster at the 2nd Experiments in Linguistic Meaning (ELM) conference, 18-20 May 2022. University of Pennsylvania, Philadelphia, PA.
 

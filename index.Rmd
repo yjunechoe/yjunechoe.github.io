@@ -65,7 +65,7 @@ d-title p {
   <img src="static/img/profile_rect.jpeg">
 </div>
 
-<div class="hero-right" style="padding-bottom:1em">
+<div class="hero-right" style="margin-top:-10px; padding-bottom:1em">
   <p style="font-weight:bold; margin-top:5px">
     <i class="fa fa-graduation-cap" aria-hidden="true" style="padding-right:5px"></i> Education
   </p>
@@ -76,8 +76,9 @@ d-title p {
   </p>
   <li>(Computational) Psycholinguistics</li>
   <li>Language Acquisition</li>
-  <li>Parsing / Sentence Processing</li>
-  <li>Prosody & Information Structure</li> 
+  <li>Sentence Processing</li>
+  <li>Prosody</li>
+  <li>Quantitative Methods</li>
 </div>
 
 <div style="float:left; width:100%;">
@@ -91,22 +92,22 @@ d-title p {
     <strong style="font-family:Roboto Slab; font-size:1.2em">
       <i class="fa fa-code" aria-hidden="true" style="padding-right:5px"></i> Programming: 
     </strong>
-    R <span style="font-size:0.8em">(fluent)</span> | HTML/CSS, Javascript, Julia <span style="font-size:0.8em">(proficient)</span>
+    R <span style="font-size:0.8em">(fluent)</span> | HTML/CSS, Javascript, Julia <span style="font-size:0.8em">(proficient)</span> | Python <span style="font-size:0.8em">(coursework)</span>
   </p>
 </div>
 
 </div>
 
 
-<h3 style="margin: 0px 0px 25px 0px; font-variant:small-caps; font-size:2em; letter-spacing:2px">about</h3>
+<!-- <h3 style="margin: 0px 0px 25px 0px; font-variant:small-caps; font-size:2em; letter-spacing:2px">about</h3> -->
 
 <div class="about">
 
-I am a third year PhD student in [Linguistics at the University of Pennsylvania](https://live-sas-www-ling.pantheon.sas.upenn.edu/), and a student affiliate of [Penn MindCORE](https://mindcore.sas.upenn.edu/) and the [Language and Communication Sciences](https://web.sas.upenn.edu/lcs/) program. I am a psycholinguist broadly interested in experimental approaches to studying meaning, of various flavors. I use computational and behavioral methods to study how comprehenders process ambiguity in structure and meaning, both in real time and at different stages of language development. My advisor is Anna Papafragou and I am a member of the [Language & Cognition Lab](https://www.langcoglab.com/).
+I am a third year PhD student in [Linguistics at the University of Pennsylvania](https://live-sas-www-ling.pantheon.sas.upenn.edu/), and a student affiliate of [Penn MindCORE](https://mindcore.sas.upenn.edu/) and the [Language and Communication Sciences](https://web.sas.upenn.edu/lcs/) program. I am a psycholinguist broadly interested in experimental approaches to studying meaning, of various flavors. I use computational and behavioral methods to study how comprehenders process and represent linguistic ambiguity, both in real time and at different stages of language development. My advisor is Anna Papafragou and I am a member of the [Language & Cognition Lab](https://www.langcoglab.com/).
 
-I received my B.A. in Linguistics from Northwestern University, where I worked with [Jennifer Cole](https://sites.northwestern.edu/cole/), [Masaya Yoshida](https://faculty.wcas.northwestern.edu/~myo507/), and [Annette D'Onofrio](https://faculty.wcas.northwestern.edu/~akd2621/). I also worked as a research assistant for the [Language, Education, and Reading Neuroscience Lab](https://learnlab.northwestern.edu/)). I wrote my [thesis](https://escholarship.org/uc/item/5d84n2x7) on the role of prosodically-marked semantic focus in the reanalysis of garden-path sentences.
+I received my B.A. in Linguistics from Northwestern University, where I worked with [Jennifer Cole](https://sites.northwestern.edu/cole/), [Masaya Yoshida](https://faculty.wcas.northwestern.edu/~myo507/), and [Annette D'Onofrio](https://faculty.wcas.northwestern.edu/~akd2621/). I also worked as a research assistant for the [Language, Education, and Reading Neuroscience Lab](https://learnlab.northwestern.edu/). My [thesis](https://escholarship.org/uc/item/5d84n2x7) explored the role of prosodically-marked semantic focus in garden-path reanalysis.
 
-Beyond linguistics research, I have interests in data visualization, science communication, and the R programming language. I develop and contribute to [R packages](https://github.com/yjunechoe) and [blog](https://yjunechoe.github.io/blog.html) about these topics as a hobby. I'm especially passionate about improving explanatory data viz in academic research and strongly believe that _style_ is just as important as _content_. I also work as a data science tutor for researchers at Penn.
+Beyond linguistics research, I have interests in data visualization, science communication, and the R programming language. I actively [develop](https://yjunechoe.github.io/ggtrace/), [share](https://www.youtube.com/watch?v=dUBnitXf5mk), and [contribute to](https://github.com/ropensci/openalexR) open source software and I write a [technical blog](https://yjunechoe.github.io/blog.html) as a hobby. I also work as a data science tutor as part of a MindCORE program, and occasionally take on small statistical consulting projects.
 
 </div>
 
