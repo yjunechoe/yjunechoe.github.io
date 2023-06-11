@@ -12,7 +12,18 @@
       <link>https://yjunechoe.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>2022-11-15</lastBuildDate>
+    <lastBuildDate>2023-06-11</lastBuildDate>
+    <item>
+      <title>Row relational operations with slice()</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>https://yjunechoe.github.io/posts/2023-06-11-row-relational-operations</link>
+      <description>A love letter to dplyr::slice() and a gallery of usecases</description>
+      <category>data wrangling</category>
+      <category>dplyr</category>
+      <guid>https://yjunechoe.github.io/posts/2023-06-11-row-relational-operations</guid>
+      <pubDate>2023-06-11</pubDate>
+      <media:content url="https://yjunechoe.github.io/posts/2023-06-11-row-relational-operations/preview.png" medium="image" type="image/png" width="1800" height="1080"/>
+    </item>
     <item>
       <title>First impressions of DataFrames.jl and accessories</title>
       <dc:creator>June Choe</dc:creator>

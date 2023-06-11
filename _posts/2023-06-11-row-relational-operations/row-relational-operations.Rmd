@@ -1,7 +1,7 @@
 ---
-title: "Do more with slice()"
+title: "Row relational operations with slice()"
 description: |
-  A showcase of dplyr::slice() with its unlikely partner, matrix()
+  A love letter to dplyr::slice() and a gallery of usecases
 categories:
   - data wrangling
   - dplyr
@@ -20,8 +20,7 @@ output:
     css: "../../styles.css"
 editor_options: 
   chunk_output_type: console
-draft: true
-# preview: preview.jpg
+preview: preview.png
 ---
 
 ```{r setup, include=FALSE}
@@ -43,7 +42,7 @@ xaringanExtra::use_clipboard()
 
 In data wrangling, there are a handful of **classes** of operations on data frames that we think of as theoretically well-defined and tackling distinct problems. To name a few, these include subsetting, joins, split-apply-combine, pairwise operations, nested-column workflows, and so on.
 
-Against this rich backdrop, there's one aspect of data wrangling that doesn't receive as much attention: **ordering of rows**. This isn't necessarily surprising - we often think of row order as an auxillary attribute of data frames since they don't speak to the content of the data, *per se*. I think we all share the intuition that two dataframe that differ only in row order are practically the same for most analysis purposes.
+Against this rich backdrop, there's one aspect of data wrangling that doesn't receive as much attention: **ordering of rows**. This isn't necessarily surprising - we often think of row order as an auxiliary attribute of data frames since they don't speak to the content of the data, *per se*. I think we all share the intuition that two dataframe that differ only in row order are practically the same for most analysis purposes.
 
 *Except when they aren't.*
 
@@ -83,7 +82,7 @@ starwars_sm |>
   slice( n() - 2:0 ) # Last three rows
 ```
 
-Another context-depedent expression that comes in handy is `row_number()`, which returns all row indices:
+Another context-dependent expression that comes in handy is `row_number()`, which returns all row indices. Using it inside `slice()` essentially performs an identity transformation:
 
 ```{r}
 identical(
@@ -179,14 +178,14 @@ This lets you do funky stuff like select all even numbered rows by passing `slic
 
 ```{r}
 starwars_sm |> 
-  slice( row_number() * 2 ) # Add `- 1` for odd rows!
+  slice( row_number() * 2 ) # Add `- 1` at the end for *odd* rows!
 ```
 
 ### Re-imagining `slice()` with data-masking
 
 `slice()` is already pretty neat as it is, but that's just the tip of the iceberg.
 
-The really cool, underrated feature of `slice()` is that it's [**data-masked**](https://dplyr.tidyverse.org/reference/dplyr_data_masking.html), meaning that you can reference column vectors as if they're variables.
+The really cool, under-rated feature of `slice()` is that it's [**data-masked**](https://dplyr.tidyverse.org/reference/dplyr_data_masking.html), meaning that you can reference column vectors as if they're variables. Another way of describing this property of `slice()` is to say that it has [**mutate-semantics**](https://rlang.r-lib.org/reference/topic-data-mask-programming.html).
 
 At a very basic level, this means that `slice()` can straightforwardly replicate the behavior of some dplyr verbs like `arrange()` and `filter()`!
 
@@ -206,7 +205,7 @@ starwars_sm |>
   slice( order(height) )
 ```
 
-This is conceptually the same as combining the following 2-step process:
+This is conceptually equivalent to combining the following 2-step process:
 
 1)
 
@@ -258,7 +257,7 @@ This re-imagined `slice()` that heavily exploits data-masking gives us two inter
 
 1) We can work with **sets** of row indices that need not to be the same length as the data frame (vs. `filter()`).
 
-2) We can work directly with rows indices as **integers**, which are legible to arithmetic operations (ex: `+` and `-`)
+2) We can work with row indices as **integers**, which are legible to arithmetic operations (ex: `+` and `*`)
 
 To grok the significance of working with rows as **integer sets**, let's work through some examples where `slice()` comes in very handy.
 
@@ -278,7 +277,7 @@ uncount_df |>
   uncount(n)
 ```
 
-We can also do this inside `slice()` using `rep(times = ...)`:
+We can mimic this behavior with `slice()`, using `rep(times = ...)`:
 
 ```{r}
 rep(1:nrow(uncount_df), times = uncount_df$n)
@@ -303,7 +302,7 @@ starwars_sm |>
   slice( sort(c(row_number(), repeat_at)) )
 ```
 
-What if we also separately have information about how much to repeat by?
+What if we also separately have information about how much to repeat those rows by?
 
 ```{r}
 repeat_by <- c(3, 4)
@@ -316,7 +315,7 @@ starwars_sm |>
   slice( sort(c(row_number(), rep(repeat_at, times = repeat_by - 1))) )
 ```
 
-Alternatively with `uncount()`, you might initialize a vector of `1s` and `replace()` where the rows should be repeated:
+Circling back to `uncount()`, you could also initialize a vector of `1s` and `replace()` where the rows should be repeated:
 
 ```{r}
 starwars_sm |> 
@@ -358,7 +357,7 @@ flights_df |>
   )
 ```
 
-But now the rows are now ordered such that all the AA flights come before the other flights! How can we preserve the original order?
+But now the rows are now ordered such that all the AA flights come before the other flights! How can we preserve the original order of increasing `dep_time`?
 
 We *could* reconstruct the initial row order by piping the result into `arrange(dep_time)` again, but the simplest solution would be to concatenate the set of row indices and `sort()` them, since the output of `which()` is already integer!
 
@@ -391,7 +390,7 @@ Importantly, we can do all of this inside `slice()` because we're working with *
 
 In this example, let's problematize our approach with the repeated `which()` calls in our previous solution.
 
-Imagine another scenario where we want to filter for all AA flights and *three* flights that depart after each.
+Imagine another scenario where we want to filter for all AA flights and *three* subsequent flights for each.
 
 Do we need to write the solution out like this? That's a lot of repetition!
 
@@ -499,19 +498,19 @@ flights_df |>
 <details>
 <summary>Slicing all the way down: Case 1</summary>
 
-With the addition of the `.by` argument to `slice()` in [dplyr v1.10](https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-per-operation-grouping/), we can re-write the above code as three calls to `slice()`:
+With the addition of the `.by` argument to `slice()` in [dplyr v1.10](https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-per-operation-grouping/), we can re-write the above code as three calls to `slice()` (+ a call to `select()`):
 
 ```{r}
 flights_df |> 
   slice( as.integer( outer(0:3, which(carrier == "AA"), `+`) ) ) |> 
-  slice( which(carrier == "AA" & duplicated(flight)) ) |> 
-  slice( 1, .by = c(flight, carrier) ) |> 
+  slice( which(carrier == "AA" & duplicated(flight)) ) |>  # filter()
+  slice( 1, .by = c(flight, carrier) ) |>                  # distinct()
   select(flight, carrier)
 ```
 
 </details>
 
-The next example will demonstrate another, perhaps more practical usecase for `outer()` in `slice()` (+ a call to `select()`).
+The next example will demonstrate another, perhaps more practical usecase for `outer()` in `slice()`.
 
 ### Filter (and encode) neighboring rows
 
@@ -525,12 +524,12 @@ gapminder_df <- gapminder::gapminder |>
 gapminder_df
 ```
 
-This time, let's see the desired output first and build our way up. The goal is to plot the GDP growth of Germany over the years, *and* its yearly **GDP neighbors** side-by-side:
+This time, let's see the desired output (plot) first and build our way up. The goal is to plot the GDP growth of Germany over the years, *and* its yearly **GDP neighbors** side-by-side:
 
 ```{r final-gapminder-plot, echo = FALSE}
 ```
 
-First, let's think about what a "GDP neighbor" means in row-relational terms. If you sorted the data by GDP, the GDP neighbors would be the rows that immediately precede and follow the row for Germany. You need to recalculate neighbors every year though, so this `arrange()` + `slice()` combo should happen by-year.
+First, let's think about what a "GDP neighbor" means in row-relational terms. If you arranged the data by GDP, the GDP neighbors would be the rows that come immediately before and after the rows for Germany. You need to recalculate neighbors every year though, so this `arrange()` + `slice()` combo should happen by-year.
 
 With that in mind, let's set up a `year` grouping and arrange by `gdpPercap` within `year`:^[The `.by_group = TRUE` is not strictly necessary here, but it's good for visually inspecting the within-group ordering.]
 
@@ -540,7 +539,7 @@ gapminder_df |>
   arrange(gdpPercap, .by_group = TRUE)
 ```
 
-Now within each year, we want to grab the row for Germany and its neighboring rows. We can do this by taking the outer sum of `-1:1` and the row indices for Germany:
+Now within each year, we want to grab the row for Germany _and_ its neighboring rows. We can do this by taking the `outer()` sum of `-1:1` and the row indices for Germany:
 
 ```{r}
 gapminder_df |> 
@@ -560,12 +559,12 @@ gapminder_df |>
   slice( as.integer(outer( -1:1, which(country == "Germany"), `+` )) )
 ```
 
-For our purposes here we want actually the grouping to be persistent in order for the following `mutate()` call to work, but there may be other cases where you'd want to use `slice(.by = )` for the temporary grouping effect.
+For our purposes here we want actually the grouping to **persist** for the following `mutate()` call, but there may be other cases where you'd want to use `slice(.by = )` for temporary grouping.
 </details>
 
 Now we're already starting to see the shape of the data that we want! The last step is to encode the relationship of each row to Germany - does a row represent Germany itself, or a country that's one GDP ranking below or above Germany?
 
-Continuing with our grouped context, we make a new column `grp` that assigns a factor value `"lo"`-`"is"`-`"hi"` (for "lower", "is Germany" and "higher") to each country trio by year. Notice the use of `fct_inorder()` here - this ensures that the factor levels are in the order of their occurrence (this determines the ordering of bars in `geom_col()` later):
+Continuing with our grouped context, we make a new column `grp` that assigns a factor value `"lo"`-`"is"`-`"hi"` (for "lower" than Germany, "is" Germany and "higher" than Germany) to each country trio by year. Notice the use of `fct_inorder()` below - this ensures that the factor levels are in the order of their occurrence (necessary for the correct ordering of bars in `geom_col()` later):
 
 ```{r}
 gapminder_df |> 
@@ -588,7 +587,8 @@ gapminder_df |>
   ggplot(aes(as.factor(year), gdpPercap, group = grp)) +
   geom_col(aes(fill = grp == "is"), position = position_dodge()) +
   geom_text(
-    aes(label = country_code), vjust = 1.3,
+    aes(label = country_code),
+    vjust = 1.3,
     position = position_dodge(width = .9)
   ) +
   scale_fill_manual(
@@ -600,9 +600,9 @@ gapminder_df |>
 ```
 
 <details>
-<summary>Solving the harder version of this problem</summary>
+<summary>Solving the harder version of the problem</summary>
 
-The present solution relies on a faulty assumption that Germany will always have a higher *and* lower ranking GDP neighbor every year. But nothing about the problem description guarantees this, so how can we re-write our code to be more robust?
+The solution presented above relies on a fragile assumption that Germany will always have a higher *and* lower ranking GDP neighbor every year. But nothing about the problem description guarantees this, so how can we re-write our code to be more robust?
 
 First, let's simulate a data where Germany is the lowest ranking country in 2002 and the highest ranking in 2007. In other words, Germany only has one GDP neighbor in those years:
 
@@ -614,7 +614,7 @@ gapminder_harder_df <- gapminder_df |>
 gapminder_harder_df
 ```
 
-Given this data, we cannot assign the full, length-3 lo-is-hi factor by group, because the groups for 2002 and 2007 only have 2 observations:
+Given this data, we cannot assign the full, length-3 lo-is-hi factor by group, because the groups for year 2002 and 2007 only have 2 observations:
 
 ```{r, error=TRUE}
 gapminder_harder_df |> 
@@ -649,9 +649,9 @@ ts_df <- tibble(
 ts_df
 ```
 
-If you're new to window functions, think of them as a special kind of `group_by()` + `summarize()` where groups are chunks of observations along a (oftentimes unique) continuous measure like time, and observations can be shared between groups.
+If you're new to window functions, think of them as a special kind of `group_by()` + `summarize()` where groups are chunks of observations along a (typically unique) continuous measure like time, and observations can be shared between groups.
 
-There are several packages implementing moving/sliding/rolling window functions. My current favorite is `{r2c}` (see a [review of other implementations](https://github.com/brodieG/r2c#fast-group-and-rolling-statistics) therein), but I also like `{slider}` for an implementation that follows familiar ["tidy" design principles](https://design.tidyverse.org/):
+There are several packages implementing moving/sliding/rolling window functions. My current favorite is `{r2c}` (see a [review of other implementations therein](https://github.com/brodieG/r2c#fast-group-and-rolling-statistics)), but I also like `{slider}` for an implementation that follows familiar ["tidy" design principles](https://design.tidyverse.org/):
 
 ```{r}
 library(slider)
@@ -659,7 +659,7 @@ ts_df |>
   mutate(moving_min = slide_min(val, before = 2L, complete = TRUE))
 ```
 
-Moving window is a general class of operations that encompass any arbitrary summary statistic - so not just min but also mean, standard deviation, etc. But what makes moving **min** (along with max, median, etc.) a particularly interesting case for our current discussion is that the value comes from **an existing observation** in the data. And if our time series is tidy, every observation makes up a row. See where I'm going with this?
+Moving window is a general class of operations that encompass any arbitrary summary statistic - so not just min but other reducing functions like mean, standard deviation, etc. But what makes moving **min** (along with max, median, etc.) a particularly interesting case for our current discussion is that the value comes from **an existing observation** in the data. And if our time series is tidy, every observation makes up a row. See where I'm going with this?
 
 Using `outer()` again, we can take the outer sum of all row indices of `ts_df` and `-2:0`. This gives us a matrix where each column represents a lagged size-3 moving window:
 
@@ -699,13 +699,13 @@ ts_df |>
   mutate(moving_min = c(NA, NA, moving_mins$val))
 ```
 
-At this point you might think that this is a very round-about way of solving the same problem. But actually I think that it's a faster route to solving a different problem - augmenting each observation of a data frame with information about **comparison observations**.
+At this point you might think that this is a very round-about way of solving the same problem. But actually I think that it's a faster route to solving a slightly more complicated problem - augmenting each observation of a data frame with information about **comparison observations**.
 
 For example, our `slice()`-based solution sets us up nicely for also bringing along information about the time at which the `moving_min` occurred. After some `rename()`-ing and adding the original time information back in, we get back a relational data structure where `time` is a **key** shared with `ts_df`:
 
 ```{r}
 moving_mins2 <- moving_mins |> 
-  rename(moving_min = val, moving_min_time = time) |> 
+  rename(moving_min_val = val, moving_min_time = time) |> 
   mutate(time = ts_df$time[-(1:2)], .before = 1L)
 moving_mins2
 ```
@@ -727,6 +727,8 @@ ts_wide_df <- ts_df |>
 ts_wide_df
 ```
 
+The below code augments each observation in the original `ts_wide_df` data with information about the corresponding 3-window moving min (columns prefixed with `"min3val_"`)
+
 ```{r}
 moving_mins_wide <- ts_wide_df |> 
   slice(
@@ -737,6 +739,145 @@ moving_mins_wide <- ts_wide_df |>
   mutate(time = ts_wide_df$time[-(1:2)])
 left_join(ts_wide_df, moving_mins_wide, by = "time")
 ```
+
+<!-- ### Dependency relations between rows -->
+
+<!-- In tidy representations of nested, hierarchical data, the parent-child relationship between rows are often encoded in a column that reference other rows in the data. -->
+
+<!-- Let's take the case of dependency parsing in NLP (using [spaCy](https://spacy.io/)) for example. Given a sentence like "June likes cute cats", the dependency relationship between tokens can be represented like so: -->
+
+<!-- <details> -->
+<!-- <summary>Code to produce the figure</summary> -->
+
+<!-- ```{r displacy, eval = FALSE} -->
+<!-- library(reticulate) -->
+<!-- spacy <- import("spacy") -->
+<!-- nlp <- spacy$load("en_core_web_sm") -->
+<!-- py_parsed <- nlp("June likes cute cats") -->
+
+<!-- displacy_render <- function(x) { -->
+<!--   spacy$displacy$render(x) |>  -->
+<!--     htmltools::HTML() |> -->
+<!--     htmltools::html_print() -->
+<!-- } -->
+<!-- displacy_render(py_parsed) -->
+<!-- ``` -->
+
+<!-- </details> -->
+
+<!-- ```{r displacy, message = FALSE} -->
+<!-- ``` -->
+
+<!-- There's a lot going on here, but I want to draw attention to the fact that there's an arrow going from `"likes"` to `"cats"` and from `"cats"` to `"cute"`. In NLP terms, we say that in this sentence, the head of "cute" is "cats", and the head of "cats" is "likes". -->
+
+<!-- To demonstrate this using **spacy** in *python*, we can parse the sentence and store the parsed object in `py_parsed`: -->
+
+<!-- ```{r, eval = FALSE} -->
+<!-- library(reticulate) -->
+<!-- spacy <- import("spacy") -->
+<!-- nlp <- spacy$load("en_core_web_sm") -->
+<!-- py_parsed <- nlp("June likes cute cats") -->
+<!-- ``` -->
+
+<!-- Using python's 0-indexing, we extract the token object corresponding to "cats". From there, we can see the dependency relationship where the head of "cute" is "cats" and the head of "cats" is "likes": -->
+
+<!-- ```{r} -->
+<!-- py_parsed[2] -->
+<!-- py_parsed[2]$head -->
+<!-- py_parsed[2]$head$head -->
+<!-- ``` -->
+
+<!-- We see that this dependency relationship between "cute"-"cats"-"likes" is expressed concisely in object-oriented programming (you just follow the `head` property of tokens). This gets a bit trickier to work with in tidy data form. -->
+
+<!-- Using the `{spacyr}` package, we can generate a dataframe equivalent of `py_parsed` which stores the dependency relationship in the `head_token_id` column: -->
+
+<!-- ```{r, message = FALSE} -->
+<!-- library(spacyr) -->
+<!-- sentence <- "June likes cute cats" -->
+<!-- parsed <- spacy_parse(sentence, dependency = TRUE, entity = FALSE)[,-c(1:2)] -->
+<!-- parsed -->
+<!-- ``` -->
+
+<!-- To get from "cute" to "cats" and "likes" by following the arrows, we can use `slice()`: -->
+
+<!-- ```{r} -->
+<!-- # Child token -->
+<!-- parsed |>  -->
+<!--   slice(3) -->
+<!-- # Parent head -->
+<!-- parsed |>  -->
+<!--   slice( head_token_id[3] ) -->
+<!-- # Grandparent head -->
+<!-- parsed |>  -->
+<!--   slice( head_token_id[token_id == head_token_id[3]] ) -->
+<!-- ``` -->
+
+<!-- <details> -->
+<!-- <summary>The recursive generalization</summary> -->
+
+<!-- ```{r} -->
+<!-- # Special case for init -->
+<!-- parsed |>  -->
+<!--   slice( 3 ) -->
+<!-- # Recursive call to `head_token_id[token_id == PREV]` -->
+<!-- parsed |>  -->
+<!--   slice( head_token_id[token_id == 3] ) -->
+<!-- parsed |>  -->
+<!--   slice( head_token_id[token_id == head_token_id[token_id == 3]] ) -->
+<!-- ``` -->
+
+<!-- </details> -->
+
+<!-- Now let's say that we have a paragraph of sentences describing what June likes and doesn't likes. -->
+
+<!-- ```{r} -->
+<!-- paragraph <- "June likes cute cats. June hates angry cats. June likes small dogs." -->
+<!-- parsed_paragraph <- spacy_parse(paragraph, dependency = TRUE, entity = FALSE) -->
+<!-- parsed_paragraph <- parsed_paragraph |>  -->
+<!--   filter(pos != "PUNCT") -->
+<!-- parsed_paragraph -->
+<!-- ``` -->
+
+<!-- And let's say that our research question is: what kinds of cats does June like? In other words we want to end up with a set of `ADJ`s where the head token is `cats` and the head token of that is `likes`. In `parsed_paragraph`, there's only one token (row) meeting this criteria: -->
+
+<!-- ```{r} -->
+<!-- parsed_paragraph[3,] -->
+<!-- ``` -->
+
+<!-- In our solution we use a helper function `get_head_tokens()`, which recursively searches for token head using `slice()`. This blog post is already getting too long so I'll just dump the code for now and maybe I'll come back to add more explanations later... -->
+
+<!-- ```{r} -->
+<!-- get_head_tokens <- function(df, child, n) { -->
+<!--   child <- rlang::eval_tidy(enquo(child), data = df) -->
+<!--   purrr::accumulate( -->
+<!--     .x = seq_len(n), -->
+<!--     .f = ~ slice(df, head_token_id[token_id == .x$token_id]), -->
+<!--     .init = slice(df, child) -->
+<!--   ) |>  -->
+<!--     slice(-1) |>  -->
+<!--     pull(token) -->
+<!-- } -->
+
+<!-- parsed_paragraph |>  -->
+<!--   filter(sentence_id == 1) |>  -->
+<!--   get_head_tokens(child = which(pos == "ADJ"), n = 2) -->
+<!-- ``` -->
+
+<!-- Applying `get_head_tokens()` for each sentence gets us the solution: -->
+
+<!-- ```{r} -->
+<!-- parsed_paragraph |>  -->
+<!--   group_by(sentence_id) |>  -->
+<!--   filter( -->
+<!--     pos == "ADJ", -->
+<!--     identical( -->
+<!--       c("cats", "likes"), -->
+<!--       get_head_tokens(pick(everything()), which(pos == "ADJ"), 2) -->
+<!--     ) -->
+<!--   ) |>  -->
+<!--   ungroup() -->
+<!-- ``` -->
+
 
 ### Evenly distributed row shuffling of balanced categories
 
@@ -756,7 +897,7 @@ mismatch_trials <- tibble(
 mismatch_trials
 ```
 
-We probably also want some trials where the word and color do match, so as to serve as a baseline for the effect of mismatch:
+We probably also want to mix in some _control_ trials where the word and color do match:
 
 ```{r}
 match_trials <- mismatch_trials |> 
@@ -780,7 +921,7 @@ stroop_trials |>
   slice( as.integer(outer(c(0, 5), 1:5, "+")) )
 ```
 
-That relies on a some strong assumptions about the row order in the original data, though. So a safer alternative is to represent the row indices for `"match"` and `"mismatch"` trials as rows of a matrix, and then collapse column-wise.
+This relies on a strong assumptions about the row order in the original data, though. So a safer alternative is to represent the row indices for `"match"` and `"mismatch"` trials as rows of a matrix, and then collapse column-wise.
 
 Let's try this outside of `slice()` first. We start with a call to `sapply()` to construct a matrix where the columns contain row indices for each unique category of `trial`:
 
@@ -802,7 +943,7 @@ interleaved_stroop_trials <- stroop_trials |>
 interleaved_stroop_trials
 ```
 
-At the moment, we have both "red" word trails showing up together, and then the "green"s, the "purple"s, and so on. If we wanted to introduce some randomness to the presentation order within each type of trial, we can wrap the row indices in `sample()` to shuffle them:
+At the moment, we have both "red" word trails showing up together, and then the "green"s, the "purple"s, and so on. If we wanted to introduce some randomness to the presentation order within each type of trial, we can wrap the row indices in `sample()` to shuffle them first:
 
 ```{r}
 shuffled_stroop_trials <- stroop_trials |> 
@@ -811,6 +952,7 @@ shuffled_stroop_trials
 ```
 
 <!-- applies to monotonically increasing continuous sequences too -->
+
 
 ### Inserting a new row at specific intervals
 
@@ -899,7 +1041,7 @@ shuffled_stroop_trials |>
 
 You might protest that this is a pretty convoluted approach to a seemingly simple problem of inserting rows, and you'd be right!^[Although row insertion is a generally tricky problem for column-major data frame structures, which is partly why dplyr's [row manipulation verbs](https://dplyr.tidyverse.org/reference/rows.html) have stayed experimental for quite some time.] Not only is the code difficult to read, you can only insert the same single row over and over.
 
-It turns out that these cases of row insertion actually fall under the broader class of distributing observations from **unequal categories**, which IMO is a bit more principled - let's see this next.
+It turns out that these cases of row insertion actually fall under the broader class of interweaving **unequal categories** - let's see this next.
 
 ### Evenly distributed row shuffling of unequal categories
 
@@ -950,7 +1092,7 @@ But a better way of thinking about this is to have one matrix row representing a
 
 And it turns out that this method generalizes to balanced shuffling across categories that are not equal in size!
 
-Let's start with a really basic example - here are three kinds of fruits with varying counts:
+Let's start with a really basic example - here we have three kinds of fruits with varying counts:
 
 ```{r}
 fruits <- c("🍎", "🍋", "🍇")[c(2,1,3,3,2,3,1,2,2,1,2,2,3,3,3)]
@@ -961,13 +1103,13 @@ table(fruits)
 Their current order looks like this:
 
 ```{r}
-fruits
+cat(levels(fruits)[fruits])
 ```
 
 But I want them to be ordered such that individuals of the same fruit kind are maximally apart from one another. This effectively re-orders the fruits to be distributed "evenly":
 
 ```{r}
-fruits[c(3,1,2,4,5,0,6,8,10,13,9,0,14,11,7,15,12,0)]
+cat(levels(fruits)[fruits[c(3,1,2,4,5,0,6,8,10,13,9,0,14,11,7,15,12,0)]])
 ```
 
 With our "build row-wise, collapse col-wise" approach, this takes the following steps:
@@ -1101,245 +1243,8 @@ stroop_with_fillers |>
   slice( rshuffle(trial, shuffle_within = TRUE) )
 ```
 
-<!-- ## Split-arrange-combine -->
+## Conclusion
 
-<!-- Let's say we want to arrange the rows of this data frame *conditionally*, such that: -->
+When I started drafting this blog post, I thought I'd come with a principled taxonomy of row-relational operations. Ha. This was a lot trickier to think through than I thought.
 
-<!-- - Category "A" is ordered by values of `orderA`, "B" by `orderC`, and "C" by `orderC`. -->
-
-<!-- - Any ties within categories are broken by values of the `tiebreak` column. -->
-
-<!-- - Overall, rows should be sorted by Category "A", then "B", then "C". -->
-
-<!-- ```{r} -->
-<!-- conditional_arrange1 <- tibble( -->
-<!--   rowid = letters[1:10], -->
-<!--   category = LETTERS[sample(3, 10, replace = TRUE)], -->
-<!--   orderA = sample(5, 10, replace = TRUE), -->
-<!--   orderB = sample(5, 10, replace = TRUE), -->
-<!--   orderC = sample(5, 10, replace = TRUE), -->
-<!--   tiebreak = sample(10) -->
-<!-- ) -->
-<!-- conditional_arrange1 -->
-<!-- ``` -->
-
-<!-- We can do this straightforwardly in arrange:  -->
-
-<!-- ```{r} -->
-<!-- conditional_arrange1 |>  -->
-<!--   arrange( -->
-<!--     category, -->
-<!--     desc(case_match( -->
-<!--       category, -->
-<!--       "A" ~ orderA, -->
-<!--       "B" ~ orderB, -->
-<!--       "C" ~ orderC -->
-<!--     )), -->
-<!--     tiebreak -->
-<!--   ) -->
-<!-- ``` -->
-
-<!-- And as we saw at the beginning, we can also apply the same logic inside `slice()` using `order()`: -->
-
-<!-- ```{r} -->
-<!-- conditional_arrange1 |>  -->
-<!--   slice(order( -->
-<!--     category, -->
-<!--     -case_match( -->
-<!--       category, -->
-<!--       "A" ~ orderA, -->
-<!--       "B" ~ orderB, -->
-<!--       "C" ~ orderC -->
-<!--     ), -->
-<!--     tiebreak -->
-<!--   )) -->
-<!-- ``` -->
-
-<!-- But now suppose that we have a slightly more complex problem - the columns also specify which *direction* each category should be sorted by: -->
-
-<!-- ```{r} -->
-<!-- conditional_arrange2 <- conditional_arrange1 |>  -->
-<!--   rename( -->
-<!--     asceA = orderA, # Category A in ascending order -->
-<!--     descB = orderB, # Category B in descending order -->
-<!--     asceC = orderC  # Category C in ascending order -->
-<!--   ) -->
-<!-- conditional_arrange2 -->
-<!-- ``` -->
-
-<!-- This fundamentally breaks how `arrange()` handles sorting: -->
-
-<!-- ```{r} -->
-<!-- conditional_arrange2 |>  -->
-<!--   arrange( -->
-<!--     category, -->
-<!--     case_match( -->
-<!--       category, -->
-<!--       "A" ~ asceA, -->
-<!--       "B" ~ desc(descB), -->
-<!--       "C" ~ asceC -->
-<!--     ), -->
-<!--     tiebreak -->
-<!--   ) -->
-<!-- ``` -->
-
-
-<!-- `slice()` can also let you do this a bit more programmatically: -->
-
-<!-- ```{r} -->
-<!-- input |>  -->
-<!--   slice( -->
-<!--     mapply( -->
-<!--       FUN = \(x, y) x[order(category[x], -y[x], tiebreak[x])], -->
-<!--       x = split(row_number(), category), -->
-<!--       y = pick(starts_with("order")) -->
-<!--     ) |>  -->
-<!--       unlist() -->
-<!--   ) -->
-<!-- ``` -->
-
-<!-- ```{r} -->
-<!-- input |>  -->
-<!--   arrange( -->
-<!--     category, -->
-<!--     desc(case_match( -->
-<!--       category, -->
-<!--       "A" ~ orderA, -->
-<!--       "B" ~ orderB, -->
-<!--       "C" ~ orderC -->
-<!--     )), -->
-<!--     tiebreak -->
-<!--   ) -->
-<!-- ``` -->
-
-<!-- ```{r} -->
-<!-- input |>  -->
-<!--   arrange( -->
-<!--     category, -->
-<!--     desc(case_match( -->
-<!--       category, -->
-<!--       "A" ~ orderA, -->
-<!--       "B" ~ orderB, -->
-<!--       "C" ~ orderC -->
-<!--     )), -->
-<!--     tiebreak -->
-<!--   ) -->
-<!-- ``` -->
-
-
-<!-- Generalizes to a matrix normalized to size x -->
-
-<!-- Assigning student groups (by school_year col) -->
-
-<!-- For otter stuff... (multiple cols) -->
-
-<!-- Back to experiment template: -->
-<!-- - adding filler trials every once in a while -->
-<!-- - adding comprehension questions (sample AND refer to properties of preceding row - slice() logit in mutate with ifelse(..., col[which(...)], "")) -->
-
-
-
-<!-- Experiment template conditions (add link to pcibex demo) -->
-<!-- - shuffling within condition => apply shuffle row-wise -->
-<!-- - between-participant => zig-zagging the matrix -->
-<!-- - breaks/resting time every N trials (i.e., separator trial)? make the interleaving matrix and add a row to matrix that's filled with same value (like `n()` after adding the separator to last col), then collapse col-wise. -->
-
-<!-- For plotting (order of drawn onto canvas determined by row) -->
-<!-- - one way to address overplotting/overlap in scatterplot cloud (not elegant but yeah... slice/row-order matters here - may be unexpected!) -->
-
-<!-- ## Integer sequences in higher dimensions -->
-
-<!-- Let's table our discussion of `slice()` for a moment and talk about integer sequences. Suppose that I want an integer sequence that repeats 1-to-3 three times. -->
-
-<!-- There's at least two ways of doing this: -->
-
-<!--     1) A literal repetition of the subset: -->
-
-<!--     ```{r} -->
-<!--     rep(1:3, 3) -->
-<!--     ``` -->
-
-<!--     2) Through arithmetic operations over a simple base sequence: -->
-
-<!--     ```{r} -->
-<!--     0:8 %% 3 + 1 -->
-<!--     ``` -->
-
-<!-- Both approaches are interesting and have their own place, but neither does particularly well some class of sequences. For example, what is the best way to generate sequences like this? -->
-
-<!-- ```{r} -->
-<!-- c(1, 4, 7, 2, 5, 8, 3, 6, 9) -->
-<!-- ``` -->
-
-<!-- One way is to use a mix of two approaches - generate a base sequence repeating [1,3,7] three times, and increment with each cycle: -->
-
-<!-- ```{r} -->
-<!-- rep(c(1, 4, 7), 3) + rep(0:2, each = 3) -->
-<!-- ``` -->
-
-<!-- But if you look carefully at the target sequence, there's a kind of a 2-dimensional pattern here: three equal chunks of a simple base sequence of 1-to-9 are being interleaved: -->
-
-<!-- ```{r} -->
-<!-- c(1, 2, 3) -->
-<!-- c(4, 5, 6) -->
-<!-- c(7, 8, 9) -->
-<!-- ``` -->
-
-<!-- This looks oddly like a matrix that's filled up by row: -->
-
-<!-- ```{r} -->
-<!-- matrix(1:9, byrow = TRUE, ncol = 3) -->
-<!-- ``` -->
-
-
-
-<!-- Geometrically: -->
-
-<!-- ```{r} -->
-<!-- as.integer( matrix(rep(1:3, 3), ncol = 3) ) -->
-<!-- ``` -->
-
-<!-- When sequences are understood as the "interweaving of multiple vectors": -->
-
-<!-- ```{r} -->
-<!-- c(1, 3, 7, 2, 4, 8, 3, 6, 9) -->
-<!-- ``` -->
-
-<!-- Which contains members from three vectors: -->
-
-<!-- ```{r} -->
-<!-- c(1, 2, 3) -->
-<!-- c(4, 5, 6) -->
-<!-- c(7, 8, 9) -->
-<!-- ``` -->
-
-<!-- This looks oddly like a matrix: -->
-
-<!-- ```{r} -->
-<!-- matrix(1:9, ncol = 3) -->
-<!-- ``` -->
-
-<!-- The primary axis of matrices are columns (much like dataframes), so when we "collapse" a matrix into a vector, you "collect" the cell values starting from the top-left cell and zig zag top-to-bottom, left-to-right until you hit the bottom-right cell.  -->
-
-<!-- ```{r} -->
-<!-- as.integer( matrix(1:9, ncol = 3) ) -->
-<!-- ``` -->
-
-<!-- Exploiting this fact, it'd be nice if we could generate our number sequence via the use of a matrix: -->
-
-<!-- ```{r} -->
-<!-- matrix(c(1, 3, 7, 2, 4, 8, 3, 6, 9), ncol = 3) -->
-<!-- ``` -->
-
-<!-- You'd be surprised to know that this is just our boring matrix that has been rotated: -->
-
-<!-- ```{r} -->
-<!-- t( matrix(1:9, ncol = 3) ) -->
-<!-- ``` -->
-
-<!-- We get our complex sequence if we collapse this rotated matrix: -->
-
-<!-- ```{r} -->
-<!-- as.integer( t( matrix(1:9, ncol = 3) ) ) -->
-<!-- ``` -->
-
+But I hope that this gallery of esoteric use-cases for `slice()` inspires you to use it more, and to think about "tidy" solutions to seemingly "untidy" problems.
