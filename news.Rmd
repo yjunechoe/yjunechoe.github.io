@@ -26,7 +26,17 @@ li::marker {
 }
 ```
 
+For more of my personal news external/tangential to [research](https://yjunechoe.github.io/research.html)
+
 ## 2023
+
+### June
+
+- My package [jlmerclusterperm](https://yjunechoe.github.io/jlmerclusterperm/) was published on CRAN!
+
+### April
+
+- I was accepted to [SMLP](https://vasishth.github.io/smlp2023/) (Summer School on Statistical Methods for Linguistics and Psychology), to be held in September at the University of Potsdam, Germany! I will be joining the "Advanced methods in frequentist statistics with Julia" stream. Huge thanks to [MindCORE](https://mindcore.sas.upenn.edu/) for funding my travels to attend!
 
 ### January
 
