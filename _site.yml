@@ -27,6 +27,8 @@ navbar:
         #   href: visualizations.html
     - icon: fa fa-twitter
       href: https://twitter.com/yjunechoe
+    - icon: fa-brands fa-mastodon
+      href: https://fosstodon.org/@yjunechoe
     - icon: fa fa-github
       href: https://github.com/yjunechoe
     - image: static/img/osf.png
