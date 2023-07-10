@@ -2944,7 +2944,7 @@ Misc.
 <li id="fn6"><p>Or the number of distinct combinations between <code>PANEL</code> and <code>group</code>, as in <code>nlevels(interaction(PANEL, group, drop = TRUE))</code>. But of course that’s overkill and only of interest for “theoretical purity”.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn7"><p>And I like the R4DS slack because it doesn’t have “internet points.” There <em>is</em> status (moderator) though I don’t wear the badge (literally - it’s an emoji).<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8"><p>Actually I only thought of this because I’d been writing a statistical <a href="https://yjunechoe.github.io/jlmerclusterperm/">package</a> that required some nasty metaprogramming with the formula object.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9"><p>The significance of this solution building on top of R’s formula utilities is that it will also parse stuff like <code>"a*b"</code> (as <code>c("a", "b", "a:b")</code>. So given that the inputs originated from R formulas (as the user later clarifies), this <em>is</em> the principled approach.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>The significance of this solution building on top of R’s formula utilities is that it will also parse stuff like <code>"a*b"</code> as <code>c("a", "b", "a:b")</code>. So given that the inputs originated as R formulas (as the user later clarifies), this <em>is</em> the principled approach.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 <!--radix_placeholder_article_footer-->
