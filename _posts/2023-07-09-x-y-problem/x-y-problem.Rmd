@@ -1,0 +1,266 @@
+---
+title: "Fumbling my way through an XY problem"
+description: |
+  Some lessons learned from a (personal) case study
+categories:
+  - reflections
+base_url: https://yjunechoe.github.io
+author:
+  - name: June Choe
+    affiliation: University of Pennsylvania Linguistics
+    affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+    orcid_id: 0000-0002-0701-921X
+date: "`r Sys.Date()`"
+output:
+  distill::distill_article:
+    include-after-body: "highlighting.html"
+    toc: true
+    self_contained: false
+    css: "../../styles.css"
+editor_options: 
+  chunk_output_type: console
+preview: preview.png
+---
+
+```{r setup, include=FALSE}
+library(ggplot2)
+knitr::opts_chunk$set(
+  comment = " ",
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  R.options = list(width = 80)
+)
+theme_set(
+  theme_grey(base_size = 10)
+)
+```
+
+## Intro
+
+A few months ago, over at the R4DS slack ([http://r4ds.io/join](http://r4ds.io/join)), someone posted a ggplot question that was within my area of "expertise". I got tagged in the thread, I went in, and it took me 3 tries to arrive at the correct solution that the poster was asking for.
+
+The embarrassing part of the exchange was that I would write one solution, think about what I wrote for a bit, and then write a different solution after realizing that I had misunderstood the intent of the original question. In other words, I was consistently missing the point.
+
+This is a microcosm of a bigger problem of mine that I've been noticing lately, as my role in the R community has shifted from mostly asking questions to mostly answering questions. By this point I've sort of pin-pointed the problem: **I have a hard time recognizing that I'm stuck in an XY problem**.
+
+I have a lot of thoughts on this and I want to document them for future me,^[Especially before slack deletes the old messages.] so here goes a rant. I hope it's useful to whoever is reading this too.
+
+
+## What is an XY problem?
+
+According to [Wikipedia](https://en.wikipedia.org/wiki/XY_problem):
+
+> The XY problem is a communication problem... where the question is about an end user's attempted solution (Y) rather than the root problem itself (X).
+
+The [classic example](https://xyproblem.info/) of this is when a (novice) user asks how to extract the last 3 characters in a filename. There's no good reason to blindly grab the last 3 characters, so what they probably meant to ask is how to get the file extension (which is not always 3 characters long, like `.R` or `.Rproj`).^[In R, you can use `tools::file_ext()` or `fs::path_ext()`.]
+
+Another somewhat related cult-classic, copypasta^[https://en.wikipedia.org/wiki/Copypasta] example is the ["Don't use regex to parse HTML" answer on stackoverflow](https://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags?page=1&tab=scoredesc#tab-top). Here, a user asks how to use regular expressions to match HTML tags, to which the top-voted answer is _don't_ (instead, you should use a dedicated parser). The delivery of this answer is a work of art, so I highly suggest you giving it a read if you haven't seen it already (the link is above for your amusement).
+
+An example of an XY problem in R that might hit closer to home is when a user complains about the notorious `Object of type 'closure' is not subsettable` error. It's often brought up as a [cautionary tale for novice users](https://www.youtube.com/watch?v=vgYS-F8opgE) (error messages can only tell you so much, so you must develop debugging strategies), but it has a special meaning for more experienced users who've been bit by this multiple times. So for me, when I see novice users reporting this specific error, I usually ask them if they have a variable called `data` and whether they forgot to run the line assigning that variable. Of course, this answer does not _explain_ what the error means,^[Good luck trying to explain the actual error message. Especially **closure**, a kind of weird vocabulary in R (fun fact - the first edition of Advanced R used to have a [section on closure](http://adv-r.had.co.nz/Functional-programming.html#closures) which is absent in the second edition probably because "In R, almost every function is a closure").] but oftentimes it's the solution that the user is looking for.
+    
+```{r closure-error, error = TRUE}
+# Oops forgot to define `data`!
+# `data` is a function (in {base}), which is not subsettable
+data$value
+```
+
+As one last example, check out this [lengthy exchange on splitting a string (Y) to parse JSON (X)](https://meta.stackexchange.com/a/66378). I felt compelled to include this example because it does a good job capturing the degree of frustration (very high) that normally comes with XY problems.
+
+But the thing about the XY problem is that it often prompts the lesson of [asking good questions](http://www.catb.org/esr/faqs/smart-questions.html): don't skip steps in your reasoning, make your goals/intentions clear, use a [reprex](https://reprex.tidyverse.org/),^[Paradoxically, XY problems sometimes arise when inexperienced users try to come up with a reprex. They might capture the error/problem too narrowly, such that the more important broader context is left out.] and so on. But in so far as it's a communication problem involving both parties, I think we should also talk about what the person _answering_ the question can do to recognize an XY problem and break out of it.
+
+Enter me, someone who really needs to do a better job of recognizing when I'm stuck in an XY problem. So with the definition out of the way, let's break down how I messed up.
+
+
+## The question
+
+The question asks:
+
+> Does anyone know how to access the number of bars in a barplot? I'm looking for something that will return "15" for the following code, that can be used within ggplot, like after_stat()
+
+The question comes with an example code. Not exactly a reprex, but something to help understand the question:
+
+```{r q-plot}
+p <- ggplot(mpg, aes(manufacturer, fill = manufacturer)) +
+  geom_bar()
+p
+```
+
+The key phrase in the question is "can be used within ggplot". So the user isn't looking for something like this even though it's conceptually equivalent:
+
+```{r ans-naive}
+length(unique(mpg$manufacturer))
+```
+
+The idea here is that ggplot knows that there are 15 bars, so this fact must represented somewhere in the internals. The user wants to be able to access that value dynamically.
+
+
+## Attempt 1: `after_stat()`? I know that!
+
+The very last part of the question "... like after_stat()" triggered some alarms in the thread and got me called in. For those unfamiliar, `after_stat()` is part of the new and obscure family of [delayed aesthetic evaluation](https://ggplot2.tidyverse.org/reference/aes_eval.html) functions introduced in ggplot 3.3.0. It's something that you normally don't think about in ggplot, but it's a topic that I've been obsessed with for the last 2 years or so: it has resulted in a [paper](https://yjunechoe.github.io/static/papers/Choe_2022_SublayerGG.pdf), a package ([ggtrace](https://github.com/yjunechoe/ggtrace)), [blog](https://yjunechoe.github.io/posts/2022-03-10-ggplot2-delayed-aes-1/) [posts](https://yjunechoe.github.io/posts/2022-07-06-ggplot2-delayed-aes-2/), and talks ([useR!](https://github.com/yjunechoe/ggtrace-user2022), [rstudio::conf](https://github.com/yjunechoe/ggtrace-rstudioconf2022), [JSM](https://ww2.aievolution.com/JSMAnnual/index.cfm?do=ev.viewEv&ev=2860)).
+
+The user asked about `after_stat()` so naturally I came up with an `after_stat()` solution. In the after-stat stage of the bar layer's data, the layer data looks like this:
+
+```{r after-stat-data}
+# remotes::install_github("yjunechoe/ggtrace")
+library(ggtrace)
+# Grab the state of the layer data in the after-stat
+layer_after_stat(p)
+```
+
+It's a tidy data where each row represents a barplot. So the number of bars is the length of any column in the after-stat data, but it'd be most principled to take the length of the `group` column in this case.^[Or the number of distinct combinations between `PANEL` and `group`, as in `nlevels(interaction(PANEL, group, drop = TRUE))`. But of course that's overkill and only of interest for "theoretical purity".]
+
+So the after-stat expression that returns the desired value `15` is `after_stat(length(group))`, which essentially evaluates to the following:
+
+```{r after-stat-demo, message = FALSE}
+length(layer_after_stat(p)$group)
+```
+
+For example, you can use this inside the `aes()` to annotate the total number of bars on top of each bar:
+
+```{r after-stat-plot}
+ggplot(mpg, aes(manufacturer, fill = manufacturer)) +
+  geom_bar() +
+  geom_label(
+    aes(label = after_stat(length(group))),
+    fill = "white",
+    stat = "count"
+  )
+```
+
+The `after_stat(length(group))` solution does what the user asks using `after_stat()`, but as you can see this is _extremely useless_: there are many technical constraints on what you can actually do with this information in the after-stat stage.
+
+I should have checked if they actually wanted an `after_stat()` solution first, before providing this answer. But I got distracted by the `after_stat()` keyword and got too excited by the prospect of someone else taking interest in the thing that I'm obsessed with. Alas this wasn't the case - they were trying to do something _practical_ - so I went back into the thread to figure out their goal for my second attempt.
+
+
+## Attempt 2: Hmm but why not `after_scale()`?
+
+What I had neglected in my first attempt was the fact that the user talked more about their problem with someone else who got to the question before I did. That discussion turned out to include an important clue to the intent behind the question: the user wanted the number of bars in order to **interpolate the color of the bars**.
+
+So for example, a palette function like `topo.colors()` takes `n` to produce interpolated color values:
+
+```{r ranbow, fig.asp = .1}
+topo.colors(n = 16)
+chroma::show_col(topo.colors(16))
+```
+
+If the intent is to use the number of bars to generate a vector of colors to assign to the bars, then a better place to do it would be in the `after_scale()`, where the state of the layer data in the after-scale looks like this:
+
+```{r after-scale-data}
+layer_after_scale(p)
+```
+
+It's still a tidy data where each row represents a bar. But the important distinction between the after-stat and the after-scale is that the after-scale data reflects the work of the (non-positional) scales. So the `fill` column here is now the actual hexadecimal color values for the bars:
+
+```{r after-scale-data-fill, message = FALSE, fig.asp = .1}
+layer_after_scale(p)$fill
+chroma::show_col(layer_after_scale(p)$fill)
+```
+
+What `after_scale()`/`stage(after_scale = )` allows you to do is override these color values right before the layer data is sent off to be drawn. So we again use the same expression `length(group)` to grab the number of bars in the after-scale data, pass that value to a color palette function like `topo.colors()`, and re-map to the `fill` aesthetic.
+
+```{r after-scale-demo, message = FALSE}
+ggplot(mpg, aes(manufacturer)) +
+  geom_bar(aes(fill = stage(manufacturer, after_scale = topo.colors(length(group))))) +
+  scale_fill_identity()
+```
+
+So this solution achieves the desired effect, but it's needlessly complicated. You need complex staging of the `fill` aesthetic via `stage()` and you also need to pair this with `scale_fill_identity()` to let ggplot know that you're directly supplying the fill values (otherwise you get errors and warnings).
+
+Wait hold up - a _fill scale_? Did this user actually just want a custom fill scale? Ohhh...
+
+
+## Attempt 3: Oh. You just wanted a `scale_fill_*()`...
+
+So yeah. It turns out that they just wanted a custom scale that would take a certain set of colors, and interpolate the colors across the bars in the plot.
+
+The correct way to approach this problem is to create a new fill scale that wraps around `discrete_scale()`. The scale function should take a set of colors (`cols`) and pass `discrete_scale()` a palette function created via the [function factory](https://adv-r.hadley.nz/function-factories.html) `colorRampPalette()`.
+
+```{r scale_fill_interpolate}
+scale_fill_interpolate <- function(cols, ...) {
+  discrete_scale(
+    aesthetics = "fill",
+    scale_name = "interpolate",
+    palette = colorRampPalette(cols),
+    ...
+  )
+}
+```
+
+Our new `scale_fill_interpolate()` function can now be added to the plot like any other scale:
+
+```{r scale_fill_interpolate-1}
+p +
+  scale_fill_interpolate(c("pink", "goldenrod"))
+```
+
+```{r scale_fill_interpolate-2}
+p +
+  scale_fill_interpolate(c("steelblue", "orange", "forestgreen"))
+```
+
+```{r scale_fill_interpolate-3}
+set.seed(123)
+cols <- sample(colors(), 5)
+cols
+p +
+  scale_fill_interpolate(cols)
+```
+
+I sent (a variant of) this answer to the thread and the user marked it solved with a thanks, concluding my desperate spiral into finding the right solution to the intended question.
+
+
+## Reflections
+
+So why was this so hard for me to get? The most immediate cause is because I quickly skimmed the wording of the question and extracted two key phrases:
+
+- "access the **number of bars** in a barplot"
+
+- "that can be used within ggplot, like **after_stat()**"
+
+But neither of these turned out to be important (or even relevant) to the solution. The correct answer was just a clean custom fill scale, where you don't have to think about the number of bars or accessing that in the internals. Simply extending `discrete_scale()` allows you to abstract away from those details entirely.
+
+So in fairness, it _was_ a very difficult XY problem to get out of. But the wording of the question wasn't the root cause. I think the root cause is some combination of the following:
+
+- **There are many ways to do the same thing in R** so I automatically assume that my solution counts as a contribution as long as it gets the job done. But solutions should also be understandable for the person asking the question. Looking back, I was insane to even suggest my second attempt as the solution because it's so contrived and borderline incomprehensible. It only sets the user up for more confusion and bugs in the future, so that was a bit irresponsible and selfish of me (it only scratches _my_ itch).
+
+- **Solutions to (practical) problems are usually boring** and I'm allergic to boring solutions. This is a bad attitude to have when offering to help people. I assumed that people share my excitement about ggplot internals, but actually most users don't care (that's why it's called the _internals_ and hidden from users). An important context that I miss as the person answering questions on the other end is that users post questions when they're stuck and frustrated. Their goal is not to take a hard problem and turn it into a thinking exercise or a learning experience (that part happens organically, but is not the goal). If anything, that's what _I_ do when I take interest in other people's (coding) problems.
+
+- **I imbue intent to questions that are clearing missing it**. I don't think that's a categorically bad thing because it can sometimes land you in a shortcut out of an XY problem. But when you miss, it's catastrophic and pulls you deeper into the problem. I think that was the case for me here - I conflated the X with the Y and assumed that `after_stat()` was relevant on face value because I personally know it to be a very powerful tool. I let my _own history_ of treating `after_stat()` like the X ("How can I use `after_stat()` to solve/simplify this problem?") guide my interpretation of the question, which is not good practice.
+
+Of course, there are likely more to this, but these are plenty for me to work on for now.
+
+Lastly, I don't want this to detract from the fact that the onus is on users to ask good questions. I don't want to put question-answer-ers on the spot for their handling of XY problems. After all, most are volunteers who gain nothing from helping others besides status and some internet points.^[And I like the R4DS slack because it doesn't have "internet points." There _is_ status (moderator) though I don't wear the badge (literally - it's an emoji).] Just take this as me telling myself to be a better person.
+
+
+## Ending on a fun aside - accidentally escaping an XY problem
+
+It's not my style to to write serious blog posts. I think I deserve a break from many paragraphs of self-induced beat down.
+
+So in that spirit I want to end on a funny anecdote where I escaped an XY problem by pure luck.
+
+I came across a relatively straightforward question which can be summarized as the following:
+
+```{r fun-q}
+input <- "a + c + d + e"
+output <- c("a", "c", "d", "e")
+```
+
+There are many valid approaches to this and some were already posted to the thread: 
+
+```{r fun-q-ans}
+strsplit(input, " + ", TRUE)[[1]]
+all.vars(parse(text = input))
+```
+
+Me, knowing too many useless things (and knowing that the the user already has the answer they need), suggested a quirky alternative:^[Actually I only thought of this because I'd been writing a statistical [package](https://yjunechoe.github.io/jlmerclusterperm/) that required some nasty metaprogramming with the formula object.]
+
+> This is super off-label usage but you can also use R's formula utilities to parse this:
+
+```{r fun-q-hack}
+attr(terms(reformulate(input)), "term.labels")
+```
+
+To my surprise, the response I got was:
+
+> Lovely! These definitely originated from formula ages ago so it's actually not far off-label at all 🙂

@@ -50,16 +50,17 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {   }
+  { color: #00769e; background-color: #f1f3f5; }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
+code span { color: #00769e; } /* Normal */
 code span.al { color: #ad0000; } /* Alert */
 code span.an { color: #5e5e5e; } /* Annotation */
-code span.at { color: #20794d; } /* Attribute */
+code span.at { color: #657422; } /* Attribute */
 code span.bn { color: #ad0000; } /* BaseN */
 code span.bu { } /* BuiltIn */
-code span.cf { color: #007ba5; } /* ControlFlow */
+code span.cf { color: #00769e; } /* ControlFlow */
 code span.ch { color: #20794d; } /* Char */
 code span.cn { color: #8f5902; } /* Constant */
 code span.co { color: #5e5e5e; } /* Comment */
@@ -73,11 +74,11 @@ code span.fl { color: #ad0000; } /* Float */
 code span.fu { color: #4758ab; } /* Function */
 code span.im { } /* Import */
 code span.in { color: #5e5e5e; } /* Information */
-code span.kw { color: #007ba5; } /* Keyword */
+code span.kw { color: #00769e; } /* Keyword */
 code span.op { color: #5e5e5e; } /* Operator */
-code span.ot { color: #007ba5; } /* Other */
+code span.ot { color: #00769e; } /* Other */
 code span.pp { color: #ad0000; } /* Preprocessor */
-code span.sc { color: #20794d; } /* SpecialChar */
+code span.sc { color: #5e5e5e; } /* SpecialChar */
 code span.ss { color: #20794d; } /* SpecialString */
 code span.st { color: #20794d; } /* String */
 code span.va { color: #111111; } /* Variable */
@@ -85,46 +86,51 @@ code span.vs { color: #20794d; } /* VerbatimString */
 code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </style>
 
+
   <!--radix_placeholder_meta_tags-->
-<title>June Choe: Plot Makeover #2</title>
+<title>June Choe: Fumbling my way through an XY problem</title>
 
-<meta property="description" itemprop="description" content="Making a dodged-stacked hybrid bar plot in {ggplot2}"/>
+<meta property="description" itemprop="description" content="Some lessons learned from a (personal) case study"/>
 
-<link rel="canonical" href="https://yjunechoe.github.io/posts/2020-11-08-plot-makeover-2/"/>
+<link rel="canonical" href="https://yjunechoe.github.io/posts/2023-07-09-x-y-problem/"/>
 <link rel="icon" type="image/png" href="../../static/img/icon.png"/>
 
 <!--  https://schema.org/Article -->
-<meta property="article:published" itemprop="datePublished" content="2020-11-08"/>
-<meta property="article:created" itemprop="dateCreated" content="2020-11-08"/>
+<meta property="article:published" itemprop="datePublished" content="2023-07-10"/>
+<meta property="article:created" itemprop="dateCreated" content="2023-07-10"/>
 <meta name="article:author" content="June Choe"/>
 
 <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-<meta property="og:title" content="June Choe: Plot Makeover #2"/>
+<meta property="og:title" content="June Choe: Fumbling my way through an XY problem"/>
 <meta property="og:type" content="article"/>
-<meta property="og:description" content="Making a dodged-stacked hybrid bar plot in {ggplot2}"/>
-<meta property="og:url" content="https://yjunechoe.github.io/posts/2020-11-08-plot-makeover-2/"/>
+<meta property="og:description" content="Some lessons learned from a (personal) case study"/>
+<meta property="og:url" content="https://yjunechoe.github.io/posts/2023-07-09-x-y-problem/"/>
+<meta property="og:image" content="https://yjunechoe.github.io/posts/2023-07-09-x-y-problem/preview.png"/>
+<meta property="og:image:width" content="256"/>
+<meta property="og:image:height" content="256"/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:site_name" content="June Choe"/>
 
 <!--  https://dev.twitter.com/cards/types/summary -->
-<meta property="twitter:card" content="summary"/>
-<meta property="twitter:title" content="June Choe: Plot Makeover #2"/>
-<meta property="twitter:description" content="Making a dodged-stacked hybrid bar plot in {ggplot2}"/>
-<meta property="twitter:url" content="https://yjunechoe.github.io/posts/2020-11-08-plot-makeover-2/"/>
+<meta property="twitter:card" content="summary_large_image"/>
+<meta property="twitter:title" content="June Choe: Fumbling my way through an XY problem"/>
+<meta property="twitter:description" content="Some lessons learned from a (personal) case study"/>
+<meta property="twitter:url" content="https://yjunechoe.github.io/posts/2023-07-09-x-y-problem/"/>
+<meta property="twitter:image" content="https://yjunechoe.github.io/posts/2023-07-09-x-y-problem/preview.png"/>
+<meta property="twitter:image:width" content="256"/>
+<meta property="twitter:image:height" content="256"/>
 <meta property="twitter:site" content="@yjunechoe"/>
 
 <!--/radix_placeholder_meta_tags-->
-  
-  <meta name="citation_reference" content="citation_title=Mutual exclusivity in cross-situational statistical learning;citation_publication_date=2008;citation_author=Daniel Yurovsky;citation_author=C. Yu"/>
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","date","output","editor_options","bibliography","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["Plot Makeover #2"]},{"type":"character","attributes":{},"value":["Making a dodged-stacked hybrid bar plot in {ggplot2}"]},{"type":"character","attributes":{},"value":["plot makeover","data visualization","ggplot2"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]},{"type":"character","attributes":{},"value":["0000-0002-0701-921X"]}]}]},{"type":"character","attributes":{},"value":["11-08-2020"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["chunk_output_type"]}},"value":[{"type":"character","attributes":{},"value":["console"]}]},{"type":"character","attributes":{},"value":["biblio.bib"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io/posts/2020-11-08-plot-makeover-2/"]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","date","output","editor_options","preview","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["Fumbling my way through an XY problem"]},{"type":"character","attributes":{},"value":["Some lessons learned from a (personal) case study"]},{"type":"character","attributes":{},"value":["reflections"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]},{"type":"character","attributes":{},"value":["0000-0002-0701-921X"]}]}]},{"type":"character","attributes":{},"value":["2023-07-10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["include-after-body","toc","self_contained","css"]}},"value":[{"type":"character","attributes":{},"value":["highlighting.html"]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["../../styles.css"]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["chunk_output_type"]}},"value":[{"type":"character","attributes":{},"value":["console"]}]},{"type":"character","attributes":{},"value":["preview.png"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io/posts/2023-07-09-x-y-problem/"]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["biblio.bib","plot-makeover-2_files/anchor-4.2.2/anchor.min.js","plot-makeover-2_files/bowser-1.9.3/bowser.min.js","plot-makeover-2_files/clipboard-2.0.6/clipboard.min.js","plot-makeover-2_files/distill-2.2.21/template.v2.js","plot-makeover-2_files/figure-html5/final-1.png","plot-makeover-2_files/figure-html5/first-draft-1.png","plot-makeover-2_files/figure-html5/unnamed-chunk-1-1.png","plot-makeover-2_files/figure-html5/unnamed-chunk-2-1.png","plot-makeover-2_files/figure-html5/unnamed-chunk-2-2.png","plot-makeover-2_files/figure-html5/unnamed-chunk-3-1.png","plot-makeover-2_files/figure-html5/unnamed-chunk-3-2.png","plot-makeover-2_files/figure-html5/unnamed-chunk-4-1.png","plot-makeover-2_files/figure-html5/unnamed-chunk-4-2.png","plot-makeover-2_files/figure-html5/unnamed-chunk-5-1.png","plot-makeover-2_files/figure-html5/unnamed-chunk-6-1.png","plot-makeover-2_files/header-attrs-2.5/header-attrs.js","plot-makeover-2_files/header-attrs-2.6/header-attrs.js","plot-makeover-2_files/jquery-1.11.3/jquery.min.js","plot-makeover-2_files/panelset-0.2.3/panelset.css","plot-makeover-2_files/panelset-0.2.3/panelset.js","plot-makeover-2_files/popper-2.6.0/popper.min.js","plot-makeover-2_files/tippy-6.2.7/tippy-bundle.umd.min.js","plot-makeover-2_files/tippy-6.2.7/tippy-light-border.css","plot-makeover-2_files/tippy-6.2.7/tippy.css","plot-makeover-2_files/tippy-6.2.7/tippy.umd.min.js","plot-makeover-2_files/webcomponents-2.0.0/webcomponents.js","plot-makeover-2_files/xaringanExtra-clipboard-0.2.3/xaringanExtra-clipboard.css","plot-makeover-2_files/xaringanExtra-clipboard-0.2.3/xaringanExtra-clipboard.js","plot.png"]}
+  {"type":"character","attributes":{},"value":["preview.png","x-y-problem_files/anchor-4.2.2/anchor.min.js","x-y-problem_files/bowser-1.9.3/bowser.min.js","x-y-problem_files/distill-2.2.21/template.v2.js","x-y-problem_files/figure-html5/after-scale-data-fill-1.png","x-y-problem_files/figure-html5/after-scale-demo-1.png","x-y-problem_files/figure-html5/after-stat-plot-1.png","x-y-problem_files/figure-html5/q-plot-1.png","x-y-problem_files/figure-html5/ranbow-1.png","x-y-problem_files/figure-html5/scale_fill_interpolate-1-1.png","x-y-problem_files/figure-html5/scale_fill_interpolate-2-1.png","x-y-problem_files/figure-html5/scale_fill_interpolate-3-1.png","x-y-problem_files/figure-html5/topo-colors-1.png","x-y-problem_files/figure-html5/unnamed-chunk-1-1.png","x-y-problem_files/header-attrs-2.22/header-attrs.js","x-y-problem_files/jquery-3.6.0/jquery-3.6.0.js","x-y-problem_files/jquery-3.6.0/jquery-3.6.0.min.js","x-y-problem_files/jquery-3.6.0/jquery-3.6.0.min.map","x-y-problem_files/popper-2.6.0/popper.min.js","x-y-problem_files/tippy-6.2.7/tippy-bundle.umd.min.js","x-y-problem_files/tippy-6.2.7/tippy-light-border.css","x-y-problem_files/tippy-6.2.7/tippy.css","x-y-problem_files/tippy-6.2.7/tippy.umd.min.js","x-y-problem_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2087,14 +2093,8 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <!--/radix_placeholder_distill-->
-  <script src="../../site_libs/header-attrs-2.8/header-attrs.js"></script>
-  <script src="../../site_libs/clipboard-2.0.6/clipboard.min.js"></script>
-  <link href="../../site_libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
-  <script src="../../site_libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
-  <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
-  <link href="../../site_libs/panelset-0.2.6/panelset.css" rel="stylesheet" />
-  <script src="../../site_libs/panelset-0.2.6/panelset.js"></script>
-  <script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
+  <script src="../../site_libs/header-attrs-2.22/header-attrs.js"></script>
+  <script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
   <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="../../site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2586,6 +2586,7 @@ d-footnote-list code {
 </style>
 <!--/radix_placeholder_site_in_header-->
 
+  <link rel="stylesheet" href="../../styles.css" type="text/css"/>
 
 </head>
 
@@ -2594,7 +2595,7 @@ d-footnote-list code {
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Plot Makeover #2","description":"Making a dodged-stacked hybrid bar plot in {ggplot2}","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/","orcidID":"0000-0002-0701-921X"}],"publishedDate":"2020-11-08T00:00:00.000+09:00","citationText":"Choe, 2020"}
+{"title":"Fumbling my way through an XY problem","description":"Some lessons learned from a (personal) case study","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/","orcidID":"0000-0002-0701-921X"}],"publishedDate":"2023-07-10T00:00:00.000+09:00","citationText":"Choe, 2023"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2642,21 +2643,19 @@ Misc.
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Plot Makeover #2</h1>
+<h1>Fumbling my way through an XY problem</h1>
 <!--radix_placeholder_categories-->
 <div class="dt-tags">
-  <a href="../../blog.html#category:plot_makeover" class="dt-tag">plot makeover</a>
-  <a href="../../blog.html#category:data_visualization" class="dt-tag">data visualization</a>
-  <a href="../../blog.html#category:ggplot2" class="dt-tag">ggplot2</a>
+  <a href="../../blog.html#category:reflections" class="dt-tag">reflections</a>
 </div>
 <!--/radix_placeholder_categories-->
-<p><p>Making a dodged-stacked hybrid bar plot in {ggplot2}</p></p>
+<p><p>Some lessons learned from a (personal) case study</p></p>
 </div>
 
 <div class="d-byline">
   June Choe  (University of Pennsylvania Linguistics)<a href="https://live-sas-www-ling.pantheon.sas.upenn.edu/" class="uri">https://live-sas-www-ling.pantheon.sas.upenn.edu/</a>
   
-<br/>11-08-2020
+<br/>2023-07-10
 </div>
 
 <div class="d-article">
@@ -2664,245 +2663,287 @@ Misc.
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#before">Before</a></li>
-<li><a href="#my-plan">My Plan</a></li>
-<li><a href="#after">After</a>
-<ul>
-<li><a href="#first-draft">First draft</a></li>
-<li><a href="#final-touch-up">Final touch-up</a></li>
-</ul></li>
+<li><a href="#intro" id="toc-intro">Intro</a></li>
+<li><a href="#what-is-an-xy-problem" id="toc-what-is-an-xy-problem">What is an XY problem?</a></li>
+<li><a href="#the-question" id="toc-the-question">The question</a></li>
+<li><a href="#attempt-1-after_stat-i-know-that" id="toc-attempt-1-after_stat-i-know-that">Attempt 1: <code>after_stat()</code>? I know that!</a></li>
+<li><a href="#attempt-2-hmm-but-why-not-after_scale" id="toc-attempt-2-hmm-but-why-not-after_scale">Attempt 2: Hmm but why not <code>after_scale()</code>?</a></li>
+<li><a href="#attempt-3-oh.-you-just-wanted-a-scale_fill_" id="toc-attempt-3-oh.-you-just-wanted-a-scale_fill_">Attempt 3: Oh. You just wanted a <code>scale_fill_*()</code>…</a></li>
+<li><a href="#reflections" id="toc-reflections">Reflections</a></li>
+<li><a href="#ending-on-a-fun-aside---accidentally-escaping-an-xy-problem" id="toc-ending-on-a-fun-aside---accidentally-escaping-an-xy-problem">Ending on a fun aside - accidentally escaping an XY problem</a></li>
 </ul>
 </nav>
 </div>
-<div class="layout-chunk" data-layout="l-body">
-
-</div>
-<p><em>This is the second installment of <strong>plot makeover</strong> where I take a plot in the wild and make very opinionated modifications to it.</em></p>
-<h2 id="before">Before</h2>
-<p>Our plot-in-the-wild comes from <span class="citation" data-cites="Yurovsky2008MutualEI">(<a href="#ref-Yurovsky2008MutualEI" role="doc-biblioref">Yurovsky and Yu 2008</a>)</span>, a paper on statistical word learning. The plot that I’ll be looking at here is <span class="sc">Figure 2</span>, a bar plot of accuracy in a 3-by-3 experimental design.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-1"></span>
-<img src="plot.png" alt="Plot from Yurovsky and Yu (2008)" width="608" />
-<p class="caption">
-Figure 1: Plot from Yurovsky and Yu (2008)
-</p>
-</div>
-</div>
-<p>As you might notice, there’s something interesting going on in this bar plot. It looks like the red and green bars <strong>stack</strong> together but <strong>dodge</strong> from the blue bar. It’s looks a bit weird for me as someone who mainly uses {ggplot2} because this kind of a hybrid design is not explicitly supported in the API.</p>
-<p>For this plot makeover, I’ll leave aside the issue of whether having a half-stacked, half-dodged bar plot is a good idea.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> In fact, I’m not even gonna focus much on the “makeover” part. Instead I’m just going to take a shot at recreating this plot (likely made in MATLAB with post-processing in PowerPoint) in {ggplot2}.</p>
-<h2 id="my-plan">My Plan</h2>
-<p>Again, my primary goal here is replication. But I do want to touch up on some aesthetics while I’m at it.</p>
-<p><strong>Major Changes</strong>:</p>
-<ul>
-<li><p>Move the title to above the plot</p></li>
-<li><p>Move the legend inside the plot</p></li>
-<li><p>Move/remove the y-axis title so it’s not vertically aligned</p></li>
-</ul>
-<p><strong>Minor Changes</strong>:</p>
-<ul>
-<li><p>Remove grid lines</p></li>
-<li><p>Put y-axis in percentages</p></li>
-<li><p>Add white borders around the bars for clearer color contrast</p></li>
-</ul>
-<h2 id="after">After</h2>
-<h3 id="first-draft">First draft</h3>
-<p>For a first pass on the makeover, I wanted to get the hybrid design right.</p>
-<p>The plot below isn’t quite there in terms of covering everything I laid out in my plan, but it does replicate the bar plot design specifically.</p>
-<div class="panelset">
-<div class="panel">
-<p><span class="panel-name">Plot</span></p>
-<div class="layout-chunk" data-layout="l-body">
-<p><img src="plot-makeover-2_files/figure-html5/first-draft-1.png" width="624" style="display: block; margin: auto;" /></p>
-</div>
-</div>
-<div class="panel">
-<p><span class="panel-name">Code</span></p>
+<h2 id="intro">Intro</h2>
+<p>A few months ago, over at the R4DS slack (<a href="http://r4ds.io/join">http://r4ds.io/join</a>), someone posted a ggplot question that was within my area of “expertise”. I got tagged in the thread, I went in, and it took me 3 tries to arrive at the correct solution that the poster was asking for.</p>
+<p>The embarrassing part of the exchange was that I would write one solution, think about what I wrote for a bit, and then write a different solution after realizing that I had misunderstood the intent of the original question. In other words, I was consistently missing the point.</p>
+<p>This is a microcosm of a bigger problem of mine that I’ve been noticing lately, as my role in the R community has shifted from mostly asking questions to mostly answering questions. By this point I’ve sort of pin-pointed the problem: <strong>I have a hard time recognizing that I’m stuck in an XY problem</strong>.</p>
+<p>I have a lot of thoughts on this and I want to document them for future me,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> so here goes a rant. I hope it’s useful to whoever is reading this too.</p>
+<h2 id="what-is-an-xy-problem">What is an XY problem?</h2>
+<p>According to <a href="https://en.wikipedia.org/wiki/XY_problem">Wikipedia</a>:</p>
+<blockquote>
+<p>The XY problem is a communication problem… where the question is about an end user’s attempted solution (Y) rather than the root problem itself (X).</p>
+</blockquote>
+<p>The <a href="https://xyproblem.info/">classic example</a> of this is when a (novice) user asks how to extract the last 3 characters in a filename. There’s no good reason to blindly grab the last 3 characters, so what they probably meant to ask is how to get the file extension (which is not always 3 characters long, like <code>.R</code> or <code>.Rproj</code>).<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>Another somewhat related cult-classic, copypasta<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> example is the <a href="https://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags?page=1&amp;tab=scoredesc#tab-top">“Don’t use regex to parse HTML” answer on stackoverflow</a>. Here, a user asks how to use regular expressions to match HTML tags, to which the top-voted answer is <em>don’t</em> (instead, you should use a dedicated parser). The delivery of this answer is a work of art, so I highly suggest you giving it a read if you haven’t seen it already (the link is above for your amusement).</p>
+<p>An example of an XY problem in R that might hit closer to home is when a user complains about the notorious <code>Object of type 'closure' is not subsettable</code> error. It’s often brought up as a <a href="https://www.youtube.com/watch?v=vgYS-F8opgE">cautionary tale for novice users</a> (error messages can only tell you so much, so you must develop debugging strategies), but it has a special meaning for more experienced users who’ve been bit by this multiple times. So for me, when I see novice users reporting this specific error, I usually ask them if they have a variable called <code>data</code> and whether they forgot to run the line assigning that variable. Of course, this answer does not <em>explain</em> what the error means,<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> but oftentimes it’s the solution that the user is looking for.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/wch/extrafont'>extrafont</a></span><span class='op'>)</span>
-
-<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>tribble</span><span class='op'>(</span>
-  <span class='op'>~</span><span class='va'>Condition</span>, <span class='op'>~</span><span class='va'>Referent</span>, <span class='op'>~</span><span class='va'>Accuracy</span>,
-  <span class='st'>"Primacy"</span>,  <span class='st'>"Single"</span>,  <span class='fl'>0.63</span>,
-  <span class='st'>"Primacy"</span>,  <span class='st'>"Primacy"</span>, <span class='fl'>0.59</span>,
-  <span class='st'>"Recency"</span>,  <span class='st'>"Single"</span>,  <span class='fl'>0.63</span>,
-  <span class='st'>"Recency"</span>,  <span class='st'>"Recency"</span>, <span class='fl'>0.5</span>,
-  <span class='st'>"Both"</span>,     <span class='st'>"Single"</span>,  <span class='fl'>0.63</span>,
-  <span class='st'>"Both"</span>,     <span class='st'>"Primacy"</span>, <span class='fl'>0.5</span>,
-  <span class='st'>"Both"</span>,     <span class='st'>"Recency"</span>, <span class='fl'>0.31</span>
-<span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>mutate</span><span class='op'>(</span>
-    error_low <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>7</span>, <span class='fl'>.04</span>, <span class='fl'>.06</span><span class='op'>)</span>,
-    error_high <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>7</span>, <span class='fl'>.04</span>, <span class='fl'>.06</span><span class='op'>)</span>,
-    Condition_name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>Condition</span>, levels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Primacy"</span>, <span class='st'>"Recency"</span>, <span class='st'>"Both"</span><span class='op'>)</span><span class='op'>)</span>,
-    Condition <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>Condition_name</span><span class='op'>)</span>,
-    Referent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>Referent</span>, levels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Single"</span>, <span class='st'>"Recency"</span>, <span class='st'>"Primacy"</span><span class='op'>)</span><span class='op'>)</span>,
-    left <span class='op'>=</span> <span class='va'>Referent</span> <span class='op'>==</span> <span class='st'>"Single"</span>,
-    color <span class='op'>=</span> <span class='fu'>case_when</span><span class='op'>(</span>
-      <span class='va'>Referent</span> <span class='op'>==</span> <span class='st'>"Single"</span> <span class='op'>~</span> <span class='st'>"#29476B"</span>,
-      <span class='va'>Referent</span> <span class='op'>==</span> <span class='st'>"Primacy"</span> <span class='op'>~</span> <span class='st'>"#AD403D"</span>,
-      <span class='va'>Referent</span> <span class='op'>==</span> <span class='st'>"Recency"</span> <span class='op'>~</span> <span class='st'>"#9BBB58"</span>
-    <span class='op'>)</span>
-  <span class='op'>)</span>
-
-
-<span class='fu'>ggplot</span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>Condition</span>, y <span class='op'>=</span> <span class='va'>Accuracy</span>, fill <span class='op'>=</span> <span class='va'>color</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>geom_col</span><span class='op'>(</span>
-    data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>left</span><span class='op'>)</span>,
-    width <span class='op'>=</span> <span class='fl'>.3</span>,
-    color <span class='op'>=</span> <span class='st'>"white"</span>,
-    position <span class='op'>=</span> <span class='fu'>position_nudge</span><span class='op'>(</span>x <span class='op'>=</span> <span class='op'>-</span><span class='fl'>.3</span><span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>geom_errorbar</span><span class='op'>(</span>
-    <span class='fu'>aes</span><span class='op'>(</span>ymin <span class='op'>=</span> <span class='va'>Accuracy</span> <span class='op'>-</span> <span class='va'>error_low</span>, ymax <span class='op'>=</span> <span class='va'>Accuracy</span> <span class='op'>+</span> <span class='va'>error_high</span><span class='op'>)</span>,
-    data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>left</span><span class='op'>)</span>,
-    width <span class='op'>=</span> <span class='fl'>.1</span>,
-    position <span class='op'>=</span> <span class='fu'>position_nudge</span><span class='op'>(</span>x <span class='op'>=</span> <span class='op'>-</span><span class='fl'>.3</span><span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>geom_col</span><span class='op'>(</span>
-    data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='op'>!</span><span class='va'>left</span><span class='op'>)</span>,
-    color <span class='op'>=</span> <span class='st'>"white"</span>,
-    width <span class='op'>=</span> <span class='fl'>.3</span>,
-  <span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>geom_errorbar</span><span class='op'>(</span>
-    <span class='fu'>aes</span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>y</span>, ymin <span class='op'>=</span> <span class='va'>y</span> <span class='op'>-</span> <span class='va'>error_low</span>, ymax <span class='op'>=</span> <span class='va'>y</span> <span class='op'>+</span> <span class='va'>error_high</span><span class='op'>)</span>,
-    data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='op'>!</span><span class='va'>left</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-      <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>Condition</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-      <span class='fu'>mutate</span><span class='op'>(</span>y <span class='op'>=</span> <span class='fu'>accumulate</span><span class='op'>(</span><span class='va'>Accuracy</span>, <span class='va'>sum</span><span class='op'>)</span><span class='op'>)</span>,
-    width <span class='op'>=</span> <span class='fl'>.1</span>
-  <span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>scale_fill_identity</span><span class='op'>(</span>
-    labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>Referent</span><span class='op'>)</span>,
-    guide <span class='op'>=</span> <span class='fu'>guide_legend</span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Referent"</span><span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>scale_x_continuous</span><span class='op'>(</span>
-    breaks <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span> <span class='op'>-</span> <span class='fl'>.15</span>,
-    labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>Condition_name</span><span class='op'>)</span>,
-    expand <span class='op'>=</span> <span class='fu'>expansion</span><span class='op'>(</span><span class='fl'>.1</span><span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>scale_y_continuous</span><span class='op'>(</span>
-    breaks <span class='op'>=</span> <span class='fu'>scales</span><span class='fu'>::</span><span class='fu'><a href='https://scales.r-lib.org/reference/breaks_pretty.html'>pretty_breaks</a></span><span class='op'>(</span><span class='fl'>6</span><span class='op'>)</span>,
-    labels <span class='op'>=</span> <span class='fu'>str_remove</span><span class='op'>(</span><span class='fu'>scales</span><span class='fu'>::</span><span class='fu'><a href='https://scales.r-lib.org/reference/breaks_pretty.html'>pretty_breaks</a></span><span class='op'>(</span><span class='fl'>6</span><span class='op'>)</span><span class='op'>(</span><span class='fl'>0</span><span class='op'>:</span><span class='fl'>1</span><span class='op'>)</span>, <span class='st'>"\\.0+"</span><span class='op'>)</span>,
-    limits <span class='op'>=</span> <span class='fl'>0</span><span class='op'>:</span><span class='fl'>1</span>,
-    expand <span class='op'>=</span> <span class='fu'>expansion</span><span class='op'>(</span><span class='fl'>0</span><span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>labs</span><span class='op'>(</span>
-    title <span class='op'>=</span> <span class='st'>"Exp1: Accuracy by Condition and Word Type"</span>
-  <span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>theme_classic</span><span class='op'>(</span>
-    base_family <span class='op'>=</span> <span class='st'>"Roboto"</span>,
-    base_size <span class='op'>=</span> <span class='fl'>16</span>
-  <span class='op'>)</span>
-</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Oops forgot to define `data`!</span></span>
+<span><span class='co'># `data` is a function (in {base}), which is not subsettable</span></span>
+<span><span class='va'>data</span><span class='op'>$</span><span class='va'>value</span></span></code></pre>
 </div>
+<pre><code>  Error in data$value: object of type &#39;closure&#39; is not subsettable</code></pre>
 </div>
-</div>
-</div>
-<p>As you might guess from my two calls to <code>geom_col()</code> and <code>geom_errorbar()</code>, I actually split the plotting of the bars into two parts. First I drew the blue bars and their errorbars, then I drew the green and red bars and their errorbars.</p>
-<p>Effectively, the above plot is a combination of these two:<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>As one last example, check out this <a href="https://meta.stackexchange.com/a/66378">lengthy exchange on splitting a string (Y) to parse JSON (X)</a>. I felt compelled to include this example because it does a good job capturing the degree of frustration (very high) that normally comes with XY problems.</p>
+<p>But the thing about the XY problem is that it often prompts the lesson of <a href="http://www.catb.org/esr/faqs/smart-questions.html">asking good questions</a>: don’t skip steps in your reasoning, make your goals/intentions clear, use a <a href="https://reprex.tidyverse.org/">reprex</a>,<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> and so on. But in so far as it’s a communication problem involving both parties, I think we should also talk about what the person <em>answering</em> the question can do to recognize an XY problem and break out of it.</p>
+<p>Enter me, someone who really needs to do a better job of recognizing when I’m stuck in an XY problem. So with the definition out of the way, let’s break down how I messed up.</p>
+<h2 id="the-question">The question</h2>
+<p>The question asks:</p>
+<blockquote>
+<p>Does anyone know how to access the number of bars in a barplot? I’m looking for something that will return “15” for the following code, that can be used within ggplot, like after_stat()</p>
+</blockquote>
+<p>The question comes with an example code. Not exactly a reprex, but something to help understand the question:</p>
 <div class="layout-chunk" data-layout="l-body">
-<p><img src="plot-makeover-2_files/figure-html5/unnamed-chunk-2-1.png" width="50%" /><img src="plot-makeover-2_files/figure-html5/unnamed-chunk-2-2.png" width="50%" /></p>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>mpg</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>manufacturer</span>, fill <span class='op'>=</span> <span class='va'>manufacturer</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_bar</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span><span class='va'>p</span></span></code></pre>
 </div>
-<p>A bit hacky, I guess, but it works!</p>
-<p>
-</p>
-<p>
-</p>
-<h3 id="final-touch-up">Final touch-up</h3>
+<p><img src="x-y-problem_files/figure-html5/q-plot-1.png" width="624" /></p>
+</div>
+<p>The key phrase in the question is “can be used within ggplot”. So the user isn’t looking for something like this even though it’s conceptually equivalent:</p>
 <div class="layout-chunk" data-layout="l-body">
-<p><img src="plot-makeover-2_files/figure-html5/final-1.png" width="672" data-distill-preview=1 /></p>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>$</span><span class='va'>manufacturer</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  [1] 15</code></pre>
+</div>
+<p>The idea here is that ggplot knows that there are 15 bars, so this fact must represented somewhere in the internals. The user wants to be able to access that value dynamically.</p>
+<h2 id="attempt-1-after_stat-i-know-that">Attempt 1: <code>after_stat()</code>? I know that!</h2>
+<p>The very last part of the question “… like after_stat()” triggered some alarms in the thread and got me called in. For those unfamiliar, <code>after_stat()</code> is part of the new and obscure family of <a href="https://ggplot2.tidyverse.org/reference/aes_eval.html">delayed aesthetic evaluation</a> functions introduced in ggplot 3.3.0. It’s something that you normally don’t think about in ggplot, but it’s a topic that I’ve been obsessed with for the last 2 years or so: it has resulted in a <a href="https://yjunechoe.github.io/static/papers/Choe_2022_SublayerGG.pdf">paper</a>, a package (<a href="https://github.com/yjunechoe/ggtrace">ggtrace</a>), <a href="https://yjunechoe.github.io/posts/2022-03-10-ggplot2-delayed-aes-1/">blog</a> <a href="https://yjunechoe.github.io/posts/2022-07-06-ggplot2-delayed-aes-2/">posts</a>, and talks (<a href="https://github.com/yjunechoe/ggtrace-user2022">useR!</a>, <a href="https://github.com/yjunechoe/ggtrace-rstudioconf2022">rstudio::conf</a>, <a href="https://ww2.aievolution.com/JSMAnnual/index.cfm?do=ev.viewEv&amp;ev=2860">JSM</a>).</p>
+<p>The user asked about <code>after_stat()</code> so naturally I came up with an <code>after_stat()</code> solution. In the after-stat stage of the bar layer’s data, the layer data looks like this:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># remotes::install_github("yjunechoe/ggtrace")</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://yjunechoe.github.io/ggtrace'>ggtrace</a></span><span class='op'>)</span></span>
+<span><span class='co'># Grab the state of the layer data in the after-stat</span></span>
+<span><span class='fu'><a href='https://yjunechoe.github.io/ggtrace/reference/sublayer-data.html'>layer_after_stat</a></span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 15 × 8
+     count  prop x          width flipped_aes fill       PANEL group
+     &lt;dbl&gt; &lt;dbl&gt; &lt;mppd_dsc&gt; &lt;dbl&gt; &lt;lgl&gt;       &lt;chr&gt;      &lt;fct&gt; &lt;int&gt;
+   1    18     1  1           0.9 FALSE       audi       1         1
+   2    19     1  2           0.9 FALSE       chevrolet  1         2
+   3    37     1  3           0.9 FALSE       dodge      1         3
+   4    25     1  4           0.9 FALSE       ford       1         4
+   5     9     1  5           0.9 FALSE       honda      1         5
+   6    14     1  6           0.9 FALSE       hyundai    1         6
+   7     8     1  7           0.9 FALSE       jeep       1         7
+   8     4     1  8           0.9 FALSE       land rover 1         8
+   9     3     1  9           0.9 FALSE       lincoln    1         9
+  10     4     1 10           0.9 FALSE       mercury    1        10
+  11    13     1 11           0.9 FALSE       nissan     1        11
+  12     5     1 12           0.9 FALSE       pontiac    1        12
+  13    14     1 13           0.9 FALSE       subaru     1        13
+  14    34     1 14           0.9 FALSE       toyota     1        14
+  15    27     1 15           0.9 FALSE       volkswagen 1        15</code></pre>
+</div>
+<p>It’s a tidy data where each row represents a barplot. So the number of bars is the length of any column in the after-stat data, but it’d be most principled to take the length of the <code>group</code> column in this case.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<p>So the after-stat expression that returns the desired value <code>15</code> is <code>after_stat(length(group))</code>, which essentially evaluates to the following:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='fu'><a href='https://yjunechoe.github.io/ggtrace/reference/sublayer-data.html'>layer_after_stat</a></span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span><span class='op'>$</span><span class='va'>group</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  [1] 15</code></pre>
+</div>
+<p>For example, you can use this inside the <code>aes()</code> to annotate the total number of bars on top of each bar:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>mpg</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>manufacturer</span>, fill <span class='op'>=</span> <span class='va'>manufacturer</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_bar</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_text.html'>geom_label</a></span><span class='op'>(</span></span>
+<span>    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes_eval.html'>after_stat</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>group</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span>    fill <span class='op'>=</span> <span class='st'>"white"</span>,</span>
+<span>    stat <span class='op'>=</span> <span class='st'>"count"</span></span>
+<span>  <span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="x-y-problem_files/figure-html5/after-stat-plot-1.png" width="624" /></p>
+</div>
+<p>The <code>after_stat(length(group))</code> solution does what the user asks using <code>after_stat()</code>, but as you can see this is <em>extremely useless</em>: there are many technical constraints on what you can actually do with this information in the after-stat stage.</p>
+<p>I should have checked if they actually wanted an <code>after_stat()</code> solution first, before providing this answer. But I got distracted by the <code>after_stat()</code> keyword and got too excited by the prospect of someone else taking interest in the thing that I’m obsessed with. Alas this wasn’t the case - they were trying to do something <em>practical</em> - so I went back into the thread to figure out their goal for my second attempt.</p>
+<h2 id="attempt-2-hmm-but-why-not-after_scale">Attempt 2: Hmm but why not <code>after_scale()</code>?</h2>
+<p>What I had neglected in my first attempt was the fact that the user talked more about their problem with someone else who got to the question before I did. That discussion turned out to include an important clue to the intent behind the question: the user wanted the number of bars in order to <strong>interpolate the color of the bars</strong>.</p>
+<p>So for example, a palette function like <code>topo.colors()</code> takes <code>n</code> to produce interpolated color values:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/grDevices/palettes.html'>topo.colors</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>16</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>   [1] &quot;#4C00FF&quot; &quot;#0F00FF&quot; &quot;#002EFF&quot; &quot;#006BFF&quot; &quot;#00A8FF&quot; &quot;#00E5FF&quot; &quot;#00FF4D&quot;
+   [8] &quot;#00FF00&quot; &quot;#4DFF00&quot; &quot;#99FF00&quot; &quot;#E6FF00&quot; &quot;#FFFF00&quot; &quot;#FFEA2D&quot; &quot;#FFDE59&quot;
+  [15] &quot;#FFDB86&quot; &quot;#FFE0B3&quot;</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>chroma</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/chroma/man/show_col.html'>show_col</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/grDevices/palettes.html'>topo.colors</a></span><span class='op'>(</span><span class='fl'>16</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="x-y-problem_files/figure-html5/ranbow-1.png" width="624" /></p>
+</div>
+<p>If the intent is to use the number of bars to generate a vector of colors to assign to the bars, then a better place to do it would be in the <code>after_scale()</code>, where the state of the layer data in the after-scale looks like this:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://yjunechoe.github.io/ggtrace/reference/sublayer-data.html'>layer_after_scale</a></span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 15 × 16
+     fill      y count  prop x     flipped_aes PANEL group  ymin  ymax xmin  xmax 
+     &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;mpp&gt; &lt;lgl&gt;       &lt;fct&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;mpp&gt; &lt;mpp&gt;
+   1 #F87…    18    18     1  1    FALSE       1         1     0    18  0.55  1.45
+   2 #E58…    19    19     1  2    FALSE       1         2     0    19  1.55  2.45
+   3 #C99…    37    37     1  3    FALSE       1         3     0    37  2.55  3.45
+   4 #A3A…    25    25     1  4    FALSE       1         4     0    25  3.55  4.45
+   5 #6BB…     9     9     1  5    FALSE       1         5     0     9  4.55  5.45
+   6 #00B…    14    14     1  6    FALSE       1         6     0    14  5.55  6.45
+   7 #00B…     8     8     1  7    FALSE       1         7     0     8  6.55  7.45
+   8 #00C…     4     4     1  8    FALSE       1         8     0     4  7.55  8.45
+   9 #00B…     3     3     1  9    FALSE       1         9     0     3  8.55  9.45
+  10 #00B…     4     4     1 10    FALSE       1        10     0     4  9.55 10.45
+  11 #619…    13    13     1 11    FALSE       1        11     0    13 10.55 11.45
+  12 #B98…     5     5     1 12    FALSE       1        12     0     5 11.55 12.45
+  13 #E76…    14    14     1 13    FALSE       1        13     0    14 12.55 13.45
+  14 #FD6…    34    34     1 14    FALSE       1        14     0    34 13.55 14.45
+  15 #FF6…    27    27     1 15    FALSE       1        15     0    27 14.55 15.45
+  # ℹ 4 more variables: colour &lt;lgl&gt;, linewidth &lt;dbl&gt;, linetype &lt;dbl&gt;,
+  #   alpha &lt;lgl&gt;</code></pre>
+</div>
+<p>It’s still a tidy data where each row represents a bar. But the important distinction between the after-stat and the after-scale is that the after-scale data reflects the work of the (non-positional) scales. So the <code>fill</code> column here is now the actual hexadecimal color values for the bars:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://yjunechoe.github.io/ggtrace/reference/sublayer-data.html'>layer_after_scale</a></span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span><span class='op'>$</span><span class='va'>fill</span></span></code></pre>
+</div>
+<pre><code>   [1] &quot;#F8766D&quot; &quot;#E58700&quot; &quot;#C99800&quot; &quot;#A3A500&quot; &quot;#6BB100&quot; &quot;#00BA38&quot; &quot;#00BF7D&quot;
+   [8] &quot;#00C0AF&quot; &quot;#00BCD8&quot; &quot;#00B0F6&quot; &quot;#619CFF&quot; &quot;#B983FF&quot; &quot;#E76BF3&quot; &quot;#FD61D1&quot;
+  [15] &quot;#FF67A4&quot;</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>chroma</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/chroma/man/show_col.html'>show_col</a></span><span class='op'>(</span><span class='fu'><a href='https://yjunechoe.github.io/ggtrace/reference/sublayer-data.html'>layer_after_scale</a></span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span><span class='op'>$</span><span class='va'>fill</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="x-y-problem_files/figure-html5/after-scale-data-fill-1.png" width="624" /></p>
+</div>
+<p>What <code>after_scale()</code>/<code>stage(after_scale = )</code> allows you to do is override these color values right before the layer data is sent off to be drawn. So we again use the same expression <code>length(group)</code> to grab the number of bars in the after-scale data, pass that value to a color palette function like <code>topo.colors()</code>, and re-map to the <code>fill</code> aesthetic.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>mpg</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>manufacturer</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_bar</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes_eval.html'>stage</a></span><span class='op'>(</span><span class='va'>manufacturer</span>, after_scale <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/palettes.html'>topo.colors</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>group</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_identity.html'>scale_fill_identity</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="x-y-problem_files/figure-html5/after-scale-demo-1.png" width="624" /></p>
+</div>
+<p>So this solution achieves the desired effect, but it’s needlessly complicated. You need complex staging of the <code>fill</code> aesthetic via <code>stage()</code> and you also need to pair this with <code>scale_fill_identity()</code> to let ggplot know that you’re directly supplying the fill values (otherwise you get errors and warnings).</p>
+<p>Wait hold up - a <em>fill scale</em>? Did this user actually just want a custom fill scale? Ohhh…</p>
+<h2 id="attempt-3-oh.-you-just-wanted-a-scale_fill_">Attempt 3: Oh. You just wanted a <code>scale_fill_*()</code>…</h2>
+<p>So yeah. It turns out that they just wanted a custom scale that would take a certain set of colors, and interpolate the colors across the bars in the plot.</p>
+<p>The correct way to approach this problem is to create a new fill scale that wraps around <code>discrete_scale()</code>. The scale function should take a set of colors (<code>cols</code>) and pass <code>discrete_scale()</code> a palette function created via the <a href="https://adv-r.hadley.nz/function-factories.html">function factory</a> <code>colorRampPalette()</code>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>scale_fill_interpolate</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>cols</span>, <span class='va'>...</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/discrete_scale.html'>discrete_scale</a></span><span class='op'>(</span></span>
+<span>    aesthetics <span class='op'>=</span> <span class='st'>"fill"</span>,</span>
+<span>    scale_name <span class='op'>=</span> <span class='st'>"interpolate"</span>,</span>
+<span>    palette <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/colorRamp.html'>colorRampPalette</a></span><span class='op'>(</span><span class='va'>cols</span><span class='op'>)</span>,</span>
+<span>    <span class='va'>...</span></span>
+<span>  <span class='op'>)</span></span>
+<span><span class='op'>}</span></span></code></pre>
+</div>
+</div>
+<p>Our new <code>scale_fill_interpolate()</code> function can now be added to the plot like any other scale:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>p</span> <span class='op'>+</span></span>
+<span>  <span class='fu'>scale_fill_interpolate</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pink"</span>, <span class='st'>"goldenrod"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="x-y-problem_files/figure-html5/scale_fill_interpolate-1-1.png" width="624" /></p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>ggplot</span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>Condition</span>, y <span class='op'>=</span> <span class='va'>Accuracy</span>, fill <span class='op'>=</span> <span class='va'>color</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>geom_col</span><span class='op'>(</span>
-    data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>left</span><span class='op'>)</span>,
-    width <span class='op'>=</span> <span class='fl'>.3</span>,
-    color <span class='op'>=</span> <span class='st'>"white"</span>,
-    position <span class='op'>=</span> <span class='fu'>position_nudge</span><span class='op'>(</span>x <span class='op'>=</span> <span class='op'>-</span><span class='fl'>.3</span><span class='op'>)</span>,
-  <span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>geom_errorbar</span><span class='op'>(</span>
-    <span class='fu'>aes</span><span class='op'>(</span>ymin <span class='op'>=</span> <span class='va'>Accuracy</span> <span class='op'>-</span> <span class='va'>error_low</span>, ymax <span class='op'>=</span> <span class='va'>Accuracy</span> <span class='op'>+</span> <span class='va'>error_high</span><span class='op'>)</span>,
-    data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>left</span><span class='op'>)</span>,
-    width <span class='op'>=</span> <span class='fl'>.1</span>,
-    position <span class='op'>=</span> <span class='fu'>position_nudge</span><span class='op'>(</span>x <span class='op'>=</span> <span class='op'>-</span><span class='fl'>.3</span><span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>geom_col</span><span class='op'>(</span>
-    data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='op'>!</span><span class='va'>left</span><span class='op'>)</span>,
-    color <span class='op'>=</span> <span class='st'>"white"</span>,
-    width <span class='op'>=</span> <span class='fl'>.3</span>, 
-  <span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>geom_errorbar</span><span class='op'>(</span>
-    <span class='fu'>aes</span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>y</span>, ymin <span class='op'>=</span> <span class='va'>y</span> <span class='op'>-</span> <span class='va'>error_low</span>, ymax <span class='op'>=</span> <span class='va'>y</span> <span class='op'>+</span> <span class='va'>error_high</span><span class='op'>)</span>,
-    data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='op'>!</span><span class='va'>left</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-      <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>Condition</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-      <span class='fu'>mutate</span><span class='op'>(</span>y <span class='op'>=</span> <span class='fu'>accumulate</span><span class='op'>(</span><span class='va'>Accuracy</span>, <span class='va'>sum</span><span class='op'>)</span><span class='op'>)</span>,
-    width <span class='op'>=</span> <span class='fl'>.1</span>
-  <span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>geom_hline</span><span class='op'>(</span>
-    <span class='fu'>aes</span><span class='op'>(</span>yintercept <span class='op'>=</span> <span class='fl'>.25</span><span class='op'>)</span>,
-    linetype <span class='op'>=</span> <span class='fl'>2</span>,
-    size <span class='op'>=</span> <span class='fl'>1</span>,
-  <span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>geom_text</span><span class='op'>(</span>
-    <span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>3.4</span>, y <span class='op'>=</span> <span class='fl'>.29</span><span class='op'>)</span>,
-    label <span class='op'>=</span> <span class='st'>"Chance"</span>,
-    family <span class='op'>=</span> <span class='st'>"Adelle"</span>,
-    color <span class='op'>=</span> <span class='st'>"grey20"</span>,
-    inherit.aes <span class='op'>=</span> <span class='cn'>FALSE</span>
-  <span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>scale_fill_identity</span><span class='op'>(</span>
-    labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Single"</span>, <span class='st'>"Primacy"</span>, <span class='st'>"Recency"</span><span class='op'>)</span>,
-    guide <span class='op'>=</span> <span class='fu'>guide_legend</span><span class='op'>(</span>
-      title <span class='op'>=</span> <span class='cn'>NULL</span>,
-      direction <span class='op'>=</span> <span class='st'>"horizontal"</span>,
-      override.aes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#29476B"</span>, <span class='st'>"#AD403D"</span>, <span class='st'>"#9BBB58"</span><span class='op'>)</span><span class='op'>)</span>
-    <span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>scale_x_continuous</span><span class='op'>(</span>
-    breaks <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span> <span class='op'>-</span> <span class='fl'>.15</span>,
-    labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>Condition_name</span><span class='op'>)</span>,
-    expand <span class='op'>=</span> <span class='fu'>expansion</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.1</span>, <span class='fl'>.05</span><span class='op'>)</span><span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>scale_y_continuous</span><span class='op'>(</span>
-    breaks <span class='op'>=</span> <span class='fu'>scales</span><span class='fu'>::</span><span class='fu'><a href='https://scales.r-lib.org/reference/breaks_pretty.html'>pretty_breaks</a></span><span class='op'>(</span><span class='fl'>6</span><span class='op'>)</span>,
-    labels <span class='op'>=</span> <span class='fu'>scales</span><span class='fu'>::</span><span class='fu'><a href='https://scales.r-lib.org/reference/label_percent.html'>percent_format</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>,
-    limits <span class='op'>=</span> <span class='fl'>0</span><span class='op'>:</span><span class='fl'>1</span>,
-    expand <span class='op'>=</span> <span class='fu'>expansion</span><span class='op'>(</span><span class='fl'>0</span><span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>labs</span><span class='op'>(</span>
-    title <span class='op'>=</span> <span class='st'>"Accuracy by Condition and Referent"</span>,
-    y <span class='op'>=</span> <span class='cn'>NULL</span>
-  <span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>theme_classic</span><span class='op'>(</span>
-    base_family <span class='op'>=</span> <span class='st'>"Roboto"</span>,
-    base_size <span class='op'>=</span> <span class='fl'>16</span>
-  <span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>theme</span><span class='op'>(</span>
-    plot.title.position <span class='op'>=</span> <span class='st'>"plot"</span>,
-    plot.title <span class='op'>=</span> <span class='fu'>element_text</span><span class='op'>(</span>
-      family <span class='op'>=</span> <span class='st'>"Roboto Slab"</span>,
-      margin <span class='op'>=</span> <span class='fu'>margin</span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, <span class='st'>"cm"</span><span class='op'>)</span>
-    <span class='op'>)</span>,
-    legend.position <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.35</span>, <span class='fl'>.9</span><span class='op'>)</span>,
-    axis.title.x <span class='op'>=</span> <span class='fu'>element_text</span><span class='op'>(</span>margin <span class='op'>=</span> <span class='fu'>margin</span><span class='op'>(</span>t <span class='op'>=</span> <span class='fl'>.4</span>, unit <span class='op'>=</span> <span class='st'>"cm"</span><span class='op'>)</span><span class='op'>)</span>,
-    plot.margin <span class='op'>=</span> <span class='fu'>margin</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>.7</span>, <span class='fl'>1</span>, <span class='st'>"cm"</span><span class='op'>)</span>
-  <span class='op'>)</span>
-</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>p</span> <span class='op'>+</span></span>
+<span>  <span class='fu'>scale_fill_interpolate</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"steelblue"</span>, <span class='st'>"orange"</span>, <span class='st'>"forestgreen"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="x-y-problem_files/figure-html5/scale_fill_interpolate-2-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span></span>
+<span><span class='va'>cols</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/grDevices/colors.html'>colors</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='fl'>5</span><span class='op'>)</span></span>
+<span><span class='va'>cols</span></span></code></pre>
+</div>
+<pre><code>  [1] &quot;lightgoldenrodyellow&quot; &quot;mediumorchid1&quot;        &quot;gray26&quot;              
+  [4] &quot;palevioletred2&quot;       &quot;gray42&quot;</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>p</span> <span class='op'>+</span></span>
+<span>  <span class='fu'>scale_fill_interpolate</span><span class='op'>(</span><span class='va'>cols</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="x-y-problem_files/figure-html5/scale_fill_interpolate-3-1.png" width="624" /></p>
+</div>
+<p>I sent (a variant of) this answer to the thread and the user marked it solved with a thanks, concluding my desperate spiral into finding the right solution to the intended question.</p>
+<h2 id="reflections">Reflections</h2>
+<p>So why was this so hard for me to get? The most immediate cause is because I quickly skimmed the wording of the question and extracted two key phrases:</p>
+<ul>
+<li><p>“access the <strong>number of bars</strong> in a barplot”</p></li>
+<li><p>“that can be used within ggplot, like <strong>after_stat()</strong>”</p></li>
+</ul>
+<p>But neither of these turned out to be important (or even relevant) to the solution. The correct answer was just a clean custom fill scale, where you don’t have to think about the number of bars or accessing that in the internals. Simply extending <code>discrete_scale()</code> allows you to abstract away from those details entirely.</p>
+<p>So in fairness, it <em>was</em> a very difficult XY problem to get out of. But the wording of the question wasn’t the root cause. I think the root cause is some combination of the following:</p>
+<ul>
+<li><p><strong>There are many ways to do the same thing in R</strong> so I automatically assume that my solution counts as a contribution as long as it gets the job done. But solutions should also be understandable for the person asking the question. Looking back, I was insane to even suggest my second attempt as the solution because it’s so contrived and borderline incomprehensible. It only sets the user up for more confusion and bugs in the future, so that was a bit irresponsible and selfish of me (it only scratches <em>my</em> itch).</p></li>
+<li><p><strong>Solutions to (practical) problems are usually boring</strong> and I’m allergic to boring solutions. This is a bad attitude to have when offering to help people. I assumed that people share my excitement about ggplot internals, but actually most users don’t care (that’s why it’s called the <em>internals</em> and hidden from users). An important context that I miss as the person answering questions on the other end is that users post questions when they’re stuck and frustrated. Their goal is not to take a hard problem and turn it into a thinking exercise or a learning experience (that part happens organically, but is not the goal). If anything, that’s what <em>I</em> do when I take interest in other people’s (coding) problems.</p></li>
+<li><p><strong>I imbue intent to questions that are clearing missing it</strong>. I don’t think that’s a categorically bad thing because it can sometimes land you in a shortcut out of an XY problem. But when you miss, it’s catastrophic and pulls you deeper into the problem. I think that was the case for me here - I conflated the X with the Y and assumed that <code>after_stat()</code> was relevant on face value because I personally know it to be a very powerful tool. I let my <em>own history</em> of treating <code>after_stat()</code> like the X (“How can I use <code>after_stat()</code> to solve/simplify this problem?”) guide my interpretation of the question, which is not good practice.</p></li>
+</ul>
+<p>Of course, there are likely more to this, but these are plenty for me to work on for now.</p>
+<p>Lastly, I don’t want this to detract from the fact that the onus is on users to ask good questions. I don’t want to put question-answer-ers on the spot for their handling of XY problems. After all, most are volunteers who gain nothing from helping others besides status and some internet points.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> Just take this as me telling myself to be a better person.</p>
+<h2 id="ending-on-a-fun-aside---accidentally-escaping-an-xy-problem">Ending on a fun aside - accidentally escaping an XY problem</h2>
+<p>It’s not my style to to write serious blog posts. I think I deserve a break from many paragraphs of self-induced beat down.</p>
+<p>So in that spirit I want to end on a funny anecdote where I escaped an XY problem by pure luck.</p>
+<p>I came across a relatively straightforward question which can be summarized as the following:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>input</span> <span class='op'>&lt;-</span> <span class='st'>"a + c + d + e"</span></span>
+<span><span class='va'>output</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"c"</span>, <span class='st'>"d"</span>, <span class='st'>"e"</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
-<div id="ref-Yurovsky2008MutualEI" class="csl-entry" role="doc-biblioentry">
-Yurovsky, Daniel, and C. Yu. 2008. <em>Mutual Exclusivity in Cross-Situational Statistical Learning</em>. <a href="https://dll.sitehost.iu.edu/papers/Yurovsky_cs08.pdf">https://dll.sitehost.iu.edu/papers/Yurovsky_cs08.pdf</a>.
+<p>There are many valid approaches to this and some were already posted to the thread:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/strsplit.html'>strsplit</a></span><span class='op'>(</span><span class='va'>input</span>, <span class='st'>" + "</span>, <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span></span></code></pre>
 </div>
+<pre><code>  [1] &quot;a&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot;</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/allnames.html'>all.vars</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/parse.html'>parse</a></span><span class='op'>(</span>text <span class='op'>=</span> <span class='va'>input</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
-<section class="footnotes" role="doc-endnotes">
+<pre><code>  [1] &quot;a&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot;</code></pre>
+</div>
+<p>Me, knowing too many useless things (and knowing that the the user already has the answer they need), suggested a quirky alternative:<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
+<blockquote>
+<p>This is super off-label usage but you can also use R’s formula utilities to parse this:</p>
+</blockquote>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/terms.html'>terms</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/delete.response.html'>reformulate</a></span><span class='op'>(</span><span class='va'>input</span><span class='op'>)</span><span class='op'>)</span>, <span class='st'>"term.labels"</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  [1] &quot;a&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot;</code></pre>
+</div>
+<p>To my surprise, the response I got was:</p>
+<blockquote>
+<p>Lovely! These definitely originated from formula ages ago so it’s actually not far off-label at all 🙂</p>
+</blockquote>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>I actually don’t even have a strong feeling about this. It <em>does</em> look kinda cool.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>I used a neat trick from the <a href="https://bookdown.org/yihui/rmarkdown-cookbook/figures-side.html">R Markdown Cookbook</a> to get the plots printed side-by-side<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Especially before slack deletes the old messages.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>In R, you can use <code>tools::file_ext()</code> or <code>fs::path_ext()</code>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><a href="https://en.wikipedia.org/wiki/Copypasta" class="uri">https://en.wikipedia.org/wiki/Copypasta</a><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Good luck trying to explain the actual error message. Especially <strong>closure</strong>, a kind of weird vocabulary in R (fun fact - the first edition of Advanced R used to have a <a href="http://adv-r.had.co.nz/Functional-programming.html#closures">section on closure</a> which is absent in the second edition probably because “In R, almost every function is a closure”).<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Paradoxically, XY problems sometimes arise when inexperienced users try to come up with a reprex. They might capture the error/problem too narrowly, such that the more important broader context is left out.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Or the number of distinct combinations between <code>PANEL</code> and <code>group</code>, as in <code>nlevels(interaction(PANEL, group, drop = TRUE))</code>. But of course that’s overkill and only of interest for “theoretical purity”.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>And I like the R4DS slack because it doesn’t have “internet points.” There <em>is</em> status (moderator) though I don’t wear the badge (literally - it’s an emoji).<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>Actually I only thought of this because I’d been writing a statistical <a href="https://yjunechoe.github.io/jlmerclusterperm/">package</a> that required some nasty metaprogramming with the formula object.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 <!--radix_placeholder_article_footer-->
@@ -2910,7 +2951,7 @@ Yurovsky, Daniel, and C. Yu. 2008. <em>Mutual Exclusivity in Cross-Situational S
   <p class="social_footer">
     <span class="article-sharing">
       Share: &nbsp;
-      <a href="https://twitter.com/share?text=Plot%20Makeover%20%232&amp;url=https%3A%2F%2Fyjunechoe.github.io%2Fposts%2F2020-11-08-plot-makeover-2%2F" aria-label="share on twitter">
+      <a href="https://twitter.com/share?text=Fumbling%20my%20way%20through%20an%20XY%20problem&amp;url=https%3A%2F%2Fyjunechoe.github.io%2Fposts%2F2023-07-09-x-y-problem%2F" aria-label="share on twitter">
         <i class="fab fa-twitter" aria-hidden="true"></i>
       </a>
     </span>
@@ -2926,10 +2967,7 @@ Yurovsky, Daniel, and C. Yu. 2008. <em>Mutual Exclusivity in Cross-Situational S
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->
 <!--radix_placeholder_appendices-->
-<div class="appendix-bottom">
-  <h3 id="references">References</h3>
-  <div id="references-listing"></div>
-</div>
+<div class="appendix-bottom"></div>
 <!--/radix_placeholder_appendices-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
 <!--radix_placeholder_navigation_after_body--><html><body>

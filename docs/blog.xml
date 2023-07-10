@@ -12,7 +12,17 @@
       <link>https://yjunechoe.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>2023-06-11</lastBuildDate>
+    <lastBuildDate>2023-07-10</lastBuildDate>
+    <item>
+      <title>Fumbling my way through an XY problem</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>https://yjunechoe.github.io/posts/2023-07-09-x-y-problem</link>
+      <description>Some lessons learned from a (personal) case study</description>
+      <category>reflections</category>
+      <guid>https://yjunechoe.github.io/posts/2023-07-09-x-y-problem</guid>
+      <pubDate>2023-07-10</pubDate>
+      <media:content url="https://yjunechoe.github.io/posts/2023-07-09-x-y-problem/preview.png" medium="image" type="image/png" width="256" height="256"/>
+    </item>
     <item>
       <title>Row relational operations with slice()</title>
       <dc:creator>June Choe</dc:creator>
@@ -119,7 +129,6 @@
       <category>ggplot2</category>
       <guid>https://yjunechoe.github.io/posts/2020-11-08-plot-makeover-2</guid>
       <pubDate>2020-11-08</pubDate>
-      <media:content url="https://yjunechoe.github.io/posts/2020-11-08-plot-makeover-2/plot-makeover-2_files/figure-html5/final-1.png" medium="image" type="image/png" width="1344" height="1152"/>
     </item>
     <item>
       <title>TidyTuesday 2020 week 45</title>
@@ -206,7 +215,7 @@
       <category>ggplot2</category>
       <guid>https://yjunechoe.github.io/posts/2020-09-20-plot-makeover-1</guid>
       <pubDate>2020-09-20</pubDate>
-      <media:content url="https://yjunechoe.github.io/posts/2020-09-20-plot-makeover-1/plot-makeover-1_files/figure-html5/after_bar_plot-1.png" medium="image" type="image/png" width="1248" height="768"/>
+      <media:content url="https://yjunechoe.github.io/posts/2020-09-20-plot-makeover-1/plot.png" medium="image" type="image/png" width="597" height="815"/>
     </item>
     <item>
       <title>TidyTuesday 2020 week 38</title>
@@ -324,7 +333,6 @@
       <category>tutorial</category>
       <guid>https://yjunechoe.github.io/posts/2020-06-30-treemap-with-ggplot</guid>
       <pubDate>2020-06-30</pubDate>
-      <media:content url="https://yjunechoe.github.io/posts/2020-06-30-treemap-with-ggplot/2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-12-1.png" medium="image" type="image/png" width="1920" height="768"/>
     </item>
     <item>
       <title>Indexing tip for {spacyr}</title>
