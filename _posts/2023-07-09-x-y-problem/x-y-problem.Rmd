@@ -99,7 +99,7 @@ The idea here is that ggplot knows that there are 15 bars, so this fact must rep
 
 The very last part of the question "... like after_stat()" triggered some alarms in the thread and got me called in. For those unfamiliar, `after_stat()` is part of the new and obscure family of [delayed aesthetic evaluation](https://ggplot2.tidyverse.org/reference/aes_eval.html) functions introduced in ggplot 3.3.0. It's something that you normally don't think about in ggplot, but it's a topic that I've been obsessed with for the last 2 years or so: it has resulted in a [paper](https://yjunechoe.github.io/static/papers/Choe_2022_SublayerGG.pdf), a package ([ggtrace](https://github.com/yjunechoe/ggtrace)), [blog](https://yjunechoe.github.io/posts/2022-03-10-ggplot2-delayed-aes-1/) [posts](https://yjunechoe.github.io/posts/2022-07-06-ggplot2-delayed-aes-2/), and talks ([useR!](https://github.com/yjunechoe/ggtrace-user2022), [rstudio::conf](https://github.com/yjunechoe/ggtrace-rstudioconf2022), [JSM](https://ww2.aievolution.com/JSMAnnual/index.cfm?do=ev.viewEv&ev=2860)).
 
-The user asked about `after_stat()` so naturally I came up with an `after_stat()` solution. In the after-stat stage of the bar layer's data, the layer data looks like this:
+The user asked about `after_stat()`, so naturally I came up with an `after_stat()` solution. In the after-stat stage of the bar layer's data, the layer data looks like this:
 
 ```{r after-stat-data}
 # remotes::install_github("yjunechoe/ggtrace")
@@ -128,14 +128,14 @@ ggplot(mpg, aes(manufacturer, fill = manufacturer)) +
   )
 ```
 
-The `after_stat(length(group))` solution does what the user asks using `after_stat()`, but as you can see this is _extremely useless_: there are many technical constraints on what you can actually do with this information in the after-stat stage.
+The `after_stat(length(group))` solution returns the number of bars using `after_stat()`, as the user asked. But as you can see this is _extremely useless_: there are many technical constraints on what you can actually do with this information in the after-stat stage.
 
 I should have checked if they actually wanted an `after_stat()` solution first, before providing this answer. But I got distracted by the `after_stat()` keyword and got too excited by the prospect of someone else taking interest in the thing that I'm obsessed with. Alas this wasn't the case - they were trying to do something _practical_ - so I went back into the thread to figure out their goal for my second attempt.
 
 
 ## Attempt 2: Hmm but why not `after_scale()`?
 
-What I had neglected in my first attempt was the fact that the user talked more about their problem with someone else who got to the question before I did. That discussion turned out to include an important clue to the intent behind the question: the user wanted the number of bars in order to **interpolate the color of the bars**.
+What I had neglected in my first attempt was the fact that the user talked more about their problem with someone else who got to the question before I did. That discussion turned out to include an important clue to the intent behind the original question: the user wanted the number of bars in order to **interpolate the color of the bars**.
 
 So for example, a palette function like `topo.colors()` takes `n` to produce interpolated color values:
 
@@ -172,7 +172,7 @@ Wait hold up - a _fill scale_? Did this user actually just want a custom fill sc
 
 ## Attempt 3: Oh. You just wanted a `scale_fill_*()`...
 
-So yeah. It turns out that they just wanted a custom scale that would take a certain set of colors, and interpolate the colors across the bars in the plot.
+So yeah. It turns out that they just wanted a custom scale that takes some set of colors and interpolate the colors across the bars in the plot.
 
 The correct way to approach this problem is to create a new fill scale that wraps around `discrete_scale()`. The scale function should take a set of colors (`cols`) and pass `discrete_scale()` a palette function created via the [function factory](https://adv-r.hadley.nz/function-factories.html) `colorRampPalette()`.
 
@@ -216,7 +216,7 @@ So why was this so hard for me to get? The most immediate cause is because I qui
 
 - "access the **number of bars** in a barplot"
 
-- "that can be used within ggplot, like **after_stat()**"
+- "that can be used within ggplot, **like after_stat()**"
 
 But neither of these turned out to be important (or even relevant) to the solution. The correct answer was just a clean custom fill scale, where you don't have to think about the number of bars or accessing that in the internals. Simply extending `discrete_scale()` allows you to abstract away from those details entirely.
 
@@ -224,7 +224,7 @@ So in fairness, it _was_ a very difficult XY problem to get out of. But the word
 
 - **There are many ways to do the same thing in R** so I automatically assume that my solution counts as a contribution as long as it gets the job done. But solutions should also be understandable for the person asking the question. Looking back, I was insane to even suggest my second attempt as the solution because it's so contrived and borderline incomprehensible. It only sets the user up for more confusion and bugs in the future, so that was a bit irresponsible and selfish of me (it only scratches _my_ itch).
 
-- **Solutions to (practical) problems are usually boring** and I'm allergic to boring solutions. This is a bad attitude to have when offering to help people. I assumed that people share my excitement about ggplot internals, but actually most users don't care (that's why it's called the _internals_ and hidden from users). An important context that I miss as the person answering questions on the other end is that users post questions when they're stuck and frustrated. Their goal is not to take a hard problem and turn it into a thinking exercise or a learning experience (that part happens organically, but is not the goal). If anything, that's what _I_ do when I take interest in other people's (coding) problems.
+- **Solutions to (practical) problems are usually boring** and I'm allergic to boring solutions. This is a bad attitude to have when offering to help people. I assumed that people share my excitement about ggplot internals, but actually most users don't care (that's why it's called the _internals_ and hidden from users). An important context that I miss as the person answering questions on the other end is that users post questions when they're stuck and frustrated. Their goal is not to take a hard problem and turn it into a thinking exercise or a learning experience (that part happens organically, but is not the goal). If anything, that's what _I'm_ doing when I choose to take interest in other people's (coding) problems.
 
 - **I imbue intent to questions that are clearing missing it**. I don't think that's a categorically bad thing because it can sometimes land you in a shortcut out of an XY problem. But when you miss, it's catastrophic and pulls you deeper into the problem. I think that was the case for me here - I conflated the X with the Y and assumed that `after_stat()` was relevant on face value because I personally know it to be a very powerful tool. I let my _own history_ of treating `after_stat()` like the X ("How can I use `after_stat()` to solve/simplify this problem?") guide my interpretation of the question, which is not good practice.
 
@@ -235,7 +235,7 @@ Lastly, I don't want this to detract from the fact that the onus is on users to 
 
 ## Ending on a fun aside - accidentally escaping an XY problem
 
-It's not my style to to write serious blog posts. I think I deserve a break from many paragraphs of self-induced beat down.
+It's not my style to write serious blog posts. I think I deserve a break from many paragraphs of self-induced beat down.
 
 So in that spirit I want to end on a funny anecdote where I escaped an XY problem by pure luck.
 
@@ -253,9 +253,9 @@ strsplit(input, " + ", TRUE)[[1]]
 all.vars(parse(text = input))
 ```
 
-Me, knowing too many useless things (and knowing that the the user already has the answer they need), suggested a quirky alternative:^[Actually I only thought of this because I'd been writing a statistical [package](https://yjunechoe.github.io/jlmerclusterperm/) that required some nasty metaprogramming with the formula object.]
+Me, knowing too many useless things (and knowing that the the user already has the best answers), suggested a quirky alternative:^[Actually I only thought of this because I'd been writing a statistical [package](https://yjunechoe.github.io/jlmerclusterperm/) that required some nasty metaprogramming with the formula object.]
 
-> This is super off-label usage but you can also use R's formula utilities to parse this:
+> This is super off-label usage but you can also use R's formula utilities to parse this:^[The significance of this solution building on top of R's formula utilities is that it will also parse stuff like `"a*b"` (as `c("a", "b", "a:b")`. So given that the inputs originated from R formulas (as the user later clarifies), this _is_ the principled approach.]
 
 ```{r fun-q-hack}
 attr(terms(reformulate(input)), "term.labels")

@@ -2722,7 +2722,7 @@ Misc.
 <p>The idea here is that ggplot knows that there are 15 bars, so this fact must represented somewhere in the internals. The user wants to be able to access that value dynamically.</p>
 <h2 id="attempt-1-after_stat-i-know-that">Attempt 1: <code>after_stat()</code>? I know that!</h2>
 <p>The very last part of the question “… like after_stat()” triggered some alarms in the thread and got me called in. For those unfamiliar, <code>after_stat()</code> is part of the new and obscure family of <a href="https://ggplot2.tidyverse.org/reference/aes_eval.html">delayed aesthetic evaluation</a> functions introduced in ggplot 3.3.0. It’s something that you normally don’t think about in ggplot, but it’s a topic that I’ve been obsessed with for the last 2 years or so: it has resulted in a <a href="https://yjunechoe.github.io/static/papers/Choe_2022_SublayerGG.pdf">paper</a>, a package (<a href="https://github.com/yjunechoe/ggtrace">ggtrace</a>), <a href="https://yjunechoe.github.io/posts/2022-03-10-ggplot2-delayed-aes-1/">blog</a> <a href="https://yjunechoe.github.io/posts/2022-07-06-ggplot2-delayed-aes-2/">posts</a>, and talks (<a href="https://github.com/yjunechoe/ggtrace-user2022">useR!</a>, <a href="https://github.com/yjunechoe/ggtrace-rstudioconf2022">rstudio::conf</a>, <a href="https://ww2.aievolution.com/JSMAnnual/index.cfm?do=ev.viewEv&amp;ev=2860">JSM</a>).</p>
-<p>The user asked about <code>after_stat()</code> so naturally I came up with an <code>after_stat()</code> solution. In the after-stat stage of the bar layer’s data, the layer data looks like this:</p>
+<p>The user asked about <code>after_stat()</code>, so naturally I came up with an <code>after_stat()</code> solution. In the after-stat stage of the bar layer’s data, the layer data looks like this:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># remotes::install_github("yjunechoe/ggtrace")</span></span>
@@ -2770,10 +2770,10 @@ Misc.
 </div>
 <p><img src="x-y-problem_files/figure-html5/after-stat-plot-1.png" width="624" /></p>
 </div>
-<p>The <code>after_stat(length(group))</code> solution does what the user asks using <code>after_stat()</code>, but as you can see this is <em>extremely useless</em>: there are many technical constraints on what you can actually do with this information in the after-stat stage.</p>
+<p>The <code>after_stat(length(group))</code> solution returns the number of bars using <code>after_stat()</code>, as the user asked. But as you can see this is <em>extremely useless</em>: there are many technical constraints on what you can actually do with this information in the after-stat stage.</p>
 <p>I should have checked if they actually wanted an <code>after_stat()</code> solution first, before providing this answer. But I got distracted by the <code>after_stat()</code> keyword and got too excited by the prospect of someone else taking interest in the thing that I’m obsessed with. Alas this wasn’t the case - they were trying to do something <em>practical</em> - so I went back into the thread to figure out their goal for my second attempt.</p>
 <h2 id="attempt-2-hmm-but-why-not-after_scale">Attempt 2: Hmm but why not <code>after_scale()</code>?</h2>
-<p>What I had neglected in my first attempt was the fact that the user talked more about their problem with someone else who got to the question before I did. That discussion turned out to include an important clue to the intent behind the question: the user wanted the number of bars in order to <strong>interpolate the color of the bars</strong>.</p>
+<p>What I had neglected in my first attempt was the fact that the user talked more about their problem with someone else who got to the question before I did. That discussion turned out to include an important clue to the intent behind the original question: the user wanted the number of bars in order to <strong>interpolate the color of the bars</strong>.</p>
 <p>So for example, a palette function like <code>topo.colors()</code> takes <code>n</code> to produce interpolated color values:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2838,7 +2838,7 @@ Misc.
 <p>So this solution achieves the desired effect, but it’s needlessly complicated. You need complex staging of the <code>fill</code> aesthetic via <code>stage()</code> and you also need to pair this with <code>scale_fill_identity()</code> to let ggplot know that you’re directly supplying the fill values (otherwise you get errors and warnings).</p>
 <p>Wait hold up - a <em>fill scale</em>? Did this user actually just want a custom fill scale? Ohhh…</p>
 <h2 id="attempt-3-oh.-you-just-wanted-a-scale_fill_">Attempt 3: Oh. You just wanted a <code>scale_fill_*()</code>…</h2>
-<p>So yeah. It turns out that they just wanted a custom scale that would take a certain set of colors, and interpolate the colors across the bars in the plot.</p>
+<p>So yeah. It turns out that they just wanted a custom scale that takes some set of colors and interpolate the colors across the bars in the plot.</p>
 <p>The correct way to approach this problem is to create a new fill scale that wraps around <code>discrete_scale()</code>. The scale function should take a set of colors (<code>cols</code>) and pass <code>discrete_scale()</code> a palette function created via the <a href="https://adv-r.hadley.nz/function-factories.html">function factory</a> <code>colorRampPalette()</code>.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2886,19 +2886,19 @@ Misc.
 <p>So why was this so hard for me to get? The most immediate cause is because I quickly skimmed the wording of the question and extracted two key phrases:</p>
 <ul>
 <li><p>“access the <strong>number of bars</strong> in a barplot”</p></li>
-<li><p>“that can be used within ggplot, like <strong>after_stat()</strong>”</p></li>
+<li><p>“that can be used within ggplot, <strong>like after_stat()</strong>”</p></li>
 </ul>
 <p>But neither of these turned out to be important (or even relevant) to the solution. The correct answer was just a clean custom fill scale, where you don’t have to think about the number of bars or accessing that in the internals. Simply extending <code>discrete_scale()</code> allows you to abstract away from those details entirely.</p>
 <p>So in fairness, it <em>was</em> a very difficult XY problem to get out of. But the wording of the question wasn’t the root cause. I think the root cause is some combination of the following:</p>
 <ul>
 <li><p><strong>There are many ways to do the same thing in R</strong> so I automatically assume that my solution counts as a contribution as long as it gets the job done. But solutions should also be understandable for the person asking the question. Looking back, I was insane to even suggest my second attempt as the solution because it’s so contrived and borderline incomprehensible. It only sets the user up for more confusion and bugs in the future, so that was a bit irresponsible and selfish of me (it only scratches <em>my</em> itch).</p></li>
-<li><p><strong>Solutions to (practical) problems are usually boring</strong> and I’m allergic to boring solutions. This is a bad attitude to have when offering to help people. I assumed that people share my excitement about ggplot internals, but actually most users don’t care (that’s why it’s called the <em>internals</em> and hidden from users). An important context that I miss as the person answering questions on the other end is that users post questions when they’re stuck and frustrated. Their goal is not to take a hard problem and turn it into a thinking exercise or a learning experience (that part happens organically, but is not the goal). If anything, that’s what <em>I</em> do when I take interest in other people’s (coding) problems.</p></li>
+<li><p><strong>Solutions to (practical) problems are usually boring</strong> and I’m allergic to boring solutions. This is a bad attitude to have when offering to help people. I assumed that people share my excitement about ggplot internals, but actually most users don’t care (that’s why it’s called the <em>internals</em> and hidden from users). An important context that I miss as the person answering questions on the other end is that users post questions when they’re stuck and frustrated. Their goal is not to take a hard problem and turn it into a thinking exercise or a learning experience (that part happens organically, but is not the goal). If anything, that’s what <em>I’m</em> doing when I choose to take interest in other people’s (coding) problems.</p></li>
 <li><p><strong>I imbue intent to questions that are clearing missing it</strong>. I don’t think that’s a categorically bad thing because it can sometimes land you in a shortcut out of an XY problem. But when you miss, it’s catastrophic and pulls you deeper into the problem. I think that was the case for me here - I conflated the X with the Y and assumed that <code>after_stat()</code> was relevant on face value because I personally know it to be a very powerful tool. I let my <em>own history</em> of treating <code>after_stat()</code> like the X (“How can I use <code>after_stat()</code> to solve/simplify this problem?”) guide my interpretation of the question, which is not good practice.</p></li>
 </ul>
 <p>Of course, there are likely more to this, but these are plenty for me to work on for now.</p>
 <p>Lastly, I don’t want this to detract from the fact that the onus is on users to ask good questions. I don’t want to put question-answer-ers on the spot for their handling of XY problems. After all, most are volunteers who gain nothing from helping others besides status and some internet points.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> Just take this as me telling myself to be a better person.</p>
 <h2 id="ending-on-a-fun-aside---accidentally-escaping-an-xy-problem">Ending on a fun aside - accidentally escaping an XY problem</h2>
-<p>It’s not my style to to write serious blog posts. I think I deserve a break from many paragraphs of self-induced beat down.</p>
+<p>It’s not my style to write serious blog posts. I think I deserve a break from many paragraphs of self-induced beat down.</p>
 <p>So in that spirit I want to end on a funny anecdote where I escaped an XY problem by pure luck.</p>
 <p>I came across a relatively straightforward question which can be summarized as the following:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2918,9 +2918,9 @@ Misc.
 </div>
 <pre><code>  [1] &quot;a&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot;</code></pre>
 </div>
-<p>Me, knowing too many useless things (and knowing that the the user already has the answer they need), suggested a quirky alternative:<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
+<p>Me, knowing too many useless things (and knowing that the the user already has the best answers), suggested a quirky alternative:<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
 <blockquote>
-<p>This is super off-label usage but you can also use R’s formula utilities to parse this:</p>
+<p>This is super off-label usage but you can also use R’s formula utilities to parse this:<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p>
 </blockquote>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2944,6 +2944,7 @@ Misc.
 <li id="fn6"><p>Or the number of distinct combinations between <code>PANEL</code> and <code>group</code>, as in <code>nlevels(interaction(PANEL, group, drop = TRUE))</code>. But of course that’s overkill and only of interest for “theoretical purity”.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn7"><p>And I like the R4DS slack because it doesn’t have “internet points.” There <em>is</em> status (moderator) though I don’t wear the badge (literally - it’s an emoji).<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8"><p>Actually I only thought of this because I’d been writing a statistical <a href="https://yjunechoe.github.io/jlmerclusterperm/">package</a> that required some nasty metaprogramming with the formula object.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>The significance of this solution building on top of R’s formula utilities is that it will also parse stuff like <code>"a*b"</code> (as <code>c("a", "b", "a:b")</code>. So given that the inputs originated from R formulas (as the user later clarifies), this <em>is</em> the principled approach.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 <!--radix_placeholder_article_footer-->
