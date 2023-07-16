@@ -16,6 +16,8 @@ navbar:
       href: research.html
     - text: "CV"
       href: static/CV.pdf
+    - text: "Software"
+      href: software.html
     - text: "News"
       href: news.html
     - text: "Misc."
