@@ -926,6 +926,11 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
     font-size: 14px;
   }
 
+  /* tweak for Pandoc numbered line within distill */
+  d-article pre.numberSource code > span {
+      left: -2em;
+  }
+
   d-article pre {
     font-size: 14px;
   }
@@ -1762,8 +1767,9 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
     $('.distill-force-highlighting-css').parent().remove();
 
     // remove empty line numbers inserted by pandoc when using a
-    // custom syntax highlighting theme
-    $('code.sourceCode a:empty').remove();
+    // custom syntax highlighting theme, except when numbering line
+    // in code chunk
+    $('pre:not(.numberLines) code.sourceCode a:empty').remove();
 
     // load distill framework
     load_distill_framework();
@@ -2925,7 +2931,7 @@ function init_posts_list() {
 <div class="publishedDate">Nov. 8, 2020</div>
 </div>
 <div class="thumbnail">
-<img/>
+<img data-src="posts/2020-11-08-plot-makeover-2/plot-makeover-2_files/figure-html5/final-1.png"/>
 </div>
 <div class="description">
 <h2>Plot Makeover #2</h2>
@@ -3054,7 +3060,7 @@ function init_posts_list() {
 <div class="publishedDate">Sept. 20, 2020</div>
 </div>
 <div class="thumbnail">
-<img data-src="posts/2020-09-20-plot-makeover-1/plot.png"/>
+<img data-src="posts/2020-09-20-plot-makeover-1/plot-makeover-1_files/figure-html5/after_bar_plot-1.png"/>
 </div>
 <div class="description">
 <h2>Plot Makeover #1</h2>
@@ -3231,7 +3237,7 @@ function init_posts_list() {
 <div class="publishedDate">June 30, 2020</div>
 </div>
 <div class="thumbnail">
-<img/>
+<img data-src="posts/2020-06-30-treemap-with-ggplot/2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-12-1.png"/>
 </div>
 <div class="description">
 <h2>Plotting treemaps with {treemap} and {ggplot2}</h2>
@@ -3408,6 +3414,7 @@ function init_posts_list() {
 
 <div class="d-title">
 <h1>Blog Posts</h1>
+
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
 

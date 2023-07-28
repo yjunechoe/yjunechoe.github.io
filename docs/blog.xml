@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:distill="https://distill.pub/journal/" version="2.0">
   <channel>
     <title>June Choe</title>
     <link>https://yjunechoe.github.io</link>
@@ -129,6 +129,7 @@
       <category>ggplot2</category>
       <guid>https://yjunechoe.github.io/posts/2020-11-08-plot-makeover-2</guid>
       <pubDate>2020-11-08</pubDate>
+      <media:content url="https://yjunechoe.github.io/posts/2020-11-08-plot-makeover-2/plot-makeover-2_files/figure-html5/final-1.png" medium="image" type="image/png" width="1344" height="1152"/>
     </item>
     <item>
       <title>TidyTuesday 2020 week 45</title>
@@ -215,7 +216,7 @@
       <category>ggplot2</category>
       <guid>https://yjunechoe.github.io/posts/2020-09-20-plot-makeover-1</guid>
       <pubDate>2020-09-20</pubDate>
-      <media:content url="https://yjunechoe.github.io/posts/2020-09-20-plot-makeover-1/plot.png" medium="image" type="image/png" width="597" height="815"/>
+      <media:content url="https://yjunechoe.github.io/posts/2020-09-20-plot-makeover-1/plot-makeover-1_files/figure-html5/after_bar_plot-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
       <title>TidyTuesday 2020 week 38</title>
@@ -333,6 +334,7 @@
       <category>tutorial</category>
       <guid>https://yjunechoe.github.io/posts/2020-06-30-treemap-with-ggplot</guid>
       <pubDate>2020-06-30</pubDate>
+      <media:content url="https://yjunechoe.github.io/posts/2020-06-30-treemap-with-ggplot/2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-12-1.png" medium="image" type="image/png" width="1920" height="768"/>
     </item>
     <item>
       <title>Indexing tip for {spacyr}</title>

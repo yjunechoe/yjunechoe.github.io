@@ -925,6 +925,11 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
     font-size: 14px;
   }
 
+  /* tweak for Pandoc numbered line within distill */
+  d-article pre.numberSource code > span {
+      left: -2em;
+  }
+
   d-article pre {
     font-size: 14px;
   }
@@ -1761,8 +1766,9 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
     $('.distill-force-highlighting-css').parent().remove();
 
     // remove empty line numbers inserted by pandoc when using a
-    // custom syntax highlighting theme
-    $('code.sourceCode a:empty').remove();
+    // custom syntax highlighting theme, except when numbering line
+    // in code chunk
+    $('pre:not(.numberLines) code.sourceCode a:empty').remove();
 
     // load distill framework
     load_distill_framework();
@@ -2625,6 +2631,7 @@ Misc.
 
 <div class="d-title">
 <h1>Software</h1>
+
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
 

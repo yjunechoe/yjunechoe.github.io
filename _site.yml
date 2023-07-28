@@ -55,3 +55,5 @@ output:
 exclude: ['etc', 'renv*']
 favicon: static/img/icon.png
 google_analytics: "UA-178413324-1"
+rss:
+  full_content: true
