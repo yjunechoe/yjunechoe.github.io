@@ -12,7 +12,7 @@
       <link>https://yjunechoe.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>2023-07-10</lastBuildDate>
+    <lastBuildDate>Mon, 10 Jul 2023 00:00:00 +0000</lastBuildDate>
     <item>
       <title>Fumbling my way through an XY problem</title>
       <dc:creator>June Choe</dc:creator>
@@ -20,7 +20,7 @@
       <description>Some lessons learned from a (personal) case study</description>
       <category>reflections</category>
       <guid>https://yjunechoe.github.io/posts/2023-07-09-x-y-problem</guid>
-      <pubDate>2023-07-10</pubDate>
+      <pubDate>Mon, 10 Jul 2023 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2023-07-09-x-y-problem/preview.png" medium="image" type="image/png" width="238" height="205"/>
     </item>
     <item>
@@ -31,7 +31,7 @@
       <category>data wrangling</category>
       <category>dplyr</category>
       <guid>https://yjunechoe.github.io/posts/2023-06-11-row-relational-operations</guid>
-      <pubDate>2023-06-11</pubDate>
+      <pubDate>Sun, 11 Jun 2023 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2023-06-11-row-relational-operations/preview.png" medium="image" type="image/png" width="1800" height="1080"/>
     </item>
     <item>
@@ -45,7 +45,7 @@
       <category>dplyr</category>
       <category>data.table</category>
       <guid>https://yjunechoe.github.io/posts/2022-11-13-dataframes-jl-and-accessories</guid>
-      <pubDate>2022-11-15</pubDate>
+      <pubDate>Tue, 15 Nov 2022 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2022-11-13-dataframes-jl-and-accessories/preview.jpg" medium="image" type="image/jpeg"/>
     </item>
     <item>
@@ -56,7 +56,7 @@
       <category>conference</category>
       <category>ggtrace</category>
       <guid>https://yjunechoe.github.io/posts/2022-07-30-user2022</guid>
-      <pubDate>2022-08-01</pubDate>
+      <pubDate>Mon, 01 Aug 2022 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2022-07-30-user2022/preview.png" medium="image" type="image/png" width="520" height="260"/>
     </item>
     <item>
@@ -68,7 +68,7 @@
       <category>ggplot2</category>
       <category>tutorial</category>
       <guid>https://yjunechoe.github.io/posts/2022-07-06-ggplot2-delayed-aes-2</guid>
-      <pubDate>2022-07-06</pubDate>
+      <pubDate>Wed, 06 Jul 2022 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2022-07-06-ggplot2-delayed-aes-2/preview.png" medium="image" type="image/png" width="3469" height="2224"/>
     </item>
     <item>
@@ -81,7 +81,7 @@
       <category>ggplot internals</category>
       <category>tutorial</category>
       <guid>https://yjunechoe.github.io/posts/2022-03-10-ggplot2-delayed-aes-1</guid>
-      <pubDate>2022-03-17</pubDate>
+      <pubDate>Thu, 17 Mar 2022 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2022-03-10-ggplot2-delayed-aes-1/preview.png" medium="image" type="image/png" width="1457" height="872"/>
     </item>
     <item>
@@ -94,7 +94,7 @@
       <category>typography</category>
       <category>tutorial</category>
       <guid>https://yjunechoe.github.io/posts/2021-06-24-setting-up-and-debugging-custom-fonts</guid>
-      <pubDate>2021-06-24</pubDate>
+      <pubDate>Thu, 24 Jun 2021 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2021-06-24-setting-up-and-debugging-custom-fonts/preview.png" medium="image" type="image/png" width="709" height="612"/>
     </item>
     <item>
@@ -105,7 +105,7 @@
       <category>data visualization</category>
       <category>data wrangling</category>
       <guid>https://yjunechoe.github.io/posts/2021-01-17-random-sampling-a-table-animation</guid>
-      <pubDate>2021-01-17</pubDate>
+      <pubDate>Sun, 17 Jan 2021 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2021-01-17-random-sampling-a-table-animation/table_preview.png" medium="image" type="image/png" width="1185" height="1180"/>
     </item>
     <item>
@@ -116,7 +116,7 @@
       <category>data wrangling</category>
       <category>tutorial</category>
       <guid>https://yjunechoe.github.io/posts/2020-12-13-collapse-repetitive-piping-with-reduce</guid>
-      <pubDate>2020-12-13</pubDate>
+      <pubDate>Sun, 13 Dec 2020 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2020-12-13-collapse-repetitive-piping-with-reduce/reduce_ggplot.png" medium="image" type="image/png" width="1233" height="775"/>
     </item>
     <item>
@@ -128,7 +128,7 @@
       <category>data visualization</category>
       <category>ggplot2</category>
       <guid>https://yjunechoe.github.io/posts/2020-11-08-plot-makeover-2</guid>
-      <pubDate>2020-11-08</pubDate>
+      <pubDate>Sun, 08 Nov 2020 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2020-11-08-plot-makeover-2/plot-makeover-2_files/figure-html5/final-1.png" medium="image" type="image/png" width="1344" height="1152"/>
     </item>
     <item>
@@ -140,7 +140,7 @@
       <category>data visualization</category>
       <category>tidytuesday</category>
       <guid>https://yjunechoe.github.io/posts/2020-11-03-tidytuesday-2020-week-45</guid>
-      <pubDate>2020-11-03</pubDate>
+      <pubDate>Tue, 03 Nov 2020 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2020-11-03-tidytuesday-2020-week-45/preview.png" medium="image" type="image/png" width="4443" height="2950"/>
     </item>
     <item>
@@ -154,7 +154,7 @@
       <category>data visualization</category>
       <category>tidytuesday</category>
       <guid>https://yjunechoe.github.io/posts/2020-10-28-tidytuesday-2020-week-44</guid>
-      <pubDate>2020-10-28</pubDate>
+      <pubDate>Wed, 28 Oct 2020 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2020-10-28-tidytuesday-2020-week-44/preview.png" medium="image" type="image/png" width="735" height="541"/>
     </item>
     <item>
@@ -167,7 +167,7 @@
       <category>rtweet</category>
       <category>colors</category>
       <guid>https://yjunechoe.github.io/posts/2020-10-22-analysis-of-everycolorbots-tweets</guid>
-      <pubDate>2020-10-22</pubDate>
+      <pubDate>Thu, 22 Oct 2020 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2020-10-22-analysis-of-everycolorbots-tweets/preview.png" medium="image" type="image/png" width="2433" height="2259"/>
     </item>
     <item>
@@ -179,7 +179,7 @@
       <category>ggplot2</category>
       <category>tidytuesday</category>
       <guid>https://yjunechoe.github.io/posts/2020-10-13-designing-guiding-aesthetics</guid>
-      <pubDate>2020-10-13</pubDate>
+      <pubDate>Tue, 13 Oct 2020 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2020-10-13-designing-guiding-aesthetics/preview.png" medium="image" type="image/png" width="8503" height="6377"/>
     </item>
     <item>
@@ -191,7 +191,7 @@
       <category>ggplot2</category>
       <category>tutorial</category>
       <guid>https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2</guid>
-      <pubDate>2020-09-27</pubDate>
+      <pubDate>Sun, 27 Sep 2020 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/preview.png" medium="image" type="image/png" width="240" height="278"/>
     </item>
     <item>
@@ -203,7 +203,7 @@
       <category>data visualization</category>
       <category>tidytuesday</category>
       <guid>https://yjunechoe.github.io/posts/2020-09-23-tidytuesday-2020-week-39</guid>
-      <pubDate>2020-09-23</pubDate>
+      <pubDate>Wed, 23 Sep 2020 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2020-09-23-tidytuesday-2020-week-39/preview.png" medium="image" type="image/png" width="7086" height="4251"/>
     </item>
     <item>
@@ -215,7 +215,7 @@
       <category>data visualization</category>
       <category>ggplot2</category>
       <guid>https://yjunechoe.github.io/posts/2020-09-20-plot-makeover-1</guid>
-      <pubDate>2020-09-20</pubDate>
+      <pubDate>Sun, 20 Sep 2020 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2020-09-20-plot-makeover-1/plot-makeover-1_files/figure-html5/after_bar_plot-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
@@ -227,7 +227,7 @@
       <category>data visualization</category>
       <category>tidytuesday</category>
       <guid>https://yjunechoe.github.io/posts/2020-09-14-tidytuesday-2020-week-38</guid>
-      <pubDate>2020-09-14</pubDate>
+      <pubDate>Mon, 14 Sep 2020 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2020-09-14-tidytuesday-2020-week-38/preview.png" medium="image" type="image/png" width="1703" height="2203"/>
     </item>
     <item>
@@ -238,7 +238,7 @@
       <category>tables</category>
       <category>data visualization</category>
       <guid>https://yjunechoe.github.io/posts/2020-09-12-videos-in-reactable</guid>
-      <pubDate>2020-09-12</pubDate>
+      <pubDate>Sat, 12 Sep 2020 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2020-09-12-videos-in-reactable/preview.png" medium="image" type="image/png" width="808" height="617"/>
     </item>
     <item>
@@ -249,7 +249,7 @@
       <category>data visualization</category>
       <category>typography</category>
       <guid>https://yjunechoe.github.io/posts/2020-09-06-fonts-for-graphs</guid>
-      <pubDate>2020-09-06</pubDate>
+      <pubDate>Sun, 06 Sep 2020 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2020-09-06-fonts-for-graphs/preview.png" medium="image" type="image/png" width="1144" height="675"/>
     </item>
     <item>
@@ -261,7 +261,7 @@
       <category>gganimate</category>
       <category>ggplot2</category>
       <guid>https://yjunechoe.github.io/posts/2020-08-17-tidytuesday-2020-week-33</guid>
-      <pubDate>2020-08-17</pubDate>
+      <pubDate>Mon, 17 Aug 2020 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2020-08-17-tidytuesday-2020-week-33/preview.png" medium="image" type="image/png" width="1289" height="964"/>
     </item>
     <item>
@@ -273,7 +273,7 @@
       <category>dplyr</category>
       <category>tutorial</category>
       <guid>https://yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping</guid>
-      <pubDate>2020-08-07</pubDate>
+      <pubDate>Fri, 07 Aug 2020 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2020-08-07-saving-a-line-of-piping/preview.png" medium="image" type="image/png" width="877" height="372"/>
     </item>
     <item>
@@ -285,7 +285,7 @@
       <category>data visualization</category>
       <category>ggplot2</category>
       <guid>https://yjunechoe.github.io/posts/2020-08-04-tidytuesday-2020-week-32</guid>
-      <pubDate>2020-08-04</pubDate>
+      <pubDate>Tue, 04 Aug 2020 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2020-08-04-tidytuesday-2020-week-32/preview.png" medium="image" type="image/png" width="1444" height="805"/>
     </item>
     <item>
@@ -299,7 +299,7 @@
       <category>data wrangling</category>
       <category>data visualization</category>
       <guid>https://yjunechoe.github.io/posts/2020-07-29-six-years-of-my-spotify-playlists</guid>
-      <pubDate>2020-07-29</pubDate>
+      <pubDate>Wed, 29 Jul 2020 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2020-07-29-six-years-of-my-spotify-playlists/preview.png" medium="image" type="image/png" width="3593" height="2459"/>
     </item>
     <item>
@@ -309,7 +309,7 @@
       <description>%||%, imap() + {shinybusy}, and user inputs in modalDialog()</description>
       <category>shiny</category>
       <guid>https://yjunechoe.github.io/posts/2020-07-20-shiny-tips-1</guid>
-      <pubDate>2020-07-20</pubDate>
+      <pubDate>Mon, 20 Jul 2020 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2020-07-20-shiny-tips-1/preview.png" medium="image" type="image/png" width="746" height="133"/>
     </item>
     <item>
@@ -320,7 +320,7 @@
       <category>data visualization</category>
       <category>ggplot2</category>
       <guid>https://yjunechoe.github.io/posts/2020-07-13-geom-paired-raincloud</guid>
-      <pubDate>2020-07-13</pubDate>
+      <pubDate>Mon, 13 Jul 2020 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2020-07-13-geom-paired-raincloud/preview.png" medium="image" type="image/png" width="7086" height="4251"/>
     </item>
     <item>
@@ -333,7 +333,7 @@
       <category>ggplot2</category>
       <category>tutorial</category>
       <guid>https://yjunechoe.github.io/posts/2020-06-30-treemap-with-ggplot</guid>
-      <pubDate>2020-06-30</pubDate>
+      <pubDate>Tue, 30 Jun 2020 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2020-06-30-treemap-with-ggplot/2020-06-30-treemap-with-ggplot_files/figure-html5/unnamed-chunk-12-1.png" medium="image" type="image/png" width="1920" height="768"/>
     </item>
     <item>
@@ -345,7 +345,7 @@
       <category>NLP</category>
       <category>spacyr</category>
       <guid>https://yjunechoe.github.io/posts/2020-06-25-indexing-tip-for-spacyr</guid>
-      <pubDate>2020-06-25</pubDate>
+      <pubDate>Thu, 25 Jun 2020 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2020-06-25-indexing-tip-for-spacyr/preview.png" medium="image" type="image/png" width="1920" height="686"/>
     </item>
     <item>
@@ -357,7 +357,7 @@
       <category>mixed-effects models</category>
       <category>tutorial</category>
       <guid>https://yjunechoe.github.io/posts/2020-06-07-correlation-parameter-mem</guid>
-      <pubDate>2020-06-07</pubDate>
+      <pubDate>Sun, 07 Jun 2020 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2020-06-07-correlation-parameter-mem/preview.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
   </channel>

@@ -29,7 +29,7 @@ Sean McWeeny, Jinnie S. Choi, **June Choe**, Alexander LaTourette, Megan Y. Robe
 
 ## Conference Talks
 
-**June Choe**. *Sub-layer modularity in the Grammar of Graphics*. Talk at the 2023 Joint Statistical Meetings, 5-10 August 2023. Toronto, Canada. **American Statistical Association (ASA) student paper award in Statistical Computing and Graphics**.
+**June Choe**. *Sub-layer modularity in the Grammar of Graphics*. Talk at the 2023 Joint Statistical Meetings, 5-10 August 2023. Toronto, Canada. **American Statistical Association (ASA) student paper award in Statistical Computing and Graphics**. [Paper](https://yjunechoe.github.io/static/papers/Choe_2022_SublayerGG.pdf)
 
 **June Choe**. *Persona-based social expectations in sentence processing and comprehension*. Talk at the Language, Stereotypes & Social Cognition workshop, 22-23 May, 2023. University of Pennsylvania, PA.
 
@@ -41,6 +41,10 @@ May Pik Yu Chan, **June Choe**, Aini Li, Yiran Chen, Xin Gao and Nicole Holliday
 
 
 ## Conference Presentations
+
+**June Choe**, and Anna Papafragou. *Distributional signatures of superordinate nouns*. Poster presented at the 48th Boston University Conference on Language Development (BUCLD), 2-5 November, 2023. Boston University, Boston, MA. [Abstract](static/abstract/BUCLD2023a_Abstract)
+
+**June Choe**, and Anna Papafragou. *Pragmatic underpinnings of the basic-level bias*. Poster presented at the 48th Boston University Conference on Language Development (BUCLD), 2-5 November, 2023. Boston University, Boston, MA. [Abstract](static/abstract/BUCLD2023b_Abstract)
 
 **June Choe** and Anna Papafragou. *Discourse effects on the acquisition of subordinate nouns*. Poster presented at the 9th Mid-Atlantic Colloquium of Studies in Meaning (MACSIM), 15 April 2023. University of Pennsylvania, PA.
 

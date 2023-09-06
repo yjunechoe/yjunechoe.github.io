@@ -30,6 +30,10 @@ For more of my personal news external/tangential to [research](https://yjunechoe
 
 ## 2023
 
+### August
+
+- I was unfortunately not able to make it in person to [JSM 2023](https://ww2.aievolution.com/JSMAnnual/index.cfm?do=ev.viewEv&ev=2860) but have my [pre-recorded talk](https://youtu.be/613Q0j6Kjm0?feature=shared) has been uploaded!
+
 ### June
 
 - My package [jlmerclusterperm](https://yjunechoe.github.io/jlmerclusterperm/) was published on CRAN!
