@@ -14,7 +14,7 @@ Links: [Google Scholar](https://scholar.google.com/citations?user=dFdQTmYAAAAJ),
 
 ## Peer-reviewed Papers
 
-**June Choe**, and Anna Papafragou. (2023). The acquisition of subordinate nouns as pragmatwarniic inference. _Journal of Memory and Language, 132_, 104432. DOI: https://doi.org/10.1016/j.jml.2023.104432. [PDF](https://www.langcoglab.com/_files/ugd/7cb05b_746c6f11a2214857a94c3ebbc7afa718.pdf) [OSF](https://osf.io/x8cuf/?view_only=14a975d3618e4838b6cc7681b2ecf692)
+**June Choe**, and Anna Papafragou. (2023). The acquisition of subordinate nouns as pragmatic inference. _Journal of Memory and Language, 132_, 104432. DOI: https://doi.org/10.1016/j.jml.2023.104432. [PDF](https://www.langcoglab.com/_files/ugd/7cb05b_746c6f11a2214857a94c3ebbc7afa718.pdf) [OSF](https://osf.io/x8cuf/?view_only=14a975d3618e4838b6cc7681b2ecf692)
 
 **June Choe**, Yiran Chen, May Pik Yu Chan, Aini Li, Xin Gao, and Nicole Holliday. (2022). [Language-specific Effects on Automatic Speech Recognition Errors for World Englishes](https://aclanthology.org/2022.coling-1.628/). In _Proceedings of the 29th International Conference on Computational Linguistics_, 7177–7186.
 
@@ -42,9 +42,9 @@ May Pik Yu Chan, **June Choe**, Aini Li, Yiran Chen, Xin Gao and Nicole Holliday
 
 ## Conference Presentations
 
-**June Choe**, and Anna Papafragou. *Distributional signatures of superordinate nouns*. Poster presented at the 48th Boston University Conference on Language Development (BUCLD), 2-5 November, 2023. Boston University, Boston, MA. [Abstract](static/abstract/BUCLD2023a_Abstract)
+**June Choe**, and Anna Papafragou. *Distributional signatures of superordinate nouns*. Poster presented at the 48th Boston University Conference on Language Development (BUCLD), 2-5 November, 2023. Boston University, Boston, MA. [Abstract](static/abstract/BUCLD2023a_Abstract.pdf)
 
-**June Choe**, and Anna Papafragou. *Pragmatic underpinnings of the basic-level bias*. Poster presented at the 48th Boston University Conference on Language Development (BUCLD), 2-5 November, 2023. Boston University, Boston, MA. [Abstract](static/abstract/BUCLD2023b_Abstract)
+**June Choe**, and Anna Papafragou. *Pragmatic underpinnings of the basic-level bias*. Poster presented at the 48th Boston University Conference on Language Development (BUCLD), 2-5 November, 2023. Boston University, Boston, MA. [Abstract](static/abstract/BUCLD2023b_Abstract.pdf)
 
 **June Choe** and Anna Papafragou. *Discourse effects on the acquisition of subordinate nouns*. Poster presented at the 9th Mid-Atlantic Colloquium of Studies in Meaning (MACSIM), 15 April 2023. University of Pennsylvania, PA.
 

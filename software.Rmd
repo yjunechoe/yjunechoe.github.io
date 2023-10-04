@@ -2,10 +2,27 @@
 title: "Software"
 ---
 
+<style>
+div.hex-container {
+  position: relative;
+}
+img.hex {
+  width: 150px;
+  padding-left: 10px;
+  background-color: white;
+  position: absolute;
+  right: 0;
+  top: -100px;
+}
+</style>
+
 Main: [Github profile](https://github.com/yjunechoe), [R-universe profile](https://yjunechoe.r-universe.dev/builds)
 
-
 ## ggtrace
+
+<div class='hex-container'>
+  <img class='hex' src='https://yjunechoe.github.io/ggtrace/logo.png'/>
+</div>
 
 Role: Author
 
@@ -18,6 +35,10 @@ Links: [Github](https://github.com/yjunechoe/ggtrace), [website](yjunechoe.githu
 
 ## jlmerclusterperm
 
+<div class='hex-container'>
+  <img class='hex' src='https://yjunechoe.github.io/jlmerclusterperm/logo.png'/>
+</div>
+
 Role: Author
 
 Language: R, Julia
@@ -28,6 +49,10 @@ Links: [CRAN](https://cran.r-project.org/package=jlmerclusterperm), [Github](htt
 
 
 ## openalexR
+
+<div class='hex-container'>
+  <img class='hex' src='https://docs.ropensci.org/openalexR/logo.png'/>
+</div>
 
 Role: Contributor
 
