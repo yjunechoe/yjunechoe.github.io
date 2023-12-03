@@ -1,0 +1,443 @@
+---
+title: "The many ways to (un)tidy-select"
+description: |
+  Deconstructing {tidyselect} and building it back up
+categories:
+  - data wrangling
+  - dplyr
+  - tidyselect
+base_url: https://yjunechoe.github.io
+author:
+  - name: June Choe
+    affiliation: University of Pennsylvania Linguistics
+    affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+    orcid_id: 0000-0002-0701-921X
+date: "`r Sys.Date()`"
+output:
+  distill::distill_article:
+    include-after-body: "highlighting.html"
+    toc: true
+    self_contained: false
+    css: "../../styles.css"
+editor_options: 
+  chunk_output_type: console
+preview: preview.png
+---
+
+```{r setup, include=FALSE}
+set.seed(1234)
+library(dplyr)
+library(ggplot2)
+knitr::opts_chunk$set(
+  comment = " ",
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  R.options = list(width = 80)
+)
+xaringanExtra::use_panelset()
+xaringanExtra::use_clipboard()
+```
+
+## Intro
+
+Recently, I been having [frequent](https://github.com/rstudio/pointblank/pull/493) [run-ins](https://github.com/rstudio/pointblank/pull/499) with `{tidyselect}` internals, discovering some weird and interesting behaviors along the way. This blog post is my attempt at documenting a couple of these. And as is the case with my usual style of writing, I'm gonna talk about some of the weirder stuff first and then touch on some of the "practical" side to this.
+
+## Some observations
+
+Let's start with some facts about how `{tidyselect}` is supposed to work. I'll use this toy data for the demo:
+
+```{r}
+library(dplyr, warn.conflicts = FALSE)
+library(tidyselect)
+df <- tibble(x = 1:2, y = letters[1:2], z = LETTERS[1:2])
+df
+```
+
+### tidy-select!
+
+`{tidyselect}` is the package that powers `dplyr::select()`. If you've used `{dplyr}`, you already know the behavior of `select()` pretty well. We can specify a column as string, symbol, or by its position:
+
+```{r}
+df %>% 
+  select("x")
+df %>% 
+  select(x)
+df %>% 
+  select(1)
+```
+
+It's not obvious from the outside, but the way this works is that these user-supplied expressions (like `"x"`, `x`, and `1`) all get **resolved to integer** before the selection actually happens.
+
+So to be more specific, the three calls to `select()` were the same because these three calls to `tidyselect::eval_select()` are the same:^[That last example with `quote(1)` is redundant because `1` is a constant; I kept it in there just to make the comparison clearer]
+
+```{r}
+eval_select(quote("x"), df)
+eval_select(quote(x), df)
+eval_select(quote(1), df)
+```
+
+You can also see `eval_select()` in action in the `<data.frame>` method for `select()`:
+
+```{r}
+dplyr:::select.data.frame
+```
+
+
+### tidy?-select
+
+Because the column *subsetting* part is ultimately done using integers, we can theoretically pass `select()` _any_ expression, as long as it resolves to an integer vector.
+
+For example, we can use `1 + 1` to select the second column:
+
+```{r}
+df %>% 
+  select(1 + 1)
+```
+
+And vector recycling is still a thing here too - we can use `c(1, 2) + 1` to select the second and third columns:
+
+```{r}
+df %>% 
+  select(c(1, 2) + 1)
+```
+
+Ordinary function calls work as well - we can select a random column using `sample()`:
+
+```{r}
+df %>% 
+  select(sample(ncol(df), 1))
+```
+
+We can even use the `.env` pronoun to scope an integer variable from the global environment:^[Not to be confused with `all_of()`. The idiomatic pattern for scoping an external *character* vector is to do `all_of(x)` not `.env$x`. It's only when you're scoping a non-character vector that you'd use `.env$`.]
+
+```{r}
+offset <- 1
+df %>% 
+  select(1 + .env$offset)
+```
+
+So that's kinda interesting.^[It's also strangely reminiscent of my [previous blog post](https://yjunechoe.github.io/posts/2023-06-11-row-relational-operations/) on `dplyr::slice()`] But what if we try to mix the different approaches to tidyselect-ing? Can we do math on columns that we've selected using strings and symbols?
+
+### untidy-select?
+
+Uh not quite. `select()` doesn't like doing math on strings and symbols.
+
+```{r}
+#| error: true
+df %>% 
+  select(x + 1)
+df %>% 
+  select("x" + 1)
+```
+
+In fact, it doesn't even like doing certain kinds of math like multiplication (`*`), even with numeric constants:
+
+```{r}
+#| error: true
+df %>% 
+  select(1 * 2)
+```
+
+This actually makes sense from a design POV. Adding numbers to columns probably happens more often as a mistake than something intentional. These safeguards exist to prevent users from running into cryptic errors.
+
+Unless...
+
+### untidy-select!
+
+It turns out that `{tidyselect}` _**helpers**_ have an interesting behavior of *immediately* resolving the column selection to integer. So we can get addition (`+`) working if we wrap our columns in redundant column selection helpers like `all_of()` and `matches()`
+
+```{r}
+df %>% 
+  select(all_of("x") + 1)
+df %>% 
+  select(matches("^x$") + 1)
+```
+
+For multiplication, we have to additionally circumvent the [censoring](https://github.com/r-lib/tidyselect/blob/7cc3ea6213838dbb3f9c19e9a8b97cd03f5063a9/R/eval-walk.R#L167) of the `*` symbol. Here, we can simply use a different name for the same operation:^[Thanks to [Jonathan Carroll](https://fosstodon.org/@jonocarroll/111343255529231116) for this suggestion!]
+
+```{r}
+`%times%` <- `*`
+df %>% 
+  select(matches("^x$") %times% 2)
+```
+
+But geez, it's so tiring to type `all_of()` and `matches()` all the time. There must be a better way to break the rule!
+
+## Tidying untidy-select
+
+Let's make a tidy design for the untidy pattern of selecting columns by doing math on column locations. The idea is to make our own little scope inside `select()` where all the existing safeguards are suspended. Like a [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) within a DSL, if you will.
+
+Let's call this function `math()`. It should let us express stuff like "give me the column to the right of column `x`" via this intuitive(?) syntax:
+
+```{r math}
+#| echo: false
+math <- function(expr) {
+  math_expr <- rlang::enquo(expr)
+  columns <- tidyselect::peek_vars()
+  col_locs <- as.data.frame.list(seq_along(columns), col.names = columns)
+  mask <- rlang::as_data_mask(col_locs)
+  out <- rlang::eval_tidy(math_expr, mask)
+  out
+}
+```
+
+```{r}
+df %>% 
+  select(math(x + 1))
+```
+
+This is my take on `math()`:
+
+```{r math}
+#| eval: false
+```
+
+There's a lot of weird functions involved here, but it's easier to digest by focusing on its parts. Here's what each local variable in the function looks like for our `math(x + 1)` example above:
+
+```{r}
+#| include: false
+invisible(trace(math, exit = quote({
+  math_out <<- rlang::dots_list(math_expr, columns, col_locs, mask, out, .named = TRUE)
+}), print = FALSE))
+df %>% 
+  select(math(x + 1))
+untrace(math)
+```
+
+```{r}
+#| echo: false
+math_out
+```
+
+Let's walk through the pieces:
+
+1) `math_expr`: the captured user expression, with the environment attached
+
+2) `columns`: the column names of the current dataframe, in order
+
+3) `col_locs`: a dataframe of column names and location, created from `columns`
+
+4) `mask`: a [data mask](https://rlang.r-lib.org/reference/topic-data-mask.html) created from `col_locs`
+
+5) `out`: location of column(s) to select
+
+Essentially, `math()` first captures the expression to evaluate it in its own special environment, circumventing `select()`'s safeguards. Then, it grabs the column names of the data frame with `tidyselect::peek_vars()` to define `col_locs` and then `mask`. The data mask `mask` is then used inside `rlang::eval_tidy()` to resolve symbols like `x` to integer `1` when evaluating the captured expression `x + 1`. The expression `math(x + 1)` thus evaluates to `1 + 1`. In turn, `select(math(x + 1))` is evaluated to `select(2)`, returning us the second column of the dataframe.
+
+## Writing untidy-select helpers
+
+A small yet powerful detail in the implementation of `math()` is the fact that it captures the expression as a [quosure](https://rlang.r-lib.org/reference/topic-quosure.html). This allows `math()` to appropriately scope dynamically created variables, and not just bare symbols provided directly by the user.
+
+This makes more sense with some examples. Here, I define helper functions that call `math()` under the hood with their own templatic math expressions (and I have them `print()` the expression as passed to `math()` for clarity). The fact that `math()` captures its argument as a quosure is what allows variables like `num` to be correctly scoped in these examples.
+
+### 1) `times()`
+
+```{r}
+#| message: true
+times <- function(col, num) {
+  col <- rlang::ensym(col)
+  print(rlang::expr(math(!!col * num))) # for debugging
+  math(!!col * num)
+}
+df %>%
+  select(times(x, 2))
+```
+
+```{r}
+num2 <- 2
+df %>%
+  select(times(x, num2))
+```
+
+
+### 2) `offset()`
+
+```{r}
+#| message: true
+offset <- function(col, num) {
+  col <- rlang::ensym(col)
+  print(rlang::expr(math(!!col + num))) # for debugging
+  math(!!col + num)
+}
+df %>%
+  select(offset(x, 1))
+```
+
+```{r}
+num1 <- 1
+df %>%
+  select(offset(x, num1))
+```
+
+
+### 3) `neighbors()`
+
+```{r}
+#| message: true
+neighbors <- function(col, n) {
+  col <- rlang::ensym(col)
+  range <- c(-(n:1), 1:n)
+  print(rlang::expr(math(!!col + !!range))) # for debugging
+  math(!!col + !!range)
+}
+df %>%
+  select(neighbors(y, 1))
+```
+
+```{r}
+df %>%
+  select(neighbors(y, num1))
+```
+
+### DIY!
+
+And of course, we can do arbitrary injections ourselves as well with `!!` or `.env$`:
+
+```{r}
+df %>%
+  select(math(x * !!num2))
+df %>%
+  select(math(x * .env$num2))
+```
+
+That was fun but probably not super practical. Let's set `math()` aside to try our hands on something more useful.
+
+
+## Let's get practical
+
+### 1) Sorting columns
+
+Probably one of the hardest things to do idiomatically in the tidyverse is sorting (a subset of) columns by their name. For example, consider this dataframe which is a mix of columns that follow some fixed pattern (`"x|y_\\d"`) and those outside that pattern (`"year"`, `"day"`, etc.).
+
+```{r}
+data_cols <- expand.grid(first = c("x", "y"), second = 1:3) %>%
+  mutate(cols = paste0(first, "_", second)) %>%
+  pull(cols)
+df2 <- as.data.frame.list(seq_along(data_cols), col.names = data_cols)
+df2 <- cbind(df2, storms[1,1:5])
+df2 <- df2[, sample(ncol(df2))]
+df2
+```
+
+It's trivial to select columns by pattern - we can use the `matches()` helper:
+
+```{r}
+df2 %>%
+  select(matches("(x|y)_(\\d)"))
+```
+
+But what if I also wanted to further sort these columns, *after I select them*? There's no easy way to do this "on the fly" inside of select, especially if we want the flexibility to sort the columns by the letter vs. the number.
+
+But here's one way of getting at that, exploiting two facts:
+
+1) `matches()`, like other tidyselect helpers, immediately resolves the selection to integer
+2) `peek_vars()` returns the column names in order, which lets us recover the column names from location
+
+And that's pretty much all there is to the tidyselect magic that goes into my solution below. I define `locs` (integer vector of column locations) and `cols` (character vector of column names at those locations), and the rest is just regex and sorting:
+
+```{r}
+ordered_matches <- function(matches, order) {
+  # tidyselect magic
+  locs <- tidyselect::matches(matches)
+  cols <- tidyselect::peek_vars()[locs]
+  # Ordinary evaluation
+  groups <- simplify2array(regmatches(cols, regexec(matches, cols)))[-1,]
+  reordered <- do.call("order", asplit(groups[order, ], 1))
+  locs[reordered]
+}
+```
+
+Using `ordered_matches()`, we can not only select columns but also sort them using regex capture groups.
+
+This sorts the columns by letter first then number:
+
+```{r}
+df2 %>%
+  select(ordered_matches("(x|y)_(\\d)", c(1, 2)))
+```
+
+This sorts the columns by number first then letter:
+
+```{r}
+df2 %>%
+  select(ordered_matches("(x|y)_(\\d)", c(2, 1)))
+```
+
+And if we wanted the other columns too, we can use `everything()` to grab the "rest":
+
+```{r}
+df2 %>%
+  select(ordered_matches("(x|y)_(\\d)", c(2, 1)), everything())
+```
+
+### 2) Error handling
+
+One of the really nice parts about the `{tidyselect}` design is the fact that error messages are very informative.
+
+For example, if you select a non-existing column, it errors while pointing out that mistake:
+
+```{r}
+#| error: true
+df3 <- data.frame(x = 1)
+nonexistent_selection <- quote(c(x, y))
+eval_select(nonexistent_selection, df3)
+```
+
+If you use a tidyselect helper that returns nothing, it won't complain by default:
+
+```{r}
+zero_selection <- quote(starts_with("z"))
+eval_select(zero_selection, df3)
+```
+
+But you can make that error with `allow_empty = FALSE`:
+
+```{r}
+#| error: true
+eval_select(zero_selection, df3, allow_empty = FALSE)
+```
+
+General evaluation errors are caught and [chained](https://rlang.r-lib.org/reference/topic-error-chaining.html):
+
+```{r}
+#| error: true
+evaluation_error <- quote(stop("I'm a bad expression!"))
+eval_select(evaluation_error, df3)
+```
+
+These error signalling patterns are clearly very useful for users,^[For those who actually read error messages, at least (*points to self*) ...] but there's a little gem in there for developers too. It turns out that the **error condition object** contains these information too, which lets you detect different error types programmatically to forward errors to your own error handling logic.
+
+For example, the attempted non-existent column is stored in `$i`:^[Though `{tidyselect}` errors early, so it'll only record the first attempted column causing the error. You could use a `while()` loop (catch and remove bad columns from the data until there's no more error) if you really wanted to get the full set of offending columns.]
+
+```{r}
+cnd_nonexistent <- rlang::catch_cnd(
+  eval_select(nonexistent_selection, df3)
+)
+cnd_nonexistent$i
+```
+
+Zero column selections give you `NULL` in `$i` when you set it to error:
+
+```{r}
+cnd_zero_selection <- rlang::catch_cnd(
+  eval_select(zero_selection, df3, allow_empty = FALSE)
+)
+cnd_zero_selection$i
+```
+
+General evaluation errors are distinguished by having a `$parent`:
+
+```{r}
+cnd_zero_selection <- rlang::catch_cnd(
+  eval_select(evaluation_error, df3)
+)
+cnd_zero_selection$parent
+```
+
+Again, this is more useful as a developer, if you're building something that integrates `{tidyselect}`.^[If you want some examples of post-processing tidyselect errors, there's some stuff I did for [pointblank](https://github.com/rstudio/pointblank/blob/7c4bdd0eb753db17b5213d03fd74f044df12be48/R/utils.R#L241-L318) that may be helpful as a reference.] But I personally find this interesting to know about anyways!
+
+## Conclusion
+
+Here I end with the (usual) disclaimer to not actually just copy paste these for production - they're written with the very low standard of scratching my itch, so they do not come with any warranty!
+
+But I hope that this was a fun exercise in thinking through one of the most mysterious magics in `{dplyr}`. I'm sure to reference this many times in the future myself.

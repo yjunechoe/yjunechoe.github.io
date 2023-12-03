@@ -1,0 +1,3308 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { color: #00769e; background-color: #f1f3f5; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #00769e; } /* Normal */
+code span.al { color: #ad0000; } /* Alert */
+code span.an { color: #5e5e5e; } /* Annotation */
+code span.at { color: #657422; } /* Attribute */
+code span.bn { color: #ad0000; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #00769e; } /* ControlFlow */
+code span.ch { color: #20794d; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #5e5e5e; } /* Comment */
+code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+code span.dt { color: #ad0000; } /* DataType */
+code span.dv { color: #ad0000; } /* DecVal */
+code span.er { color: #ad0000; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #ad0000; } /* Float */
+code span.fu { color: #4758ab; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #5e5e5e; } /* Information */
+code span.kw { color: #00769e; } /* Keyword */
+code span.op { color: #5e5e5e; } /* Operator */
+code span.ot { color: #00769e; } /* Other */
+code span.pp { color: #ad0000; } /* Preprocessor */
+code span.sc { color: #5e5e5e; } /* SpecialChar */
+code span.ss { color: #20794d; } /* SpecialString */
+code span.st { color: #20794d; } /* String */
+code span.va { color: #111111; } /* Variable */
+code span.vs { color: #20794d; } /* VerbatimString */
+code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+</style>
+
+
+  <!--radix_placeholder_meta_tags-->
+<title>June Choe: The many ways to (un)tidy-select</title>
+
+<meta property="description" itemprop="description" content="Deconstructing {tidyselect} and building it back up"/>
+
+<link rel="canonical" href="https://yjunechoe.github.io/posts/2023-12-03-untidy-select/"/>
+<link rel="icon" type="image/png" href="../../static/img/icon.png"/>
+
+<!--  https://schema.org/Article -->
+<meta property="article:published" itemprop="datePublished" content="2023-12-03"/>
+<meta property="article:created" itemprop="dateCreated" content="2023-12-03"/>
+<meta name="article:author" content="June Choe"/>
+
+<!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+<meta property="og:title" content="June Choe: The many ways to (un)tidy-select"/>
+<meta property="og:type" content="article"/>
+<meta property="og:description" content="Deconstructing {tidyselect} and building it back up"/>
+<meta property="og:url" content="https://yjunechoe.github.io/posts/2023-12-03-untidy-select/"/>
+<meta property="og:image" content="https://yjunechoe.github.io/posts/2023-12-03-untidy-select/preview.png"/>
+<meta property="og:image:width" content="957"/>
+<meta property="og:image:height" content="664"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:site_name" content="June Choe"/>
+
+<!--  https://dev.twitter.com/cards/types/summary -->
+<meta property="twitter:card" content="summary_large_image"/>
+<meta property="twitter:title" content="June Choe: The many ways to (un)tidy-select"/>
+<meta property="twitter:description" content="Deconstructing {tidyselect} and building it back up"/>
+<meta property="twitter:url" content="https://yjunechoe.github.io/posts/2023-12-03-untidy-select/"/>
+<meta property="twitter:image" content="https://yjunechoe.github.io/posts/2023-12-03-untidy-select/preview.png"/>
+<meta property="twitter:image:width" content="957"/>
+<meta property="twitter:image:height" content="664"/>
+<meta property="twitter:site" content="@yjunechoe"/>
+
+<!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+<script type="text/json" id="radix-rmarkdown-metadata">
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","date","output","editor_options","preview","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["The many ways to (un)tidy-select"]},{"type":"character","attributes":{},"value":["Deconstructing {tidyselect} and building it back up"]},{"type":"character","attributes":{},"value":["data wrangling","dplyr","tidyselect"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]},{"type":"character","attributes":{},"value":["0000-0002-0701-921X"]}]}]},{"type":"character","attributes":{},"value":["2023-12-03"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["include-after-body","toc","self_contained","css"]}},"value":[{"type":"character","attributes":{},"value":["highlighting.html"]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["../../styles.css"]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["chunk_output_type"]}},"value":[{"type":"character","attributes":{},"value":["console"]}]},{"type":"character","attributes":{},"value":["preview.png"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io/posts/2023-12-03-untidy-select/"]}]}
+</script>
+<!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["preview.png","untidy-select_files/anchor-4.2.2/anchor.min.js","untidy-select_files/bowser-1.9.3/bowser.min.js","untidy-select_files/clipboard-2.0.6/clipboard.min.js","untidy-select_files/distill-2.2.21/template.v2.js","untidy-select_files/header-attrs-2.25/header-attrs.js","untidy-select_files/jquery-3.6.0/jquery-3.6.0.js","untidy-select_files/jquery-3.6.0/jquery-3.6.0.min.js","untidy-select_files/jquery-3.6.0/jquery-3.6.0.min.map","untidy-select_files/panelset-0.2.6/panelset.css","untidy-select_files/panelset-0.2.6/panelset.js","untidy-select_files/popper-2.6.0/popper.min.js","untidy-select_files/tippy-6.2.7/tippy-bundle.umd.min.js","untidy-select_files/tippy-6.2.7/tippy-light-border.css","untidy-select_files/tippy-6.2.7/tippy.css","untidy-select_files/tippy-6.2.7/tippy.umd.min.js","untidy-select_files/webcomponents-2.0.0/webcomponents.js","untidy-select_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css","untidy-select_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+<meta name="distill:offset" content="../.."/>
+
+<script type="application/javascript">
+
+  window.headroom_prevent_pin = false;
+
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+
+    // initialize headroom for banner
+    var header = $('header').get(0);
+    var headerHeight = header.offsetHeight;
+    var headroom = new Headroom(header, {
+      tolerance: 5,
+      onPin : function() {
+        if (window.headroom_prevent_pin) {
+          window.headroom_prevent_pin = false;
+          headroom.unpin();
+        }
+      }
+    });
+    headroom.init();
+    if(window.location.hash)
+      headroom.unpin();
+    $(header).addClass('headroom--transition');
+
+    // offset scroll location for banner on hash change
+    // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
+    window.addEventListener("hashchange", function(event) {
+      window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
+    });
+
+    // responsive menu
+    $('.distill-site-header').each(function(i, val) {
+      var topnav = $(this);
+      var toggle = topnav.find('.nav-toggle');
+      toggle.on('click', function() {
+        topnav.toggleClass('responsive');
+      });
+    });
+
+    // nav dropdowns
+    $('.nav-dropbtn').click(function(e) {
+      $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
+      $(this).parent().siblings('.nav-dropdown')
+         .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
+    });
+    $("body").click(function(e){
+      $('.nav-dropdown-content').removeClass('nav-dropdown-active');
+    });
+    $(".nav-dropdown").click(function(e){
+      e.stopPropagation();
+    });
+  });
+</script>
+
+<style type="text/css">
+
+/* Theme (user-documented overrideables for nav appearance) */
+
+.distill-site-nav {
+  color: rgba(255, 255, 255, 0.8);
+  background-color: #0F2E3D;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.distill-site-nav a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.distill-site-nav a:hover {
+  color: white;
+}
+
+@media print {
+  .distill-site-nav {
+    display: none;
+  }
+}
+
+.distill-site-header {
+
+}
+
+.distill-site-footer {
+
+}
+
+
+/* Site Header */
+
+.distill-site-header {
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 3;
+}
+
+.distill-site-header .nav-left {
+  display: inline-block;
+  margin-left: 8px;
+}
+
+@media screen and (max-width: 768px) {
+  .distill-site-header .nav-left {
+    margin-left: 0;
+  }
+}
+
+
+.distill-site-header .nav-right {
+  float: right;
+  margin-right: 8px;
+}
+
+.distill-site-header a,
+.distill-site-header .title {
+  display: inline-block;
+  text-align: center;
+  padding: 14px 10px 14px 10px;
+}
+
+.distill-site-header .title {
+  font-size: 18px;
+  min-width: 150px;
+}
+
+.distill-site-header .logo {
+  padding: 0;
+}
+
+.distill-site-header .logo img {
+  display: none;
+  max-height: 20px;
+  width: auto;
+  margin-bottom: -4px;
+}
+
+.distill-site-header .nav-image img {
+  max-height: 18px;
+  width: auto;
+  display: inline-block;
+  margin-bottom: -3px;
+}
+
+
+
+@media screen and (min-width: 1000px) {
+  .distill-site-header .logo img {
+    display: inline-block;
+  }
+  .distill-site-header .nav-left {
+    margin-left: 20px;
+  }
+  .distill-site-header .nav-right {
+    margin-right: 20px;
+  }
+  .distill-site-header .title {
+    padding-left: 12px;
+  }
+}
+
+
+.distill-site-header .nav-toggle {
+  display: none;
+}
+
+.nav-dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.nav-dropdown .nav-dropbtn {
+  border: none;
+  outline: none;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 16px 10px;
+  background-color: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  margin: 0;
+  margin-top: 1px;
+  z-index: 2;
+}
+
+.nav-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 200px;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 4px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+  z-index: 1;
+  margin-top: 2px;
+  white-space: nowrap;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.nav-dropdown-content hr {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.nav-dropdown-active {
+  display: block;
+}
+
+.nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
+  color: black;
+  padding: 6px 24px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.nav-dropdown-content .nav-dropdown-header {
+  display: block;
+  padding: 5px 24px;
+  padding-bottom: 0;
+  text-transform: uppercase;
+  font-size: 14px;
+  color: #999999;
+  white-space: nowrap;
+}
+
+.nav-dropdown:hover .nav-dropbtn {
+  color: white;
+}
+
+.nav-dropdown-content a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.nav-right .nav-dropdown-content {
+  margin-left: -45%;
+  right: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
+  .distill-site-header a.nav-toggle {
+    float: right;
+    display: block;
+  }
+  .distill-site-header .title {
+    margin-left: 0;
+  }
+  .distill-site-header .nav-right {
+    margin-right: 0;
+  }
+  .distill-site-header {
+    overflow: hidden;
+  }
+  .nav-right .nav-dropdown-content {
+    margin-left: 0;
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .distill-site-header.responsive {position: relative; min-height: 500px; }
+  .distill-site-header.responsive a.nav-toggle {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .distill-site-header.responsive a,
+  .distill-site-header.responsive .nav-dropdown {
+    display: block;
+    text-align: left;
+  }
+  .distill-site-header.responsive .nav-left,
+  .distill-site-header.responsive .nav-right {
+    width: 100%;
+  }
+  .distill-site-header.responsive .nav-dropdown {float: none;}
+  .distill-site-header.responsive .nav-dropdown-content {position: relative;}
+  .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+}
+
+/* Site Footer */
+
+.distill-site-footer {
+  width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  z-index: 3;
+  margin-top: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  text-align: center;
+}
+
+/* Headroom */
+
+d-title {
+  padding-top: 6rem;
+}
+
+@media print {
+  d-title {
+    padding-top: 4rem;
+  }
+}
+
+.headroom {
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.headroom--transition {
+  transition: all .4s ease-in-out;
+}
+
+.headroom--unpinned {
+  top: -100px;
+}
+
+.headroom--pinned {
+  top: 0;
+}
+
+/* adjust viewport for navbar height */
+/* helps vertically center bootstrap (non-distill) content */
+.min-vh-100 {
+  min-height: calc(100vh - 100px) !important;
+}
+
+</style>
+
+<script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<link href="../../site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet"/>
+<link href="../../site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet"/>
+<script src="../../site_libs/headroom-0.9.4/headroom.min.js"></script>
+<script src="../../site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
+<script src="../../site_libs/fuse-6.4.1/fuse.min.js"></script>
+
+<script type="application/javascript">
+
+function getMeta(metaName) {
+  var metas = document.getElementsByTagName('meta');
+  for (let i = 0; i < metas.length; i++) {
+    if (metas[i].getAttribute('name') === metaName) {
+      return metas[i].getAttribute('content');
+    }
+  }
+  return '';
+}
+
+function offsetURL(url) {
+  var offset = getMeta('distill:offset');
+  return offset ? offset + '/' + url : url;
+}
+
+function createFuseIndex() {
+
+  // create fuse index
+  var options = {
+    keys: [
+      { name: 'title', weight: 20 },
+      { name: 'categories', weight: 15 },
+      { name: 'description', weight: 10 },
+      { name: 'contents', weight: 5 },
+    ],
+    ignoreLocation: true,
+    threshold: 0
+  };
+  var fuse = new window.Fuse([], options);
+
+  // fetch the main search.json
+  return fetch(offsetURL('search.json'))
+    .then(function(response) {
+      if (response.status == 200) {
+        return response.json().then(function(json) {
+          // index main articles
+          json.articles.forEach(function(article) {
+            fuse.add(article);
+          });
+          // download collections and index their articles
+          return Promise.all(json.collections.map(function(collection) {
+            return fetch(offsetURL(collection)).then(function(response) {
+              if (response.status === 200) {
+                return response.json().then(function(articles) {
+                  articles.forEach(function(article) {
+                    fuse.add(article);
+                  });
+                })
+              } else {
+                return Promise.reject(
+                  new Error('Unexpected status from search index request: ' +
+                            response.status)
+                );
+              }
+            });
+          })).then(function() {
+            return fuse;
+          });
+        });
+
+      } else {
+        return Promise.reject(
+          new Error('Unexpected status from search index request: ' +
+                      response.status)
+        );
+      }
+    });
+}
+
+window.document.addEventListener("DOMContentLoaded", function (event) {
+
+  // get search element (bail if we don't have one)
+  var searchEl = window.document.getElementById('distill-search');
+  if (!searchEl)
+    return;
+
+  createFuseIndex()
+    .then(function(fuse) {
+
+      // make search box visible
+      searchEl.classList.remove('hidden');
+
+      // initialize autocomplete
+      var options = {
+        autoselect: true,
+        hint: false,
+        minLength: 2,
+      };
+      window.autocomplete(searchEl, options, [{
+        source: function(query, callback) {
+          const searchOptions = {
+            isCaseSensitive: false,
+            shouldSort: true,
+            minMatchCharLength: 2,
+            limit: 10,
+          };
+          var results = fuse.search(query, searchOptions);
+          callback(results
+            .map(function(result) { return result.item; })
+          );
+        },
+        templates: {
+          suggestion: function(suggestion) {
+            var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
+              ? `<img src="${offsetURL(suggestion.preview)}"</img>`
+              : '';
+            var html = `
+              <div class="search-item">
+                <h3>${suggestion.title}</h3>
+                <div class="search-item-description">
+                  ${suggestion.description || ''}
+                </div>
+                <div class="search-item-preview">
+                  ${img}
+                </div>
+              </div>
+            `;
+            return html;
+          }
+        }
+      }]).on('autocomplete:selected', function(event, suggestion) {
+        window.location.href = offsetURL(suggestion.path);
+      });
+      // remove inline display style on autocompleter (we want to
+      // manage responsive display via css)
+      $('.algolia-autocomplete').css("display", "");
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+
+});
+
+</script>
+
+<style type="text/css">
+
+.nav-search {
+  font-size: x-small;
+}
+
+/* Algolioa Autocomplete */
+
+.algolia-autocomplete {
+  display: inline-block;
+  margin-left: 10px;
+  vertical-align: sub;
+  background-color: white;
+  color: black;
+  padding: 6px;
+  padding-top: 8px;
+  padding-bottom: 0;
+  border-radius: 6px;
+  border: 1px #0F2E3D solid;
+  width: 180px;
+}
+
+
+@media screen and (max-width: 768px) {
+  .distill-site-nav .algolia-autocomplete {
+    display: none;
+    visibility: hidden;
+  }
+  .distill-site-nav.responsive .algolia-autocomplete {
+    display: inline-block;
+    visibility: visible;
+  }
+  .distill-site-nav.responsive .algolia-autocomplete .aa-dropdown-menu {
+    margin-left: 0;
+    width: 400px;
+    max-height: 400px;
+  }
+}
+
+.algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
+  width: 90%;
+  outline: none;
+  border: none;
+}
+
+.algolia-autocomplete .aa-hint {
+  color: #999;
+}
+.algolia-autocomplete .aa-dropdown-menu {
+  width: 550px;
+  max-height: 70vh;
+  overflow-x: visible;
+  overflow-y: scroll;
+  padding: 5px;
+  margin-top: 3px;
+  margin-left: -150px;
+  background-color: #fff;
+  border-radius: 5px;
+  border: 1px solid #999;
+  border-top: none;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
+  cursor: pointer;
+  padding: 5px 4px;
+  border-bottom: 1px solid #eee;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion:last-of-type {
+  border-bottom: none;
+  margin-bottom: 2px;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item {
+  overflow: hidden;
+  font-size: 0.8em;
+  line-height: 1.4em;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
+  font-size: 1rem;
+  margin-block-start: 0;
+  margin-block-end: 5px;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-description {
+  display: inline-block;
+  overflow: hidden;
+  height: 2.8em;
+  width: 80%;
+  margin-right: 4%;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview {
+  display: inline-block;
+  width: 15%;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img {
+  height: 3em;
+  width: auto;
+  display: none;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img[src] {
+  display: initial;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
+  background-color: #eee;
+}
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
+  font-weight: bold;
+  font-style: normal;
+}
+
+</style>
+
+
+<!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+<style type="text/css">
+
+body {
+  background-color: white;
+}
+
+.pandoc-table {
+  width: 100%;
+}
+
+.pandoc-table>caption {
+  margin-bottom: 10px;
+}
+
+.pandoc-table th:not([align]) {
+  text-align: left;
+}
+
+.pagedtable-footer {
+  font-size: 15px;
+}
+
+d-byline .byline {
+  grid-template-columns: 2fr 2fr;
+}
+
+d-byline .byline h3 {
+  margin-block-start: 1.5em;
+}
+
+d-byline .byline .authors-affiliations h3 {
+  margin-block-start: 0.5em;
+}
+
+.authors-affiliations .orcid-id {
+  width: 16px;
+  height:16px;
+  margin-left: 4px;
+  margin-right: 4px;
+  vertical-align: middle;
+  padding-bottom: 2px;
+}
+
+d-title .dt-tags {
+  margin-top: 1em;
+  grid-column: text;
+}
+
+.dt-tags .dt-tag {
+  text-decoration: none;
+  display: inline-block;
+  color: rgba(0,0,0,0.6);
+  padding: 0em 0.4em;
+  margin-right: 0.5em;
+  margin-bottom: 0.4em;
+  font-size: 70%;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+d-article table.gt_table td,
+d-article table.gt_table th {
+  border-bottom: none;
+  font-size: 100%;
+}
+
+.html-widget {
+  margin-bottom: 2.0em;
+}
+
+.l-screen-inset {
+  padding-right: 16px;
+}
+
+.l-screen .caption {
+  margin-left: 10px;
+}
+
+.shaded {
+  background: rgb(247, 247, 247);
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.shaded .html-widget {
+  margin-bottom: 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.shaded .shaded-content {
+  background: white;
+}
+
+.text-output {
+  margin-top: 0;
+  line-height: 1.5em;
+}
+
+.hidden {
+  display: none !important;
+}
+
+hr.section-separator {
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  margin: 0px;
+}
+
+
+d-byline {
+  border-top: none;
+}
+
+d-article {
+  padding-top: 2.5rem;
+  padding-bottom: 30px;
+  border-top: none;
+}
+
+d-appendix {
+  padding-top: 30px;
+}
+
+d-article>p>img {
+  width: 100%;
+}
+
+d-article h2 {
+  margin: 1rem 0 1.5rem 0;
+}
+
+d-article h3 {
+  margin-top: 1.5rem;
+}
+
+d-article iframe {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 2.0em;
+  width: 100%;
+}
+
+/* Tweak code blocks */
+
+d-article div.sourceCode code,
+d-article pre code {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+}
+
+d-article pre,
+d-article div.sourceCode,
+d-article div.sourceCode pre {
+  overflow: auto;
+}
+
+d-article div.sourceCode {
+  background-color: white;
+}
+
+d-article div.sourceCode pre {
+  padding-left: 10px;
+  font-size: 12px;
+  border-left: 2px solid rgba(0,0,0,0.1);
+}
+
+d-article pre {
+  font-size: 12px;
+  color: black;
+  background: none;
+  margin-top: 0;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+d-article pre a {
+  border-bottom: none;
+}
+
+d-article pre a:hover {
+  border-bottom: none;
+  text-decoration: underline;
+}
+
+d-article details {
+  grid-column: text;
+  margin-bottom: 0.8em;
+}
+
+@media(min-width: 768px) {
+
+d-article pre,
+d-article div.sourceCode,
+d-article div.sourceCode pre {
+  overflow: visible !important;
+}
+
+d-article div.sourceCode pre {
+  padding-left: 18px;
+  font-size: 14px;
+}
+
+/* tweak for Pandoc numbered line within distill */
+d-article pre.numberSource code > span {
+    left: -2em;
+}
+
+d-article pre {
+  font-size: 14px;
+}
+
+}
+
+figure img.external {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  padding: 18px;
+  box-sizing: border-box;
+}
+
+/* CSS for d-contents */
+
+.d-contents {
+  grid-column: text;
+  color: rgba(0,0,0,0.8);
+  font-size: 0.9em;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+  padding-bottom: 0.5em;
+  margin-bottom: 1em;
+  padding-left: 0.25em;
+  justify-self: start;
+}
+
+@media(min-width: 1000px) {
+  .d-contents.d-contents-float {
+    height: 0;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    justify-self: center;
+    padding-right: 3em;
+    padding-left: 2em;
+  }
+}
+
+.d-contents nav h3 {
+  font-size: 18px;
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+.d-contents li {
+  list-style-type: none
+}
+
+.d-contents nav > ul {
+  padding-left: 0;
+}
+
+.d-contents ul {
+  padding-left: 1em
+}
+
+.d-contents nav ul li {
+  margin-top: 0.6em;
+  margin-bottom: 0.2em;
+}
+
+.d-contents nav a {
+  font-size: 13px;
+  border-bottom: none;
+  text-decoration: none
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.d-contents nav a:hover {
+  text-decoration: underline solid rgba(0, 0, 0, 0.6)
+}
+
+.d-contents nav > ul > li > a {
+  font-weight: 600;
+}
+
+.d-contents nav > ul > li > ul {
+  font-weight: inherit;
+}
+
+.d-contents nav > ul > li > ul > li {
+  margin-top: 0.2em;
+}
+
+
+.d-contents nav ul {
+  margin-top: 0;
+  margin-bottom: 0.25em;
+}
+
+.d-article-with-toc h2:nth-child(2) {
+  margin-top: 0;
+}
+
+
+/* Figure */
+
+.figure {
+  position: relative;
+  margin-bottom: 2.5em;
+  margin-top: 1.5em;
+}
+
+.figure .caption {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 12px;
+  line-height: 1.5em;
+}
+
+.figure img.external {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  padding: 18px;
+  box-sizing: border-box;
+}
+
+.figure .caption a {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.figure .caption b,
+.figure .caption strong, {
+  font-weight: 600;
+  color: rgba(0, 0, 0, 1.0);
+}
+
+/* Citations */
+
+d-article .citation {
+  color: inherit;
+  cursor: inherit;
+}
+
+div.hanging-indent{
+  margin-left: 1em; text-indent: -1em;
+}
+
+/* Citation hover box */
+
+.tippy-box[data-theme~=light-border] {
+  background-color: rgba(250, 250, 250, 0.95);
+}
+
+.tippy-content > p {
+  margin-bottom: 0;
+  padding: 2px;
+}
+
+
+/* Tweak 1000px media break to show more text */
+
+@media(min-width: 1000px) {
+  .base-grid,
+  distill-header,
+  d-title,
+  d-abstract,
+  d-article,
+  d-appendix,
+  distill-appendix,
+  d-byline,
+  d-footnote-list,
+  d-citation-list,
+  distill-footer {
+    grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+    grid-column-gap: 16px;
+  }
+
+  .grid {
+    grid-column-gap: 16px;
+  }
+
+  d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+  }
+  figure .caption, .figure .caption, figure figcaption {
+    font-size: 13px;
+  }
+}
+
+@media(min-width: 1180px) {
+  .base-grid,
+  distill-header,
+  d-title,
+  d-abstract,
+  d-article,
+  d-appendix,
+  distill-appendix,
+  d-byline,
+  d-footnote-list,
+  d-citation-list,
+  distill-footer {
+    grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+    grid-column-gap: 32px;
+  }
+
+  .grid {
+    grid-column-gap: 32px;
+  }
+}
+
+
+/* Get the citation styles for the appendix (not auto-injected on render since
+   we do our own rendering of the citation appendix) */
+
+d-appendix .citation-appendix,
+.d-appendix .citation-appendix {
+  font-size: 11px;
+  line-height: 15px;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  padding-left: 18px;
+  border: 1px solid rgba(0,0,0,0.1);
+  background: rgba(0, 0, 0, 0.02);
+  padding: 10px 18px;
+  border-radius: 3px;
+  color: rgba(150, 150, 150, 1);
+  overflow: hidden;
+  margin-top: -12px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* Include appendix styles here so they can be overridden */
+
+d-appendix {
+  contain: layout style;
+  font-size: 0.8em;
+  line-height: 1.7em;
+  margin-top: 60px;
+  margin-bottom: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  color: rgba(0,0,0,0.5);
+  padding-top: 60px;
+  padding-bottom: 48px;
+}
+
+d-appendix h3 {
+  grid-column: page-start / text-start;
+  font-size: 15px;
+  font-weight: 500;
+  margin-top: 1em;
+  margin-bottom: 0;
+  color: rgba(0,0,0,0.65);
+}
+
+d-appendix h3 + * {
+  margin-top: 1em;
+}
+
+d-appendix ol {
+  padding: 0 0 0 15px;
+}
+
+@media (min-width: 768px) {
+  d-appendix ol {
+    padding: 0 0 0 30px;
+    margin-left: -30px;
+  }
+}
+
+d-appendix li {
+  margin-bottom: 1em;
+}
+
+d-appendix a {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+d-appendix > * {
+  grid-column: text;
+}
+
+d-appendix > d-footnote-list,
+d-appendix > d-citation-list,
+d-appendix > distill-appendix {
+  grid-column: screen;
+}
+
+/* Include footnote styles here so they can be overridden */
+
+d-footnote-list {
+  contain: layout style;
+}
+
+d-footnote-list > * {
+  grid-column: text;
+}
+
+d-footnote-list a.footnote-backlink {
+  color: rgba(0,0,0,0.3);
+  padding-left: 0.5em;
+}
+
+
+
+/* Anchor.js */
+
+.anchorjs-link {
+  /*transition: all .25s linear; */
+  text-decoration: none;
+  border-bottom: none;
+}
+*:hover > .anchorjs-link {
+  margin-left: -1.125em !important;
+  text-decoration: none;
+  border-bottom: none;
+}
+
+/* Social footer */
+
+.social_footer {
+  margin-top: 30px;
+  margin-bottom: 0;
+  color: rgba(0,0,0,0.67);
+}
+
+.disqus-comments {
+  margin-right: 30px;
+}
+
+.disqus-comment-count {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
+#disqus_thread {
+  margin-top: 30px;
+}
+
+.article-sharing a {
+  border-bottom: none;
+  margin-right: 8px;
+}
+
+.article-sharing a:hover {
+  border-bottom: none;
+}
+
+.sidebar-section.subscribe {
+  font-size: 12px;
+  line-height: 1.6em;
+}
+
+.subscribe p {
+  margin-bottom: 0.5em;
+}
+
+
+.article-footer .subscribe {
+  font-size: 15px;
+  margin-top: 45px;
+}
+
+
+.sidebar-section.custom {
+  font-size: 12px;
+  line-height: 1.6em;
+}
+
+.custom p {
+  margin-bottom: 0.5em;
+}
+
+/* Styles for listing layout (hide title) */
+.layout-listing d-title, .layout-listing .d-title {
+  display: none;
+}
+
+/* Styles for posts lists (not auto-injected) */
+
+
+.posts-with-sidebar {
+  padding-left: 45px;
+  padding-right: 45px;
+}
+
+.posts-list .description h2,
+.posts-list .description p {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+.posts-list .description h2 {
+  font-weight: 700;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.posts-list h2.post-tag {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding-bottom: 12px;
+}
+.posts-list {
+  margin-top: 60px;
+  margin-bottom: 24px;
+}
+
+.posts-list .post-preview {
+  text-decoration: none;
+  overflow: hidden;
+  display: block;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 24px 0;
+}
+
+.post-preview-last {
+  border-bottom: none !important;
+}
+
+.posts-list .posts-list-caption {
+  grid-column: screen;
+  font-weight: 400;
+}
+
+.posts-list .post-preview h2 {
+  margin: 0 0 6px 0;
+  line-height: 1.2em;
+  font-style: normal;
+  font-size: 24px;
+}
+
+.posts-list .post-preview p {
+  margin: 0 0 12px 0;
+  line-height: 1.4em;
+  font-size: 16px;
+}
+
+.posts-list .post-preview .thumbnail {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+  position: relative;
+  max-width: 500px;
+}
+.posts-list .post-preview img {
+  width: 100%;
+  display: block;
+}
+
+.posts-list .metadata {
+  font-size: 12px;
+  line-height: 1.4em;
+  margin-bottom: 18px;
+}
+
+.posts-list .metadata > * {
+  display: inline-block;
+}
+
+.posts-list .metadata .publishedDate {
+  margin-right: 2em;
+}
+
+.posts-list .metadata .dt-authors {
+  display: block;
+  margin-top: 0.3em;
+  margin-right: 2em;
+}
+
+.posts-list .dt-tags {
+  display: block;
+  line-height: 1em;
+}
+
+.posts-list .dt-tags .dt-tag {
+  display: inline-block;
+  color: rgba(0,0,0,0.6);
+  padding: 0.3em 0.4em;
+  margin-right: 0.2em;
+  margin-bottom: 0.4em;
+  font-size: 60%;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.posts-list img {
+  opacity: 1;
+}
+
+.posts-list img[data-src] {
+  opacity: 0;
+}
+
+.posts-more {
+  clear: both;
+}
+
+
+.posts-sidebar {
+  font-size: 16px;
+}
+
+.posts-sidebar h3 {
+  font-size: 16px;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.sidebar-section {
+  margin-bottom: 30px;
+}
+
+.categories ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.categories li {
+  color: rgba(0, 0, 0, 0.8);
+  margin-bottom: 0;
+}
+
+.categories li>a {
+  border-bottom: none;
+}
+
+.categories li>a:hover {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.categories .active {
+  font-weight: 600;
+}
+
+.categories .category-count {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+
+@media(min-width: 768px) {
+  .posts-list .post-preview h2 {
+    font-size: 26px;
+  }
+  .posts-list .post-preview .thumbnail {
+    float: right;
+    width: 30%;
+    margin-bottom: 0;
+  }
+  .posts-list .post-preview .description {
+    float: left;
+    width: 45%;
+  }
+  .posts-list .post-preview .metadata {
+    float: left;
+    width: 20%;
+    margin-top: 8px;
+  }
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.5em;
+    font-size: 16px;
+  }
+  .posts-with-sidebar .posts-list {
+    float: left;
+    width: 75%;
+  }
+  .posts-with-sidebar .posts-sidebar {
+    float: right;
+    width: 20%;
+    margin-top: 60px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+}
+
+
+/* Improve display for browsers without grid (IE/Edge <= 15) */
+
+.downlevel {
+  line-height: 1.6em;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+}
+
+.downlevel .d-title {
+  padding-top: 6rem;
+  padding-bottom: 1.5rem;
+}
+
+.downlevel .d-title h1 {
+  font-size: 50px;
+  font-weight: 700;
+  line-height: 1.1em;
+  margin: 0 0 0.5rem;
+}
+
+.downlevel .d-title p {
+  font-weight: 300;
+  font-size: 1.2rem;
+  line-height: 1.55em;
+  margin-top: 0;
+}
+
+.downlevel .d-byline {
+  padding-top: 0.8em;
+  padding-bottom: 0.8em;
+  font-size: 0.8rem;
+  line-height: 1.8em;
+}
+
+.downlevel .section-separator {
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.downlevel .d-article {
+  font-size: 1.06rem;
+  line-height: 1.7em;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+
+.downlevel .d-appendix {
+  padding-left: 0;
+  padding-right: 0;
+  max-width: none;
+  font-size: 0.8em;
+  line-height: 1.7em;
+  margin-bottom: 0;
+  color: rgba(0,0,0,0.5);
+  padding-top: 40px;
+  padding-bottom: 48px;
+}
+
+.downlevel .footnotes ol {
+  padding-left: 13px;
+}
+
+.downlevel .base-grid,
+.downlevel .distill-header,
+.downlevel .d-title,
+.downlevel .d-abstract,
+.downlevel .d-article,
+.downlevel .d-appendix,
+.downlevel .distill-appendix,
+.downlevel .d-byline,
+.downlevel .d-footnote-list,
+.downlevel .d-citation-list,
+.downlevel .distill-footer,
+.downlevel .appendix-bottom,
+.downlevel .posts-container {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+@media(min-width: 768px) {
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+  padding-left: 150px;
+  padding-right: 150px;
+  max-width: 900px;
+}
+}
+
+.downlevel pre code {
+  display: block;
+  border-left: 2px solid rgba(0, 0, 0, .1);
+  padding: 0 0 0 20px;
+  font-size: 14px;
+}
+
+.downlevel code, .downlevel pre {
+  color: black;
+  background: none;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+.downlevel .posts-list .post-preview {
+  color: inherit;
+}
+
+
+
+</style>
+
+<script type="application/javascript">
+
+function is_downlevel_browser() {
+  if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                 window.navigator.userAgent)) {
+    return true;
+  } else {
+    return window.load_distill_framework === undefined;
+  }
+}
+
+// show body when load is complete
+function on_load_complete() {
+
+  // add anchors
+  if (window.anchors) {
+    window.anchors.options.placement = 'left';
+    window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+  }
+
+
+  // set body to visible
+  document.body.style.visibility = 'visible';
+
+  // force redraw for leaflet widgets
+  if (window.HTMLWidgets) {
+    var maps = window.HTMLWidgets.findAll(".leaflet");
+    $.each(maps, function(i, el) {
+      var map = this.getMap();
+      map.invalidateSize();
+      map.eachLayer(function(layer) {
+        if (layer instanceof L.TileLayer)
+          layer.redraw();
+      });
+    });
+  }
+
+  // trigger 'shown' so htmlwidgets resize
+  $('d-article').trigger('shown');
+}
+
+function init_distill() {
+
+  init_common();
+
+  // create front matter
+  var front_matter = $('<d-front-matter></d-front-matter>');
+  $('#distill-front-matter').wrap(front_matter);
+
+  // create d-title
+  $('.d-title').changeElementType('d-title');
+
+  // separator
+  var separator = '<hr class="section-separator" style="clear: both"/>';
+  // prepend separator above appendix
+  $('.d-byline').before(separator);
+  $('.d-article').before(separator);
+
+  // create d-byline
+  var byline = $('<d-byline></d-byline>');
+  $('.d-byline').replaceWith(byline);
+
+  // create d-article
+  var article = $('<d-article></d-article>');
+  $('.d-article').wrap(article).children().unwrap();
+
+  // move posts container into article
+  $('.posts-container').appendTo($('d-article'));
+
+  // create d-appendix
+  $('.d-appendix').changeElementType('d-appendix');
+
+  // flag indicating that we have appendix items
+  var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+  // replace footnotes with <d-footnote>
+  $('.footnote-ref').each(function(i, val) {
+    appendix = true;
+    var href = $(this).attr('href');
+    var id = href.replace('#', '');
+    var fn = $('#' + id);
+    var fn_p = $('#' + id + '>p');
+    fn_p.find('.footnote-back').remove();
+    var text = fn_p.html();
+    var dtfn = $('<d-footnote></d-footnote>');
+    dtfn.html(text);
+    $(this).replaceWith(dtfn);
+  });
+  // remove footnotes
+  $('.footnotes').remove();
+
+  // move refs into #references-listing
+  $('#references-listing').replaceWith($('#refs'));
+
+  $('h1.appendix, h2.appendix').each(function(i, val) {
+    $(this).changeElementType('h3');
+  });
+  $('h3.appendix').each(function(i, val) {
+    var id = $(this).attr('id');
+    $('.d-contents a[href="#' + id + '"]').parent().remove();
+    appendix = true;
+    $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+  });
+
+  // show d-appendix if we have appendix content
+  $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+  // localize layout chunks to just output
+  $('.layout-chunk').each(function(i, val) {
+
+    // capture layout
+    var layout = $(this).attr('data-layout');
+
+    // apply layout to markdown level block elements
+    var elements = $(this).children().not('details, div.sourceCode, pre, script');
+    elements.each(function(i, el) {
+      var layout_div = $('<div class="' + layout + '"></div>');
+      if (layout_div.hasClass('shaded')) {
+        var shaded_content = $('<div class="shaded-content"></div>');
+        $(this).wrap(shaded_content);
+        $(this).parent().wrap(layout_div);
+      } else {
+        $(this).wrap(layout_div);
+      }
+    });
+
+
+    // unwrap the layout-chunk div
+    $(this).children().unwrap();
+  });
+
+  // remove code block used to force  highlighting css
+  $('.distill-force-highlighting-css').parent().remove();
+
+  // remove empty line numbers inserted by pandoc when using a
+  // custom syntax highlighting theme, except when numbering line
+  // in code chunk
+  $('pre:not(.numberLines) code.sourceCode a:empty').remove();
+
+  // load distill framework
+  load_distill_framework();
+
+  // wait for window.distillRunlevel == 4 to do post processing
+  function distill_post_process() {
+
+    if (!window.distillRunlevel || window.distillRunlevel < 4)
+      return;
+
+    // hide author/affiliations entirely if we have no authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+    if (!have_authors)
+      $('d-byline').addClass('hidden');
+
+    // article with toc class
+    $('.d-contents').parent().addClass('d-article-with-toc');
+
+    // strip links that point to #
+    $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+    // add orcid ids
+    $('.authors-affiliations').find('.author').each(function(i, el) {
+      var orcid_id = front_matter.authors[i].orcidID;
+      var author_name = front_matter.authors[i].author
+      if (orcid_id) {
+        var a = $('<a></a>');
+        a.attr('href', 'https://orcid.org/' + orcid_id);
+        var img = $('<img></img>');
+        img.addClass('orcid-id');
+        img.attr('alt', author_name ? 'ORCID ID for ' + author_name : 'ORCID ID');
+        img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+        a.append(img);
+        $(this).append(a);
+      }
+    });
+
+    // hide elements of author/affiliations grid that have no value
+    function hide_byline_column(caption) {
+      $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+    }
+
+    // affiliations
+    var have_affiliations = false;
+    for (var i = 0; i<front_matter.authors.length; ++i) {
+      var author = front_matter.authors[i];
+      if (author.affiliation !== "&nbsp;") {
+        have_affiliations = true;
+        break;
+      }
+    }
+    if (!have_affiliations)
+      $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+    // published date
+    if (!front_matter.publishedDate)
+      hide_byline_column("Published");
+
+    // document object identifier
+    var doi = $('d-byline').find('h3:contains("DOI")');
+    var doi_p = doi.next().empty();
+    if (!front_matter.doi) {
+      // if we have a citation and valid citationText then link to that
+      if ($('#citation').length > 0 && front_matter.citationText) {
+        doi.html('Citation');
+        $('<a href="#citation"></a>')
+          .text(front_matter.citationText)
+          .appendTo(doi_p);
+      } else {
+        hide_byline_column("DOI");
+      }
+    } else {
+      $('<a></a>')
+         .attr('href', "https://doi.org/" + front_matter.doi)
+         .html(front_matter.doi)
+         .appendTo(doi_p);
+    }
+
+     // change plural form of authors/affiliations
+    if (front_matter.authors.length === 1) {
+      var grid = $('.authors-affiliations');
+      grid.children('h3:contains("Authors")').text('Author');
+      grid.children('h3:contains("Affiliations")').text('Affiliation');
+    }
+
+    // remove d-appendix and d-footnote-list local styles
+    $('d-appendix > style:first-child').remove();
+    $('d-footnote-list > style:first-child').remove();
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // hoverable references
+    $('span.citation[data-cites]').each(function() {
+      const citeChild = $(this).children()[0]
+      // Do not process if @xyz has been used without escaping and without bibliography activated
+      // https://github.com/rstudio/distill/issues/466
+      if (citeChild === undefined) return true
+
+      if (citeChild.nodeName == "D-FOOTNOTE") {
+        var fn = citeChild
+        $(this).html(fn.shadowRoot.querySelector("sup"))
+        $(this).id = fn.id
+        fn.remove()
+      }
+      var refs = $(this).attr('data-cites').split(" ");
+      var refHtml = refs.map(function(ref) {
+        // Could use CSS.escape too here, we insure backward compatibility in navigator
+        return "<p>" + $('div[id="ref-' + ref + '"]').html() + "</p>";
+      }).join("\n");
+      window.tippy(this, {
+        allowHTML: true,
+        content: refHtml,
+        maxWidth: 500,
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'light-border',
+        placement: 'bottom-start'
+      });
+    });
+
+    // fix footnotes in tables (#411)
+    // replacing broken distill.pub feature
+    $('table d-footnote').each(function() {
+      // we replace internal showAtNode methode which is triggered when hovering a footnote
+      this.hoverBox.showAtNode = function(node) {
+        // ported from https://github.com/distillpub/template/pull/105/files
+        calcOffset = function(elem) {
+            let x = elem.offsetLeft;
+            let y = elem.offsetTop;
+            // Traverse upwards until an `absolute` element is found or `elem`
+            // becomes null.
+            while (elem = elem.offsetParent && elem.style.position != 'absolute') {
+                x += elem.offsetLeft;
+                y += elem.offsetTop;
+            }
+
+            return { left: x, top: y };
+        }
+        // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetTop
+        const bbox = node.getBoundingClientRect();
+        const offset = calcOffset(node);
+        this.show([offset.left + bbox.width, offset.top + bbox.height]);
+      }
+    })
+
+    // clear polling timer
+    clearInterval(tid);
+
+    // show body now that everything is ready
+    on_load_complete();
+  }
+
+  var tid = setInterval(distill_post_process, 50);
+  distill_post_process();
+
+}
+
+function init_downlevel() {
+
+  init_common();
+
+   // insert hr after d-title
+  $('.d-title').after($('<hr class="section-separator"/>'));
+
+  // check if we have authors
+  var front_matter = JSON.parse($("#distill-front-matter").html());
+  var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+  // manage byline/border
+  if (!have_authors)
+    $('.d-byline').remove();
+  $('.d-byline').after($('<hr class="section-separator"/>'));
+  $('.d-byline a').remove();
+
+  // remove toc
+  $('.d-contents').remove();
+
+  // move appendix elements
+  $('h1.appendix, h2.appendix').each(function(i, val) {
+    $(this).changeElementType('h3');
+  });
+  $('h3.appendix').each(function(i, val) {
+    $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+  });
+
+
+  // inject headers into references and footnotes
+  var refs_header = $('<h3></h3>');
+  refs_header.text('References');
+  $('#refs').prepend(refs_header);
+
+  var footnotes_header = $('<h3></h3');
+  footnotes_header.text('Footnotes');
+  $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+  // move appendix-bottom entries to the bottom
+  $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+  $('.appendix-bottom').remove();
+
+  // remove appendix if it's empty
+  if ($('.d-appendix').children().length === 0)
+    $('.d-appendix').remove();
+
+  // prepend separator above appendix
+  $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+  // trim code
+  $('pre>code').each(function(i, val) {
+    $(this).html($.trim($(this).html()));
+  });
+
+  // move posts-container right before article
+  $('.posts-container').insertBefore($('.d-article'));
+
+  $('body').addClass('downlevel');
+
+  on_load_complete();
+}
+
+
+function init_common() {
+
+  // jquery plugin to change element types
+  (function($) {
+    $.fn.changeElementType = function(newType) {
+      var attrs = {};
+
+      $.each(this[0].attributes, function(idx, attr) {
+        attrs[attr.nodeName] = attr.nodeValue;
+      });
+
+      this.replaceWith(function() {
+        return $("<" + newType + "/>", attrs).append($(this).contents());
+      });
+    };
+  })(jQuery);
+
+  // prevent underline for linked images
+  $('a > img').parent().css({'border-bottom' : 'none'});
+
+  // mark non-body figures created by knitr chunks as 100% width
+  $('.layout-chunk').each(function(i, val) {
+    var figures = $(this).find('img, .html-widget');
+    // ignore leaflet img layers (#106)
+    figures = figures.filter(':not(img[class*="leaflet"])')
+    if ($(this).attr('data-layout') !== "l-body") {
+      figures.css('width', '100%');
+    } else {
+      figures.css('max-width', '100%');
+      figures.filter("[width]").each(function(i, val) {
+        var fig = $(this);
+        fig.css('width', fig.attr('width') + 'px');
+      });
+
+    }
+  });
+
+  // auto-append index.html to post-preview links in file: protocol
+  // and in rstudio ide preview
+  $('.post-preview').each(function(i, val) {
+    if (window.location.protocol === "file:")
+      $(this).attr('href', $(this).attr('href') + "index.html");
+  });
+
+  // get rid of index.html references in header
+  if (window.location.protocol !== "file:") {
+    $('.distill-site-header a[href]').each(function(i,val) {
+      $(this).attr('href', $(this).attr('href').replace(/^index[.]html/, "./"));
+    });
+  }
+
+  // add class to pandoc style tables
+  $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+  $('.kable-table').children('table').addClass('pandoc-table');
+
+  // add figcaption style to table captions
+  $('caption').parent('table').addClass("figcaption");
+
+  // initialize posts list
+  if (window.init_posts_list)
+    window.init_posts_list();
+
+  // implmement disqus comment link
+  $('.disqus-comment-count').click(function() {
+    window.headroom_prevent_pin = true;
+    $('#disqus_thread').toggleClass('hidden');
+    if (!$('#disqus_thread').hasClass('hidden')) {
+      var offset = $(this).offset();
+      $(window).resize();
+      $('html, body').animate({
+        scrollTop: offset.top - 35
+      });
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (is_downlevel_browser())
+    init_downlevel();
+  else
+    window.addEventListener('WebComponentsReady', init_distill);
+});
+
+</script>
+
+<!--/radix_placeholder_distill-->
+  <script src="../../site_libs/header-attrs-2.25/header-attrs.js"></script>
+  <link href="../../site_libs/panelset-0.2.6/panelset.css" rel="stylesheet" />
+  <script src="../../site_libs/panelset-0.2.6/panelset.js"></script>
+  <script src="../../site_libs/clipboard-2.0.6/clipboard.min.js"></script>
+  <link href="../../site_libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
+  <script src="../../site_libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
+  <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+  <script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+  <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
+  <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="../../site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="../../site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="../../site_libs/anchor-4.2.2/anchor.min.js"></script>
+  <script src="../../site_libs/bowser-1.9.3/bowser.min.js"></script>
+  <script src="../../site_libs/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="../../site_libs/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+<script type="text/javascript" cookie-consent="tracking" async src="https://www.googletagmanager.com/gtag/js?id=UA-178413324-1"></script>
+<script type="text/javascript" cookie-consent="tracking">
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-178413324-1');
+</script>
+<style type="text/css">
+/* ---------- Global Styles ---------- */
+
+@import url('https://fonts.googleapis.com/css?family=Atkinson+Hyperlegible&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Fira+Mono&display=swap');
+
+html, body, p {
+  
+  font-family: 'Atkinson Hyperlegible';
+  font-weight: 400;
+  line-height: 1.7; 
+  font-size: 1em;
+  color: #333333;
+  font-style: normal;
+  
+}
+
+h2, h3 {
+  font-family: 'Roboto Slab'
+}
+
+d-article h4 {
+  font-size: 20px;
+  text-align: center;
+  margin-top: 0.5em;
+  padding: 5px 0px;
+  outline: 1px solid black;
+}
+
+d-article h5 {
+  font-size: 18px;
+  text-decoration: underline;
+  margin-bottom: 0.5em;
+}
+
+em {
+  margin-right: 3px;
+}
+
+div.opener {
+  text-align: justify;
+}
+
+/* Small caps */
+
+.sc {
+  font-variant: small-caps;
+  letter-spacing: 0.1em;
+}
+
+
+/* ---------- Index Page Styles ---------- */
+
+
+/* Name time */
+
+div.nav-left.title {
+  font-family: 'Roboto Slab';
+}
+
+
+/* Search bar */
+
+.angolia-autocomplete {
+  width: 300px;
+}
+
+.nav-search {
+    font-size: inherit;
+}
+
+/* Publication Date */
+
+.publishedDate {
+  font-size: 1.1em;
+}
+
+
+/* Post Description */
+
+.posts-list .description h2 {
+  font-family: 'Roboto Slab';
+}
+
+.description p {
+  font-style: italic;
+  padding-top: 5px;
+}
+
+
+/* Tags */
+
+.posts-list .dt-tags {
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+
+.posts-list .dt-tags .dt-tag {
+  font-family: 'Roboto Slab';
+  font-weight: bold;
+  letter-spacing: 1px;
+  background-color: #565656;
+  color: white;
+}
+
+/* Top & Bot bars */
+
+.distill-site-nav {
+  background-color: #262c2f;
+}
+
+.distill-site-footer p {
+  color: white;
+}
+
+
+
+/* Post published date medatada */
+.posts-list .metadata .publishedDate{
+  font-family: 'Roboto Mono';
+}
+
+
+/* Post list caption */
+.posts-list .posts-list-caption{
+  font-family: 'Fira Mono';
+  border-bottom: 5px solid #f3f3f3;
+  padding-bottom: 2rem;
+}
+
+
+/* Sidebar Categories */
+.posts-sidebar {
+  font-family: 'Fira Mono';
+}
+
+.sidebar-section h3 {
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+
+/* ---------- Article Styles ---------- */
+
+
+/* Title */
+
+d-title {
+  padding-bottom: 0;
+}
+
+d-title h1 {
+  font-family: 'Roboto Slab';
+  line-height: 1.3;
+}
+
+d-title p {
+  font-weight: 600;
+}
+
+
+/* General */
+
+d-article > h2 {
+  margin: 2.5rem 0 1.5rem 0;
+  border-bottom: 2px solid black;
+}
+
+div.l-body + h2 {
+  margin-top: 0px;
+}
+
+d-article > h3 {
+  margin-top: 1em;
+  font-size: 28px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid lightgrey;
+}
+
+d-article ol {
+  padding-bottom: 15px;
+}
+
+/* Aside */
+
+aside {
+  margin-left: 20px;
+  width: 200px;
+  font-family: 'Roboto Slab';
+}
+
+div.sourceCode + aside {
+  margin-top: 1.5em;
+}
+
+aside code {
+  font-weight: 600;
+}
+
+/* Details */
+summary {
+  padding-left: 5px;
+}
+
+details {
+  background-color: #008bff0f;
+  outline: 2px solid #38566F;
+  padding: 1rem;
+}
+
+d-article details[open] summary {
+  margin-bottom: 1em;
+}
+
+/* Block Quotes */
+
+d-article blockquote {
+  border-left: 5px solid rgba(0, 0, 0, 0.2);
+  padding-left: 1em;
+}
+
+blockquote p {
+  margin-bottom: 0;
+}
+
+
+/* Footnote margins */
+d-footnote {
+  margin-left: -.2em;
+  margin-right: .1em;
+}
+
+/* Footnote Image */
+
+d-footnote-list ol li img {
+  width: 700px;
+}
+
+d-footnote img {
+  width: 660px;
+  padding: 10px;
+}
+
+
+/* -------- Layout Helpers -------- */
+
+/* 2-column Even */
+
+.pull-left {
+  float: left;
+  width: 47%;
+}
+
+.pull-right {
+  float: right;
+  width: 47%;
+}
+
+/* 2-column Left-skew */
+
+.pull-left-wide {
+  float: left;
+  width: 75%;
+}
+
+.pull-right-narrow {
+  float: right;
+  width: 20%;
+}
+
+/* 2-column Right-skew */
+
+.pull-left-narrow {
+  float: left;
+  width: 20%;
+}
+
+.pull-right-wide {
+  float: right;
+  width: 75%;
+}
+
+
+/* ---------- Code Styles ---------- */
+
+/* Inline Code */
+
+p > code, li > code, summary > code {
+  border-radius: 4px;
+  padding: 2px;
+  color: black;
+  background-color: #fbc4ff80;
+  font-family: 'Fira Mono';
+  font-weight: 600;
+  font-size: 0.8em;
+}
+
+a > code {
+    font-weight: bold;
+}
+
+
+/* Code Chunk */
+
+d-article div.sourceCode pre {
+  position: relative;
+  background-color: white;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-left: 5px solid #4D8DC9;
+}
+
+d-article pre.out-extended {
+  width: fit-content;
+  max-width: fit-content;
+  padding-right: 10px;
+}
+
+/* R chunk */
+d-article div.sourceCode pre.r {
+  background-color: #faffff;
+}
+
+/* Julia chunk */
+d-article div.sourceCode pre.julia {
+  background-color: #f8fffb;
+  border-left: 5px solid #4A916B;
+}
+
+d-article details div.sourceCode pre {
+  background-color: white;
+}
+
+/*
+d-article div.sourceCode pre.r:before {
+  position: absolute;
+  font-size: 1rem;
+  content: 'R';
+  font-family: 'Fira Mono';
+  font-weight: 600;
+  left: -20px;
+  top: -5px;
+  color: #59a2e6;
+}
+*/
+
+d-article div.sourceCode pre code {
+  font-family: 'Fira Mono';
+  font-weight: 600;
+}
+
+
+/* overrides some syntax highlighting */
+
+span.va {
+  color: black;
+}
+span.fu {
+  color: #3456cc;
+}
+span.cn {
+  color: #ef3e3a;
+}
+span.fl {
+  color: #c8531d;
+}
+span.kw {
+  color: #9f1eb1;
+}
+span.st {
+  color: #148a14;
+}
+span.co {
+  color: #999999;
+  font-weight: 500;
+}
+
+i.code-hl {
+  font-style: normal;
+  font-weight: bold;
+  background-color: #acf120;
+  padding: 2px 5px;
+  font-size: 1.1em;
+  outline: 1px solid lightgrey;
+}
+
+/* underline auto-linked functions */
+
+span.va a {
+  text-decoration: underline;
+}
+span.fu a {
+  text-decoration: underline;
+}
+
+
+/* Output Chunk */
+
+d-article pre code {
+  font-family: 'Fira Mono';
+  font-weight: 500;
+}
+
+d-article pre {
+  background-color: #f9f9f9;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+  overflow-x: scroll;
+}
+
+
+/* Footnote inline code */
+
+d-footnote-list code {
+  color: rgb(0 0 0 / 0.70);
+  font-weight: 600;
+}
+
+/* ---------- ADD-ONS ---------- */
+
+
+/* {rmarkdown} */
+
+.pagedtable-wrapper {
+  margin-bottom: 20px;
+}
+
+
+/* html widgets */
+
+.html-widget {
+  margin-top: 1.0em;
+  margin-bottom: 1.0em;
+}
+
+
+/* {reactable} */
+
+.ReactTable {
+  font-size: 14px;
+  font-family: 'Roboto Slab';
+  background-color: #fbfbfb;
+}
+
+
+/* {xaringanExtra} */
+
+.panelset {
+  margin-top: 10px;
+  --panel-tabs-border-bottom: black;
+  --panel-tab-font-family: 'Roboto Slab';
+  --panel-tab-hover-background: #ddd;
+  --panel-tab-text-decoration: none;
+  border-bottom: 2px solid black;
+  margin-bottom: 30px;
+}
+
+.panelset section {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.panel > pre {
+  overflow-x: auto !important;
+}
+
+</style>
+<!--/radix_placeholder_site_in_header-->
+
+  <link rel="stylesheet" href="../../styles.css" type="text/css"/>
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"The many ways to (un)tidy-select","description":"Deconstructing {tidyselect} and building it back up","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/","orcidID":"0000-0002-0701-921X"}],"publishedDate":"2023-12-03T00:00:00.000-05:00","citationText":"Choe, 2023"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<header class="header header--fixed" role="banner">
+<nav class="distill-site-nav distill-site-header">
+<div class="nav-left">
+<a href="../../index.html" class="title">June Choe</a>
+<input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
+</div>
+<div class="nav-right">
+<a href="../../index.html">Home</a>
+<a href="../../blog.html">Blog</a>
+<a href="../../research.html">Research</a>
+<a href="../../static/CV.pdf">CV</a>
+<a href="../../software.html">Software</a>
+<a href="../../news.html">News</a>
+<div class="nav-dropdown">
+<button class="nav-dropbtn">
+Misc.
+ 
+<span class="down-arrow">&#x25BE;</span>
+</button>
+<div class="nav-dropdown-content">
+<a href="../../resources.html">Resources</a>
+</div>
+</div>
+<a href="https://twitter.com/yjunechoe">
+<i class="fa fa-twitter" aria-hidden="true"></i>
+</a>
+<a href="https://fosstodon.org/@yjunechoe">
+<i class="fa fa-brands fa-mastodon" aria-hidden="true"></i>
+</a>
+<a href="https://github.com/yjunechoe">
+<i class="fa fa-github" aria-hidden="true"></i>
+</a>
+<a href="https://osf.io/72vrb/" class="nav-image">
+<img src="../../static/img/osf.png"/>
+</a>
+<a href="../../sitemap.xml">
+<i class="fa fa-rss" aria-hidden="true"></i>
+</a>
+<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
+</div>
+</nav>
+</header>
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>The many ways to (un)tidy-select</h1>
+
+<!--radix_placeholder_categories-->
+<div class="dt-tags">
+  <a href="../../blog.html#category:data_wrangling" class="dt-tag">data wrangling</a>
+  <a href="../../blog.html#category:dplyr" class="dt-tag">dplyr</a>
+  <a href="../../blog.html#category:tidyselect" class="dt-tag">tidyselect</a>
+</div>
+<!--/radix_placeholder_categories-->
+<p><p>Deconstructing {tidyselect} and building it back up</p></p>
+</div>
+
+<div class="d-byline">
+  June Choe  (University of Pennsylvania Linguistics)<a href="https://live-sas-www-ling.pantheon.sas.upenn.edu/" class="uri">https://live-sas-www-ling.pantheon.sas.upenn.edu/</a>
+  
+<br/>2023-12-03
+</div>
+
+<div class="d-article">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#intro" id="toc-intro">Intro</a></li>
+<li><a href="#some-observations" id="toc-some-observations">Some observations</a>
+<ul>
+<li><a href="#tidy-select" id="toc-tidy-select">tidy-select!</a></li>
+<li><a href="#tidy-select-1" id="toc-tidy-select-1">tidy?-select</a></li>
+<li><a href="#untidy-select" id="toc-untidy-select">untidy-select?</a></li>
+<li><a href="#untidy-select-1" id="toc-untidy-select-1">untidy-select!</a></li>
+</ul></li>
+<li><a href="#tidying-untidy-select" id="toc-tidying-untidy-select">Tidying untidy-select</a></li>
+<li><a href="#writing-untidy-select-helpers" id="toc-writing-untidy-select-helpers">Writing untidy-select helpers</a>
+<ul>
+<li><a href="#times" id="toc-times">1) <code>times()</code></a></li>
+<li><a href="#offset" id="toc-offset">2) <code>offset()</code></a></li>
+<li><a href="#neighbors" id="toc-neighbors">3) <code>neighbors()</code></a></li>
+<li><a href="#diy" id="toc-diy">DIY!</a></li>
+</ul></li>
+<li><a href="#lets-get-practical" id="toc-lets-get-practical">Let’s get practical</a>
+<ul>
+<li><a href="#sorting-columns" id="toc-sorting-columns">1) Sorting columns</a></li>
+<li><a href="#error-handling" id="toc-error-handling">2) Error handling</a></li>
+</ul></li>
+<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
+</ul>
+</nav>
+</div>
+<h2 id="intro">Intro</h2>
+<p>Recently, I been having <a href="https://github.com/rstudio/pointblank/pull/493">frequent</a> <a href="https://github.com/rstudio/pointblank/pull/499">run-ins</a> with <code>{tidyselect}</code> internals, discovering some weird and interesting behaviors along the way. This blog post is my attempt at documenting a couple of these. And as is the case with my usual style of writing, I’m gonna talk about some of the weirder stuff first and then touch on some of the “practical” side to this.</p>
+<h2 id="some-observations">Some observations</h2>
+<p>Let’s start with some facts about how <code>{tidyselect}</code> is supposed to work. I’ll use this toy data for the demo:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>, warn.conflicts <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyselect.r-lib.org'>tidyselect</a></span><span class='op'>)</span></span>
+<span><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>, y <span class='op'>=</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>]</span>, z <span class='op'>=</span> <span class='va'>LETTERS</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span></span>
+<span><span class='va'>df</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 2 × 3
+        x y     z    
+    &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
+  1     1 a     A    
+  2     2 b     B</code></pre>
+</div>
+<h3 id="tidy-select">tidy-select!</h3>
+<p><code>{tidyselect}</code> is the package that powers <code>dplyr::select()</code>. If you’ve used <code>{dplyr}</code>, you already know the behavior of <code>select()</code> pretty well. We can specify a column as string, symbol, or by its position:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='st'>"x"</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 2 × 1
+        x
+    &lt;int&gt;
+  1     1
+  2     2</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 2 × 1
+        x
+    &lt;int&gt;
+  1     1
+  2     2</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 2 × 1
+        x
+    &lt;int&gt;
+  1     1
+  2     2</code></pre>
+</div>
+<p>It’s not obvious from the outside, but the way this works is that these user-supplied expressions (like <code>"x"</code>, <code>x</code>, and <code>1</code>) all get <strong>resolved to integer</strong> before the selection actually happens.</p>
+<p>So to be more specific, the three calls to <code>select()</code> were the same because these three calls to <code>tidyselect::eval_select()</code> are the same:<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/eval_select.html'>eval_select</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>quote</a></span><span class='op'>(</span><span class='st'>"x"</span><span class='op'>)</span>, <span class='va'>df</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  x 
+  1</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/eval_select.html'>eval_select</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>quote</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, <span class='va'>df</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  x 
+  1</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/eval_select.html'>eval_select</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>quote</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>, <span class='va'>df</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  x 
+  1</code></pre>
+</div>
+<p>You can also see <code>eval_select()</code> in action in the <code>&lt;data.frame&gt;</code> method for <code>select()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>dplyr</span><span class='fu'>:::</span><span class='va'>select.data.frame</span></span></code></pre>
+</div>
+<pre><code>  function (.data, ...) 
+  {
+      error_call &lt;- dplyr_error_call()
+      loc &lt;- tidyselect::eval_select(expr(c(...)), data = .data, 
+          error_call = error_call)
+      loc &lt;- ensure_group_vars(loc, .data, notify = TRUE)
+      out &lt;- dplyr_col_select(.data, loc)
+      out &lt;- set_names(out, names(loc))
+      out
+  }
+  &lt;bytecode: 0x000001a9f37b8748&gt;
+  &lt;environment: namespace:dplyr&gt;</code></pre>
+</div>
+<h3 id="tidy-select-1">tidy?-select</h3>
+<p>Because the column <em>subsetting</em> part is ultimately done using integers, we can theoretically pass <code>select()</code> <em>any</em> expression, as long as it resolves to an integer vector.</p>
+<p>For example, we can use <code>1 + 1</code> to select the second column:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fl'>1</span> <span class='op'>+</span> <span class='fl'>1</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 2 × 1
+    y    
+    &lt;chr&gt;
+  1 a    
+  2 b</code></pre>
+</div>
+<p>And vector recycling is still a thing here too - we can use <code>c(1, 2) + 1</code> to select the second and third columns:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span> <span class='op'>+</span> <span class='fl'>1</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 2 × 2
+    y     z    
+    &lt;chr&gt; &lt;chr&gt;
+  1 a     A    
+  2 b     B</code></pre>
+</div>
+<p>Ordinary function calls work as well - we can select a random column using <code>sample()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 2 × 1
+    y    
+    &lt;chr&gt;
+  1 a    
+  2 b</code></pre>
+</div>
+<p>We can even use the <code>.env</code> pronoun to scope an integer variable from the global environment:<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>offset</span> <span class='op'>&lt;-</span> <span class='fl'>1</span></span>
+<span><span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fl'>1</span> <span class='op'>+</span> <span class='va'>.env</span><span class='op'>$</span><span class='va'>offset</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 2 × 1
+    y    
+    &lt;chr&gt;
+  1 a    
+  2 b</code></pre>
+</div>
+<p>So that’s kinda interesting.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> But what if we try to mix the different approaches to tidyselect-ing? Can we do math on columns that we’ve selected using strings and symbols?</p>
+<h3 id="untidy-select">untidy-select?</h3>
+<p>Uh not quite. <code>select()</code> doesn’t like doing math on strings and symbols.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>x</span> <span class='op'>+</span> <span class='fl'>1</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  Error in `select()`:
+  ! Problem while evaluating `x + 1`.
+  Caused by error:
+  ! object &#39;x&#39; not found</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='st'>"x"</span> <span class='op'>+</span> <span class='fl'>1</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  Error in `select()`:
+  ! Problem while evaluating `&quot;x&quot; + 1`.
+  Caused by error in `&quot;x&quot; + 1`:
+  ! non-numeric argument to binary operator</code></pre>
+</div>
+<p>In fact, it doesn’t even like doing certain kinds of math like multiplication (<code>*</code>), even with numeric constants:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fl'>1</span> <span class='op'>*</span> <span class='fl'>2</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  Error in `select()`:
+  ! Can&#39;t use arithmetic operator `*` in selection context.</code></pre>
+</div>
+<p>This actually makes sense from a design POV. Adding numbers to columns probably happens more often as a mistake than something intentional. These safeguards exist to prevent users from running into cryptic errors.</p>
+<p>Unless…</p>
+<h3 id="untidy-select-1">untidy-select!</h3>
+<p>It turns out that <code>{tidyselect}</code> <em><strong>helpers</strong></em> have an interesting behavior of <em>immediately</em> resolving the column selection to integer. So we can get addition (<code>+</code>) working if we wrap our columns in redundant column selection helpers like <code>all_of()</code> and <code>matches()</code></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/all_of.html'>all_of</a></span><span class='op'>(</span><span class='st'>"x"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fl'>1</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 2 × 1
+    y    
+    &lt;chr&gt;
+  1 a    
+  2 b</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches</a></span><span class='op'>(</span><span class='st'>"^x$"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fl'>1</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 2 × 1
+    y    
+    &lt;chr&gt;
+  1 a    
+  2 b</code></pre>
+</div>
+<p>For multiplication, we have to additionally circumvent the <a href="https://github.com/r-lib/tidyselect/blob/7cc3ea6213838dbb3f9c19e9a8b97cd03f5063a9/R/eval-walk.R#L167">censoring</a> of the <code>*</code> symbol. Here, we can simply use a different name for the same operation:<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>`%times%`</span> <span class='op'>&lt;-</span> <span class='va'>`*`</span></span>
+<span><span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches</a></span><span class='op'>(</span><span class='st'>"^x$"</span><span class='op'>)</span> <span class='op'>%times%</span> <span class='fl'>2</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 2 × 1
+    y    
+    &lt;chr&gt;
+  1 a    
+  2 b</code></pre>
+</div>
+<p>But geez, it’s so tiring to type <code>all_of()</code> and <code>matches()</code> all the time. There must be a better way to break the rule!</p>
+<h2 id="tidying-untidy-select">Tidying untidy-select</h2>
+<p>Let’s make a tidy design for the untidy pattern of selecting columns by doing math on column locations. The idea is to make our own little scope inside <code>select()</code> where all the existing safeguards are suspended. Like a <a href="https://en.wikipedia.org/wiki/Domain-specific_language">DSL</a> within a DSL, if you will.</p>
+<p>Let’s call this function <code>math()</code>. It should let us express stuff like “give me the column to the right of column <code>x</code>” via this intuitive(?) syntax:</p>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'>math</span><span class='op'>(</span><span class='va'>x</span> <span class='op'>+</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 2 × 1
+    y    
+    &lt;chr&gt;
+  1 a    
+  2 b</code></pre>
+</div>
+<p>This is my take on <code>math()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>math</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>expr</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='va'>math_expr</span> <span class='op'>&lt;-</span> <span class='fu'>rlang</span><span class='fu'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/enquo.html'>enquo</a></span><span class='op'>(</span><span class='va'>expr</span><span class='op'>)</span></span>
+<span>  <span class='va'>columns</span> <span class='op'>&lt;-</span> <span class='fu'>tidyselect</span><span class='fu'>::</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/peek_vars.html'>peek_vars</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span>  <span class='va'>col_locs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame.list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_along</a></span><span class='op'>(</span><span class='va'>columns</span><span class='op'>)</span>, col.names <span class='op'>=</span> <span class='va'>columns</span><span class='op'>)</span></span>
+<span>  <span class='va'>mask</span> <span class='op'>&lt;-</span> <span class='fu'>rlang</span><span class='fu'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/as_data_mask.html'>as_data_mask</a></span><span class='op'>(</span><span class='va'>col_locs</span><span class='op'>)</span></span>
+<span>  <span class='va'>out</span> <span class='op'>&lt;-</span> <span class='fu'>rlang</span><span class='fu'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/eval_tidy.html'>eval_tidy</a></span><span class='op'>(</span><span class='va'>math_expr</span>, <span class='va'>mask</span><span class='op'>)</span></span>
+<span>  <span class='va'>out</span></span>
+<span><span class='op'>}</span></span></code></pre>
+</div>
+</div>
+<p>There’s a lot of weird functions involved here, but it’s easier to digest by focusing on its parts. Here’s what each local variable in the function looks like for our <code>math(x + 1)</code> example above:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>  $math_expr
+  &lt;quosure&gt;
+  expr: ^x + 1
+  env:  0x000001a9f57cfce8
+  
+  $columns
+  [1] &quot;x&quot; &quot;y&quot; &quot;z&quot;
+  
+  $col_locs
+    x y z
+  1 1 2 3
+  
+  $mask
+  &lt;environment: 0x000001a9f601ddb0&gt;
+  
+  $out
+  [1] 2</code></pre>
+</div>
+<p>Let’s walk through the pieces:</p>
+<ol type="1">
+<li><p><code>math_expr</code>: the captured user expression, with the environment attached</p></li>
+<li><p><code>columns</code>: the column names of the current dataframe, in order</p></li>
+<li><p><code>col_locs</code>: a dataframe of column names and location, created from <code>columns</code></p></li>
+<li><p><code>mask</code>: a <a href="https://rlang.r-lib.org/reference/topic-data-mask.html">data mask</a> created from <code>col_locs</code></p></li>
+<li><p><code>out</code>: location of column(s) to select</p></li>
+</ol>
+<p>Essentially, <code>math()</code> first captures the expression to evaluate it in its own special environment, circumventing <code>select()</code>’s safeguards. Then, it grabs the column names of the data frame with <code>tidyselect::peek_vars()</code> to define <code>col_locs</code> and then <code>mask</code>. The data mask <code>mask</code> is then used inside <code>rlang::eval_tidy()</code> to resolve symbols like <code>x</code> to integer <code>1</code> when evaluating the captured expression <code>x + 1</code>. The expression <code>math(x + 1)</code> thus evaluates to <code>1 + 1</code>. In turn, <code>select(math(x + 1))</code> is evaluated to <code>select(2)</code>, returning us the second column of the dataframe.</p>
+<h2 id="writing-untidy-select-helpers">Writing untidy-select helpers</h2>
+<p>A small yet powerful detail in the implementation of <code>math()</code> is the fact that it captures the expression as a <a href="https://rlang.r-lib.org/reference/topic-quosure.html">quosure</a>. This allows <code>math()</code> to appropriately scope dynamically created variables, and not just bare symbols provided directly by the user.</p>
+<p>This makes more sense with some examples. Here, I define helper functions that call <code>math()</code> under the hood with their own templatic math expressions (and I have them <code>print()</code> the expression as passed to <code>math()</code> for clarity). The fact that <code>math()</code> captures its argument as a quosure is what allows variables like <code>num</code> to be correctly scoped in these examples.</p>
+<h3 id="times">1) <code>times()</code></h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>times</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>col</span>, <span class='va'>num</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='va'>col</span> <span class='op'>&lt;-</span> <span class='fu'>rlang</span><span class='fu'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/defusing-advanced.html'>ensym</a></span><span class='op'>(</span><span class='va'>col</span><span class='op'>)</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'>rlang</span><span class='fu'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/expr.html'>expr</a></span><span class='op'>(</span><span class='fu'>math</span><span class='op'>(</span><span class='op'>!</span><span class='op'>!</span><span class='va'>col</span> <span class='op'>*</span> <span class='va'>num</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># for debugging</span></span>
+<span>  <span class='fu'>math</span><span class='op'>(</span><span class='op'>!</span><span class='op'>!</span><span class='va'>col</span> <span class='op'>*</span> <span class='va'>num</span><span class='op'>)</span></span>
+<span><span class='op'>}</span></span>
+<span><span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'>times</span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  math(x * num)</code></pre>
+<pre><code>  # A tibble: 2 × 1
+    y    
+    &lt;chr&gt;
+  1 a    
+  2 b</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>num2</span> <span class='op'>&lt;-</span> <span class='fl'>2</span></span>
+<span><span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'>times</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>num2</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  math(x * num)</code></pre>
+<pre><code>  # A tibble: 2 × 1
+    y    
+    &lt;chr&gt;
+  1 a    
+  2 b</code></pre>
+</div>
+<h3 id="offset">2) <code>offset()</code></h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>offset</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>col</span>, <span class='va'>num</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='va'>col</span> <span class='op'>&lt;-</span> <span class='fu'>rlang</span><span class='fu'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/defusing-advanced.html'>ensym</a></span><span class='op'>(</span><span class='va'>col</span><span class='op'>)</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'>rlang</span><span class='fu'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/expr.html'>expr</a></span><span class='op'>(</span><span class='fu'>math</span><span class='op'>(</span><span class='op'>!</span><span class='op'>!</span><span class='va'>col</span> <span class='op'>+</span> <span class='va'>num</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># for debugging</span></span>
+<span>  <span class='fu'>math</span><span class='op'>(</span><span class='op'>!</span><span class='op'>!</span><span class='va'>col</span> <span class='op'>+</span> <span class='va'>num</span><span class='op'>)</span></span>
+<span><span class='op'>}</span></span>
+<span><span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/offset.html'>offset</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  math(x + num)</code></pre>
+<pre><code>  # A tibble: 2 × 1
+    y    
+    &lt;chr&gt;
+  1 a    
+  2 b</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>num1</span> <span class='op'>&lt;-</span> <span class='fl'>1</span></span>
+<span><span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/offset.html'>offset</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>num1</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  math(x + num)</code></pre>
+<pre><code>  # A tibble: 2 × 1
+    y    
+    &lt;chr&gt;
+  1 a    
+  2 b</code></pre>
+</div>
+<h3 id="neighbors">3) <code>neighbors()</code></h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>neighbors</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>col</span>, <span class='va'>n</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='va'>col</span> <span class='op'>&lt;-</span> <span class='fu'>rlang</span><span class='fu'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/defusing-advanced.html'>ensym</a></span><span class='op'>(</span><span class='va'>col</span><span class='op'>)</span></span>
+<span>  <span class='va'>range</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='op'>(</span><span class='va'>n</span><span class='op'>:</span><span class='fl'>1</span><span class='op'>)</span>, <span class='fl'>1</span><span class='op'>:</span><span class='va'>n</span><span class='op'>)</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'>rlang</span><span class='fu'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/expr.html'>expr</a></span><span class='op'>(</span><span class='fu'>math</span><span class='op'>(</span><span class='op'>!</span><span class='op'>!</span><span class='va'>col</span> <span class='op'>+</span> <span class='op'>!</span><span class='op'>!</span><span class='va'>range</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># for debugging</span></span>
+<span>  <span class='fu'>math</span><span class='op'>(</span><span class='op'>!</span><span class='op'>!</span><span class='va'>col</span> <span class='op'>+</span> <span class='op'>!</span><span class='op'>!</span><span class='va'>range</span><span class='op'>)</span></span>
+<span><span class='op'>}</span></span>
+<span><span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'>neighbors</span><span class='op'>(</span><span class='va'>y</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  math(y + c(-1L, 1L))</code></pre>
+<pre><code>  # A tibble: 2 × 2
+        x z    
+    &lt;int&gt; &lt;chr&gt;
+  1     1 A    
+  2     2 B</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'>neighbors</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>num1</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  math(y + c(-1L, 1L))</code></pre>
+<pre><code>  # A tibble: 2 × 2
+        x z    
+    &lt;int&gt; &lt;chr&gt;
+  1     1 A    
+  2     2 B</code></pre>
+</div>
+<h3 id="diy">DIY!</h3>
+<p>And of course, we can do arbitrary injections ourselves as well with <code>!!</code> or <code>.env$</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'>math</span><span class='op'>(</span><span class='va'>x</span> <span class='op'>*</span> <span class='op'>!</span><span class='op'>!</span><span class='va'>num2</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 2 × 1
+    y    
+    &lt;chr&gt;
+  1 a    
+  2 b</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'>math</span><span class='op'>(</span><span class='va'>x</span> <span class='op'>*</span> <span class='va'>.env</span><span class='op'>$</span><span class='va'>num2</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 2 × 1
+    y    
+    &lt;chr&gt;
+  1 a    
+  2 b</code></pre>
+</div>
+<p>That was fun but probably not super practical. Let’s set <code>math()</code> aside to try our hands on something more useful.</p>
+<h2 id="lets-get-practical">Let’s get practical</h2>
+<h3 id="sorting-columns">1) Sorting columns</h3>
+<p>Probably one of the hardest things to do idiomatically in the tidyverse is sorting (a subset of) columns by their name. For example, consider this dataframe which is a mix of columns that follow some fixed pattern (<code>"x|y_\\d"</code>) and those outside that pattern (<code>"year"</code>, <code>"day"</code>, etc.).</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>data_cols</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/expand.grid.html'>expand.grid</a></span><span class='op'>(</span>first <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"x"</span>, <span class='st'>"y"</span><span class='op'>)</span>, second <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>cols <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='va'>first</span>, <span class='st'>"_"</span>, <span class='va'>second</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span><span class='op'>(</span><span class='va'>cols</span><span class='op'>)</span></span>
+<span><span class='va'>df2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame.list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_along</a></span><span class='op'>(</span><span class='va'>data_cols</span><span class='op'>)</span>, col.names <span class='op'>=</span> <span class='va'>data_cols</span><span class='op'>)</span></span>
+<span><span class='va'>df2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>df2</span>, <span class='va'>storms</span><span class='op'>[</span><span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span><span class='op'>)</span></span>
+<span><span class='va'>df2</span> <span class='op'>&lt;-</span> <span class='va'>df2</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>df2</span><span class='op'>)</span><span class='op'>)</span><span class='op'>]</span></span>
+<span><span class='va'>df2</span></span></code></pre>
+</div>
+<pre><code>    y_3 x_3 month day hour y_2 y_1 x_2 year name x_1
+  1   6   5     6  27    0   4   2   3 1975  Amy   1</code></pre>
+</div>
+<p>It’s trivial to select columns by pattern - we can use the <code>matches()</code> helper:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df2</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches</a></span><span class='op'>(</span><span class='st'>"(x|y)_(\\d)"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>    y_3 x_3 y_2 y_1 x_2 x_1
+  1   6   5   4   2   3   1</code></pre>
+</div>
+<p>But what if I also wanted to further sort these columns, <em>after I select them</em>? There’s no easy way to do this “on the fly” inside of select, especially if we want the flexibility to sort the columns by the letter vs. the number.</p>
+<p>But here’s one way of getting at that, exploiting two facts:</p>
+<ol type="1">
+<li><code>matches()</code>, like other tidyselect helpers, immediately resolves the selection to integer</li>
+<li><code>peek_vars()</code> returns the column names in order, which lets us recover the column names from location</li>
+</ol>
+<p>And that’s pretty much all there is to the tidyselect magic that goes into my solution below. I define <code>locs</code> (integer vector of column locations) and <code>cols</code> (character vector of column names at those locations), and the rest is just regex and sorting:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>ordered_matches</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>matches</span>, <span class='va'>order</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='co'># tidyselect magic</span></span>
+<span>  <span class='va'>locs</span> <span class='op'>&lt;-</span> <span class='fu'>tidyselect</span><span class='fu'>::</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>matches</a></span><span class='op'>(</span><span class='va'>matches</span><span class='op'>)</span></span>
+<span>  <span class='va'>cols</span> <span class='op'>&lt;-</span> <span class='fu'>tidyselect</span><span class='fu'>::</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/peek_vars.html'>peek_vars</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>[</span><span class='va'>locs</span><span class='op'>]</span></span>
+<span>  <span class='co'># Ordinary evaluation</span></span>
+<span>  <span class='va'>groups</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>simplify2array</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/regmatches.html'>regmatches</a></span><span class='op'>(</span><span class='va'>cols</span>, <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>regexec</a></span><span class='op'>(</span><span class='va'>matches</span>, <span class='va'>cols</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>[</span><span class='op'>-</span><span class='fl'>1</span>,<span class='op'>]</span></span>
+<span>  <span class='va'>reordered</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/do.call.html'>do.call</a></span><span class='op'>(</span><span class='st'>"order"</span>, <span class='fu'><a href='https://rdrr.io/r/base/asplit.html'>asplit</a></span><span class='op'>(</span><span class='va'>groups</span><span class='op'>[</span><span class='va'>order</span>, <span class='op'>]</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span></span>
+<span>  <span class='va'>locs</span><span class='op'>[</span><span class='va'>reordered</span><span class='op'>]</span></span>
+<span><span class='op'>}</span></span></code></pre>
+</div>
+</div>
+<p>Using <code>ordered_matches()</code>, we can not only select columns but also sort them using regex capture groups.</p>
+<p>This sorts the columns by letter first then number:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df2</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'>ordered_matches</span><span class='op'>(</span><span class='st'>"(x|y)_(\\d)"</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>    x_1 x_2 x_3 y_1 y_2 y_3
+  1   1   3   5   2   4   6</code></pre>
+</div>
+<p>This sorts the columns by number first then letter:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df2</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'>ordered_matches</span><span class='op'>(</span><span class='st'>"(x|y)_(\\d)"</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>    x_1 y_1 x_2 y_2 x_3 y_3
+  1   1   2   3   4   5   6</code></pre>
+</div>
+<p>And if we wanted the other columns too, we can use <code>everything()</code> to grab the “rest”:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df2</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'>ordered_matches</span><span class='op'>(</span><span class='st'>"(x|y)_(\\d)"</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>    x_1 y_1 x_2 y_2 x_3 y_3 month day hour year name
+  1   1   2   3   4   5   6     6  27    0 1975  Amy</code></pre>
+</div>
+<h3 id="error-handling">2) Error handling</h3>
+<p>One of the really nice parts about the <code>{tidyselect}</code> design is the fact that error messages are very informative.</p>
+<p>For example, if you select a non-existing column, it errors while pointing out that mistake:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>df3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
+<span><span class='va'>nonexistent_selection</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>quote</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/eval_select.html'>eval_select</a></span><span class='op'>(</span><span class='va'>nonexistent_selection</span>, <span class='va'>df3</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  Error:
+  ! Can&#39;t subset columns that don&#39;t exist.
+  ✖ Column `y` doesn&#39;t exist.</code></pre>
+</div>
+<p>If you use a tidyselect helper that returns nothing, it won’t complain by default:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>zero_selection</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>quote</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span><span class='op'>(</span><span class='st'>"z"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/eval_select.html'>eval_select</a></span><span class='op'>(</span><span class='va'>zero_selection</span>, <span class='va'>df3</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  named integer(0)</code></pre>
+</div>
+<p>But you can make that error with <code>allow_empty = FALSE</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/eval_select.html'>eval_select</a></span><span class='op'>(</span><span class='va'>zero_selection</span>, <span class='va'>df3</span>, allow_empty <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  Error:
+  ! Must select at least one item.</code></pre>
+</div>
+<p>General evaluation errors are caught and <a href="https://rlang.r-lib.org/reference/topic-error-chaining.html">chained</a>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>evaluation_error</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>quote</a></span><span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span><span class='op'>(</span><span class='st'>"I'm a bad expression!"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/eval_select.html'>eval_select</a></span><span class='op'>(</span><span class='va'>evaluation_error</span>, <span class='va'>df3</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  Error:
+  ! Problem while evaluating `stop(&quot;I&#39;m a bad expression!&quot;)`.
+  Caused by error:
+  ! I&#39;m a bad expression!</code></pre>
+</div>
+<p>These error signalling patterns are clearly very useful for users,<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> but there’s a little gem in there for developers too. It turns out that the <strong>error condition object</strong> contains these information too, which lets you detect different error types programmatically to forward errors to your own error handling logic.</p>
+<p>For example, the attempted non-existent column is stored in <code>$i</code>:<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>cnd_nonexistent</span> <span class='op'>&lt;-</span> <span class='fu'>rlang</span><span class='fu'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/catch_cnd.html'>catch_cnd</a></span><span class='op'>(</span></span>
+<span>  <span class='fu'><a href='https://tidyselect.r-lib.org/reference/eval_select.html'>eval_select</a></span><span class='op'>(</span><span class='va'>nonexistent_selection</span>, <span class='va'>df3</span><span class='op'>)</span></span>
+<span><span class='op'>)</span></span>
+<span><span class='va'>cnd_nonexistent</span><span class='op'>$</span><span class='va'>i</span></span></code></pre>
+</div>
+<pre><code>  [1] &quot;y&quot;</code></pre>
+</div>
+<p>Zero column selections give you <code>NULL</code> in <code>$i</code> when you set it to error:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>cnd_zero_selection</span> <span class='op'>&lt;-</span> <span class='fu'>rlang</span><span class='fu'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/catch_cnd.html'>catch_cnd</a></span><span class='op'>(</span></span>
+<span>  <span class='fu'><a href='https://tidyselect.r-lib.org/reference/eval_select.html'>eval_select</a></span><span class='op'>(</span><span class='va'>zero_selection</span>, <span class='va'>df3</span>, allow_empty <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span><span class='op'>)</span></span>
+<span><span class='va'>cnd_zero_selection</span><span class='op'>$</span><span class='va'>i</span></span></code></pre>
+</div>
+<pre><code>  NULL</code></pre>
+</div>
+<p>General evaluation errors are distinguished by having a <code>$parent</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>cnd_zero_selection</span> <span class='op'>&lt;-</span> <span class='fu'>rlang</span><span class='fu'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/catch_cnd.html'>catch_cnd</a></span><span class='op'>(</span></span>
+<span>  <span class='fu'><a href='https://tidyselect.r-lib.org/reference/eval_select.html'>eval_select</a></span><span class='op'>(</span><span class='va'>evaluation_error</span>, <span class='va'>df3</span><span class='op'>)</span></span>
+<span><span class='op'>)</span></span>
+<span><span class='va'>cnd_zero_selection</span><span class='op'>$</span><span class='va'>parent</span></span></code></pre>
+</div>
+<pre><code>  &lt;simpleError in eval_tidy(as_quosure(expr, env), context_mask): I&#39;m a bad expression!&gt;</code></pre>
+</div>
+<p>Again, this is more useful as a developer, if you’re building something that integrates <code>{tidyselect}</code>.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> But I personally find this interesting to know about anyways!</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Here I end with the (usual) disclaimer to not actually just copy paste these for production - they’re written with the very low standard of scratching my itch, so they do not come with any warranty!</p>
+<p>But I hope that this was a fun exercise in thinking through one of the most mysterious magics in <code>{dplyr}</code>. I’m sure to reference this many times in the future myself.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>That last example with <code>quote(1)</code> is redundant because <code>1</code> is a constant; I kept it in there just to make the comparison clearer<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Not to be confused with <code>all_of()</code>. The idiomatic pattern for scoping an external <em>character</em> vector is to do <code>all_of(x)</code> not <code>.env$x</code>. It’s only when you’re scoping a non-character vector that you’d use <code>.env$</code>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>It’s also strangely reminiscent of my <a href="https://yjunechoe.github.io/posts/2023-06-11-row-relational-operations/">previous blog post</a> on <code>dplyr::slice()</code><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Thanks to <a href="https://fosstodon.org/@jonocarroll/111343255529231116">Jonathan Carroll</a> for this suggestion!<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>For those who actually read error messages, at least (<em>points to self</em>) …<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Though <code>{tidyselect}</code> errors early, so it’ll only record the first attempted column causing the error. You could use a <code>while()</code> loop (catch and remove bad columns from the data until there’s no more error) if you really wanted to get the full set of offending columns.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>If you want some examples of post-processing tidyselect errors, there’s some stuff I did for <a href="https://github.com/rstudio/pointblank/blob/7c4bdd0eb753db17b5213d03fd74f044df12be48/R/utils.R#L241-L318">pointblank</a> that may be helpful as a reference.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+<!--radix_placeholder_article_footer-->
+<div class="article-footer">
+  <p class="social_footer">
+    <span class="article-sharing">
+      Share: &nbsp;
+      <a href="https://twitter.com/share?text=The%20many%20ways%20to%20%28un%29tidy-select&amp;url=https%3A%2F%2Fyjunechoe.github.io%2Fposts%2F2023-12-03-untidy-select%2F" aria-label="share on twitter">
+        <i class="fab fa-twitter" aria-hidden="true"></i>
+      </a>
+    </span>
+  </p>
+</div>
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!--radix_placeholder_navigation_after_body--><html><body>
+<div class="distill-site-nav distill-site-footer">
+<p><span style="font-family: 'Open Sans'"> June Choe | Created with
+{<a href="https://github.com/rstudio/distill" style="color: #24addb">distill</a>}
+</span></p>
+</div>
+<!--/radix_placeholder_navigation_after_body-->
+</body></html>
+
+
+</body>
+
+</html>
