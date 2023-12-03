@@ -67,6 +67,8 @@ D’Onofrio, Annette, **June Choe** and Masaya Yoshida. *Personae in syntactic p
 
 ## Workshops led
 
+_Introduction to mixed-effects models in Julia_. Workshop at Penn MindCORE. 1 December 2023. Philadelphia, PA. [Github](https://github.com/yjunechoe/MindCORE-julia-mixedmodels)
+
 _Experimental syntax using IBEX/PCIBEX_ with Dr. Nayoun Kim. Workshop at the 2022 Seoul International Conference on Linguistics. 11-12 August 2022. Seoul, South Korea. [PDF](https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2022-ibex-pcibex-workshop-slides.pdf)
 
 _Experimental syntax using IBEX: a walkthrough_ with Dr. Nayoun Kim. 2021 BK Winter School-Workshop on Experimental Linguistics/Syntax at Sungkyunkwan University, 19-22 January 2021. Seoul, South Korea. [PDF](https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2021-ibex-workshop-slides.pdf)
@@ -74,20 +76,18 @@ _Experimental syntax using IBEX: a walkthrough_ with Dr. Nayoun Kim. 2021 BK Win
 
 ## Guest lectures
 
+_Model fitting and diagnosis with MixedModels.jl in Julia_ for LING 5620 ("Quantitative Study of Linguistic Variation"), Fall 2023.
+
 _Simulation-based power analysis for mixed-effects models_ for LING 5620 ("Quantitative Study of Linguistic Variation"), Spring 2023.
 
 
 ## Research activities in FOSS
 
-### Software
+### Papers
 
-Massimo Aria, Trang Le, Corrado Cuccurullo, Alessandra Belfiore, and **June Choe**. (Submitted). openalexR: An R-tool for collecting bibliometric data from OpenAlex. [Github](https://github.com/massimoaria/openalexR)
-
-**June Choe**. (2023). jlmerclusterperm: Cluster-Based Permutation Analysis for Densely Sampled Time Data. R package version 1.0.0. https://cran.r-project.org/package=jlmerclusterperm. [Github](https://github.com/yjunechoe/jlmerclusterperm/)
+Massimo Aria, Trang Le, Corrado Cuccurullo, Alessandra Belfiore, and **June Choe**. (in press). openalexR: An R-tool for collecting bibliometric data from OpenAlex. [Github](https://github.com/massimoaria/openalexR)
 
 **June Choe**. (2022). Sub-layer modularity in the Grammar of Graphics. American Statistical Association (ASA) student paper award in Statistical Computing and Graphics. [Paper](static/papers/Choe_2022_SublayerGG.pdf), [Github](https://github.com/yjunechoe/ggtrace/)
-
-Sean McWeeny, **June Choe**, & Elizabeth S. Norton. (2021). SnowGlobe: An Iterative Search Tool for Systematic Reviews and Meta-Analyses [Computer Software]. [OSF](https://doi.org/10.17605/OSF.IO/U25RN)
 
 ### Talks
 
@@ -98,3 +98,11 @@ June Choe. Fast cluster-based permutation test using mixed-effects models. Talk 
 June Choe. [Cracking open ggplot internals with {ggtrace}](https://www.youtube.com/watch?v=dUBnitXf5mk&list=PL9HYL-VRX0oTOwqzVtL_q5T8MNrzn0mdH&index=38). Talk at the 2022 RStudio Conference, 25-28 July 2022. Washington D.C. [https://github.com/yjunechoe/ggtrace-rstudioconf2022](https://github.com/yjunechoe/ggtrace-rstudioconf2022)
 
 June Choe. [Stepping into {ggplot2} internals with {ggtrace}](https://www.youtube.com/watch?v=2JX8zu4QxMg&t=2959s). Talk at the 2022 useR! Conference, 20-23 June 2022. Vanderbilt University, TN. [https://github.com/yjunechoe/ggtrace-user2022](https://github.com/yjunechoe/ggtrace-user2022)
+
+### Software
+
+Massimo Aria, Corrado Cuccurullo, Trang Le, **June Choe**. (2023). openalexR: Getting Bibliographic Records from 'OpenAlex' Database Using 'DSL' API. R package version 1.2.3. https://CRAN.R-project.org/package=openalexR. [Github](https://github.com/ropensci/openalexR)
+
+**June Choe**. (2023). jlmerclusterperm: Cluster-Based Permutation Analysis for Densely Sampled Time Data. R package version 1.0.0. https://cran.r-project.org/package=jlmerclusterperm. [Github](https://github.com/yjunechoe/jlmerclusterperm/)
+
+Sean McWeeny, **June Choe**, & Elizabeth S. Norton. (2021). SnowGlobe: An Iterative Search Tool for Systematic Reviews and Meta-Analyses [Computer Software]. [OSF](https://doi.org/10.17605/OSF.IO/U25RN)
