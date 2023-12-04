@@ -12,17 +12,551 @@
       <link>https://yjunechoe.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Sun, 03 Dec 2023 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 04 Dec 2023 00:00:00 +0000</lastBuildDate>
     <item>
       <title>The many ways to (un)tidy-select</title>
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2023-12-03-untidy-select</link>
-      <description>Deconstructing {tidyselect} and building it back up</description>
+      <description>
+
+
+&lt;h2 id="intro"&gt;Intro&lt;/h2&gt;
+&lt;p&gt;Recently, I’ve been having &lt;a
+href="https://github.com/rstudio/pointblank/pull/493"&gt;frequent&lt;/a&gt; &lt;a
+href="https://github.com/rstudio/pointblank/pull/499"&gt;run-ins&lt;/a&gt; with
+&lt;code&gt;{tidyselect}&lt;/code&gt; internals, discovering some weird and
+interesting behaviors along the way. This blog post is my attempt at
+documenting a couple of these. And as is the case with my usual style of
+writing, I’m gonna talk about some of the weirder stuff first and then
+touch on some of the “practical” side to this.&lt;/p&gt;
+&lt;h2 id="some-observations"&gt;Some observations&lt;/h2&gt;
+&lt;p&gt;Let’s start with some facts about how &lt;code&gt;{tidyselect}&lt;/code&gt; is
+supposed to work. I’ll use this toy data for the demo:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;library(dplyr, warn.conflicts = FALSE)
+library(tidyselect)
+df &amp;lt;- tibble(x = 1:2, y = letters[1:2], z = LETTERS[1:2])
+df&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 2 × 3
+        x y     z    
+    &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;
+  1     1 a     A    
+  2     2 b     B&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="tidy-select"&gt;tidy-select!&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;{tidyselect}&lt;/code&gt; is the package that powers
+&lt;code&gt;dplyr::select()&lt;/code&gt;. If you’ve used &lt;code&gt;{dplyr}&lt;/code&gt;, you
+already know the behavior of &lt;code&gt;select()&lt;/code&gt; pretty well. We can
+specify a column as string, symbol, or by its position:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;df %&amp;gt;% 
+  select(&amp;quot;x&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 2 × 1
+        x
+    &amp;lt;int&amp;gt;
+  1     1
+  2     2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;df %&amp;gt;% 
+  select(x)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 2 × 1
+        x
+    &amp;lt;int&amp;gt;
+  1     1
+  2     2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;df %&amp;gt;% 
+  select(1)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 2 × 1
+        x
+    &amp;lt;int&amp;gt;
+  1     1
+  2     2&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It’s not obvious from the outside, but the way this works is that
+these user-supplied expressions (like &lt;code&gt;"x"&lt;/code&gt;, &lt;code&gt;x&lt;/code&gt;,
+and &lt;code&gt;1&lt;/code&gt;) all get &lt;strong&gt;resolved to integer&lt;/strong&gt; before
+the selection actually happens.&lt;/p&gt;
+&lt;p&gt;So to be more specific, the three calls to &lt;code&gt;select()&lt;/code&gt; were
+the same because these three calls to
+&lt;code&gt;tidyselect::eval_select()&lt;/code&gt; are the same:&lt;a href="#fn1"
+class="footnote-ref" id="fnref1"&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;eval_select(quote(&amp;quot;x&amp;quot;), df)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  x 
+  1&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;eval_select(quote(x), df)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  x 
+  1&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;eval_select(quote(1), df)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  x 
+  1&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You can also see &lt;code&gt;eval_select()&lt;/code&gt; in action in the
+&lt;code&gt;&amp;lt;data.frame&amp;gt;&lt;/code&gt; method for &lt;code&gt;select()&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;dplyr:::select.data.frame&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  function (.data, ...) 
+  {
+      error_call &amp;lt;- dplyr_error_call()
+      loc &amp;lt;- tidyselect::eval_select(expr(c(...)), data = .data, 
+          error_call = error_call)
+      loc &amp;lt;- ensure_group_vars(loc, .data, notify = TRUE)
+      out &amp;lt;- dplyr_col_select(.data, loc)
+      out &amp;lt;- set_names(out, names(loc))
+      out
+  }
+  &amp;lt;bytecode: 0x0000012f8e6de148&amp;gt;
+  &amp;lt;environment: namespace:dplyr&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="tidy-select-1"&gt;tidy?-select&lt;/h3&gt;
+&lt;p&gt;Because the column &lt;em&gt;subsetting&lt;/em&gt; part is ultimately done using
+integers, we can theoretically pass &lt;code&gt;select()&lt;/code&gt; &lt;em&gt;any&lt;/em&gt;
+expression, as long as it resolves to an integer vector.&lt;/p&gt;
+&lt;p&gt;For example, we can use &lt;code&gt;1 + 1&lt;/code&gt; to select the second
+column:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;df %&amp;gt;% 
+  select(1 + 1)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 2 × 1
+    y    
+    &amp;lt;chr&amp;gt;
+  1 a    
+  2 b&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And vector recycling is still a thing here too - we can use
+&lt;code&gt;c(1, 2) + 1&lt;/code&gt; to select the second and third columns:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;df %&amp;gt;% 
+  select(c(1, 2) + 1)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 2 × 2
+    y     z    
+    &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;
+  1 a     A    
+  2 b     B&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Ordinary function calls work as well - we can select a random column
+using &lt;code&gt;sample()&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;df %&amp;gt;% 
+  select(sample(ncol(df), 1))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 2 × 1
+    y    
+    &amp;lt;chr&amp;gt;
+  1 a    
+  2 b&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can even use the &lt;code&gt;.env&lt;/code&gt; pronoun to scope an integer
+variable from the global environment:&lt;a href="#fn2" class="footnote-ref"
+id="fnref2"&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;offset &amp;lt;- 1
+df %&amp;gt;% 
+  select(1 + .env$offset)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 2 × 1
+    y    
+    &amp;lt;chr&amp;gt;
+  1 a    
+  2 b&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;So that’s kinda interesting.&lt;a href="#fn3" class="footnote-ref"
+id="fnref3"&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt; But what if we try to mix the different
+approaches to tidyselect-ing? Can we do math on columns that we’ve
+selected using strings and symbols?&lt;/p&gt;
+&lt;h3 id="untidy-select"&gt;untidy-select?&lt;/h3&gt;
+&lt;p&gt;Uh not quite. &lt;code&gt;select()&lt;/code&gt; doesn’t like doing math on
+strings and symbols.&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;df %&amp;gt;% 
+  select(x + 1)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  Error in `select()`:
+  ! Problem while evaluating `x + 1`.
+  Caused by error:
+  ! object &amp;#39;x&amp;#39; not found&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;df %&amp;gt;% 
+  select(&amp;quot;x&amp;quot; + 1)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  Error in `select()`:
+  ! Problem while evaluating `&amp;quot;x&amp;quot; + 1`.
+  Caused by error in `&amp;quot;x&amp;quot; + 1`:
+  ! non-numeric argument to binary operator&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In fact, it doesn’t even like doing certain kinds of math like
+multiplication (&lt;code&gt;*&lt;/code&gt;), even with numeric constants:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;df %&amp;gt;% 
+  select(1 * 2)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  Error in `select()`:
+  ! Can&amp;#39;t use arithmetic operator `*` in selection context.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This actually makes sense from a design POV. Adding numbers to
+columns probably happens more often as a mistake than something
+intentional. These safeguards exist to prevent users from running into
+cryptic errors.&lt;/p&gt;
+&lt;p&gt;Unless…&lt;/p&gt;
+&lt;h3 id="untidy-select-1"&gt;untidy-select!&lt;/h3&gt;
+&lt;p&gt;It turns out that &lt;code&gt;{tidyselect}&lt;/code&gt;
+&lt;em&gt;&lt;strong&gt;helpers&lt;/strong&gt;&lt;/em&gt; have an interesting behavior of
+&lt;em&gt;immediately&lt;/em&gt; resolving the column selection to integer. So we
+can get addition (&lt;code&gt;+&lt;/code&gt;) working if we wrap our columns in
+redundant column selection helpers like &lt;code&gt;all_of()&lt;/code&gt; and
+&lt;code&gt;matches()&lt;/code&gt;&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;df %&amp;gt;% 
+  select(all_of(&amp;quot;x&amp;quot;) + 1)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 2 × 1
+    y    
+    &amp;lt;chr&amp;gt;
+  1 a    
+  2 b&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;df %&amp;gt;% 
+  select(matches(&amp;quot;^x$&amp;quot;) + 1)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 2 × 1
+    y    
+    &amp;lt;chr&amp;gt;
+  1 a    
+  2 b&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For multiplication, we have to additionally circumvent the &lt;a
+href="https://github.com/r-lib/tidyselect/blob/7cc3ea6213838dbb3f9c19e9a8b97cd03f5063a9/R/eval-walk.R#L167"&gt;censoring&lt;/a&gt;
+of the &lt;code&gt;*&lt;/code&gt; symbol. Here, we can simply use a different name
+for the same operation:&lt;a href="#fn4" class="footnote-ref"
+id="fnref4"&gt;&lt;sup&gt;4&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;`%times%` &amp;lt;- `*`
+df %&amp;gt;% 
+  select(matches(&amp;quot;^x$&amp;quot;) %times% 2)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 2 × 1
+    y    
+    &amp;lt;chr&amp;gt;
+  1 a    
+  2 b&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;But geez, it’s so tiring to type &lt;code&gt;all_of()&lt;/code&gt; and
+&lt;code&gt;matches()&lt;/code&gt; all the time. There must be a better way to break
+the rule!&lt;/p&gt;
+&lt;h2 id="tidying-untidy-select"&gt;Tidying untidy-select&lt;/h2&gt;
+&lt;p&gt;Let’s make a tidy design for the untidy pattern of selecting columns
+by doing math on column locations. The idea is to make our own little
+scope inside &lt;code&gt;select()&lt;/code&gt; where all the existing safeguards are
+suspended. Like a &lt;a
+href="https://en.wikipedia.org/wiki/Domain-specific_language"&gt;DSL&lt;/a&gt;
+within a DSL, if you will.&lt;/p&gt;
+&lt;p&gt;Let’s call this function &lt;code&gt;math()&lt;/code&gt;. It should let us
+express stuff like “give me the column to the right of column
+&lt;code&gt;x&lt;/code&gt;” via this intuitive(?) syntax:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;df %&amp;gt;% 
+  select(math(x + 1))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 2 × 1
+    y    
+    &amp;lt;chr&amp;gt;
+  1 a    
+  2 b&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This is my take on &lt;code&gt;math()&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;math &amp;lt;- function(expr) {
+  math_expr &amp;lt;- rlang::enquo(expr)
+  columns &amp;lt;- tidyselect::peek_vars()
+  col_locs &amp;lt;- as.data.frame.list(seq_along(columns), col.names = columns)
+  mask &amp;lt;- rlang::as_data_mask(col_locs)
+  out &amp;lt;- rlang::eval_tidy(math_expr, mask)
+  out
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;There’s a lot of weird functions involved here, but it’s easier to
+digest by focusing on its parts. Here’s what each local variable in the
+function looks like for our &lt;code&gt;math(x + 1)&lt;/code&gt; example above:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  $math_expr
+  &amp;lt;quosure&amp;gt;
+  expr: ^x + 1
+  env:  0x0000012f8e27cec8
+  
+  $columns
+  [1] &amp;quot;x&amp;quot; &amp;quot;y&amp;quot; &amp;quot;z&amp;quot;
+  
+  $col_locs
+    x y z
+  1 1 2 3
+  
+  $mask
+  &amp;lt;environment: 0x0000012f8e3332f0&amp;gt;
+  
+  $out
+  [1] 2&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Let’s walk through the pieces:&lt;/p&gt;
+&lt;ol style="list-style-type: decimal"&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;math_expr&lt;/code&gt;: the captured user expression, with the
+environment attached&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;columns&lt;/code&gt;: the column names of the current dataframe,
+in order&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;col_locs&lt;/code&gt;: a dataframe of column names and location,
+created from &lt;code&gt;columns&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;mask&lt;/code&gt;: a &lt;a
+href="https://rlang.r-lib.org/reference/topic-data-mask.html"&gt;data
+mask&lt;/a&gt; created from &lt;code&gt;col_locs&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;out&lt;/code&gt;: location of column(s) to select&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Essentially, &lt;code&gt;math()&lt;/code&gt; first captures the expression to
+evaluate it in its own special environment, circumventing
+&lt;code&gt;select()&lt;/code&gt;’s safeguards. Then, it grabs the column names of
+the data frame with &lt;code&gt;tidyselect::peek_vars()&lt;/code&gt; to define
+&lt;code&gt;col_locs&lt;/code&gt; and then &lt;code&gt;mask&lt;/code&gt;. The data mask
+&lt;code&gt;mask&lt;/code&gt; is then used inside &lt;code&gt;rlang::eval_tidy()&lt;/code&gt; to
+resolve symbols like &lt;code&gt;x&lt;/code&gt; to integer &lt;code&gt;1&lt;/code&gt; when
+evaluating the captured expression &lt;code&gt;x + 1&lt;/code&gt;. The expression
+&lt;code&gt;math(x + 1)&lt;/code&gt; thus evaluates to &lt;code&gt;1 + 1&lt;/code&gt;. In turn,
+&lt;code&gt;select(math(x + 1))&lt;/code&gt; is evaluated to &lt;code&gt;select(2)&lt;/code&gt;,
+returning us the second column of the dataframe.&lt;/p&gt;
+&lt;h2 id="writing-untidy-select-helpers"&gt;Writing untidy-select
+helpers&lt;/h2&gt;
+&lt;p&gt;A small yet powerful detail in the implementation of
+&lt;code&gt;math()&lt;/code&gt; is the fact that it captures the expression as a &lt;a
+href="https://rlang.r-lib.org/reference/topic-quosure.html"&gt;quosure&lt;/a&gt;.
+This allows &lt;code&gt;math()&lt;/code&gt; to appropriately scope dynamically
+created variables, and not just bare symbols provided directly by the
+user.&lt;/p&gt;
+&lt;p&gt;This makes more sense with some examples. Here, I define helper
+functions that call &lt;code&gt;math()&lt;/code&gt; under the hood with their own
+templatic math expressions (and I have them &lt;code&gt;print()&lt;/code&gt; the
+expression as passed to &lt;code&gt;math()&lt;/code&gt; for clarity). The fact that
+&lt;code&gt;math()&lt;/code&gt; captures its argument as a quosure is what allows
+local variables like &lt;code&gt;n&lt;/code&gt; to be correctly scoped in these
+examples.&lt;/p&gt;
+&lt;h3 id="times"&gt;1) &lt;code&gt;times()&lt;/code&gt;&lt;/h3&gt;
+&lt;pre class="r"&gt;&lt;code&gt;times &amp;lt;- function(col, n) {
+  col &amp;lt;- rlang::ensym(col)
+  print(rlang::expr(math(!!col * n))) # for debugging
+  math(!!col * n)
+}
+df %&amp;gt;%
+  select(times(x, 2))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  math(x * n)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 2 × 1
+    y    
+    &amp;lt;chr&amp;gt;
+  1 a    
+  2 b&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;num2 &amp;lt;- 2
+df %&amp;gt;%
+  select(times(x, num2))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  math(x * n)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 2 × 1
+    y    
+    &amp;lt;chr&amp;gt;
+  1 a    
+  2 b&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="offset"&gt;2) &lt;code&gt;offset()&lt;/code&gt;&lt;/h3&gt;
+&lt;pre class="r"&gt;&lt;code&gt;offset &amp;lt;- function(col, n) {
+  col &amp;lt;- rlang::ensym(col)
+  print(rlang::expr(math(!!col + n))) # for debugging
+  math(!!col + n)
+}
+df %&amp;gt;%
+  select(offset(x, 1))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  math(x + n)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 2 × 1
+    y    
+    &amp;lt;chr&amp;gt;
+  1 a    
+  2 b&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;num1 &amp;lt;- 1
+df %&amp;gt;%
+  select(offset(x, num1))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  math(x + n)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 2 × 1
+    y    
+    &amp;lt;chr&amp;gt;
+  1 a    
+  2 b&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="neighbors"&gt;3) &lt;code&gt;neighbors()&lt;/code&gt;&lt;/h3&gt;
+&lt;pre class="r"&gt;&lt;code&gt;neighbors &amp;lt;- function(col, n) {
+  col &amp;lt;- rlang::ensym(col)
+  range &amp;lt;- c(-(n:1), 1:n)
+  print(rlang::expr(math(!!col + !!range))) # for debugging
+  math(!!col + !!range)
+}
+df %&amp;gt;%
+  select(neighbors(y, 1))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  math(y + c(-1L, 1L))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 2 × 2
+        x z    
+    &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;
+  1     1 A    
+  2     2 B&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;df %&amp;gt;%
+  select(neighbors(y, num1))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  math(y + c(-1L, 1L))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 2 × 2
+        x z    
+    &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;
+  1     1 A    
+  2     2 B&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="diy"&gt;DIY!&lt;/h3&gt;
+&lt;p&gt;And of course, we can do arbitrary injections ourselves as well with
+&lt;code&gt;!!&lt;/code&gt; or &lt;code&gt;.env$&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;df %&amp;gt;%
+  select(math(x * !!num2))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 2 × 1
+    y    
+    &amp;lt;chr&amp;gt;
+  1 a    
+  2 b&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;df %&amp;gt;%
+  select(math(x * .env$num2))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 2 × 1
+    y    
+    &amp;lt;chr&amp;gt;
+  1 a    
+  2 b&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;That was fun but probably not super practical. Let’s set
+&lt;code&gt;math()&lt;/code&gt; aside to try our hands on something more useful.&lt;/p&gt;
+&lt;h2 id="lets-get-practical"&gt;Let’s get practical&lt;/h2&gt;
+&lt;h3 id="sorting-columns"&gt;1) Sorting columns&lt;/h3&gt;
+&lt;p&gt;Probably one of the hardest things to do idiomatically in the
+tidyverse is sorting (a subset of) columns by their name. For example,
+consider this dataframe which is a mix of columns that follow some fixed
+pattern (&lt;code&gt;"x|y_\\d"&lt;/code&gt;) and those outside that pattern
+(&lt;code&gt;"year"&lt;/code&gt;, &lt;code&gt;"day"&lt;/code&gt;, etc.).&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;data_cols &amp;lt;- expand.grid(first = c(&amp;quot;x&amp;quot;, &amp;quot;y&amp;quot;), second = 1:3) %&amp;gt;%
+  mutate(cols = paste0(first, &amp;quot;_&amp;quot;, second)) %&amp;gt;%
+  pull(cols)
+df2 &amp;lt;- as.data.frame.list(seq_along(data_cols), col.names = data_cols)
+df2 &amp;lt;- cbind(df2, storms[1,1:5])
+df2 &amp;lt;- df2[, sample(ncol(df2))]
+df2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;    y_3 x_3 month day hour y_2 y_1 x_2 year name x_1
+  1   6   5     6  27    0   4   2   3 1975  Amy   1&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It’s trivial to select columns by pattern - we can use the
+&lt;code&gt;matches()&lt;/code&gt; helper:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;df2 %&amp;gt;%
+  select(matches(&amp;quot;(x|y)_(\\d)&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;    y_3 x_3 y_2 y_1 x_2 x_1
+  1   6   5   4   2   3   1&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;But what if I also wanted to further sort these columns, &lt;em&gt;after I
+select them&lt;/em&gt;? There’s no easy way to do this “on the fly” inside of
+select, especially if we want the flexibility to sort the columns by the
+letter vs. the number.&lt;/p&gt;
+&lt;p&gt;But here’s one way of getting at that, exploiting two facts:&lt;/p&gt;
+&lt;ol style="list-style-type: decimal"&gt;
+&lt;li&gt;&lt;code&gt;matches()&lt;/code&gt;, like other tidyselect helpers, immediately
+resolves the selection to integer&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;peek_vars()&lt;/code&gt; returns the column names in order, which
+lets us recover the column names from location&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;And that’s pretty much all there is to the tidyselect magic that goes
+into my solution below. I define &lt;code&gt;locs&lt;/code&gt; (integer vector of
+column locations) and &lt;code&gt;cols&lt;/code&gt; (character vector of column
+names at those locations), and the rest is just regex and sorting:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;ordered_matches &amp;lt;- function(matches, order) {
+  # tidyselect magic
+  locs &amp;lt;- tidyselect::matches(matches)
+  cols &amp;lt;- tidyselect::peek_vars()[locs]
+  # Ordinary evaluation
+  groups &amp;lt;- simplify2array(regmatches(cols, regexec(matches, cols)))[-1,]
+  reordered &amp;lt;- do.call(&amp;quot;order&amp;quot;, asplit(groups[order, ], 1))
+  locs[reordered]
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Using &lt;code&gt;ordered_matches()&lt;/code&gt;, we can not only select columns
+but also sort them using regex capture groups.&lt;/p&gt;
+&lt;p&gt;This sorts the columns by letter first then number:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;df2 %&amp;gt;%
+  select(ordered_matches(&amp;quot;(x|y)_(\\d)&amp;quot;, c(1, 2)))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;    x_1 x_2 x_3 y_1 y_2 y_3
+  1   1   3   5   2   4   6&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This sorts the columns by number first then letter:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;df2 %&amp;gt;%
+  select(ordered_matches(&amp;quot;(x|y)_(\\d)&amp;quot;, c(2, 1)))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;    x_1 y_1 x_2 y_2 x_3 y_3
+  1   1   2   3   4   5   6&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And if we wanted the other columns too, we can use
+&lt;code&gt;everything()&lt;/code&gt; to grab the “rest”:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;df2 %&amp;gt;%
+  select(ordered_matches(&amp;quot;(x|y)_(\\d)&amp;quot;, c(2, 1)), everything())&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;    x_1 y_1 x_2 y_2 x_3 y_3 month day hour year name
+  1   1   2   3   4   5   6     6  27    0 1975  Amy&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="error-handling"&gt;2) Error handling&lt;/h3&gt;
+&lt;p&gt;One of the really nice parts about the &lt;code&gt;{tidyselect}&lt;/code&gt;
+design is the fact that error messages are very informative.&lt;/p&gt;
+&lt;p&gt;For example, if you select a non-existing column, it errors while
+pointing out that mistake:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;df3 &amp;lt;- data.frame(x = 1)
+nonexistent_selection &amp;lt;- quote(c(x, y))
+eval_select(nonexistent_selection, df3)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  Error in `write_feed_xml_html_content()`:
+  ! Can&amp;#39;t subset columns that don&amp;#39;t exist.
+  ✖ Column `y` doesn&amp;#39;t exist.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you use a tidyselect helper that returns nothing, it won’t
+complain by default:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;zero_selection &amp;lt;- quote(starts_with(&amp;quot;z&amp;quot;))
+eval_select(zero_selection, df3)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  named integer(0)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;But you can make that error with
+&lt;code&gt;allow_empty = FALSE&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;eval_select(zero_selection, df3, allow_empty = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  Error in `write_feed_xml_html_content()`:
+  ! Must select at least one item.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;General evaluation errors are caught and &lt;a
+href="https://rlang.r-lib.org/reference/topic-error-chaining.html"&gt;chained&lt;/a&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;evaluation_error &amp;lt;- quote(stop(&amp;quot;I&amp;#39;m a bad expression!&amp;quot;))
+eval_select(evaluation_error, df3)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  Error in `write_feed_xml_html_content()`:
+  ! Problem while evaluating `stop(&amp;quot;I&amp;#39;m a bad expression!&amp;quot;)`.
+  Caused by error:
+  ! I&amp;#39;m a bad expression!&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;These error signalling patterns are clearly very useful for users,&lt;a
+href="#fn5" class="footnote-ref" id="fnref5"&gt;&lt;sup&gt;5&lt;/sup&gt;&lt;/a&gt; but
+there’s a little gem in there for developers too. It turns out that the
+&lt;strong&gt;error condition object&lt;/strong&gt; contains these information too,
+which lets you detect different error types programmatically to forward
+errors to your own error handling logic.&lt;/p&gt;
+&lt;p&gt;For example, the attempted non-existent column is stored in
+&lt;code&gt;$i&lt;/code&gt;:&lt;a href="#fn6" class="footnote-ref"
+id="fnref6"&gt;&lt;sup&gt;6&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;cnd_nonexistent &amp;lt;- rlang::catch_cnd(
+  eval_select(nonexistent_selection, df3)
+)
+cnd_nonexistent$i&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [1] &amp;quot;y&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Zero column selections give you &lt;code&gt;NULL&lt;/code&gt; in &lt;code&gt;$i&lt;/code&gt;
+when you set it to error:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;cnd_zero_selection &amp;lt;- rlang::catch_cnd(
+  eval_select(zero_selection, df3, allow_empty = FALSE)
+)
+cnd_zero_selection$i&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  NULL&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;General evaluation errors are distinguished by having a
+&lt;code&gt;$parent&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;cnd_evaluation_error &amp;lt;- rlang::catch_cnd(
+  eval_select(evaluation_error, df3)
+)
+cnd_evaluation_error$parent&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  &amp;lt;simpleError in eval_tidy(as_quosure(expr, env), context_mask): I&amp;#39;m a bad expression!&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Again, this is more useful as a developer, if you’re building
+something that integrates &lt;code&gt;{tidyselect}&lt;/code&gt;.&lt;a href="#fn7"
+class="footnote-ref" id="fnref7"&gt;&lt;sup&gt;7&lt;/sup&gt;&lt;/a&gt; But I personally find
+this interesting to know about anyways!&lt;/p&gt;
+&lt;h2 id="conclusion"&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Here I end with the (usual) disclaimer to not actually just copy
+paste these for production - they’re written with the very low standard
+of scratching my itch, so they do not come with any warranty!&lt;/p&gt;
+&lt;p&gt;But I hope that this was a fun exercise in thinking through one of
+the most mysterious magics in &lt;code&gt;{dplyr}&lt;/code&gt;. I’m sure to
+reference this many times in the future myself.&lt;/p&gt;
+&lt;pre class="r distill-force-highlighting-css"&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="footnotes footnotes-end-of-document"&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id="fn1"&gt;&lt;p&gt;The examples &lt;code&gt;quote("x")&lt;/code&gt; and
+&lt;code&gt;quote(1)&lt;/code&gt; are redundant because &lt;code&gt;"x"&lt;/code&gt; and
+&lt;code&gt;1&lt;/code&gt; are constants. I keep &lt;code&gt;quote()&lt;/code&gt; in there just
+to make the comparison clearer&lt;a href="#fnref1"
+class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id="fn2"&gt;&lt;p&gt;Not to be confused with &lt;code&gt;all_of()&lt;/code&gt;. The
+idiomatic pattern for scoping an external &lt;em&gt;character&lt;/em&gt; vector is
+to do &lt;code&gt;all_of(x)&lt;/code&gt; not &lt;code&gt;.env$x&lt;/code&gt;. It’s only when
+you’re scoping a non-character vector that you’d use
+&lt;code&gt;.env$&lt;/code&gt;.&lt;a href="#fnref2"
+class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id="fn3"&gt;&lt;p&gt;It’s also strangely reminiscent of my &lt;a
+href="https://yjunechoe.github.io/posts/2023-06-11-row-relational-operations/"&gt;previous
+blog post&lt;/a&gt; on &lt;code&gt;dplyr::slice()&lt;/code&gt;&lt;a href="#fnref3"
+class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id="fn4"&gt;&lt;p&gt;Thanks to &lt;a
+href="https://fosstodon.org/@jonocarroll/111343255529231116"&gt;Jonathan
+Carroll&lt;/a&gt; for this suggestion!&lt;a href="#fnref4"
+class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id="fn5"&gt;&lt;p&gt;For those who actually read error messages, at least
+(&lt;em&gt;points to self&lt;/em&gt;) …&lt;a href="#fnref5"
+class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id="fn6"&gt;&lt;p&gt;Though &lt;code&gt;{tidyselect}&lt;/code&gt; errors early, so it’ll
+only record the first attempted column causing the error. You could use
+a &lt;code&gt;while()&lt;/code&gt; loop (catch and remove bad columns from the data
+until there’s no more error) if you really wanted to get the full set of
+offending columns.&lt;a href="#fnref6" class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id="fn7"&gt;&lt;p&gt;If you want some examples of post-processing tidyselect
+errors, there’s some stuff I did for &lt;a
+href="https://github.com/rstudio/pointblank/blob/7c4bdd0eb753db17b5213d03fd74f044df12be48/R/utils.R#L241-L318"&gt;pointblank&lt;/a&gt;
+that may be helpful as a reference.&lt;a href="#fnref7"
+class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</description>
+      <distill:md5>32275e0b0a132d327f6605e22aa8b745</distill:md5>
       <category>data wrangling</category>
       <category>dplyr</category>
       <category>tidyselect</category>
       <guid>https://yjunechoe.github.io/posts/2023-12-03-untidy-select</guid>
-      <pubDate>Sun, 03 Dec 2023 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 04 Dec 2023 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2023-12-03-untidy-select/preview.png" medium="image" type="image/png" width="957" height="664"/>
     </item>
     <item>

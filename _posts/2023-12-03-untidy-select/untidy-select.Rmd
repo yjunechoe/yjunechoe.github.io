@@ -428,10 +428,10 @@ cnd_zero_selection$i
 General evaluation errors are distinguished by having a `$parent`:
 
 ```{r}
-cnd_zero_selection <- rlang::catch_cnd(
+cnd_evaluation_error <- rlang::catch_cnd(
   eval_select(evaluation_error, df3)
 )
-cnd_zero_selection$parent
+cnd_evaluation_error$parent
 ```
 
 Again, this is more useful as a developer, if you're building something that integrates `{tidyselect}`.^[If you want some examples of post-processing tidyselect errors, there's some stuff I did for [pointblank](https://github.com/rstudio/pointblank/blob/7c4bdd0eb753db17b5213d03fd74f044df12be48/R/utils.R#L241-L318) that may be helpful as a reference.] But I personally find this interesting to know about anyways!
