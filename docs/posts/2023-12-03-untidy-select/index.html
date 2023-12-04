@@ -2727,7 +2727,7 @@ Misc.
 </nav>
 </div>
 <h2 id="intro">Intro</h2>
-<p>Recently, I been having <a href="https://github.com/rstudio/pointblank/pull/493">frequent</a> <a href="https://github.com/rstudio/pointblank/pull/499">run-ins</a> with <code>{tidyselect}</code> internals, discovering some weird and interesting behaviors along the way. This blog post is my attempt at documenting a couple of these. And as is the case with my usual style of writing, I’m gonna talk about some of the weirder stuff first and then touch on some of the “practical” side to this.</p>
+<p>Recently, I’ve been having <a href="https://github.com/rstudio/pointblank/pull/493">frequent</a> <a href="https://github.com/rstudio/pointblank/pull/499">run-ins</a> with <code>{tidyselect}</code> internals, discovering some weird and interesting behaviors along the way. This blog post is my attempt at documenting a couple of these. And as is the case with my usual style of writing, I’m gonna talk about some of the weirder stuff first and then touch on some of the “practical” side to this.</p>
 <h2 id="some-observations">Some observations</h2>
 <p>Let’s start with some facts about how <code>{tidyselect}</code> is supposed to work. I’ll use this toy data for the demo:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2808,7 +2808,7 @@ Misc.
       out &lt;- set_names(out, names(loc))
       out
   }
-  &lt;bytecode: 0x000001a9f37b8748&gt;
+  &lt;bytecode: 0x000002917a3967b8&gt;
   &lt;environment: namespace:dplyr&gt;</code></pre>
 </div>
 <h3 id="tidy-select-1">tidy?-select</h3>
@@ -2965,7 +2965,7 @@ Misc.
 <pre><code>  $math_expr
   &lt;quosure&gt;
   expr: ^x + 1
-  env:  0x000001a9f57cfce8
+  env:  0x000002917c379bd0
   
   $columns
   [1] &quot;x&quot; &quot;y&quot; &quot;z&quot;
@@ -2975,7 +2975,7 @@ Misc.
   1 1 2 3
   
   $mask
-  &lt;environment: 0x000001a9f601ddb0&gt;
+  &lt;environment: 0x000002917cbc2600&gt;
   
   $out
   [1] 2</code></pre>
@@ -2991,19 +2991,19 @@ Misc.
 <p>Essentially, <code>math()</code> first captures the expression to evaluate it in its own special environment, circumventing <code>select()</code>’s safeguards. Then, it grabs the column names of the data frame with <code>tidyselect::peek_vars()</code> to define <code>col_locs</code> and then <code>mask</code>. The data mask <code>mask</code> is then used inside <code>rlang::eval_tidy()</code> to resolve symbols like <code>x</code> to integer <code>1</code> when evaluating the captured expression <code>x + 1</code>. The expression <code>math(x + 1)</code> thus evaluates to <code>1 + 1</code>. In turn, <code>select(math(x + 1))</code> is evaluated to <code>select(2)</code>, returning us the second column of the dataframe.</p>
 <h2 id="writing-untidy-select-helpers">Writing untidy-select helpers</h2>
 <p>A small yet powerful detail in the implementation of <code>math()</code> is the fact that it captures the expression as a <a href="https://rlang.r-lib.org/reference/topic-quosure.html">quosure</a>. This allows <code>math()</code> to appropriately scope dynamically created variables, and not just bare symbols provided directly by the user.</p>
-<p>This makes more sense with some examples. Here, I define helper functions that call <code>math()</code> under the hood with their own templatic math expressions (and I have them <code>print()</code> the expression as passed to <code>math()</code> for clarity). The fact that <code>math()</code> captures its argument as a quosure is what allows variables like <code>num</code> to be correctly scoped in these examples.</p>
+<p>This makes more sense with some examples. Here, I define helper functions that call <code>math()</code> under the hood with their own templatic math expressions (and I have them <code>print()</code> the expression as passed to <code>math()</code> for clarity). The fact that <code>math()</code> captures its argument as a quosure is what allows local variables like <code>n</code> to be correctly scoped in these examples.</p>
 <h3 id="times">1) <code>times()</code></h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>times</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>col</span>, <span class='va'>num</span><span class='op'>)</span> <span class='op'>{</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>times</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>col</span>, <span class='va'>n</span><span class='op'>)</span> <span class='op'>{</span></span>
 <span>  <span class='va'>col</span> <span class='op'>&lt;-</span> <span class='fu'>rlang</span><span class='fu'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/defusing-advanced.html'>ensym</a></span><span class='op'>(</span><span class='va'>col</span><span class='op'>)</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'>rlang</span><span class='fu'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/expr.html'>expr</a></span><span class='op'>(</span><span class='fu'>math</span><span class='op'>(</span><span class='op'>!</span><span class='op'>!</span><span class='va'>col</span> <span class='op'>*</span> <span class='va'>num</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># for debugging</span></span>
-<span>  <span class='fu'>math</span><span class='op'>(</span><span class='op'>!</span><span class='op'>!</span><span class='va'>col</span> <span class='op'>*</span> <span class='va'>num</span><span class='op'>)</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'>rlang</span><span class='fu'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/expr.html'>expr</a></span><span class='op'>(</span><span class='fu'>math</span><span class='op'>(</span><span class='op'>!</span><span class='op'>!</span><span class='va'>col</span> <span class='op'>*</span> <span class='va'>n</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># for debugging</span></span>
+<span>  <span class='fu'>math</span><span class='op'>(</span><span class='op'>!</span><span class='op'>!</span><span class='va'>col</span> <span class='op'>*</span> <span class='va'>n</span><span class='op'>)</span></span>
 <span><span class='op'>}</span></span>
 <span><span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'>times</span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>  math(x * num)</code></pre>
+<pre><code>  math(x * n)</code></pre>
 <pre><code>  # A tibble: 2 × 1
     y    
     &lt;chr&gt;
@@ -3016,7 +3016,7 @@ Misc.
 <span><span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'>times</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>num2</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>  math(x * num)</code></pre>
+<pre><code>  math(x * n)</code></pre>
 <pre><code>  # A tibble: 2 × 1
     y    
     &lt;chr&gt;
@@ -3026,15 +3026,15 @@ Misc.
 <h3 id="offset">2) <code>offset()</code></h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>offset</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>col</span>, <span class='va'>num</span><span class='op'>)</span> <span class='op'>{</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>offset</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>col</span>, <span class='va'>n</span><span class='op'>)</span> <span class='op'>{</span></span>
 <span>  <span class='va'>col</span> <span class='op'>&lt;-</span> <span class='fu'>rlang</span><span class='fu'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/defusing-advanced.html'>ensym</a></span><span class='op'>(</span><span class='va'>col</span><span class='op'>)</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'>rlang</span><span class='fu'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/expr.html'>expr</a></span><span class='op'>(</span><span class='fu'>math</span><span class='op'>(</span><span class='op'>!</span><span class='op'>!</span><span class='va'>col</span> <span class='op'>+</span> <span class='va'>num</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># for debugging</span></span>
-<span>  <span class='fu'>math</span><span class='op'>(</span><span class='op'>!</span><span class='op'>!</span><span class='va'>col</span> <span class='op'>+</span> <span class='va'>num</span><span class='op'>)</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'>rlang</span><span class='fu'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/expr.html'>expr</a></span><span class='op'>(</span><span class='fu'>math</span><span class='op'>(</span><span class='op'>!</span><span class='op'>!</span><span class='va'>col</span> <span class='op'>+</span> <span class='va'>n</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># for debugging</span></span>
+<span>  <span class='fu'>math</span><span class='op'>(</span><span class='op'>!</span><span class='op'>!</span><span class='va'>col</span> <span class='op'>+</span> <span class='va'>n</span><span class='op'>)</span></span>
 <span><span class='op'>}</span></span>
 <span><span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/offset.html'>offset</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>  math(x + num)</code></pre>
+<pre><code>  math(x + n)</code></pre>
 <pre><code>  # A tibble: 2 × 1
     y    
     &lt;chr&gt;
@@ -3047,7 +3047,7 @@ Misc.
 <span><span class='va'>df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/offset.html'>offset</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>num1</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>  math(x + num)</code></pre>
+<pre><code>  math(x + n)</code></pre>
 <pre><code>  # A tibble: 2 × 1
     y    
     &lt;chr&gt;
@@ -3260,7 +3260,7 @@ Misc.
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>That last example with <code>quote(1)</code> is redundant because <code>1</code> is a constant; I kept it in there just to make the comparison clearer<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>The examples <code>quote("x")</code> and <code>quote(1)</code> are redundant because <code>"x"</code> and <code>1</code> are constants. I keep <code>quote()</code> in there just to make the comparison clearer<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Not to be confused with <code>all_of()</code>. The idiomatic pattern for scoping an external <em>character</em> vector is to do <code>all_of(x)</code> not <code>.env$x</code>. It’s only when you’re scoping a non-character vector that you’d use <code>.env$</code>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>It’s also strangely reminiscent of my <a href="https://yjunechoe.github.io/posts/2023-06-11-row-relational-operations/">previous blog post</a> on <code>dplyr::slice()</code><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>Thanks to <a href="https://fosstodon.org/@jonocarroll/111343255529231116">Jonathan Carroll</a> for this suggestion!<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>

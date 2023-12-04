@@ -41,7 +41,7 @@ xaringanExtra::use_clipboard()
 
 ## Intro
 
-Recently, I been having [frequent](https://github.com/rstudio/pointblank/pull/493) [run-ins](https://github.com/rstudio/pointblank/pull/499) with `{tidyselect}` internals, discovering some weird and interesting behaviors along the way. This blog post is my attempt at documenting a couple of these. And as is the case with my usual style of writing, I'm gonna talk about some of the weirder stuff first and then touch on some of the "practical" side to this.
+Recently, I've been having [frequent](https://github.com/rstudio/pointblank/pull/493) [run-ins](https://github.com/rstudio/pointblank/pull/499) with `{tidyselect}` internals, discovering some weird and interesting behaviors along the way. This blog post is my attempt at documenting a couple of these. And as is the case with my usual style of writing, I'm gonna talk about some of the weirder stuff first and then touch on some of the "practical" side to this.
 
 ## Some observations
 
@@ -69,7 +69,7 @@ df %>%
 
 It's not obvious from the outside, but the way this works is that these user-supplied expressions (like `"x"`, `x`, and `1`) all get **resolved to integer** before the selection actually happens.
 
-So to be more specific, the three calls to `select()` were the same because these three calls to `tidyselect::eval_select()` are the same:^[That last example with `quote(1)` is redundant because `1` is a constant; I kept it in there just to make the comparison clearer]
+So to be more specific, the three calls to `select()` were the same because these three calls to `tidyselect::eval_select()` are the same:^[The examples `quote("x")` and `quote(1)` are redundant because `"x"` and `1` are constants. I keep `quote()` in there just to make the comparison clearer]
 
 ```{r}
 eval_select(quote("x"), df)
@@ -228,16 +228,16 @@ Essentially, `math()` first captures the expression to evaluate it in its own sp
 
 A small yet powerful detail in the implementation of `math()` is the fact that it captures the expression as a [quosure](https://rlang.r-lib.org/reference/topic-quosure.html). This allows `math()` to appropriately scope dynamically created variables, and not just bare symbols provided directly by the user.
 
-This makes more sense with some examples. Here, I define helper functions that call `math()` under the hood with their own templatic math expressions (and I have them `print()` the expression as passed to `math()` for clarity). The fact that `math()` captures its argument as a quosure is what allows variables like `num` to be correctly scoped in these examples.
+This makes more sense with some examples. Here, I define helper functions that call `math()` under the hood with their own templatic math expressions (and I have them `print()` the expression as passed to `math()` for clarity). The fact that `math()` captures its argument as a quosure is what allows local variables like `n` to be correctly scoped in these examples.
 
 ### 1) `times()`
 
 ```{r}
 #| message: true
-times <- function(col, num) {
+times <- function(col, n) {
   col <- rlang::ensym(col)
-  print(rlang::expr(math(!!col * num))) # for debugging
-  math(!!col * num)
+  print(rlang::expr(math(!!col * n))) # for debugging
+  math(!!col * n)
 }
 df %>%
   select(times(x, 2))
@@ -254,10 +254,10 @@ df %>%
 
 ```{r}
 #| message: true
-offset <- function(col, num) {
+offset <- function(col, n) {
   col <- rlang::ensym(col)
-  print(rlang::expr(math(!!col + num))) # for debugging
-  math(!!col + num)
+  print(rlang::expr(math(!!col + n))) # for debugging
+  math(!!col + n)
 }
 df %>%
   select(offset(x, 1))
