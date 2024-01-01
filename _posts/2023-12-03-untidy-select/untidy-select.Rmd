@@ -197,6 +197,7 @@ There's a lot of weird functions involved here, but it's easier to digest by foc
 
 ```{r}
 #| include: false
+#| eval: false
 invisible(trace(math, exit = quote({
   math_out <<- rlang::dots_list(math_expr, columns, col_locs, mask, out, .named = TRUE)
 }), print = FALSE))
@@ -207,6 +208,7 @@ untrace(math)
 
 ```{r}
 #| echo: false
+#| eval: false
 math_out
 ```
 

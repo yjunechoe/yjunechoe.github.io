@@ -2,31 +2,35 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" version="1.0">
   <url>
     <loc>https://yjunechoe.github.io/blog.html</loc>
-    <lastmod>2022-11-13T09:16:58-05:00</lastmod>
+    <lastmod>2022-11-13T06:16:58-08:00</lastmod>
   </url>
   <url>
     <loc>https://yjunechoe.github.io/</loc>
-    <lastmod>2023-11-04T12:28:35-04:00</lastmod>
+    <lastmod>2023-11-04T09:28:35-07:00</lastmod>
   </url>
   <url>
     <loc>https://yjunechoe.github.io/news.html</loc>
-    <lastmod>2023-09-06T15:55:04-04:00</lastmod>
+    <lastmod>2023-09-06T12:55:04-07:00</lastmod>
   </url>
   <url>
     <loc>https://yjunechoe.github.io/research.html</loc>
-    <lastmod>2023-12-03T09:49:50-05:00</lastmod>
+    <lastmod>2023-12-03T06:49:50-08:00</lastmod>
   </url>
   <url>
     <loc>https://yjunechoe.github.io/resources.html</loc>
-    <lastmod>2022-11-13T09:17:00-05:00</lastmod>
+    <lastmod>2022-11-13T06:17:00-08:00</lastmod>
   </url>
   <url>
     <loc>https://yjunechoe.github.io/software.html</loc>
-    <lastmod>2023-10-04T13:29:41-04:00</lastmod>
+    <lastmod>2023-10-04T10:29:41-07:00</lastmod>
   </url>
   <url>
     <loc>https://yjunechoe.github.io/visualizations.html</loc>
-    <lastmod>2022-11-13T09:17:01-05:00</lastmod>
+    <lastmod>2022-11-13T06:17:01-08:00</lastmod>
+  </url>
+  <url>
+    <loc>https://yjunechoe.github.io/posts/2023-12-31-2023-year-in-review/</loc>
+    <lastmod>2024-01-01T01:38:46-08:00</lastmod>
   </url>
   <url>
     <loc>https://yjunechoe.github.io/posts/2023-12-03-untidy-select/</loc>
