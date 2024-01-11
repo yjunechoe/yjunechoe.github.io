@@ -42,9 +42,9 @@ May Pik Yu Chan, **June Choe**, Aini Li, Yiran Chen, Xin Gao and Nicole Holliday
 
 ## Conference Presentations
 
-**June Choe**, and Anna Papafragou. *Distributional signatures of superordinate nouns*. Poster presented at the 48th Boston University Conference on Language Development (BUCLD), 2-5 November, 2023. Boston University, Boston, MA. [Abstract](static/abstract/BUCLD2023a_Abstract.pdf)
+**June Choe**, and Anna Papafragou. *Distributional signatures of superordinate nouns*. Poster presented at the 48th Boston University Conference on Language Development (BUCLD), 2-5 November, 2023. Boston University, Boston, MA. [Abstract](static/abstract/BUCLD2023a_Abstract.pdf) [Poster](static/poster/BUCLD2023_superordinates_corpus.png)
 
-**June Choe**, and Anna Papafragou. *Pragmatic underpinnings of the basic-level bias*. Poster presented at the 48th Boston University Conference on Language Development (BUCLD), 2-5 November, 2023. Boston University, Boston, MA. [Abstract](static/abstract/BUCLD2023b_Abstract.pdf)
+**June Choe**, and Anna Papafragou. *Pragmatic underpinnings of the basic-level bias*. Poster presented at the 48th Boston University Conference on Language Development (BUCLD), 2-5 November, 2023. Boston University, Boston, MA. [Abstract](static/abstract/BUCLD2023b_Abstract.pdf) [Poster](static/poster/BUCLD2023_superordinates_judgments.png)
 
 **June Choe** and Anna Papafragou. *Discourse effects on the acquisition of subordinate nouns*. Poster presented at the 9th Mid-Atlantic Colloquium of Studies in Meaning (MACSIM), 15 April 2023. University of Pennsylvania, PA.
 
