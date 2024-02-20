@@ -12,7 +12,17 @@
       <link>https://yjunechoe.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Sun, 31 Dec 2023 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 20 Feb 2024 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>HelloWorld("print")</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>https://yjunechoe.github.io/posts/2024-02-20-helloworld-print</link>
+      <description>R is a language optimized for meme-ing</description>
+      <category>metaprogramming</category>
+      <guid>https://yjunechoe.github.io/posts/2024-02-20-helloworld-print</guid>
+      <pubDate>Tue, 20 Feb 2024 00:00:00 +0000</pubDate>
+      <media:content url="https://yjunechoe.github.io/posts/2024-02-20-helloworld-print/preview.png" medium="image" type="image/png" width="462" height="184"/>
+    </item>
     <item>
       <title>2023 Year in Review</title>
       <dc:creator>June Choe</dc:creator>

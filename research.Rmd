@@ -76,9 +76,13 @@ _Experimental syntax using IBEX: a walkthrough_ with Dr. Nayoun Kim. 2021 BK Win
 
 ## Guest lectures
 
-_Model fitting and diagnosis with MixedModels.jl in Julia_ for LING 5620 ("Quantitative Study of Linguistic Variation"), Fall 2023.
+_Hard words and syntactic bootstrapping_. LING 5750 "The Acquisition of Meaning". Instructor: Dr. Anna Papafragou. Spring 2024, University of Pennsylvania.
 
-_Simulation-based power analysis for mixed-effects models_ for LING 5620 ("Quantitative Study of Linguistic Variation"), Spring 2023.
+_Introduction to R for psychology research_. PSYC 4997 "Senior Honors Seminar in Psychology". Instructor: Dr. Coren Apicella. Spring 2024, University of Pennsylvania.
+
+_Model fitting and diagnosis with MixedModels.jl in Julia_. LING 5670 "Quantitative Study of Linguistic Variation". Instructor: Dr. Meredith Tamminga. Fall 2023, University of Pennsylvania.
+
+_Simulation-based power analysis for mixed-effects models_ for LING 5670 ("Quantitative Study of Linguistic Variation"). Instructor: Dr. Meredith Tamminga. Spring 2023, University of Pennsylvania.
 
 
 ## Research activities in FOSS

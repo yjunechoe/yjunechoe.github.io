@@ -1,0 +1,396 @@
+---
+title: 'HelloWorld("print")'
+description: |
+  R is a language optimized for meme-ing
+categories:
+  - metaprogramming
+base_url: https://yjunechoe.github.io
+author:
+  - name: June Choe
+    affiliation: University of Pennsylvania Linguistics
+    affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+    orcid_id: 0000-0002-0701-921X
+date: "`r Sys.Date()`"
+output:
+  distill::distill_article:
+    include-after-body: "highlighting.html"
+    toc: true
+    self_contained: false
+    css: "../../styles.css"
+editor_options: 
+  chunk_output_type: console
+preview: preview.png
+---
+
+```{r setup, include=FALSE}
+library(ggplot2)
+knitr::opts_chunk$set(
+  comment = " ",
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  R.options = list(width = 80)
+)
+```
+
+## Hello World
+
+Getting a program to print "Hello World" is one of the earliest things people are taught to do when picking up a new programming language. This universal experience among programmers has also turned it into a running joke about the complexity of programming languages.
+
+For example, whereas in R we can express what we want transparently in the following:
+
+```{r, eval = FALSE}
+print("Hello World")
+```
+
+This simple task can get absurdly complex in other languages; perhaps most notoriously, Java:
+
+<pre style="padding:10px;margin-bottom:1em;">
+class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!"); 
+    }
+}
+</pre>
+
+
+This joke around "Hello World" has also evolved into other forms. Every once in a while I come across a variant of the joke in the style of something like:
+
+```{r brute-force, include = FALSE}
+HelloWorld <- function(x) print("HelloWorld")
+```
+
+```{r}
+HelloWorld("print")
+```
+
+This is funny because it seemingly swaps the role of the argument and the function in an expression. It's also a good educational example because it demonstrates the *arbitrariness of signs* as a universal design principle of programming (and human!) languages.^[A topic close to my heart as a linguist. This is one of the first things we teach in intro to linguistics.] Crucially, you should be able to produce this behavior in any reasonable programming language - the ability to do this is a feature, not a bug.
+
+The most trivial implementation of the above is to define `HelloWorld()` as a function that's been hardcoded to simply print "Hello World": 
+
+```{r brute-force, eval = FALSE}
+```
+
+But here, too, languages show differences. Not so much in their ability to implement this specific solution, but in their ability to formulate a *generalizable* solution in an *idiomatic* way, using tools and concepts that are native to the language.
+
+When it comes to R, it turns out that R has certain quirks which can give us a surprisingly principled and lean solution to the problem. So that's what this blog post will be about.
+
+## Quirks in R syntax
+
+In R, functions are distinguished from non-functions in part by their role as a *caller*. This role is defined by its syntactic position in an expression: it always occupies the first position `[[1]]` of a `<language>` object.^[Where objects of class `<language>` are essentially a (nested) list of symbols and constants.]
+
+<div style="
+  display: flex;
+  justify-content: space-between;
+">
+<div style="width:48%">
+```{r}
+plus_expr <- quote(1 + 2)
+plus_expr
+plus_expr[[1]]
+```
+</div>
+
+<div style="width:48%">
+```{r}
+sum_expr <- quote(sum(1, 2))
+sum_expr
+sum_expr[[1]]
+```
+</div>
+</div>
+
+When R sees a variable in an expression and needs to resolve its value, it firstly determines whether the value *must* be a function, by virtue of its position in the expression. Here, R eagerly commits to the assumption that whatever appears in the caller position must be a function.
+
+This gives rise to a somewhat surprising behavior. In evaluating the expression `f(1, 2)` inside a local scope below, R smartly skips the immediately-adjacent, local value of `f` (a numeric constant) to scope the global value of `f()` (alias of the function `sum()`) that's "further away".
+
+```{r}
+f <- sum
+local({
+  f <- 0
+  f(1, 2)
+})
+```
+
+So the point here is that, R knows to only scope values of `f` that are functions, because it found `f` in the caller position of the expression:
+
+```{r}
+f_expr <- quote(f(1, 2))
+f_expr[[1]]
+```
+
+This in and of itself is interesting, but I want to return to my characterization of R as "eagerly committing" to this. Consider the fact that the above example works even if you swapped `f` with the string `"f"` in the expression:
+
+```{r}
+f <- sum
+local({
+  f <- 0
+  "f"(1, 2)
+})
+```
+
+Because R eagerly commits to the invariant that the first position is reserved for functions, it **repairs** `"f"()` to `f()` at the level of the parser, before the evaluation engine even sees the expression.
+
+```{r}
+f_expr2 <- quote("f"(1, 2))
+f_expr2
+f_expr2[[1]]
+```
+
+All of this to say that the following syntax that looks even *more* flipped is also valid in R:
+
+```{r}
+HelloWorld <- function(x) print("HelloWorld")
+"HelloWorld"(print)
+```
+
+This is trivially true about R's sytax and its parser but funny nonetheless, so this deserves a mention first. Now lets talk about the implementation side of things - how well does R fair in letting us express something like "arg(f) should evaluate to f(arg)"?
+
+## Flipping
+
+I'll get right to the chase - the following definition for `HelloWorld()` gives us the ability to pass in a function that is then called with `"HelloWorld"` as the argument.
+
+```{r}
+HelloWorld <- function(x) {
+  fun <- match.fun(x)
+  arg <- deparse(sys.call()[[1]])
+  fun(arg)
+}
+HelloWorld("print")
+HelloWorld(toupper)
+```
+
+There are two pieces to this solution.
+
+First is `match.fun()`, which allows `HelloWorld()` to receive the name of a function as a string and match the function with that name. This is kind of like what we talked about in the previous section with `"f"()`, but it's a more explicit, less auto-magic way of handling functions specified as a string:
+
+```{r}
+identical(match.fun("print"), print)
+```
+
+A nice convenience feature is that when `match.fun()` receives a function, it simply passes it through. That also gives us this equality:
+
+```{r}
+identical(match.fun(print), print)
+```
+
+In sum, `match.fun()` gives us a choice in whether `HelloWorld()` receives its argument as a string vs. symbol. Combined with our observation from the previous section, this gives us a full 2-by-2 variation in whether the function or the argument is a string (vs. a symbol):
+
+```{r, eval = FALSE}
+HelloWorld(print)
+HelloWorld("print")
+"HelloWorld"(print)
+"HelloWorld"("print")
+```
+
+The second piece of the solution is `sys.call()`, which returns the expression that called the function where `sys.call()` is called from. It's hard to explain in words but actually pretty intuitive once you see some examples:
+
+```{r}
+f <- function(...) {
+  sys.call()
+}
+f()
+f(arg = val)
+f(pi)
+```
+
+And that's it! When `sys.call()` is called from `f()`, it captures the expression that makes up `f(...)`. So in the case of `HelloWorld("print")`, the call to `sys.call()` evaluates to the following language object:
+
+```{r, echo = FALSE}
+quote(HelloWorld("print"))
+```
+
+... which is essentially a list of length-2:
+
+```{r, echo = FALSE}
+as.list(quote(HelloWorld("print")))
+```
+
+So the code `deparse(sys.call()[[1]])` grabs the symbol `HelloWorld` and `deparse()`s it into a string, resulting in `"HelloWorld"`. And as I mentioned before, we grab the string `"print"` and pass it to `match.fun()` to get back the `print()` function.
+
+Once we have these two pieces, the line `fun(arg)` evaluates to the un-flipped version `print("HelloWorld")`.
+
+And of course, as far as the argument is concerned, `HelloWorld()` takes any function that can operate on the string `"HelloWorld"`:
+
+```{r}
+caps_split <- function(x) {
+  strsplit(x, "(?<!^)(?=[A-Z])", perl = TRUE)[[1]]
+}
+# Canonical version
+caps_split("HelloWorld")
+# Flipped version
+HelloWorld("caps_split")
+```
+
+But what if I wanted to do `ByeWorld("print")` or `yes(toupper)`? Must I define a `ByeWorld()` and `yes()` each time? What would that look like?
+
+## Registering arguments
+
+In a sense, yes - we need to define each function to have them available for use as functions. But we don't have to copy-paste the function definition every time. We can write a wrapper function like `register()` that takes a symbol and defines a function of the same name.
+
+```{r}
+register <- function(name, envir = parent.frame()) {
+  arg <- deparse(substitute(name))
+  f <- function(x) {
+    fun <- match.fun(x)
+    fun(arg)
+  }
+  assign(arg, f, envir)
+}
+register(ByeWorld)
+ByeWorld("print")
+```
+
+R is pretty loose about assigning variables into different environments,^[The notorious `<<-` is evidence of this.] which makes it a pretty simple task. There are two new pieces here:
+
+First is the `deparse(substitute())` combo to first capture the user-supplied argument `ByeWorld` as a symbol and then turn it into the string `"ByeWorld"`. Second is the `assign()` function, which uses that to define `ByeWorld()` in an environment which defaults to where `register()` is called from (determined via `parent.frame()`).
+
+Since we just called `register()` from the global environment, we see the consequence of this side effect in `ls()`:^[
+This is starting to look something like a very butchered form of [string interning](https://en.wikipedia.org/wiki/String_interning)...]
+
+```{r}
+grep("^[A-Z]", ls(), value = TRUE)
+```
+
+And because `register()` resolves the value of `arg` immediately on the first line (vs. leaving it to be evaluated lazily), it correctly persists:
+
+```{r}
+alias <- ByeWorld
+alias("print") # Doesn't return `"alias"`
+```
+
+## Unflipping
+
+We can of course go the other way: from `HelloWorld("print")` to `print("HelloWorld")`. For this we define the function `unflip()`, which captures the user-supplied expression and flips it inside out:
+
+```{r}
+unflip <- function(expr) {
+  chr <- as.character(substitute(expr))
+  arg <- chr[1]
+  fun <- chr[2]
+  call(fun, arg)
+}
+unflip(HelloWorld("print"))
+```
+
+This works by first coercing the language object into a character vector, then plucking out its parts, and finally reconstruct the unflipped expression with `call()`:^[You might protest that `as.character(substitute())` is bad practice which is true but it's idiomatic in the sense that it's the first line of the function definition of `require()`.]
+
+```{r}
+as.character(quote(
+  HelloWorld("print")
+))
+call("print", "HelloWorld")
+```
+
+## Currying
+
+But if you really wanted a world where you could linear specify the argument before the function without littering your environment, *and* you also don't have the pipe (`"HelloWorld" |> print()`), the next best tool for this job is probably [currying](https://en.wikipedia.org/wiki/Currying).
+
+Here's the simplest attempt at that:^[A version with stricter safeguards would probably use `force()` among other things (see [Adv R](https://adv-r.hadley.nz/function-factories.html?q=force#forcing-evaluation)).]
+
+```{r}
+curry <- function(arg) {
+  function(fun) {
+    fun <- match.fun(fun)
+    fun(arg)
+  }
+}
+curry("HelloWorld")(print)
+```
+
+Essentially, `curry("HelloWorld")` is returning a function that takes a function and calls that function with `"HelloWorld"` as its argument. Although, unfortunately, that's not so obvious from the function definition which just looks generic:
+
+```{r}
+curry("HelloWorld")
+```
+
+For us to see `"HelloWorld"` in the function body for `curry("HelloWorld")`, we would need to in-line the value of `arg` when the curried function is defined.^[This in-lining also resolves the need for `force()`.] Let's take this up in steps.
+
+First, we can use `substitute()` (or `bquote()`) to create an expression where the value of `arg` is in-lined. Both methods produce the contextualized function definition we want.
+
+```{r}
+curry2 <- function(arg) {
+  list(
+    substitute = substitute(
+      function(fun) {
+        fun <- match.fun(fun)
+        fun(arg)
+      }
+    ),
+    bquote = bquote(
+      function(fun) {
+        fun <- match.fun(fun)
+        fun(.(arg))
+      }
+    )
+  )
+}
+curry2("HelloWorld")
+```
+
+Let's stick with `substitute()` and move on. Now that we have an expression of the function definition, we can `eval()`-uate it to get an actual function object back.
+
+```{r}
+curry2 <- function(arg) {
+  eval(substitute(
+    function(fun) {
+      fun <- match.fun(fun)
+      fun(arg)
+    }
+  ))
+}
+curry2("HelloWorld")
+```
+
+Wait... `"HelloWorld"` just turned back into `arg`! Turns out that functions in R have [a "memory" of how they were defined](https://adv-r.hadley.nz/evaluation.html?q=srcref#gotcha-function). It's stored in the **srcref** attribute of functions, and this is the function definition that gets shown when we print functions. 
+
+```{r}
+HelloWorld <- curry2("HelloWorld")
+attr(HelloWorld, "srcref")
+```
+
+And actually, if we just strip this attribute away, we can see our work of in-lining `arg`:
+
+```{r}
+attr(HelloWorld, "srcref") <- NULL
+HelloWorld
+```
+
+We can now go back to the currying function and implement this solution there:
+
+```{r}
+curry3 <- function(arg) {
+  inlined <- eval(substitute(
+    function(fun) {
+      fun <- match.fun(fun)
+      fun(arg)
+    }
+  ))
+  attr(inlined, "srcref") <- NULL
+  inlined
+}
+curry3("HelloWorld")
+```
+
+To avoid all this mess, you could also inline `arg` first, and then piece together the function from scratch:
+
+```{r}
+curry4 <- function(arg) {
+  inlined_body <- rlang::expr({
+    fun <- match.fun(fun)
+    fun(!!arg)
+  })
+  rlang::new_function(
+    args = rlang::pairlist2(fun=),
+    body = inlined_body
+  )
+}
+curry4("HelloWorld")
+```
+
+## Fin.
+
+```{r}
+register(`But don't do this in practice!`)
+get(ls()[order(-nchar(ls()))][1])("print")
+```
