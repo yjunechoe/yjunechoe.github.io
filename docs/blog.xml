@@ -53,7 +53,7 @@ start by looking at the argument that &lt;code&gt;args()&lt;/code&gt; takes.&lt;
 &lt;pre class="r"&gt;&lt;code&gt;args&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;  function (name) 
   .Internal(args(name))
-  &amp;lt;bytecode: 0x000002061097a210&amp;gt;
+  &amp;lt;bytecode: 0x00000209743b31c0&amp;gt;
   &amp;lt;environment: namespace:base&amp;gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;But wouldn’t it be fun if I used &lt;code&gt;args()&lt;/code&gt; itself to get
 this information?&lt;/p&gt;
@@ -222,19 +222,14 @@ around &lt;code&gt;args&lt;/code&gt; each time - all to produce a
 &lt;p&gt;Ready?&lt;/p&gt;
 &lt;pre class="r"&gt;&lt;code&gt;ARGS2 &amp;lt;- function(n, m) {
   Reduce(
-    f = \(x,y) bquote(
-      .(x) %&amp;gt;%
-        (.(Reduce(\(x,y) call(&amp;quot;args&amp;quot;, x), seq_len(m), quote(args))))
-    ),
-    x = seq_len(n),
-    init = quote(args)
+    f = \(x,y) bquote(.(x) %&amp;gt;% (.(y))),
+    x = rep(list(Reduce(\(x,y) call(&amp;quot;args&amp;quot;, x), seq_len(m), quote(args))), n)
   )
 }&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class="r"&gt;&lt;code&gt;ARGS2(5, 1) %&amp;gt;% 
   deparse1() %&amp;gt;%
   styler::style_text()&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;  args %&amp;gt;%
-    (args(args)) %&amp;gt;%
+&lt;pre&gt;&lt;code&gt;  args(args) %&amp;gt;%
     (args(args)) %&amp;gt;%
     (args(args)) %&amp;gt;%
     (args(args)) %&amp;gt;%
@@ -242,8 +237,7 @@ around &lt;code&gt;args&lt;/code&gt; each time - all to produce a
 &lt;pre class="r"&gt;&lt;code&gt;ARGS2(5, 3) %&amp;gt;% 
   deparse1() %&amp;gt;%
   styler::style_text()&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;  args %&amp;gt;%
-    (args(args(args(args)))) %&amp;gt;%
+&lt;pre&gt;&lt;code&gt;  args(args(args(args))) %&amp;gt;%
     (args(args(args(args)))) %&amp;gt;%
     (args(args(args(args)))) %&amp;gt;%
     (args(args(args(args)))) %&amp;gt;%
@@ -251,8 +245,7 @@ around &lt;code&gt;args&lt;/code&gt; each time - all to produce a
 &lt;pre class="r"&gt;&lt;code&gt;ARGS2(10, 5) %&amp;gt;% 
   deparse1() %&amp;gt;%
   styler::style_text()&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;  args %&amp;gt;%
-    (args(args(args(args(args(args)))))) %&amp;gt;%
+&lt;pre&gt;&lt;code&gt;  args(args(args(args(args(args))))) %&amp;gt;%
     (args(args(args(args(args(args)))))) %&amp;gt;%
     (args(args(args(args(args(args)))))) %&amp;gt;%
     (args(args(args(args(args(args)))))) %&amp;gt;%

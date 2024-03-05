@@ -227,12 +227,8 @@ Ready?
 ```{r}
 ARGS2 <- function(n, m) {
   Reduce(
-    f = \(x,y) bquote(
-      .(x) %>%
-        (.(Reduce(\(x,y) call("args", x), seq_len(m), quote(args))))
-    ),
-    x = seq_len(n),
-    init = quote(args)
+    f = \(x,y) bquote(.(x) %>% (.(y))),
+    x = rep(list(Reduce(\(x,y) call("args", x), seq_len(m), quote(args))), n)
   )
 }
 ```
