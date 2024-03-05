@@ -1,0 +1,228 @@
+---
+title: 'args(args(args)(args))'
+description: |
+  The unexpected sequal to "R is a language optimized for meme-ing"
+categories:
+  - args
+base_url: https://yjunechoe.github.io
+author:
+  - name: June Choe
+    affiliation: University of Pennsylvania Linguistics
+    affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+    orcid_id: 0000-0002-0701-921X
+date: "`r Sys.Date()`"
+output:
+  distill::distill_article:
+    include-after-body: "highlighting.html"
+    toc: true
+    self_contained: false
+    css: "../../styles.css"
+editor_options: 
+  chunk_output_type: console
+preview: preview.png
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  comment = " ",
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  R.options = list(width = 80)
+)
+```
+
+The kind of blog posts that I have the most fun writing are those where I hyperfocus on a single function, like [dplyr::slice()](https://yjunechoe.github.io/posts/2023-06-11-row-relational-operations/), [purrr::reduce()](https://yjunechoe.github.io/posts/2020-12-13-collapse-repetitive-piping-with-reduce/), and [ggplot2::stat_summary()](https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/). In writing blog posts of this kind, I naturally come across a point where I need to introduce the argument(s) that the function takes. I usually talk about them one at a time as needed, but I *could* start by front-loading that important piece of information first.
+
+In fact, there's a function in R that lets me do exactly that, called `args()`.
+
+## `args()`
+
+`args()` is, in theory, a very neat function. According to `?args`:
+
+> Displays the argument names and corresponding default values of a (non-primitive or primitive) function.
+
+So, for example, I know that `sum()` takes the arguments `...` and `na.rm` (with the `na.rm = FALSE` default). The role of `args()` is to display exactly that piece of information using R code. This blog runs on rmarkdown, so surely I can use `args()` as a convenient and fancy way of showing information about a function's arguments to my readers.
+
+In this blog post, I want to talk about `args()`. So let's start by looking at the argument that `args()` takes.
+
+Of course, I could just print `args` in the console:
+
+```{r}
+args
+```
+
+But wouldn't it be fun if I used `args()` itself to get this information?
+
+## `args(args)`
+
+```{r}
+args(args)
+```
+
+Okay, so I get the `function (name)` piece, which is the information I wanted to show. We can see that `args()` takes one argument, called `name`, with no defaults.
+
+But wait - what's that `NULL` doing there in the second line?
+
+Hmm, I wonder if they forgot to `invisible()`-y return the `NULL`. `args()` is a function for *displaying* a function's arguments after all, so maybe the arguments are printed to the console as a side-effect and the actual output of `args()` is `NULL`.
+
+If that is true, we should be able to suppress the printing of `NULL` with `invisible()`:
+
+```{r}
+invisible(args(args))
+```
+
+Uh oh, now *everything* is invisible.
+
+Alright, enough games! What exactly are you, output of `args()`?!
+
+```{r}
+typeof(args(args))
+```
+
+What? 
+
+## `args(args)(args)`
+
+Turns out that `args(args)` is actually returning a whole function that's a *copy* of `args()`, except with its body replaced with NULL.
+
+So `args(args)` is itself a function that takes an argument called `name` and then returns `NULL`. Let's assign it to a variable and call it like a function:
+
+```{r}
+abomination <- args(args)
+```
+
+```{r}
+abomination(123)
+abomination(mtcars)
+abomination(stop())
+```
+
+The body is *just* `NULL`, so the function doesn't care what it receives^[You can even see lazy evaluation in action when it receives `stop()` without erroring.] - it just returns `NULL`.
+
+In fact, we could even pass it... `args`:
+
+```{r}
+args(args)(args)
+```
+
+## `args(args(args)(args))`
+
+But wait, that's not all! `args()` doesn't *just* accept a function as its argument. From the documentation:
+
+> **Value**
+>
+> NULL in case of a non-function.
+
+So yeah - if `args()` receives a non-function, it just returns `NULL`:
+
+```{r}
+args(123)
+args(mtcars)
+```
+
+This applies to *any* non-function, including... `NULL`:
+
+```{r}
+args(NULL)
+```
+
+And recall that:
+
+```{r}
+is.null( args(args)(args) )
+```
+
+Therefore, this is a valid expression in base R:
+
+```{r}
+args(args(args)(args))
+```
+
+## ad infinitum
+
+For our cursed usecase of using `args(f)` to return a copy of `f` with it's body replaced with `NULL` only to then immediately call `args(f)(f)` to return `NULL`, it really doesn't matter what the identity of `f` is as long as it's a function.
+
+That function can even be ... `args(args)`!
+
+So let's take our `args(args(args)(args))`:
+
+```{r}
+args( args( args )( args ))
+```
+
+And swap every `args()` with `args(args)`:
+
+```{r}
+args(args)( args(args)( args(args) )( args(args) ))
+```
+
+Or better yet, swap every `args()` with `args(args(args))`:
+
+```{r}
+args(args(args))( args(args(args))( args(args(args)) )( args(args(args)) ))
+```
+
+The above unhinged examples are a product of two patterns:
+
+1) The fact that you always get `function (name) NULL` from wrapping `args()` over `args(args)`:
+
+    ```{r}
+    list(
+      args(          args),
+      args(     args(args)),
+      args(args(args(args)))
+    )
+    ```
+
+2) The fact that you can get this whole thing to return `NULL` by having `function (name) NULL` call the function object `args`. You can do this anywhere in the stack and the `NULL` will simply propagate:
+
+    ```{r}
+    list(
+      args(args(args(args))) (args)   ,
+      args(args(args(args))  (args) ) ,
+      args(args(args(args)   (args) ))
+    )
+    ```
+
+We could keep going but it's tiring to type out and read all these nested `args()`... but did you know that there's this thing called the pipe `%>%` that's the solution to all code readability issues?
+
+So why don't we just make an `args()` factory `ARGS()` ...
+
+```{r}
+library(magrittr)
+ARGS <- function(n) {
+  Reduce(
+    f = \(x,y) bquote(.(x) %>% args()),
+    x = seq_len(n),
+    init = quote(args(args))
+  )
+}
+```
+
+... to produce a sequence of `args()` ...
+
+```{r}
+ARGS(10)
+eval(ARGS(10))
+```
+
+... and tidy it up?
+
+```{r}
+deparse1(ARGS(10)) |>
+  styler::style_text()
+```
+
+Yay!
+
+## TL;DR: `str()`
+
+If you want a version of `args()` that does what it's supposed to, use `str()`:^[But remember to remove the `"srcref"` attribute if the function has one.]
+
+```{r}
+str(args)
+str(sum)
+```
+
+`args()` is hereafter banned from my blog.

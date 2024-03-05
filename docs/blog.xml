@@ -12,7 +12,17 @@
       <link>https://yjunechoe.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Tue, 20 Feb 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 04 Mar 2024 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>args(args(args)(args))</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>https://yjunechoe.github.io/posts/2024-03-04-args-args-args-args</link>
+      <description>The unexpected sequal to "R is a language optimized for meme-ing"</description>
+      <category>args</category>
+      <guid>https://yjunechoe.github.io/posts/2024-03-04-args-args-args-args</guid>
+      <pubDate>Mon, 04 Mar 2024 00:00:00 +0000</pubDate>
+      <media:content url="https://yjunechoe.github.io/posts/2024-03-04-args-args-args-args/preview.png" medium="image" type="image/png" width="419" height="300"/>
+    </item>
     <item>
       <title>HelloWorld("print")</title>
       <dc:creator>June Choe</dc:creator>
