@@ -53,7 +53,7 @@ start by looking at the argument that &lt;code&gt;args()&lt;/code&gt; takes.&lt;
 &lt;pre class="r"&gt;&lt;code&gt;args&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;  function (name) 
   .Internal(args(name))
-  &amp;lt;bytecode: 0x0000020d66d37fb0&amp;gt;
+  &amp;lt;bytecode: 0x0000024f98dbd180&amp;gt;
   &amp;lt;environment: namespace:base&amp;gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;But wouldn’t it be fun if I used &lt;code&gt;args()&lt;/code&gt; itself to get
 this information?&lt;/p&gt;
@@ -284,7 +284,7 @@ class="footnote-ref" id="fnref2"&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
 href="https://fosstodon.org/@yjunechoe/112039945400602627"&gt;I was just
 complaining&lt;/a&gt; about how I think &lt;code&gt;args()&lt;/code&gt; is a rather poorly
 designed function.&lt;/p&gt;
-&lt;p&gt;Let’s try to redesign args. I’ll do three takes:&lt;/p&gt;
+&lt;p&gt;Let’s try to redesign &lt;code&gt;args()&lt;/code&gt;. I’ll do three takes:&lt;/p&gt;
 &lt;h3 id="take-1-display-is-the-side-effect-output-is-trivial"&gt;Take 1)
 Display is the side-effect; output is trivial&lt;/h3&gt;
 &lt;p&gt;If the whole point of &lt;code&gt;args()&lt;/code&gt; is to
@@ -337,8 +337,8 @@ side-effect.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;  function (..., na.rm = FALSE)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class="r"&gt;&lt;code&gt;args2(rnorm)(5)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;  function (..., na.rm = FALSE)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;  [1]  1.6536876  1.4528063 -0.3030989 -0.2270826  0.6305848&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="take-1-display-is-the-side-effect-output-is-meaningful"&gt;Take 1)
+&lt;pre&gt;&lt;code&gt;  [1]  0.9164464  1.5802621 -1.3677842  0.1642751 -0.5970638&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="take-2-display-is-the-side-effect-output-is-meaningful"&gt;Take 2)
 Display is the side-effect; output is meaningful&lt;/h3&gt;
 &lt;p&gt;One thing I neglected to mention in this blog post is that there are
 other ways to extract a function’s arguments. One of them is
@@ -408,6 +408,44 @@ args4(sum)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class="r"&gt;&lt;code&gt;typeof( args4(rnorm) )&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;  [1] &amp;quot;closure&amp;quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Like, come on!&lt;/p&gt;
+&lt;h2 id="sessioninfo"&gt;sessionInfo()&lt;/h2&gt;
+&lt;pre class="r"&gt;&lt;code&gt;sessionInfo()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  R version 4.3.3 (2024-02-29 ucrt)
+  Platform: x86_64-w64-mingw32/x64 (64-bit)
+  Running under: Windows 11 x64 (build 22631)
+  
+  Matrix products: default
+  
+  
+  locale:
+  [1] LC_COLLATE=English_United States.utf8 
+  [2] LC_CTYPE=English_United States.utf8   
+  [3] LC_MONETARY=English_United States.utf8
+  [4] LC_NUMERIC=C                          
+  [5] LC_TIME=English_United States.utf8    
+  
+  time zone: America/New_York
+  tzcode source: internal
+  
+  attached base packages:
+  [1] stats     graphics  grDevices utils     datasets  methods   base     
+  
+  other attached packages:
+  [1] magrittr_2.0.3
+  
+  loaded via a namespace (and not attached):
+   [1] jsonlite_1.8.8    compiler_4.3.3    crayon_1.5.2      xml2_1.3.6       
+   [5] jquerylib_0.1.4   png_0.1-8         yaml_2.3.7        fastmap_1.1.1    
+   [9] mime_0.12         R6_2.5.1          generics_0.1.3    knitr_1.45       
+  [13] bookdown_0.37     distill_1.6       rprojroot_2.0.4   openssl_2.1.1    
+  [17] lubridate_1.9.3   R.cache_0.16.0    bslib_0.6.1       R.utils_2.12.3   
+  [21] rlang_1.1.2       cachem_1.0.8      prettycode_1.1.0  xfun_0.41        
+  [25] sass_0.4.7        timechange_0.2.0  memoise_2.0.1     cli_3.6.1        
+  [29] withr_3.0.0       digest_0.6.33     rstudioapi_0.15.0 fontawesome_0.5.2
+  [33] askpass_1.2.0     lifecycle_1.0.4   R.methodsS3_1.8.2 R.oo_1.25.0      
+  [37] vctrs_0.6.5       downlit_0.4.3     evaluate_0.23     styler_1.10.2    
+  [41] fansi_1.0.5       rmarkdown_2.25    purrr_1.0.2       tools_4.3.3      
+  [45] htmltools_0.5.7&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class="r distill-force-highlighting-css"&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;div class="footnotes footnotes-end-of-document"&gt;
 &lt;hr /&gt;

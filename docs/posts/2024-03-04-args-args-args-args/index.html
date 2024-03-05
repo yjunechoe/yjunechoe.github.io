@@ -2704,9 +2704,10 @@ Misc.
 <li><a href="#coda-serious-redesigning-args" id="toc-coda-serious-redesigning-args">Coda (serious): redesigning <code>args()</code></a>
 <ul>
 <li><a href="#take-1-display-is-the-side-effect-output-is-trivial" id="toc-take-1-display-is-the-side-effect-output-is-trivial">Take 1) Display is the side-effect; output is trivial</a></li>
-<li><a href="#take-1-display-is-the-side-effect-output-is-meaningful" id="toc-take-1-display-is-the-side-effect-output-is-meaningful">Take 1) Display is the side-effect; output is meaningful</a></li>
+<li><a href="#take-2-display-is-the-side-effect-output-is-meaningful" id="toc-take-2-display-is-the-side-effect-output-is-meaningful">Take 2) Display is the side-effect; output is meaningful</a></li>
 <li><a href="#take-3-just-remove-the-null" id="toc-take-3-just-remove-the-null">Take 3) Just remove the <code>NULL</code></a></li>
 </ul></li>
+<li><a href="#sessioninfo" id="toc-sessioninfo">sessionInfo()</a></li>
 </ul>
 </nav>
 </div>
@@ -2726,7 +2727,7 @@ Misc.
 </div>
 <pre><code>  function (name) 
   .Internal(args(name))
-  &lt;bytecode: 0x0000020d66d37fb0&gt;
+  &lt;bytecode: 0x0000024f98dbd180&gt;
   &lt;environment: namespace:base&gt;</code></pre>
 </div>
 <p>But wouldn’t it be fun if I used <code>args()</code> itself to get this information?</p>
@@ -3024,7 +3025,7 @@ Misc.
 <p><code>args()</code> is hereafter banned from my blog.</p>
 <h2 id="coda-serious-redesigning-args">Coda (serious): redesigning <code>args()</code></h2>
 <p>The context for my absurd rant above is that <a href="https://fosstodon.org/@yjunechoe/112039945400602627">I was just complaining</a> about how I think <code>args()</code> is a rather poorly designed function.</p>
-<p>Let’s try to redesign args. I’ll do three takes:</p>
+<p>Let’s try to redesign <code>args()</code>. I’ll do three takes:</p>
 <h3 id="take-1-display-is-the-side-effect-output-is-trivial">Take 1) Display is the side-effect; output is trivial</h3>
 <p>If the whole point of <code>args()</code> is to <strong>display</strong> a function’s arguments for inspection in interactive usage, then that can simply be done as a side-effect.</p>
 <p>As I said above, <code>str()</code> surprisingly has this more sensible behavior out of the box. So let’s write our first redesign of <code>args()</code> which just calls <code>str()</code>:</p>
@@ -3082,9 +3083,9 @@ Misc.
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>args2</span><span class='op'>(</span><span class='va'>rnorm</span><span class='op'>)</span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span></span></code></pre>
 </div>
 <pre><code>  function (..., na.rm = FALSE)</code></pre>
-<pre><code>  [1] -0.1377015 -1.1093728 -0.4732521  1.2939402 -1.9288874</code></pre>
+<pre><code>  [1] -0.5494891  1.2861975 -1.2755454  1.0817387 -0.7248563</code></pre>
 </div>
-<h3 id="take-1-display-is-the-side-effect-output-is-meaningful">Take 1) Display is the side-effect; output is meaningful</h3>
+<h3 id="take-2-display-is-the-side-effect-output-is-meaningful">Take 2) Display is the side-effect; output is meaningful</h3>
 <p>One thing I neglected to mention in this blog post is that there are other ways to extract a function’s arguments. One of them is <code>formals()</code>:<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -3165,7 +3166,46 @@ Misc.
 <pre><code>  [1] &quot;closure&quot;</code></pre>
 </div>
 <p>Like, come on!</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<h2 id="sessioninfo">sessionInfo()</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/utils/sessionInfo.html'>sessionInfo</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  R version 4.3.3 (2024-02-29 ucrt)
+  Platform: x86_64-w64-mingw32/x64 (64-bit)
+  Running under: Windows 11 x64 (build 22631)
+  
+  Matrix products: default
+  
+  
+  locale:
+  [1] LC_COLLATE=English_United States.utf8 
+  [2] LC_CTYPE=English_United States.utf8   
+  [3] LC_MONETARY=English_United States.utf8
+  [4] LC_NUMERIC=C                          
+  [5] LC_TIME=English_United States.utf8    
+  
+  time zone: America/New_York
+  tzcode source: internal
+  
+  attached base packages:
+  [1] stats     graphics  grDevices utils     datasets  methods   base     
+  
+  other attached packages:
+  [1] magrittr_2.0.3
+  
+  loaded via a namespace (and not attached):
+   [1] crayon_1.5.2      vctrs_0.6.5       cli_3.6.1         knitr_1.45       
+   [5] rlang_1.1.2       xfun_0.41         purrr_1.0.2       styler_1.10.2    
+   [9] jsonlite_1.8.8    htmltools_0.5.7   sass_0.4.7        fansi_1.0.5      
+  [13] rmarkdown_2.25    R.cache_0.16.0    evaluate_0.23     jquerylib_0.1.4  
+  [17] distill_1.6       fastmap_1.1.1     yaml_2.3.7        lifecycle_1.0.4  
+  [21] memoise_2.0.1     compiler_4.3.3    prettycode_1.1.0  downlit_0.4.3    
+  [25] rstudioapi_0.15.0 R.oo_1.25.0       R.utils_2.12.3    digest_0.6.33    
+  [29] R6_2.5.1          R.methodsS3_1.8.2 bslib_0.6.1       tools_4.3.3      
+  [33] withr_3.0.0       cachem_1.0.8</code></pre>
+</div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>

@@ -276,7 +276,7 @@ str(sum)
 
 The context for my absurd rant above is that [I was just complaining](https://fosstodon.org/@yjunechoe/112039945400602627) about how I think `args()` is a rather poorly designed function.
 
-Let's try to redesign args. I'll do three takes:
+Let's try to redesign `args()`. I'll do three takes:
 
 ### Take 1) Display is the side-effect; output is trivial
 
@@ -325,7 +325,7 @@ args2(rnorm)(5)
 ```
 
 
-### Take 1) Display is the side-effect; output is meaningful
+### Take 2) Display is the side-effect; output is meaningful
 
 One thing I neglected to mention in this blog post is that there are other ways to extract a function's arguments. One of them is `formals()`:^[But note that it has a [special behavior](https://adv-r.hadley.nz/functions.html?q=formals#primitive-functions) of returning `NULL` for primitive functions (written in C) that clearly have user-facing arguments on the R side. See also `formalArgs()`, for a shortcut to `names(formals())`]
 
@@ -376,3 +376,10 @@ typeof( args4(rnorm) )
 ```
 
 Like, come on!
+
+## sessionInfo()
+
+```{r}
+sessionInfo()
+```
+
