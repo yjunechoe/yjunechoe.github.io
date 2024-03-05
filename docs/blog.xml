@@ -12,7 +12,7 @@
       <link>https://yjunechoe.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Mon, 04 Mar 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 05 Mar 2024 00:00:00 +0000</lastBuildDate>
     <item>
       <title>args(args(args)(args))</title>
       <dc:creator>June Choe</dc:creator>
@@ -53,7 +53,7 @@ start by looking at the argument that &lt;code&gt;args()&lt;/code&gt; takes.&lt;
 &lt;pre class="r"&gt;&lt;code&gt;args&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;  function (name) 
   .Internal(args(name))
-  &amp;lt;bytecode: 0x000001350ee67300&amp;gt;
+  &amp;lt;bytecode: 0x0000020d66d37fb0&amp;gt;
   &amp;lt;environment: namespace:base&amp;gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;But wouldn’t it be fun if I used &lt;code&gt;args()&lt;/code&gt; itself to get
 this information?&lt;/p&gt;
@@ -271,13 +271,143 @@ all to produce a &lt;code&gt;NULL&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Yay!&lt;/p&gt;
 &lt;h2 id="tldr-str"&gt;TL;DR: &lt;code&gt;str()&lt;/code&gt;&lt;/h2&gt;
 &lt;p&gt;If you want a version of &lt;code&gt;args()&lt;/code&gt; that does what it’s
-supposed to, use &lt;code&gt;str()&lt;/code&gt;:&lt;a href="#fn2" class="footnote-ref"
-id="fnref2"&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+supposed to, use &lt;code&gt;str()&lt;/code&gt; instead:&lt;a href="#fn2"
+class="footnote-ref" id="fnref2"&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;pre class="r"&gt;&lt;code&gt;str(args)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;  function (name)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class="r"&gt;&lt;code&gt;str(sum)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;  function (..., na.rm = FALSE)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;code&gt;args()&lt;/code&gt; is hereafter banned from my blog.&lt;/p&gt;
+&lt;h2 id="coda-serious-redesigning-args"&gt;Coda (serious): redesigning
+&lt;code&gt;args()&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;The context for my absurd rant above is that &lt;a
+href="https://fosstodon.org/@yjunechoe/112039945400602627"&gt;I was just
+complaining&lt;/a&gt; about how I think &lt;code&gt;args()&lt;/code&gt; is a rather poorly
+designed function.&lt;/p&gt;
+&lt;p&gt;Let’s try to redesign args. I’ll do three takes:&lt;/p&gt;
+&lt;h3 id="take-1-display-is-the-side-effect-output-is-trivial"&gt;Take 1)
+Display is the side-effect; output is trivial&lt;/h3&gt;
+&lt;p&gt;If the whole point of &lt;code&gt;args()&lt;/code&gt; is to
+&lt;strong&gt;display&lt;/strong&gt; a function’s arguments for inspection in
+interactive usage, then that can simply be done as a side-effect.&lt;/p&gt;
+&lt;p&gt;As I said above, &lt;code&gt;str()&lt;/code&gt; surprisingly has this more
+sensible behavior out of the box. So let’s write our first redesign of
+&lt;code&gt;args()&lt;/code&gt; which just calls &lt;code&gt;str()&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;args1 &amp;lt;- function(name) {
+  str(name)
+}
+args1(sum)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  function (..., na.rm = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In &lt;code&gt;args1()&lt;/code&gt;/&lt;code&gt;str()&lt;/code&gt;, information about the
+function arguments are sent to the console.&lt;a href="#fn3"
+class="footnote-ref" id="fnref3"&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt; We know this because
+we can’t suppress this with &lt;code&gt;invisible&lt;/code&gt; but we &lt;em&gt;can&lt;/em&gt;
+grab this via &lt;code&gt;capture.output&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;invisible( args1(sum) )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  function (..., na.rm = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;capture.output( args1(sum) )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [1] &amp;quot;function (..., na.rm = FALSE)  &amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For functions whose purpose is to signal information to the console
+(and whose usage is limited to interactive contexts), we don’t
+particularly care about the output. In fact, because the focus isn’t on
+the output, the return value should be as &lt;em&gt;trivial&lt;/em&gt; as
+possible.&lt;/p&gt;
+&lt;p&gt;A &lt;a
+href="https://design.tidyverse.org/out-invisible.html"&gt;recommended
+option&lt;/a&gt; is to just invisibly return &lt;code&gt;NULL&lt;/code&gt;. This is now
+how &lt;code&gt;args1()&lt;/code&gt; does it (via &lt;code&gt;str()&lt;/code&gt;).&lt;a href="#fn4"
+class="footnote-ref" id="fnref4"&gt;&lt;sup&gt;4&lt;/sup&gt;&lt;/a&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;print( args1(sum) )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  function (..., na.rm = FALSE)  
+  NULL&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;is.null( args1(sum) )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  function (..., na.rm = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Alternatively, the function could just invisibly return what it
+receives,&lt;a href="#fn5" class="footnote-ref"
+id="fnref5"&gt;&lt;sup&gt;5&lt;/sup&gt;&lt;/a&gt; which is another common pattern for cases
+like this. Again, we return invisibly to avoid distracting from the fact
+that the point of the function is to &lt;em&gt;display&lt;/em&gt; as the
+side-effect.&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;args2 &amp;lt;- function(name) {
+  str(sum)
+  invisible(name)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;args2(rnorm)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  function (..., na.rm = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;args2(rnorm)(5)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  function (..., na.rm = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [1]  1.6536876  1.4528063 -0.3030989 -0.2270826  0.6305848&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="take-1-display-is-the-side-effect-output-is-meaningful"&gt;Take 1)
+Display is the side-effect; output is meaningful&lt;/h3&gt;
+&lt;p&gt;One thing I neglected to mention in this blog post is that there are
+other ways to extract a function’s arguments. One of them is
+&lt;code&gt;formals()&lt;/code&gt;:&lt;a href="#fn6" class="footnote-ref"
+id="fnref6"&gt;&lt;sup&gt;6&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;formals(args)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  $name&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;formals(rnorm)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  $n
+  
+  
+  $mean
+  [1] 0
+  
+  $sd
+  [1] 1&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;formals()&lt;/code&gt; returns the information about a function’s
+arguments in a list which is pretty boring, but it’s an object we can
+manipulate (unlike the return value of &lt;code&gt;str()&lt;/code&gt;). So there’s
+some pros and cons.&lt;/p&gt;
+&lt;p&gt;Actually, we could just combine both &lt;code&gt;formals()&lt;/code&gt; and
+&lt;code&gt;str()&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;args3 &amp;lt;- function(name) {
+  str(name)
+  invisible(formals(name))
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;arguments &amp;lt;- args3(rnorm)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  function (n, mean = 0, sd = 1)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;arguments&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  $n
+  
+  
+  $mean
+  [1] 0
+  
+  $sd
+  [1] 1&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;arguments$mean&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [1] 0&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You get the nice display as a side-effect (via &lt;code&gt;str()&lt;/code&gt;)
+and then an informative output (via &lt;code&gt;formals()&lt;/code&gt;). You could
+even turn this into a class with a print method, which is definitely the
+better way to go about this, but I’m running out of steam here and I
+don’t like OOP, so I won’t touch that here.&lt;/p&gt;
+&lt;h3 id="take-3-just-remove-the-null"&gt;Take 3) Just remove the
+&lt;code&gt;NULL&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;This last redesign is the simplest of the three, and narrowly deals
+with the problem of that pesky &lt;code&gt;NULL&lt;/code&gt; shown alongside the
+function arguments:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;args(sum)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  function (..., na.rm = FALSE) 
+  NULL&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Fine, I’ll give them that &lt;code&gt;args()&lt;/code&gt; must, for
+&lt;del&gt;compatibility with S&lt;/del&gt; whatever reason, return a whole new
+function object, which in turn requires a function body. But if that
+function is just as a placeholder and not meant to be called, can’t you
+just make the function body, like, empty?&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;args4 &amp;lt;- function(name) {
+  f &amp;lt;- args(name)
+  body(f) &amp;lt;- quote(expr=)
+  f
+}
+args4(sum)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  function (..., na.rm = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;args4(rnorm)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  function (n, mean = 0, sd = 1)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;typeof( args4(rnorm) )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [1] &amp;quot;closure&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Like, come on!&lt;/p&gt;
 &lt;pre class="r distill-force-highlighting-css"&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;div class="footnotes footnotes-end-of-document"&gt;
 &lt;hr /&gt;
@@ -285,8 +415,22 @@ id="fnref2"&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;li id="fn1"&gt;&lt;p&gt;You can even see lazy evaluation in action when it
 receives &lt;code&gt;stop()&lt;/code&gt; without erroring.&lt;a href="#fnref1"
 class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id="fn2"&gt;&lt;p&gt;But remember to remove the &lt;code&gt;"srcref"&lt;/code&gt;
-attribute if the function has one.&lt;a href="#fnref2"
+&lt;li id="fn2"&gt;&lt;p&gt;Though you have to remove the &lt;code&gt;"srcref"&lt;/code&gt;
+attribute if the function has one. But also don’t actually do this!&lt;a
+href="#fnref2" class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id="fn3"&gt;&lt;p&gt;Technically, the &lt;code&gt;"output"&lt;/code&gt; stream.&lt;a
+href="#fnref3" class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id="fn4"&gt;&lt;p&gt;For the longest time, I thought &lt;code&gt;args()&lt;/code&gt; was
+doing this from how its output looked.&lt;a href="#fnref4"
+class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id="fn5"&gt;&lt;p&gt;Essentially acting like &lt;code&gt;identity()&lt;/code&gt;.&lt;a
+href="#fnref5" class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id="fn6"&gt;&lt;p&gt;But note that it has a &lt;a
+href="https://adv-r.hadley.nz/functions.html?q=formals#primitive-functions"&gt;special
+behavior&lt;/a&gt; of returning &lt;code&gt;NULL&lt;/code&gt; for primitive functions
+(written in C) that clearly have user-facing arguments on the R side.
+See also &lt;code&gt;formalArgs()&lt;/code&gt;, for a shortcut to
+&lt;code&gt;names(formals())&lt;/code&gt;&lt;a href="#fnref6"
 class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;</description>
@@ -294,7 +438,7 @@ class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
       <category>args</category>
       <category>metaprogramming</category>
       <guid>https://yjunechoe.github.io/posts/2024-03-04-args-args-args-args</guid>
-      <pubDate>Mon, 04 Mar 2024 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 05 Mar 2024 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2024-03-04-args-args-args-args/preview.png" medium="image" type="image/png" width="419" height="300"/>
     </item>
     <item>

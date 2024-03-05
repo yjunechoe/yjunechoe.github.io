@@ -263,7 +263,7 @@ Yay!
 
 ## TL;DR: `str()`
 
-If you want a version of `args()` that does what it's supposed to, use `str()`:^[But remember to remove the `"srcref"` attribute if the function has one.]
+If you want a version of `args()` that does what it's supposed to, use `str()` instead:^[Though you have to remove the `"srcref"` attribute if the function has one. But also don't actually do this!]
 
 ```{r}
 str(args)
@@ -271,3 +271,108 @@ str(sum)
 ```
 
 `args()` is hereafter banned from my blog.
+
+## Coda (serious): redesigning `args()`
+
+The context for my absurd rant above is that [I was just complaining](https://fosstodon.org/@yjunechoe/112039945400602627) about how I think `args()` is a rather poorly designed function.
+
+Let's try to redesign args. I'll do three takes:
+
+### Take 1) Display is the side-effect; output is trivial
+
+If the whole point of `args()` is to **display** a function's arguments for inspection in interactive usage, then that can simply be done as a side-effect.
+
+As I said above, `str()` surprisingly has this more sensible behavior out of the box. So let's write our first redesign of `args()` which just calls `str()`:
+
+```{r}
+args1 <- function(name) {
+  str(name)
+}
+args1(sum)
+```
+
+In `args1()`/`str()`, information about the function arguments are sent to the console.^[Technically, the `"output"` stream.] We know this because we can't suppress this with `invisible` but we *can* grab this via `capture.output`:
+
+```{r}
+invisible( args1(sum) )
+capture.output( args1(sum) )
+```
+
+For functions whose purpose is to signal information to the console (and whose usage is limited to interactive contexts), we don't particularly care about the output. In fact, because the focus isn't on the output, the return value should be as *trivial* as possible.
+
+A [recommended option](https://design.tidyverse.org/out-invisible.html) is to just invisibly return `NULL`. This is now how `args1()` does it (via `str()`).^[For the longest time, I thought `args()` was doing this from how its output looked.]:
+
+```{r}
+print( args1(sum) )
+is.null( args1(sum) )
+```
+
+Alternatively, the function could just invisibly return what it receives,^[Essentially acting like `identity()`.] which is another common pattern for cases like this. Again, we return invisibly to avoid distracting from the fact that the point of the function is to *display* as the side-effect.
+
+```{r}
+args2 <- function(name) {
+  str(sum)
+  invisible(name)
+}
+```
+
+```{r}
+args2(rnorm)
+```
+
+```{r}
+args2(rnorm)(5)
+```
+
+
+### Take 1) Display is the side-effect; output is meaningful
+
+One thing I neglected to mention in this blog post is that there are other ways to extract a function's arguments. One of them is `formals()`:^[But note that it has a [special behavior](https://adv-r.hadley.nz/functions.html?q=formals#primitive-functions) of returning `NULL` for primitive functions (written in C) that clearly have user-facing arguments on the R side. See also `formalArgs()`, for a shortcut to `names(formals())`]
+
+```{r}
+formals(args)
+formals(rnorm)
+```
+
+`formals()` returns the information about a function's arguments in a list which is pretty boring, but it's an object we can manipulate (unlike the return value of `str()`). So there's some pros and cons.
+
+Actually, we could just combine both `formals()` and `str()`:
+
+```{r}
+args3 <- function(name) {
+  str(name)
+  invisible(formals(name))
+}
+```
+
+
+```{r}
+arguments <- args3(rnorm)
+arguments
+arguments$mean
+```
+
+You get the nice display as a side-effect (via `str()`) and then an informative output (via `formals()`). You could even turn this into a class with a print method, which is definitely the better way to go about this, but I'm running out of steam here and I don't like OOP, so I won't touch that here.
+
+### Take 3) Just remove the `NULL`
+
+This last redesign is the simplest of the three, and narrowly deals with the problem of that pesky `NULL` shown alongside the function arguments:
+
+```{r}
+args(sum)
+```
+
+Fine, I'll give them that `args()` must, for ~~compatibility with S~~ whatever reason, return a whole new function object, which in turn requires a function body. But if that function is just as a placeholder and not meant to be called, can't you just make the function body, like, empty?
+
+```{r}
+args4 <- function(name) {
+  f <- args(name)
+  body(f) <- quote(expr=)
+  f
+}
+args4(sum)
+args4(rnorm)
+typeof( args4(rnorm) )
+```
+
+Like, come on!
