@@ -17,7 +17,225 @@
       <title>args(args(args)(args))</title>
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2024-03-04-args-args-args-args</link>
-      <description>The unexpected sequal to "R is a language optimized for meme-ing"</description>
+      <description>
+
+
+&lt;p&gt;The kind of blog posts that I have the most fun writing are those
+where I hyperfocus on a single function, like &lt;a
+href="https://yjunechoe.github.io/posts/2023-06-11-row-relational-operations/"&gt;dplyr::slice()&lt;/a&gt;,
+&lt;a
+href="https://yjunechoe.github.io/posts/2020-12-13-collapse-repetitive-piping-with-reduce/"&gt;purrr::reduce()&lt;/a&gt;,
+and &lt;a
+href="https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/"&gt;ggplot2::stat_summary()&lt;/a&gt;.
+In writing blog posts of this kind, I naturally come across a point
+where I need to introduce the argument(s) that the function takes. I
+usually talk about them one at a time as needed, but I &lt;em&gt;could&lt;/em&gt;
+start by front-loading that important piece of information first.&lt;/p&gt;
+&lt;p&gt;In fact, there’s a function in R that lets me do exactly that, called
+&lt;code&gt;args()&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id="args"&gt;&lt;code&gt;args()&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;args()&lt;/code&gt; is, in theory, a very neat function. According to
+&lt;code&gt;?args&lt;/code&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Displays the argument names and corresponding default values of a
+(non-primitive or primitive) function.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;So, for example, I know that &lt;code&gt;sum()&lt;/code&gt; takes the arguments
+&lt;code&gt;...&lt;/code&gt; and &lt;code&gt;na.rm&lt;/code&gt; (with the
+&lt;code&gt;na.rm = FALSE&lt;/code&gt; default). The role of &lt;code&gt;args()&lt;/code&gt; is
+to display exactly that piece of information using R code. This blog
+runs on rmarkdown, so surely I can use &lt;code&gt;args()&lt;/code&gt; as a
+convenient and fancy way of showing information about a function’s
+arguments to my readers.&lt;/p&gt;
+&lt;p&gt;In this blog post, I want to talk about &lt;code&gt;args()&lt;/code&gt;. So let’s
+start by looking at the argument that &lt;code&gt;args()&lt;/code&gt; takes.&lt;/p&gt;
+&lt;p&gt;Of course, I could just print &lt;code&gt;args&lt;/code&gt; in the console:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;args&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  function (name) 
+  .Internal(args(name))
+  &amp;lt;bytecode: 0x000001c114e13ff0&amp;gt;
+  &amp;lt;environment: namespace:base&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;But wouldn’t it be fun if I used &lt;code&gt;args()&lt;/code&gt; itself to get
+this information?&lt;/p&gt;
+&lt;h2 id="argsargs"&gt;&lt;code&gt;args(args)&lt;/code&gt;&lt;/h2&gt;
+&lt;pre class="r"&gt;&lt;code&gt;args(args)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  function (name) 
+  NULL&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Okay, so I get the &lt;code&gt;function (name)&lt;/code&gt; piece, which is the
+information I wanted to show. We can see that &lt;code&gt;args()&lt;/code&gt; takes
+one argument, called &lt;code&gt;name&lt;/code&gt;, with no defaults.&lt;/p&gt;
+&lt;p&gt;But wait - what’s that &lt;code&gt;NULL&lt;/code&gt; doing there in the second
+line?&lt;/p&gt;
+&lt;p&gt;Hmm, I wonder if they forgot to &lt;code&gt;invisible()&lt;/code&gt;-y return the
+&lt;code&gt;NULL&lt;/code&gt;. &lt;code&gt;args()&lt;/code&gt; is a function for
+&lt;em&gt;displaying&lt;/em&gt; a function’s arguments after all, so maybe the
+arguments are printed to the console as a side-effect and the actual
+output of &lt;code&gt;args()&lt;/code&gt; is &lt;code&gt;NULL&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;If that is true, we should be able to suppress the printing of
+&lt;code&gt;NULL&lt;/code&gt; with &lt;code&gt;invisible()&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;invisible(args(args))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Uh oh, now &lt;em&gt;everything&lt;/em&gt; is invisible.&lt;/p&gt;
+&lt;p&gt;Alright, enough games! What exactly are you, output of
+&lt;code&gt;args()&lt;/code&gt;?!&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;typeof(args(args))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [1] &amp;quot;closure&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;What?&lt;/p&gt;
+&lt;h2 id="argsargsargs"&gt;&lt;code&gt;args(args)(args)&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;Turns out that &lt;code&gt;args(args)&lt;/code&gt; is actually returning a whole
+function that’s a &lt;em&gt;copy&lt;/em&gt; of &lt;code&gt;args()&lt;/code&gt;, except with its
+body replaced with NULL.&lt;/p&gt;
+&lt;p&gt;So &lt;code&gt;args(args)&lt;/code&gt; is itself a function that takes an
+argument called &lt;code&gt;name&lt;/code&gt; and then returns &lt;code&gt;NULL&lt;/code&gt;.
+Let’s assign it to a variable and call it like a function:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;abomination &amp;lt;- args(args)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;abomination(123)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  NULL&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;abomination(mtcars)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  NULL&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;abomination(stop())&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  NULL&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The body is &lt;em&gt;just&lt;/em&gt; &lt;code&gt;NULL&lt;/code&gt;, so the function doesn’t
+care what it receives&lt;a href="#fn1" class="footnote-ref"
+id="fnref1"&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; - it just returns &lt;code&gt;NULL&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;In fact, we could even pass it… &lt;code&gt;args&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;args(args)(args)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  NULL&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="argsargsargsargs"&gt;&lt;code&gt;args(args(args)(args))&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;But wait, that’s not all! &lt;code&gt;args()&lt;/code&gt; doesn’t &lt;em&gt;just&lt;/em&gt;
+accept a function as its argument. From the documentation:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Value&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;NULL in case of a non-function.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;So yeah - if &lt;code&gt;args()&lt;/code&gt; receives a non-function, it just
+returns &lt;code&gt;NULL&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;args(123)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  NULL&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;args(mtcars)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  NULL&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This applies to &lt;em&gt;any&lt;/em&gt; non-function, including…
+&lt;code&gt;NULL&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;args(NULL)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  NULL&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And recall that:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;is.null( args(args)(args) )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Therefore, this is a valid expression in base R:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;args(args(args)(args))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  NULL&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="ad-infinitum"&gt;ad infinitum&lt;/h2&gt;
+&lt;p&gt;For our cursed usecase of using &lt;code&gt;args(f)&lt;/code&gt; to return a copy
+of &lt;code&gt;f&lt;/code&gt; with it’s body replaced with &lt;code&gt;NULL&lt;/code&gt; only to
+then immediately call &lt;code&gt;args(f)(f)&lt;/code&gt; to return
+&lt;code&gt;NULL&lt;/code&gt;, it really doesn’t matter what the identity of
+&lt;code&gt;f&lt;/code&gt; is as long as it’s a function.&lt;/p&gt;
+&lt;p&gt;That function can even be … &lt;code&gt;args(args)&lt;/code&gt;!&lt;/p&gt;
+&lt;p&gt;So let’s take our &lt;code&gt;args(args(args)(args))&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;args( args( args )( args ))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  NULL&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And swap every &lt;code&gt;args()&lt;/code&gt; with &lt;code&gt;args(args)&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;args(args)( args(args)( args(args) )( args(args) ))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  NULL&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Or better yet, swap every &lt;code&gt;args()&lt;/code&gt; with
+&lt;code&gt;args(args(args))&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;args(args(args))( args(args(args))( args(args(args)) )( args(args(args)) ))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  NULL&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The above unhinged examples are a product of two patterns:&lt;/p&gt;
+&lt;ol style="list-style-type: decimal"&gt;
+&lt;li&gt;&lt;p&gt;The fact that you always get &lt;code&gt;function (name) NULL&lt;/code&gt;
+from wrapping &lt;code&gt;args()&lt;/code&gt;s over &lt;code&gt;args&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;list(
+  args(          args),
+  args(     args(args)),
+  args(args(args(args)))
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [[1]]
+  function (name) 
+  NULL
+
+  [[2]]
+  function (name) 
+  NULL
+
+  [[3]]
+  function (name) 
+  NULL&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;The fact that you can get this whole thing to return
+&lt;code&gt;NULL&lt;/code&gt; by having &lt;code&gt;function (name) NULL&lt;/code&gt; call the
+function object &lt;code&gt;args&lt;/code&gt;. You can do this anywhere in the stack
+and the &lt;code&gt;NULL&lt;/code&gt; will simply propagate:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;list(
+  args(args(args(args))) (args)   ,
+  args(args(args(args))  (args) ) ,
+  args(args(args(args)   (args) ))
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [[1]]
+  NULL
+
+  [[2]]
+  NULL
+
+  [[3]]
+  NULL&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;We could keep going but it’s tiring to type out and read all these
+nested &lt;code&gt;args()&lt;/code&gt;… but did you know that there’s this thing
+called the pipe &lt;code&gt;%&amp;gt;%&lt;/code&gt; that’s the solution to all code
+readability issues?&lt;/p&gt;
+&lt;p&gt;So why don’t we just make an &lt;code&gt;args()&lt;/code&gt; factory
+&lt;code&gt;ARGS()&lt;/code&gt; …&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;library(magrittr)
+ARGS &amp;lt;- function(n) {
+  Reduce(
+    f = \(x,y) bquote(.(x) %&amp;gt;% args()),
+    x = seq_len(n),
+    init = quote(args)
+  )
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;… to produce a sequence of &lt;code&gt;args()&lt;/code&gt; …&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;ARGS(10)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  args %&amp;gt;% args() %&amp;gt;% args() %&amp;gt;% args() %&amp;gt;% args() %&amp;gt;% args() %&amp;gt;% 
+      args() %&amp;gt;% args() %&amp;gt;% args() %&amp;gt;% args() %&amp;gt;% args()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;eval(ARGS(10))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  function (name) 
+  NULL&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;… and tidy it up?&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;deparse1(ARGS(10)) |&amp;gt;
+  styler::style_text()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  args %&amp;gt;%
+    args() %&amp;gt;%
+    args() %&amp;gt;%
+    args() %&amp;gt;%
+    args() %&amp;gt;%
+    args() %&amp;gt;%
+    args() %&amp;gt;%
+    args() %&amp;gt;%
+    args() %&amp;gt;%
+    args() %&amp;gt;%
+    args()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Yay!&lt;/p&gt;
+&lt;h2 id="tldr-str"&gt;TL;DR: &lt;code&gt;str()&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;If you want a version of &lt;code&gt;args()&lt;/code&gt; that does what it’s
+supposed to, use &lt;code&gt;str()&lt;/code&gt;:&lt;a href="#fn2" class="footnote-ref"
+id="fnref2"&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;str(args)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  function (name)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;str(sum)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  function (..., na.rm = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;args()&lt;/code&gt; is hereafter banned from my blog.&lt;/p&gt;
+&lt;pre class="r distill-force-highlighting-css"&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="footnotes footnotes-end-of-document"&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id="fn1"&gt;&lt;p&gt;You can even see lazy evaluation in action when it
+receives &lt;code&gt;stop()&lt;/code&gt; without erroring.&lt;a href="#fnref1"
+class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id="fn2"&gt;&lt;p&gt;But remember to remove the &lt;code&gt;"srcref"&lt;/code&gt;
+attribute if the function has one.&lt;a href="#fnref2"
+class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</description>
+      <distill:md5>a7c2de69010eda0d57a43eca8dcdc41d</distill:md5>
       <category>args</category>
       <guid>https://yjunechoe.github.io/posts/2024-03-04-args-args-args-args</guid>
       <pubDate>Mon, 04 Mar 2024 00:00:00 +0000</pubDate>

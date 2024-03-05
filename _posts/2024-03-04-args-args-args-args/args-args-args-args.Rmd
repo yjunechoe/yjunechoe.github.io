@@ -165,7 +165,7 @@ args(args(args))( args(args(args))( args(args(args)) )( args(args(args)) ))
 
 The above unhinged examples are a product of two patterns:
 
-1) The fact that you always get `function (name) NULL` from wrapping `args()` over `args(args)`:
+1) The fact that you always get `function (name) NULL` from wrapping `args()`s over `args`:
 
     ```{r}
     list(
@@ -195,7 +195,7 @@ ARGS <- function(n) {
   Reduce(
     f = \(x,y) bquote(.(x) %>% args()),
     x = seq_len(n),
-    init = quote(args(args))
+    init = quote(args)
   )
 }
 ```

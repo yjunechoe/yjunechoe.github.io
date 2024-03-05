@@ -1584,7 +1584,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <pre><code>  function (name) 
   .Internal(args(name))
-  &lt;bytecode: 0x000001cee84380e0&gt;
+  &lt;bytecode: 0x000001c114e13ff0&gt;
   &lt;environment: namespace:base&gt;</code></pre>
 </div>
 <p>But wouldn’t it be fun if I used <code>args()</code> itself to get this information?</p>
@@ -1708,7 +1708,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <p>The above unhinged examples are a product of two patterns:</p>
 <ol type="1">
-<li><p>The fact that you always get <code>function (name) NULL</code> from wrapping <code>args()</code> over <code>args(args)</code>:</p>
+<li><p>The fact that you always get <code>function (name) NULL</code> from wrapping <code>args()</code>s over <code>args</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
@@ -1757,7 +1757,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span>  <span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Reduce</a></span><span class='op'>(</span></span>
 <span>    f <span class='op'>=</span> \<span class='op'>(</span><span class='va'>x</span>,<span class='va'>y</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/bquote.html'>bquote</a></span><span class='op'>(</span><span class='fu'>.</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/args.html'>args</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>,</span>
 <span>    x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span>,</span>
-<span>    init <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>quote</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/args.html'>args</a></span><span class='op'>(</span><span class='va'>args</span><span class='op'>)</span><span class='op'>)</span></span>
+<span>    init <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>quote</a></span><span class='op'>(</span><span class='va'>args</span><span class='op'>)</span></span>
 <span>  <span class='op'>)</span></span>
 <span><span class='op'>}</span></span></code></pre>
 </div>
@@ -1767,7 +1767,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>ARGS</span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>  args(args) %&gt;% args() %&gt;% args() %&gt;% args() %&gt;% args() %&gt;% args() %&gt;% 
+<pre><code>  args %&gt;% args() %&gt;% args() %&gt;% args() %&gt;% args() %&gt;% args() %&gt;% 
       args() %&gt;% args() %&gt;% args() %&gt;% args() %&gt;% args()</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/eval.html'>eval</a></span><span class='op'>(</span><span class='fu'>ARGS</span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
@@ -1781,7 +1781,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse1</a></span><span class='op'>(</span><span class='fu'>ARGS</span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'>styler</span><span class='fu'>::</span><span class='fu'><a href='https://styler.r-lib.org/reference/style_text.html'>style_text</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>  args(args) %&gt;%
+<pre><code>  args %&gt;%
     args() %&gt;%
     args() %&gt;%
     args() %&gt;%
