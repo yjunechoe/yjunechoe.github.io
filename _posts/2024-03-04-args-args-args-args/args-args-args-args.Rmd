@@ -220,15 +220,15 @@ ARGS(10) %>%
 
 Wanna see even more unhinged?
 
-Let's try to produce a "matrix" of `args()`. You get a choice of `n` lines, and `m` `args()` around `args` each time - all to produce a `NULL`.
+Let's try to produce a "matrix" of `args()`. You get a choice of `i` "rows" of piped lines, and `j` "columns" of `args()`-around-`args` each time - all to produce a `NULL`.
 
 Ready?
 
 ```{r}
-ARGS2 <- function(n, m) {
+ARGS2 <- function(i, j) {
   Reduce(
     f = \(x,y) bquote(.(x) %>% (.(y))),
-    x = rep(list(Reduce(\(x,y) call("args", x), seq_len(m), quote(args))), n)
+    x = rep(list(Reduce(\(x,y) call("args", x), seq_len(j), quote(args))), i)
   )
 }
 ```

@@ -1586,7 +1586,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <pre><code>  function (name) 
   .Internal(args(name))
-  &lt;bytecode: 0x00000209743b31c0&gt;
+  &lt;bytecode: 0x000001350ee67300&gt;
   &lt;environment: namespace:base&gt;</code></pre>
 </div>
 <p>But wouldn’t it be fun if I used <code>args()</code> itself to get this information?</p>
@@ -1798,14 +1798,14 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     args()</code></pre>
 </div>
 <p>Wanna see even more unhinged?</p>
-<p>Let’s try to produce a “matrix” of <code>args()</code>. You get a choice of <code>n</code> lines, and <code>m</code> <code>args()</code> around <code>args</code> each time - all to produce a <code>NULL</code>.</p>
+<p>Let’s try to produce a “matrix” of <code>args()</code>. You get a choice of <code>i</code> “rows” of piped lines, and <code>j</code> “columns” of <code>args()</code>-around-<code>args</code> each time - all to produce a <code>NULL</code>.</p>
 <p>Ready?</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>ARGS2</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>n</span>, <span class='va'>m</span><span class='op'>)</span> <span class='op'>{</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>ARGS2</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>i</span>, <span class='va'>j</span><span class='op'>)</span> <span class='op'>{</span></span>
 <span>  <span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Reduce</a></span><span class='op'>(</span></span>
 <span>    f <span class='op'>=</span> \<span class='op'>(</span><span class='va'>x</span>,<span class='va'>y</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/bquote.html'>bquote</a></span><span class='op'>(</span><span class='fu'>.</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='op'>(</span><span class='fu'>.</span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,</span>
-<span>    x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Reduce</a></span><span class='op'>(</span>\<span class='op'>(</span><span class='va'>x</span>,<span class='va'>y</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/call.html'>call</a></span><span class='op'>(</span><span class='st'>"args"</span>, <span class='va'>x</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>quote</a></span><span class='op'>(</span><span class='va'>args</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>, <span class='va'>n</span><span class='op'>)</span></span>
+<span>    x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Reduce</a></span><span class='op'>(</span>\<span class='op'>(</span><span class='va'>x</span>,<span class='va'>y</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/call.html'>call</a></span><span class='op'>(</span><span class='st'>"args"</span>, <span class='va'>x</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='va'>j</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>quote</a></span><span class='op'>(</span><span class='va'>args</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>, <span class='va'>i</span><span class='op'>)</span></span>
 <span>  <span class='op'>)</span></span>
 <span><span class='op'>}</span></span></code></pre>
 </div>
