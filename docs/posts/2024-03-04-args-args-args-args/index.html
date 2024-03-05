@@ -125,7 +125,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","date","output","editor_options","preview","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["args(args(args)(args))"]},{"type":"character","attributes":{},"value":["The unexpected sequal to \"R is a language optimized for meme-ing\""]},{"type":"character","attributes":{},"value":["args"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]},{"type":"character","attributes":{},"value":["0000-0002-0701-921X"]}]}]},{"type":"character","attributes":{},"value":["2024-03-04"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["include-after-body","toc","self_contained","css"]}},"value":[{"type":"character","attributes":{},"value":["highlighting.html"]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["../../styles.css"]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["chunk_output_type"]}},"value":[{"type":"character","attributes":{},"value":["console"]}]},{"type":"character","attributes":{},"value":["preview.png"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io/posts/2024-03-04-args-args-args-args/"]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","date","output","editor_options","preview","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["args(args(args)(args))"]},{"type":"character","attributes":{},"value":["The unexpected sequal to \"R is a language optimized for meme-ing\""]},{"type":"character","attributes":{},"value":["args","metaprogramming"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]},{"type":"character","attributes":{},"value":["0000-0002-0701-921X"]}]}]},{"type":"character","attributes":{},"value":["2024-03-04"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["include-after-body","toc","self_contained","css"]}},"value":[{"type":"character","attributes":{},"value":["highlighting.html"]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["../../styles.css"]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["chunk_output_type"]}},"value":[{"type":"character","attributes":{},"value":["console"]}]},{"type":"character","attributes":{},"value":["preview.png"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io/posts/2024-03-04-args-args-args-args/"]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -2677,6 +2677,7 @@ Misc.
 <!--radix_placeholder_categories-->
 <div class="dt-tags">
   <a href="../../blog.html#category:args" class="dt-tag">args</a>
+  <a href="../../blog.html#category:metaprogramming" class="dt-tag">metaprogramming</a>
 </div>
 <!--/radix_placeholder_categories-->
 <p><p>The unexpected sequal to “R is a language optimized for meme-ing”</p></p>
@@ -2698,6 +2699,7 @@ Misc.
 <li><a href="#argsargsargs" id="toc-argsargsargs"><code>args(args)(args)</code></a></li>
 <li><a href="#argsargsargsargs" id="toc-argsargsargsargs"><code>args(args(args)(args))</code></a></li>
 <li><a href="#ad-infinitum" id="toc-ad-infinitum">ad infinitum</a></li>
+<li><a href="#had-enough-args-yet" id="toc-had-enough-args-yet">Had enough <code>args()</code> yet?</a></li>
 <li><a href="#tldr-str" id="toc-tldr-str">TL;DR: <code>str()</code></a></li>
 </ul>
 </nav>
@@ -2718,7 +2720,7 @@ Misc.
 </div>
 <pre><code>  function (name) 
   .Internal(args(name))
-  &lt;bytecode: 0x000001c114e13ff0&gt;
+  &lt;bytecode: 0x000002061097a210&gt;
   &lt;environment: namespace:base&gt;</code></pre>
 </div>
 <p>But wouldn’t it be fun if I used <code>args()</code> itself to get this information?</p>
@@ -2883,7 +2885,8 @@ Misc.
 </div></li>
 </ol>
 <p>We could keep going but it’s tiring to type out and read all these nested <code>args()</code>… but did you know that there’s this thing called the pipe <code>%&gt;%</code> that’s the solution to all code readability issues?</p>
-<p>So why don’t we just make an <code>args()</code> factory <code>ARGS()</code> …</p>
+<h2 id="had-enough-args-yet">Had enough <code>args()</code> yet?</h2>
+<p>Let’s make an <code>args()</code> factory <code>ARGS()</code> …</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://magrittr.tidyverse.org'>magrittr</a></span><span class='op'>)</span></span>
@@ -2909,10 +2912,11 @@ Misc.
 <pre><code>  function (name) 
   NULL</code></pre>
 </div>
-<p>… and tidy it up?</p>
+<p>… and tidy it up!</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse1</a></span><span class='op'>(</span><span class='fu'>ARGS</span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>ARGS</span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse1</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
 <span>  <span class='fu'>styler</span><span class='fu'>::</span><span class='fu'><a href='https://styler.r-lib.org/reference/style_text.html'>style_text</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
 </div>
 <pre><code>  args %&gt;%
@@ -2926,6 +2930,84 @@ Misc.
     args() %&gt;%
     args() %&gt;%
     args()</code></pre>
+</div>
+<p>Wanna see even more unhinged?</p>
+<p>Let’s try to produce a “matrix” of <code>args()</code>. You get a choice of <code>n</code> lines, and <code>m</code> <code>args()</code> around <code>args</code> each time - all to produce a <code>NULL</code>.</p>
+<p>Ready?</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>ARGS2</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>n</span>, <span class='va'>m</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Reduce</a></span><span class='op'>(</span></span>
+<span>    f <span class='op'>=</span> \<span class='op'>(</span><span class='va'>x</span>,<span class='va'>y</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/bquote.html'>bquote</a></span><span class='op'>(</span></span>
+<span>      <span class='fu'>.</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>        <span class='op'>(</span><span class='fu'>.</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Reduce</a></span><span class='op'>(</span>\<span class='op'>(</span><span class='va'>x</span>,<span class='va'>y</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/call.html'>call</a></span><span class='op'>(</span><span class='st'>"args"</span>, <span class='va'>x</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>quote</a></span><span class='op'>(</span><span class='va'>args</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span>    <span class='op'>)</span>,</span>
+<span>    x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span>,</span>
+<span>    init <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>quote</a></span><span class='op'>(</span><span class='va'>args</span><span class='op'>)</span></span>
+<span>  <span class='op'>)</span></span>
+<span><span class='op'>}</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>ARGS2</span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>1</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse1</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'>styler</span><span class='fu'>::</span><span class='fu'><a href='https://styler.r-lib.org/reference/style_text.html'>style_text</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  args %&gt;%
+    (args(args)) %&gt;%
+    (args(args)) %&gt;%
+    (args(args)) %&gt;%
+    (args(args)) %&gt;%
+    (args(args))</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>ARGS2</span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>3</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse1</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'>styler</span><span class='fu'>::</span><span class='fu'><a href='https://styler.r-lib.org/reference/style_text.html'>style_text</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  args %&gt;%
+    (args(args(args(args)))) %&gt;%
+    (args(args(args(args)))) %&gt;%
+    (args(args(args(args)))) %&gt;%
+    (args(args(args(args)))) %&gt;%
+    (args(args(args(args))))</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>ARGS2</span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>5</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse1</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'>styler</span><span class='fu'>::</span><span class='fu'><a href='https://styler.r-lib.org/reference/style_text.html'>style_text</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  args %&gt;%
+    (args(args(args(args(args(args)))))) %&gt;%
+    (args(args(args(args(args(args)))))) %&gt;%
+    (args(args(args(args(args(args)))))) %&gt;%
+    (args(args(args(args(args(args)))))) %&gt;%
+    (args(args(args(args(args(args)))))) %&gt;%
+    (args(args(args(args(args(args)))))) %&gt;%
+    (args(args(args(args(args(args)))))) %&gt;%
+    (args(args(args(args(args(args)))))) %&gt;%
+    (args(args(args(args(args(args)))))) %&gt;%
+    (args(args(args(args(args(args))))))</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/eval.html'>eval</a></span><span class='op'>(</span><span class='fu'>ARGS2</span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/eval.html'>eval</a></span><span class='op'>(</span><span class='fu'>ARGS2</span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/eval.html'>eval</a></span><span class='op'>(</span><span class='fu'>ARGS2</span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span></span>
+<span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  [[1]]
+  NULL
+  
+  [[2]]
+  NULL
+  
+  [[3]]
+  NULL</code></pre>
 </div>
 <p>Yay!</p>
 <h2 id="tldr-str">TL;DR: <code>str()</code></h2>
@@ -2941,7 +3023,7 @@ Misc.
 <pre><code>  function (..., na.rm = FALSE)</code></pre>
 </div>
 <p><code>args()</code> is hereafter banned from my blog.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>

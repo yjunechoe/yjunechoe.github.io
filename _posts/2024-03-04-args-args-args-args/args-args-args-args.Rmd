@@ -4,6 +4,7 @@ description: |
   The unexpected sequal to "R is a language optimized for meme-ing"
 categories:
   - args
+  - metaprogramming
 base_url: https://yjunechoe.github.io
 author:
   - name: June Choe
@@ -187,7 +188,9 @@ The above unhinged examples are a product of two patterns:
 
 We could keep going but it's tiring to type out and read all these nested `args()`... but did you know that there's this thing called the pipe `%>%` that's the solution to all code readability issues?
 
-So why don't we just make an `args()` factory `ARGS()` ...
+## Had enough `args()` yet?
+
+Let's make an `args()` factory `ARGS()` ...
 
 ```{r}
 library(magrittr)
@@ -207,11 +210,57 @@ ARGS(10)
 eval(ARGS(10))
 ```
 
-... and tidy it up?
+... and tidy it up!
 
 ```{r}
-deparse1(ARGS(10)) |>
+ARGS(10) %>% 
+  deparse1() %>% 
   styler::style_text()
+```
+
+Wanna see even more unhinged?
+
+Let's try to produce a "matrix" of `args()`. You get a choice of `n` lines, and `m` `args()` around `args` each time - all to produce a `NULL`.
+
+Ready?
+
+```{r}
+ARGS2 <- function(n, m) {
+  Reduce(
+    f = \(x,y) bquote(
+      .(x) %>%
+        (.(Reduce(\(x,y) call("args", x), seq_len(m), quote(args))))
+    ),
+    x = seq_len(n),
+    init = quote(args)
+  )
+}
+```
+
+```{r}
+ARGS2(5, 1) %>% 
+  deparse1() %>%
+  styler::style_text()
+```
+
+```{r}
+ARGS2(5, 3) %>% 
+  deparse1() %>%
+  styler::style_text()
+```
+
+```{r}
+ARGS2(10, 5) %>% 
+  deparse1() %>%
+  styler::style_text()
+```
+
+```{r}
+list(
+  eval(ARGS2(5, 1)),
+  eval(ARGS2(5, 3)),
+  eval(ARGS2(10, 5))
+)
 ```
 
 Yay!

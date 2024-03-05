@@ -53,7 +53,7 @@ start by looking at the argument that &lt;code&gt;args()&lt;/code&gt; takes.&lt;
 &lt;pre class="r"&gt;&lt;code&gt;args&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;  function (name) 
   .Internal(args(name))
-  &amp;lt;bytecode: 0x000001c114e13ff0&amp;gt;
+  &amp;lt;bytecode: 0x000002061097a210&amp;gt;
   &amp;lt;environment: namespace:base&amp;gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;But wouldn’t it be fun if I used &lt;code&gt;args()&lt;/code&gt; itself to get
 this information?&lt;/p&gt;
@@ -182,8 +182,8 @@ and the &lt;code&gt;NULL&lt;/code&gt; will simply propagate:&lt;/p&gt;
 nested &lt;code&gt;args()&lt;/code&gt;… but did you know that there’s this thing
 called the pipe &lt;code&gt;%&amp;gt;%&lt;/code&gt; that’s the solution to all code
 readability issues?&lt;/p&gt;
-&lt;p&gt;So why don’t we just make an &lt;code&gt;args()&lt;/code&gt; factory
-&lt;code&gt;ARGS()&lt;/code&gt; …&lt;/p&gt;
+&lt;h2 id="had-enough-args-yet"&gt;Had enough &lt;code&gt;args()&lt;/code&gt; yet?&lt;/h2&gt;
+&lt;p&gt;Let’s make an &lt;code&gt;args()&lt;/code&gt; factory &lt;code&gt;ARGS()&lt;/code&gt; …&lt;/p&gt;
 &lt;pre class="r"&gt;&lt;code&gt;library(magrittr)
 ARGS &amp;lt;- function(n) {
   Reduce(
@@ -199,8 +199,9 @@ ARGS &amp;lt;- function(n) {
 &lt;pre class="r"&gt;&lt;code&gt;eval(ARGS(10))&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;  function (name) 
   NULL&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;… and tidy it up?&lt;/p&gt;
-&lt;pre class="r"&gt;&lt;code&gt;deparse1(ARGS(10)) |&amp;gt;
+&lt;p&gt;… and tidy it up!&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;ARGS(10) %&amp;gt;% 
+  deparse1() %&amp;gt;% 
   styler::style_text()&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;  args %&amp;gt;%
     args() %&amp;gt;%
@@ -213,6 +214,67 @@ ARGS &amp;lt;- function(n) {
     args() %&amp;gt;%
     args() %&amp;gt;%
     args()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Wanna see even more unhinged?&lt;/p&gt;
+&lt;p&gt;Let’s try to produce a “matrix” of &lt;code&gt;args()&lt;/code&gt;. You get a
+choice of &lt;code&gt;n&lt;/code&gt; lines, and &lt;code&gt;m&lt;/code&gt; &lt;code&gt;args()&lt;/code&gt;
+around &lt;code&gt;args&lt;/code&gt; each time - all to produce a
+&lt;code&gt;NULL&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Ready?&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;ARGS2 &amp;lt;- function(n, m) {
+  Reduce(
+    f = \(x,y) bquote(
+      .(x) %&amp;gt;%
+        (.(Reduce(\(x,y) call(&amp;quot;args&amp;quot;, x), seq_len(m), quote(args))))
+    ),
+    x = seq_len(n),
+    init = quote(args)
+  )
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;ARGS2(5, 1) %&amp;gt;% 
+  deparse1() %&amp;gt;%
+  styler::style_text()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  args %&amp;gt;%
+    (args(args)) %&amp;gt;%
+    (args(args)) %&amp;gt;%
+    (args(args)) %&amp;gt;%
+    (args(args)) %&amp;gt;%
+    (args(args))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;ARGS2(5, 3) %&amp;gt;% 
+  deparse1() %&amp;gt;%
+  styler::style_text()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  args %&amp;gt;%
+    (args(args(args(args)))) %&amp;gt;%
+    (args(args(args(args)))) %&amp;gt;%
+    (args(args(args(args)))) %&amp;gt;%
+    (args(args(args(args)))) %&amp;gt;%
+    (args(args(args(args))))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;ARGS2(10, 5) %&amp;gt;% 
+  deparse1() %&amp;gt;%
+  styler::style_text()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  args %&amp;gt;%
+    (args(args(args(args(args(args)))))) %&amp;gt;%
+    (args(args(args(args(args(args)))))) %&amp;gt;%
+    (args(args(args(args(args(args)))))) %&amp;gt;%
+    (args(args(args(args(args(args)))))) %&amp;gt;%
+    (args(args(args(args(args(args)))))) %&amp;gt;%
+    (args(args(args(args(args(args)))))) %&amp;gt;%
+    (args(args(args(args(args(args)))))) %&amp;gt;%
+    (args(args(args(args(args(args)))))) %&amp;gt;%
+    (args(args(args(args(args(args)))))) %&amp;gt;%
+    (args(args(args(args(args(args))))))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;list(
+  eval(ARGS2(5, 1)),
+  eval(ARGS2(5, 3)),
+  eval(ARGS2(10, 5))
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [[1]]
+  NULL
+  
+  [[2]]
+  NULL
+  
+  [[3]]
+  NULL&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Yay!&lt;/p&gt;
 &lt;h2 id="tldr-str"&gt;TL;DR: &lt;code&gt;str()&lt;/code&gt;&lt;/h2&gt;
 &lt;p&gt;If you want a version of &lt;code&gt;args()&lt;/code&gt; that does what it’s
@@ -237,6 +299,7 @@ class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/div&gt;</description>
       <distill:md5>a7c2de69010eda0d57a43eca8dcdc41d</distill:md5>
       <category>args</category>
+      <category>metaprogramming</category>
       <guid>https://yjunechoe.github.io/posts/2024-03-04-args-args-args-args</guid>
       <pubDate>Mon, 04 Mar 2024 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2024-03-04-args-args-args-args/preview.png" medium="image" type="image/png" width="419" height="300"/>
