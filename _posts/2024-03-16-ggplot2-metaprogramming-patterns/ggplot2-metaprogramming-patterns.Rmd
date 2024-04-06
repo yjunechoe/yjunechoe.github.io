@@ -1,0 +1,98 @@
+---
+title: '{ggplot2} metaprogramming patterns'
+description: |
+  A ggplot blog post that only uses `aes()`
+categories:
+  - ggplot2
+  - metaprogramming
+base_url: https://yjunechoe.github.io
+author:
+  - name: June Choe
+    affiliation: University of Pennsylvania Linguistics
+    affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+    orcid_id: 0000-0002-0701-921X
+date: "`r Sys.Date()`"
+output:
+  distill::distill_article:
+    include-after-body: "highlighting.html"
+    toc: true
+    self_contained: false
+    css: "../../styles.css"
+editor_options: 
+  chunk_output_type: console
+preview: preview.png
+---
+
+```{r setup, include=FALSE}
+library(ggplot2)
+knitr::opts_chunk$set(
+  comment = " ",
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  R.options = list(width = 80)
+)
+```
+
+## ggplot2 metaprogramming
+
+In `{ggplot2}`, aesthetic mappings are declared using `aes()`. If you want to plot a time series of daily average temperature from a data where the `day` column is mapped to the x-axis and the `temperature` column is mapped to the y-axis, you'd write something like:
+
+```{r, eval=FALSE}
+aes(day, temperature)
+```
+
+Or more explicitly,
+
+```{r, eval=FALSE}
+aes(x = day, y = temperature)
+```
+
+When we write ggplot code, we don't really do much with the `aes()` function alone. I do this when I'm teaching ggplot too - for the sake of simplicity, I actively try not to draw attention to the fact that `aes()` is itself a function. I just tell my students that the `aes()` is "a place where you write down the aesthetic mappings", and that simply mental model can get users very far.
+
+But this is a deceptively simple understanding of `aes()` - one that we have to unlearn when we start doing more advanced stuff, like writing *functions* that return ggplot objects.
+
+The world of `aes()` will look simultaneously familiar, yet at times overwhelmingly foreign. This blog post will try to showcase a little bit of that in (hopefully) a gentle way.
+
+We start with the most obvious yet most under-appreciated fact: `aes()` returns a stand-alone object.
+
+```{r}
+x <- aes(day, temperature)
+x
+```
+
+## The structure of `aes()`
+
+`aes()` returns an object of class `<uneval>`:
+
+```{r}
+class(x)
+```
+
+It means "unevaluated expression(s)". It's unevalated because it "captures" (a.k.a. ["defuses"](https://rlang.r-lib.org/reference/topic-defuse.html)) what we, as the user, provided to `aes()`.
+
+We know `time` and `temperature` are unevaluated by `aes()` because if we _were_ to evaluate them, it would error. And of course they do - they're undefined variables!
+
+```{r, error=TRUE}
+day
+temperature
+```
+
+This `<uneval>` object returned by `aes()` is actually just a list: 
+
+```{r}
+typeof(x)
+```
+
+And you can see its list-like nature when you strip away its class:
+
+```{r}
+unclass(x)
+```
+
+## sessionInfo()
+
+```{r}
+sessionInfo()
+```
+
