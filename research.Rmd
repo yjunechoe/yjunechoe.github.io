@@ -29,6 +29,8 @@ Sean McWeeny, Jinnie S. Choi, **June Choe**, Alexander LaTourette, Megan Y. Robe
 
 ## Conference Talks
 
+**June Choe**. *Distributional signatures of superordinate nouns*. Talk at the 10th MACSIM conference. 6 April 2024. University of Maryland, College Park, MD.
+
 **June Choe**. *Sub-layer modularity in the Grammar of Graphics*. Talk at the 2023 Joint Statistical Meetings, 5-10 August 2023. Toronto, Canada. **American Statistical Association (ASA) student paper award in Statistical Computing and Graphics**. [Paper](https://yjunechoe.github.io/static/papers/Choe_2022_SublayerGG.pdf)
 
 **June Choe**. *Persona-based social expectations in sentence processing and comprehension*. Talk at the Language, Stereotypes & Social Cognition workshop, 22-23 May, 2023. University of Pennsylvania, PA.
@@ -76,20 +78,20 @@ _Experimental syntax using IBEX: a walkthrough_ with Dr. Nayoun Kim. 2021 BK Win
 
 ## Guest lectures
 
-_Hard words and syntactic bootstrapping_. LING 5750 "The Acquisition of Meaning". Instructor: Dr. Anna Papafragou. Spring 2024, University of Pennsylvania.
+_Hard words and (syntactic) bootstrapping_. LING 5750 "The Acquisition of Meaning". Instructor: Dr. Anna Papafragou. Spring 2024, University of Pennsylvania.
 
 _Introduction to R for psychology research_. PSYC 4997 "Senior Honors Seminar in Psychology". Instructor: Dr. Coren Apicella. Spring 2024, University of Pennsylvania.
 
 _Model fitting and diagnosis with MixedModels.jl in Julia_. LING 5670 "Quantitative Study of Linguistic Variation". Instructor: Dr. Meredith Tamminga. Fall 2023, University of Pennsylvania.
 
-_Simulation-based power analysis for mixed-effects models_ for LING 5670 ("Quantitative Study of Linguistic Variation"). Instructor: Dr. Meredith Tamminga. Spring 2023, University of Pennsylvania.
+_Simulation-based power analysis for mixed-effects models_. LING 5670 "Quantitative Study of Linguistic Variation". Instructor: Dr. Meredith Tamminga. Spring 2023, University of Pennsylvania.
 
 
 ## Research activities in FOSS
 
 ### Papers
 
-Massimo Aria, Trang Le, Corrado Cuccurullo, Alessandra Belfiore, and **June Choe**. (in press). openalexR: An R-tool for collecting bibliometric data from OpenAlex. [Github](https://github.com/massimoaria/openalexR)
+Massimo Aria, Trang Le, Corrado Cuccurullo, Alessandra Belfiore, and **June Choe**. (Accepted). openalexR: An R-tool for collecting bibliometric data from OpenAlex. [Github](https://github.com/massimoaria/openalexR)
 
 **June Choe**. (2022). Sub-layer modularity in the Grammar of Graphics. American Statistical Association (ASA) student paper award in Statistical Computing and Graphics. [Paper](static/papers/Choe_2022_SublayerGG.pdf), [Github](https://github.com/yjunechoe/ggtrace/)
 
@@ -97,7 +99,7 @@ Massimo Aria, Trang Le, Corrado Cuccurullo, Alessandra Belfiore, and **June Choe
 
 June Choe. [Sub-layer modularity in the Grammar of Graphics](https://ww2.aievolution.com/JSMAnnual/index.cfm?do=ev.viewEv&ev=2860). Talk at the 2023 Joint Statistical Meetings, 5-10 August 2023. Toronto, Canada.
 
-June Choe. Fast cluster-based permutation test using mixed-effects models. Talk at the Integrated Language Science and Technology (ILST) seminar, 21 April 2023. University of Pennsylvania, PA.
+June Choe. [Fast cluster-based permutation test using mixed-effects models.](https://github.com/yjunechoe/jlmerclusterperm/) Talk at the Integrated Language Science and Technology (ILST) seminar, 21 April 2023. University of Pennsylvania, PA.
 
 June Choe. [Cracking open ggplot internals with {ggtrace}](https://www.youtube.com/watch?v=dUBnitXf5mk&list=PL9HYL-VRX0oTOwqzVtL_q5T8MNrzn0mdH&index=38). Talk at the 2022 RStudio Conference, 25-28 July 2022. Washington D.C. [https://github.com/yjunechoe/ggtrace-rstudioconf2022](https://github.com/yjunechoe/ggtrace-rstudioconf2022)
 
@@ -105,8 +107,22 @@ June Choe. [Stepping into {ggplot2} internals with {ggtrace}](https://www.youtub
 
 ### Software
 
-Massimo Aria, Corrado Cuccurullo, Trang Le, **June Choe**. (2023). openalexR: Getting Bibliographic Records from 'OpenAlex' Database Using 'DSL' API. R package version 1.2.3. https://CRAN.R-project.org/package=openalexR. [Github](https://github.com/ropensci/openalexR)
+Rich Iannone, **June Choe**, Mauricio Vargas Sepulveda. (2024). pointblank: Data Validation and Organization of Metadata for Local and Remote Tables. R package version 0.12.1. https://CRAN.R-project.org/package=pointblank. [Github](https://rstudio.github.io/pointblank/)
 
-**June Choe**. (2023). jlmerclusterperm: Cluster-Based Permutation Analysis for Densely Sampled Time Data. R package version 1.0.0. https://cran.r-project.org/package=jlmerclusterperm. [Github](https://github.com/yjunechoe/jlmerclusterperm/)
+Massimo Aria, Corrado Cuccurullo, Trang Le, **June Choe**. (2024). openalexR: Getting Bibliographic Records from 'OpenAlex' Database Using 'DSL' API. R package version 1.2.3. https://CRAN.R-project.org/package=openalexR. [Github](https://github.com/ropensci/openalexR)
+
+**June Choe**. (2024). jlmerclusterperm: Cluster-Based Permutation Analysis for Densely Sampled Time Data. R package version 1.1.3. https://cran.r-project.org/package=jlmerclusterperm. [Github](https://github.com/yjunechoe/jlmerclusterperm/)
 
 Sean McWeeny, **June Choe**, & Elizabeth S. Norton. (2021). SnowGlobe: An Iterative Search Tool for Systematic Reviews and Meta-Analyses [Computer Software]. [OSF](https://doi.org/10.17605/OSF.IO/U25RN)
+
+## Service
+
+### Editor
+
+- [Penn Working Papers in Linguistics (PWPL)](https://www.ling.upenn.edu/pwpl/), Volumne 30, Issue 1.
+
+### Reviewer
+
+- Language Learning and Development
+- Journal of Open Source Software
+- Proceedings of the Annual Meeting of the Cognitive Science Society
