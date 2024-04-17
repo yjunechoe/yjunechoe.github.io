@@ -91,7 +91,7 @@ _Simulation-based power analysis for mixed-effects models_. LING 5670 "Quantitat
 
 ### Papers
 
-Massimo Aria, Trang Le, Corrado Cuccurullo, Alessandra Belfiore, and **June Choe**. (Accepted). openalexR: An R-tool for collecting bibliometric data from OpenAlex. [Github](https://github.com/massimoaria/openalexR)
+Massimo Aria, Trang Le, Corrado Cuccurullo, Alessandra Belfiore, and **June Choe**. (2024). openalexR: An R-tool for collecting bibliometric data from OpenAlex. The R Journal, 15(4), 166-179. [Paper](https://rjournal.github.io/articles/RJ-2023-089/), [Github](https://github.com/massimoaria/openalexR)
 
 **June Choe**. (2022). Sub-layer modularity in the Grammar of Graphics. American Statistical Association (ASA) student paper award in Statistical Computing and Graphics. [Paper](static/papers/Choe_2022_SublayerGG.pdf), [Github](https://github.com/yjunechoe/ggtrace/)
 
