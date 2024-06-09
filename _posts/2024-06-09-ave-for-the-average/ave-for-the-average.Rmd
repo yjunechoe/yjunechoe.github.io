@@ -37,7 +37,7 @@ I think it's safe to say that the average `{dplyr}` user does not know the `ave(
 
 ## `ave()`
 
-`ave()` is a split-apply-function in base R (specifically, `{stats}`). It's a pretty short function - maybe you can make out what it does from just reading the code^[And check out the elusive `split<-` function!]
+`ave()` is a split-apply-combine function in base R (specifically, `{stats}`). It's a pretty short function - maybe you can make out what it does from just reading the code^[And check out the elusive `split<-` function!]
 
 ```{r}
 ave
@@ -130,7 +130,7 @@ input %>%
   ...
 ```
 
-I'll note that there's actually also an idiomatic `{dplyr}`-solution to this using the lesser-known function `add_count()`, but you can't avoid the repetitiveness problem because it doesn't vectorize on the first argument:
+I'll note that there's actually also an idiomatic `{dplyr}`-solution to this using the lesser-known function `add_count()`, but you can't avoid the repetitiveness problem because it doesn't vectorize over the first argument:
 
 ```{r}
 input %>% 

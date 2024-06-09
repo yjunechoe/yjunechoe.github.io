@@ -12,15 +12,278 @@
       <link>https://yjunechoe.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Sun, 09 Jun 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 08 Jun 2024 00:00:00 +0000</lastBuildDate>
     <item>
       <title>`ave()` for the average {dplyr} user</title>
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2024-06-09-ave-for-the-average</link>
-      <description>tidyverse 🤝 base R</description>
+      <description>
+
+
+&lt;p&gt;I think it’s safe to say that the average &lt;code&gt;{dplyr}&lt;/code&gt; user
+does not know the &lt;code&gt;ave()&lt;/code&gt; function. For that audience, this
+is a short appreciation post on &lt;code&gt;ave()&lt;/code&gt;, a case of tidyverse
+&lt;em&gt;and&lt;/em&gt; base R.&lt;/p&gt;
+&lt;h2 id="ave"&gt;&lt;code&gt;ave()&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;ave()&lt;/code&gt; is a split-apply-combine function in base R
+(specifically, &lt;code&gt;{stats}&lt;/code&gt;). It’s a pretty short function -
+maybe you can make out what it does from just reading the code&lt;a
+href="#fn1" class="footnote-ref" id="fnref1"&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;ave&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  function (x, ..., FUN = mean) 
+  {
+      if (missing(...)) 
+          x[] &amp;lt;- FUN(x)
+      else {
+          g &amp;lt;- interaction(...)
+          split(x, g) &amp;lt;- lapply(split(x, g), FUN)
+      }
+      x
+  }
+  &amp;lt;bytecode: 0x0000020fc12974b8&amp;gt;
+  &amp;lt;environment: namespace:stats&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Despite its (rather generic and uninformative) name, I like to think
+of &lt;code&gt;ave()&lt;/code&gt; as actually belonging to the &lt;code&gt;*apply()&lt;/code&gt;
+family of functions, having particularly close ties to
+&lt;code&gt;tapply()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;A unique feature of &lt;code&gt;ave()&lt;/code&gt; is the invariant that it
+&lt;strong&gt;returns a vector of the same length as the input&lt;/strong&gt;. And
+if you use an aggregating function like &lt;code&gt;sum()&lt;/code&gt; or
+&lt;code&gt;mean()&lt;/code&gt;, it simply repeats those values over the
+observations on the basis of their grouping.&lt;/p&gt;
+&lt;p&gt;For example, whereas &lt;code&gt;tapply()&lt;/code&gt; can be used to summarize
+the average &lt;code&gt;mpg&lt;/code&gt; by &lt;code&gt;cyl&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;tapply(mtcars$mpg, mtcars$cyl, FUN = mean)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;         4        6        8 
+  26.66364 19.74286 15.10000&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The same syntax with &lt;code&gt;ave()&lt;/code&gt; will repeat those values over
+each element of the input vector:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;ave(mtcars$mpg, mtcars$cyl, FUN = mean)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;   [1] 19.74286 19.74286 26.66364 19.74286 15.10000 19.74286 15.10000 26.66364
+   [9] 26.66364 19.74286 19.74286 15.10000 15.10000 15.10000 15.10000 15.10000
+  [17] 15.10000 26.66364 26.66364 26.66364 26.66364 15.10000 15.10000 15.10000
+  [25] 15.10000 26.66364 26.66364 26.66364 15.10000 19.74286 15.10000 26.66364&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You can also get to this output from &lt;code&gt;tapply()&lt;/code&gt; with an
+extra step of vectorized indexing:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;tapply(mtcars$mpg, mtcars$cyl, FUN = mean)[as.character(mtcars$cyl)]&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;         6        6        4        6        8        6        8        4 
+  19.74286 19.74286 26.66364 19.74286 15.10000 19.74286 15.10000 26.66364 
+         4        6        6        8        8        8        8        8 
+  26.66364 19.74286 19.74286 15.10000 15.10000 15.10000 15.10000 15.10000 
+         8        4        4        4        4        8        8        8 
+  15.10000 26.66364 26.66364 26.66364 26.66364 15.10000 15.10000 15.10000 
+         8        4        4        4        8        6        8        4 
+  15.10000 26.66364 26.66364 26.66364 15.10000 19.74286 15.10000 26.66364&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="the-problem"&gt;The problem&lt;/h2&gt;
+&lt;p&gt;Nothing sparks more joy than when a base R function helps you write
+more “tidy” code. I’ve talked about this in length before with
+&lt;code&gt;outer()&lt;/code&gt; in a &lt;a
+href="https://yjunechoe.github.io/posts/2023-06-11-row-relational-operations/"&gt;prior
+blog post on &lt;code&gt;dplyr::slice()&lt;/code&gt;&lt;/a&gt;, and here I want to show a
+cool &lt;code&gt;ave()&lt;/code&gt; + &lt;code&gt;dplyr::mutate()&lt;/code&gt; combo.&lt;/p&gt;
+&lt;p&gt;This example is adapted from a reprex by &lt;a
+href="https://cedricscherer.netlify.app/"&gt;Cédric Scherer&lt;/a&gt;&lt;a
+href="#fn2" class="footnote-ref" id="fnref2"&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt; on the
+DSLC (previously R4DS) slack.&lt;/p&gt;
+&lt;p&gt;Given an input of multiple discrete columns and the frequencies of
+these values:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;input &amp;lt;- data.frame(
+  a = c(&amp;quot;A&amp;quot;, &amp;quot;A&amp;quot;, &amp;quot;A&amp;quot;, &amp;quot;B&amp;quot;), 
+  b = c(&amp;quot;X&amp;quot;, &amp;quot;Y&amp;quot;, &amp;quot;Y&amp;quot;, &amp;quot;Z&amp;quot;), 
+  c = c(&amp;quot;M&amp;quot;, &amp;quot;N&amp;quot;, &amp;quot;O&amp;quot;, &amp;quot;O&amp;quot;), 
+  freq = c(5, 12, 3, 7)
+)
+input&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;    a b c freq
+  1 A X M    5
+  2 A Y N   12
+  3 A Y O    3
+  4 B Z O    7&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The task is to add new columns named &lt;code&gt;freq_*&lt;/code&gt; that show
+the total frequency of the values in each column:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;output &amp;lt;- data.frame(
+  a = c(&amp;quot;A&amp;quot;, &amp;quot;A&amp;quot;, &amp;quot;A&amp;quot;, &amp;quot;B&amp;quot;), 
+  freq_a = c(20, 20, 20, 7),
+  b = c(&amp;quot;X&amp;quot;, &amp;quot;Y&amp;quot;, &amp;quot;Y&amp;quot;, &amp;quot;Z&amp;quot;),
+  freq_b = c(5, 15, 15, 7), 
+  c = c(&amp;quot;M&amp;quot;, &amp;quot;N&amp;quot;, &amp;quot;O&amp;quot;, &amp;quot;O&amp;quot;), 
+  freq_c = c(5, 12, 10, 10), 
+  freq = c(5, 12, 3, 7)
+)
+output&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;    a freq_a b freq_b c freq_c freq
+  1 A     20 X      5 M      5    5
+  2 A     20 Y     15 N     12   12
+  3 A     20 Y     15 O     10    3
+  4 B      7 Z      7 O     10    7&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;So for example, in column &lt;code&gt;a&lt;/code&gt; the value &lt;code&gt;"A"&lt;/code&gt;
+is associated with values &lt;code&gt;5&lt;/code&gt;, &lt;code&gt;12&lt;/code&gt;, and
+&lt;code&gt;3&lt;/code&gt; in the &lt;code&gt;freq&lt;/code&gt; column, so a new
+&lt;code&gt;freq_a&lt;/code&gt; column should be created to track their total
+frequencies &lt;code&gt;5 + 12 + 3&lt;/code&gt; and associate that value
+(&lt;code&gt;20&lt;/code&gt;) for all occurrences of &lt;code&gt;"A"&lt;/code&gt; in the
+&lt;code&gt;a&lt;/code&gt; column.&lt;/p&gt;
+&lt;h2 id="some-tidyverse-solutions"&gt;Some &lt;code&gt;{tidyverse}&lt;/code&gt;
+solutions&lt;/h2&gt;
+&lt;p&gt;The gut feeling is that this seems to lack a straightforwardly “tidy”
+solution. I mean, the input isn’t even &lt;strong&gt;tidy&lt;/strong&gt;&lt;a
+href="#fn3" class="footnote-ref" id="fnref3"&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt; in the
+first place!&lt;/p&gt;
+&lt;p&gt;So maybe we’d be better off starting with a pivoted tidy data for
+constructing a tidy solution:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;library(tidyverse)
+input %&amp;gt;% 
+  pivot_longer(-freq)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 12 × 3
+      freq name  value
+     &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;
+   1     5 a     A    
+   2     5 b     X    
+   3     5 c     M    
+   4    12 a     A    
+   5    12 b     Y    
+   6    12 c     N    
+   7     3 a     A    
+   8     3 b     Y    
+   9     3 c     O    
+  10     7 a     B    
+  11     7 b     Z    
+  12     7 c     O&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;But recall that the desired output is of a wide form like the input,
+so it looks like our tidy solution will require some indirection,
+involving something like:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;input %&amp;gt;% 
+  pivot_longer(-freq) %&amp;gt;% 
+  ... %&amp;gt;% 
+  pivot_wider(...)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Or maybe you’d rather tackle this with some
+&lt;code&gt;left_join()&lt;/code&gt;s, like:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;input %&amp;gt;% 
+  left_join(summarize(input, freq_a = sum(freq), .by = a)) %&amp;gt;% 
+  ...&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I’ll note that there’s actually also an idiomatic
+&lt;code&gt;{dplyr}&lt;/code&gt;-solution to this using the lesser-known function
+&lt;code&gt;add_count()&lt;/code&gt;, but you can’t avoid the repetitiveness problem
+because it doesn’t vectorize over the first argument:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;input %&amp;gt;% 
+  add_count(a, wt = freq, name = &amp;quot;freq_a&amp;quot;) %&amp;gt;% 
+  add_count(b, wt = freq, name = &amp;quot;freq_b&amp;quot;) %&amp;gt;% 
+  add_count(c, wt = freq, name = &amp;quot;freq_c&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;    a b c freq freq_a freq_b freq_c
+  1 A X M    5     20      5      5
+  2 A Y N   12     20     15     12
+  3 A Y O    3     20     15     10
+  4 B Z O    7      7      7     10&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You could try to scale this &lt;code&gt;add_count()&lt;/code&gt; solution with
+&lt;code&gt;reduce()&lt;/code&gt; (see my previous blog post on &lt;a
+href="https://yjunechoe.github.io/posts/2020-12-13-collapse-repetitive-piping-with-reduce/"&gt;collapsing
+repetitive piping&lt;/a&gt;), but now we’re straying very far from the “tidy”
+territory:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;input %&amp;gt;% 
+  purrr::reduce(
+    c(&amp;quot;a&amp;quot;, &amp;quot;b&amp;quot;, &amp;quot;c&amp;quot;),
+    ~ .x %&amp;gt;% 
+      add_count(.data[[.y]], wt = freq, name = paste0(&amp;quot;freq_&amp;quot;, .y)),
+    .init = .
+  )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;    a b c freq freq_a freq_b freq_c
+  1 A X M    5     20      5      5
+  2 A Y N   12     20     15     12
+  3 A Y O    3     20     15     10
+  4 B Z O    7      7      7     10&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;IMO this problem is actually a really good thinking exercise for the
+“average {dplyr} user”, so I encourage you to take a stab at this
+yourself before proceeding if you’ve read this far!&lt;/p&gt;
+&lt;h2 id="an-ave-dplyr-solution"&gt;An &lt;code&gt;ave()&lt;/code&gt; +
+&lt;code&gt;{dplyr}&lt;/code&gt; solution&lt;/h2&gt;
+&lt;p&gt;The crucial piece of the puzzle here is to think a little outside the
+box, beyond “data(frame) wrangling”.&lt;/p&gt;
+&lt;p&gt;It helps to simplify the problem once we think about the problem in
+terms of “(column) vector wrangling” first, and that’s where
+&lt;code&gt;ave()&lt;/code&gt; comes in!&lt;/p&gt;
+&lt;p&gt;I’ll start with the cake first - this is the one-liner
+&lt;code&gt;ave()&lt;/code&gt; solution I advocated for:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;input %&amp;gt;% 
+  mutate(across(a:c, ~ ave(freq, .x, FUN = sum), .names = &amp;quot;freq_{.col}&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;    a b c freq freq_a freq_b freq_c
+  1 A X M    5     20      5      5
+  2 A Y N   12     20     15     12
+  3 A Y O    3     20     15     10
+  4 B Z O    7      7      7     10&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Taking column &lt;code&gt;freq_a&lt;/code&gt; as an example, the
+&lt;code&gt;ave()&lt;/code&gt; part of the solution essential creates this vector of
+summed-up &lt;code&gt;freq&lt;/code&gt; values by the categories of
+&lt;code&gt;a&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;ave(input$freq, input$a, FUN = sum)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [1] 20 20 20  7&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;From there, &lt;code&gt;across()&lt;/code&gt; handles the iteration over columns
+and, as an added bonus, the naming of the new columns in convenient
+&lt;code&gt;{glue}&lt;/code&gt; syntax (&lt;code&gt;"freq_{.col}"&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;It’s the perfect mashup of base R + tidyverse. Base R takes care of
+the problem at the vector level with a split-apply-combine that’s
+concisely expressed with &lt;code&gt;ave()&lt;/code&gt;, and tidyverse scales that
+solution up to the dataframe level with &lt;code&gt;mutate()&lt;/code&gt; and
+&lt;code&gt;across()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;tidyverse 🤝 base R&lt;/p&gt;
+&lt;h2 id="sessioninfo"&gt;sessionInfo()&lt;/h2&gt;
+&lt;pre class="r"&gt;&lt;code&gt;sessionInfo()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  R version 4.3.3 (2024-02-29 ucrt)
+  Platform: x86_64-w64-mingw32/x64 (64-bit)
+  Running under: Windows 11 x64 (build 22631)
+  
+  Matrix products: default
+  
+  
+  locale:
+  [1] LC_COLLATE=English_United States.utf8 
+  [2] LC_CTYPE=English_United States.utf8   
+  [3] LC_MONETARY=English_United States.utf8
+  [4] LC_NUMERIC=C                          
+  [5] LC_TIME=English_United States.utf8    
+  
+  time zone: Asia/Seoul
+  tzcode source: internal
+  
+  attached base packages:
+  [1] stats     graphics  grDevices utils     datasets  methods   base     
+  
+  other attached packages:
+   [1] lubridate_1.9.3 forcats_1.0.0   stringr_1.5.1   dplyr_1.1.4    
+   [5] purrr_1.0.2     readr_2.1.5     tidyr_1.3.1     tibble_3.2.1   
+   [9] tidyverse_2.0.0 ggplot2_3.5.1  
+  
+  loaded via a namespace (and not attached):
+   [1] sass_0.4.9        utf8_1.2.4        generics_0.1.3    xml2_1.3.6       
+   [5] stringi_1.8.4     distill_1.6       hms_1.1.3         digest_0.6.35    
+   [9] magrittr_2.0.3    evaluate_0.23     grid_4.3.3        timechange_0.2.0 
+  [13] bookdown_0.38     fastmap_1.1.1     rprojroot_2.0.4   jsonlite_1.8.8   
+  [17] fansi_1.0.6       scales_1.3.0      jquerylib_0.1.4   cli_3.6.2        
+  [21] rlang_1.1.4       munsell_0.5.0     withr_3.0.0       cachem_1.0.8     
+  [25] yaml_2.3.8        tools_4.3.3       tzdb_0.4.0        memoise_2.0.1    
+  [29] colorspace_2.1-0  vctrs_0.6.5       R6_2.5.1          mime_0.12        
+  [33] png_0.1-8         lifecycle_1.0.4   fontawesome_0.5.2 pkgconfig_2.0.3  
+  [37] pillar_1.9.0      bslib_0.7.0       gtable_0.3.5      glue_1.7.0       
+  [41] xfun_0.44         tidyselect_1.2.1  rstudioapi_0.16.0 knitr_1.47       
+  [45] htmltools_0.5.8.1 rmarkdown_2.27    compiler_4.3.3    askpass_1.2.0    
+  [49] downlit_0.4.3     openssl_2.1.1&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r distill-force-highlighting-css"&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="footnotes footnotes-end-of-document"&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id="fn1"&gt;&lt;p&gt;And check out the elusive &lt;code&gt;split&amp;lt;-&lt;/code&gt;
+function!&lt;a href="#fnref1" class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id="fn2"&gt;&lt;p&gt;Who I can only assume was needing this for a fancy data
+viz thing 😆&lt;a href="#fnref2" class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id="fn3"&gt;&lt;p&gt;I mean that in the technical sense here. In this
+problem, the unit of observation is the “cells” of the input columns
+(the values “A”, “B”, “X”, “Y”, etc.).&lt;a href="#fnref3"
+class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</description>
+      <distill:md5>478d5b66974022ae5d6b9c8ba58783a7</distill:md5>
       <category>dplyr</category>
       <guid>https://yjunechoe.github.io/posts/2024-06-09-ave-for-the-average</guid>
-      <pubDate>Sun, 09 Jun 2024 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 08 Jun 2024 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2024-06-09-ave-for-the-average/preview.png" medium="image" type="image/png" width="926" height="328"/>
     </item>
     <item>
