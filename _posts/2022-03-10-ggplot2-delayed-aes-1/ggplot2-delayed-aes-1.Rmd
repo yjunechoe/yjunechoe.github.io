@@ -41,7 +41,7 @@ knitr::opts_chunk$set(
 _This is a developing series of blog posts, scheduled for three parts:_
 
 - _[Part 1: Exploring the logic of `after_stat()` to peek inside ggplot internals]()_ (you are here)
-- _Part 2: Exposing the `Stat` ggproto in functional programming terms_ (TBD)
+- _[Part 2: Exposing the `Stat` ggproto in functional programming terms](https://yjunechoe.github.io/posts/2022-07-06-ggplot2-delayed-aes-2/)_
 - _Part 3: Completing the picture with `after_scale()` and `stage()`_ (TBD)
 
 ## Introduction
@@ -98,7 +98,7 @@ But how does ggplot know to _wait_ until `count` is computed to map it to `y`?
 
 ## `after_stat()`
 
-The technical details of how and where `count` is _computed_ will be covered in the [Part 2]() of this series. For now, all we need to know is that layers like `geom_bar()` and `geom_histogram()` transforms the raw data that it receives to derive new values like `count`. 
+The technical details of how and where `count` is _computed_ will be covered in the [Part 2](https://yjunechoe.github.io/posts/2022-07-06-ggplot2-delayed-aes-2/) of this series. For now, all we need to know is that layers like `geom_bar()` and `geom_histogram()` transforms the raw data that it receives to derive new values like `count`. 
 
 So here's the big idea: to allow aesthetics to be mapped to internally calculated variables like `count`, there must be a way to **delay some aesthetic mappings**.
 
@@ -158,7 +158,7 @@ inspect_after_stat <- function(p, i = 1L) {
 body(ggplot2:::ggplot_build.ggplot)[[18]]
 ```
 
-[Part 2]() will explore what happens here in more detail. 
+[Part 2](https://yjunechoe.github.io/posts/2022-07-06-ggplot2-delayed-aes-2/) will explore what happens here in more detail. 
 
 If you're interested in more functions like `inspect_after_stat()` that allow you to interact with ggplot internals, take a look at my package [`{ggtrace}`](https://yjunechoe.github.io/ggtrace/)!
 
@@ -222,7 +222,7 @@ p_bar + aes(y = after_stat(as.numeric(PANEL)))
 p_bar + aes(y = after_stat(group))
 ```
 
-Before I get sacked, I should add that just because you _can_, doesn't mean you _should_! More specifically, `after_stat()` should only really be used to access variables computed from the **stat** stage like `count` and `prop` (we'll go over how to tell what variables are from the **stat** stage in [Part 2]()). The **stat** transformation is just one of many transformations that the data goes through to become drawing-ready, and so the state of the "after stat" data also carries the output of other processes that came before it like **facet**-ing and positional **scale** transformations which we shouldn't touch.
+Before I get sacked, I should add that just because you _can_, doesn't mean you _should_! More specifically, `after_stat()` should only really be used to access variables computed from the **stat** stage like `count` and `prop` (we'll go over how to tell what variables are from the **stat** stage in [Part 2](https://yjunechoe.github.io/posts/2022-07-06-ggplot2-delayed-aes-2/)). The **stat** transformation is just one of many transformations that the data goes through to become drawing-ready, and so the state of the "after stat" data also carries the output of other processes that came before it like **facet**-ing and positional **scale** transformations which we shouldn't touch.
 
 And in fact, many more transformations happen _after_ the **stat** stage as well, so it's neither the first _nor_ the last thing to happen to the data. Using `layer_data()` again, we see that the final form of the data builds on our data from that we saw from the **stat** stage:
 
@@ -357,7 +357,7 @@ ggplot(penguins, aes(species)) +
   facet_grid(~ island, scales = "free_x", space = "free")
 ```
 
-We see that `aes(group = 1)` had the effect of making sure that `prop` adds up to 1 _within each facet_ because all bars in a panel share the same group.^[Why not _across_ facets? That's a good question and has to do with how by-panel and by-group computations are done inside ggplot. We'll look at this more in detail in [Part 2]()!]
+We see that `aes(group = 1)` had the effect of making sure that `prop` adds up to 1 _within each facet_ because all bars in a panel share the same group.^[Why not _across_ facets? That's a good question and has to do with how by-panel and by-group computations are done inside ggplot. We'll look at this more in detail in [Part 2](https://yjunechoe.github.io/posts/2022-07-06-ggplot2-delayed-aes-2/)!]
 
 
 ## Baby steps to the Stat ggproto
@@ -517,9 +517,9 @@ Which do _you_ prefer?
 
 I've tried my best to split up this topic of delayed aesthetic evaluation to keep it more manageable, so hopefully this wasn't too overwhelming!
 
-[Part 2]() will pick up where we left off by exploring _when_, _where_, and _how_ the data actually undergoes the statistical transformation. We will do a lot more of "peaking inside" the internals similar to what we did with our custom function `inspect_after_stat()`, except we will use functions from my package [`{ggtrace}`](https://yjunechoe.github.io/ggtrace/) to interact with ggplots internals. It's a package partly designed as a pedagogical tool for folks in early stages of the user-to-developer transition, and I'm very excited to showcase its potentials!
+[Part 2](https://yjunechoe.github.io/posts/2022-07-06-ggplot2-delayed-aes-2/) will pick up where we left off by exploring _when_, _where_, and _how_ the data actually undergoes the statistical transformation. We will do a lot more of "peaking inside" the internals similar to what we did with our custom function `inspect_after_stat()`, except we will use functions from my package [`{ggtrace}`](https://yjunechoe.github.io/ggtrace/) to interact with ggplots internals. It's a package partly designed as a pedagogical tool for folks in early stages of the user-to-developer transition, and I'm very excited to showcase its potentials!
 
-One last note: [Part 2]() will introduce the [**ggproto**](https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html) system which powers ggplot internals. It's notoriously difficult to grasp, and has a big learning curve even if you're an experienced _user_ of ggplot. But fear not, because we already got a little taste of ggproto! Remember how we were just passing strings to the `geom` and `stat` arguments of layer functions? Well that was actually just a shorthand for specifying ggproto objects like `StatCount` and `GeomBar`:
+One last note: [Part 2](https://yjunechoe.github.io/posts/2022-07-06-ggplot2-delayed-aes-2/) will introduce the [**ggproto**](https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html) system which powers ggplot internals. It's notoriously difficult to grasp, and has a big learning curve even if you're an experienced _user_ of ggplot. But fear not, because we already got a little taste of ggproto! Remember how we were just passing strings to the `geom` and `stat` arguments of layer functions? Well that was actually just a shorthand for specifying ggproto objects like `StatCount` and `GeomBar`:
 
 ```{r, eval = FALSE}
 ggplot(penguins, aes(species)) +

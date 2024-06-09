@@ -2722,8 +2722,8 @@ parts:</em></p>
 <li><em><a href="">Part 1: Exploring the logic of
 <code>after_stat()</code> to peek inside ggplot internals</a></em> (you
 are here)</li>
-<li><em>Part 2: Exposing the <code>Stat</code> ggproto in functional
-programming terms</em> (TBD)</li>
+<li><em><a href="https://yjunechoe.github.io/posts/2022-07-06-ggplot2-delayed-aes-2/">Part 2: Exposing the <code>Stat</code> ggproto in functional
+programming terms</a></em></li>
 <li><em>Part 3: Completing the picture with <code>after_scale()</code>
 and <code>stage()</code></em> (TBD)</li>
 </ul>
@@ -2826,7 +2826,7 @@ things:</p>
 computed to map it to <code>y</code>?</p>
 <h2 id="after_stat"><code>after_stat()</code></h2>
 <p>The technical details of how and where <code>count</code> is
-<em>computed</em> will be covered in the <a href="">Part 2</a> of this
+<em>computed</em> will be covered in the <a href="https://yjunechoe.github.io/posts/2022-07-06-ggplot2-delayed-aes-2/">Part 2</a> of this
 series. For now, all we need to know is that layers like
 <code>geom_bar()</code> and <code>geom_histogram()</code> transforms the
 raw data that it receives to derive new values like
@@ -2924,7 +2924,7 @@ happens in the preceding step, Step 18:</p>
 </div>
 <pre><code>  data &lt;- by_layer(function(l, d) l$compute_statistic(d, layout))</code></pre>
 </div>
-<p><a href="">Part 2</a> will explore what happens here in more
+<p><a href="https://yjunechoe.github.io/posts/2022-07-06-ggplot2-delayed-aes-2/">Part 2</a> will explore what happens here in more
 detail.</p>
 <p>If you’re interested in more functions like
 <code>inspect_after_stat()</code> that allow you to interact with ggplot
@@ -3021,7 +3021,7 @@ doesn’t mean you <em>should</em>! More specifically,
 <code>after_stat()</code> should only really be used to access variables
 computed from the <strong>stat</strong> stage like <code>count</code>
 and <code>prop</code> (we’ll go over how to tell what variables are from
-the <strong>stat</strong> stage in <a href="">Part 2</a>). The
+the <strong>stat</strong> stage in <a href="https://yjunechoe.github.io/posts/2022-07-06-ggplot2-delayed-aes-2/">Part 2</a>). The
 <strong>stat</strong> transformation is just one of many transformations
 that the data goes through to become drawing-ready, and so the state of
 the “after stat” data also carries the output of other processes that
@@ -3527,7 +3527,7 @@ aligns pretty well with my actual data viz thought process.</p></li>
 <p>I’ve tried my best to split up this topic of delayed aesthetic
 evaluation to keep it more manageable, so hopefully this wasn’t too
 overwhelming!</p>
-<p><a href="">Part 2</a> will pick up where we left off by exploring
+<p><a href="https://yjunechoe.github.io/posts/2022-07-06-ggplot2-delayed-aes-2/">Part 2</a> will pick up where we left off by exploring
 <em>when</em>, <em>where</em>, and <em>how</em> the data actually
 undergoes the statistical transformation. We will do a lot more of
 “peaking inside” the internals similar to what we did with our custom
@@ -3537,7 +3537,7 @@ href="https://yjunechoe.github.io/ggtrace/"><code>{ggtrace}</code></a>
 to interact with ggplots internals. It’s a package partly designed as a
 pedagogical tool for folks in early stages of the user-to-developer
 transition, and I’m very excited to showcase its potentials!</p>
-<p>One last note: <a href="">Part 2</a> will introduce the <a
+<p>One last note: <a href="https://yjunechoe.github.io/posts/2022-07-06-ggplot2-delayed-aes-2/">Part 2</a> will introduce the <a
 href="https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html"><strong>ggproto</strong></a>
 system which powers ggplot internals. It’s notoriously difficult to
 grasp, and has a big learning curve even if you’re an experienced
@@ -3641,7 +3641,7 @@ href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6" role="doc-endnote"><p>Why not <em>across</em> facets?
 That’s a good question and has to do with how by-panel and by-group
 computations are done inside ggplot. We’ll look at this more in detail
-in <a href="">Part 2</a>!<a href="#fnref6" class="footnote-back"
+in <a href="https://yjunechoe.github.io/posts/2022-07-06-ggplot2-delayed-aes-2/">Part 2</a>!<a href="#fnref6" class="footnote-back"
 role="doc-backlink">↩︎</a></p></li>
 <li id="fn7" role="doc-endnote"><p>As well as a “stack”
 <strong>position</strong>, but we won’t go into that in this blog post

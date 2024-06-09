@@ -48,7 +48,7 @@ _This blog post was featured in the [R Weekly highlights podcast](https://share.
 
 Getting **custom fonts** to work in R has historically been pretty difficult.^[In fact, text rendering as a whole is an incredibly complicated task. Check out [Text Rendering Hates You](https://gankra.github.io/blah/text-hates-you/#how-do-you-write-that-you-cant-write) for a fun and informative read.] At a high level, it involves the non-trivial task of unifying the _graphics device_, the _operating system_, and _text rendering_, (and also in our case, R!) to seamlessly work with each other.
 
-Luckily for us in 2021, we have an amazing solution to this problem thanks to recent developments in the `{ragg}`,  `{systemfonts}`, and `{textshaping}` packages by RStudio. This is great news because a lot of the work for getting custom fonts to work in R is already done for us!
+Luckily for us in post-2021, we have an amazing solution to this problem thanks to recent developments in the `{ragg}`,  `{systemfonts}`, and `{textshaping}` packages by RStudio. This is great news because a lot of the work for getting custom fonts to work in R is already done for us!
 
 In this blog post, I'll start with the basics of **setting up custom fonts** followed by a walkthrough of the **font debugging workflow**, concluding with some **practical use-cases** that can spice up your typography game for data viz.  
 
