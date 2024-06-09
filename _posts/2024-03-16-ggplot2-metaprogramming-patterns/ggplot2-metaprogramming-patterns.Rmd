@@ -21,6 +21,7 @@ output:
 editor_options: 
   chunk_output_type: console
 preview: preview.png
+draft: true
 ---
 
 ```{r setup, include=FALSE}

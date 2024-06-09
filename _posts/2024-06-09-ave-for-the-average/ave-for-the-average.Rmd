@@ -1,0 +1,186 @@
+---
+title: '`ave()` for the average {dplyr} user'
+description: |
+  tidyverse 🤝 base R
+categories:
+  - dplyr
+base_url: https://yjunechoe.github.io
+author:
+  - name: June Choe
+    affiliation: University of Pennsylvania Linguistics
+    affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+    orcid_id: 0000-0002-0701-921X
+date: "`r Sys.Date()`"
+output:
+  distill::distill_article:
+    include-after-body: "highlighting.html"
+    toc: true
+    self_contained: false
+    css: "../../styles.css"
+editor_options: 
+  chunk_output_type: console
+preview: preview.png
+---
+
+```{r setup, include=FALSE}
+library(ggplot2)
+knitr::opts_chunk$set(
+  comment = " ",
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  R.options = list(width = 80)
+)
+```
+
+I think it's safe to say that the average `{dplyr}` user does not know the `ave()` function. For that audience, this is a short appreciation post on `ave()`, a case of tidyverse _and_ base R.
+
+## `ave()`
+
+`ave()` is a split-apply-function in base R (specifically, `{stats}`). It's a pretty short function - maybe you can make out what it does from just reading the code^[And check out the elusive `split<-` function!]
+
+```{r}
+ave
+```
+
+
+Despite its (rather generic and uninformative) name, I like to think of `ave()` as actually belonging to the `*apply()` family of functions, having particularly close ties to `tapply()`.
+
+A unique feature of `ave()` is the invariant that it **returns a vector of the same length as the input**. And if you use an aggregating function like `sum()` or `mean()`, it simply repeats those values over the observations on the basis of their grouping.
+
+For example, whereas `tapply()` can be used to summarize the average `mpg` by `cyl`:
+
+```{r}
+tapply(mtcars$mpg, mtcars$cyl, FUN = mean)
+```
+
+The same syntax with `ave()` will repeat those values over each element of the input vector:
+
+```{r}
+ave(mtcars$mpg, mtcars$cyl, FUN = mean)
+```
+
+You can also get to this output from `tapply()` with an extra step of vectorized indexing:
+
+```{r}
+tapply(mtcars$mpg, mtcars$cyl, FUN = mean)[as.character(mtcars$cyl)]
+```
+
+## The problem
+
+Nothing sparks more joy than when a base R function helps you write more "tidy" code. I've talked about this in length before with `outer()` in a [prior blog post on `dplyr::slice()`](https://yjunechoe.github.io/posts/2023-06-11-row-relational-operations/), and here I want to show a cool `ave()` + `dplyr::mutate()` combo.
+
+This example is adapted from a reprex by [Cédric Scherer](https://cedricscherer.netlify.app/)^[Who I can only assume was needing this for a fancy data viz thing 😆] on the DSLC (previously R4DS) slack.
+
+Given an input of multiple discrete columns and the frequencies of these values:
+
+```{r}
+input <- data.frame(
+  a = c("A", "A", "A", "B"), 
+  b = c("X", "Y", "Y", "Z"), 
+  c = c("M", "N", "O", "O"), 
+  freq = c(5, 12, 3, 7)
+)
+input
+```
+
+The task is to add new columns named `freq_*` that show the total frequency of the values in each column:
+
+```{r}
+output <- data.frame(
+  a = c("A", "A", "A", "B"), 
+  freq_a = c(20, 20, 20, 7),
+  b = c("X", "Y", "Y", "Z"),
+  freq_b = c(5, 15, 15, 7), 
+  c = c("M", "N", "O", "O"), 
+  freq_c = c(5, 12, 10, 10), 
+  freq = c(5, 12, 3, 7)
+)
+output
+```
+
+So for example, in column `a` the value `"A"` is associated with values `5`, `12`, and `3` in the `freq` column, so a new `freq_a` column should be created to track their total frequencies `5 + 12 + 3` and associate that value (`20`) for all occurrences of `"A"` in the `a` column.
+
+## Some `{tidyverse}` solutions
+
+The gut feeling is that this seems to lack a straightforwardly "tidy" solution. I mean, the input isn't even **tidy**^[I mean that in the technical sense here. In this problem, the unit of observation is the "cells" of the input columns (the values "A", "B", "X", "Y", etc.).] in the first place!
+
+So maybe we'd be better off starting with a pivoted tidy data for constructing a tidy solution:
+
+```{r, message = FALSE}
+library(tidyverse)
+input %>% 
+  pivot_longer(-freq)
+```
+
+But recall that the desired output is of a wide form like the input, so it looks like our tidy solution will require some indirection, involving something like:
+
+```{r, eval = FALSE}
+input %>% 
+  pivot_longer(-freq) %>% 
+  ... %>% 
+  pivot_wider(...)
+```
+
+Or maybe you'd rather tackle this with some `left_join()`s, like:
+
+```{r, eval = FALSE}
+input %>% 
+  left_join(summarize(input, freq_a = sum(freq), .by = a)) %>% 
+  ...
+```
+
+I'll note that there's actually also an idiomatic `{dplyr}`-solution to this using the lesser-known function `add_count()`, but you can't avoid the repetitiveness problem because it doesn't vectorize on the first argument:
+
+```{r}
+input %>% 
+  add_count(a, wt = freq, name = "freq_a") %>% 
+  add_count(b, wt = freq, name = "freq_b") %>% 
+  add_count(c, wt = freq, name = "freq_c")
+```
+
+You could try to scale this `add_count()` solution with `reduce()` (see my previous blog post on [collapsing repetitive piping](https://yjunechoe.github.io/posts/2020-12-13-collapse-repetitive-piping-with-reduce/)), but now we're straying very far from the "tidy" territory:
+
+```{r}
+input %>% 
+  purrr::reduce(
+    c("a", "b", "c"),
+    ~ .x %>% 
+      add_count(.data[[.y]], wt = freq, name = paste0("freq_", .y)),
+    .init = .
+  )
+```
+
+IMO this problem is actually a really good thinking exercise for the "average {dplyr} user", so I encourage you to take a stab at this yourself before proceeding if you've read this far!
+
+## An `ave()` + `{dplyr}` solution
+
+The crucial piece of the puzzle here is to think a little outside the box, beyond "data(frame) wrangling".
+
+It helps to simplify the problem once we think about the problem in terms of "(column) vector wrangling" first, and that's where `ave()` comes in!
+
+I'll start with the cake first - this is the one-liner `ave()` solution I advocated for:
+
+```{r}
+input %>% 
+  mutate(across(a:c, ~ ave(freq, .x, FUN = sum), .names = "freq_{.col}"))
+```
+
+Taking column `freq_a` as an example, the `ave()` part of the solution essential creates this vector of summed-up `freq` values by the categories of `a`:
+
+```{r}
+ave(input$freq, input$a, FUN = sum)
+```
+
+From there, `across()` handles the iteration over columns and, as an added bonus, the naming of the new columns in convenient `{glue}` syntax (`"freq_{.col}"`).
+
+It's the perfect mashup of base R + tidyverse. Base R takes care of the problem at the vector level with a split-apply-combine that's concisely expressed with `ave()`, and tidyverse scales that solution up to the dataframe level with `mutate()` and `across()`.
+
+tidyverse 🤝 base R
+
+## sessionInfo()
+
+```{r}
+sessionInfo()
+```
+

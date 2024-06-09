@@ -69,7 +69,7 @@ D’Onofrio, Annette, **June Choe** and Masaya Yoshida. *Personae in syntactic p
 
 ## Workshops led
 
-_Introduction to mixed-effects models in Julia_. Workshop at Penn MindCORE. 1 December 2023. Philadelphia, PA. [Github](https://github.com/yjunechoe/MindCORE-julia-mixedmodels)
+_Introduction to mixed-effects models in Julia_. Workshop at Penn MindCORE. 1 December 2023. Philadelphia, PA. [Github](https://github.com/yjunechoe/MindCORE-julia-mixedmodels) [Colab notebook](https://colab.research.google.com/drive/1eT-cb3_TAczLvs29_XpRH49oaySM4zW0?usp=sharing)
 
 _Experimental syntax using IBEX/PCIBEX_ with Dr. Nayoun Kim. Workshop at the 2022 Seoul International Conference on Linguistics. 11-12 August 2022. Seoul, South Korea. [PDF](https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2022-ibex-pcibex-workshop-slides.pdf)
 
@@ -80,7 +80,7 @@ _Experimental syntax using IBEX: a walkthrough_ with Dr. Nayoun Kim. 2021 BK Win
 
 _Hard words and (syntactic) bootstrapping_. LING 5750 "The Acquisition of Meaning". Instructor: Dr. Anna Papafragou. Spring 2024, University of Pennsylvania.
 
-_Introduction to R for psychology research_. PSYC 4997 "Senior Honors Seminar in Psychology". Instructor: Dr. Coren Apicella. Spring 2024, University of Pennsylvania.
+_Introduction to R for psychology research_. PSYC 4997 "Senior Honors Seminar in Psychology". Instructor: Dr. Coren Apicella. Spring 2024, University of Pennsylvania. [Colab notebook](https://colab.research.google.com/drive/1MJ23TMCYvo0jt2Lefyx60Mees6CzEFaY?usp=drive_link)
 
 _Model fitting and diagnosis with MixedModels.jl in Julia_. LING 5670 "Quantitative Study of Linguistic Variation". Instructor: Dr. Meredith Tamminga. Fall 2023, University of Pennsylvania.
 
