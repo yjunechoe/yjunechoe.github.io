@@ -178,9 +178,42 @@ It's the perfect mashup of base R + tidyverse. Base R takes care of the problem 
 
 tidyverse 🤝 base R
 
+## Aside: `ave()` for the average {data.table} user
+
+Since I wrote this blog post, I discovered that `{data.table}` recently added in support for using `names(.SD)` in the LHS of the walrus `:=`. I'm so excited for this to hit the next release (v1.6.0)!
+
+I'm also trying to be more mindful of showcasing `{data.table}` where I talk about `{dplyr}`, so here's a solution to compare with the `dplyr::across()` solution above.
+
+```{r, message=FALSE}
+# data.table::update_dev_pkg()
+library(data.table)
+input_dt <- as.data.table(input)
+input_dt
+```
+
+```{r}
+input_dt[ , paste0("freq_", names(.SD)) := lapply(.SD, \(x) ave(freq, x, FUN = sum)), .SDcols = a:c]
+input_dt
+```
+
+In practice, I often pair `{data.table}` with `{collapse}`, where the latter provides a rich and performant set of split-apply-combine vector operations, to the likes ot `ave()`. In `{collapse}`, `ave(..., FUN = sum)` can be expressed with `fsum(..., TRA = "replace")`:
+
+```{r}
+library(collapse)
+ave(input_dt$freq, input_dt$a, FUN = sum)
+fsum(input_dt$freq, input_dt$a, TRA = "replace")
+```
+
+So the `{data.table}` 🤝 `{collapse}` version of this would be:^[I couldn't show this here with this particular example, but another nice feature of `{collapse}` 🤝 `{data.table}` is the fact that they do not shy away from consuming/producing matrices: see `scale()[,1]` vs. `fscale()` for a good example of this.]
+
+```{r}
+input_dt[, names(.SD) := NULL, .SDcols = patterns("^freq_")]
+input_dt[ , paste0("freq_", names(.SD)) := lapply(.SD, \(x) fsum(freq, x, TRA = "replace")), .SDcols = a:c]
+input_dt
+```
+
 ## sessionInfo()
 
 ```{r}
 sessionInfo()
 ```
-
