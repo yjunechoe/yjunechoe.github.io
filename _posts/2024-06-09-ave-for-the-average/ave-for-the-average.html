@@ -1563,7 +1563,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <li><a href="#the-problem" id="toc-the-problem">The problem</a></li>
 <li><a href="#some-tidyverse-solutions" id="toc-some-tidyverse-solutions">Some <code>{tidyverse}</code> solutions</a></li>
 <li><a href="#an-ave-dplyr-solution" id="toc-an-ave-dplyr-solution">An <code>ave()</code> + <code>{dplyr}</code> solution</a></li>
-<li><a href="#aside-data.table-collapse" id="toc-aside-data.table-collapse">Aside: data.table 🤝 collapse</a></li>
+<li><a href="#aside-data.table-collapse" id="toc-aside-data.table-collapse">Aside: <code>{data.table}</code> 🤝 <code>{collapse}</code></a></li>
 <li><a href="#sessioninfo" id="toc-sessioninfo">sessionInfo()</a></li>
 </ul>
 </nav>
@@ -1585,7 +1585,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
       }
       x
   }
-  &lt;bytecode: 0x000002dc894a8f80&gt;
+  &lt;bytecode: 0x0000029931326f80&gt;
   &lt;environment: namespace:stats&gt;</code></pre>
 </div>
 <p>Despite its (rather generic and uninformative) name, I like to think of <code>ave()</code> as actually belonging to the <code>*apply()</code> family of functions, having particularly close ties to <code>tapply()</code>.</p>
@@ -1762,8 +1762,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p>From there, <code>across()</code> handles the iteration over columns and, as an added bonus, the naming of the new columns in convenient <code>{glue}</code> syntax (<code>"freq_{.col}"</code>).</p>
 <p>It’s the perfect mashup of base R + tidyverse. Base R takes care of the problem at the vector level with a split-apply-combine that’s concisely expressed with <code>ave()</code>, and tidyverse scales that solution up to the dataframe level with <code>mutate()</code> and <code>across()</code>.</p>
 <p>tidyverse 🤝 base R</p>
-<h2 id="aside-data.table-collapse">Aside: data.table 🤝 collapse</h2>
-<p>Since I wrote this blog post, I discovered that <code>{data.table}</code> recently added in support for using <code>names(.SD)</code> in the LHS of the walrus <code>:=</code>. I’m so excited for this to hit the next release (v1.6.0)!</p>
+<h2 id="aside-data.table-collapse">Aside: <code>{data.table}</code> 🤝 <code>{collapse}</code></h2>
+<p>Since I wrote this blog post, I discovered that <code>{data.table}</code> recently added in support for using <code>names(.SD)</code> in the LHS of the walrus <code>:=</code>. I’m so excited for this to hit the <a href="https://rdatatable.gitlab.io/data.table/news/index.html">next release</a> (v1.16.0)!</p>
 <p>I’ve trying to be more mindful of showcasing <code>{data.table}</code> whenever I talk about <code>{dplyr}</code>, so here’s a solution to compare with the <code>dplyr::across()</code> solution above.</p>
 <div class="layout-chunk" data-layout="l-body">
 
@@ -1806,7 +1806,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <pre><code>  [1] 20 20 20  7</code></pre>
 </div>
-<p>So the version of the solution integrating <code>fsum()</code> would be:<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<p>So a version of the solution integrating <code>fsum()</code> would be:<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>input_dt</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>.SD</span><span class='op'>)</span> <span class='op'>:=</span> <span class='cn'>NULL</span>, .SDcols <span class='op'>=</span> <span class='fu'>patterns</span><span class='op'>(</span><span class='st'>"^freq_"</span><span class='op'>)</span><span class='op'>]</span></span>

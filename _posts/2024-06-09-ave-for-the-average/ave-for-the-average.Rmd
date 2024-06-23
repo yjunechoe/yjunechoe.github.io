@@ -178,9 +178,9 @@ It's the perfect mashup of base R + tidyverse. Base R takes care of the problem 
 
 tidyverse 🤝 base R
 
-## Aside: data.table 🤝 collapse
+## Aside: `{data.table}` 🤝 `{collapse}`
 
-Since I wrote this blog post, I discovered that `{data.table}` recently added in support for using `names(.SD)` in the LHS of the walrus `:=`. I'm so excited for this to hit the next release (v1.6.0)!
+Since I wrote this blog post, I discovered that `{data.table}` recently added in support for using `names(.SD)` in the LHS of the walrus `:=`. I'm so excited for this to hit the [next release](https://rdatatable.gitlab.io/data.table/news/index.html) (v1.16.0)!
 
 I've trying to be more mindful of showcasing `{data.table}` whenever I talk about `{dplyr}`, so here's a solution to compare with the `dplyr::across()` solution above.
 
@@ -209,7 +209,7 @@ ave(input_dt$freq, input_dt$a, FUN = sum)
 fsum(input_dt$freq, input_dt$a, TRA = "replace") # Also, TRA = 2
 ```
 
-So the version of the solution integrating `fsum()` would be:^[I couldn't show this here with this particular example, but another nice feature of `{collapse}` 🤝 `{data.table}` is the fact that they do not shy away from consuming/producing matrices: see `scale()[,1]` vs. `fscale()` for a good example of this.]
+So a version of the solution integrating `fsum()` would be:^[I couldn't show this here with this particular example, but another nice feature of `{collapse}` 🤝 `{data.table}` is the fact that they do not shy away from consuming/producing matrices: see `scale()[,1]` vs. `fscale()` for a good example of this.]
 
 ```{r}
 input_dt[, names(.SD) := NULL, .SDcols = patterns("^freq_")]
