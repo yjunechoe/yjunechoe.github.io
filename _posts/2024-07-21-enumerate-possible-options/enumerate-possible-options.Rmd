@@ -133,7 +133,7 @@ I like this strategy of "naming the scale" because it gives off the impression t
 
 Sometimes a boolean argument may encode a genuinely binary choice of a true/false, on/off, yes/no option. But refactoring the boolean options as enum may still offer some benefits. In those cases, I prefer the strategy of **name the obvious/absence**.
 
-Some cases for improvement are easier to spot than others. An easy case is something like the `REML` argument in `lme4::lmer()`. Without going into too much detail, when `REML = TRUE` (default), the model optimizes the REML (restricted/residualized maximum likelihood) criterion in finding the best fitting model. But it's not like the model doesn't use any criteria for goodness of fit when `REML = FALSE`. Instead, when `REML = FALSE`, the function uses a different criterion of ML (maximum likelihood). So the choice is not really between toggling REML on or off, but rather betweem tje ise pf REML vs. ML. The enum version lets us spell out the assumed default and make the choice explicit (again, with room for introducing other criteria in the future):
+Some cases for improvement are easier to spot than others. An easy case is something like the `REML` argument in `lme4::lmer()`. Without going into too much detail, when `REML = TRUE` (default), the model optimizes the REML (restricted/residualized maximum likelihood) criterion in finding the best fitting model. But it's not like the model doesn't use _any_ criteria for goodness of fit when `REML = FALSE`. Instead, when `REML = FALSE`, the function uses a different criterion of ML (maximum likelihood). So the choice is not really between toggling REML on or off, but rather between the choice of REML vs. ML. The enum version lets us spell out the assumed default and make the choice between the two explicit (again, with room for introducing other criteria in the future):
 
 ```{r, eval = FALSE}
 # Boolean options
@@ -145,7 +145,7 @@ lmer::lme4(criterion = "REML")
 lmer::lme4(criterion = "ML")
 ```
 
-A somewhat harder cases is a true presence-or-absence kind of a situation, where setting the argument to true/false essentially boils down to triggering an `if` block inside the function. For example, say a function has an option to use an optimizer called "MyOptim". This may be implemented as:
+A somewhat harder case is a true presence-or-absence kind of a situation, where setting the argument to true/false essentially boils down to triggering an `if` block inside the function. For example, say a function has an option to use an optimizer called "MyOptim". This may be implemented as:
 
 ```{r, eval = FALSE}
 # Boolean options
