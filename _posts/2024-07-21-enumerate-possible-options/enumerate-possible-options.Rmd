@@ -1,0 +1,206 @@
+---
+title: 'Naming patterns for boolean enums'
+description: |
+  Some thoughts on the principle of enumerating possible options, even for booleans
+categories:
+  - design
+base_url: https://yjunechoe.github.io
+author:
+  - name: June Choe
+    affiliation: University of Pennsylvania Linguistics
+    affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+    orcid_id: 0000-0002-0701-921X
+date: "`r Sys.Date()`"
+output:
+  distill::distill_article:
+    include-after-body: "highlighting.html"
+    toc: true
+    self_contained: false
+    css: "../../styles.css"
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+library(ggplot2)
+knitr::opts_chunk$set(
+  comment = " ",
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  R.options = list(width = 80)
+)
+```
+
+I've been having a blast reading through the [Tidy design principles](https://design.tidyverse.org/) book lately - it's packed with just the kind of stuff I needed to hear at this stage of my developer experience. And actually, I started writing packages in the post-`{devtools}`/[R Packages](https://r-pkgs.org/) era, so I wasn't too surprised to find that my habits already align with many of the design principles advocated for in the book.^[The fun part of reading the book for me is not necessarily about discovering new patterns, but about being able to put a name to them and think more critically about their pros and cons.]
+
+But there was one pattern which took me a bit to fully wrap my head around (and be fully convinced by). It's first introduced in the chapter ["Enumerate possible options"](https://design.tidyverse.org/enumerate-options.html) which gives a pretty convincing example of the base R function `rank()`. `rank()` has a couple options for resolving ties between values which are exposed to the user via the `ties.method` argument. The default value of this argument is a vector that enumerates all the possible options, and the user's choice of (or the lack of) an option is resolved through `match.arg()` and then the appropriate algorithm is called via a `switch()` statement.
+
+This is all good and well, but the book takes it a step further in a later chapter ["Prefer an enum, even if only two choices"](https://design.tidyverse.org/boolean-strategies.html), which outlines what I personally consider to be one of the more controversial (and newer^[To quote the book: "... this is a pattern that we only discovered relatively recently"]) strategies advocated for in the book. It's a specific case of the "enumerate possible options" principle applied to boolean arguments, and is best understood with an example (of `sort()` vs. `vctrs::vec_sort()`, from the book):
+
+```{r, eval = FALSE}
+# Booolean options
+sort(x, decreasing = TRUE)
+sort(x, decreasing = FALSE)
+
+# Enumerated options
+vctrs::vec_sort(x, direction = "desc")
+vctrs::vec_sort(x, direction = "asc")
+```
+
+The main argument for this pattern is one of clarity. In the case of the example above, it is unclear from reading `decreasing = FALSE` whether that expresses "sort in the opposite of decreasing order (i.e., increasing/ascending)" or "do not sort in decreasing order (ex: leave it alone)". The former is the correct interpretation, and this is expressed much clearer with `direction = "asc"`, which contrasts with the other option `direction = "desc"`.^[The book describes the awkwardness of `decreasing = FALSE` as "feels like a double negative", but I think this is just a general, pervasive problem of pragmatic ambiguity with negation, and this issue of "what exactly is being negated?" is actually one of my research topics! Negation is interpreted with respect to the relevant and accessible _alternatives_ (which "desc" vs. "asc" establishes very well) - in turn, recovering the intended meaning of the negation is difficult deprived of that context (like in the case of "direction = TRUE/FALSE"). See: [Alternative Semantics](https://en.wikipedia.org/wiki/Alternative_semantics).]
+
+I've never used this pattern for boolean options previously, but it's been growing on me and I'm starting to get convinced. But in thinking through its implementation for refactoring code that I own and/or use, I got walled by the hardest problem in CS: [naming things](https://www.karlton.org/2017/12/naming-things-hard/). A lot has been said on how to name things, but I've realized that the case of "turn booleans into enums" raises a whole different naming problem, one where you have to be precise about what's being negated, the alternatives that are being contrasted, and the scale that the enums lie on.
+
+What follows are my somewhat half-baked, unstructured thoughts on some heuristics that I hope can be useful for determining when to apply the "enumerate possible options" principle for boolean options, and how to rename them in the refactoring.
+
+## Take the argument name and negate it - is the intention clear?
+
+One good litmus test for whether you should convert your boolean option into an enum is to take the argument name X and turn it into "X" and "not-X" - is the intended behavior expressed clearly in the context of the function? If, conceptually, the options are truly and unambiguously binary, then it should still make sense. But if the TRUE/FALSE options assume a very particular _contrast_ which is difficult to recover from just reading "X" vs. "not-X", consider using an enum for the two options.
+
+To take `sort()` as an example again, imagine if we were to re-write it as:
+
+```{r eval = FALSE}
+sort(option = "decreasing")
+sort(option = "not-decreasing")
+```
+
+If `"decreasing"` vs. `"not-decreasing"` is ambiguous, then maybe that's a sign to consider ditching the boolean pattern and spell out the options more explicitly with e.g., `direction = "desc"` and `direction = "asc"`, as `vctrs::vec_sort()` does. I also think this is a useful exercise because it reflects the user's experience when encountering boolean options.
+
+## Look at the argument name - is it verb-y without an object?  
+
+Let's take a bigger offender of this principle as an example: `ggplot2::facet_grid()`. `facet_grid()` is a function that I use all the time, and it has a couple boolean arguments which makes no immediate sense to me. Admittedly, I've never actually used them in practice, but from all my experience with `{ggplot2}` and `facet_grid()`, shouldn't I be able to get at least _some_ clues as to what they do from reading the arguments?^[To pre-empt the preference for short argument names, the fact that users don't reach for these arguments in everyday use of `facet_grid()` should loosen that constraint for short, easy-to-type names. IMO the "too much to type" complaint since time immemorial is already obviated by auto-complete, and should frankly just be ignored for the designing these kinds of esoteric arguments that only experienced users would reach for in very specific circumstances.]
+
+```{r}
+Filter(is.logical, formals(ggplot2::facet_grid))
+```
+
+Take for example the `shrink` argument. Right off the bat it already runs into the problem where it's not clear _what_ we're shrinking. I find this to be **a general problem with boolean arguments: they're often _verbs_ with the _object_ omitted** (presumably to save keystrokes). Using the heuristic of negating the argument, we get "shrink" vs. "don't shrink", which not only repeats the problem of the ambiguity of negation as we saw with `sort()` previously, but also exposes how serious the problem of missing the object of the verb is. 
+
+At this point you may be wondering what exactly the `shrink` argument does at all. From the docs:
+
+> If TRUE, will shrink scales to fit output of statistics, not raw data. If FALSE, will be range of raw data before statistical summary.
+
+The intended contrast seems to be one of "statistics" (default) vs. "raw data", so these are obvious candidates for our enum refactoring. But something like `shrink = c("statistics", "raw-data")` doesn't quite cut it yet, because the object of shrinking is not the data, but the _scales_. So to be fully informative, the argument name should complete the verb phrase (i.e., include the object).
+
+Combining the observations from above, I think the following makes more sense:
+
+```{r, eval = FALSE}
+# Boolean options
+facet_grid(shrink = TRUE)
+facet_grid(shrink = FALSE)
+
+# Enumerated options
+facet_grid(shrink_scales_to = "statistics")
+facet_grid(shrink_scales_to = "raw-data")
+```
+
+This last point is a bit of a tangent, but after tinkering with the behavior of `shrink` more, I don't think "shrink" is a particularly useful description here. I might actually prefer something more neutral like `fit_scales_to`.
+
+## Is the argument a scalar adjective? Consider naming the scale.
+
+Loosely speaking, scalar (a.k.a. gradable) adjectives are adjectives that can be strengthened (or weakened) - English grammar can express this with the suffixes "-er" and "-est". For example, "tall" is a scalar adjective because you can say "taller" and "tallest", and scalar adjectives are called such because they lie on a scale (in this case, the scale of height). Note that the quality of an adjective as a scalar one is not so clear though, as you can "more X" or "most X" just about any adjective X (e.g., even true vs. false can lie on a scale of more true or more false) - what matters more is if saying something like "more X" makes sense in the context of where X is found (e.g., the context of the function).^[Try this from the view point of both the developer and the user!] If so, you're dealing with a scalar adjective.
+
+This Linguistics 101 tangent is relevant here because I often see boolean arguments named after scalar adjectives, but I feel like in those cases it's better to just **name the scale itself** (which in turn makes the switch to enum more natural).
+
+A contrived example would be if a function had a boolean argument called `tall`. To refactor this into an enum, we can rename the argument to the scale itself (`height`) and enumerate the two end points:
+
+```{r, eval = FALSE}
+# Boolean options
+fun(tall = TRUE)
+fun(tall = FALSE)
+
+# Enumerated options
+fun(height = "tall")
+fun(height = "short")
+```
+
+A frequent offender of the enum principle in the wild is the `verbose` argument. `verbose` is an interesting case study because it suffers from the additional problem of there possibly being more than 2 options as the function matures. The book offers [some strategies for remedying these kinds of problems after-the-fact](https://design.tidyverse.org/boolean-strategies.html#how-do-you-remediate-past-mistakes), but I think a proactive solution is to name the argument `verbosity` (the name of the scale) with the possible options enumerated (see also [a recent Mastodon thread](https://fosstodon.org/@coolbutuseless/112742297912462306) that has great suggestions on this topic).
+
+```{r, eval = FALSE}
+# Boolean options
+fun(verbose = TRUE)
+fun(verbose = FALSE)
+
+# Enumerated options
+fun(verbosity = "all")
+fun(verbosity = "none")
+```
+
+I like this strategy of "naming the scale" because it gives off the impression to users that the possible options are values that lie on the scale. In the example above, it could either be the extremes `"all"` or `"none"`, but also possibly somewhere in between if the writer of the function chooses to introduce more granular settings later.
+
+## Is the argument truly binary? Still prefer enum and name the obvious/absence.
+
+Sometimes a boolean argument may encode a genuinely binary choice of a true/false, on/off, yes/no option. But refactoring the boolean options as enum may still offer some benefits. In those cases, I prefer the strategy of **name the obvious/absence**.
+
+Some cases for improvement are easier to spot than others. An easy case is something like the `REML` argument in `lme4::lmer()`. Without going into too much detail, when `REML = TRUE` (default), the model optimizes the REML (restricted/residualized maximum likelihood) criterion in finding the best fitting model. But it's not like the model doesn't use any criteria for goodness of fit when `REML = FALSE`. Instead, when `REML = FALSE`, the function uses a different criterion of ML (maximum likelihood). So the choice is not really between toggling REML on or off, but rather betweem tje ise pf REML vs. ML. The enum version lets us spell out the assumed default and make the choice explicit (again, with room for introducing other criteria in the future):
+
+```{r, eval = FALSE}
+# Boolean options
+lmer::lme4(REML = TRUE)
+lmer::lme4(REML = FALSE)
+
+# Enumerated options
+lmer::lme4(criterion = "REML")
+lmer::lme4(criterion = "ML")
+```
+
+A somewhat harder cases is a true presence-or-absence kind of a situation, where setting the argument to true/false essentially boils down to triggering an `if` block inside the function. For example, say a function has an option to use an optimizer called "MyOptim". This may be implemented as:
+
+```{r, eval = FALSE}
+# Boolean options
+fun(optimize = TRUE)
+fun(optimize = FALSE)
+```
+
+Even if the absence of optimization is not nameable, you could just call that option something like `"none"` for the enum pattern, which makes the choices explicit:
+
+```{r, eval = FALSE}
+# Enumerated options
+fun(optimizer = "MyOptim")
+fun(optimizer = "none")
+```
+
+Of course, the more difficult case is when the thing that's being toggled isn't really nameable. I think this is more often the case in practice, and may be the reason why there are many verb-y names for arguments with boolean options. Like, you wrote some code that optimizes something, but you have no name for it, so the argument that toggles it simple refers to its function like "should the function `optimize`?".
+
+But not all is lost. I think one way out of this would be to enumerate over placeholders, not necessarily names. So something like:
+
+```{r, eval = FALSE}
+# Enumerated options (placeholders)
+fun(optimizer = 1) # bespoke optimizer
+fun(optimizer = 0) # none
+```
+
+Then the documentation can clarify what the placeholder values `0`, `1`, etc. represent in longer, paragraph form, to describe what they do without the pressure of having to _name_ the options.^[IMO, `{collapse}` does a very good job at this (see `?TRA`).] It's not pretty, but I don't think there will ever be a pretty solution to this problem if you want to avoid naming things entirely.
+
+## Move shared strings across options into the argument name
+
+This one is simple and easily demonstrated with an example. Consider the `matrix()` function for constructing a matrix. It has an argument `byrow` which fills the matrix by column when `FALSE` (default) or by row when `TRUE`. The argument controls the margin of fill, so we could re-write it as a `fill` argument like so:
+
+```{r, eval = FALSE}
+# Boolean options
+matrix(byrow = FALSE)
+matrix(byrow = TRUE)
+
+# Enumerated options
+matrix(fill = "bycolumn")
+matrix(fill = "byrow")
+```
+
+The options `"bycolumn"` and `"byrow"` share the "by" string, so we could move that into the argument name:
+
+```{r, eval = FALSE}
+matrix(fill_by = "column")
+matrix(fill_by = "row")
+```
+
+At this point I was also wondering whether the enumerated options should have the shortened `"col"` or the full `"column"` name. At the moment I'm less decided about this, but note that given the partial matching behavior in `match.arg()`, you could get away with `matrix(fill_by = "col")` in both cases.
+
+At least from the book's examples, it looks like shortening is ok for the options. To repeat the `vctrs::vec_sort()` example from earlier:
+
+```{r, eval = FALSE}
+vctrs::vec_sort(x, direction = "desc") # vs. "descending"
+vctrs::vec_sort(x, direction = "asc")  # vs. "ascending"
+```
+
+I was actually kind of surprised by this when I first saw it, and I have mixed feelings especially for `"asc"` since that's not very frequent as a shorthand for "ascending" (e.g., `{dplyr}` has `desc()` but not a `asc()` equivalent - see also the previous section on "naming the obvious"). So I feel like I'd prefer for this to be spelled out in full in the function, and users can still loosely do partial matching in practice.^[Of course, the degree to which you'd encourage this should depend on how sure you are about the stability of the current set of enumerated options.]

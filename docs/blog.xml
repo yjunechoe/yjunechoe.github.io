@@ -12,7 +12,16 @@
       <link>https://yjunechoe.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Sun, 23 Jun 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jul 2024 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Naming patterns for boolean enums</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>https://yjunechoe.github.io/posts/2024-07-21-enumerate-possible-options</link>
+      <description>Some thoughts on the principle of enumerating possible options, even for booleans</description>
+      <category>design</category>
+      <guid>https://yjunechoe.github.io/posts/2024-07-21-enumerate-possible-options</guid>
+      <pubDate>Sun, 21 Jul 2024 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>`ave()` for the average {dplyr} user</title>
       <dc:creator>June Choe</dc:creator>
