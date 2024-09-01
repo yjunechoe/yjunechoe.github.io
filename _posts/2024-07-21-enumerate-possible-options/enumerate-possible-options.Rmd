@@ -19,6 +19,7 @@ output:
     css: "../../styles.css"
 editor_options: 
   chunk_output_type: console
+preview: preview.jpg
 ---
 
 ```{r setup, include=FALSE}
@@ -161,7 +162,7 @@ fun(optimizer = "MyOptim")
 fun(optimizer = "none")
 ```
 
-Of course, the more difficult case is when the thing that's being toggled isn't really nameable. I think this is more often the case in practice, and may be the reason why there are many verb-y names for arguments with boolean options. Like, you wrote some code that optimizes something, but you have no name for it, so the argument that toggles it simple refers to its function like "should the function `optimize`?".
+Of course, the more difficult case is when the thing that's being toggled isn't really nameable. I think this is more often the case in practice, and may be the reason why there are many verb-y names for arguments with boolean options. Like, you wrote some code that optimizes something, but you have no name for it, so the argument that toggles it simply refers to its function, like "should the function `optimize`?".
 
 But not all is lost. I think one way out of this would be to enumerate over placeholders, not necessarily names. So something like:
 

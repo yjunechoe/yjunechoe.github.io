@@ -12,15 +12,357 @@
       <link>https://yjunechoe.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Sun, 21 Jul 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 01 Sep 2024 00:00:00 +0000</lastBuildDate>
     <item>
       <title>Naming patterns for boolean enums</title>
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2024-07-21-enumerate-possible-options</link>
-      <description>Some thoughts on the principle of enumerating possible options, even for booleans</description>
+      <description>
+
+
+&lt;p&gt;I’ve been having a blast reading through the &lt;a
+href="https://design.tidyverse.org/"&gt;Tidy design principles&lt;/a&gt; book
+lately - it’s packed with just the kind of stuff I needed to hear at
+this stage of my developer experience. And actually, I started writing
+packages in the post-&lt;code&gt;{devtools}&lt;/code&gt;/&lt;a
+href="https://r-pkgs.org/"&gt;R Packages&lt;/a&gt; era, so I wasn’t too surprised
+to find that my habits already align with many of the design principles
+advocated for in the book.&lt;a href="#fn1" class="footnote-ref"
+id="fnref1"&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;But there was one pattern which took me a bit to fully wrap my head
+around (and be fully convinced by). It’s first introduced in the chapter
+&lt;a href="https://design.tidyverse.org/enumerate-options.html"&gt;“Enumerate
+possible options”&lt;/a&gt; which gives a pretty convincing example of the
+base R function &lt;code&gt;rank()&lt;/code&gt;. &lt;code&gt;rank()&lt;/code&gt; has a couple
+options for resolving ties between values which are exposed to the user
+via the &lt;code&gt;ties.method&lt;/code&gt; argument. The default value of this
+argument is a vector that enumerates all the possible options, and the
+user’s choice of (or the lack of) an option is resolved through
+&lt;code&gt;match.arg()&lt;/code&gt; and then the appropriate algorithm is called
+via a &lt;code&gt;switch()&lt;/code&gt; statement.&lt;/p&gt;
+&lt;p&gt;This is all good and well, but the book takes it a step further in a
+later chapter &lt;a
+href="https://design.tidyverse.org/boolean-strategies.html"&gt;“Prefer an
+enum, even if only two choices”&lt;/a&gt;, which outlines what I personally
+consider to be one of the more controversial (and newer&lt;a href="#fn2"
+class="footnote-ref" id="fnref2"&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;) strategies advocated
+for in the book. It’s a specific case of the “enumerate possible
+options” principle applied to boolean arguments, and is best understood
+with an example (of &lt;code&gt;sort()&lt;/code&gt;
+vs. &lt;code&gt;vctrs::vec_sort()&lt;/code&gt;, from the book):&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;# Booolean options
+sort(x, decreasing = TRUE)
+sort(x, decreasing = FALSE)
+
+# Enumerated options
+vctrs::vec_sort(x, direction = &amp;quot;desc&amp;quot;)
+vctrs::vec_sort(x, direction = &amp;quot;asc&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The main argument for this pattern is one of clarity. In the case of
+the example above, it is unclear from reading
+&lt;code&gt;decreasing = FALSE&lt;/code&gt; whether that expresses “sort in the
+opposite of decreasing order (i.e., increasing/ascending)” or “do not
+sort in decreasing order (ex: leave it alone)”. The former is the
+correct interpretation, and this is expressed much clearer with
+&lt;code&gt;direction = "asc"&lt;/code&gt;, which contrasts with the other option
+&lt;code&gt;direction = "desc"&lt;/code&gt;.&lt;a href="#fn3" class="footnote-ref"
+id="fnref3"&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I’ve never used this pattern for boolean options previously, but it’s
+been growing on me and I’m starting to get convinced. But in thinking
+through its implementation for refactoring code that I own and/or use, I
+got walled by the hardest problem in CS: &lt;a
+href="https://www.karlton.org/2017/12/naming-things-hard/"&gt;naming
+things&lt;/a&gt;. A lot has been said on how to name things, but I’ve realized
+that the case of “turn booleans into enums” raises a whole different
+naming problem, one where you have to be precise about what’s being
+negated, the alternatives that are being contrasted, and the scale that
+the enums lie on.&lt;/p&gt;
+&lt;p&gt;What follows are my somewhat half-baked, unstructured thoughts on
+some heuristics that I hope can be useful for determining when to apply
+the “enumerate possible options” principle for boolean options, and how
+to rename them in the refactoring.&lt;/p&gt;
+&lt;h2
+id="take-the-argument-name-and-negate-it---is-the-intention-clear"&gt;Take
+the argument name and negate it - is the intention clear?&lt;/h2&gt;
+&lt;p&gt;One good litmus test for whether you should convert your boolean
+option into an enum is to take the argument name X and turn it into “X”
+and “not-X” - is the intended behavior expressed clearly in the context
+of the function? If, conceptually, the options are truly and
+unambiguously binary, then it should still make sense. But if the
+TRUE/FALSE options assume a very particular &lt;em&gt;contrast&lt;/em&gt; which is
+difficult to recover from just reading “X” vs. “not-X”, consider using
+an enum for the two options.&lt;/p&gt;
+&lt;p&gt;To take &lt;code&gt;sort()&lt;/code&gt; as an example again, imagine if we were
+to re-write it as:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;sort(option = &amp;quot;decreasing&amp;quot;)
+sort(option = &amp;quot;not-decreasing&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If &lt;code&gt;"decreasing"&lt;/code&gt; vs. &lt;code&gt;"not-decreasing"&lt;/code&gt; is
+ambiguous, then maybe that’s a sign to consider ditching the boolean
+pattern and spell out the options more explicitly with e.g.,
+&lt;code&gt;direction = "desc"&lt;/code&gt; and &lt;code&gt;direction = "asc"&lt;/code&gt;, as
+&lt;code&gt;vctrs::vec_sort()&lt;/code&gt; does. I also think this is a useful
+exercise because it reflects the user’s experience when encountering
+boolean options.&lt;/p&gt;
+&lt;h2 id="look-at-the-argument-name---is-it-verb-y-without-an-object"&gt;Look
+at the argument name - is it verb-y without an object?&lt;/h2&gt;
+&lt;p&gt;Let’s take a bigger offender of this principle as an example:
+&lt;code&gt;ggplot2::facet_grid()&lt;/code&gt;. &lt;code&gt;facet_grid()&lt;/code&gt; is a
+function that I use all the time, and it has a couple boolean arguments
+which makes no immediate sense to me. Admittedly, I’ve never actually
+used them in practice, but from all my experience with
+&lt;code&gt;{ggplot2}&lt;/code&gt; and &lt;code&gt;facet_grid()&lt;/code&gt;, shouldn’t I be
+able to get at least &lt;em&gt;some&lt;/em&gt; clues as to what they do from reading
+the arguments?&lt;a href="#fn4" class="footnote-ref"
+id="fnref4"&gt;&lt;sup&gt;4&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;Filter(is.logical, formals(ggplot2::facet_grid))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  $shrink
+  [1] TRUE
+  
+  $as.table
+  [1] TRUE
+  
+  $drop
+  [1] TRUE
+  
+  $margins
+  [1] FALSE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Take for example the &lt;code&gt;shrink&lt;/code&gt; argument. Right off the bat
+it already runs into the problem where it’s not clear &lt;em&gt;what&lt;/em&gt;
+we’re shrinking. I find this to be &lt;strong&gt;a general problem with
+boolean arguments: they’re often &lt;em&gt;verbs&lt;/em&gt; with the &lt;em&gt;object&lt;/em&gt;
+omitted&lt;/strong&gt; (presumably to save keystrokes). Using the heuristic of
+negating the argument, we get “shrink” vs. “don’t shrink”, which not
+only repeats the problem of the ambiguity of negation as we saw with
+&lt;code&gt;sort()&lt;/code&gt; previously, but also exposes how serious the problem
+of missing the object of the verb is.&lt;/p&gt;
+&lt;p&gt;At this point you may be wondering what exactly the
+&lt;code&gt;shrink&lt;/code&gt; argument does at all. From the docs:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;If TRUE, will shrink scales to fit output of statistics, not raw
+data. If FALSE, will be range of raw data before statistical
+summary.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The intended contrast seems to be one of “statistics” (default)
+vs. “raw data”, so these are obvious candidates for our enum
+refactoring. But something like
+&lt;code&gt;shrink = c("statistics", "raw-data")&lt;/code&gt; doesn’t quite cut it
+yet, because the object of shrinking is not the data, but the
+&lt;em&gt;scales&lt;/em&gt;. So to be fully informative, the argument name should
+complete the verb phrase (i.e., include the object).&lt;/p&gt;
+&lt;p&gt;Combining the observations from above, I think the following makes
+more sense:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;# Boolean options
+facet_grid(shrink = TRUE)
+facet_grid(shrink = FALSE)
+
+# Enumerated options
+facet_grid(shrink_scales_to = &amp;quot;statistics&amp;quot;)
+facet_grid(shrink_scales_to = &amp;quot;raw-data&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This last point is a bit of a tangent, but after tinkering with the
+behavior of &lt;code&gt;shrink&lt;/code&gt; more, I don’t think “shrink” is a
+particularly useful description here. I might actually prefer something
+more neutral like &lt;code&gt;fit_scales_to&lt;/code&gt;.&lt;/p&gt;
+&lt;h2
+id="is-the-argument-a-scalar-adjective-consider-naming-the-scale."&gt;Is
+the argument a scalar adjective? Consider naming the scale.&lt;/h2&gt;
+&lt;p&gt;Loosely speaking, scalar (a.k.a. gradable) adjectives are adjectives
+that can be strengthened (or weakened) - English grammar can express
+this with the suffixes “-er” and “-est”. For example, “tall” is a scalar
+adjective because you can say “taller” and “tallest”, and scalar
+adjectives are called such because they lie on a scale (in this case,
+the scale of height). Note that the quality of an adjective as a scalar
+one is not so clear though, as you can “more X” or “most X” just about
+any adjective X (e.g., even true vs. false can lie on a scale of more
+true or more false) - what matters more is if saying something like
+“more X” makes sense in the context of where X is found (e.g., the
+context of the function).&lt;a href="#fn5" class="footnote-ref"
+id="fnref5"&gt;&lt;sup&gt;5&lt;/sup&gt;&lt;/a&gt; If so, you’re dealing with a scalar
+adjective.&lt;/p&gt;
+&lt;p&gt;This Linguistics 101 tangent is relevant here because I often see
+boolean arguments named after scalar adjectives, but I feel like in
+those cases it’s better to just &lt;strong&gt;name the scale itself&lt;/strong&gt;
+(which in turn makes the switch to enum more natural).&lt;/p&gt;
+&lt;p&gt;A contrived example would be if a function had a boolean argument
+called &lt;code&gt;tall&lt;/code&gt;. To refactor this into an enum, we can rename
+the argument to the scale itself (&lt;code&gt;height&lt;/code&gt;) and enumerate the
+two end points:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;# Boolean options
+fun(tall = TRUE)
+fun(tall = FALSE)
+
+# Enumerated options
+fun(height = &amp;quot;tall&amp;quot;)
+fun(height = &amp;quot;short&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;A frequent offender of the enum principle in the wild is the
+&lt;code&gt;verbose&lt;/code&gt; argument. &lt;code&gt;verbose&lt;/code&gt; is an interesting
+case study because it suffers from the additional problem of there
+possibly being more than 2 options as the function matures. The book
+offers &lt;a
+href="https://design.tidyverse.org/boolean-strategies.html#how-do-you-remediate-past-mistakes"&gt;some
+strategies for remedying these kinds of problems after-the-fact&lt;/a&gt;, but
+I think a proactive solution is to name the argument
+&lt;code&gt;verbosity&lt;/code&gt; (the name of the scale) with the possible options
+enumerated (see also &lt;a
+href="https://fosstodon.org/@coolbutuseless/112742297912462306"&gt;a recent
+Mastodon thread&lt;/a&gt; that has great suggestions on this topic).&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;# Boolean options
+fun(verbose = TRUE)
+fun(verbose = FALSE)
+
+# Enumerated options
+fun(verbosity = &amp;quot;all&amp;quot;)
+fun(verbosity = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I like this strategy of “naming the scale” because it gives off the
+impression to users that the possible options are values that lie on the
+scale. In the example above, it could either be the extremes
+&lt;code&gt;"all"&lt;/code&gt; or &lt;code&gt;"none"&lt;/code&gt;, but also possibly somewhere
+in between if the writer of the function chooses to introduce more
+granular settings later.&lt;/p&gt;
+&lt;h2
+id="is-the-argument-truly-binary-still-prefer-enum-and-name-the-obviousabsence."&gt;Is
+the argument truly binary? Still prefer enum and name the
+obvious/absence.&lt;/h2&gt;
+&lt;p&gt;Sometimes a boolean argument may encode a genuinely binary choice of
+a true/false, on/off, yes/no option. But refactoring the boolean options
+as enum may still offer some benefits. In those cases, I prefer the
+strategy of &lt;strong&gt;name the obvious/absence&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Some cases for improvement are easier to spot than others. An easy
+case is something like the &lt;code&gt;REML&lt;/code&gt; argument in
+&lt;code&gt;lme4::lmer()&lt;/code&gt;. Without going into too much detail, when
+&lt;code&gt;REML = TRUE&lt;/code&gt; (default), the model optimizes the REML
+(restricted/residualized maximum likelihood) criterion in finding the
+best fitting model. But it’s not like the model doesn’t use &lt;em&gt;any&lt;/em&gt;
+criteria for goodness of fit when &lt;code&gt;REML = FALSE&lt;/code&gt;. Instead,
+when &lt;code&gt;REML = FALSE&lt;/code&gt;, the function uses a different criterion
+of ML (maximum likelihood). So the choice is not really between toggling
+REML on or off, but rather between the choice of REML vs. ML. The enum
+version lets us spell out the assumed default and make the choice
+between the two explicit (again, with room for introducing other
+criteria in the future):&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;# Boolean options
+lmer::lme4(REML = TRUE)
+lmer::lme4(REML = FALSE)
+
+# Enumerated options
+lmer::lme4(criterion = &amp;quot;REML&amp;quot;)
+lmer::lme4(criterion = &amp;quot;ML&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;A somewhat harder case is a true presence-or-absence kind of a
+situation, where setting the argument to true/false essentially boils
+down to triggering an &lt;code&gt;if&lt;/code&gt; block inside the function. For
+example, say a function has an option to use an optimizer called
+“MyOptim”. This may be implemented as:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;# Boolean options
+fun(optimize = TRUE)
+fun(optimize = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Even if the absence of optimization is not nameable, you could just
+call that option something like &lt;code&gt;"none"&lt;/code&gt; for the enum
+pattern, which makes the choices explicit:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;# Enumerated options
+fun(optimizer = &amp;quot;MyOptim&amp;quot;)
+fun(optimizer = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Of course, the more difficult case is when the thing that’s being
+toggled isn’t really nameable. I think this is more often the case in
+practice, and may be the reason why there are many verb-y names for
+arguments with boolean options. Like, you wrote some code that optimizes
+something, but you have no name for it, so the argument that toggles it
+simply refers to its function, like “should the function
+&lt;code&gt;optimize&lt;/code&gt;?”.&lt;/p&gt;
+&lt;p&gt;But not all is lost. I think one way out of this would be to
+enumerate over placeholders, not necessarily names. So something
+like:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;# Enumerated options (placeholders)
+fun(optimizer = 1) # bespoke optimizer
+fun(optimizer = 0) # none&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then the documentation can clarify what the placeholder values
+&lt;code&gt;0&lt;/code&gt;, &lt;code&gt;1&lt;/code&gt;, etc. represent in longer, paragraph
+form, to describe what they do without the pressure of having to
+&lt;em&gt;name&lt;/em&gt; the options.&lt;a href="#fn6" class="footnote-ref"
+id="fnref6"&gt;&lt;sup&gt;6&lt;/sup&gt;&lt;/a&gt; It’s not pretty, but I don’t think there
+will ever be a pretty solution to this problem if you want to avoid
+naming things entirely.&lt;/p&gt;
+&lt;h2 id="move-shared-strings-across-options-into-the-argument-name"&gt;Move
+shared strings across options into the argument name&lt;/h2&gt;
+&lt;p&gt;This one is simple and easily demonstrated with an example. Consider
+the &lt;code&gt;matrix()&lt;/code&gt; function for constructing a matrix. It has an
+argument &lt;code&gt;byrow&lt;/code&gt; which fills the matrix by column when
+&lt;code&gt;FALSE&lt;/code&gt; (default) or by row when &lt;code&gt;TRUE&lt;/code&gt;. The
+argument controls the margin of fill, so we could re-write it as a
+&lt;code&gt;fill&lt;/code&gt; argument like so:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;# Boolean options
+matrix(byrow = FALSE)
+matrix(byrow = TRUE)
+
+# Enumerated options
+matrix(fill = &amp;quot;bycolumn&amp;quot;)
+matrix(fill = &amp;quot;byrow&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The options &lt;code&gt;"bycolumn"&lt;/code&gt; and &lt;code&gt;"byrow"&lt;/code&gt; share
+the “by” string, so we could move that into the argument name:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;matrix(fill_by = &amp;quot;column&amp;quot;)
+matrix(fill_by = &amp;quot;row&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;At this point I was also wondering whether the enumerated options
+should have the shortened &lt;code&gt;"col"&lt;/code&gt; or the full
+&lt;code&gt;"column"&lt;/code&gt; name. At the moment I’m less decided about this,
+but note that given the partial matching behavior in
+&lt;code&gt;match.arg()&lt;/code&gt;, you could get away with
+&lt;code&gt;matrix(fill_by = "col")&lt;/code&gt; in both cases.&lt;/p&gt;
+&lt;p&gt;At least from the book’s examples, it looks like shortening is ok for
+the options. To repeat the &lt;code&gt;vctrs::vec_sort()&lt;/code&gt; example from
+earlier:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;vctrs::vec_sort(x, direction = &amp;quot;desc&amp;quot;) # vs. &amp;quot;descending&amp;quot;
+vctrs::vec_sort(x, direction = &amp;quot;asc&amp;quot;)  # vs. &amp;quot;ascending&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I was actually kind of surprised by this when I first saw it, and I
+have mixed feelings especially for &lt;code&gt;"asc"&lt;/code&gt; since that’s not
+very frequent as a shorthand for “ascending” (e.g., &lt;code&gt;{dplyr}&lt;/code&gt;
+has &lt;code&gt;desc()&lt;/code&gt; but not a &lt;code&gt;asc()&lt;/code&gt; equivalent - see
+also the previous section on “naming the obvious”). So I feel like I’d
+prefer for this to be spelled out in full in the function, and users can
+still loosely do partial matching in practice.&lt;a href="#fn7"
+class="footnote-ref" id="fnref7"&gt;&lt;sup&gt;7&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;pre class="r distill-force-highlighting-css"&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="footnotes footnotes-end-of-document"&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id="fn1"&gt;&lt;p&gt;The fun part of reading the book for me is not
+necessarily about discovering new patterns, but about being able to put
+a name to them and think more critically about their pros and cons.&lt;a
+href="#fnref1" class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id="fn2"&gt;&lt;p&gt;To quote the book: “… this is a pattern that we only
+discovered relatively recently”&lt;a href="#fnref2"
+class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id="fn3"&gt;&lt;p&gt;The book describes the awkwardness of
+&lt;code&gt;decreasing = FALSE&lt;/code&gt; as “feels like a double negative”, but I
+think this is just a general, pervasive problem of pragmatic ambiguity
+with negation, and this issue of “what exactly is being negated?” is
+actually one of my research topics! Negation is interpreted with respect
+to the relevant and accessible &lt;em&gt;alternatives&lt;/em&gt; (which “desc”
+vs. “asc” establishes very well) - in turn, recovering the intended
+meaning of the negation is difficult deprived of that context (like in
+the case of “direction = TRUE/FALSE”). See: &lt;a
+href="https://en.wikipedia.org/wiki/Alternative_semantics"&gt;Alternative
+Semantics&lt;/a&gt;.&lt;a href="#fnref3" class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id="fn4"&gt;&lt;p&gt;To pre-empt the preference for short argument names, the
+fact that users don’t reach for these arguments in everyday use of
+&lt;code&gt;facet_grid()&lt;/code&gt; should loosen that constraint for short,
+easy-to-type names. IMO the “too much to type” complaint since time
+immemorial is already obviated by auto-complete, and should frankly just
+be ignored for the designing these kinds of esoteric arguments that only
+experienced users would reach for in very specific circumstances.&lt;a
+href="#fnref4" class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id="fn5"&gt;&lt;p&gt;Try this from the view point of both the developer and
+the user!&lt;a href="#fnref5" class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id="fn6"&gt;&lt;p&gt;IMO, &lt;code&gt;{collapse}&lt;/code&gt; does a very good job at
+this (see &lt;code&gt;?TRA&lt;/code&gt;).&lt;a href="#fnref6"
+class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id="fn7"&gt;&lt;p&gt;Of course, the degree to which you’d encourage this
+should depend on how sure you are about the stability of the current set
+of enumerated options.&lt;a href="#fnref7"
+class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</description>
+      <distill:md5>c608ddd22a8f548be394d00ce37cba58</distill:md5>
       <category>design</category>
       <guid>https://yjunechoe.github.io/posts/2024-07-21-enumerate-possible-options</guid>
-      <pubDate>Sun, 21 Jul 2024 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 01 Sep 2024 00:00:00 +0000</pubDate>
+      <media:content url="https://yjunechoe.github.io/posts/2024-07-21-enumerate-possible-options/preview.jpg" medium="image" type="image/jpeg"/>
     </item>
     <item>
       <title>`ave()` for the average {dplyr} user</title>
