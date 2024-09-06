@@ -121,7 +121,7 @@ We now turn to the harder problem of accessing a file in a private GitHub reposi
 
 Except this time, when you open the file at that url (assuming it can display in plain text), you'll see the url come with a "token" attached at the end (I'll show an example further down). This token is necessary to remotely access the data in a private repo. Once a token is generated, the file can be accessed using that token from anywhere, but note that it *will expire* at some point as GitHub refreshes tokens periodically (so treat them as if they're for single use).
 
-For a more robust approach, you can use the [GitHub Contents API](https://docs.github.com/en/rest/repos/contents). If you have your credentials set up in [`{gh}`](https://gh.r-lib.org/) (which you can check with `gh::gh_whoami()`), you can request a token-tagged url to the private file using the syntax:
+For a more robust approach, you can use the [GitHub Contents API](https://docs.github.com/en/rest/repos/contents). If you have your credentials set up in [`{gh}`](https://gh.r-lib.org/) (which you can check with `gh::gh_whoami()`), you can request a token-tagged url to the private file using the syntax:[^Thanks [@tanho](https://fosstodon.org/@tanho) for pointing me to this at the [R4DS/DSLC](https://fosstodon.org/@DSLC) slack.]
 
 ```{r, eval=FALSE}
 gh::gh("/repos/{user}/{repo}/contents/{path}")$download_url
@@ -298,7 +298,7 @@ cat(query2)
 dbGetQuery(con, query2)
 ```
 
-To do this more programmatically over *all* (parquet) files under `/tokens_data` in the repository, we need to transition to using the [GitHub Trees API](https://docs.github.com/en/rest/git/trees). The idea is similar to using the Contents API but now we are requesting a list of all files using the following syntax:
+To do this more programmatically over *all* parquet files under `/tokens_data` in the repository, we need to transition to using the [GitHub Trees API](https://docs.github.com/en/rest/git/trees). The idea is similar to using the Contents API but now we are requesting a list of all files using the following syntax:
 
 ```{r, eval=FALSE}
 gh::gh("/repos/{user}/{repo}/git/trees/{branch/tag/commitSHA}?recursive=true")$tree
@@ -415,13 +415,15 @@ In writing this blog post, I'm indebted to all the knowledgeable folks on [Masto
 
 First, a post about reading remote files would not be complete without a mention of the wonderful [`{googlesheets4}`](https://googlesheets4.tidyverse.org/) package for reading from Google Sheets. I debated whether I should include a larger discussion of `{googlesheets4}`, and despite using it quite often myself I ultimately decided to omit it for the sake of space and because the package website is already very comprehensive. I would suggest starting from the [*Get Started*](https://googlesheets4.tidyverse.org/articles/googlesheets4.html) vignette if you are new and interested.
 
-Second, along the lines of `{osfr}`, there are other similar [rOpensci](https://ropensci.org/) packages for retrieving data from the kinds of data sources that may be of interest to academics, such as [`{deposits}`](https://docs.ropensci.org/deposits/) for [zenodo](https://zenodo.org/) and [figshare](https://figshare.com/), and [`{piggyback}`](https://docs.ropensci.org/piggyback/) for GitHub release assets ([Maëlle Salmon's comment](https://fosstodon.org/@maelle@mastodon.social/113044065044359603) pointed me to the first two; I responded with [some of my experiences](https://fosstodon.org/@yjunechoe/113045714727018087)). I was also reminded of [`{pins}`](https://pins.rstudio.com/), though I'm not familiar with this service/interface myself.
+Second, along the lines of `{osfr}`, there are other similar [rOpensci](https://ropensci.org/) packages for retrieving data from the kinds of data sources that may be of interest to academics, such as [`{deposits}`](https://docs.ropensci.org/deposits/) for [zenodo](https://zenodo.org/) and [figshare](https://figshare.com/), and [`{piggyback}`](https://docs.ropensci.org/piggyback/) for GitHub release assets ([Maëlle Salmon's comment](https://fosstodon.org/@maelle@mastodon.social/113044065044359603) pointed me to the first two; I responded with [some of my experiences](https://fosstodon.org/@yjunechoe/113045714727018087)). I was also reminded that [`{pins}`](https://pins.rstudio.com/) exists - I'm not familiar with it myself so I thought I wouldn't write anything for it here BUT [Isabella Velásquez ](https://fosstodon.org/@ivelasq3/113079721335721253) came in clutch sharing a recent talk on [dynamically loading up-to-date data with {pins}](https://www.youtube.com/watch?v=u2OK8IWJWhk) which is a great demo of the unique strengths of `{pins}`.
 
 Lastly, I inadvertently(?) started some discussion around remotely accessing spatial files. I don't work with spatial data *at all* but I can totally imagine how the hassle of the traditional click-download-find-load workflow would be even more pronounced for spatial data which are presumably much larger in size and more difficult to preview. On this note, I'll just link to [Carl Boettiger's comment](https://fosstodon.org/@cboettig@ecoevo.social) about the fact that [GDAL has a virtual file system](https://gdal.org/en/latest/user/virtual_file_systems.html) that you can interface with from R packages wrapping this API (ex: [{gdalraster}](https://usdaforestservice.github.io/gdalraster/)), and to [Michael Sumner's comment/gist](https://fosstodon.org/@mdsumner@rstats.me/113041566793211094) + [Chris Toney's comment](https://fosstodon.org/@ctoney/113043719551668933) on the fact that you can even use this feature to stream non-spatial data!
 
 ### Miscellaneous tips and tricks
 
 I also have some random tricks that are more situational. Unfortunately, I can only recall like 20% of them at any given moment, so I'll be updating this space as more come back to me:
+
+- When reading remote `.rda` or `.RData` files with `load()`, you need to wrap the link in `url()` first (ref: [stackoverflow](https://stackoverflow.com/questions/26108575/loading-rdata-files-from-url)).
 
 - [`{vroom}`](https://vroom.r-lib.org/) can [remotely read gzipped files](https://vroom.r-lib.org/articles/vroom.html#reading-remote-files), without having to `download.file()` and `unzip()` first.
 
@@ -430,12 +432,12 @@ I also have some random tricks that are more situational. Unfortunately, I can o
     ```{r}
     fetched <- curl::curl_fetch_memory(
     "https://raw.githubusercontent.com/tidyverse/dplyr/main/data-raw/starwars.csv"
-  )
-  read.csv(text = rawToChar(fetched$content)) |> 
+)
+read.csv(text = rawToChar(fetched$content)) |> 
     dplyr::glimpse()
     ```
 
-  And even if you're going the route of downloading the file first, `curl::multi_download()` can offer big performance improvements over `download.file()`.[^See an example implemented for [`{openalexR}`](https://github.com/ropensci/openalexR/pull/63), an API package.] Many `{curl}` functions also take a `retry` parameter in some form which is cool too.
+  And even if you're going the route of downloading the file first, `curl::multi_download()` can offer big performance improvements over `download.file()`.^[See an example implemented for [`{openalexR}`](https://github.com/ropensci/openalexR/pull/63), an API package.] Many `{curl}` functions can also handle [retries and stop/resumes](https://fosstodon.org/@eliocamp@mastodon.social/111885424355264237) which is cool too.
 
 - [`{httr2}`](https://httr2.r-lib.org/) can capture a *continuous data stream* with `httr2::req_perform_stream()` up to a set time or size.
 
