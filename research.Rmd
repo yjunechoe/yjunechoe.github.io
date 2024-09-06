@@ -29,6 +29,8 @@ Sean McWeeny, Jinnie S. Choi, **June Choe**, Alexander LaTourette, Megan Y. Robe
 
 ## Conference Talks
 
+**June Choe**. *Children's sensitivity to informativeness in naming: basic-level vs. superordinate nouns*. Talk at the 101st Linguistic Society of America (LSA) conference. 9-12 January 2025. Philadelphia.
+
 **June Choe**. *Distributional signatures of superordinate nouns*. Talk at the 10th MACSIM conference. 6 April 2024. University of Maryland, College Park, MD.
 
 **June Choe**. *Sub-layer modularity in the Grammar of Graphics*. Talk at the 2023 Joint Statistical Meetings, 5-10 August 2023. Toronto, Canada. **American Statistical Association (ASA) student paper award in Statistical Computing and Graphics**. [Paper](https://yjunechoe.github.io/static/papers/Choe_2022_SublayerGG.pdf)
