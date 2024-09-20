@@ -1,5 +1,5 @@
 ---
-title: "Research"
+title: "Research and activities"
 ---
 
 <style>
@@ -12,7 +12,9 @@ p {
 Links: [Google Scholar](https://scholar.google.com/citations?user=dFdQTmYAAAAJ), [Github](https://github.com/yjunechoe), [OSF](https://osf.io/72vrb/)
 
 
-## Peer-reviewed Papers
+## Academic research output
+
+### Peer-reviewed Papers
 
 **June Choe**, and Anna Papafragou. (2023). The acquisition of subordinate nouns as pragmatic inference. _Journal of Memory and Language, 132_, 104432. DOI: https://doi.org/10.1016/j.jml.2023.104432. [PDF](https://www.langcoglab.com/_files/ugd/7cb05b_746c6f11a2214857a94c3ebbc7afa718.pdf) [OSF](https://osf.io/x8cuf/?view_only=14a975d3618e4838b6cc7681b2ecf692)
 
@@ -26,10 +28,9 @@ May Pik Yu Chan, **June Choe**, Aini Li, Yiran Chen, Xin Gao, and Nicole Hollida
 
 Sean McWeeny, Jinnie S. Choi, **June Choe**, Alexander LaTourette, Megan Y. Roberts, and Elizabeth S. Norton. (2022). [Rapid automatized naming (RAN) as a kindergarten predictor of future reading in English: A systematic review and meta-analysis](https://doi.org/10.1002/rrq.467). _Reading Research Quarterly, 57_(4), 1187–1211. DOI: 10.1002/rrq.467
 
+### Conference Talks
 
-## Conference Talks
-
-**June Choe**. *Children's sensitivity to informativeness in naming: basic-level vs. superordinate nouns*. Talk at the 101st Linguistic Society of America (LSA) conference. 9-12 January 2025. Philadelphia.
+**June Choe**, and Anna Papafragou. *Children's sensitivity to informativeness in naming: basic-level vs. superordinate nouns*. Talk at the 101st Linguistic Society of America (LSA) conference. 9-12 January 2025. Philadelphia.
 
 **June Choe**. *Distributional signatures of superordinate nouns*. Talk at the 10th MACSIM conference. 6 April 2024. University of Maryland, College Park, MD.
 
@@ -43,8 +44,7 @@ Sean McWeeny, Jinnie S. Choi, **June Choe**, Alexander LaTourette, Megan Y. Robe
 
 May Pik Yu Chan, **June Choe**, Aini Li, Yiran Chen, Xin Gao and Nicole Holliday. (2022). *Training and typological bias in ASR performance for world Englishes*. Talk at the 23rd Conference of the International Speech Communication Association (INTERSPEECH), 18-22 September, 2022. Incheon, South Korea.
 
-
-## Conference Presentations
+### Conference Presentations
 
 **June Choe**, and Anna Papafragou. *Distributional signatures of superordinate nouns*. Poster presented at the 48th Boston University Conference on Language Development (BUCLD), 2-5 November, 2023. Boston University, Boston, MA. [Abstract](static/abstract/BUCLD2023a_Abstract.pdf) [Poster](static/poster/BUCLD2023_superordinates_corpus.png)
 
@@ -69,26 +69,6 @@ May Pik Yu Chan, **June Choe**, Aini Li, Yiran Chen, Xin Gao and Nicole Holliday
 D’Onofrio, Annette, **June Choe** and Masaya Yoshida. *Personae in syntactic processing: Socially-specific agents bias expectations of verb transitivity*. Poster at The 93rd Annual Meeting of the Linguistics Society of America. 3-6 January 2019. New York City, NY.
 
 
-## Workshops led
-
-_Introduction to mixed-effects models in Julia_. Workshop at Penn MindCORE. 1 December 2023. Philadelphia, PA. [Github](https://github.com/yjunechoe/MindCORE-julia-mixedmodels) [Colab notebook](https://colab.research.google.com/drive/1eT-cb3_TAczLvs29_XpRH49oaySM4zW0?usp=sharing)
-
-_Experimental syntax using IBEX/PCIBEX_ with Dr. Nayoun Kim. Workshop at the 2022 Seoul International Conference on Linguistics. 11-12 August 2022. Seoul, South Korea. [PDF](https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2022-ibex-pcibex-workshop-slides.pdf)
-
-_Experimental syntax using IBEX: a walkthrough_ with Dr. Nayoun Kim. 2021 BK Winter School-Workshop on Experimental Linguistics/Syntax at Sungkyunkwan University, 19-22 January 2021. Seoul, South Korea. [PDF](https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2021-ibex-workshop-slides.pdf)
-
-
-## Guest lectures
-
-_Hard words and (syntactic) bootstrapping_. LING 5750 "The Acquisition of Meaning". Instructor: Dr. Anna Papafragou. Spring 2024, University of Pennsylvania.
-
-_Introduction to R for psychology research_. PSYC 4997 "Senior Honors Seminar in Psychology". Instructor: Dr. Coren Apicella. Spring 2024, University of Pennsylvania. [Colab notebook](https://colab.research.google.com/drive/1MJ23TMCYvo0jt2Lefyx60Mees6CzEFaY?usp=drive_link)
-
-_Model fitting and diagnosis with MixedModels.jl in Julia_. LING 5670 "Quantitative Study of Linguistic Variation". Instructor: Dr. Meredith Tamminga. Fall 2023, University of Pennsylvania.
-
-_Simulation-based power analysis for mixed-effects models_. LING 5670 "Quantitative Study of Linguistic Variation". Instructor: Dr. Meredith Tamminga. Spring 2023, University of Pennsylvania.
-
-
 ## Research activities in FOSS
 
 ### Papers
@@ -109,15 +89,45 @@ June Choe. [Stepping into {ggplot2} internals with {ggtrace}](https://www.youtub
 
 ### Software
 
+**June Choe**. (2024). jlmerclusterperm: Cluster-Based Permutation Analysis for Densely Sampled Time Data. R package version 1.1.3. https://cran.r-project.org/package=jlmerclusterperm. [Github](https://github.com/yjunechoe/jlmerclusterperm/)
+
 Rich Iannone, **June Choe**, Mauricio Vargas Sepulveda. (2024). pointblank: Data Validation and Organization of Metadata for Local and Remote Tables. R package version 0.12.1. https://CRAN.R-project.org/package=pointblank. [Github](https://rstudio.github.io/pointblank/)
 
-Massimo Aria, Corrado Cuccurullo, Trang Le, **June Choe**. (2024). openalexR: Getting Bibliographic Records from 'OpenAlex' Database Using 'DSL' API. R package version 1.2.3. https://CRAN.R-project.org/package=openalexR. [Github](https://github.com/ropensci/openalexR)
+Massimo Aria, Corrado Cuccurullo, Trang Le, **June Choe**. (2024). openalexR: Getting Bibliographic Records from 'OpenAlex' Database Using 'DSL' API. R package version 1.4.0. https://CRAN.R-project.org/package=openalexR. [Github](https://github.com/ropensci/openalexR)
 
-**June Choe**. (2024). jlmerclusterperm: Cluster-Based Permutation Analysis for Densely Sampled Time Data. R package version 1.1.3. https://cran.r-project.org/package=jlmerclusterperm. [Github](https://github.com/yjunechoe/jlmerclusterperm/)
+**June Choe**. (2024). jlme: Regression Modelling with 'GLM.jl' and 'MixedModels.jl' in 'Julia'. R package version 0.3.0. https://cran.r-project.org/package=jlme. [Github](https://github.com/yjunechoe/jlme/)
 
 Sean McWeeny, **June Choe**, & Elizabeth S. Norton. (2021). SnowGlobe: An Iterative Search Tool for Systematic Reviews and Meta-Analyses [Computer Software]. [OSF](https://doi.org/10.17605/OSF.IO/U25RN)
 
-## Service
+
+## Teaching
+
+### Positions held
+
+Teaching assistant for "Introduction to Linguistics". Instructor: Aletheia Cui. Spring 2024. University of Pennsylvania.
+
+Teaching assistant for "Data science for language and the mind". Instructor: Katie Schuler. Fall 2021, Spring, 2023, and Fall 2023. University of Pennsylvania.
+
+### Workshops led
+
+_Introduction to mixed-effects models in Julia_. Workshop at Penn MindCORE. 1 December 2023. Philadelphia, PA. [Github](https://github.com/yjunechoe/MindCORE-julia-mixedmodels) [Colab notebook](https://colab.research.google.com/drive/1eT-cb3_TAczLvs29_XpRH49oaySM4zW0?usp=sharing)
+
+_Experimental syntax using IBEX/PCIBEX_ with Dr. Nayoun Kim. Workshop at the 2022 Seoul International Conference on Linguistics. 11-12 August 2022. Seoul, South Korea. [PDF](https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2022-ibex-pcibex-workshop-slides.pdf)
+
+_Experimental syntax using IBEX: a walkthrough_ with Dr. Nayoun Kim. 2021 BK Winter School-Workshop on Experimental Linguistics/Syntax at Sungkyunkwan University, 19-22 January 2021. Seoul, South Korea. [PDF](https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2021-ibex-workshop-slides.pdf)
+
+### Guest lectures
+
+_Hard words and (syntactic) bootstrapping_. LING 5750 "The Acquisition of Meaning". Instructor: Dr. Anna Papafragou. Spring 2024. University of Pennsylvania.
+
+_Introduction to R for psychology research_. PSYC 4997 "Senior Honors Seminar in Psychology". Instructor: Dr. Coren Apicella. Spring 2024. University of Pennsylvania. [Colab notebook](https://colab.research.google.com/drive/1MJ23TMCYvo0jt2Lefyx60Mees6CzEFaY?usp=drive_link)
+
+_Model fitting and diagnosis with MixedModels.jl in Julia_. LING 5670 "Quantitative Study of Linguistic Variation". Instructor: Dr. Meredith Tamminga. Fall 2023. University of Pennsylvania.
+
+_Simulation-based power analysis for mixed-effects models_. LING 5670 "Quantitative Study of Linguistic Variation". Instructor: Dr. Meredith Tamminga. Spring 2023. University of Pennsylvania.
+
+
+## Professional activities
 
 ### Editor
 
@@ -125,6 +135,12 @@ Sean McWeeny, **June Choe**, & Elizabeth S. Norton. (2021). SnowGlobe: An Iterat
 
 ### Reviewer
 
+- Cognition
 - Language Learning and Development
 - Journal of Open Source Software
 - Proceedings of the Annual Meeting of the Cognitive Science Society
+
+### Membership
+
+- Linguistics Society of America
+- American Statistical Association

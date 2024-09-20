@@ -68,7 +68,7 @@ Links: [Github](https://github.com/rstudio/pointblank), [website](https://rstudi
   <img class='hex' src='https://docs.ropensci.org/openalexR/logo.png'/>
 </div>
 
-Role: Contributor
+Role: Author
 
 Language: R
 

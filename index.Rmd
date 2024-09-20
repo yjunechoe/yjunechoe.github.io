@@ -126,3 +126,7 @@ Projects:
 4) {ggplot2} internals for users
 
 -->
+
+<script>
+  document.querySelector("hr").remove()
+</script>
