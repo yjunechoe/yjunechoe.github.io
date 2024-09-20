@@ -128,5 +128,7 @@ Projects:
 -->
 
 <script>
+window.addEventListener('load', function () {
   document.querySelector("hr").remove()
+})
 </script>
