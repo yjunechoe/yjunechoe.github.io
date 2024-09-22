@@ -24,6 +24,79 @@
       <media:content url="https://yjunechoe.github.io/posts/2024-09-22-fetch-files-web/github-dplyr-starwars.jpg" medium="image" type="image/jpeg"/>
     </item>
     <item>
+      <title>Naming patterns for boolean enums</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>https://yjunechoe.github.io/posts/2024-07-21-enumerate-possible-options</link>
+      <description>Some thoughts on the principle of enumerating possible options, even for booleans</description>
+      <category>design</category>
+      <guid>https://yjunechoe.github.io/posts/2024-07-21-enumerate-possible-options</guid>
+      <pubDate>Sun, 21 Jul 2024 00:00:00 +0000</pubDate>
+      <media:content url="https://yjunechoe.github.io/posts/2024-07-21-enumerate-possible-options/preview.jpg" medium="image" type="image/jpeg"/>
+    </item>
+    <item>
+      <title>`ave()` for the average {dplyr} user</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>https://yjunechoe.github.io/posts/2024-06-09-ave-for-the-average</link>
+      <description>tidyverse 🤝 base R</description>
+      <category>dplyr</category>
+      <guid>https://yjunechoe.github.io/posts/2024-06-09-ave-for-the-average</guid>
+      <pubDate>Sun, 23 Jun 2024 00:00:00 +0000</pubDate>
+      <media:content url="https://yjunechoe.github.io/posts/2024-06-09-ave-for-the-average/preview.png" medium="image" type="image/png" width="926" height="328"/>
+    </item>
+    <item>
+      <title>args(args(args)(args))</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>https://yjunechoe.github.io/posts/2024-03-04-args-args-args-args</link>
+      <description>The unexpected sequal to "R is a language optimized for meme-ing"</description>
+      <category>args</category>
+      <category>metaprogramming</category>
+      <guid>https://yjunechoe.github.io/posts/2024-03-04-args-args-args-args</guid>
+      <pubDate>Tue, 05 Mar 2024 00:00:00 +0000</pubDate>
+      <media:content url="https://yjunechoe.github.io/posts/2024-03-04-args-args-args-args/preview.png" medium="image" type="image/png" width="419" height="300"/>
+    </item>
+    <item>
+      <title>HelloWorld("print")</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>https://yjunechoe.github.io/posts/2024-02-20-helloworld-print</link>
+      <description>R is a language optimized for meme-ing</description>
+      <category>metaprogramming</category>
+      <guid>https://yjunechoe.github.io/posts/2024-02-20-helloworld-print</guid>
+      <pubDate>Tue, 20 Feb 2024 00:00:00 +0000</pubDate>
+      <media:content url="https://yjunechoe.github.io/posts/2024-02-20-helloworld-print/preview.png" medium="image" type="image/png" width="462" height="184"/>
+    </item>
+    <item>
+      <title>2023 Year in Review</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>https://yjunechoe.github.io/posts/2023-12-31-2023-year-in-review</link>
+      <description>Reflections and updates on what I've been up to in 2023</description>
+      <category>reflections</category>
+      <guid>https://yjunechoe.github.io/posts/2023-12-31-2023-year-in-review</guid>
+      <pubDate>Sun, 31 Dec 2023 00:00:00 +0000</pubDate>
+      <media:content url="https://yjunechoe.github.io/posts/2023-12-31-2023-year-in-review/preview.png" medium="image" type="image/png" width="1512" height="1371"/>
+    </item>
+    <item>
+      <title>The many ways to (un)tidy-select</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>https://yjunechoe.github.io/posts/2023-12-03-untidy-select</link>
+      <description>Deconstructing {tidyselect} and building it back up</description>
+      <category>data wrangling</category>
+      <category>dplyr</category>
+      <category>tidyselect</category>
+      <guid>https://yjunechoe.github.io/posts/2023-12-03-untidy-select</guid>
+      <pubDate>Mon, 04 Dec 2023 00:00:00 +0000</pubDate>
+      <media:content url="https://yjunechoe.github.io/posts/2023-12-03-untidy-select/preview.png" medium="image" type="image/png" width="957" height="664"/>
+    </item>
+    <item>
+      <title>Fumbling my way through an XY problem</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>https://yjunechoe.github.io/posts/2023-07-09-x-y-problem</link>
+      <description>Some lessons learned from a (personal) case study</description>
+      <category>reflections</category>
+      <guid>https://yjunechoe.github.io/posts/2023-07-09-x-y-problem</guid>
+      <pubDate>Mon, 10 Jul 2023 00:00:00 +0000</pubDate>
+      <media:content url="https://yjunechoe.github.io/posts/2023-07-09-x-y-problem/preview.png" medium="image" type="image/png" width="238" height="205"/>
+    </item>
+    <item>
       <title>Row relational operations with slice()</title>
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2023-06-11-row-relational-operations</link>
@@ -781,7 +854,7 @@ gapminder_df&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This time, let’s see the desired output (plot) first and build our
 way up. The goal is to plot the GDP growth of Germany over the years,
 &lt;em&gt;and&lt;/em&gt; its yearly &lt;strong&gt;GDP neighbors&lt;/strong&gt; side-by-side:&lt;/p&gt;
-&lt;p&gt;&lt;img src="file86a47c2865f8_files/figure-html/final-gapminder-plot-1.png" width="672" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="file34b04a67397f_files/figure-html/final-gapminder-plot-1.png" width="672" /&gt;&lt;/p&gt;
 &lt;p&gt;First, let’s think about what a “GDP neighbor” means in
 row-relational terms. If you arranged the data by GDP, the GDP neighbors
 would be the rows that come immediately before and after the rows for
@@ -918,7 +991,7 @@ voila!&lt;/p&gt;
   ) +
   theme_classic() +
   labs(x = &amp;quot;Year&amp;quot;, y = &amp;quot;GDP per capita&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src="file86a47c2865f8_files/figure-html/final-gapminder-plot-1.png" width="672" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="file34b04a67397f_files/figure-html/final-gapminder-plot-1.png" width="672" /&gt;&lt;/p&gt;
 &lt;details&gt;
 &lt;summary&gt;
 Solving the harder version of the problem
@@ -1860,81 +1933,8 @@ class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
       <category>data wrangling</category>
       <category>dplyr</category>
       <guid>https://yjunechoe.github.io/posts/2023-06-11-row-relational-operations</guid>
-      <pubDate>Sun, 22 Sep 2024 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 11 Jun 2023 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2023-06-11-row-relational-operations/preview.png" medium="image" type="image/png" width="1800" height="1080"/>
-    </item>
-    <item>
-      <title>Naming patterns for boolean enums</title>
-      <dc:creator>June Choe</dc:creator>
-      <link>https://yjunechoe.github.io/posts/2024-07-21-enumerate-possible-options</link>
-      <description>Some thoughts on the principle of enumerating possible options, even for booleans</description>
-      <category>design</category>
-      <guid>https://yjunechoe.github.io/posts/2024-07-21-enumerate-possible-options</guid>
-      <pubDate>Sun, 21 Jul 2024 00:00:00 +0000</pubDate>
-      <media:content url="https://yjunechoe.github.io/posts/2024-07-21-enumerate-possible-options/preview.jpg" medium="image" type="image/jpeg"/>
-    </item>
-    <item>
-      <title>`ave()` for the average {dplyr} user</title>
-      <dc:creator>June Choe</dc:creator>
-      <link>https://yjunechoe.github.io/posts/2024-06-09-ave-for-the-average</link>
-      <description>tidyverse 🤝 base R</description>
-      <category>dplyr</category>
-      <guid>https://yjunechoe.github.io/posts/2024-06-09-ave-for-the-average</guid>
-      <pubDate>Sun, 23 Jun 2024 00:00:00 +0000</pubDate>
-      <media:content url="https://yjunechoe.github.io/posts/2024-06-09-ave-for-the-average/preview.png" medium="image" type="image/png" width="926" height="328"/>
-    </item>
-    <item>
-      <title>args(args(args)(args))</title>
-      <dc:creator>June Choe</dc:creator>
-      <link>https://yjunechoe.github.io/posts/2024-03-04-args-args-args-args</link>
-      <description>The unexpected sequal to "R is a language optimized for meme-ing"</description>
-      <category>args</category>
-      <category>metaprogramming</category>
-      <guid>https://yjunechoe.github.io/posts/2024-03-04-args-args-args-args</guid>
-      <pubDate>Tue, 05 Mar 2024 00:00:00 +0000</pubDate>
-      <media:content url="https://yjunechoe.github.io/posts/2024-03-04-args-args-args-args/preview.png" medium="image" type="image/png" width="419" height="300"/>
-    </item>
-    <item>
-      <title>HelloWorld("print")</title>
-      <dc:creator>June Choe</dc:creator>
-      <link>https://yjunechoe.github.io/posts/2024-02-20-helloworld-print</link>
-      <description>R is a language optimized for meme-ing</description>
-      <category>metaprogramming</category>
-      <guid>https://yjunechoe.github.io/posts/2024-02-20-helloworld-print</guid>
-      <pubDate>Tue, 20 Feb 2024 00:00:00 +0000</pubDate>
-      <media:content url="https://yjunechoe.github.io/posts/2024-02-20-helloworld-print/preview.png" medium="image" type="image/png" width="462" height="184"/>
-    </item>
-    <item>
-      <title>2023 Year in Review</title>
-      <dc:creator>June Choe</dc:creator>
-      <link>https://yjunechoe.github.io/posts/2023-12-31-2023-year-in-review</link>
-      <description>Reflections and updates on what I've been up to in 2023</description>
-      <category>reflections</category>
-      <guid>https://yjunechoe.github.io/posts/2023-12-31-2023-year-in-review</guid>
-      <pubDate>Sun, 31 Dec 2023 00:00:00 +0000</pubDate>
-      <media:content url="https://yjunechoe.github.io/posts/2023-12-31-2023-year-in-review/preview.png" medium="image" type="image/png" width="1512" height="1371"/>
-    </item>
-    <item>
-      <title>The many ways to (un)tidy-select</title>
-      <dc:creator>June Choe</dc:creator>
-      <link>https://yjunechoe.github.io/posts/2023-12-03-untidy-select</link>
-      <description>Deconstructing {tidyselect} and building it back up</description>
-      <category>data wrangling</category>
-      <category>dplyr</category>
-      <category>tidyselect</category>
-      <guid>https://yjunechoe.github.io/posts/2023-12-03-untidy-select</guid>
-      <pubDate>Mon, 04 Dec 2023 00:00:00 +0000</pubDate>
-      <media:content url="https://yjunechoe.github.io/posts/2023-12-03-untidy-select/preview.png" medium="image" type="image/png" width="957" height="664"/>
-    </item>
-    <item>
-      <title>Fumbling my way through an XY problem</title>
-      <dc:creator>June Choe</dc:creator>
-      <link>https://yjunechoe.github.io/posts/2023-07-09-x-y-problem</link>
-      <description>Some lessons learned from a (personal) case study</description>
-      <category>reflections</category>
-      <guid>https://yjunechoe.github.io/posts/2023-07-09-x-y-problem</guid>
-      <pubDate>Mon, 10 Jul 2023 00:00:00 +0000</pubDate>
-      <media:content url="https://yjunechoe.github.io/posts/2023-07-09-x-y-problem/preview.png" medium="image" type="image/png" width="238" height="205"/>
     </item>
     <item>
       <title>First impressions of DataFrames.jl and accessories</title>
