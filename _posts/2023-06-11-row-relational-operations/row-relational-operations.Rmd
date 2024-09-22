@@ -637,6 +637,35 @@ We find that the lessons of working with row indices from `slice()` translated t
 
 </details>
 
+### Aside: `kronecker()` as `as.vector(outer())`
+
+Following from the `slice()` + `outer()` strategy demoed above, imagine if we wanted to filter for `"Luke Skywalker"` and 4 other characters that are neighbors in the `height` and `mass` values.
+
+```{r}
+dplyr::starwars[, 1:3]
+```
+
+In row-relational terms, "filtering neighboring values" just means "filtering rows after arranging by the values we care about". We can express this using `slice()` and `outer()` as:
+
+```{r}
+starwars %>% 
+  select(name, mass, height) %>% 
+  arrange(mass, height) %>% 
+  slice( as.vector(outer(-2:2, which(name == "Luke Skywalker"), `+`)) )
+```
+
+I raised this example on an unrelated thread on the [R4DS/DSLC slack](https://fosstodon.org/@DSLC), where Anthony Durrant pointed me to `kronecker()` as a version of `outer()` that unlist before returning the output.
+
+So in examples involving `outer()` to generate row indices in `slice()`, we can also use `kronecker()` instead to save a call to a flattening function like `as.vector()`:
+
+```{r}
+starwars %>% 
+  select(name, mass, height) %>% 
+  arrange(mass, height) %>% 
+  slice( kronecker(-2:2, which(name == "Luke Skywalker"), `+`) )
+```
+
+
 ### Windowed min/max/median (etc.)
 
 Let's say we have this small time series data, and we want to calculate a **lagged 3-window moving minimum** for the `val` column:

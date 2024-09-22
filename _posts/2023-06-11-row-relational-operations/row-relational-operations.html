@@ -21,7 +21,7 @@
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -32,7 +32,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -94,8 +94,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--  https://schema.org/Article -->
-  <meta property="article:published" itemprop="datePublished" content="2023-06-11"/>
-  <meta property="article:created" itemprop="dateCreated" content="2023-06-11"/>
+  <meta property="article:published" itemprop="datePublished" content="2024-09-22"/>
+  <meta property="article:created" itemprop="dateCreated" content="2024-09-22"/>
   <meta name="article:author" content="June Choe"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
@@ -119,7 +119,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","date","output","editor_options","preview"]}},"value":[{"type":"character","attributes":{},"value":["Row relational operations with slice()"]},{"type":"character","attributes":{},"value":["A love letter to dplyr::slice() and a gallery of usecases\n"]},{"type":"character","attributes":{},"value":["data wrangling","dplyr"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]},{"type":"character","attributes":{},"value":["0000-0002-0701-921X"]}]}]},{"type":"character","attributes":{},"value":["2023-06-11"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["include-after-body","toc","self_contained","css"]}},"value":[{"type":"character","attributes":{},"value":["highlighting.html"]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["../../styles.css"]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["chunk_output_type"]}},"value":[{"type":"character","attributes":{},"value":["console"]}]},{"type":"character","attributes":{},"value":["preview.png"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","date","output","editor_options","preview"]}},"value":[{"type":"character","attributes":{},"value":["Row relational operations with slice()"]},{"type":"character","attributes":{},"value":["A love letter to dplyr::slice() and a gallery of usecases\n"]},{"type":"character","attributes":{},"value":["data wrangling","dplyr"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]},{"type":"character","attributes":{},"value":["0000-0002-0701-921X"]}]}]},{"type":"character","attributes":{},"value":["2024-09-22"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["include-after-body","toc","self_contained","css"]}},"value":[{"type":"character","attributes":{},"value":["highlighting.html"]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["../../styles.css"]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["chunk_output_type"]}},"value":[{"type":"character","attributes":{},"value":["console"]}]},{"type":"character","attributes":{},"value":["preview.png"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -236,9 +236,21 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     display: none !important;
   }
 
+  hr.section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin: 0px;
+  }
+
+
+  d-byline {
+    border-top: none;
+  }
+
   d-article {
     padding-top: 2.5rem;
     padding-bottom: 30px;
+    border-top: none;
   }
 
   d-appendix {
@@ -333,6 +345,11 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   d-article div.sourceCode pre {
     padding-left: 18px;
     font-size: 14px;
+  }
+
+  /* tweak for Pandoc numbered line within distill */
+  d-article pre.numberSource code > span {
+      left: -2em;
   }
 
   d-article pre {
@@ -1094,6 +1111,12 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     // create d-title
     $('.d-title').changeElementType('d-title');
 
+    // separator
+    var separator = '<hr class="section-separator" style="clear: both"/>';
+    // prepend separator above appendix
+    $('.d-byline').before(separator);
+    $('.d-article').before(separator);
+
     // create d-byline
     var byline = $('<d-byline></d-byline>');
     $('.d-byline').replaceWith(byline);
@@ -1171,8 +1194,9 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     $('.distill-force-highlighting-css').parent().remove();
 
     // remove empty line numbers inserted by pandoc when using a
-    // custom syntax highlighting theme
-    $('code.sourceCode a:empty').remove();
+    // custom syntax highlighting theme, except when numbering line
+    // in code chunk
+    $('pre:not(.numberLines) code.sourceCode a:empty').remove();
 
     // load distill framework
     load_distill_framework();
@@ -1198,12 +1222,13 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
       // add orcid ids
       $('.authors-affiliations').find('.author').each(function(i, el) {
         var orcid_id = front_matter.authors[i].orcidID;
+        var author_name = front_matter.authors[i].author
         if (orcid_id) {
           var a = $('<a></a>');
           a.attr('href', 'https://orcid.org/' + orcid_id);
           var img = $('<img></img>');
           img.addClass('orcid-id');
-          img.attr('alt', 'ORCID ID');
+          img.attr('alt', author_name ? 'ORCID ID for ' + author_name : 'ORCID ID');
           img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
           a.append(img);
           $(this).append(a);
@@ -1481,9 +1506,9 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="row-relational-operations_files/header-attrs-2.21/header-attrs.js"></script>
-  <link href="row-relational-operations_files/panelset-0.2.6/panelset.css" rel="stylesheet" />
-  <script src="row-relational-operations_files/panelset-0.2.6/panelset.js"></script>
+  <script src="row-relational-operations_files/header-attrs-2.27/header-attrs.js"></script>
+  <link href="row-relational-operations_files/panelset-0.3.0/panelset.css" rel="stylesheet" />
+  <script src="row-relational-operations_files/panelset-0.3.0/panelset.js"></script>
   <script src="row-relational-operations_files/clipboard-2.0.6/clipboard.min.js"></script>
   <link href="row-relational-operations_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
   <script src="row-relational-operations_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
@@ -1509,7 +1534,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Row relational operations with slice()","description":"A love letter to dplyr::slice() and a gallery of usecases","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/","orcidID":"0000-0002-0701-921X"}],"publishedDate":"2023-06-11T00:00:00.000+09:00","citationText":"Choe, 2023"}
+{"title":"Row relational operations with slice()","description":"A love letter to dplyr::slice() and a gallery of usecases","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/","orcidID":"0000-0002-0701-921X"}],"publishedDate":"2024-09-22T00:00:00.000-04:00","citationText":"Choe, 2024"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -1520,6 +1545,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 <div class="d-title">
 <h1>Row relational operations with slice()</h1>
+
 <!--radix_placeholder_categories-->
 <div class="dt-tags">
 <div class="dt-tag">data wrangling</div>
@@ -1532,7 +1558,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="d-byline">
   June Choe  (University of Pennsylvania Linguistics)<a href="https://live-sas-www-ling.pantheon.sas.upenn.edu/" class="uri">https://live-sas-www-ling.pantheon.sas.upenn.edu/</a>
   
-<br/>2023-06-11
+<br/>2024-09-22
 </div>
 
 <div class="d-article">
@@ -1553,6 +1579,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <li><a href="#subset-a-selection-of-rows-the-following-row" id="toc-subset-a-selection-of-rows-the-following-row">Subset a selection of rows + the following row</a></li>
 <li><a href="#subset-a-selection-of-rows-multiple-following-rows" id="toc-subset-a-selection-of-rows-multiple-following-rows">Subset a selection of rows + multiple following rows</a></li>
 <li><a href="#filter-and-encode-neighboring-rows" id="toc-filter-and-encode-neighboring-rows">Filter (and encode) neighboring rows</a></li>
+<li><a href="#aside-kronecker-as-as.vectorouter" id="toc-aside-kronecker-as-as.vectorouter">Aside: <code>kronecker()</code> as <code>as.vector(outer())</code></a></li>
 <li><a href="#windowed-minmaxmedian-etc." id="toc-windowed-minmaxmedian-etc.">Windowed min/max/median (etc.)</a></li>
 <li><a href="#evenly-distributed-row-shuffling-of-balanced-categories" id="toc-evenly-distributed-row-shuffling-of-balanced-categories">Evenly distributed row shuffling of balanced categories</a></li>
 <li><a href="#inserting-a-new-row-at-specific-intervals" id="toc-inserting-a-new-row-at-specific-intervals">Inserting a new row at specific intervals</a></li>
@@ -1586,7 +1613,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
    4 Darth Vader           202   136
    5 Leia Organa           150    49
    6 Owen Lars             178   120
-   7 Beru Whitesun lars    165    75
+   7 Beru Whitesun Lars    165    75
    8 R5-D4                  97    32
    9 Biggs Darklighter     183    84
   10 Obi-Wan Kenobi        182    77</code></pre>
@@ -1714,7 +1741,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
    5 Luke Skywalker        172    77
    6 R5-D4                  97    32
    7 C-3PO                 167    75
-   8 Beru Whitesun lars    165    75
+   8 Beru Whitesun Lars    165    75
    9 Biggs Darklighter     183    84
   10 R2-D2                  96    32</code></pre>
 </div>
@@ -1733,7 +1760,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
    4 Darth Vader           202   136
    5 Luke Skywalker        172    77
    6 Owen Lars             178   120
-   7 Beru Whitesun lars    165    75
+   7 Beru Whitesun Lars    165    75
    8 R5-D4                  97    32
    9 Biggs Darklighter     183    84
   10 Obi-Wan Kenobi        182    77</code></pre>
@@ -1750,7 +1777,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
    1 Obi-Wan Kenobi        182    77
    2 Biggs Darklighter     183    84
    3 R5-D4                  97    32
-   4 Beru Whitesun lars    165    75
+   4 Beru Whitesun Lars    165    75
    5 Owen Lars             178   120
    6 Leia Organa           150    49
    7 Darth Vader           202   136
@@ -1817,7 +1844,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
    1 R2-D2                  96    32
    2 R5-D4                  97    32
    3 Leia Organa           150    49
-   4 Beru Whitesun lars    165    75
+   4 Beru Whitesun Lars    165    75
    5 C-3PO                 167    75
    6 Luke Skywalker        172    77
    7 Owen Lars             178   120
@@ -1837,7 +1864,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
    1 R2-D2                  96    32
    2 R5-D4                  97    32
    3 Leia Organa           150    49
-   4 Beru Whitesun lars    165    75
+   4 Beru Whitesun Lars    165    75
    5 C-3PO                 167    75
    6 Luke Skywalker        172    77
    7 Owen Lars             178   120
@@ -1865,7 +1892,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
    1 R2-D2                  96    32
    2 R5-D4                  97    32
    3 Leia Organa           150    49
-   4 Beru Whitesun lars    165    75
+   4 Beru Whitesun Lars    165    75
    5 C-3PO                 167    75
    6 Luke Skywalker        172    77
    7 Owen Lars             178   120
@@ -1981,7 +2008,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
    6 Leia Organa           150    49
    7 Leia Organa           150    49
    8 Owen Lars             178   120
-   9 Beru Whitesun lars    165    75
+   9 Beru Whitesun Lars    165    75
   10 R5-D4                  97    32
   11 Biggs Darklighter     183    84
   12 Obi-Wan Kenobi        182    77</code></pre>
@@ -2012,7 +2039,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
    9 Leia Organa           150    49
   10 Leia Organa           150    49
   11 Owen Lars             178   120
-  12 Beru Whitesun lars    165    75
+  12 Beru Whitesun Lars    165    75
   13 R5-D4                  97    32
   14 Biggs Darklighter     183    84
   15 Obi-Wan Kenobi        182    77</code></pre>
@@ -2037,7 +2064,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
    9 Leia Organa           150    49
   10 Leia Organa           150    49
   11 Owen Lars             178   120
-  12 Beru Whitesun lars    165    75
+  12 Beru Whitesun Lars    165    75
   13 R5-D4                  97    32
   14 Biggs Darklighter     183    84
   15 Obi-Wan Kenobi        182    77</code></pre>
@@ -2570,6 +2597,62 @@ Solving the harder version of the problem
 </div>
 <p>We find that the lessons of working with row indices from <code>slice()</code> translated to solving this complex <code>mutate()</code> problem - neat!</p>
 </details>
+<h3 id="aside-kronecker-as-as.vectorouter">Aside: <code>kronecker()</code> as <code>as.vector(outer())</code></h3>
+<p>Following from the <code>slice()</code> + <code>outer()</code> strategy demoed above, imagine if we wanted to filter for <code>"Luke Skywalker"</code> and 4 other characters that are neighbors in the <code>height</code> and <code>mass</code> values.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>dplyr</span><span class='fu'>::</span><span class='va'><a href='https://dplyr.tidyverse.org/reference/starwars.html'>starwars</a></span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 87 × 3
+     name               height  mass
+     &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt;
+   1 Luke Skywalker        172    77
+   2 C-3PO                 167    75
+   3 R2-D2                  96    32
+   4 Darth Vader           202   136
+   5 Leia Organa           150    49
+   6 Owen Lars             178   120
+   7 Beru Whitesun Lars    165    75
+   8 R5-D4                  97    32
+   9 Biggs Darklighter     183    84
+  10 Obi-Wan Kenobi        182    77
+  # ℹ 77 more rows</code></pre>
+</div>
+<p>In row-relational terms, “filtering neighboring values” just means “filtering rows after arranging by the values we care about”. We can express this using <code>slice()</code> and <code>outer()</code> as:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>starwars</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>name</span>, <span class='va'>mass</span>, <span class='va'>height</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='va'>mass</span>, <span class='va'>height</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span> <span class='fu'><a href='https://rdrr.io/r/base/vector.html'>as.vector</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/outer.html'>outer</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>2</span>, <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='va'>name</span> <span class='op'>==</span> <span class='st'>"Luke Skywalker"</span><span class='op'>)</span>, <span class='va'>`+`</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 5 × 3
+    name            mass height
+    &lt;chr&gt;          &lt;dbl&gt;  &lt;int&gt;
+  1 Palpatine       75      170
+  2 Wedge Antilles  77      170
+  3 Luke Skywalker  77      172
+  4 Obi-Wan Kenobi  77      182
+  5 Boba Fett       78.2    183</code></pre>
+</div>
+<p>I raised this example on an unrelated thread on the <a href="https://fosstodon.org/@DSLC">R4DS/DSLC slack</a>, where Anthony Durrant pointed me to <code>kronecker()</code> as a version of <code>outer()</code> that unlist before returning the output.</p>
+<p>So in examples involving <code>outer()</code> to generate row indices in <code>slice()</code>, we can also use <code>kronecker()</code> instead to save a call to a flattening function like <code>as.vector()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>starwars</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>name</span>, <span class='va'>mass</span>, <span class='va'>height</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='va'>mass</span>, <span class='va'>height</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span> <span class='fu'><a href='https://rdrr.io/r/base/kronecker.html'>kronecker</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>2</span>, <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='va'>name</span> <span class='op'>==</span> <span class='st'>"Luke Skywalker"</span><span class='op'>)</span>, <span class='va'>`+`</span><span class='op'>)</span> <span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 5 × 3
+    name            mass height
+    &lt;chr&gt;          &lt;dbl&gt;  &lt;int&gt;
+  1 Palpatine       75      170
+  2 Wedge Antilles  77      170
+  3 Luke Skywalker  77      172
+  4 Obi-Wan Kenobi  77      182
+  5 Boba Fett       78.2    183</code></pre>
+</div>
 <h3 id="windowed-minmaxmedian-etc.">Windowed min/max/median (etc.)</h3>
 <p>Let’s say we have this small time series data, and we want to calculate a <strong>lagged 3-window moving minimum</strong> for the <code>val</code> column:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -3446,7 +3529,7 @@ Solving the harder version of the problem
 <h2 id="conclusion">Conclusion</h2>
 <p>When I started drafting this blog post, I thought I’d come with a principled taxonomy of row-relational operations. Ha. This was a lot trickier to think through than I thought.</p>
 <p>But I hope that this gallery of esoteric use-cases for <code>slice()</code> inspires you to use it more, and to think about “tidy” solutions to seemingly “untidy” problems.</p>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>

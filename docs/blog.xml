@@ -24,6 +24,1846 @@
       <media:content url="https://yjunechoe.github.io/posts/2024-09-22-fetch-files-web/github-dplyr-starwars.jpg" medium="image" type="image/jpeg"/>
     </item>
     <item>
+      <title>Row relational operations with slice()</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>https://yjunechoe.github.io/posts/2023-06-11-row-relational-operations</link>
+      <description>
+
+
+&lt;h2 id="intro"&gt;Intro&lt;/h2&gt;
+&lt;p&gt;In data wrangling, there are a handful of &lt;strong&gt;classes&lt;/strong&gt; of
+operations on data frames that we think of as theoretically well-defined
+and tackling distinct problems. To name a few, these include subsetting,
+joins, split-apply-combine, pairwise operations, nested-column
+workflows, and so on.&lt;/p&gt;
+&lt;p&gt;Against this rich backdrop, there’s one aspect of data wrangling that
+doesn’t receive as much attention: &lt;strong&gt;ordering of rows&lt;/strong&gt;.
+This isn’t necessarily surprising - we often think of row order as an
+auxiliary attribute of data frames since they don’t speak to the content
+of the data, &lt;em&gt;per se&lt;/em&gt;. I think we all share the intuition that
+two dataframe that differ only in row order are practically the same for
+most analysis purposes.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Except when they aren’t.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;In this blog post I want to talk about a few, somewhat esoteric cases
+of what I like to call &lt;strong&gt;row-relational operations&lt;/strong&gt;. My
+goal is to try to motivate row-relational operations as a full-blown
+class of data wrangling operation that includes not only row ordering,
+but also sampling, shuffling, repeating, interweaving, and so on (I’ll
+go over all of these later).&lt;/p&gt;
+&lt;p&gt;Without spoiling too much, I believe that &lt;code&gt;dplyr::slice()&lt;/code&gt;
+offers a powerful context for operations over row indices, even those
+that at first seem to lack a “tidy” solution. You may already know
+&lt;code&gt;slice()&lt;/code&gt; as an indexing function, but my hope is to convince
+you that it can do so much more.&lt;/p&gt;
+&lt;p&gt;Let’s start by first talking about some special properties of
+&lt;code&gt;dplyr::slice()&lt;/code&gt;, and then see how we can use it for various
+row-relational operations.&lt;/p&gt;
+&lt;h2 id="special-properties-of-dplyrslice"&gt;Special properties of
+&lt;code&gt;dplyr::slice()&lt;/code&gt;&lt;/h2&gt;
+&lt;h3 id="basic-usage"&gt;Basic usage&lt;/h3&gt;
+&lt;p&gt;For the following demonstration, I’ll use a small subset of the
+&lt;code&gt;dplyr::starwars&lt;/code&gt; dataset:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;starwars_sm &amp;lt;- dplyr::starwars[1:10, 1:3]
+starwars_sm&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 10 × 3
+     name               height  mass
+     &amp;lt;chr&amp;gt;               &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;
+   1 Luke Skywalker        172    77
+   2 C-3PO                 167    75
+   3 R2-D2                  96    32
+   4 Darth Vader           202   136
+   5 Leia Organa           150    49
+   6 Owen Lars             178   120
+   7 Beru Whitesun Lars    165    75
+   8 R5-D4                  97    32
+   9 Biggs Darklighter     183    84
+  10 Obi-Wan Kenobi        182    77&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id="row-selection"&gt;1) Row selection&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;slice()&lt;/code&gt; is a row indexing verb - if you pass it a vector
+of integers, it subsets data frame rows:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;starwars_sm |&amp;gt; 
+  slice(1:6) # First six rows&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 6 × 3
+    name           height  mass
+    &amp;lt;chr&amp;gt;           &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;
+  1 Luke Skywalker    172    77
+  2 C-3PO             167    75
+  3 R2-D2              96    32
+  4 Darth Vader       202   136
+  5 Leia Organa       150    49
+  6 Owen Lars         178   120&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Like other dplyr verbs with mutate-semantics, you can use &lt;a
+href="https://dplyr.tidyverse.org/reference/context.html"&gt;context-dependent
+expressions&lt;/a&gt; inside &lt;code&gt;slice()&lt;/code&gt;. For example, you can use
+&lt;code&gt;n()&lt;/code&gt; to grab the last row (or last couple of rows):&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;starwars_sm |&amp;gt; 
+  slice( n() ) # Last row&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 1 × 3
+    name           height  mass
+    &amp;lt;chr&amp;gt;           &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;
+  1 Obi-Wan Kenobi    182    77&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;starwars_sm |&amp;gt; 
+  slice( n() - 2:0 ) # Last three rows&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 3 × 3
+    name              height  mass
+    &amp;lt;chr&amp;gt;              &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;
+  1 R5-D4                 97    32
+  2 Biggs Darklighter    183    84
+  3 Obi-Wan Kenobi       182    77&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Another context-dependent expression that comes in handy is
+&lt;code&gt;row_number()&lt;/code&gt;, which returns all row indices. Using it
+inside &lt;code&gt;slice()&lt;/code&gt; essentially performs an identity
+transformation:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;identical(
+  starwars_sm,
+  starwars_sm |&amp;gt; slice( row_number() )
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Lastly, similar to in &lt;code&gt;select()&lt;/code&gt;, you can use
+&lt;code&gt;-&lt;/code&gt; for negative indexing (to remove rows):&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;identical(
+  starwars_sm |&amp;gt; slice(1:3),      # First three rows
+  starwars_sm |&amp;gt; slice(-(4:n()))  # All rows except fourth row to last row
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id="dynamic-dots"&gt;2) Dynamic dots&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;slice()&lt;/code&gt; supports &lt;a
+href="https://rlang.r-lib.org/reference/dyn-dots.html"&gt;dynamic dots&lt;/a&gt;.
+If you pass row indices into multiple argument positions,
+&lt;code&gt;slice()&lt;/code&gt; will concatenate them for you:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;identical(
+  starwars_sm |&amp;gt; slice(1:6),
+  starwars_sm |&amp;gt; slice(1, 2:4, 5, 6)
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you have a &lt;code&gt;list()&lt;/code&gt; of row indices, you can use the &lt;a
+href="https://rlang.r-lib.org/reference/splice-operator.html"&gt;splice
+operator&lt;/a&gt; &lt;code&gt;!!!&lt;/code&gt; to spread them out:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;starwars_sm |&amp;gt; 
+  slice( !!!list(1, 2:4, 5, 6) )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 6 × 3
+    name           height  mass
+    &amp;lt;chr&amp;gt;           &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;
+  1 Luke Skywalker    172    77
+  2 C-3PO             167    75
+  3 R2-D2              96    32
+  4 Darth Vader       202   136
+  5 Leia Organa       150    49
+  6 Owen Lars         178   120&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The above call to &lt;code&gt;slice()&lt;/code&gt; evaluates to the following
+after splicing:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;rlang::expr( slice(!!!list(1, 2:4, 5, 6)) )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  slice(1, 2:4, 5, 6)&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id="row-ordering"&gt;3) Row ordering&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;slice()&lt;/code&gt; respects the order in which you supplied the row
+indices:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;starwars_sm |&amp;gt; 
+  slice(3, 1, 2, 5)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 4 × 3
+    name           height  mass
+    &amp;lt;chr&amp;gt;           &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;
+  1 R2-D2              96    32
+  2 Luke Skywalker    172    77
+  3 C-3PO             167    75
+  4 Leia Organa       150    49&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This means you can do stuff like random sampling with
+&lt;code&gt;sample()&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;starwars_sm |&amp;gt; 
+  slice( sample(n()) )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 10 × 3
+     name               height  mass
+     &amp;lt;chr&amp;gt;               &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;
+   1 Obi-Wan Kenobi        182    77
+   2 Owen Lars             178   120
+   3 Leia Organa           150    49
+   4 Darth Vader           202   136
+   5 Luke Skywalker        172    77
+   6 R5-D4                  97    32
+   7 C-3PO                 167    75
+   8 Beru Whitesun Lars    165    75
+   9 Biggs Darklighter     183    84
+  10 R2-D2                  96    32&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You can also shuffle a subset of rows (ex: just the first five):&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;starwars_sm |&amp;gt; 
+  slice( sample(5), 6:n() )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 10 × 3
+     name               height  mass
+     &amp;lt;chr&amp;gt;               &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;
+   1 C-3PO                 167    75
+   2 Leia Organa           150    49
+   3 R2-D2                  96    32
+   4 Darth Vader           202   136
+   5 Luke Skywalker        172    77
+   6 Owen Lars             178   120
+   7 Beru Whitesun Lars    165    75
+   8 R5-D4                  97    32
+   9 Biggs Darklighter     183    84
+  10 Obi-Wan Kenobi        182    77&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Or reorder all rows by their indices (ex: in reverse):&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;starwars_sm |&amp;gt; 
+  slice( rev(row_number()) )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 10 × 3
+     name               height  mass
+     &amp;lt;chr&amp;gt;               &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;
+   1 Obi-Wan Kenobi        182    77
+   2 Biggs Darklighter     183    84
+   3 R5-D4                  97    32
+   4 Beru Whitesun Lars    165    75
+   5 Owen Lars             178   120
+   6 Leia Organa           150    49
+   7 Darth Vader           202   136
+   8 R2-D2                  96    32
+   9 C-3PO                 167    75
+  10 Luke Skywalker        172    77&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id="out-of-bounds-handling"&gt;4) Out-of-bounds handling&lt;/h4&gt;
+&lt;p&gt;If you pass a row index that’s out of bounds, &lt;code&gt;slice()&lt;/code&gt;
+returns a 0-row data frame:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;starwars_sm |&amp;gt; 
+  slice( n() + 1 ) # Select the row after the last row&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 0 × 3
+  # ℹ 3 variables: name &amp;lt;chr&amp;gt;, height &amp;lt;int&amp;gt;, mass &amp;lt;dbl&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;When mixed with valid row indices, out-of-bounds indices are simply
+ignored (much 💜 for this behavior):&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;starwars_sm |&amp;gt; 
+  slice(
+    0,       # 0th row - ignored
+    1:3,     # first three rows
+    n() + 1  # 1 after last row - ignored
+  )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 3 × 3
+    name           height  mass
+    &amp;lt;chr&amp;gt;           &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;
+  1 Luke Skywalker    172    77
+  2 C-3PO             167    75
+  3 R2-D2              96    32&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This lets you do funky stuff like select all even numbered rows by
+passing &lt;code&gt;slice()&lt;/code&gt; all row indices times 2:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;starwars_sm |&amp;gt; 
+  slice( row_number() * 2 ) # Add `- 1` at the end for *odd* rows!&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 5 × 3
+    name           height  mass
+    &amp;lt;chr&amp;gt;           &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;
+  1 C-3PO             167    75
+  2 Darth Vader       202   136
+  3 Owen Lars         178   120
+  4 R5-D4              97    32
+  5 Obi-Wan Kenobi    182    77&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="re-imagining-slice-with-data-masking"&gt;Re-imagining
+&lt;code&gt;slice()&lt;/code&gt; with data-masking&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;slice()&lt;/code&gt; is already pretty neat as it is, but that’s just
+the tip of the iceberg.&lt;/p&gt;
+&lt;p&gt;The really cool, under-rated feature of &lt;code&gt;slice()&lt;/code&gt; is that
+it’s &lt;a
+href="https://dplyr.tidyverse.org/reference/dplyr_data_masking.html"&gt;&lt;strong&gt;data-masked&lt;/strong&gt;&lt;/a&gt;,
+meaning that you can reference column vectors as if they’re variables.
+Another way of describing this property of &lt;code&gt;slice()&lt;/code&gt; is to
+say that it has &lt;a
+href="https://rlang.r-lib.org/reference/topic-data-mask-programming.html"&gt;&lt;strong&gt;mutate-semantics&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;At a very basic level, this means that &lt;code&gt;slice()&lt;/code&gt; can
+straightforwardly replicate the behavior of some dplyr verbs like
+&lt;code&gt;arrange()&lt;/code&gt; and &lt;code&gt;filter()&lt;/code&gt;!&lt;/p&gt;
+&lt;h4 id="slice-as-arrange"&gt;&lt;code&gt;slice()&lt;/code&gt; as
+&lt;code&gt;arrange()&lt;/code&gt;&lt;/h4&gt;
+&lt;p&gt;From our &lt;code&gt;starwars_sm&lt;/code&gt; data, if we want to sort by
+&lt;code&gt;height&lt;/code&gt; we can use &lt;code&gt;arrange()&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;starwars_sm |&amp;gt; 
+  arrange(height)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 10 × 3
+     name               height  mass
+     &amp;lt;chr&amp;gt;               &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;
+   1 R2-D2                  96    32
+   2 R5-D4                  97    32
+   3 Leia Organa           150    49
+   4 Beru Whitesun Lars    165    75
+   5 C-3PO                 167    75
+   6 Luke Skywalker        172    77
+   7 Owen Lars             178   120
+   8 Obi-Wan Kenobi        182    77
+   9 Biggs Darklighter     183    84
+  10 Darth Vader           202   136&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;But we can also do this with &lt;code&gt;slice()&lt;/code&gt; to the same effect,
+using &lt;code&gt;order()&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;starwars_sm |&amp;gt; 
+  slice( order(height) )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 10 × 3
+     name               height  mass
+     &amp;lt;chr&amp;gt;               &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;
+   1 R2-D2                  96    32
+   2 R5-D4                  97    32
+   3 Leia Organa           150    49
+   4 Beru Whitesun Lars    165    75
+   5 C-3PO                 167    75
+   6 Luke Skywalker        172    77
+   7 Owen Lars             178   120
+   8 Obi-Wan Kenobi        182    77
+   9 Biggs Darklighter     183    84
+  10 Darth Vader           202   136&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This is conceptually equivalent to combining the following 2-step
+process:&lt;/p&gt;
+&lt;ol style="list-style-type: decimal"&gt;
+&lt;li&gt;&lt;pre class="r"&gt;&lt;code&gt;ordered_val_ind &amp;lt;- order(starwars_sm$height)
+ordered_val_ind&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;   [1]  3  8  5  7  2  1  6 10  9  4&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;pre class="r"&gt;&lt;code&gt;starwars_sm |&amp;gt; 
+  slice( ordered_val_ind )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 10 × 3
+     name               height  mass
+     &amp;lt;chr&amp;gt;               &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;
+   1 R2-D2                  96    32
+   2 R5-D4                  97    32
+   3 Leia Organa           150    49
+   4 Beru Whitesun Lars    165    75
+   5 C-3PO                 167    75
+   6 Luke Skywalker        172    77
+   7 Owen Lars             178   120
+   8 Obi-Wan Kenobi        182    77
+   9 Biggs Darklighter     183    84
+  10 Darth Vader           202   136&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id="slice-as-filter"&gt;&lt;code&gt;slice()&lt;/code&gt; as
+&lt;code&gt;filter()&lt;/code&gt;&lt;/h4&gt;
+&lt;p&gt;We can also use &lt;code&gt;slice()&lt;/code&gt; to &lt;code&gt;filter()&lt;/code&gt;, using
+&lt;code&gt;which()&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;identical(
+  starwars_sm |&amp;gt; filter( height &amp;gt; 150 ),
+  starwars_sm |&amp;gt; slice( which(height &amp;gt; 150) )
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Thus, we can think of &lt;code&gt;filter()&lt;/code&gt; and &lt;code&gt;slice()&lt;/code&gt;
+as two sides of the same coin:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;filter()&lt;/code&gt; takes a logical vector that’s the same
+length as the number of rows in the data frame&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;slice()&lt;/code&gt; takes an integer vector that’s a (sub)set of
+a data frame’s row indices.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To put it more concretely, this logical vector was being passed to
+the above &lt;code&gt;filter()&lt;/code&gt; call:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;starwars_sm$height &amp;gt; 150&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;   [1]  TRUE  TRUE FALSE  TRUE FALSE  TRUE  TRUE FALSE  TRUE  TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;While this integer vector was being passed to the above
+&lt;code&gt;slice()&lt;/code&gt; call, where &lt;code&gt;which()&lt;/code&gt; returns the
+position of &lt;code&gt;TRUE&lt;/code&gt; values, given a logical vector:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;which( starwars_sm$height &amp;gt; 150 )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [1]  1  2  4  6  7  9 10&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="special-properties-of-slice"&gt;Special properties of
+&lt;code&gt;slice()&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;This re-imagined &lt;code&gt;slice()&lt;/code&gt; that heavily exploits
+data-masking gives us two interesting properties:&lt;/p&gt;
+&lt;ol style="list-style-type: decimal"&gt;
+&lt;li&gt;&lt;p&gt;We can work with &lt;strong&gt;sets&lt;/strong&gt; of row indices that need
+not to be the same length as the data frame
+(vs. &lt;code&gt;filter()&lt;/code&gt;).&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;We can work with row indices as &lt;strong&gt;integers&lt;/strong&gt;, which
+are legible to arithmetic operations (ex: &lt;code&gt;+&lt;/code&gt; and
+&lt;code&gt;*&lt;/code&gt;)&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;To grok the significance of working with rows as &lt;strong&gt;integer
+sets&lt;/strong&gt;, let’s work through some examples where
+&lt;code&gt;slice()&lt;/code&gt; comes in very handy.&lt;/p&gt;
+&lt;h2 id="a-gallery-of-row-operations-with-slice"&gt;A gallery of row
+operations with &lt;code&gt;slice()&lt;/code&gt;&lt;/h2&gt;
+&lt;h3 id="repeat-rows-in-place"&gt;Repeat rows (in place)&lt;/h3&gt;
+&lt;p&gt;In &lt;code&gt;{tidyr}&lt;/code&gt;, there’s a function called
+&lt;code&gt;uncount()&lt;/code&gt; which does the opposite of
+&lt;code&gt;dplyr::count()&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;library(tidyr)
+# Example from `tidyr::uncount()` docs
+uncount_df &amp;lt;- tibble(x = c(&amp;quot;a&amp;quot;, &amp;quot;b&amp;quot;), n = c(1, 2))
+uncount_df&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 2 × 2
+    x         n
+    &amp;lt;chr&amp;gt; &amp;lt;dbl&amp;gt;
+  1 a         1
+  2 b         2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;uncount_df |&amp;gt; 
+  uncount(n)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 3 × 1
+    x    
+    &amp;lt;chr&amp;gt;
+  1 a    
+  2 b    
+  3 b&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can mimic this behavior with &lt;code&gt;slice()&lt;/code&gt;, using
+&lt;code&gt;rep(times = ...)&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;rep(1:nrow(uncount_df), times = uncount_df$n)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [1] 1 2 2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;uncount_df |&amp;gt; 
+  slice( rep(row_number(), times = n) ) |&amp;gt; 
+  select( -n )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 3 × 1
+    x    
+    &amp;lt;chr&amp;gt;
+  1 a    
+  2 b    
+  3 b&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;What if instead of a whole column storing that information, we only
+have information about row position?&lt;/p&gt;
+&lt;p&gt;Let’s say we want to duplicate the rows of &lt;code&gt;starwars_sm&lt;/code&gt;
+at the &lt;code&gt;repeat_at&lt;/code&gt; positions:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;repeat_at &amp;lt;- sample(5, 2)
+repeat_at&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [1] 4 5&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In &lt;code&gt;slice()&lt;/code&gt;, you’d just select all rows plus those
+additional rows, then sort the integer row indices:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;starwars_sm |&amp;gt; 
+  slice( sort(c(row_number(), repeat_at)) )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 12 × 3
+     name               height  mass
+     &amp;lt;chr&amp;gt;               &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;
+   1 Luke Skywalker        172    77
+   2 C-3PO                 167    75
+   3 R2-D2                  96    32
+   4 Darth Vader           202   136
+   5 Darth Vader           202   136
+   6 Leia Organa           150    49
+   7 Leia Organa           150    49
+   8 Owen Lars             178   120
+   9 Beru Whitesun Lars    165    75
+  10 R5-D4                  97    32
+  11 Biggs Darklighter     183    84
+  12 Obi-Wan Kenobi        182    77&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;What if we also separately have information about how much to repeat
+those rows by?&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;repeat_by &amp;lt;- c(3, 4)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You can apply the same &lt;code&gt;rep()&lt;/code&gt; method for just the subset
+of rows to repeat:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;starwars_sm |&amp;gt; 
+  slice( sort(c(row_number(), rep(repeat_at, times = repeat_by - 1))) )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 15 × 3
+     name               height  mass
+     &amp;lt;chr&amp;gt;               &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;
+   1 Luke Skywalker        172    77
+   2 C-3PO                 167    75
+   3 R2-D2                  96    32
+   4 Darth Vader           202   136
+   5 Darth Vader           202   136
+   6 Darth Vader           202   136
+   7 Leia Organa           150    49
+   8 Leia Organa           150    49
+   9 Leia Organa           150    49
+  10 Leia Organa           150    49
+  11 Owen Lars             178   120
+  12 Beru Whitesun Lars    165    75
+  13 R5-D4                  97    32
+  14 Biggs Darklighter     183    84
+  15 Obi-Wan Kenobi        182    77&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Circling back to &lt;code&gt;uncount()&lt;/code&gt;, you could also initialize a
+vector of &lt;code&gt;1s&lt;/code&gt; and &lt;code&gt;replace()&lt;/code&gt; where the rows
+should be repeated:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;starwars_sm |&amp;gt; 
+  uncount( replace(rep(1, n()), repeat_at, repeat_by) )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 15 × 3
+     name               height  mass
+     &amp;lt;chr&amp;gt;               &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;
+   1 Luke Skywalker        172    77
+   2 C-3PO                 167    75
+   3 R2-D2                  96    32
+   4 Darth Vader           202   136
+   5 Darth Vader           202   136
+   6 Darth Vader           202   136
+   7 Leia Organa           150    49
+   8 Leia Organa           150    49
+   9 Leia Organa           150    49
+  10 Leia Organa           150    49
+  11 Owen Lars             178   120
+  12 Beru Whitesun Lars    165    75
+  13 R5-D4                  97    32
+  14 Biggs Darklighter     183    84
+  15 Obi-Wan Kenobi        182    77&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="subset-a-selection-of-rows-the-following-row"&gt;Subset a selection
+of rows + the following row&lt;/h3&gt;
+&lt;p&gt;Row order can sometimes encode a meaningful continuous measure, like
+time.&lt;/p&gt;
+&lt;p&gt;Take for example this subset of the &lt;code&gt;flights&lt;/code&gt; dataset in
+&lt;code&gt;{nycflights13}&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;flights_df &amp;lt;- nycflights13::flights |&amp;gt; 
+  filter(month == 3, day == 3, origin == &amp;quot;JFK&amp;quot;) |&amp;gt; 
+  select(dep_time, flight, carrier) |&amp;gt; 
+  slice(1:100) |&amp;gt; 
+  arrange(dep_time)
+flights_df&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 100 × 3
+     dep_time flight carrier
+        &amp;lt;int&amp;gt;  &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;  
+   1      535   1141 AA     
+   2      551   5716 EV     
+   3      555    145 B6     
+   4      556    208 B6     
+   5      556     79 B6     
+   6      601    501 B6     
+   7      604    725 B6     
+   8      606    135 B6     
+   9      606    600 UA     
+  10      607    829 US     
+  # ℹ 90 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here, the rows are ordered by &lt;code&gt;dep_time&lt;/code&gt;, such that given
+a row, the next row is a data point for the next flight that departed
+from the airport.&lt;/p&gt;
+&lt;p&gt;And let’s say we’re interested in flights that took off immediately
+after American Airlines (&lt;code&gt;"AA"&lt;/code&gt;) flights. Given what we just
+noted about the ordering of rows in the data frame, we can do this in
+&lt;code&gt;slice()&lt;/code&gt; by adding &lt;code&gt;1&lt;/code&gt; to the row index of AA
+flights:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;flights_df |&amp;gt; 
+  slice( which(carrier == &amp;quot;AA&amp;quot;) + 1 )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 14 × 3
+     dep_time flight carrier
+        &amp;lt;int&amp;gt;  &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;  
+   1      551   5716 EV     
+   2      627    905 B6     
+   3      652    117 B6     
+   4      714    825 AA     
+   5      717    987 B6     
+   6      724     11 VX     
+   7      742    183 DL     
+   8      802    655 AA     
+   9      805   2143 DL     
+  10      847     59 B6     
+  11      858    647 AA     
+  12      859    120 DL     
+  13     1031    179 AA     
+  14     1036    641 B6&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;What if we also want to keep observations for the preceding AA
+flights as well? We can just stick &lt;code&gt;which(carrier == "AA")&lt;/code&gt;
+inside &lt;code&gt;slice()&lt;/code&gt; too:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;flights_df |&amp;gt; 
+  slice(
+    which(carrier == &amp;quot;AA&amp;quot;),
+    which(carrier == &amp;quot;AA&amp;quot;) + 1
+  )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 28 × 3
+     dep_time flight carrier
+        &amp;lt;int&amp;gt;  &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;  
+   1      535   1141 AA     
+   2      626    413 AA     
+   3      652   1815 AA     
+   4      711    443 AA     
+   5      714    825 AA     
+   6      724     33 AA     
+   7      739     59 AA     
+   8      802   1838 AA     
+   9      802    655 AA     
+  10      843   1357 AA     
+  # ℹ 18 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;But now the rows are now ordered such that all the AA flights come
+before the other flights! How can we preserve the original order of
+increasing &lt;code&gt;dep_time&lt;/code&gt;?&lt;/p&gt;
+&lt;p&gt;We &lt;em&gt;could&lt;/em&gt; reconstruct the initial row order by piping the
+result into &lt;code&gt;arrange(dep_time)&lt;/code&gt; again, but the simplest
+solution would be to concatenate the set of row indices and
+&lt;code&gt;sort()&lt;/code&gt; them, since the output of &lt;code&gt;which()&lt;/code&gt; is
+already integer!&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;flights_df |&amp;gt; 
+  slice(
+    sort(c(
+      which(carrier == &amp;quot;AA&amp;quot;),
+      which(carrier == &amp;quot;AA&amp;quot;) + 1
+    ))
+  )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 28 × 3
+     dep_time flight carrier
+        &amp;lt;int&amp;gt;  &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;  
+   1      535   1141 AA     
+   2      551   5716 EV     
+   3      626    413 AA     
+   4      627    905 B6     
+   5      652   1815 AA     
+   6      652    117 B6     
+   7      711    443 AA     
+   8      714    825 AA     
+   9      714    825 AA     
+  10      717    987 B6     
+  # ℹ 18 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Notice how the 8th and 9th rows are repeated here - that’s because 2
+AA flights departed in a row (ha!). We can use &lt;code&gt;unique()&lt;/code&gt; to
+remove duplicate rows in the same call to &lt;code&gt;slice()&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;flights_df |&amp;gt; 
+  slice(
+    unique(sort(c(
+      which(carrier == &amp;quot;AA&amp;quot;),
+      which(carrier == &amp;quot;AA&amp;quot;) + 1
+    )))
+  )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 24 × 3
+     dep_time flight carrier
+        &amp;lt;int&amp;gt;  &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;  
+   1      535   1141 AA     
+   2      551   5716 EV     
+   3      626    413 AA     
+   4      627    905 B6     
+   5      652   1815 AA     
+   6      652    117 B6     
+   7      711    443 AA     
+   8      714    825 AA     
+   9      717    987 B6     
+  10      724     33 AA     
+  # ℹ 14 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Importantly, we can do all of this inside &lt;code&gt;slice()&lt;/code&gt;
+because we’re working with &lt;strong&gt;integer sets&lt;/strong&gt;. The
+&lt;strong&gt;integer&lt;/strong&gt; part allows us to do things like
+&lt;code&gt;+ 1&lt;/code&gt; and &lt;code&gt;sort()&lt;/code&gt;, while the &lt;strong&gt;set&lt;/strong&gt;
+part allows us to combine with &lt;code&gt;c()&lt;/code&gt; and remove duplicates
+with &lt;code&gt;unique()&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id="subset-a-selection-of-rows-multiple-following-rows"&gt;Subset a
+selection of rows + multiple following rows&lt;/h3&gt;
+&lt;p&gt;In this example, let’s problematize our approach with the repeated
+&lt;code&gt;which()&lt;/code&gt; calls in our previous solution.&lt;/p&gt;
+&lt;p&gt;Imagine another scenario where we want to filter for all AA flights
+and &lt;em&gt;three&lt;/em&gt; subsequent flights for each.&lt;/p&gt;
+&lt;p&gt;Do we need to write the solution out like this? That’s a lot of
+repetition!&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;flights_df |&amp;gt; 
+  slice(
+    which(carrier == &amp;quot;AA&amp;quot;),
+    which(carrier == &amp;quot;AA&amp;quot;) + 1,
+    which(carrier == &amp;quot;AA&amp;quot;) + 2,
+    which(carrier == &amp;quot;AA&amp;quot;) + 3
+  )&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You might think we can get away with &lt;code&gt;+ 0:3&lt;/code&gt;, but it
+doesn’t work as we’d like. The &lt;code&gt;+&lt;/code&gt; just forces
+&lt;code&gt;0:3&lt;/code&gt; to be (partially) recycled to the same length as
+&lt;code&gt;carrier&lt;/code&gt; for element-wise addition:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;which(flights_df$carrier == &amp;quot;AA&amp;quot;) + 0:3&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  Warning in which(flights_df$carrier == &amp;quot;AA&amp;quot;) + 0:3: longer object length is not
+  a multiple of shorter object length&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;   [1]  1 14 20 27 25 28 34 40 38 62 66 68 91 93&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If only we can get the &lt;strong&gt;outer&lt;/strong&gt; sum of the two arrays,
+&lt;code&gt;0:3&lt;/code&gt; and &lt;code&gt;which(carrier == "AA")&lt;/code&gt; … Oh wait, we
+can - that’s what &lt;code&gt;outer()&lt;/code&gt; does!&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;outer(0:3, which(flights_df$carrier == &amp;quot;AA&amp;quot;), `+`)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
+  [1,]    1   13   18   24   25   27   32   37   38    61    64    65    91    92
+  [2,]    2   14   19   25   26   28   33   38   39    62    65    66    92    93
+  [3,]    3   15   20   26   27   29   34   39   40    63    66    67    93    94
+  [4,]    4   16   21   27   28   30   35   40   41    64    67    68    94    95&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This is essentially the repeated &lt;code&gt;which()&lt;/code&gt; vectors stacked
+on top of each other, but as a matrix:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;print( which(flights_df$carrier == &amp;quot;AA&amp;quot;)     )
+print( which(flights_df$carrier == &amp;quot;AA&amp;quot;) + 1 )
+print( which(flights_df$carrier == &amp;quot;AA&amp;quot;) + 2 )
+print( which(flights_df$carrier == &amp;quot;AA&amp;quot;) + 3 )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;   [1]  1 13 18 24 25 27 32 37 38 61 64 65 91 92
+   [1]  2 14 19 25 26 28 33 38 39 62 65 66 92 93
+   [1]  3 15 20 26 27 29 34 39 40 63 66 67 93 94
+   [1]  4 16 21 27 28 30 35 40 41 64 67 68 94 95&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The fact that &lt;code&gt;outer()&lt;/code&gt; returns all the relevant row
+indices inside a single matrix is nice because we can collect the
+indices column-by-column, preserving row order. Matrices, like data
+frames, are &lt;strong&gt;column-major&lt;/strong&gt;, so coercing a matrix to a
+vector collapses it column-wise:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;as.integer( outer(0:3, which(flights_df$carrier == &amp;quot;AA&amp;quot;), `+`) )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;   [1]  1  2  3  4 13 14 15 16 18 19 20 21 24 25 26 27 25 26 27 28 27 28 29 30 32
+  [26] 33 34 35 37 38 39 40 38 39 40 41 61 62 63 64 64 65 66 67 65 66 67 68 91 92
+  [51] 93 94 92 93 94 95&lt;/code&gt;&lt;/pre&gt;
+&lt;details&gt;
+&lt;summary&gt;
+Other ways to coerce matrix to vector
+&lt;/summary&gt;
+&lt;p&gt;There are two other options for coercing a matrix to vector -
+&lt;code&gt;c()&lt;/code&gt; and &lt;code&gt;as.vector()&lt;/code&gt;. I like to stick with
+&lt;code&gt;as.integer()&lt;/code&gt; because that enforces integer type (which
+makes sense for row indices), and &lt;code&gt;c()&lt;/code&gt; can be nice because
+it’s less to type (although it’s &lt;a
+href="https://youtu.be/izFssYRsLZs?t=1143"&gt;off-label usage&lt;/a&gt;):&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;# Not run, but equivalent to `as.integer()` method
+as.vector( outer(0:3, which(flights_df$carrier == &amp;quot;AA&amp;quot;), `+`) )
+c( outer(0:3, which(flights_df$carrier == &amp;quot;AA&amp;quot;), `+`) )&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Somewhat relatedly - and this only works inside the tidy-eval context
+of &lt;code&gt;slice()&lt;/code&gt; - you can get a similar effect of “collapsing” a
+matrix using the &lt;a
+href="https://rlang.r-lib.org/reference/topic-inject.html#splicing-with-"&gt;splice
+operator&lt;/a&gt; &lt;code&gt;!!!&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;seq_matrix &amp;lt;- matrix(1:9, byrow = TRUE, nrow = 3)
+as.integer(seq_matrix)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [1] 1 4 7 2 5 8 3 6 9&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;identical(
+  mtcars |&amp;gt; slice( as.vector(seq_matrix) ),
+  mtcars |&amp;gt; slice( !!!seq_matrix )
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here, the &lt;code&gt;!!!seq_matrix&lt;/code&gt; was slotting each individual
+“cell” as argument to &lt;code&gt;slice()&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;rlang::expr( slice(!!!seq_matrix) )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  slice(1L, 4L, 7L, 2L, 5L, 8L, 3L, 6L, 9L)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;A big difference in behavior between &lt;code&gt;as.integer()&lt;/code&gt;
+vs. &lt;code&gt;!!!&lt;/code&gt; is that the latter works for &lt;strong&gt;lists&lt;/strong&gt;
+of indices too, by slotting each element of the list as an argument to
+&lt;code&gt;slice()&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;seq_list &amp;lt;- list(c(1, 4, 7, 2), c(5, 8, 3, 6, 9))
+rlang::expr( slice( !!!seq_list ) )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  slice(c(1, 4, 7, 2), c(5, 8, 3, 6, 9))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;However, as you may already know, &lt;code&gt;as.integer()&lt;/code&gt; cannot
+flatten lists:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;as.integer(seq_list)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  Error in eval(expr, envir, enclos): &amp;#39;list&amp;#39; object cannot be coerced to type &amp;#39;integer&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Note that &lt;code&gt;as.vector()&lt;/code&gt; and &lt;code&gt;c()&lt;/code&gt; leaves lists
+&lt;em&gt;as is&lt;/em&gt;, which is another reason to prefer
+&lt;code&gt;as.integer()&lt;/code&gt; for type-checking:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;identical(seq_list, as.vector(seq_list))
+identical(seq_list, c(seq_list))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [1] TRUE
+  [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Finally, back in our &lt;code&gt;!!!seq_matrix&lt;/code&gt; example, we could
+have applied &lt;code&gt;asplit(MARGIN = 2)&lt;/code&gt; to chunk the splicing by
+&lt;em&gt;matrix column&lt;/em&gt;, although the overall effect would be the
+same:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;rlang::expr(slice( !!!seq_matrix            ))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  slice(1L, 4L, 7L, 2L, 5L, 8L, 3L, 6L, 9L)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;rlang::expr(slice( !!!asplit(seq_matrix, 2) ))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  slice(c(1L, 4L, 7L), c(2L, 5L, 8L), c(3L, 6L, 9L))&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;p&gt;This lets us ask questions like: Which AA flights departed within 3
+flights of another AA flight?&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;flights_df |&amp;gt; 
+  slice( as.integer( outer(0:3, which(carrier == &amp;quot;AA&amp;quot;), `+`) ) ) |&amp;gt; 
+  filter( carrier == &amp;quot;AA&amp;quot;, duplicated(flight) ) |&amp;gt; 
+  distinct(flight, carrier)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 6 × 2
+    flight carrier
+     &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;  
+  1    825 AA     
+  2     33 AA     
+  3    655 AA     
+  4      1 AA     
+  5    647 AA     
+  6    179 AA&lt;/code&gt;&lt;/pre&gt;
+&lt;details&gt;
+&lt;summary&gt;
+Slicing all the way down: Case 1
+&lt;/summary&gt;
+&lt;p&gt;With the addition of the &lt;code&gt;.by&lt;/code&gt; argument to
+&lt;code&gt;slice()&lt;/code&gt; in &lt;a
+href="https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-per-operation-grouping/"&gt;dplyr
+v1.10&lt;/a&gt;, we can re-write the above code as three calls to
+&lt;code&gt;slice()&lt;/code&gt; (+ a call to &lt;code&gt;select()&lt;/code&gt;):&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;flights_df |&amp;gt; 
+  slice( as.integer( outer(0:3, which(carrier == &amp;quot;AA&amp;quot;), `+`) ) ) |&amp;gt; 
+  slice( which(carrier == &amp;quot;AA&amp;quot; &amp;amp; duplicated(flight)) ) |&amp;gt;  # filter()
+  slice( 1, .by = c(flight, carrier) ) |&amp;gt;                  # distinct()
+  select(flight, carrier)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 6 × 2
+    flight carrier
+     &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;  
+  1    825 AA     
+  2     33 AA     
+  3    655 AA     
+  4      1 AA     
+  5    647 AA     
+  6    179 AA&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;p&gt;The next example will demonstrate another, perhaps more practical
+usecase for &lt;code&gt;outer()&lt;/code&gt; in &lt;code&gt;slice()&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id="filter-and-encode-neighboring-rows"&gt;Filter (and encode)
+neighboring rows&lt;/h3&gt;
+&lt;p&gt;Let’s use a subset of the &lt;code&gt;{gapminder}&lt;/code&gt; data set for this
+one. Here, we have data for each European country’s GDP-per-capita by
+year, between 1992 to 2007:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;gapminder_df &amp;lt;- gapminder::gapminder |&amp;gt; 
+  left_join(gapminder::country_codes, by = &amp;quot;country&amp;quot;) |&amp;gt;  # `multiple = &amp;quot;all&amp;quot;`
+  filter(year &amp;gt;= 1992, continent == &amp;quot;Europe&amp;quot;) |&amp;gt; 
+  select(country, country_code = iso_alpha, year, gdpPercap)
+gapminder_df&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 120 × 4
+     country country_code  year gdpPercap
+     &amp;lt;chr&amp;gt;   &amp;lt;chr&amp;gt;        &amp;lt;int&amp;gt;     &amp;lt;dbl&amp;gt;
+   1 Albania ALB           1992     2497.
+   2 Albania ALB           1997     3193.
+   3 Albania ALB           2002     4604.
+   4 Albania ALB           2007     5937.
+   5 Austria AUT           1992    27042.
+   6 Austria AUT           1997    29096.
+   7 Austria AUT           2002    32418.
+   8 Austria AUT           2007    36126.
+   9 Belgium BEL           1992    25576.
+  10 Belgium BEL           1997    27561.
+  # ℹ 110 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This time, let’s see the desired output (plot) first and build our
+way up. The goal is to plot the GDP growth of Germany over the years,
+&lt;em&gt;and&lt;/em&gt; its yearly &lt;strong&gt;GDP neighbors&lt;/strong&gt; side-by-side:&lt;/p&gt;
+&lt;p&gt;&lt;img src="file86a47c2865f8_files/figure-html/final-gapminder-plot-1.png" width="672" /&gt;&lt;/p&gt;
+&lt;p&gt;First, let’s think about what a “GDP neighbor” means in
+row-relational terms. If you arranged the data by GDP, the GDP neighbors
+would be the rows that come immediately before and after the rows for
+Germany. You need to recalculate neighbors every year though, so this
+&lt;code&gt;arrange()&lt;/code&gt; + &lt;code&gt;slice()&lt;/code&gt; combo should happen
+by-year.&lt;/p&gt;
+&lt;p&gt;With that in mind, let’s set up a &lt;code&gt;year&lt;/code&gt; grouping and
+arrange by &lt;code&gt;gdpPercap&lt;/code&gt; within &lt;code&gt;year&lt;/code&gt;:&lt;a
+href="#fn1" class="footnote-ref" id="fnref1"&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;gapminder_df |&amp;gt; 
+  group_by(year) |&amp;gt; 
+  arrange(gdpPercap, .by_group = TRUE)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 120 × 4
+  # Groups:   year [4]
+     country                country_code  year gdpPercap
+     &amp;lt;chr&amp;gt;                  &amp;lt;chr&amp;gt;        &amp;lt;int&amp;gt;     &amp;lt;dbl&amp;gt;
+   1 Albania                ALB           1992     2497.
+   2 Bosnia and Herzegovina BIH           1992     2547.
+   3 Turkey                 TUR           1992     5678.
+   4 Bulgaria               BGR           1992     6303.
+   5 Romania                ROU           1992     6598.
+   6 Montenegro             MNE           1992     7003.
+   7 Poland                 POL           1992     7739.
+   8 Croatia                HRV           1992     8448.
+   9 Serbia                 SRB           1992     9325.
+  10 Slovak Republic        SVK           1992     9498.
+  # ℹ 110 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now within each year, we want to grab the row for Germany
+&lt;em&gt;and&lt;/em&gt; its neighboring rows. We can do this by taking the
+&lt;code&gt;outer()&lt;/code&gt; sum of &lt;code&gt;-1:1&lt;/code&gt; and the row indices for
+Germany:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;gapminder_df |&amp;gt; 
+  group_by(year) |&amp;gt; 
+  arrange(gdpPercap, .by_group = TRUE) |&amp;gt; 
+  slice( as.integer(outer( -1:1, which(country == &amp;quot;Germany&amp;quot;), `+` )) )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 12 × 4
+  # Groups:   year [4]
+     country        country_code  year gdpPercap
+     &amp;lt;chr&amp;gt;          &amp;lt;chr&amp;gt;        &amp;lt;int&amp;gt;     &amp;lt;dbl&amp;gt;
+   1 Denmark        DNK           1992    26407.
+   2 Germany        DEU           1992    26505.
+   3 Netherlands    NLD           1992    26791.
+   4 Belgium        BEL           1997    27561.
+   5 Germany        DEU           1997    27789.
+   6 Iceland        ISL           1997    28061.
+   7 United Kingdom GBR           2002    29479.
+   8 Germany        DEU           2002    30036.
+   9 Belgium        BEL           2002    30486.
+  10 France         FRA           2007    30470.
+  11 Germany        DEU           2007    32170.
+  12 United Kingdom GBR           2007    33203.&lt;/code&gt;&lt;/pre&gt;
+&lt;details&gt;
+&lt;summary&gt;
+Slicing all the way down: Case 2
+&lt;/summary&gt;
+&lt;p&gt;The new &lt;code&gt;.by&lt;/code&gt; argument in &lt;code&gt;slice()&lt;/code&gt; comes in
+handy again here, allowing us to collapse the &lt;code&gt;group_by()&lt;/code&gt; +
+&lt;code&gt;arrange()&lt;/code&gt; combo into one &lt;code&gt;slice()&lt;/code&gt; call:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;gapminder_df |&amp;gt; 
+  slice( order(gdpPercap), .by = year) |&amp;gt; 
+  slice( as.integer(outer( -1:1, which(country == &amp;quot;Germany&amp;quot;), `+` )) )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 12 × 4
+     country        country_code  year gdpPercap
+     &amp;lt;chr&amp;gt;          &amp;lt;chr&amp;gt;        &amp;lt;int&amp;gt;     &amp;lt;dbl&amp;gt;
+   1 Denmark        DNK           1992    26407.
+   2 Germany        DEU           1992    26505.
+   3 Netherlands    NLD           1992    26791.
+   4 Belgium        BEL           1997    27561.
+   5 Germany        DEU           1997    27789.
+   6 Iceland        ISL           1997    28061.
+   7 United Kingdom GBR           2002    29479.
+   8 Germany        DEU           2002    30036.
+   9 Belgium        BEL           2002    30486.
+  10 France         FRA           2007    30470.
+  11 Germany        DEU           2007    32170.
+  12 United Kingdom GBR           2007    33203.&lt;/code&gt;&lt;/pre&gt;
+For our purposes here we want actually the grouping to
+&lt;strong&gt;persist&lt;/strong&gt; for the following &lt;code&gt;mutate()&lt;/code&gt; call,
+but there may be other cases where you’d want to use
+&lt;code&gt;slice(.by = )&lt;/code&gt; for temporary grouping.
+&lt;/details&gt;
+&lt;p&gt;Now we’re already starting to see the shape of the data that we want!
+The last step is to encode the relationship of each row to Germany -
+does a row represent Germany itself, or a country that’s one GDP ranking
+below or above Germany?&lt;/p&gt;
+&lt;p&gt;Continuing with our grouped context, we make a new column
+&lt;code&gt;grp&lt;/code&gt; that assigns a factor value
+&lt;code&gt;"lo"&lt;/code&gt;-&lt;code&gt;"is"&lt;/code&gt;-&lt;code&gt;"hi"&lt;/code&gt; (for “lower” than
+Germany, “is” Germany and “higher” than Germany) to each country trio by
+year. Notice the use of &lt;code&gt;fct_inorder()&lt;/code&gt; below - this ensures
+that the factor levels are in the order of their occurrence (necessary
+for the correct ordering of bars in &lt;code&gt;geom_col()&lt;/code&gt; later):&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;gapminder_df |&amp;gt; 
+  group_by(year) |&amp;gt; 
+  arrange(gdpPercap) |&amp;gt; 
+  slice( as.integer(outer( -1:1, which(country == &amp;quot;Germany&amp;quot;), `+` )) ) |&amp;gt; 
+  mutate(grp = forcats::fct_inorder(c(&amp;quot;lo&amp;quot;, &amp;quot;is&amp;quot;, &amp;quot;hi&amp;quot;)))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 12 × 5
+  # Groups:   year [4]
+     country        country_code  year gdpPercap grp  
+     &amp;lt;chr&amp;gt;          &amp;lt;chr&amp;gt;        &amp;lt;int&amp;gt;     &amp;lt;dbl&amp;gt; &amp;lt;fct&amp;gt;
+   1 Denmark        DNK           1992    26407. lo   
+   2 Germany        DEU           1992    26505. is   
+   3 Netherlands    NLD           1992    26791. hi   
+   4 Belgium        BEL           1997    27561. lo   
+   5 Germany        DEU           1997    27789. is   
+   6 Iceland        ISL           1997    28061. hi   
+   7 United Kingdom GBR           2002    29479. lo   
+   8 Germany        DEU           2002    30036. is   
+   9 Belgium        BEL           2002    30486. hi   
+  10 France         FRA           2007    30470. lo   
+  11 Germany        DEU           2007    32170. is   
+  12 United Kingdom GBR           2007    33203. hi&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We now have everything that’s necessary to make our desired plot, so
+we &lt;code&gt;ungroup()&lt;/code&gt;, write some &lt;code&gt;{ggplot2}&lt;/code&gt; code, and
+voila!&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;gapminder_df |&amp;gt; 
+  group_by(year) |&amp;gt; 
+  arrange(gdpPercap) |&amp;gt; 
+  slice( as.integer(outer( -1:1, which(country == &amp;quot;Germany&amp;quot;), `+` )) ) |&amp;gt; 
+  mutate(grp = forcats::fct_inorder(c(&amp;quot;lo&amp;quot;, &amp;quot;is&amp;quot;, &amp;quot;hi&amp;quot;))) |&amp;gt; 
+  # Ungroup and make ggplot
+  ungroup() |&amp;gt; 
+  ggplot(aes(as.factor(year), gdpPercap, group = grp)) +
+  geom_col(aes(fill = grp == &amp;quot;is&amp;quot;), position = position_dodge()) +
+  geom_text(
+    aes(label = country_code),
+    vjust = 1.3,
+    position = position_dodge(width = .9)
+  ) +
+  scale_fill_manual(
+    values = c(&amp;quot;grey75&amp;quot;, &amp;quot;steelblue&amp;quot;),
+    guide = guide_none()
+  ) +
+  theme_classic() +
+  labs(x = &amp;quot;Year&amp;quot;, y = &amp;quot;GDP per capita&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src="file86a47c2865f8_files/figure-html/final-gapminder-plot-1.png" width="672" /&gt;&lt;/p&gt;
+&lt;details&gt;
+&lt;summary&gt;
+Solving the harder version of the problem
+&lt;/summary&gt;
+&lt;p&gt;The solution presented above relies on a fragile assumption that
+Germany will always have a higher &lt;em&gt;and&lt;/em&gt; lower ranking GDP
+neighbor every year. But nothing about the problem description
+guarantees this, so how can we re-write our code to be more robust?&lt;/p&gt;
+&lt;p&gt;First, let’s simulate a data where Germany is the lowest ranking
+country in 2002 and the highest ranking in 2007. In other words, Germany
+only has one GDP neighbor in those years:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;gapminder_harder_df &amp;lt;- gapminder_df |&amp;gt; 
+  slice( order(gdpPercap), .by = year) |&amp;gt; 
+  slice( as.integer(outer( -1:1, which(country == &amp;quot;Germany&amp;quot;), `+` )) ) |&amp;gt; 
+  slice( -7, -12 )
+gapminder_harder_df&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 10 × 4
+     country     country_code  year gdpPercap
+     &amp;lt;chr&amp;gt;       &amp;lt;chr&amp;gt;        &amp;lt;int&amp;gt;     &amp;lt;dbl&amp;gt;
+   1 Denmark     DNK           1992    26407.
+   2 Germany     DEU           1992    26505.
+   3 Netherlands NLD           1992    26791.
+   4 Belgium     BEL           1997    27561.
+   5 Germany     DEU           1997    27789.
+   6 Iceland     ISL           1997    28061.
+   7 Germany     DEU           2002    30036.
+   8 Belgium     BEL           2002    30486.
+   9 France      FRA           2007    30470.
+  10 Germany     DEU           2007    32170.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Given this data, we cannot assign the full, length-3 lo-is-hi factor
+by group, because the groups for year 2002 and 2007 only have 2
+observations:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;gapminder_harder_df |&amp;gt; 
+  group_by(year) |&amp;gt; 
+  mutate(grp = forcats::fct_inorder(c(&amp;quot;lo&amp;quot;, &amp;quot;is&amp;quot;, &amp;quot;hi&amp;quot;)))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  Error in `mutate()`:
+  ℹ In argument: `grp = forcats::fct_inorder(c(&amp;quot;lo&amp;quot;, &amp;quot;is&amp;quot;, &amp;quot;hi&amp;quot;))`.
+  ℹ In group 3: `year = 2002`.
+  Caused by error:
+  ! `grp` must be size 2 or 1, not 3.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The trick here is to turn each group of rows into an integer sequence
+where Germany is “anchored” to 2, and then use that vector to subset the
+lo-is-hi factor:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;gapminder_harder_df |&amp;gt; 
+  group_by(year) |&amp;gt; 
+  mutate(
+    Germany_anchored_to_2 = row_number() - which(country == &amp;quot;Germany&amp;quot;) + 2,
+    grp = forcats::fct_inorder(c(&amp;quot;lo&amp;quot;, &amp;quot;is&amp;quot;, &amp;quot;hi&amp;quot;))[Germany_anchored_to_2]
+  )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 10 × 6
+  # Groups:   year [4]
+     country     country_code  year gdpPercap Germany_anchored_to_2 grp  
+     &amp;lt;chr&amp;gt;       &amp;lt;chr&amp;gt;        &amp;lt;int&amp;gt;     &amp;lt;dbl&amp;gt;                 &amp;lt;dbl&amp;gt; &amp;lt;fct&amp;gt;
+   1 Denmark     DNK           1992    26407.                     1 lo   
+   2 Germany     DEU           1992    26505.                     2 is   
+   3 Netherlands NLD           1992    26791.                     3 hi   
+   4 Belgium     BEL           1997    27561.                     1 lo   
+   5 Germany     DEU           1997    27789.                     2 is   
+   6 Iceland     ISL           1997    28061.                     3 hi   
+   7 Germany     DEU           2002    30036.                     2 is   
+   8 Belgium     BEL           2002    30486.                     3 hi   
+   9 France      FRA           2007    30470.                     1 lo   
+  10 Germany     DEU           2007    32170.                     2 is&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We find that the lessons of working with row indices from
+&lt;code&gt;slice()&lt;/code&gt; translated to solving this complex
+&lt;code&gt;mutate()&lt;/code&gt; problem - neat!&lt;/p&gt;
+&lt;/details&gt;
+&lt;h3 id="aside-kronecker-as-as.vectorouter"&gt;Aside:
+&lt;code&gt;kronecker()&lt;/code&gt; as &lt;code&gt;as.vector(outer())&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;Following from the &lt;code&gt;slice()&lt;/code&gt; + &lt;code&gt;outer()&lt;/code&gt;
+strategy demoed above, imagine if we wanted to filter for
+&lt;code&gt;"Luke Skywalker"&lt;/code&gt; and 4 other characters that are neighbors
+in the &lt;code&gt;height&lt;/code&gt; and &lt;code&gt;mass&lt;/code&gt; values.&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;dplyr::starwars[, 1:3]&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 87 × 3
+     name               height  mass
+     &amp;lt;chr&amp;gt;               &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;
+   1 Luke Skywalker        172    77
+   2 C-3PO                 167    75
+   3 R2-D2                  96    32
+   4 Darth Vader           202   136
+   5 Leia Organa           150    49
+   6 Owen Lars             178   120
+   7 Beru Whitesun Lars    165    75
+   8 R5-D4                  97    32
+   9 Biggs Darklighter     183    84
+  10 Obi-Wan Kenobi        182    77
+  # ℹ 77 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In row-relational terms, “filtering neighboring values” just means
+“filtering rows after arranging by the values we care about”. We can
+express this using &lt;code&gt;slice()&lt;/code&gt; and &lt;code&gt;outer()&lt;/code&gt; as:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;starwars %&amp;gt;% 
+  select(name, mass, height) %&amp;gt;% 
+  arrange(mass, height) %&amp;gt;% 
+  slice( as.vector(outer(-2:2, which(name == &amp;quot;Luke Skywalker&amp;quot;), `+`)) )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 5 × 3
+    name            mass height
+    &amp;lt;chr&amp;gt;          &amp;lt;dbl&amp;gt;  &amp;lt;int&amp;gt;
+  1 Palpatine       75      170
+  2 Wedge Antilles  77      170
+  3 Luke Skywalker  77      172
+  4 Obi-Wan Kenobi  77      182
+  5 Boba Fett       78.2    183&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I raised this example on an unrelated thread on the &lt;a
+href="https://fosstodon.org/@DSLC"&gt;R4DS/DSLC slack&lt;/a&gt;, where Anthony
+Durrant pointed me to &lt;code&gt;kronecker()&lt;/code&gt; as a version of
+&lt;code&gt;outer()&lt;/code&gt; that unlist before returning the output.&lt;/p&gt;
+&lt;p&gt;So in examples involving &lt;code&gt;outer()&lt;/code&gt; to generate row indices
+in &lt;code&gt;slice()&lt;/code&gt;, we can also use &lt;code&gt;kronecker()&lt;/code&gt;
+instead to save a call to a flattening function like
+&lt;code&gt;as.vector()&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;starwars %&amp;gt;% 
+  select(name, mass, height) %&amp;gt;% 
+  arrange(mass, height) %&amp;gt;% 
+  slice( kronecker(-2:2, which(name == &amp;quot;Luke Skywalker&amp;quot;), `+`) )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 5 × 3
+    name            mass height
+    &amp;lt;chr&amp;gt;          &amp;lt;dbl&amp;gt;  &amp;lt;int&amp;gt;
+  1 Palpatine       75      170
+  2 Wedge Antilles  77      170
+  3 Luke Skywalker  77      172
+  4 Obi-Wan Kenobi  77      182
+  5 Boba Fett       78.2    183&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="windowed-minmaxmedian-etc."&gt;Windowed min/max/median (etc.)&lt;/h3&gt;
+&lt;p&gt;Let’s say we have this small time series data, and we want to
+calculate a &lt;strong&gt;lagged 3-window moving minimum&lt;/strong&gt; for the
+&lt;code&gt;val&lt;/code&gt; column:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;ts_df &amp;lt;- tibble(
+  time = 1:6,
+  val = sample(1:6 * 10)
+)
+ts_df&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 6 × 2
+     time   val
+    &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;
+  1     1    50
+  2     2    40
+  3     3    60
+  4     4    30
+  5     5    20
+  6     6    10&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you’re new to window functions, think of them as a special kind of
+&lt;code&gt;group_by()&lt;/code&gt; + &lt;code&gt;summarize()&lt;/code&gt; where groups are
+chunks of observations along a (typically unique) continuous measure
+like time, and observations can be shared between groups.&lt;/p&gt;
+&lt;p&gt;There are several packages implementing moving/sliding/rolling window
+functions. My current favorite is &lt;code&gt;{r2c}&lt;/code&gt; (see a &lt;a
+href="https://github.com/brodieG/r2c#fast-group-and-rolling-statistics"&gt;review
+of other implementations therein&lt;/a&gt;), but I also like
+&lt;code&gt;{slider}&lt;/code&gt; for an implementation that follows familiar &lt;a
+href="https://design.tidyverse.org/"&gt;“tidy” design principles&lt;/a&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;library(slider)
+ts_df |&amp;gt; 
+  mutate(moving_min = slide_min(val, before = 2L, complete = TRUE))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 6 × 3
+     time   val moving_min
+    &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;      &amp;lt;dbl&amp;gt;
+  1     1    50         NA
+  2     2    40         NA
+  3     3    60         40
+  4     4    30         30
+  5     5    20         20
+  6     6    10         10&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Moving window is a general class of operations that encompass any
+arbitrary summary statistic - so not just min but other reducing
+functions like mean, standard deviation, etc. But what makes moving
+&lt;strong&gt;min&lt;/strong&gt; (along with max, median, etc.) a particularly
+interesting case for our current discussion is that the value comes from
+&lt;strong&gt;an existing observation&lt;/strong&gt; in the data. And if our time
+series is tidy, every observation makes up a row. See where I’m going
+with this?&lt;/p&gt;
+&lt;p&gt;Using &lt;code&gt;outer()&lt;/code&gt; again, we can take the outer sum of all
+row indices of &lt;code&gt;ts_df&lt;/code&gt; and &lt;code&gt;-2:0&lt;/code&gt;. This gives us a
+matrix where each column represents a lagged size-3 moving window:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;windows_3lag &amp;lt;- outer(-2:0, 1:nrow(ts_df), &amp;quot;+&amp;quot;)
+windows_3lag&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;       [,1] [,2] [,3] [,4] [,5] [,6]
+  [1,]   -1    0    1    2    3    4
+  [2,]    0    1    2    3    4    5
+  [3,]    1    2    3    4    5    6&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The “lagged size-3” property of this moving window means that the
+first two windows are incomplete (consisting of less than 3
+observations). We want to treat those as invalid, so we can drop the
+first two columns from our matrix:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;windows_3lag[,-(1:2)]&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;       [,1] [,2] [,3] [,4]
+  [1,]    1    2    3    4
+  [2,]    2    3    4    5
+  [3,]    3    4    5    6&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For each remaining column, we want to grab the values of
+&lt;code&gt;val&lt;/code&gt; at the corresponding row indices and find which row has
+the minimum &lt;code&gt;val&lt;/code&gt;. In terms of code, we use
+&lt;code&gt;apply()&lt;/code&gt; with &lt;code&gt;MARGIN = 2L&lt;/code&gt; to column-wise apply
+a function where we use &lt;code&gt;which.min()&lt;/code&gt; to find the location of
+the minimum &lt;code&gt;val&lt;/code&gt; and convert it back to row index via
+subsetting:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;windows_3lag[, -(1:2)] |&amp;gt; 
+  apply(MARGIN = 2L, \(i) i[which.min(ts_df$val[i])])&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [1] 2 4 5 6&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now let’s stick this inside &lt;code&gt;slice()&lt;/code&gt;, exploiting the fact
+that it’s &lt;em&gt;data-masked&lt;/em&gt; (&lt;code&gt;ts_df$val&lt;/code&gt; can just be
+&lt;code&gt;val&lt;/code&gt;) and exposes &lt;em&gt;context-dependent expressions&lt;/em&gt;
+(&lt;code&gt;1:nrow(ts_df)&lt;/code&gt; can just be &lt;code&gt;row_number()&lt;/code&gt;):&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;moving_mins &amp;lt;- ts_df |&amp;gt; 
+  slice(
+    outer(-2:0, row_number(), &amp;quot;+&amp;quot;)[,-(1:2)] |&amp;gt; 
+      apply(MARGIN = 2L, \(i) i[which.min(val[i])])
+  )
+moving_mins&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 4 × 2
+     time   val
+    &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;
+  1     2    40
+  2     4    30
+  3     5    20
+  4     6    10&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;From here, we can grab the &lt;code&gt;val&lt;/code&gt; column and pad it with
+&lt;code&gt;NA&lt;/code&gt; to add our desired &lt;code&gt;window_min&lt;/code&gt; column to the
+original data frame:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;ts_df |&amp;gt; 
+  mutate(moving_min = c(NA, NA, moving_mins$val))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 6 × 3
+     time   val moving_min
+    &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;      &amp;lt;dbl&amp;gt;
+  1     1    50         NA
+  2     2    40         NA
+  3     3    60         40
+  4     4    30         30
+  5     5    20         20
+  6     6    10         10&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;At this point you might think that this is a very round-about way of
+solving the same problem. But actually I think that it’s a faster route
+to solving a slightly more complicated problem - augmenting each
+observation of a data frame with information about &lt;strong&gt;comparison
+observations&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;For example, our &lt;code&gt;slice()&lt;/code&gt;-based solution sets us up
+nicely for also bringing along information about the time at which the
+&lt;code&gt;moving_min&lt;/code&gt; occurred. After some &lt;code&gt;rename()&lt;/code&gt;-ing
+and adding the original time information back in, we get back a
+relational data structure where &lt;code&gt;time&lt;/code&gt; is a
+&lt;strong&gt;key&lt;/strong&gt; shared with &lt;code&gt;ts_df&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;moving_mins2 &amp;lt;- moving_mins |&amp;gt; 
+  rename(moving_min_val = val, moving_min_time = time) |&amp;gt; 
+  mutate(time = ts_df$time[-(1:2)], .before = 1L)
+moving_mins2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 4 × 3
+     time moving_min_time moving_min_val
+    &amp;lt;int&amp;gt;           &amp;lt;int&amp;gt;          &amp;lt;dbl&amp;gt;
+  1     3               2             40
+  2     4               4             30
+  3     5               5             20
+  4     6               6             10&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can then left-join this to the original data to augment it with
+information about both the value of the 3-window minimum and the time
+that the minimum occurred:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;left_join(ts_df, moving_mins2, by = &amp;quot;time&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 6 × 4
+     time   val moving_min_time moving_min_val
+    &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;           &amp;lt;int&amp;gt;          &amp;lt;dbl&amp;gt;
+  1     1    50              NA             NA
+  2     2    40              NA             NA
+  3     3    60               2             40
+  4     4    30               4             30
+  5     5    20               5             20
+  6     6    10               6             10&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This is particularly useful if rows contain other useful information
+for comparison and you have memory to spare:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;ts_wide_df &amp;lt;- ts_df |&amp;gt; 
+  mutate(
+    col1 = rnorm(6),
+    col2 = rnorm(6)
+  )
+ts_wide_df&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 6 × 4
+     time   val    col1     col2
+    &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;   &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;
+  1     1    50  0.0183  0.00501
+  2     2    40  0.705  -0.0376 
+  3     3    60 -0.647   0.724  
+  4     4    30  0.868  -0.497  
+  5     5    20  0.376   0.0114 
+  6     6    10  0.310   0.00986&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The below code augments each observation in the original
+&lt;code&gt;ts_wide_df&lt;/code&gt; data with information about the corresponding
+3-window moving min (columns prefixed with &lt;code&gt;"min3val_"&lt;/code&gt;)&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;moving_mins_wide &amp;lt;- ts_wide_df |&amp;gt; 
+  slice(
+    outer(-2:0, row_number(), &amp;quot;+&amp;quot;)[,-(1:2)] |&amp;gt; 
+      apply(MARGIN = 2L, \(i) i[which.min(val[i])])
+  ) |&amp;gt; 
+  rename_with(~ paste0(&amp;quot;min3val_&amp;quot;, .x)) |&amp;gt; 
+  mutate(time = ts_wide_df$time[-(1:2)])
+left_join(ts_wide_df, moving_mins_wide, by = &amp;quot;time&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 6 × 8
+     time   val    col1     col2 min3val_time min3val_val min3val_col1
+    &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;   &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;        &amp;lt;int&amp;gt;       &amp;lt;dbl&amp;gt;        &amp;lt;dbl&amp;gt;
+  1     1    50  0.0183  0.00501           NA          NA       NA    
+  2     2    40  0.705  -0.0376            NA          NA       NA    
+  3     3    60 -0.647   0.724              2          40        0.705
+  4     4    30  0.868  -0.497              4          30        0.868
+  5     5    20  0.376   0.0114             5          20        0.376
+  6     6    10  0.310   0.00986            6          10        0.310
+  # ℹ 1 more variable: min3val_col2 &amp;lt;dbl&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;!-- ### Dependency relations between rows --&gt;
+&lt;!-- In tidy representations of nested, hierarchical data, the parent-child relationship between rows are often encoded in a column that reference other rows in the data. --&gt;
+&lt;!-- Let's take the case of dependency parsing in NLP (using [spaCy](https://spacy.io/)) for example. Given a sentence like "June likes cute cats", the dependency relationship between tokens can be represented like so: --&gt;
+&lt;!-- &lt;details&gt; --&gt;
+&lt;!-- &lt;summary&gt;Code to produce the figure&lt;/summary&gt; --&gt;
+&lt;!-- ```{r displacy, eval = FALSE} --&gt;
+&lt;!-- library(reticulate) --&gt;
+&lt;!-- spacy &lt;- import("spacy") --&gt;
+&lt;!-- nlp &lt;- spacy$load("en_core_web_sm") --&gt;
+&lt;!-- py_parsed &lt;- nlp("June likes cute cats") --&gt;
+&lt;!-- displacy_render &lt;- function(x) { --&gt;
+&lt;!--   spacy$displacy$render(x) |&gt;  --&gt;
+&lt;!--     htmltools::HTML() |&gt; --&gt;
+&lt;!--     htmltools::html_print() --&gt;
+&lt;!-- } --&gt;
+&lt;!-- displacy_render(py_parsed) --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- &lt;/details&gt; --&gt;
+&lt;!-- ```{r displacy, message = FALSE} --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- There's a lot going on here, but I want to draw attention to the fact that there's an arrow going from `"likes"` to `"cats"` and from `"cats"` to `"cute"`. In NLP terms, we say that in this sentence, the head of "cute" is "cats", and the head of "cats" is "likes". --&gt;
+&lt;!-- To demonstrate this using **spacy** in *python*, we can parse the sentence and store the parsed object in `py_parsed`: --&gt;
+&lt;!-- ```{r, eval = FALSE} --&gt;
+&lt;!-- library(reticulate) --&gt;
+&lt;!-- spacy &lt;- import("spacy") --&gt;
+&lt;!-- nlp &lt;- spacy$load("en_core_web_sm") --&gt;
+&lt;!-- py_parsed &lt;- nlp("June likes cute cats") --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- Using python's 0-indexing, we extract the token object corresponding to "cats". From there, we can see the dependency relationship where the head of "cute" is "cats" and the head of "cats" is "likes": --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- py_parsed[2] --&gt;
+&lt;!-- py_parsed[2]$head --&gt;
+&lt;!-- py_parsed[2]$head$head --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- We see that this dependency relationship between "cute"-"cats"-"likes" is expressed concisely in object-oriented programming (you just follow the `head` property of tokens). This gets a bit trickier to work with in tidy data form. --&gt;
+&lt;!-- Using the `{spacyr}` package, we can generate a dataframe equivalent of `py_parsed` which stores the dependency relationship in the `head_token_id` column: --&gt;
+&lt;!-- ```{r, message = FALSE} --&gt;
+&lt;!-- library(spacyr) --&gt;
+&lt;!-- sentence &lt;- "June likes cute cats" --&gt;
+&lt;!-- parsed &lt;- spacy_parse(sentence, dependency = TRUE, entity = FALSE)[,-c(1:2)] --&gt;
+&lt;!-- parsed --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- To get from "cute" to "cats" and "likes" by following the arrows, we can use `slice()`: --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- # Child token --&gt;
+&lt;!-- parsed |&gt;  --&gt;
+&lt;!--   slice(3) --&gt;
+&lt;!-- # Parent head --&gt;
+&lt;!-- parsed |&gt;  --&gt;
+&lt;!--   slice( head_token_id[3] ) --&gt;
+&lt;!-- # Grandparent head --&gt;
+&lt;!-- parsed |&gt;  --&gt;
+&lt;!--   slice( head_token_id[token_id == head_token_id[3]] ) --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- &lt;details&gt; --&gt;
+&lt;!-- &lt;summary&gt;The recursive generalization&lt;/summary&gt; --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- # Special case for init --&gt;
+&lt;!-- parsed |&gt;  --&gt;
+&lt;!--   slice( 3 ) --&gt;
+&lt;!-- # Recursive call to `head_token_id[token_id == PREV]` --&gt;
+&lt;!-- parsed |&gt;  --&gt;
+&lt;!--   slice( head_token_id[token_id == 3] ) --&gt;
+&lt;!-- parsed |&gt;  --&gt;
+&lt;!--   slice( head_token_id[token_id == head_token_id[token_id == 3]] ) --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- &lt;/details&gt; --&gt;
+&lt;!-- Now let's say that we have a paragraph of sentences describing what June likes and doesn't likes. --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- paragraph &lt;- "June likes cute cats. June hates angry cats. June likes small dogs." --&gt;
+&lt;!-- parsed_paragraph &lt;- spacy_parse(paragraph, dependency = TRUE, entity = FALSE) --&gt;
+&lt;!-- parsed_paragraph &lt;- parsed_paragraph |&gt;  --&gt;
+&lt;!--   filter(pos != "PUNCT") --&gt;
+&lt;!-- parsed_paragraph --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- And let's say that our research question is: what kinds of cats does June like? In other words we want to end up with a set of `ADJ`s where the head token is `cats` and the head token of that is `likes`. In `parsed_paragraph`, there's only one token (row) meeting this criteria: --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- parsed_paragraph[3,] --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- In our solution we use a helper function `get_head_tokens()`, which recursively searches for token head using `slice()`. This blog post is already getting too long so I'll just dump the code for now and maybe I'll come back to add more explanations later... --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- get_head_tokens &lt;- function(df, child, n) { --&gt;
+&lt;!--   child &lt;- rlang::eval_tidy(enquo(child), data = df) --&gt;
+&lt;!--   purrr::accumulate( --&gt;
+&lt;!--     .x = seq_len(n), --&gt;
+&lt;!--     .f = ~ slice(df, head_token_id[token_id == .x$token_id]), --&gt;
+&lt;!--     .init = slice(df, child) --&gt;
+&lt;!--   ) |&gt;  --&gt;
+&lt;!--     slice(-1) |&gt;  --&gt;
+&lt;!--     pull(token) --&gt;
+&lt;!-- } --&gt;
+&lt;!-- parsed_paragraph |&gt;  --&gt;
+&lt;!--   filter(sentence_id == 1) |&gt;  --&gt;
+&lt;!--   get_head_tokens(child = which(pos == "ADJ"), n = 2) --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- Applying `get_head_tokens()` for each sentence gets us the solution: --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- parsed_paragraph |&gt;  --&gt;
+&lt;!--   group_by(sentence_id) |&gt;  --&gt;
+&lt;!--   filter( --&gt;
+&lt;!--     pos == "ADJ", --&gt;
+&lt;!--     identical( --&gt;
+&lt;!--       c("cats", "likes"), --&gt;
+&lt;!--       get_head_tokens(pick(everything()), which(pos == "ADJ"), 2) --&gt;
+&lt;!--     ) --&gt;
+&lt;!--   ) |&gt;  --&gt;
+&lt;!--   ungroup() --&gt;
+&lt;!-- ``` --&gt;
+&lt;h3 id="evenly-distributed-row-shuffling-of-balanced-categories"&gt;Evenly
+distributed row shuffling of balanced categories&lt;/h3&gt;
+&lt;p&gt;Sometimes the ordering of rows in a data frame can be meaningful for
+an external application.&lt;/p&gt;
+&lt;p&gt;For example, many experiment-building platforms for psychology
+research require researchers to specify the running order of trials in
+an experiment via a csv, where each row represents a trial and each
+column represents information about the trial.&lt;/p&gt;
+&lt;p&gt;So an experiment testing the classic &lt;a
+href="https://www.psytoolkit.org/lessons/stroop.html"&gt;Stroop effect&lt;/a&gt;
+may have the following template:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;mismatch_trials &amp;lt;- tibble(
+  item_id = 1:5,
+  trial = &amp;quot;mismatch&amp;quot;,
+  word = c(&amp;quot;red&amp;quot;, &amp;quot;green&amp;quot;, &amp;quot;purple&amp;quot;, &amp;quot;brown&amp;quot;, &amp;quot;blue&amp;quot;),
+  color = c(&amp;quot;brown&amp;quot;, &amp;quot;red&amp;quot;, &amp;quot;green&amp;quot;, &amp;quot;blue&amp;quot;, &amp;quot;purple&amp;quot;)
+)
+mismatch_trials&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 5 × 4
+    item_id trial    word   color 
+      &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt; 
+  1       1 mismatch red    brown 
+  2       2 mismatch green  red   
+  3       3 mismatch purple green 
+  4       4 mismatch brown  blue  
+  5       5 mismatch blue   purple&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We probably also want to mix in some &lt;em&gt;control&lt;/em&gt; trials where
+the word and color do match:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;match_trials &amp;lt;- mismatch_trials |&amp;gt; 
+  mutate(trial = &amp;quot;match&amp;quot;, color = word)
+match_trials&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 5 × 4
+    item_id trial word   color 
+      &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt; 
+  1       1 match red    red   
+  2       2 match green  green 
+  3       3 match purple purple
+  4       4 match brown  brown 
+  5       5 match blue   blue&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now that we have all materials for our experiment, we next want the
+running order to interleave the match and mismatch trials.&lt;/p&gt;
+&lt;p&gt;We first add them together into a longer data frame:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;stroop_trials &amp;lt;- bind_rows(mismatch_trials, match_trials)
+stroop_trials&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 10 × 4
+     item_id trial    word   color 
+       &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt; 
+   1       1 mismatch red    brown 
+   2       2 mismatch green  red   
+   3       3 mismatch purple green 
+   4       4 mismatch brown  blue  
+   5       5 mismatch blue   purple
+   6       1 match    red    red   
+   7       2 match    green  green 
+   8       3 match    purple purple
+   9       4 match    brown  brown 
+  10       5 match    blue   blue&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And from here we can exploit the fact that all mismatch items come
+before match items, and that they share the same length of 5:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;stroop_trials |&amp;gt; 
+  slice( as.integer(outer(c(0, 5), 1:5, &amp;quot;+&amp;quot;)) )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 10 × 4
+     item_id trial    word   color 
+       &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt; 
+   1       1 mismatch red    brown 
+   2       1 match    red    red   
+   3       2 mismatch green  red   
+   4       2 match    green  green 
+   5       3 mismatch purple green 
+   6       3 match    purple purple
+   7       4 mismatch brown  blue  
+   8       4 match    brown  brown 
+   9       5 mismatch blue   purple
+  10       5 match    blue   blue&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This relies on a strong assumptions about the row order in the
+original data, though. So a safer alternative is to represent the row
+indices for &lt;code&gt;"match"&lt;/code&gt; and &lt;code&gt;"mismatch"&lt;/code&gt; trials as
+rows of a matrix, and then collapse column-wise.&lt;/p&gt;
+&lt;p&gt;Let’s try this outside of &lt;code&gt;slice()&lt;/code&gt; first. We start with a
+call to &lt;code&gt;sapply()&lt;/code&gt; to construct a matrix where the columns
+contain row indices for each unique category of &lt;code&gt;trial&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;sapply(unique(stroop_trials$trial), \(x) which(stroop_trials$trial == x))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;       mismatch match
+  [1,]        1     6
+  [2,]        2     7
+  [3,]        3     8
+  [4,]        4     9
+  [5,]        5    10&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then we transpose the matrix with &lt;code&gt;t()&lt;/code&gt;, which rotates
+it:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;t( sapply(unique(stroop_trials$trial), \(x) which(stroop_trials$trial == x)) )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;           [,1] [,2] [,3] [,4] [,5]
+  mismatch    1    2    3    4    5
+  match       6    7    8    9   10&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now lets stick that inside slice, remembering to collapse the
+transposed matrix into vector:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;interleaved_stroop_trials &amp;lt;- stroop_trials |&amp;gt; 
+  slice( as.integer(t(sapply(unique(trial), \(x) which(trial == x)))) )
+interleaved_stroop_trials&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 10 × 4
+     item_id trial    word   color 
+       &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt; 
+   1       1 mismatch red    brown 
+   2       1 match    red    red   
+   3       2 mismatch green  red   
+   4       2 match    green  green 
+   5       3 mismatch purple green 
+   6       3 match    purple purple
+   7       4 mismatch brown  blue  
+   8       4 match    brown  brown 
+   9       5 mismatch blue   purple
+  10       5 match    blue   blue&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;At the moment, we have both “red” word trails showing up together,
+and then the “green”s, the “purple”s, and so on. If we wanted to
+introduce some randomness to the presentation order within each type of
+trial, we can wrap the row indices in &lt;code&gt;sample()&lt;/code&gt; to shuffle
+them first:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;shuffled_stroop_trials &amp;lt;- stroop_trials |&amp;gt; 
+  slice( as.integer(t(sapply(unique(trial), \(x) sample(which(trial == x))))) )
+shuffled_stroop_trials&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 10 × 4
+     item_id trial    word   color 
+       &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt; 
+   1       1 mismatch red    brown 
+   2       5 match    blue   blue  
+   3       2 mismatch green  red   
+   4       4 match    brown  brown 
+   5       3 mismatch purple green 
+   6       1 match    red    red   
+   7       4 mismatch brown  blue  
+   8       3 match    purple purple
+   9       5 mismatch blue   purple
+  10       2 match    green  green&lt;/code&gt;&lt;/pre&gt;
+&lt;!-- applies to monotonically increasing continuous sequences too --&gt;
+&lt;h3 id="inserting-a-new-row-at-specific-intervals"&gt;Inserting a new row
+at specific intervals&lt;/h3&gt;
+&lt;p&gt;Continuing with our Stroop experiment template example, let’s say we
+want to give participants a break every two trials.&lt;/p&gt;
+&lt;p&gt;In a matrix representation, this means constructing this 2-row matrix
+of row indices:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;matrix(1:nrow(shuffled_stroop_trials), nrow = 2)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;       [,1] [,2] [,3] [,4] [,5]
+  [1,]    1    3    5    7    9
+  [2,]    2    4    6    8   10&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And adding a row of that represent a separator/break, before
+collapsing column-wise:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;matrix(1:nrow(shuffled_stroop_trials), nrow = 2) |&amp;gt; 
+  rbind(11)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;       [,1] [,2] [,3] [,4] [,5]
+  [1,]    1    3    5    7    9
+  [2,]    2    4    6    8   10
+  [3,]   11   11   11   11   11&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Using slice, this means adding a row to the data representing a break
+trial first, and then adding a row to the row index matrix representing
+that row:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;stroop_with_breaks &amp;lt;- shuffled_stroop_trials |&amp;gt; 
+  add_row(trial = &amp;quot;BREAK&amp;quot;) |&amp;gt; 
+  slice(
+    matrix(row_number()[-n()], nrow = 2) |&amp;gt; 
+      rbind(n()) |&amp;gt; 
+      as.integer()
+  )
+stroop_with_breaks&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 15 × 4
+     item_id trial    word   color 
+       &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt; 
+   1       1 mismatch red    brown 
+   2       5 match    blue   blue  
+   3      NA BREAK    &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
+   4       2 mismatch green  red   
+   5       4 match    brown  brown 
+   6      NA BREAK    &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
+   7       3 mismatch purple green 
+   8       1 match    red    red   
+   9      NA BREAK    &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
+  10       4 mismatch brown  blue  
+  11       3 match    purple purple
+  12      NA BREAK    &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
+  13       5 mismatch blue   purple
+  14       2 match    green  green 
+  15      NA BREAK    &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If we don’t want a break after the last trial, we can use negative
+indexing with &lt;code&gt;slice(-n())&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;stroop_with_breaks |&amp;gt; 
+  slice(-n())&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 14 × 4
+     item_id trial    word   color 
+       &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt; 
+   1       1 mismatch red    brown 
+   2       5 match    blue   blue  
+   3      NA BREAK    &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
+   4       2 mismatch green  red   
+   5       4 match    brown  brown 
+   6      NA BREAK    &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
+   7       3 mismatch purple green 
+   8       1 match    red    red   
+   9      NA BREAK    &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
+  10       4 mismatch brown  blue  
+  11       3 match    purple purple
+  12      NA BREAK    &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
+  13       5 mismatch blue   purple
+  14       2 match    green  green&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;What about after 3 trials, where the number of trials (10) is not
+divisibly by 3? Can we still use a matrix?&lt;/p&gt;
+&lt;p&gt;Yes, you’d just need to explicitly fill in the “blanks”!&lt;/p&gt;
+&lt;p&gt;Conceptually, we want a matrix like this, where extra “cells” are
+padded with 0s (recall that 0s are ignored in &lt;code&gt;slice()&lt;/code&gt;):&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;matrix(c(1:10, rep(0, 3 - 10 %% 3)), nrow = 3)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;       [,1] [,2] [,3] [,4]
+  [1,]    1    4    7   10
+  [2,]    2    5    8    0
+  [3,]    3    6    9    0&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And this is how that could be implemented inside
+&lt;code&gt;slice()&lt;/code&gt;, minding the fact that adding the break trial
+increases original row count by 1:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;shuffled_stroop_trials |&amp;gt; 
+  add_row(trial = &amp;quot;BREAK&amp;quot;) |&amp;gt; 
+  slice(
+    c(seq_len(n()-1), rep(0, 3 - (n()-1) %% 3)) |&amp;gt; 
+      matrix(nrow = 3) |&amp;gt; 
+      rbind(n()) |&amp;gt; 
+      as.integer()
+  ) |&amp;gt; 
+  slice(-n())&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 13 × 4
+     item_id trial    word   color 
+       &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt; 
+   1       1 mismatch red    brown 
+   2       5 match    blue   blue  
+   3       2 mismatch green  red   
+   4      NA BREAK    &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
+   5       4 match    brown  brown 
+   6       3 mismatch purple green 
+   7       1 match    red    red   
+   8      NA BREAK    &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
+   9       4 mismatch brown  blue  
+  10       3 match    purple purple
+  11       5 mismatch blue   purple
+  12      NA BREAK    &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
+  13       2 match    green  green&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;How about inserting a break trial after every &lt;code&gt;"purple"&lt;/code&gt;
+word trials?&lt;/p&gt;
+&lt;p&gt;Conceptually, we want a matrix that binds these two vectors as rows
+before collapsing:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;print( 1:nrow(shuffled_stroop_trials) )
+print(
+  replace(rep(0, nrow(shuffled_stroop_trials)),
+          which(shuffled_stroop_trials$word == &amp;quot;purple&amp;quot;), 11)
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;   [1]  1  2  3  4  5  6  7  8  9 10
+   [1]  0  0  0  0 11  0  0 11  0  0&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And this is how you could do that inside &lt;code&gt;slice()&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;shuffled_stroop_trials |&amp;gt; 
+  add_row(trial = &amp;quot;BREAK&amp;quot;) |&amp;gt; 
+  slice(
+    c(seq_len(n()-1), replace(rep(0, n()-1), which(word == &amp;quot;purple&amp;quot;), n())) |&amp;gt;
+      matrix(nrow = 2, byrow = TRUE) |&amp;gt; 
+      as.integer()
+  )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 12 × 4
+     item_id trial    word   color 
+       &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt; 
+   1       1 mismatch red    brown 
+   2       5 match    blue   blue  
+   3       2 mismatch green  red   
+   4       4 match    brown  brown 
+   5       3 mismatch purple green 
+   6      NA BREAK    &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
+   7       1 match    red    red   
+   8       4 mismatch brown  blue  
+   9       3 match    purple purple
+  10      NA BREAK    &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
+  11       5 mismatch blue   purple
+  12       2 match    green  green&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You might protest that this is a pretty convoluted approach to a
+seemingly simple problem of inserting rows, and you’d be right!&lt;a
+href="#fn2" class="footnote-ref" id="fnref2"&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt; Not only
+is the code difficult to read, you can only insert the same single row
+over and over.&lt;/p&gt;
+&lt;p&gt;It turns out that these cases of row insertion actually fall under
+the broader class of interweaving &lt;strong&gt;unequal categories&lt;/strong&gt; -
+let’s see this next.&lt;/p&gt;
+&lt;h3 id="evenly-distributed-row-shuffling-of-unequal-categories"&gt;Evenly
+distributed row shuffling of unequal categories&lt;/h3&gt;
+&lt;p&gt;Let’s return to our solution for the initial “break every 2 trials”
+problem:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;shuffled_stroop_trials |&amp;gt; 
+  add_row(trial = &amp;quot;BREAK&amp;quot;) |&amp;gt; 
+  slice(
+    matrix(row_number()[-n()], nrow = 2) |&amp;gt; 
+      rbind(n()) |&amp;gt; 
+      as.integer()
+  ) |&amp;gt; 
+  slice(-n())&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 14 × 4
+     item_id trial    word   color 
+       &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt; 
+   1       1 mismatch red    brown 
+   2       5 match    blue   blue  
+   3      NA BREAK    &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
+   4       2 mismatch green  red   
+   5       4 match    brown  brown 
+   6      NA BREAK    &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
+   7       3 mismatch purple green 
+   8       1 match    red    red   
+   9      NA BREAK    &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
+  10       4 mismatch brown  blue  
+  11       3 match    purple purple
+  12      NA BREAK    &amp;lt;NA&amp;gt;   &amp;lt;NA&amp;gt;  
+  13       5 mismatch blue   purple
+  14       2 match    green  green&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here, we were working with a matrix that looks like this, where
+&lt;code&gt;11&lt;/code&gt; represents the new row we added representing a break
+trial:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;       [,1] [,2] [,3] [,4] [,5]
+  [1,]    1    3    5    7    9
+  [2,]    2    4    6    8   10
+  [3,]   11   11   11   11   11&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And recall that to insert every &lt;em&gt;3&lt;/em&gt; rows, we needed to pad
+with &lt;code&gt;0&lt;/code&gt; first to satisfy the matrix’s rectangle
+constraint:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;       [,1] [,2] [,3] [,4]
+  [1,]    1    4    7   10
+  [2,]    2    5    8    0
+  [3,]    3    6    9    0
+  [4,]   11   11   11   11&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;But a better way of thinking about this is to have one matrix row
+representing all row indices, and then add a &lt;strong&gt;sparse row&lt;/strong&gt;
+that represent breaks:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Break after every 2 trials:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;matrix(c(1:10, rep_len(c(0, 11), 10)), nrow = 2, byrow = TRUE)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+  [1,]    1    2    3    4    5    6    7    8    9    10
+  [2,]    0   11    0   11    0   11    0   11    0    11&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Break after every 3 trials:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;matrix(c(1:10, rep_len(c(0, 0, 11), 10)), nrow = 2, byrow = TRUE)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+  [1,]    1    2    3    4    5    6    7    8    9    10
+  [2,]    0    0   11    0    0   11    0    0   11     0&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Break after every 4 trials:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;matrix(c(1:10, rep_len(c(0, 0, 0, 11), 10)), nrow = 2, byrow = TRUE)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+  [1,]    1    2    3    4    5    6    7    8    9    10
+  [2,]    0    0    0   11    0    0    0   11    0     0&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;And it turns out that this method generalizes to balanced shuffling
+across categories that are not equal in size!&lt;/p&gt;
+&lt;p&gt;Let’s start with a really basic example - here we have three kinds of
+fruits with varying counts:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;fruits &amp;lt;- c(&amp;quot;🍎&amp;quot;, &amp;quot;🍋&amp;quot;, &amp;quot;🍇&amp;quot;)[c(2,1,3,3,2,3,1,2,2,1,2,2,3,3,3)]
+fruits &amp;lt;- factor(fruits, levels = c(&amp;quot;🍇&amp;quot;, &amp;quot;🍋&amp;quot;, &amp;quot;🍎&amp;quot;))
+table(fruits)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  fruits
+  🍇 🍋 🍎 
+   6  6  3&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Their current order looks like this:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;cat(levels(fruits)[fruits])&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  🍋 🍎 🍇 🍇 🍋 🍇 🍎 🍋 🍋 🍎 🍋 🍋 🍇 🍇 🍇&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;But I want them to be ordered such that individuals of the same fruit
+kind are maximally apart from one another. This effectively re-orders
+the fruits to be distributed “evenly”:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;cat(levels(fruits)[fruits[c(3,1,2,4,5,0,6,8,10,13,9,0,14,11,7,15,12,0)]])&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  🍇 🍋 🍎 🍇 🍋 🍇 🍋 🍎 🍇 🍋 🍇 🍋 🍎 🍇 🍋&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;With our “build row-wise, collapse col-wise” approach, this takes the
+following steps:&lt;/p&gt;
+&lt;ol style="list-style-type: decimal"&gt;
+&lt;li&gt;&lt;p&gt;Find the most frequent category - that N-max becomes the number
+of columns in the matrix of row indices.&lt;/p&gt;
+&lt;p&gt;In this case it’s grapes and lemons, of which there are 6 each:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;grape_rows &amp;lt;- which(fruits == &amp;quot;🍇&amp;quot;)
+setNames(grape_rows, rep(&amp;quot;🍇&amp;quot;, 6))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  🍇 🍇 🍇 🍇 🍇 🍇 
+   3  4  6 13 14 15&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class="r"&gt;&lt;code&gt;lemon_rows &amp;lt;- which(fruits == &amp;quot;🍋&amp;quot;)
+setNames(lemon_rows, rep(&amp;quot;🍋&amp;quot;, 6))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  🍋 🍋 🍋 🍋 🍋 🍋 
+   1  5  8  9 11 12&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Normalize (“stretch”) all vectors to have the same length as
+N.&lt;/p&gt;
+&lt;p&gt;In this case we need to stretch the apples vector, which is currently
+only length-3:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;apple_rows &amp;lt;- which(fruits == &amp;quot;🍎&amp;quot;)
+apple_rows&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [1]  2  7 10&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The desired “sparse” representation is something like this, where
+each instance of apple is equidistant, with 0s in between:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;apple_rows_sparse &amp;lt;- c(2, 0, 7, 0, 10, 0)
+setNames(apple_rows_sparse, c(&amp;quot;🍎&amp;quot;, &amp;quot;&amp;quot;, &amp;quot;🍎&amp;quot;, &amp;quot;&amp;quot;, &amp;quot;🍎&amp;quot;, &amp;quot;&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  🍎    🍎    🍎    
+   2  0  7  0 10  0&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;There are many ways to get at this, but one trick involves creating
+an evenly spaced float sequence from 1 to N-apple over N-max steps:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;seq(1, 3, length.out = 6)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [1] 1.0 1.4 1.8 2.2 2.6 3.0&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;From there, we round the numbers:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;round(seq(1, 3, length.out = 6))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [1] 1 1 2 2 3 3&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then mark the first occurance of each number using
+&lt;code&gt;!duplicated()&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;!duplicated(round(seq(1, 3, length.out = 6)))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [1]  TRUE FALSE  TRUE FALSE  TRUE FALSE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And lastly, we initialize a vector of 0s and &lt;code&gt;replace()&lt;/code&gt;
+the &lt;code&gt;TRUE&lt;/code&gt;s with apple indices:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;replace(
+  rep(0, 6),
+  !duplicated(round(seq(1, 3, length.out = 6))),
+  which(fruits == &amp;quot;🍎&amp;quot;)
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [1]  2  0  7  0 10  0&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Stack up the category vectors by row and collapse
+column-wise:&lt;/p&gt;
+&lt;p&gt;Manually, we would build the full matrix row-by-row like this:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;fruits_matrix &amp;lt;- matrix(
+  c(grape_rows, lemon_rows, apple_rows_sparse),
+  nrow = 3, byrow = TRUE
+)
+rownames(fruits_matrix) &amp;lt;- c(&amp;quot;🍇&amp;quot;, &amp;quot;🍋&amp;quot;, &amp;quot;🍎&amp;quot;)
+fruits_matrix&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;     [,1] [,2] [,3] [,4] [,5] [,6]
+  🍇    3    4    6   13   14   15
+  🍋    1    5    8    9   11   12
+  🍎    2    0    7    0   10    0&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And dynamically we can use &lt;code&gt;sapply()&lt;/code&gt; to fill the matrix
+column-by-column, and then &lt;code&gt;t()&lt;/code&gt;-ing the output:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;fruits_distributed &amp;lt;- sapply(levels(fruits), \(x) {
+  n_max &amp;lt;- max(table(fruits))
+  ind &amp;lt;- which(fruits == x)
+  nums &amp;lt;- seq(1, length(ind), length.out = n_max)
+  replace(rep(0, n_max), !duplicated(round(nums)), ind)
+}) |&amp;gt; 
+  t()
+fruits_distributed&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;     [,1] [,2] [,3] [,4] [,5] [,6]
+  🍇    3    4    6   13   14   15
+  🍋    1    5    8    9   11   12
+  🍎    2    0    7    0   10    0&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Finally, we collapse the vector and we see that it indeed distributed
+the fruits evenly!&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;fruits[as.integer(fruits_distributed)]&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;   [1] 🍇 🍋 🍎 🍇 🍋 🍇 🍋 🍎 🍇 🍋 🍇 🍋 🍎 🍇 🍋
+  Levels: 🍇 🍋 🍎&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;We can go even further and wrap the dynamic,
+&lt;code&gt;sapply()&lt;/code&gt;-based solution into a function for use within
+&lt;code&gt;slice()&lt;/code&gt;. Here, I also added an optional argument for
+shuffling within categories:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;rshuffle &amp;lt;- function(x, shuffle_within = FALSE) {
+  categories &amp;lt;- as.factor(x)
+  n_max &amp;lt;- max(table(categories))
+  sapply(levels(categories), \(lvl) {
+    ind &amp;lt;- which(categories == lvl)
+    if (shuffle_within) ind &amp;lt;- sample(ind)
+    nums &amp;lt;- seq(1, length(ind), length.out = n_max)
+    replace(rep(0, n_max), !duplicated(round(nums)), ind)
+  }) |&amp;gt; 
+    t() |&amp;gt; 
+    as.integer()
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Returning back to our Stroop experiment template example, imagine we
+also had two filler trials, where no word is shown and just the color
+flashes on the screen:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;stroop_fillers &amp;lt;- tibble(
+  item_id = 1:2,
+  trial = &amp;quot;filler&amp;quot;,
+  word = NA,
+  color = c(&amp;quot;red&amp;quot;, &amp;quot;blue&amp;quot;)
+)
+stroop_with_fillers &amp;lt;- bind_rows(stroop_fillers, stroop_trials) |&amp;gt; 
+  mutate(trial = factor(trial, c(&amp;quot;match&amp;quot;, &amp;quot;mismatch&amp;quot;, &amp;quot;filler&amp;quot;)))
+stroop_with_fillers&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 12 × 4
+     item_id trial    word   color 
+       &amp;lt;int&amp;gt; &amp;lt;fct&amp;gt;    &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt; 
+   1       1 filler   &amp;lt;NA&amp;gt;   red   
+   2       2 filler   &amp;lt;NA&amp;gt;   blue  
+   3       1 mismatch red    brown 
+   4       2 mismatch green  red   
+   5       3 mismatch purple green 
+   6       4 mismatch brown  blue  
+   7       5 mismatch blue   purple
+   8       1 match    red    red   
+   9       2 match    green  green 
+  10       3 match    purple purple
+  11       4 match    brown  brown 
+  12       5 match    blue   blue&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can evenly shuffle between the unequal trial types with our new
+&lt;code&gt;rshuffle()&lt;/code&gt; function:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;stroop_with_fillers |&amp;gt; 
+  slice( rshuffle(trial, shuffle_within = TRUE) )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 12 × 4
+     item_id trial    word   color 
+       &amp;lt;int&amp;gt; &amp;lt;fct&amp;gt;    &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt; 
+   1       2 match    green  green 
+   2       2 mismatch green  red   
+   3       1 filler   &amp;lt;NA&amp;gt;   red   
+   4       1 match    red    red   
+   5       4 mismatch brown  blue  
+   6       3 match    purple purple
+   7       3 mismatch purple green 
+   8       2 filler   &amp;lt;NA&amp;gt;   blue  
+   9       4 match    brown  brown 
+  10       5 mismatch blue   purple
+  11       5 match    blue   blue  
+  12       1 mismatch red    brown&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="conclusion"&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;When I started drafting this blog post, I thought I’d come with a
+principled taxonomy of row-relational operations. Ha. This was a lot
+trickier to think through than I thought.&lt;/p&gt;
+&lt;p&gt;But I hope that this gallery of esoteric use-cases for
+&lt;code&gt;slice()&lt;/code&gt; inspires you to use it more, and to think about
+“tidy” solutions to seemingly “untidy” problems.&lt;/p&gt;
+&lt;pre class="r distill-force-highlighting-css"&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="footnotes footnotes-end-of-document"&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id="fn1"&gt;&lt;p&gt;The &lt;code&gt;.by_group = TRUE&lt;/code&gt; is not strictly
+necessary here, but it’s good for visually inspecting the within-group
+ordering.&lt;a href="#fnref1" class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id="fn2"&gt;&lt;p&gt;Although row insertion is a generally tricky problem for
+column-major data frame structures, which is partly why dplyr’s &lt;a
+href="https://dplyr.tidyverse.org/reference/rows.html"&gt;row manipulation
+verbs&lt;/a&gt; have stayed experimental for quite some time.&lt;a href="#fnref2"
+class="footnote-back"&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</description>
+      <distill:md5>5f086a5db2d8a7a771b81537a421b2fb</distill:md5>
+      <category>data wrangling</category>
+      <category>dplyr</category>
+      <guid>https://yjunechoe.github.io/posts/2023-06-11-row-relational-operations</guid>
+      <pubDate>Sun, 22 Sep 2024 00:00:00 +0000</pubDate>
+      <media:content url="https://yjunechoe.github.io/posts/2023-06-11-row-relational-operations/preview.png" medium="image" type="image/png" width="1800" height="1080"/>
+    </item>
+    <item>
       <title>Naming patterns for boolean enums</title>
       <dc:creator>June Choe</dc:creator>
       <link>https://yjunechoe.github.io/posts/2024-07-21-enumerate-possible-options</link>
@@ -95,17 +1935,6 @@
       <guid>https://yjunechoe.github.io/posts/2023-07-09-x-y-problem</guid>
       <pubDate>Mon, 10 Jul 2023 00:00:00 +0000</pubDate>
       <media:content url="https://yjunechoe.github.io/posts/2023-07-09-x-y-problem/preview.png" medium="image" type="image/png" width="238" height="205"/>
-    </item>
-    <item>
-      <title>Row relational operations with slice()</title>
-      <dc:creator>June Choe</dc:creator>
-      <link>https://yjunechoe.github.io/posts/2023-06-11-row-relational-operations</link>
-      <description>A love letter to dplyr::slice() and a gallery of usecases</description>
-      <category>data wrangling</category>
-      <category>dplyr</category>
-      <guid>https://yjunechoe.github.io/posts/2023-06-11-row-relational-operations</guid>
-      <pubDate>Sun, 11 Jun 2023 00:00:00 +0000</pubDate>
-      <media:content url="https://yjunechoe.github.io/posts/2023-06-11-row-relational-operations/preview.png" medium="image" type="image/png" width="1800" height="1080"/>
     </item>
     <item>
       <title>First impressions of DataFrames.jl and accessories</title>
