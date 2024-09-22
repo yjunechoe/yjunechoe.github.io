@@ -1,7 +1,7 @@
 ---
 title: 'Read files on the web into R'
 description: |
-  Mostly a compilation of some code-snippets for my own use
+  For the download-button-averse of us
 categories:
   - tutorial
 base_url: https://yjunechoe.github.io
@@ -10,7 +10,7 @@ author:
     affiliation: University of Pennsylvania Linguistics
     affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
     orcid_id: 0000-0002-0701-921X
-date: 09-01-2024
+date: 09-22-2024
 output:
   distill::distill_article:
     include-after-body: "highlighting.html"
@@ -20,7 +20,6 @@ output:
 editor_options: 
   chunk_output_type: console
 preview: github-dplyr-starwars.jpg
-draft: true
 ---
 
 ```{r setup, include=FALSE}
@@ -36,7 +35,7 @@ knitr::opts_chunk$set(
 
 Every so often I'll have a link to some file on hand and want to read it in R without going out of my way to browse the web page, find a download link, download it somewhere onto my computer, grab the path to it, and then finally read it into R.
 
-Over the years I've accumulated some tricks to get data into R "straight from a url", even if the url does not point to the raw file contents itself. The method varies between data sources though, and I have a hard time keeping track of them in my head, so I thought I'd write some of these down for my own reference. This is not meant to be comprehensive though - keep in mind that I'm someone who primarily works with tabular data and use GitHub and OSF as data repositories.
+Over the years I've accumulated some tricks to get data into R "straight from a url", even if the url does not point to the raw file contents itself. The method varies between data sources though, and I have a hard time keeping track of them in my head, so I thought I'd write some of these down for my own reference. This is not meant to be comprehensive though - keep in mind that I'm someone who primarily works with tabular data and interface with GitHub and OSF as data repositories.
 
 ## GitHub (public repos)
 
@@ -91,9 +90,9 @@ emphatic::hl_diff(
 
 ## GitHub (gists)
 
-It's a similar idea with GitHub Gists (sometimes I like to store small datasets for demos as gists). For example, here's a link to a simulated data for a [Stroop experiment](https://en.wikipedia.org/wiki/Stroop_effect) `stroop.csv`: <https://gist.github.com/yjunechoe/17b3787fb7aec108c19b33d71bc19bc6>.
+It's a similar idea with GitHub Gists, where I sometimes like to store small toy datasets for use in demos. For example, here's a link to a simulated data for a [Stroop experiment](https://en.wikipedia.org/wiki/Stroop_effect) `stroop.csv`: <https://gist.github.com/yjunechoe/17b3787fb7aec108c19b33d71bc19bc6>.
 
-But that's a full on webpage. The url which actually hosts the csv contents is <https://gist.githubusercontent.com/yjunechoe/17b3787fb7aec108c19b33d71bc19bc6/raw/c643b9760126d92b8ac100860ac5b50ba492f316/stroop.csv>, which you can again get to by clicking the **Raw** button at the top-right corner of the gist
+But that's again a full-on webpage. The url which actually hosts the csv contents is <https://gist.githubusercontent.com/yjunechoe/17b3787fb7aec108c19b33d71bc19bc6/raw/c643b9760126d92b8ac100860ac5b50ba492f316/stroop.csv>, which you can again get to by clicking the **Raw** button at the top-right corner of the gist
 
 ```{r, echo=FALSE, fig.align='center', out.width="100%", out.extra="class=external"}
 knitr::include_graphics("github-gist-stroop.jpg", error = FALSE)
@@ -121,7 +120,7 @@ We now turn to the harder problem of accessing a file in a private GitHub reposi
 
 Except this time, when you open the file at that url (assuming it can display in plain text), you'll see the url come with a "token" attached at the end (I'll show an example further down). This token is necessary to remotely access the data in a private repo. Once a token is generated, the file can be accessed using that token from anywhere, but note that it *will expire* at some point as GitHub refreshes tokens periodically (so treat them as if they're for single use).
 
-For a more robust approach, you can use the [GitHub Contents API](https://docs.github.com/en/rest/repos/contents). If you have your credentials set up in [`{gh}`](https://gh.r-lib.org/) (which you can check with `gh::gh_whoami()`), you can request a token-tagged url to the private file using the syntax:[^Thanks [@tanho](https://fosstodon.org/@tanho) for pointing me to this at the [R4DS/DSLC](https://fosstodon.org/@DSLC) slack.]
+For a more robust approach, you can use the [GitHub Contents API](https://docs.github.com/en/rest/repos/contents). If you have your credentials set up in [`{gh}`](https://gh.r-lib.org/) (which you can check with `gh::gh_whoami()`), you can request a token-tagged url to the private file using the syntax:^[Thanks [@tanho](https://fosstodon.org/@tanho) for pointing me to this at the [R4DS/DSLC](https://fosstodon.org/@DSLC) slack.]
 
 ```{r, eval=FALSE}
 gh::gh("/repos/{user}/{repo}/contents/{path}")$download_url
@@ -173,7 +172,7 @@ arrow::read_feather("https://osf.io/download/9vztj/") |>
 
 You might have already caught on to this, but the pattern is to simply point to `osf.io/download/` instead of `osf.io/`.
 
-This method also works for view-only links to anonymized OSF projects as well. For example, this is an anonymized link to a csv file from one of my projects <https://osf.io/tr8qm?view_only=998ad87d86cc4049af4ec6c96a91d9ad>. Navigating to this link will show a web preview of the csv file contents, just like in the GitHub example with `dplyr::starwars`.
+This method also works for view-only links to anonymized OSF projects as well. For example, this is an anonymized link to a csv file from one of my projects <https://osf.io/tr8qm?view_only=998ad87d86cc4049af4ec6c96a91d9ad>. Navigating to this link will show a web preview of the csv file contents.
 
 By inserting `/download` into this url, we can read the csv file contents directly:
 
@@ -186,9 +185,9 @@ See also the [`{osfr}`](https://docs.ropensci.org/osfr/reference/osfr-package.ht
 
 ## Aside: Can't go wrong with a copy-paste!
 
-Reading remote files aside, I think it's severly under-rated how base R has a  `readClipboard()` function and a collection of `read.*()` functions which can also read directly from a `"clipboard"` connection.^[The special value `"clipboard"` works for most base-R read functions that take a `file` or `con` argument.]
+Reading remote files aside, I think it's severely underrated how base R has a `readClipboard()` function and a collection of `read.*()` functions which can also read directly from a `"clipboard"` connection.^[The special value `"clipboard"` works for most base-R read functions that take a `file` or `con` argument.]
 
-I sometimes do this for html/markdown summary tables that a website might display, or sometimes even for entire excel/googlesheets tables after doing a select-all + copy. For such relatively small chunks of data that you just want to quickly get into R, you can also lean on base R's clipboard functionalities.
+I sometimes do this for html/markdown summary tables that a website might display, or sometimes even for entire excel/googlesheets tables after doing a select-all + copy. For such relatively small chunks of data that you just want to quickly get into R, you can lean on base R's clipboard functionalities.
 
 For example, given this markdown table:
 
@@ -197,7 +196,7 @@ aggregate(mtcars, mpg ~ cyl, mean) |>
   knitr::kable()
 ```
 
-You can copy it and run the following code to get that data back as an R data frame:
+You can copy its contents and run the following code to get that data back as an R data frame:
 
 ```{r, eval=FALSE}
 read.delim("clipboard")
@@ -257,9 +256,13 @@ For this example I will use a [parquet file](https://duckdb.org/docs/data/parque
 ```{r}
 # A parquet file of tokens from a sample of child-directed speech
 file <- "https://raw.githubusercontent.com/yjunechoe/repetition_events/master/data/tokens_data/childID%3D1/part-7.parquet"
+
+# For comparison, reading its contents with {arrow}
+arrow::read_parquet(file) |> 
+  head(5)
 ```
 
-In duckdb, the `httpfs` extension allows `PARQUET_SCAN`^[Or `READ_PARQUET` - [same thing](https://duckdb.org/docs/data/parquet/overview.html#read_parquet-function).] to read a remote parquet file.
+In duckdb, the `httpfs` extension we loaded above allows `PARQUET_SCAN`^[Or `READ_PARQUET` - [same thing](https://duckdb.org/docs/data/parquet/overview.html#read_parquet-function).] to read a remote parquet file.
 
 ```{r}
 query1 <- glue::glue_sql("
@@ -310,11 +313,11 @@ To get the file tree of the repo on the master branch, we use:
 files <- gh::gh("/repos/yjunechoe/repetition_events/git/trees/master?recursive=true")$tree
 ```
 
-With `recursive=true`, this returns all files in the repo. We can filter for just the parquet files we want with a little regex:
+With `recursive=true`, this returns all files in the repo. Then, we can filter for just the parquet files we want with a little regex:
 
 ```{r}
 parquet_files <- sapply(files, `[[`, "path") |> 
-  grep(x = _, pattern = ".*data/tokens_data/.*parquet$", value = TRUE)
+  grep(x = _, pattern = ".*/tokens_data/.*parquet$", value = TRUE)
 length(parquet_files)
 head(parquet_files)
 ```
@@ -423,21 +426,21 @@ Lastly, I inadvertently(?) started some discussion around remotely accessing spa
 
 I also have some random tricks that are more situational. Unfortunately, I can only recall like 20% of them at any given moment, so I'll be updating this space as more come back to me:
 
-- When reading remote `.rda` or `.RData` files with `load()`, you need to wrap the link in `url()` first (ref: [stackoverflow](https://stackoverflow.com/questions/26108575/loading-rdata-files-from-url)).
+- When reading remote `.rda` or `.RData` files with `load()`, you may need to wrap the link in `url()` first (ref: [stackoverflow](https://stackoverflow.com/questions/26108575/loading-rdata-files-from-url)).
 
 - [`{vroom}`](https://vroom.r-lib.org/) can [remotely read gzipped files](https://vroom.r-lib.org/articles/vroom.html#reading-remote-files), without having to `download.file()` and `unzip()` first.
 
 - [`{curl}`](https://jeroen.cran.dev/curl/), of course, will always have the most comprehensive set of low-level tools you need to read any arbitrary data remotely. For example, using `curl::curl_fetch_memory()` to read the `dplyr::storms` data again from the GitHub raw contents link:
 
-    ```{r}
-    fetched <- curl::curl_fetch_memory(
-    "https://raw.githubusercontent.com/tidyverse/dplyr/main/data-raw/starwars.csv"
+```{r}
+fetched <- curl::curl_fetch_memory(
+  "https://raw.githubusercontent.com/tidyverse/dplyr/main/data-raw/starwars.csv"
 )
 read.csv(text = rawToChar(fetched$content)) |> 
-    dplyr::glimpse()
-    ```
+  dplyr::glimpse()
+```
 
-  And even if you're going the route of downloading the file first, `curl::multi_download()` can offer big performance improvements over `download.file()`.^[See an example implemented for [`{openalexR}`](https://github.com/ropensci/openalexR/pull/63), an API package.] Many `{curl}` functions can also handle [retries and stop/resumes](https://fosstodon.org/@eliocamp@mastodon.social/111885424355264237) which is cool too.
+- Even if you're going the route of downloading the file first, `curl::multi_download()` can offer big performance improvements over `download.file()`.^[See an example implemented for [`{openalexR}`](https://github.com/ropensci/openalexR/pull/63), an API package.] Many `{curl}` functions can also handle [retries and stop/resumes](https://fosstodon.org/@eliocamp@mastodon.social/111885424355264237) which is cool too.
 
 - [`{httr2}`](https://httr2.r-lib.org/) can capture a *continuous data stream* with `httr2::req_perform_stream()` up to a set time or size.
 

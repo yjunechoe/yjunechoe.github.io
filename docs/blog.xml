@@ -12,7 +12,17 @@
       <link>https://yjunechoe.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Sun, 21 Jul 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Sep 2024 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Read files on the web into R</title>
+      <dc:creator>June Choe</dc:creator>
+      <link>https://yjunechoe.github.io/posts/2024-09-22-fetch-files-web</link>
+      <description>For the download-button-averse of us</description>
+      <category>tutorial</category>
+      <guid>https://yjunechoe.github.io/posts/2024-09-22-fetch-files-web</guid>
+      <pubDate>Sun, 22 Sep 2024 00:00:00 +0000</pubDate>
+      <media:content url="https://yjunechoe.github.io/posts/2024-09-22-fetch-files-web/github-dplyr-starwars.jpg" medium="image" type="image/jpeg"/>
+    </item>
     <item>
       <title>Naming patterns for boolean enums</title>
       <dc:creator>June Choe</dc:creator>

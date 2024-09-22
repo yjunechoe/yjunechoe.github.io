@@ -32,7 +32,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -90,32 +90,32 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_meta_tags-->
   <title>Read files on the web into R</title>
 
-  <meta property="description" itemprop="description" content="Mostly a compilation of some code-snippets for my own use"/>
+  <meta property="description" itemprop="description" content="For the download-button-averse of us"/>
 
 
   <!--  https://schema.org/Article -->
-  <meta property="article:published" itemprop="datePublished" content="2024-09-01"/>
-  <meta property="article:created" itemprop="dateCreated" content="2024-09-01"/>
+  <meta property="article:published" itemprop="datePublished" content="2024-09-22"/>
+  <meta property="article:created" itemprop="dateCreated" content="2024-09-22"/>
   <meta name="article:author" content="June Choe"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
   <meta property="og:title" content="Read files on the web into R"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="Mostly a compilation of some code-snippets for my own use"/>
+  <meta property="og:description" content="For the download-button-averse of us"/>
   <meta property="og:image" content="https://yjunechoe.github.io/github-dplyr-starwars.jpg"/>
   <meta property="og:locale" content="en_US"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary_large_image"/>
   <meta property="twitter:title" content="Read files on the web into R"/>
-  <meta property="twitter:description" content="Mostly a compilation of some code-snippets for my own use"/>
+  <meta property="twitter:description" content="For the download-button-averse of us"/>
   <meta property="twitter:image" content="https://yjunechoe.github.io/github-dplyr-starwars.jpg"/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","date","output","editor_options","preview","draft"]}},"value":[{"type":"character","attributes":{},"value":["Read files on the web into R"]},{"type":"character","attributes":{},"value":["Mostly a compilation of some code-snippets for my own use\n"]},{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]},{"type":"character","attributes":{},"value":["0000-0002-0701-921X"]}]}]},{"type":"character","attributes":{},"value":["09-01-2024"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["include-after-body","toc","self_contained","css"]}},"value":[{"type":"character","attributes":{},"value":["highlighting.html"]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["../../styles.css"]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["chunk_output_type"]}},"value":[{"type":"character","attributes":{},"value":["console"]}]},{"type":"character","attributes":{},"value":["github-dplyr-starwars.jpg"]},{"type":"logical","attributes":{},"value":[true]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","categories","base_url","author","date","output","editor_options","preview"]}},"value":[{"type":"character","attributes":{},"value":["Read files on the web into R"]},{"type":"character","attributes":{},"value":["For the download-button-averse of us\n"]},{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["https://yjunechoe.github.io"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["June Choe"]},{"type":"character","attributes":{},"value":["University of Pennsylvania Linguistics"]},{"type":"character","attributes":{},"value":["https://live-sas-www-ling.pantheon.sas.upenn.edu/"]},{"type":"character","attributes":{},"value":["0000-0002-0701-921X"]}]}]},{"type":"character","attributes":{},"value":["09-22-2024"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["include-after-body","toc","self_contained","css"]}},"value":[{"type":"character","attributes":{},"value":["highlighting.html"]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["../../styles.css"]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["chunk_output_type"]}},"value":[{"type":"character","attributes":{},"value":["console"]}]},{"type":"character","attributes":{},"value":["github-dplyr-starwars.jpg"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -1524,7 +1524,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Read files on the web into R","description":"Mostly a compilation of some code-snippets for my own use","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/","orcidID":"0000-0002-0701-921X"}],"publishedDate":"2024-09-01T00:00:00.000-04:00","citationText":"Choe, 2024"}
+{"title":"Read files on the web into R","description":"For the download-button-averse of us","authors":[{"author":"June Choe","authorURL":"#","affiliation":"University of Pennsylvania Linguistics","affiliationURL":"https://live-sas-www-ling.pantheon.sas.upenn.edu/","orcidID":"0000-0002-0701-921X"}],"publishedDate":"2024-09-22T00:00:00.000-04:00","citationText":"Choe, 2024"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -1541,13 +1541,13 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="dt-tag">tutorial</div>
 </div>
 <!--/radix_placeholder_categories-->
-<p><p>Mostly a compilation of some code-snippets for my own use</p></p>
+<p><p>For the download-button-averse of us</p></p>
 </div>
 
 <div class="d-byline">
   June Choe  (University of Pennsylvania Linguistics)<a href="https://live-sas-www-ling.pantheon.sas.upenn.edu/" class="uri">https://live-sas-www-ling.pantheon.sas.upenn.edu/</a>
   
-<br/>09-01-2024
+<br/>09-22-2024
 </div>
 
 <div class="d-article">
@@ -1571,7 +1571,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </nav>
 </div>
 <p>Every so often I’ll have a link to some file on hand and want to read it in R without going out of my way to browse the web page, find a download link, download it somewhere onto my computer, grab the path to it, and then finally read it into R.</p>
-<p>Over the years I’ve accumulated some tricks to get data into R “straight from a url”, even if the url does not point to the raw file contents itself. The method varies between data sources though, and I have a hard time keeping track of them in my head, so I thought I’d write some of these down for my own reference. This is not meant to be comprehensive though - keep in mind that I’m someone who primarily works with tabular data and use GitHub and OSF as data repositories.</p>
+<p>Over the years I’ve accumulated some tricks to get data into R “straight from a url”, even if the url does not point to the raw file contents itself. The method varies between data sources though, and I have a hard time keeping track of them in my head, so I thought I’d write some of these down for my own reference. This is not meant to be comprehensive though - keep in mind that I’m someone who primarily works with tabular data and interface with GitHub and OSF as data repositories.</p>
 <h2 id="github-public-repos">GitHub (public repos)</h2>
 <p>GitHub has nice a point-and-click interface for browsing repositories and previewing files. For example, you can navigate to the <code>dplyr::starwars</code> dataset from <a href="https://github.com/tidyverse/dplyr/">tidyverse/dplyr</a>, at <a href="https://github.com/tidyverse/dplyr/blob/main/data-raw/starwars.csv" class="uri">https://github.com/tidyverse/dplyr/blob/main/data-raw/starwars.csv</a>:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -1632,8 +1632,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </pre>
 </div>
 <h2 id="github-gists">GitHub (gists)</h2>
-<p>It’s a similar idea with GitHub Gists (sometimes I like to store small datasets for demos as gists). For example, here’s a link to a simulated data for a <a href="https://en.wikipedia.org/wiki/Stroop_effect">Stroop experiment</a> <code>stroop.csv</code>: <a href="https://gist.github.com/yjunechoe/17b3787fb7aec108c19b33d71bc19bc6" class="uri">https://gist.github.com/yjunechoe/17b3787fb7aec108c19b33d71bc19bc6</a>.</p>
-<p>But that’s a full on webpage. The url which actually hosts the csv contents is <a href="https://gist.githubusercontent.com/yjunechoe/17b3787fb7aec108c19b33d71bc19bc6/raw/c643b9760126d92b8ac100860ac5b50ba492f316/stroop.csv" class="uri">https://gist.githubusercontent.com/yjunechoe/17b3787fb7aec108c19b33d71bc19bc6/raw/c643b9760126d92b8ac100860ac5b50ba492f316/stroop.csv</a>, which you can again get to by clicking the <strong>Raw</strong> button at the top-right corner of the gist</p>
+<p>It’s a similar idea with GitHub Gists, where I sometimes like to store small toy datasets for use in demos. For example, here’s a link to a simulated data for a <a href="https://en.wikipedia.org/wiki/Stroop_effect">Stroop experiment</a> <code>stroop.csv</code>: <a href="https://gist.github.com/yjunechoe/17b3787fb7aec108c19b33d71bc19bc6" class="uri">https://gist.github.com/yjunechoe/17b3787fb7aec108c19b33d71bc19bc6</a>.</p>
+<p>But that’s again a full-on webpage. The url which actually hosts the csv contents is <a href="https://gist.githubusercontent.com/yjunechoe/17b3787fb7aec108c19b33d71bc19bc6/raw/c643b9760126d92b8ac100860ac5b50ba492f316/stroop.csv" class="uri">https://gist.githubusercontent.com/yjunechoe/17b3787fb7aec108c19b33d71bc19bc6/raw/c643b9760126d92b8ac100860ac5b50ba492f316/stroop.csv</a>, which you can again get to by clicking the <strong>Raw</strong> button at the top-right corner of the gist</p>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="github-gist-stroop.jpg" width="100%" class=external style="display: block; margin: auto;" /></p>
 </div>
@@ -1666,7 +1666,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <h2 id="github-private-repos">GitHub (private repos)</h2>
 <p>We now turn to the harder problem of accessing a file in a private GitHub repository. If you already have the GitHub webpage open and you’re signed in, you can follow the same step of copying the link that the <strong>Raw</strong> button redirects to.</p>
 <p>Except this time, when you open the file at that url (assuming it can display in plain text), you’ll see the url come with a “token” attached at the end (I’ll show an example further down). This token is necessary to remotely access the data in a private repo. Once a token is generated, the file can be accessed using that token from anywhere, but note that it <em>will expire</em> at some point as GitHub refreshes tokens periodically (so treat them as if they’re for single use).</p>
-<p>For a more robust approach, you can use the <a href="https://docs.github.com/en/rest/repos/contents">GitHub Contents API</a>. If you have your credentials set up in <a href="https://gh.r-lib.org/"><code>{gh}</code></a> (which you can check with <code>gh::gh_whoami()</code>), you can request a token-tagged url to the private file using the syntax:</p>
+<p>For a more robust approach, you can use the <a href="https://docs.github.com/en/rest/repos/contents">GitHub Contents API</a>. If you have your credentials set up in <a href="https://gh.r-lib.org/"><code>{gh}</code></a> (which you can check with <code>gh::gh_whoami()</code>), you can request a token-tagged url to the private file using the syntax:<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>gh</span><span class='fu'>::</span><span class='fu'><a href='https://gh.r-lib.org/reference/gh.html'>gh</a></span><span class='op'>(</span><span class='st'>"/repos/{user}/{repo}/contents/{path}"</span><span class='op'>)</span><span class='op'>$</span><span class='va'>download_url</span></span></code></pre>
@@ -1686,9 +1686,9 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span>  <span class='co'># truncating</span></span>
 <span>  <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>gsub</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>_</span>, <span class='st'>"^(.{100}).*"</span>, <span class='st'>"\\1..."</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>  [1] &quot;https://raw.githubusercontent.com/yjunechoe/my-super-secret-repo/main/README.md?token=AMTCUR6BQGEERA...&quot;</code></pre>
+<pre><code>  [1] &quot;https://raw.githubusercontent.com/yjunechoe/my-super-secret-repo/main/README.md?token=AMTCUR2JPXCIX5...&quot;</code></pre>
 </div>
-<p>I can then use this url to read the private file:<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>I can then use this url to read the private file:<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>gh</span><span class='fu'>::</span><span class='fu'><a href='https://gh.r-lib.org/reference/gh.html'>gh</a></span><span class='op'>(</span><span class='st'>"/repos/yjunechoe/my-super-secret-repo/contents/README.md"</span><span class='op'>)</span><span class='op'>$</span><span class='va'>download_url</span> <span class='op'>|&gt;</span> </span>
@@ -1718,7 +1718,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   $ yield &lt;int&gt; 1545, 1440, 1440, 1520, 1580, 1540, 1555, 1490, 1560, 1495, 1595…</code></pre>
 </div>
 <p>You might have already caught on to this, but the pattern is to simply point to <code>osf.io/download/</code> instead of <code>osf.io/</code>.</p>
-<p>This method also works for view-only links to anonymized OSF projects as well. For example, this is an anonymized link to a csv file from one of my projects <a href="https://osf.io/tr8qm?view_only=998ad87d86cc4049af4ec6c96a91d9ad" class="uri">https://osf.io/tr8qm?view_only=998ad87d86cc4049af4ec6c96a91d9ad</a>. Navigating to this link will show a web preview of the csv file contents, just like in the GitHub example with <code>dplyr::starwars</code>.</p>
+<p>This method also works for view-only links to anonymized OSF projects as well. For example, this is an anonymized link to a csv file from one of my projects <a href="https://osf.io/tr8qm?view_only=998ad87d86cc4049af4ec6c96a91d9ad" class="uri">https://osf.io/tr8qm?view_only=998ad87d86cc4049af4ec6c96a91d9ad</a>. Navigating to this link will show a web preview of the csv file contents.</p>
 <p>By inserting <code>/download</code> into this url, we can read the csv file contents directly:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -1735,8 +1735,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <p>See also the <a href="https://docs.ropensci.org/osfr/reference/osfr-package.html"><code>{osfr}</code></a> package for a more principled interface to OSF.</p>
 <h2 id="aside-cant-go-wrong-with-a-copy-paste">Aside: Can’t go wrong with a copy-paste!</h2>
-<p>Reading remote files aside, I think it’s severly under-rated how base R has a <code>readClipboard()</code> function and a collection of <code>read.*()</code> functions which can also read directly from a <code>"clipboard"</code> connection.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
-<p>I sometimes do this for html/markdown summary tables that a website might display, or sometimes even for entire excel/googlesheets tables after doing a select-all + copy. For such relatively small chunks of data that you just want to quickly get into R, you can also lean on base R’s clipboard functionalities.</p>
+<p>Reading remote files aside, I think it’s severely underrated how base R has a <code>readClipboard()</code> function and a collection of <code>read.*()</code> functions which can also read directly from a <code>"clipboard"</code> connection.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>I sometimes do this for html/markdown summary tables that a website might display, or sometimes even for entire excel/googlesheets tables after doing a select-all + copy. For such relatively small chunks of data that you just want to quickly get into R, you can lean on base R’s clipboard functionalities.</p>
 <p>For example, given this markdown table:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -1745,28 +1745,28 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th style="text-align: right;">cyl</th>
 <th style="text-align: right;">mpg</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td style="text-align: right;">4</td>
 <td style="text-align: right;">26.66364</td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: right;">6</td>
 <td style="text-align: right;">19.74286</td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">15.10000</td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>You can copy it and run the following code to get that data back as an R data frame:</p>
+<p>You can copy its contents and run the following code to get that data back as an R data frame:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.delim</a></span><span class='op'>(</span><span class='st'>"clipboard"</span><span class='op'>)</span></span>
@@ -1779,7 +1779,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   2   6 19.74286
   3   8 15.10000</code></pre>
 </div>
-<p>If you’re instead copying something flat like a list of numbers or strings, you can also use <code>scan()</code> and specify the appropriate <code>sep</code> to get that data back as a vector:<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>If you’re instead copying something flat like a list of numbers or strings, you can also use <code>scan()</code> and specify the appropriate <code>sep</code> to get that data back as a vector:<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, collapse <span class='op'>=</span> <span class='st'>", "</span><span class='op'>)</span> <span class='op'>|&gt;</span> </span>
@@ -1816,10 +1816,22 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># A parquet file of tokens from a sample of child-directed speech</span></span>
-<span><span class='va'>file</span> <span class='op'>&lt;-</span> <span class='st'>"https://raw.githubusercontent.com/yjunechoe/repetition_events/master/data/tokens_data/childID%3D1/part-7.parquet"</span></span></code></pre>
+<span><span class='va'>file</span> <span class='op'>&lt;-</span> <span class='st'>"https://raw.githubusercontent.com/yjunechoe/repetition_events/master/data/tokens_data/childID%3D1/part-7.parquet"</span></span>
+<span></span>
+<span><span class='co'># For comparison, reading its contents with {arrow}</span></span>
+<span><span class='fu'>arrow</span><span class='fu'>::</span><span class='fu'><a href='https://arrow.apache.org/docs/r/reference/read_parquet.html'>read_parquet</a></span><span class='op'>(</span><span class='va'>file</span><span class='op'>)</span> <span class='op'>|&gt;</span> </span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span></span></code></pre>
 </div>
+<pre><code>  # A tibble: 5 × 3
+    utterance_id gloss   part_of_speech
+           &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;         
+  1            1 www     &quot;&quot;            
+  2            2 bye     &quot;co&quot;          
+  3            3 mhm     &quot;co&quot;          
+  4            4 Mommy&#39;s &quot;n:prop&quot;      
+  5            4 here    &quot;adv&quot;</code></pre>
 </div>
-<p>In duckdb, the <code>httpfs</code> extension allows <code>PARQUET_SCAN</code><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> to read a remote parquet file.</p>
+<p>In duckdb, the <code>httpfs</code> extension we loaded above allows <code>PARQUET_SCAN</code><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> to read a remote parquet file.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>query1</span> <span class='op'>&lt;-</span> <span class='fu'>glue</span><span class='fu'>::</span><span class='fu'><a href='https://glue.tidyverse.org/reference/glue_sql.html'>glue_sql</a></span><span class='op'>(</span><span class='st'>"</span></span>
@@ -1885,7 +1897,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   4            4 Mommy&#39;s         n:prop       1
   5            4    here            adv       1</code></pre>
 </div>
-<p>To do this more programmatically over <em>all</em> (parquet) files under <code>/tokens_data</code> in the repository, we need to transition to using the <a href="https://docs.github.com/en/rest/git/trees">GitHub Trees API</a>. The idea is similar to using the Contents API but now we are requesting a list of all files using the following syntax:</p>
+<p>To do this more programmatically over <em>all</em> parquet files under <code>/tokens_data</code> in the repository, we need to transition to using the <a href="https://docs.github.com/en/rest/git/trees">GitHub Trees API</a>. The idea is similar to using the Contents API but now we are requesting a list of all files using the following syntax:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>gh</span><span class='fu'>::</span><span class='fu'><a href='https://gh.r-lib.org/reference/gh.html'>gh</a></span><span class='op'>(</span><span class='st'>"/repos/{user}/{repo}/git/trees/{branch/tag/commitSHA}?recursive=true"</span><span class='op'>)</span><span class='op'>$</span><span class='va'>tree</span></span></code></pre>
@@ -1897,11 +1909,11 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>files</span> <span class='op'>&lt;-</span> <span class='fu'>gh</span><span class='fu'>::</span><span class='fu'><a href='https://gh.r-lib.org/reference/gh.html'>gh</a></span><span class='op'>(</span><span class='st'>"/repos/yjunechoe/repetition_events/git/trees/master?recursive=true"</span><span class='op'>)</span><span class='op'>$</span><span class='va'>tree</span></span></code></pre>
 </div>
 </div>
-<p>With <code>recursive=true</code>, this returns all files in the repo. We can filter for just the parquet files we want with a little regex:</p>
+<p>With <code>recursive=true</code>, this returns all files in the repo. Then, we can filter for just the parquet files we want with a little regex:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>parquet_files</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span><span class='va'>files</span>, <span class='va'>`[[`</span>, <span class='st'>"path"</span><span class='op'>)</span> <span class='op'>|&gt;</span> </span>
-<span>  <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grep</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>_</span>, pattern <span class='op'>=</span> <span class='st'>".*data/tokens_data/.*parquet$"</span>, value <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grep</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>_</span>, pattern <span class='op'>=</span> <span class='st'>".*/tokens_data/.*parquet$"</span>, value <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
 <span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>parquet_files</span><span class='op'>)</span></span></code></pre>
 </div>
 <pre><code>  [1] 70</code></pre>
@@ -1931,7 +1943,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   [5] &quot;https://raw.githubusercontent.com/yjunechoe/repetition_events/master/data/tokens_data/childID=13/part-1.parquet&quot;
   [6] &quot;https://raw.githubusercontent.com/yjunechoe/repetition_events/master/data/tokens_data/childID=14/part-2.parquet&quot;</code></pre>
 </div>
-<p>Back on duckdb, we can use <code>PARQUET_SCAN</code> to read <em>multiple</em> files by supplying a vector <code>['file1.parquet', 'file2.parquet', ...]</code>.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> This time, we also ask for a quick computation to count the number of distinct <code>childID</code>s:</p>
+<p>Back on duckdb, we can use <code>PARQUET_SCAN</code> to read <em>multiple</em> files by supplying a vector <code>['file1.parquet', 'file2.parquet', ...]</code>.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> This time, we also ask for a quick computation to count the number of distinct <code>childID</code>s:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>query3</span> <span class='op'>&lt;-</span> <span class='fu'>glue</span><span class='fu'>::</span><span class='fu'><a href='https://glue.tidyverse.org/reference/glue_sql.html'>glue_sql</a></span><span class='op'>(</span><span class='st'>"</span></span>
@@ -1955,7 +1967,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   1                      70</code></pre>
 </div>
 <p>This returns <code>70</code> which matches the length of the <code>parquet_files</code> vector listing the files that had been partitioned by childID.</p>
-<p>For further analyses, we can <code>CREATE TABLE</code><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> our data in our in-memory database <code>con</code>:</p>
+<p>For further analyses, we can <code>CREATE TABLE</code><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> our data in our in-memory database <code>con</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>query4</span> <span class='op'>&lt;-</span> <span class='fu'>glue</span><span class='fu'>::</span><span class='fu'><a href='https://glue.tidyverse.org/reference/glue_sql.html'>glue_sql</a></span><span class='op'>(</span><span class='st'>"</span></span>
@@ -2046,21 +2058,22 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <h3 id="other-sources-for-data">Other sources for data</h3>
 <p>In writing this blog post, I’m indebted to all the knowledgeable folks on <a href="https://fosstodon.org/@yjunechoe/113040141392861021">Mastodon</a> who suggested their own recommended tools and workflows for various kinds of remote data. Unfortunately, I’m not familiar enough with most of them enough to do them justice, but I still wanted to record the suggestions I got from there for posterity.</p>
 <p>First, a post about reading remote files would not be complete without a mention of the wonderful <a href="https://googlesheets4.tidyverse.org/"><code>{googlesheets4}</code></a> package for reading from Google Sheets. I debated whether I should include a larger discussion of <code>{googlesheets4}</code>, and despite using it quite often myself I ultimately decided to omit it for the sake of space and because the package website is already very comprehensive. I would suggest starting from the <a href="https://googlesheets4.tidyverse.org/articles/googlesheets4.html"><em>Get Started</em></a> vignette if you are new and interested.</p>
-<p>Second, along the lines of <code>{osfr}</code>, there are other similar <a href="https://ropensci.org/">rOpensci</a> packages for retrieving data from the kinds of data sources that may be of interest to academics, such as <a href="https://docs.ropensci.org/deposits/"><code>{deposits}</code></a> for <a href="https://zenodo.org/">zenodo</a> and <a href="https://figshare.com/">figshare</a>, and <a href="https://docs.ropensci.org/piggyback/"><code>{piggyback}</code></a> for GitHub release assets (<a href="https://fosstodon.org/@maelle@mastodon.social/113044065044359603">Maëlle Salmon’s comment</a> pointed me to the first two; I responded with <a href="https://fosstodon.org/@yjunechoe/113045714727018087">some of my experiences</a>). I was also reminded that <a href="https://pins.rstudio.com/"><code>{pins}</code></a> exists - I’m not familiar with it myself so I thought I wouldn’t write anything for it here BUT <a href="https://fosstodon.org/@ivelasq3/113079721335721253">Isabella Velásquez</a> came in clutch with a whole talk on <a href="https://www.youtube.com/watch?v=u2OK8IWJWhk">dynamically loading up-to-date data with {pins}</a> which is a great usecase demo of the unique strength of <code>{pins}</code>.</p>
+<p>Second, along the lines of <code>{osfr}</code>, there are other similar <a href="https://ropensci.org/">rOpensci</a> packages for retrieving data from the kinds of data sources that may be of interest to academics, such as <a href="https://docs.ropensci.org/deposits/"><code>{deposits}</code></a> for <a href="https://zenodo.org/">zenodo</a> and <a href="https://figshare.com/">figshare</a>, and <a href="https://docs.ropensci.org/piggyback/"><code>{piggyback}</code></a> for GitHub release assets (<a href="https://fosstodon.org/@maelle@mastodon.social/113044065044359603">Maëlle Salmon’s comment</a> pointed me to the first two; I responded with <a href="https://fosstodon.org/@yjunechoe/113045714727018087">some of my experiences</a>). I was also reminded that <a href="https://pins.rstudio.com/"><code>{pins}</code></a> exists - I’m not familiar with it myself so I thought I wouldn’t write anything for it here BUT <a href="https://fosstodon.org/@ivelasq3/113079721335721253">Isabella Velásquez</a> came in clutch sharing a recent talk on <a href="https://www.youtube.com/watch?v=u2OK8IWJWhk">dynamically loading up-to-date data with {pins}</a> which is a great demo of the unique strengths of <code>{pins}</code>.</p>
 <p>Lastly, I inadvertently(?) started some discussion around remotely accessing spatial files. I don’t work with spatial data <em>at all</em> but I can totally imagine how the hassle of the traditional click-download-find-load workflow would be even more pronounced for spatial data which are presumably much larger in size and more difficult to preview. On this note, I’ll just link to <a href="https://fosstodon.org/@cboettig@ecoevo.social">Carl Boettiger’s comment</a> about the fact that <a href="https://gdal.org/en/latest/user/virtual_file_systems.html">GDAL has a virtual file system</a> that you can interface with from R packages wrapping this API (ex: <a href="https://usdaforestservice.github.io/gdalraster/">{gdalraster}</a>), and to <a href="https://fosstodon.org/@mdsumner@rstats.me/113041566793211094">Michael Sumner’s comment/gist</a> + <a href="https://fosstodon.org/@ctoney/113043719551668933">Chris Toney’s comment</a> on the fact that you can even use this feature to stream non-spatial data!</p>
 <h3 id="miscellaneous-tips-and-tricks">Miscellaneous tips and tricks</h3>
 <p>I also have some random tricks that are more situational. Unfortunately, I can only recall like 20% of them at any given moment, so I’ll be updating this space as more come back to me:</p>
 <ul>
-<li><p>When reading remote <code>.rda</code> or <code>.RData</code> files with <code>load()</code>, you need to wrap the link in <code>url()</code> first (ref: <a href="https://stackoverflow.com/questions/26108575/loading-rdata-files-from-url">stackoverflow</a>).</p></li>
+<li><p>When reading remote <code>.rda</code> or <code>.RData</code> files with <code>load()</code>, you may need to wrap the link in <code>url()</code> first (ref: <a href="https://stackoverflow.com/questions/26108575/loading-rdata-files-from-url">stackoverflow</a>).</p></li>
 <li><p><a href="https://vroom.r-lib.org/"><code>{vroom}</code></a> can <a href="https://vroom.r-lib.org/articles/vroom.html#reading-remote-files">remotely read gzipped files</a>, without having to <code>download.file()</code> and <code>unzip()</code> first.</p></li>
-<li><p><a href="https://jeroen.cran.dev/curl/"><code>{curl}</code></a>, of course, will always have the most comprehensive set of low-level tools you need to read any arbitrary data remotely. For example, using <code>curl::curl_fetch_memory()</code> to read the <code>dplyr::storms</code> data again from the GitHub raw contents link:</p>
+<li><p><a href="https://jeroen.cran.dev/curl/"><code>{curl}</code></a>, of course, will always have the most comprehensive set of low-level tools you need to read any arbitrary data remotely. For example, using <code>curl::curl_fetch_memory()</code> to read the <code>dplyr::storms</code> data again from the GitHub raw contents link:</p></li>
+</ul>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>fetched</span> <span class='op'>&lt;-</span> <span class='fu'>curl</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/curl/man/curl_fetch.html'>curl_fetch_memory</a></span><span class='op'>(</span></span>
-  <span><span class='st'>"https://raw.githubusercontent.com/tidyverse/dplyr/main/data-raw/starwars.csv"</span></span>
-  <span>  <span class='op'>)</span></span>
-  <span>  <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span>text <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rawConversion.html'>rawToChar</a></span><span class='op'>(</span><span class='va'>fetched</span><span class='op'>$</span><span class='va'>content</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span> </span>
-  <span><span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://pillar.r-lib.org/reference/glimpse.html'>glimpse</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+<span>  <span class='st'>"https://raw.githubusercontent.com/tidyverse/dplyr/main/data-raw/starwars.csv"</span></span>
+<span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span>text <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rawConversion.html'>rawToChar</a></span><span class='op'>(</span><span class='va'>fetched</span><span class='op'>$</span><span class='va'>content</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span> </span>
+<span>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://pillar.r-lib.org/reference/glimpse.html'>glimpse</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
 </div>
 <pre><code>  Rows: 87
   Columns: 14
@@ -2079,7 +2092,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   $ vehicles   &lt;chr&gt; &quot;Snowspeeder, Imperial Speeder Bike&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;Imperial…
   $ starships  &lt;chr&gt; &quot;X-wing, Imperial shuttle&quot;, &quot;&quot;, &quot;&quot;, &quot;TIE Advanced x1&quot;, &quot;&quot;, …</code></pre>
 </div>
-<p>And even if you’re going the route of downloading the file first, <code>curl::multi_download()</code> can offer big performance improvements over <code>download.file()</code>.[^See an example implemented for <a href="https://github.com/ropensci/openalexR/pull/63"><code>{openalexR}</code></a>, an API package.] Many <code>{curl}</code> functions also take a <code>retry</code> parameter in some form which is cool too.</p></li>
+<ul>
+<li><p>Even if you’re going the route of downloading the file first, <code>curl::multi_download()</code> can offer big performance improvements over <code>download.file()</code>.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> Many <code>{curl}</code> functions can also handle <a href="https://fosstodon.org/@eliocamp@mastodon.social/111885424355264237">retries and stop/resumes</a> which is cool too.</p></li>
 <li><p><a href="https://httr2.r-lib.org/"><code>{httr2}</code></a> can capture a <em>continuous data stream</em> with <code>httr2::req_perform_stream()</code> up to a set time or size.</p></li>
 </ul>
 <h2 id="sessioninfo">sessionInfo()</h2>
@@ -2131,16 +2145,18 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>Note that the API will actually generate a <em>new</em> token every time you send a request (and again, these tokens will expire with time).<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>The special value <code>"clipboard"</code> works for most base-R read functions that take a <code>file</code> or <code>con</code> argument.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>Thanks <a href="https://fosstodon.org/@coolbutuseless/113042231377588589"><span class="citation" data-cites="coolbutuseless">@coolbutuseless</span></a> for pointing me to <code>textConnection()</code>!<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>Or <code>READ_PARQUET</code> - <a href="https://duckdb.org/docs/data/parquet/overview.html#read_parquet-function">same thing</a>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>We can also get this formatting with a combination of <code>shQuote()</code> and <code>toString()</code>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>Whereas <code>CREATE TABLE</code> results in a physical copy of the data in memory, <code>CREATE VIEW</code> will dynamically fetch the data from the source every time you query the table. If the data fits into memory (as in this case), I prefer <code>CREATE</code> as queries will be much faster (though you pay up-front for the time copying the data). If the data is larger than memory, <code>CREATE VIEW</code> will be your only option.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Thanks <a href="https://fosstodon.org/@tanho"><span class="citation" data-cites="tanho">@tanho</span></a> for pointing me to this at the <a href="https://fosstodon.org/@DSLC">R4DS/DSLC</a> slack.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Note that the API will actually generate a <em>new</em> token every time you send a request (and again, these tokens will expire with time).<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>The special value <code>"clipboard"</code> works for most base-R read functions that take a <code>file</code> or <code>con</code> argument.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Thanks <a href="https://fosstodon.org/@coolbutuseless/113042231377588589"><span class="citation" data-cites="coolbutuseless">@coolbutuseless</span></a> for pointing me to <code>textConnection()</code>!<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Or <code>READ_PARQUET</code> - <a href="https://duckdb.org/docs/data/parquet/overview.html#read_parquet-function">same thing</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>We can also get this formatting with a combination of <code>shQuote()</code> and <code>toString()</code>.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>Whereas <code>CREATE TABLE</code> results in a physical copy of the data in memory, <code>CREATE VIEW</code> will dynamically fetch the data from the source every time you query the table. If the data fits into memory (as in this case), I prefer <code>CREATE</code> as queries will be much faster (though you pay up-front for the time copying the data). If the data is larger than memory, <code>CREATE VIEW</code> will be your only option.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>See an example implemented for <a href="https://github.com/ropensci/openalexR/pull/63"><code>{openalexR}</code></a>, an API package.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 <!--radix_placeholder_article_footer-->
