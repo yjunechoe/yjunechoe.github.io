@@ -3758,16 +3758,17 @@ Solving the harder version of the problem
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>starwars</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>name</span>, <span class='va'>mass</span>, <span class='va'>height</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='va'>mass</span>, <span class='va'>height</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span> <span class='fu'><a href='https://rdrr.io/r/base/vector.html'>as.vector</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/outer.html'>outer</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>2</span>, <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='va'>name</span> <span class='op'>==</span> <span class='st'>"Luke Skywalker"</span><span class='op'>)</span>, <span class='va'>`+`</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>)</span></span></code></pre>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span> <span class='fu'><a href='https://rdrr.io/r/base/vector.html'>as.vector</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/outer.html'>outer</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span><span class='st'>"(Luke|Anakin) Skywalker"</span>, <span class='va'>name</span><span class='op'>)</span><span class='op'>)</span>, <span class='va'>`+`</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>  # A tibble: 5 × 3
-    name            mass height
-    &lt;chr&gt;          &lt;dbl&gt;  &lt;int&gt;
-  1 Palpatine       75      170
-  2 Wedge Antilles  77      170
-  3 Luke Skywalker  77      172
-  4 Obi-Wan Kenobi  77      182
-  5 Boba Fett       78.2    183</code></pre>
+<pre><code>  # A tibble: 6 × 3
+    name               mass height
+    &lt;chr&gt;             &lt;dbl&gt;  &lt;int&gt;
+  1 Wedge Antilles       77    170
+  2 Luke Skywalker       77    172
+  3 Obi-Wan Kenobi       77    182
+  4 Biggs Darklighter    84    183
+  5 Anakin Skywalker     84    188
+  6 Mace Windu           84    188</code></pre>
 </div>
 <p>I raised this example on an unrelated thread on the <a href="https://fosstodon.org/@DSLC">R4DS/DSLC slack</a>, where Anthony Durrant pointed me to <code>kronecker()</code> as a version of <code>outer()</code> that unlist before returning the output.</p>
 <p>So in examples involving <code>outer()</code> to generate row indices in <code>slice()</code>, we can also use <code>kronecker()</code> instead to save a call to a flattening function like <code>as.vector()</code>:</p>
@@ -3776,16 +3777,75 @@ Solving the harder version of the problem
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>starwars</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>name</span>, <span class='va'>mass</span>, <span class='va'>height</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='va'>mass</span>, <span class='va'>height</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> </span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span> <span class='fu'><a href='https://rdrr.io/r/base/kronecker.html'>kronecker</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>2</span>, <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='va'>name</span> <span class='op'>==</span> <span class='st'>"Luke Skywalker"</span><span class='op'>)</span>, <span class='va'>`+`</span><span class='op'>)</span> <span class='op'>)</span></span></code></pre>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span> <span class='fu'><a href='https://rdrr.io/r/base/kronecker.html'>kronecker</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span><span class='st'>"(Luke|Anakin) Skywalker"</span>, <span class='va'>name</span><span class='op'>)</span><span class='op'>)</span>, <span class='va'>`+`</span><span class='op'>)</span> <span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>  # A tibble: 5 × 3
-    name            mass height
-    &lt;chr&gt;          &lt;dbl&gt;  &lt;int&gt;
-  1 Palpatine       75      170
-  2 Wedge Antilles  77      170
-  3 Luke Skywalker  77      172
-  4 Obi-Wan Kenobi  77      182
-  5 Boba Fett       78.2    183</code></pre>
+<pre><code>  # A tibble: 6 × 3
+    name               mass height
+    &lt;chr&gt;             &lt;dbl&gt;  &lt;int&gt;
+  1 Wedge Antilles       77    170
+  2 Biggs Darklighter    84    183
+  3 Luke Skywalker       77    172
+  4 Anakin Skywalker     84    188
+  5 Obi-Wan Kenobi       77    182
+  6 Mace Windu           84    188</code></pre>
+</div>
+<p>I returning to this problem with <code>kronecker()</code> also inspired me to write a function around this. Since <code>slice()</code>-ing with <code>which(...)</code> is just <code>filter(...)</code>, I call it <code>filter_around()</code> and give it a <code>filter()</code> with its defaults.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>filter_around</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span>, <span class='va'>by</span>, <span class='va'>n</span> <span class='op'>=</span> <span class='fl'>0</span>, <span class='va'>name</span> <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>  <span class='va'>data</span> <span class='op'>&lt;-</span> <span class='va'>.data</span> <span class='op'>|&gt;</span></span>
+<span>    <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/pick.html'>pick</a></span><span class='op'>(</span><span class='op'>{</span><span class='op'>{</span> <span class='va'>by</span> <span class='op'>}</span><span class='op'>}</span><span class='op'>)</span><span class='op'>)</span></span>
+<span>  <span class='va'>dots</span> <span class='op'>&lt;-</span> <span class='fu'>rlang</span><span class='fu'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/enquo.html'>enquos</a></span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></span>
+<span>  <span class='va'>lgls</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>dots</span>, <span class='fu'>rlang</span><span class='fu'>::</span><span class='va'><a href='https://rlang.r-lib.org/reference/eval_tidy.html'>eval_tidy</a></span>, data <span class='op'>=</span> <span class='va'>data</span><span class='op'>)</span></span>
+<span>  <span class='va'>inds</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/logical.html'>as.logical</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/do.call.html'>do.call</a></span><span class='op'>(</span><span class='va'>pmin</span>, <span class='va'>lgls</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span>  <span class='va'>inds_around</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/kronecker.html'>kronecker</a></span><span class='op'>(</span><span class='va'>inds</span>, <span class='op'>-</span><span class='va'>n</span><span class='op'>:</span><span class='va'>n</span>, <span class='va'>`+`</span><span class='op'>)</span></span>
+<span>  <span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NULL.html'>is.null</a></span><span class='op'>(</span><span class='va'>name</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span>    <span class='va'>data</span><span class='op'>[[</span><span class='va'>name</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/replace.html'>replace</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>FALSE</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span><span class='op'>)</span>, <span class='va'>inds</span>, <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span>  <span class='op'>}</span></span>
+<span>  <span class='va'>data</span> <span class='op'>|&gt;</span></span>
+<span>    <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='va'>.env</span><span class='op'>$</span><span class='va'>inds_around</span><span class='op'>)</span></span>
+<span><span class='op'>}</span></span></code></pre>
+</div>
+</div>
+<p>Passing conditions to the dots makes it behave like <code>filter()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>dplyr</span><span class='fu'>::</span><span class='va'><a href='https://dplyr.tidyverse.org/reference/starwars.html'>starwars</a></span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'>filter_around</span><span class='op'>(</span></span>
+<span>    <span class='co'># Two conditions below evaluate to `grepl("(Luke|Anakin) Skywalker", name)`</span></span>
+<span>    <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span><span class='st'>"Skywalker"</span>, <span class='va'>name</span><span class='op'>)</span>,</span>
+<span>    <span class='va'>name</span> <span class='op'>!=</span> <span class='st'>"Shmi Skywalker"</span></span>
+<span>  <span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 2 × 3
+    name             height  mass
+    &lt;chr&gt;             &lt;int&gt; &lt;dbl&gt;
+  1 Luke Skywalker      172    77
+  2 Anakin Skywalker    188    84</code></pre>
+</div>
+<p>And other arguments can be used for the “around” behavior:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'># Filter the target rows *and* a pair of neighbors for each row by height + mass</span></span>
+<span><span class='fu'>dplyr</span><span class='fu'>::</span><span class='va'><a href='https://dplyr.tidyverse.org/reference/starwars.html'>starwars</a></span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'>filter_around</span><span class='op'>(</span></span>
+<span>    <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span><span class='st'>"Skywalker"</span>, <span class='va'>name</span><span class='op'>)</span>,</span>
+<span>    <span class='va'>name</span> <span class='op'>!=</span> <span class='st'>"Shmi Skywalker"</span>,</span>
+<span>    <span class='co'># Extra args</span></span>
+<span>    by <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>height</span>, <span class='va'>mass</span><span class='op'>)</span>,</span>
+<span>    n <span class='op'>=</span> <span class='fl'>1</span>,</span>
+<span>    name <span class='op'>=</span> <span class='st'>"target"</span></span>
+<span>  <span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>  # A tibble: 6 × 4
+    name             height  mass target
+    &lt;chr&gt;             &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; 
+  1 Eeth Koth           171    NA FALSE 
+  2 Luke Skywalker      172    77 TRUE  
+  3 Greedo              173    74 FALSE 
+  4 Plo Koon            188    80 FALSE 
+  5 Anakin Skywalker    188    84 TRUE  
+  6 Mace Windu          188    84 FALSE</code></pre>
 </div>
 <h3 id="windowed-minmaxmedian-etc.">Windowed min/max/median (etc.)</h3>
 <p>Let’s say we have this small time series data, and we want to calculate a <strong>lagged 3-window moving minimum</strong> for the <code>val</code> column:</p>
@@ -4663,7 +4723,7 @@ Solving the harder version of the problem
 <h2 id="conclusion">Conclusion</h2>
 <p>When I started drafting this blog post, I thought I’d come with a principled taxonomy of row-relational operations. Ha. This was a lot trickier to think through than I thought.</p>
 <p>But I hope that this gallery of esoteric use-cases for <code>slice()</code> inspires you to use it more, and to think about “tidy” solutions to seemingly “untidy” problems.</p>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>

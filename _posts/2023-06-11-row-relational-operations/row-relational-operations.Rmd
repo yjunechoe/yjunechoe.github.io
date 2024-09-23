@@ -651,7 +651,7 @@ In row-relational terms, "filtering neighboring values" just means "filtering ro
 starwars %>% 
   select(name, mass, height) %>% 
   arrange(mass, height) %>% 
-  slice( as.vector(outer(-2:2, which(name == "Luke Skywalker"), `+`)) )
+  slice( as.vector(outer(-1:1, which(grepl("(Luke|Anakin) Skywalker", name)), `+`)) )
 ```
 
 I raised this example on an unrelated thread on the [R4DS/DSLC slack](https://fosstodon.org/@DSLC), where Anthony Durrant pointed me to `kronecker()` as a version of `outer()` that unlist before returning the output.
@@ -662,7 +662,51 @@ So in examples involving `outer()` to generate row indices in `slice()`, we can 
 starwars %>% 
   select(name, mass, height) %>% 
   arrange(mass, height) %>% 
-  slice( kronecker(-2:2, which(name == "Luke Skywalker"), `+`) )
+  slice( kronecker(-1:1, which(grepl("(Luke|Anakin) Skywalker", name)), `+`) )
+```
+
+I returning to this problem with `kronecker()` also inspired me to write a function around this. Since `slice()`-ing with `which(...)` is just `filter(...)`, I call it `filter_around()` and give it a `filter()` with its defaults.
+
+```{r}
+filter_around <- function(.data, ..., by, n = 0, name = NULL) {
+  data <- .data |>
+    dplyr::arrange(dplyr::pick({{ by }}))
+  dots <- rlang::enquos(...)
+  lgls <- lapply(dots, rlang::eval_tidy, data = data)
+  inds <- which(as.logical(do.call(pmin, lgls)))
+  inds_around <- kronecker(inds, -n:n, `+`)
+  if (!is.null(name)) {
+    data[[name]] <- replace(rep(FALSE, nrow(data)), inds, TRUE)
+  }
+  data |>
+    dplyr::slice(.env$inds_around)
+}
+```
+
+Passing conditions to the dots makes it behave like `filter()`:
+
+```{r}
+dplyr::starwars[, 1:3] |>
+  filter_around(
+    # Two conditions below evaluate to `grepl("(Luke|Anakin) Skywalker", name)`
+    grepl("Skywalker", name),
+    name != "Shmi Skywalker"
+  )
+```
+
+And other arguments can be used for the "around" behavior:
+
+```{r}
+# Filter the target rows *and* a pair of neighbors for each row by height + mass
+dplyr::starwars[, 1:3] |>
+  filter_around(
+    grepl("Skywalker", name),
+    name != "Shmi Skywalker",
+    # Extra args
+    by = c(height, mass),
+    n = 1,
+    name = "target"
+  )
 ```
 
 

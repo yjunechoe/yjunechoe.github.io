@@ -854,7 +854,7 @@ gapminder_df&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This time, let’s see the desired output (plot) first and build our
 way up. The goal is to plot the GDP growth of Germany over the years,
 &lt;em&gt;and&lt;/em&gt; its yearly &lt;strong&gt;GDP neighbors&lt;/strong&gt; side-by-side:&lt;/p&gt;
-&lt;p&gt;&lt;img src="file34b04a67397f_files/figure-html/final-gapminder-plot-1.png" width="672" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="file8f246eef3f3_files/figure-html/final-gapminder-plot-1.png" width="672" /&gt;&lt;/p&gt;
 &lt;p&gt;First, let’s think about what a “GDP neighbor” means in
 row-relational terms. If you arranged the data by GDP, the GDP neighbors
 would be the rows that come immediately before and after the rows for
@@ -991,7 +991,7 @@ voila!&lt;/p&gt;
   ) +
   theme_classic() +
   labs(x = &amp;quot;Year&amp;quot;, y = &amp;quot;GDP per capita&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src="file34b04a67397f_files/figure-html/final-gapminder-plot-1.png" width="672" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="file8f246eef3f3_files/figure-html/final-gapminder-plot-1.png" width="672" /&gt;&lt;/p&gt;
 &lt;details&gt;
 &lt;summary&gt;
 Solving the harder version of the problem
@@ -1086,15 +1086,16 @@ express this using &lt;code&gt;slice()&lt;/code&gt; and &lt;code&gt;outer()&lt;/
 &lt;pre class="r"&gt;&lt;code&gt;starwars %&amp;gt;% 
   select(name, mass, height) %&amp;gt;% 
   arrange(mass, height) %&amp;gt;% 
-  slice( as.vector(outer(-2:2, which(name == &amp;quot;Luke Skywalker&amp;quot;), `+`)) )&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;  # A tibble: 5 × 3
-    name            mass height
-    &amp;lt;chr&amp;gt;          &amp;lt;dbl&amp;gt;  &amp;lt;int&amp;gt;
-  1 Palpatine       75      170
-  2 Wedge Antilles  77      170
-  3 Luke Skywalker  77      172
-  4 Obi-Wan Kenobi  77      182
-  5 Boba Fett       78.2    183&lt;/code&gt;&lt;/pre&gt;
+  slice( as.vector(outer(-1:1, which(grepl(&amp;quot;(Luke|Anakin) Skywalker&amp;quot;, name)), `+`)) )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 6 × 3
+    name               mass height
+    &amp;lt;chr&amp;gt;             &amp;lt;dbl&amp;gt;  &amp;lt;int&amp;gt;
+  1 Wedge Antilles       77    170
+  2 Luke Skywalker       77    172
+  3 Obi-Wan Kenobi       77    182
+  4 Biggs Darklighter    84    183
+  5 Anakin Skywalker     84    188
+  6 Mace Windu           84    188&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;I raised this example on an unrelated thread on the &lt;a
 href="https://fosstodon.org/@DSLC"&gt;R4DS/DSLC slack&lt;/a&gt;, where Anthony
 Durrant pointed me to &lt;code&gt;kronecker()&lt;/code&gt; as a version of
@@ -1106,15 +1107,67 @@ instead to save a call to a flattening function like
 &lt;pre class="r"&gt;&lt;code&gt;starwars %&amp;gt;% 
   select(name, mass, height) %&amp;gt;% 
   arrange(mass, height) %&amp;gt;% 
-  slice( kronecker(-2:2, which(name == &amp;quot;Luke Skywalker&amp;quot;), `+`) )&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;  # A tibble: 5 × 3
-    name            mass height
-    &amp;lt;chr&amp;gt;          &amp;lt;dbl&amp;gt;  &amp;lt;int&amp;gt;
-  1 Palpatine       75      170
-  2 Wedge Antilles  77      170
-  3 Luke Skywalker  77      172
-  4 Obi-Wan Kenobi  77      182
-  5 Boba Fett       78.2    183&lt;/code&gt;&lt;/pre&gt;
+  slice( kronecker(-1:1, which(grepl(&amp;quot;(Luke|Anakin) Skywalker&amp;quot;, name)), `+`) )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 6 × 3
+    name               mass height
+    &amp;lt;chr&amp;gt;             &amp;lt;dbl&amp;gt;  &amp;lt;int&amp;gt;
+  1 Wedge Antilles       77    170
+  2 Biggs Darklighter    84    183
+  3 Luke Skywalker       77    172
+  4 Anakin Skywalker     84    188
+  5 Obi-Wan Kenobi       77    182
+  6 Mace Windu           84    188&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I returning to this problem with &lt;code&gt;kronecker()&lt;/code&gt; also
+inspired me to write a function around this. Since
+&lt;code&gt;slice()&lt;/code&gt;-ing with &lt;code&gt;which(...)&lt;/code&gt; is just
+&lt;code&gt;filter(...)&lt;/code&gt;, I call it &lt;code&gt;filter_around()&lt;/code&gt; and
+give it a &lt;code&gt;filter()&lt;/code&gt; with its defaults.&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;filter_around &amp;lt;- function(.data, ..., by, n = 0, name = NULL) {
+  data &amp;lt;- .data |&amp;gt;
+    dplyr::arrange(dplyr::pick({{ by }}))
+  dots &amp;lt;- rlang::enquos(...)
+  lgls &amp;lt;- lapply(dots, rlang::eval_tidy, data = data)
+  inds &amp;lt;- which(as.logical(do.call(pmin, lgls)))
+  inds_around &amp;lt;- kronecker(inds, -n:n, `+`)
+  if (!is.null(name)) {
+    data[[name]] &amp;lt;- replace(rep(FALSE, nrow(data)), inds, TRUE)
+  }
+  data |&amp;gt;
+    dplyr::slice(.env$inds_around)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Passing conditions to the dots makes it behave like
+&lt;code&gt;filter()&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;dplyr::starwars[, 1:3] |&amp;gt;
+  filter_around(
+    # Two conditions below evaluate to `grepl(&amp;quot;(Luke|Anakin) Skywalker&amp;quot;, name)`
+    grepl(&amp;quot;Skywalker&amp;quot;, name),
+    name != &amp;quot;Shmi Skywalker&amp;quot;
+  )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 2 × 3
+    name             height  mass
+    &amp;lt;chr&amp;gt;             &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;
+  1 Luke Skywalker      172    77
+  2 Anakin Skywalker    188    84&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And other arguments can be used for the “around” behavior:&lt;/p&gt;
+&lt;pre class="r"&gt;&lt;code&gt;# Filter the target rows *and* a pair of neighbors for each row by height + mass
+dplyr::starwars[, 1:3] |&amp;gt;
+  filter_around(
+    grepl(&amp;quot;Skywalker&amp;quot;, name),
+    name != &amp;quot;Shmi Skywalker&amp;quot;,
+    # Extra args
+    by = c(height, mass),
+    n = 1,
+    name = &amp;quot;target&amp;quot;
+  )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  # A tibble: 6 × 4
+    name             height  mass target
+    &amp;lt;chr&amp;gt;             &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;lgl&amp;gt; 
+  1 Eeth Koth           171    NA FALSE 
+  2 Luke Skywalker      172    77 TRUE  
+  3 Greedo              173    74 FALSE 
+  4 Plo Koon            188    80 FALSE 
+  5 Anakin Skywalker    188    84 TRUE  
+  6 Mace Windu          188    84 FALSE&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id="windowed-minmaxmedian-etc."&gt;Windowed min/max/median (etc.)&lt;/h3&gt;
 &lt;p&gt;Let’s say we have this small time series data, and we want to
 calculate a &lt;strong&gt;lagged 3-window moving minimum&lt;/strong&gt; for the
