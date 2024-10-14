@@ -113,10 +113,16 @@ Links: [Github](https://github.com/yjunechoe/Snowglobe), [OSF](https://osf.io/u2
 ## Other contributions
 
 I am listed as a contributor in:
+
 - [JuliaConnectoR](https://github.com/stefan-m-lenz/JuliaConnectoR)
+
 - [reactablefmtr](https://github.com/kcuilla/reactablefmtr/)
+
 - [ddplot](https://github.com/feddelegrand7/ddplot/)
 
+
 I have also contributed via PRs to:
+
 - [ggplot2](https://github.com/tidyverse/ggplot2/)
+
 - [fda](https://github.com/JamesRamsay5/fda)
