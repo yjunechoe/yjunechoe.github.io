@@ -46,9 +46,9 @@ May Pik Yu Chan, **June Choe**, Aini Li, Yiran Chen, Xin Gao and Nicole Holliday
 
 ### Conference Presentations
 
-**June Choe**, and Anna Papafragou. *Distributional signatures of superordinate nouns*. Poster presented at the 48th Boston University Conference on Language Development (BUCLD), 2-5 November, 2023. Boston University, Boston, MA. [Abstract](static/abstract/BUCLD2023a_Abstract.pdf) [Poster](static/poster/BUCLD2023_superordinates_corpus.png)
+**June Choe**, and Anna Papafragou. *Distributional signatures of superordinate nouns*. Poster presented at the 48th Boston University Conference on Language Development (BUCLD), 2-5 November, 2023. Boston University, Boston, MA. **Paula Menyuk Travel Award**. [Abstract](static/abstract/BUCLD2023a_Abstract.pdf) [Poster](static/poster/BUCLD2023_superordinates_corpus.png)
 
-**June Choe**, and Anna Papafragou. *Pragmatic underpinnings of the basic-level bias*. Poster presented at the 48th Boston University Conference on Language Development (BUCLD), 2-5 November, 2023. Boston University, Boston, MA. [Abstract](static/abstract/BUCLD2023b_Abstract.pdf) [Poster](static/poster/BUCLD2023_superordinates_judgments.png)
+**June Choe**, and Anna Papafragou. *Pragmatic underpinnings of the basic-level bias*. Poster presented at the 48th Boston University Conference on Language Development (BUCLD), 2-5 November, 2023. Boston University, Boston, MA. **Paula Menyuk Travel Award**. [Abstract](static/abstract/BUCLD2023b_Abstract.pdf) [Poster](static/poster/BUCLD2023_superordinates_judgments.png)
 
 **June Choe** and Anna Papafragou. *Discourse effects on the acquisition of subordinate nouns*. Poster presented at the 9th Mid-Atlantic Colloquium of Studies in Meaning (MACSIM), 15 April 2023. University of Pennsylvania, PA.
 
@@ -83,9 +83,9 @@ June Choe. [Sub-layer modularity in the Grammar of Graphics](https://ww2.aievolu
 
 June Choe. [Fast cluster-based permutation test using mixed-effects models.](https://github.com/yjunechoe/jlmerclusterperm/) Talk at the Integrated Language Science and Technology (ILST) seminar, 21 April 2023. University of Pennsylvania, PA.
 
-June Choe. [Cracking open ggplot internals with {ggtrace}](https://www.youtube.com/watch?v=dUBnitXf5mk&list=PL9HYL-VRX0oTOwqzVtL_q5T8MNrzn0mdH&index=38). Talk at the 2022 RStudio Conference, 25-28 July 2022. Washington D.C. [https://github.com/yjunechoe/ggtrace-rstudioconf2022](https://github.com/yjunechoe/ggtrace-rstudioconf2022)
+June Choe. [Cracking open ggplot internals with {ggtrace}](https://www.youtube.com/watch?v=dUBnitXf5mk&list=PL9HYL-VRX0oTOwqzVtL_q5T8MNrzn0mdH&index=38). Talk at the 2022 RStudio Conference, 25-28 July 2022. Washington D.C. [https://github.com/yjunechoe/ggtrace-rstudioconf2022](https://github.com/yjunechoe/ggtrace-rstudioconf2022).
 
-June Choe. [Stepping into {ggplot2} internals with {ggtrace}](https://www.youtube.com/watch?v=2JX8zu4QxMg&t=2959s). Talk at the 2022 useR! Conference, 20-23 June 2022. Vanderbilt University, TN. [https://github.com/yjunechoe/ggtrace-user2022](https://github.com/yjunechoe/ggtrace-user2022)
+June Choe. [Stepping into {ggplot2} internals with {ggtrace}](https://www.youtube.com/watch?v=2JX8zu4QxMg&t=2959s). Talk at the 2022 useR! Conference, 20-23 June 2022. Vanderbilt University, TN. **Diversity scholarship award**. [https://github.com/yjunechoe/ggtrace-user2022](https://github.com/yjunechoe/ggtrace-user2022)
 
 ### Software
 

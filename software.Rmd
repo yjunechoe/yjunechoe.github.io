@@ -24,7 +24,7 @@ Main: [Github profile](https://github.com/yjunechoe), [R-universe profile](https
   <img class='hex' src='https://yjunechoe.github.io/ggtrace/logo.png'/>
 </div>
 
-Role: Author
+Role: Maintainer, Author
 
 Language: R
 
@@ -39,7 +39,7 @@ Links: [Github](https://github.com/yjunechoe/ggtrace), [website](yjunechoe.githu
   <img class='hex' src='https://yjunechoe.github.io/jlmerclusterperm/logo.png'/>
 </div>
 
-Role: Author
+Role: Maintainer, Author
 
 Language: R, Julia
 
@@ -77,9 +77,20 @@ Links: [Github](https://github.com/ropensci/openalexR), [website](https://docs.r
 > A set of tools to extract bibliographic content from the OpenAlex database using API https://docs.openalex.org.
 
 
+## jlme
+
+Role: Author, Maintainer
+
+Language: R, Julia
+
+Links: [Github](https://github.com/yjunechoe/jlme), [website](https://yjunechoe.github.io/jlme/)
+
+> Julia (mixed-effects) regression modelling from R. Powered by the {JuliaConnectoR} R package and Julia libraries GLM, StatsModels, and MixedModels.
+
+
 ## ggcolormeter
 
-Role: Author
+Role: Maintainer, Author
 
 Language: R
 
@@ -88,23 +99,24 @@ Links: [Github](https://github.com/yjunechoe/ggcolormeter)
 > {ggcolormeter} adds guide_colormeter(), a {ggplot2} color/fill legend guide extension in the style of a dashboard meter.
 
 
-## ddplot
-
-Role: Contributor
-
-Language: R, JavaScript
-
-Links: [Github](https://github.com/feddelegrand7/ddplot/), [website](https://feddelegrand7.github.io/ddplot)
-
-> Create 'D3' based 'SVG' ('Scalable Vector Graphics') graphics using a simple 'R' API. The package aims to simplify the creation of many 'SVG' plot types using a straightforward 'R' API. The package relies on the 'r2d3' 'R' package and the 'D3' 'JavaScript' library. See <https://rstudio.github.io/r2d3/> and <https://d3js.org/> respectively.
-
-
 ## Snowglobe (retired)
 
-Role: Author
+Role: Maintainer, Author
 
 Language: R, SQL
 
 Links: [Github](https://github.com/yjunechoe/Snowglobe), [OSF](https://osf.io/u25rn/), [poster](https://yjunechoe.github.io/static/poster/Snowballer_June_Choe.pdf)
 
 > An iterative search tool for systematic reviews and meta-analyses, implemented as a Shiny app. Retired due to the [discontinuation of the Microsoft Academic Graph](https://www.microsoft.com/en-us/research/project/academic/articles/microsoft-academic-to-expand-horizons-with-community-driven-approach/) service in 2021. I now contribute to {openalexR}.
+
+
+## Other contributions
+
+I am listed as a contributor in:
+- [JuliaConnectoR](https://github.com/stefan-m-lenz/JuliaConnectoR)
+- [reactablefmtr](https://github.com/kcuilla/reactablefmtr/)
+- [ddplot](https://github.com/feddelegrand7/ddplot/)
+
+I have also contributed via PRs to:
+- [ggplot2](https://github.com/tidyverse/ggplot2/)
+- [fda](https://github.com/JamesRamsay5/fda)
