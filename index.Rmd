@@ -1,6 +1,5 @@
 ---
 title: "June Choe"
-description: "Ph.D. Candidate in Linguistics"
 site: distill::distill_website
 ---
 
@@ -21,7 +20,7 @@ d-title p {
 }
 
 .hero-left img {
-  width: 100%;
+  width: 85%;
   border-radius: 15%;
   border: 3px solid grey;
   display: block;
@@ -69,31 +68,14 @@ d-title p {
   <p style="font-weight:bold; margin-top:5px">
     <i class="fa fa-graduation-cap" aria-hidden="true" style="padding-right:5px"></i> Education
   </p>
-  <li>B.A. (hons.) Northwestern University (2016–20)</li>
-  <li>Ph.D. University of Pennsylvania (2020 ~)</li>
+  <li>Ph.D. Linguistics, University of Pennsylvania (~2025)</li>
+  <li>B.A. Lingusitics, Northwestern University (2020)</li>
   <p style="font-weight:bold; margin-top:15px">
     <i class="fa fa-lightbulb-o" aria-hidden="true" style="padding-right:5px"></i> Interests
   </p>
-  <li>(Computational) Psycholinguistics</li>
-  <li>Language Acquisition</li>
-  <li>Sentence Processing</li>
-  <li>Prosody</li>
-  <li>Quantitative Methods</li>
-</div>
-
-<div style="float:left; width:100%;">
-  <p style="margin-bottom:.5em">
-    <strong style="font-family: Roboto Slab; font-size: 1.2em">
-      <i class="fa fa-flask" aria-hidden="true" style="padding-right:12.5px"></i> Methods: 
-    </strong>
-    Web-based experiments, eye-tracking, self-paced reading, corpus analysis
-  </p>
-  <p style="margin-bottom:1.5em">
-    <strong style="font-family:Roboto Slab; font-size:1.2em">
-      <i class="fa fa-code" aria-hidden="true" style="padding-right:5px"></i> Programming: 
-    </strong>
-    R <span style="font-size:0.8em">(fluent)</span> | HTML/CSS, Javascript, Julia <span style="font-size:0.8em">(proficient)</span> | Python <span style="font-size:0.8em">(coursework)</span>
-  </p>
+  <li>Computational Psycholinguistics</li>
+  <li>Language Acquisition and Development</li>
+  <li>Statistical Computing and Graphics</li>
 </div>
 
 </div>
@@ -103,32 +85,20 @@ d-title p {
 
 <div class="about">
 
-I am a PhD candidate in [Linguistics at the University of Pennsylvania](https://live-sas-www-ling.pantheon.sas.upenn.edu/), and a student affiliate of [Penn MindCORE](https://mindcore.sas.upenn.edu/) and the [Language and Communication Sciences](https://web.sas.upenn.edu/lcs/) program. I am a psycholinguist broadly interested in experimental approaches to studying meaning, of various flavors. My advisor is Anna Papafragou and I am a member of the [Language & Cognition Lab](https://www.langcoglab.com/).
+I am a linguist, software developer, and scientific programmer. In my PhD research in [Linguistics at the University of Pennsylvania](https://live-sas-www-ling.pantheon.sas.upenn.edu/), I use experimental, corpus, and computational approaches to studying linguistic meaning, of various flavors. My dissertation investigates the learning problem of acquiring hierarchical noun meanings in early childhood, from the angles of semantics/pragmatics, distributional learning, and conceptual development.
 
-I received my B.A. in Linguistics from Northwestern University, where I worked with [Jennifer Cole](https://sites.northwestern.edu/cole/), [Masaya Yoshida](https://faculty.wcas.northwestern.edu/~myo507/), and [Annette D'Onofrio](https://faculty.wcas.northwestern.edu/~akd2621/). I also worked as a research assistant for the [Language, Education, and Reading Neuroscience Lab](https://learnlab.northwestern.edu/). My [thesis](https://escholarship.org/uc/item/5d84n2x7) explored the role of prosodic focus in garden-path reanalysis.
-
-Beyond linguistics research, I have interests in data visualization, science communication, and the R programming language. I author [packages](/software.html) in statistical computing and graphics (ex: [ggtrace](https://yjunechoe.github.io/ggtrace/), [jlmerclusterperm](https://yjunechoe.github.io/jlmerclusterperm/)) and collaborate on other open-source software (ex: [openalexR](https://github.com/ropensci/openalexR), [pointblank](https://github.com/rstudio/pointblank)). I also maintain a [technical blog](https://yjunechoe.github.io/blog.html) as a hobby and occasionally take on small statistical consulting projects.
+I am also active in the R programming community as a mentor and open-source developer. I maintain and collaborate on several [open-source software]((/software.html)) in statistical computing ([jlmerclusterperm](https://yjunechoe.github.io/jlmerclusterperm)), data visualization ([ggtrace](https://yjunechoe.github.io/ggtrace/)), data quality assurance ([pointblank](https://github.com/rstudio/pointblank)), and interfaces to data APIs ([openalexR](https://github.com/ropensci/openalexR)). My work on graphics received an [award from the American Statistical Association in 2023](https://community.amstat.org/jointscsg-section/awards/student-paper-competition). I enjoy writing in my free time and have been maintaining a [technical blog](https://yjunechoe.github.io/blog.html) over the past 5 years, covering topics including R language internals, software design principles, and practical tutorials for everyday data analysis.
 
 </div>
 
-<p></p>
-
-<div style='text-align: center; font-family: Fira Mono;'><span class="sc" style="font-size:1.2em">contact me: </span> yj<span>choe</span>\@sas.upenn.edu</div>
+<div style='text-align: center; font-family: Fira Mono; margin-top: 10px;'><span class="sc" style="font-size:1.2em">contact me: </span> yj<span>choe</span>\@sas.upenn.edu</div>
 
 <a rel="me" href="https://fosstodon.org/@yjunechoe"></a>
-
-<!-- 
-Projects:
-
-1) Acquisition of subordinate nouns as pragmatic inference
-2) Prosodic focus in garden-path reanalysis
-3) Computer-assisted snowball search for meta-analysis research
-4) {ggplot2} internals for users
-
--->
 
 <script>
 window.addEventListener('load', function () {
   document.querySelector("hr").remove()
+  document.querySelector(".d-title").style.paddingTop = "5rem"
+  document.querySelector(".distill-site-footer").remove()
 })
 </script>
