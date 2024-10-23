@@ -1,0 +1,54 @@
+---
+title: "On writing research software"
+description: |
+  {jlmerclusterperm} reaches 10k downloads on CRAN
+categories:
+  - reflections
+  - jlmerclusterperm
+  - statistics
+  - mixed-effects models
+base_url: https://yjunechoe.github.io
+author:
+  - name: June Choe
+    affiliation: University of Pennsylvania Linguistics
+    affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+    orcid_id: 0000-0002-0701-921X
+date: "2024-10-18"
+output:
+  distill::distill_article:
+    include-after-body: "highlighting.html"
+    toc: true
+    self_contained: false
+    css: "../../styles.css"
+editor_options: 
+  chunk_output_type: console
+preview: preview.png
+draft: true
+---
+
+## Intro
+
+[A little over a year ago](https://yjunechoe.github.io/posts/2023-12-31-2023-year-in-review/#r-stuff), I published [{jlmerclusterperm}](https://yjunechoe.github.io/jlmerclusterperm/), my first own [research software](https://user2021.r-project.org/blog/2021/09/04/role-of-r-in-research-software-engineering/) package, to [CRAN](https://CRAN.R-project.org/package=jlmerclusterperm). As with everything else that I've been doing over the past few years in grad school, it was a passion project that I chose to pursue and really enjoyed working on.
+
+But it's always occupied a somewhat awkward place in my heart. {jlmerclusterperm} is neither adjacent to my academic nor my programming interests - I don't even use it in my own work as a "humanities" student, and I haven't really been "[marketing](https://yihui.org/en/2018/12/social-media-marketing/)" it or otherwise nerding out about it in my online circles (versus, say, ggplot internals or R metaprogramming).
+
+Against that backdrop, this blog post is motivated by three recent developments:^[As I'm writing this, a fourth inspiration came to me by way of a Mastodon share from [US RSE](https://us-rse.org/): a great, recent Nature article ["Six tips for going public with your labs software"](https://www.nature.com/articles/d41586-024-03344-y)]
+
+1) I need to figure out what I want to do with my life after I graduate.
+
+2) I need to somehow translate my work on {jlmerclusterperm} as reflecting a desirable skill/trait for my CV and resume.
+
+3) {jlmerclusterperm} reached 10k downloads^[Of course, "actual" downloads by users via `install.packages("jlmerclusterperm")` is much lower, but I'm still surprised to see this number despite the niche target audience and non-existent marketing.] on CRAN.
+
+
+## The package {jlmerclusterperm}
+
+[{jlmerclusterperm}](https://yjunechoe.github.io/jlmerclusterperm/) implements the [cluster-based permutation test](https://www-sciencedirect-com.proxy.library.upenn.edu/science/article/pii/S0165027007001707?via%3Dihub) for densely-sampled, multi-level timeseries data. Specifically, it's a frequentist NHST method based on permutation testing to detect greater-than-chance **clusters** of differences between groups in the data, where the magnitude of difference (i.e., the **cluster-mass statistic**) is derived from (mixed effects) regression models fitted to each time point.
+
+In simpler terms, it tells you whether two lines plotted in time are different from one another.
+
+
+
+## The story of {jlmerclusterperm}
+
+
