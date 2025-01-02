@@ -16,15 +16,15 @@ Links: [Google Scholar](https://scholar.google.com/citations?user=dFdQTmYAAAAJ),
 
 ### Peer-reviewed Papers
 
-**June Choe**, and Anna Papafragou. (Accepted). Distributional signatures of superordinate nouns. _Language Acquisition_. DOI: https://doi.org/10.1080/10489223.2024.2440348. [PDF]() [OSF](https://osf.io/uhpr2/)
+**June Choe**, and Anna Papafragou. (Accepted). Distributional signatures of superordinate nouns. _Language Acquisition_. DOI: 10.1080/10489223.2024.2440348. [PDF]() [OSF](https://osf.io/uhpr2/)
 
-**June Choe**, and Anna Papafragou. (2023). The acquisition of subordinate nouns as pragmatic inference. _Journal of Memory and Language, 132_, 104432. DOI: https://doi.org/10.1016/j.jml.2023.104432. [PDF](https://www.langcoglab.com/_files/ugd/7cb05b_746c6f11a2214857a94c3ebbc7afa718.pdf) [OSF](https://osf.io/x8cuf/?view_only=14a975d3618e4838b6cc7681b2ecf692)
+**June Choe**, and Anna Papafragou. (2023). [The acquisition of subordinate nouns as pragmatic inference](https://doi.org/10.1016/j.jml.2023.104432). _Journal of Memory and Language, 132_, 104432. DOI: 10.1016/j.jml.2023.104432. [PDF](https://www.langcoglab.com/_files/ugd/7cb05b_746c6f11a2214857a94c3ebbc7afa718.pdf) [OSF](https://osf.io/x8cuf/?view_only=14a975d3618e4838b6cc7681b2ecf692)
 
 **June Choe**, Yiran Chen, May Pik Yu Chan, Aini Li, Xin Gao, and Nicole Holliday. (2022). [Language-specific Effects on Automatic Speech Recognition Errors for World Englishes](https://aclanthology.org/2022.coling-1.628/). In _Proceedings of the 29th International Conference on Computational Linguistics_, 7177–7186.
 
-May Pik Yu Chan, **June Choe**, Aini Li, Yiran Chen, Xin Gao, and Nicole Holliday. (2022). [Training and typological bias in ASR performance for world Englishes](https://www.isca-speech.org/archive/interspeech_2022/chan22b_interspeech.html). In _Proceedings of Interspeech 2022_, 1273-1277. DOI: 10.21437/Interspeech.2022-10869
+May Pik Yu Chan, **June Choe**, Aini Li, Yiran Chen, Xin Gao, and Nicole Holliday. (2022). [Training and typological bias in ASR performance for world Englishes](https://www.isca-speech.org/archive/interspeech_2022/chan22b_interspeech.html). In _Proceedings of Interspeech 2022_, 1273-1277. DOI: 10.21437/Interspeech.2022-10869.
 
-**June Choe**, Masaya Yoshida, and Jennifer Cole. (2022). [The role of prosodic focus in the reanalysis of garden path sentences: Depth of semantic processing impedes the revision of an erroneous local analysis](https://escholarship.org/uc/item/5d84n2x7). _Glossa Psycholinguistics, 1_(1). DOI: 10.5070/G601136
+**June Choe**, Masaya Yoshida, and Jennifer Cole. (2022). [The role of prosodic focus in the reanalysis of garden path sentences: Depth of semantic processing impedes the revision of an erroneous local analysis](https://escholarship.org/uc/item/5d84n2x7). _Glossa Psycholinguistics, 1_(1). DOI: 10.5070/G601136. [PDF](static/papers/Choe_Yoshida_Cole_2022_prosodic_focus_garden_path_reanalysis.pdf) [OSF](https://osf.io/u6dq5/)
 
 **June Choe**, and Anna Papafragou. (2022). [The acquisition of subordinate nouns as pragmatic inference: Semantic alternatives modulate subordinate meanings](https://escholarship.org/uc/item/2m87n4ht). In _Proceedings of the Annual Meeting of the Cognitive Science Society_, 44, 2745-2752.
 
