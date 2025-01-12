@@ -14,21 +14,23 @@ Links: [Google Scholar](https://scholar.google.com/citations?user=dFdQTmYAAAAJ),
 
 ## Academic research output
 
-### Peer-reviewed Papers
+### Journal Papers
 
 **June Choe**, and Anna Papafragou. (Accepted). Distributional signatures of superordinate nouns. _Language Acquisition_. DOI: 10.1080/10489223.2024.2440348. [PDF]() [OSF](https://osf.io/uhpr2/)
 
 **June Choe**, and Anna Papafragou. (2023). [The acquisition of subordinate nouns as pragmatic inference](https://doi.org/10.1016/j.jml.2023.104432). _Journal of Memory and Language, 132_, 104432. DOI: 10.1016/j.jml.2023.104432. [PDF](https://www.langcoglab.com/_files/ugd/7cb05b_746c6f11a2214857a94c3ebbc7afa718.pdf) [OSF](https://osf.io/x8cuf/?view_only=14a975d3618e4838b6cc7681b2ecf692)
 
+**June Choe**, Masaya Yoshida, and Jennifer Cole. (2022). [The role of prosodic focus in the reanalysis of garden path sentences: Depth of semantic processing impedes the revision of an erroneous local analysis](https://escholarship.org/uc/item/5d84n2x7). _Glossa Psycholinguistics, 1_(1). DOI: 10.5070/G601136. [PDF](static/papers/Choe_Yoshida_Cole_2022_prosodic_focus_garden_path_reanalysis.pdf) [OSF](https://osf.io/u6dq5/)
+
+Sean McWeeny, Jinnie S. Choi, **June Choe**, Alexander LaTourette, Megan Y. Roberts, and Elizabeth S. Norton. (2022). [Rapid automatized naming (RAN) as a kindergarten predictor of future reading in English: A systematic review and meta-analysis](https://doi.org/10.1002/rrq.467). _Reading Research Quarterly, 57_(4), 1187–1211. DOI: 10.1002/rrq.467
+
+### Peer-reviewed Proceedings
+
 **June Choe**, Yiran Chen, May Pik Yu Chan, Aini Li, Xin Gao, and Nicole Holliday. (2022). [Language-specific Effects on Automatic Speech Recognition Errors for World Englishes](https://aclanthology.org/2022.coling-1.628/). In _Proceedings of the 29th International Conference on Computational Linguistics_, 7177–7186.
 
 May Pik Yu Chan, **June Choe**, Aini Li, Yiran Chen, Xin Gao, and Nicole Holliday. (2022). [Training and typological bias in ASR performance for world Englishes](https://www.isca-speech.org/archive/interspeech_2022/chan22b_interspeech.html). In _Proceedings of Interspeech 2022_, 1273-1277. DOI: 10.21437/Interspeech.2022-10869.
 
-**June Choe**, Masaya Yoshida, and Jennifer Cole. (2022). [The role of prosodic focus in the reanalysis of garden path sentences: Depth of semantic processing impedes the revision of an erroneous local analysis](https://escholarship.org/uc/item/5d84n2x7). _Glossa Psycholinguistics, 1_(1). DOI: 10.5070/G601136. [PDF](static/papers/Choe_Yoshida_Cole_2022_prosodic_focus_garden_path_reanalysis.pdf) [OSF](https://osf.io/u6dq5/)
-
 **June Choe**, and Anna Papafragou. (2022). [The acquisition of subordinate nouns as pragmatic inference: Semantic alternatives modulate subordinate meanings](https://escholarship.org/uc/item/2m87n4ht). In _Proceedings of the Annual Meeting of the Cognitive Science Society_, 44, 2745-2752.
-
-Sean McWeeny, Jinnie S. Choi, **June Choe**, Alexander LaTourette, Megan Y. Roberts, and Elizabeth S. Norton. (2022). [Rapid automatized naming (RAN) as a kindergarten predictor of future reading in English: A systematic review and meta-analysis](https://doi.org/10.1002/rrq.467). _Reading Research Quarterly, 57_(4), 1187–1211. DOI: 10.1002/rrq.467
 
 ### Conference Talks
 
@@ -73,13 +75,17 @@ D’Onofrio, Annette, **June Choe** and Masaya Yoshida. *Personae in syntactic p
 
 ## Research activities in FOSS
 
-### Papers
+### Journal Papers
 
 Massimo Aria, Trang Le, Corrado Cuccurullo, Alessandra Belfiore, and **June Choe**. (2024). openalexR: An R-tool for collecting bibliometric data from OpenAlex. The R Journal, 15(4), 166-179. [Paper](https://rjournal.github.io/articles/RJ-2023-089/), [Github](https://github.com/massimoaria/openalexR)
 
-**June Choe**. (2022). Sub-layer modularity in the Grammar of Graphics. American Statistical Association (ASA) student paper award in Statistical Computing and Graphics. [Paper](static/papers/Choe_2022_SublayerGG.pdf), [Github](https://github.com/yjunechoe/ggtrace/)
+### Manuscripts
 
-### Talks
+**June Choe**. (2024). jlmerclusterperm: R (and Julia) package for cluster-based permutation tests on densely-sampled time series data. [Paper](static/papers/Choe_2024_jlmerclusterperm), [Github](https://github.com/yjunechoe/jlmerclusterperm/)
+
+**June Choe**. (2022). Sub-layer modularity in the Grammar of Graphics. [Paper](static/papers/Choe_2022_SublayerGG.pdf), [Github](https://github.com/yjunechoe/ggtrace/)
+
+### Conference Talks
 
 June Choe. [Sub-layer modularity in the Grammar of Graphics](https://ww2.aievolution.com/JSMAnnual/index.cfm?do=ev.viewEv&ev=2860). Talk at the 2023 Joint Statistical Meetings, 5-10 August 2023. Toronto, Canada.
 
