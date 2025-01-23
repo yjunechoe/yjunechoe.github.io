@@ -81,7 +81,7 @@ Massimo Aria, Trang Le, Corrado Cuccurullo, Alessandra Belfiore, and **June Choe
 
 ### Manuscripts
 
-**June Choe**. (2024). jlmerclusterperm: R (and Julia) package for cluster-based permutation tests on densely-sampled time series data. [Paper](static/papers/Choe_2024_jlmerclusterperm), [Github](https://github.com/yjunechoe/jlmerclusterperm/)
+**June Choe**. (2024). jlmerclusterperm: R (and Julia) package for cluster-based permutation tests on densely-sampled time series data. [Paper](static/papers/Choe_2024_jlmerclusterperm.pdf), [Github](https://github.com/yjunechoe/jlmerclusterperm/)
 
 **June Choe**. (2022). Sub-layer modularity in the Grammar of Graphics. [Paper](static/papers/Choe_2022_SublayerGG.pdf), [Github](https://github.com/yjunechoe/ggtrace/)
 
