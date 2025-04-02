@@ -12,6 +12,8 @@ navbar:
       href: index.html
     - text: "Blog"
       href: blog.html
+    - text: "Projects"
+      href: projects.html
     - text: "Research"
       href: research.html
     - text: "CV"
