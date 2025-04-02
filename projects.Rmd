@@ -57,7 +57,7 @@ d-article {
 
 Watch me talk about my dissertation research! Courtesy of the 38th Annual Conference on Human Sentence Processing ([HSP 2025](https://hsp2025.github.io/)).
 
-<iframe height="400" src="https://www.youtube.com/embed/asFt5necFD4"></iframe>
+<iframe height="400" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen src="https://www.youtube.com/embed/asFt5necFD4"></iframe>
 
 <div class="l-body-outset">
 # 1) Word Learning and Pragmatics
