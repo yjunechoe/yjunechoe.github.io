@@ -16,6 +16,10 @@ Links: [Google Scholar](https://scholar.google.com/citations?user=dFdQTmYAAAAJ),
 
 ### Journal Papers
 
+**June Choe** and Anna Papafragou. (In prep.). Children's subordinate noun generalizations: alternatives and speaker knowledge.
+
+**June Choe** and Anna Papafragou. (Submitted). Children's sensitivity to informativeness: basic-level vs. superordinate nouns.
+
 **June Choe** and Anna Papafragou. (2025). Distributional signatures of superordinate nouns. _Language Acquisition_. DOI: 10.1080/10489223.2024.2440348. [PDF](static/papers/Choe_Papafragou_2025_distributional_signatures_superordinates.pdf) [OSF](https://osf.io/uhpr2/)
 
 **June Choe** and Anna Papafragou. (2023). [The acquisition of subordinate nouns as pragmatic inference](https://doi.org/10.1016/j.jml.2023.104432). _Journal of Memory and Language, 132_, 104432. DOI: 10.1016/j.jml.2023.104432. [PDF](static/papers/Choe_Papafragou_2023_pragmatic_inference_subordinates.pdf) [OSF](https://osf.io/x8cuf/?view_only=14a975d3618e4838b6cc7681b2ecf692)
