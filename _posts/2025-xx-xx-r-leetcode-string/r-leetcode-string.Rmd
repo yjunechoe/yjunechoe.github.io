@@ -1,0 +1,386 @@
+---
+title: "R is the worst language for LeetCode Strings"
+description: |
+  Alternative title: how to be annoying at a coding interview 
+categories:
+  - strings
+base_url: https://yjunechoe.github.io
+author:
+  - name: June Choe
+    affiliation: University of Pennsylvania Linguistics
+    affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+    orcid_id: 0000-0002-0701-921X
+date: "2025-01-01"
+output:
+  distill::distill_article:
+    include-after-body: "highlighting.html"
+    toc: true
+    self_contained: false
+    css: "../../styles.css"
+editor_options: 
+  chunk_output_type: console
+preview: preview.png
+draft: true
+---
+
+## The problem: string substring search
+
+```
+Implement a function `find_substrings()` with two arguments:
+
+1. `text` - a string
+2. `substrings` - a list of strings
+
+Return a dictionary where:
+- Each substring is mapped to its starting index in text
+- Value is set to -1 if substring is absent in text
+
+Example:
+
+Input: text = "abcdefg", substrings = ["bc", "ef", "xyz"]
+Output: {"bc": 1, "ef": 4, "xyz": -1}
+```
+
+## The interviewer
+
+> This part of the interview will involve you coding up the solution to this problem that you're seeing now. I mostly use Python and our team does too, but you can use a programming language of your choice. Python, Java, R - whatever you're comfortable with. Just, if you're not using Python, walk me through the code when you're doing something specific to your language. Let's see... I see on your resume that you mostly use R?
+
+## The model answer (python)
+
+"Yes, but it's okay I learned some Python too. Here's the answer:"
+
+```{python}
+#| eval: falses
+def find_substrings(text, substrings):
+  # Initialize result dictionary with -1 default values
+  result = {substring: -1 for substring in substrings}
+
+  for substring in substrings:
+    # Check the possible starting positions for each substring
+    for i in range(len(text) - len(substring) + 1):
+      # Match for substring and update result if found
+      if text[i:i+len(substring)] == substring:
+        result[substring] = i
+        break
+
+  return result
+```
+
+"That should reproduce the example:"
+
+```{python}
+find_substrings("abcdefg", ["bc", "ef", "xyz"])
+```
+
+"Yeah I think that does it."
+
+> Great! You're hired!
+
+## The annoying answer (R)
+
+"Yeah, I do mostly code R. Seems like a simple for-loop question, so I'll just try it in R and let you know when I do something that's specific to R."
+
+```{r}
+find_substrings <- function(text, substrings) {
+  
+}
+```
+
+> Sounds good. Again just a reminder that I do not know much about R, so just walk me through your code as you write it.
+
+"Okay, got it. So first, I'd want to initialize our result structure. I think in Python you can just use like a list comprehension? But R doesn't have that convenient syntax, so:"
+
+```{r}
+find_substrings <- function(text, substrings) {
+  # Initialize the result structure
+  result <- setNames(rep(-1, length(substrings)), substrings)
+  
+}
+```
+
+"Here I use `rep(-1, length(substrings))` to create a vector of the default case (-1s). Oh and yeah, I realize that this is more verbose than Python's `[-1] * len(substrings)`, but this is how you'd do it in R. And then I need a separate function `setNames()` on top, to attach the substring names as vector names - this gives us a named vector that's like a Python dictionary"
+
+> Ok, sure. Continue.
+
+"Now, before I get to the for loop, I need to convert the string into a vector because, unlike Python where I can directly index into a string with slices like `text[1:3]`, you can't index into strings in R. So I'm gonna do that by `strsplit()`-ing on the empty character and assign that vector to a local variable `text_chars`:"
+
+```{r}
+find_substrings <- function(text, substrings) {
+  # Initialize the result structure
+  result <- setNames(rep(-1, length(substrings)), substrings)
+  
+  # Convert text to a format we can iterate through
+  text_chars <- strsplit(text, "")[[1]]
+  
+}
+```
+
+> Hey what's that `[[1]]` there?
+
+"Oh... Yeah... `strsplit()` is weird because it returns a list with a single element containing the actual character vector that we want. The `[[1]]` plucks out that element. And oh we in R we actually have two brackets for indexing - single `[` and double `[[` - aand in this case I need to use `[[` to extract the element of the list as a vector. Sorry about that confusion."
+
+> Okay... and then you're going to the for-loop next?
+
+"Yeah exactly. That sets up for-loop where I'll implement the substring search logic. First, I'll iterate through each `substring` in our vector of `substrings.` And, uh, within the for loop I should give it the same `strsplit()` treatment so that we can compare vector-to-vector later. So let me quickly define a `substring_chars` variable:"
+
+```{r}
+find_substrings <- function(text, substrings) {
+  # Initialize the result structure
+  result <- setNames(rep(-1, length(substrings)), substrings)
+  
+  # Convert text to a format we can iterate through
+  text_chars <- strsplit(text, "")[[1]]
+  
+  # Iterate over each substring
+  for (substring in substrings) {
+    # Convert substring to character vector
+    substring_chars <- strsplit(substring, "")[[1]]
+    
+  }
+  
+}
+```
+
+"Where was I? Oh yeah, the search logic. So I want to loop from the start of `text` to the end, offset by the length of the `substring`. I need the `+ 1` there to be inclusive of the last valid starting position - I think this should be the same in Python. Okay and now onto the comparison logic ..."
+
+```{r}
+find_substrings <- function(text, substrings) {
+  # Initialize the result structure
+  result <- setNames(rep(-1, length(substrings)), substrings)
+  
+  # Convert text to a format we can iterate through
+  text_chars <- strsplit(text, "")[[1]]
+  
+  # Iterate over each substring
+  for (substring in substrings) {
+    # Convert substring to character vector
+    substring_chars <- strsplit(substring, "")[[1]]
+    
+    # Search for the substring in text
+    for (i in 1:(nchar(text) - nchar(substring) + 1)) {
+
+    }
+  }
+  
+}
+```
+
+> Hey, sorry, can I interrupt - Why are you not using the `substring_chars` that you just defined to compute the length here?
+
+"Oh! Yeah you're right - actually, since we already have the character vector versions `text_chars` and `sbustring_chars`, I can use `length()` again. Sorry I realize that was confusing - while strings are monolithic in R `nchar()` is one of those special string operation functions that's implemented in C, which kinda powers R internals, so through that interface you can get the length of a string without needing to splitting it into a vector first. Ha ha. Let me re-write it using `length()` instead. Okay, where was I?"
+
+```{r}
+find_substrings <- function(text, substrings) {
+  # Initialize the result structure
+  result <- setNames(rep(-1, length(substrings)), substrings)
+  
+  # Convert text to a format we can iterate through
+  text_chars <- strsplit(text, "")[[1]]
+  
+  # Iterate over each substring
+  for (substring in substrings) {
+    # Convert substring to character vector
+    substring_chars <- strsplit(substring, "")[[1]]
+    
+    # Search for the substring in text
+    for (i in 1:(length(text_chars) - length(substring_chars) + 1)) {
+      
+    }
+  }
+  
+}
+```
+
+"Oh yeah the comparison logic. So uh, I need to index into `text_chars` to extract the sequence of same length as `substring_chars` and then compare it with `==`. And then insid-"
+
+```{r}
+find_substrings <- function(text, substrings) {
+  # Initialize the result structure
+  result <- setNames(rep(-1, length(substrings)), substrings)
+  
+  # Convert text to a format we can iterate through
+  text_chars <- strsplit(text, "")[[1]]
+  
+  # Iterate over each substring
+  for (substring in substrings) {
+    # Convert substring to character vector
+    substring_chars <- strsplit(substring, "")[[1]]
+    
+    # Search for the substring in text
+    for (i in 1:(length(text_chars) - length(substring_chars) + 1)) {
+      # Compare current position with substring
+      if (text_chars[i:(i + length(substring_chars) - 1)] == substring_chars) {
+      
+      }
+    }
+  }
+  
+}
+```
+
+"Ah shoot sorry actually, R is vectorized, so the operator `==` checks element-wise if you're comparing between vectors. Sorry, I know that Python would do the more sensible thing here but let me quickly fix this. Hmmm..."
+
+"Ah yes ok. I can wrap the whole thing in `all()`. So that's one way to check for whether vectors as a whole are *identical*s. Here we go:"
+
+```{r}
+find_substrings <- function(text, substrings) {
+  # Initialize the result structure
+  result <- setNames(rep(-1, length(substrings)), substrings)
+  
+  # Convert text to a format we can iterate through
+  text_chars <- strsplit(text, "")[[1]]
+  
+  # Iterate over each substring
+  for (substring in substrings) {
+    # Convert substring to character vector
+    substring_chars <- strsplit(substring, "")[[1]]
+    
+    # Search for the substring in text
+    for (i in 1:(length(text_chars) - length(substring_chars) + 1)) {
+      # Compare current position with substring
+      if (all(text_chars[i:(i + length(substring_chars) - 1)] == substring_chars)) {
+        
+      }
+    }
+  }
+  
+}
+```
+
+"Wait ugh sorry. `identical()`, duh! Sorry there's actually a function that checks for equality and doesn't vectorize. It's called `identical()` and we can pass the things we're comparing as its arguments. Let me do that instead:"
+
+```{r}
+find_substrings <- function(text, substrings) {
+  # Initialize the result structure
+  result <- setNames(rep(-1, length(substrings)), substrings)
+  
+  # Convert text to a format we can iterate through
+  text_chars <- strsplit(text, "")[[1]]
+  
+  # Iterate over each substring
+  for (substring in substrings) {
+    # Convert substring to character vector
+    substring_chars <- strsplit(substring, "")[[1]]
+    
+    # Search for the substring in text
+    for (i in 1:(length(text_chars) - length(substring_chars) + 1)) {
+      # Compare current position with substring
+      if (identical(text_chars[i:(i + length(substring_chars) - 1)], substring_chars)) {
+        
+      }
+    }
+  }
+  
+}
+```
+
+"Phew! Okay so, moving on. Inside the `if` case when there *is* a match, I just need to update the `result[substring]` to the current `i` and then `break` from the inner loop:"
+
+```{r}
+find_substrings <- function(text, substrings) {
+  # Initialize the result structure
+  result <- setNames(rep(-1, length(substrings)), substrings)
+  
+  # Convert text to a format we can iterate through
+  text_chars <- strsplit(text, "")[[1]]
+  
+  # Iterate over each substring
+  for (substring in substrings) {
+    # Convert substring to character vector
+    substring_chars <- strsplit(substring, "")[[1]]
+    
+    # Search for the substring in text
+    for (i in 1:(length(text_chars) - length(substring_chars) + 1)) {
+      # Compare current position with substring
+      if (identical(text_chars[i:(i + length(substring_chars) - 1)], substring_chars)) {
+        # Update result when found
+        result[substring] <- i
+        break
+      }
+    }
+  }
+  
+}
+```
+
+"And lastly I return the dictionary/named-vector `result`. By the way in R, you don't need to use the return keyword to return a value from a function, but I'll do it the Pythonic way here and write `return(result)`. In R `return()` is actually a full-fledged function and not a keyword. Isn't that funny? Ha ha."
+
+```{r}
+find_substrings <- function(text, substrings) {
+  # Initialize the result structure
+  result <- setNames(rep(-1, length(substrings)), substrings)
+  
+  # Convert text to a format we can iterate through
+  text_chars <- strsplit(text, "")[[1]]
+  
+  # Iterate over each substring
+  for (substring in substrings) {
+    # Convert substring to character vector
+    substring_chars <- strsplit(substring, "")[[1]]
+    
+    # Search for the substring in text
+    for (i in 1:(length(text_chars) - length(substring_chars) + 1)) {
+      # Compare current position with substring
+      if (identical(text_chars[i:(i + length(substring_chars) - 1)], substring_chars)) {
+        # Update result when found
+        result[substring] <- i
+        break
+      }
+    }
+  }
+  
+  return(result)
+}
+```
+
+> Okay, great. Are you done?
+
+"Yeah! Let's run the test case"
+
+```{r}
+text <- "abcdefg"
+substrings <- c("bc", "ef", "xyz")
+find_substrings(text, substrings)
+```
+
+"Oh shoot. The indexing. How could I forget! Yeah so uh R is 1-indexed so uh I think I need to subtract by 1 before I record the position:"
+
+```{r}
+find_substrings <- function(text, substrings) {
+  # Initialize the result structure
+  result <- setNames(rep(-1, length(substrings)), substrings)
+  
+  # Convert text to a format we can iterate through
+  text_chars <- strsplit(text, "")[[1]]
+  
+  # Iterate over each substring
+  for (substring in substrings) {
+    # Convert substring to character vector
+    substring_chars <- strsplit(substring, "")[[1]]
+    
+    # Search for the substring in text
+    for (i in 1:(length(text_chars) - length(substring_chars) + 1)) {
+      # Compare current position with substring
+      if (identical(text_chars[i:(i + length(substring_chars) - 1)], substring_chars)) {
+        # Update result when found
+        result[substring] <- i - 1
+        break
+      }
+    }
+  }
+  
+  return(result)
+}
+```
+
+"Yeah... I think that's it..."
+
+```{r}
+find_substrings(text, substrings)
+```
+
+"Yeah that did it. Sorry about that hiccup."
+
+> No problem. We're just 3 hours over. Please never apply to our company again
+
+**Fin.**
