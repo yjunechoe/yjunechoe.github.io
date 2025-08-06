@@ -40,14 +40,14 @@ df <- expand_grid(cat = c("Persian", "Sphynx"), food = c("fish", "chicken")) %>%
   )
 
 p_base0 <- df %>% 
-  ggplot(aes(x, y)) +
+  ggplot(aes(x, y, color = cat)) +
   labs(
     y = "Food preference score",
     x = "Days on diet"
   )
 p_base <- p_base0 +
   geom_line(
-    aes(color = cat, linetype = food, alpha = food),
+    aes(linetype = food, alpha = food),
     linewidth = 1.5
   ) +
   scale_alpha_manual(values = c(.5, 1))
@@ -94,7 +94,7 @@ p_corrected_3
 library(geomtextpath)
 p_base0 +
   geom_textpath(
-    aes(label = cat, color = cat),
+    aes(color = cat, label = cat),
     size = 20,
     linetype = NA, # text_only = TRUE
     alpha = .5,
@@ -103,9 +103,13 @@ p_base0 +
     data = . %>%
       summarize(y = mean(y), .by = c(cat, x))
   ) +
-  geom_line(
-    aes(color = cat, linetype = food),
-    linewidth = 1.5
+  geom_textpath(
+    aes(color = cat, label = food, group = interaction(cat, food))
+  ) +
+  guides(color = guide_none()) +
+  scale_discrete_manual(
+    aesthetics = "label",
+    values = c("chicken" = ".", "fish" = "..")
   )
 ```
 
