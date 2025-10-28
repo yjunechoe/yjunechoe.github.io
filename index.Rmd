@@ -58,6 +58,16 @@ d-title p {
 }
 </style>
 
+<h2 style="
+    margin: 0;
+    text-align: center;
+    border: none;
+    color: grey;
+    font-size: 1.5rem;
+    margin-top: -.5rem;
+    margin-bottom: .5rem;
+">Computational Linguist</h2>
+
 <div style="border-bottom:3px solid black; margin-bottom:20px">
 
 <div class="hero-left">
@@ -68,7 +78,7 @@ d-title p {
   <p style="font-weight:bold; margin-top:5px">
     <i class="fa fa-graduation-cap" aria-hidden="true" style="padding-right:5px"></i> Education
   </p>
-  <li>Ph.D. Linguistics, University of Pennsylvania (~2025)</li>
+  <li>Ph.D. Linguistics, University of Pennsylvania (2025)</li>
   <li>B.A. Lingusitics, Northwestern University (2020)</li>
   <p style="font-weight:bold; margin-top:15px">
     <i class="fa fa-lightbulb-o" aria-hidden="true" style="padding-right:5px"></i> Interests
@@ -85,9 +95,11 @@ d-title p {
 
 <div class="about">
 
-I am a fifth-year PhD candidate in [Linguistics at the University of Pennsylvania](https://live-sas-www-ling.pantheon.sas.upenn.edu/). I use experimental, corpus, and computational approaches to studying linguistic meaning, of various flavors. My dissertation investigates the learning problem of acquiring hierarchical noun meanings in early childhood, from the angles of semantics/pragmatics, distributional learning, and conceptual development.
+I am a computational linguist at Amazon. I develop data pipelines for LLM evaluations, human-in-the-loop workflows/tooling, and recipes for model post-training.
 
-I am also active in the R programming community as a mentor and open-source developer. I maintain and collaborate on several [open-source software](/software.html) in statistical computing ([jlmerclusterperm](https://yjunechoe.github.io/jlmerclusterperm)), data visualization ([ggtrace](https://yjunechoe.github.io/ggtrace/)), data quality assurance ([pointblank](https://github.com/rstudio/pointblank)), and interfaces to data APIs ([openalexR](https://github.com/ropensci/openalexR)). My work on graphics received an [award from the American Statistical Association in 2023](https://community.amstat.org/jointscsg-section/awards/student-paper-competition). I enjoy writing in my free time and have been maintaining a [technical blog](https://yjunechoe.github.io/blog.html) over the past 5 years, covering topics including R language internals, software design principles, and practical tutorials for everyday data analysis.
+Before transitioning to industry, I received my PhD in [Linguistics from the University of Pennsylvania](https://live-sas-www-ling.pantheon.sas.upenn.edu/), using experimental, corpus, and computational approaches to study linguistic meaning, of various flavors. My [dissertation](static/papers/Choe_2025_acquiring_words_beyond_the_basic_level.pdf) investigated the learning problem of acquiring hierarchical noun meanings in early childhood, from the angles of semantics/pragmatics, distributional learning, and conceptual development.
+
+I am also active in the R programming community as a mentor and open-source developer. I maintain and collaborate on several [open-source software](/software.html) in statistical computing ([jlmerclusterperm](https://yjunechoe.github.io/jlmerclusterperm)), data visualization ([ggtrace](https://yjunechoe.github.io/ggtrace/)), data quality assurance ([pointblank](https://github.com/rstudio/pointblank)), and interfaces to data APIs ([openalexR](https://github.com/ropensci/openalexR)). My work on graphics received an [award from the American Statistical Association in 2023](https://community.amstat.org/jointscsg-section/awards/student-paper-competition). I enjoy writing in my free time and have been maintaining a [technical blog](https://yjunechoe.github.io/blog.html) over the past 5+ years, covering topics including R language internals, software design principles, and practical tutorials for everyday data analysis.
 
 </div>
 
