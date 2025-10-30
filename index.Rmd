@@ -95,7 +95,7 @@ d-title p {
 
 <div class="about">
 
-I am a computational linguist at Amazon. I develop data pipelines for LLM evaluations, human-in-the-loop workflows/tooling, and recipes for model post-training.
+I am a computational linguist at Amazon. I develop LLM evaluation infrastructure (both with and for LLMs), manage end-to-end prompt optimization pipelines, design model post-training recipes, and build tools for human-in-the-loop workflows.
 
 Before transitioning to industry, I received my PhD in [Linguistics from the University of Pennsylvania](https://live-sas-www-ling.pantheon.sas.upenn.edu/), using experimental, corpus, and computational approaches to study linguistic meaning, of various flavors. My [dissertation](static/papers/Choe_2025_acquiring_words_beyond_the_basic_level.pdf) investigated the learning problem of acquiring hierarchical noun meanings in early childhood, from the angles of semantics/pragmatics, distributional learning, and conceptual development.
 
