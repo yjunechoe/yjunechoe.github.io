@@ -1,0 +1,108 @@
+---
+title: "2025 Year in Review"
+description: |
+  In 2025, I finished my PhD, got a job, and moved to New York.
+categories:
+  - reflections
+base_url: https://yjunechoe.github.io
+author:
+  - name: June Choe
+    affiliation: University of Pennsylvania Linguistics
+    affiliation_url: https://live-sas-www-ling.pantheon.sas.upenn.edu/
+    orcid_id: 0000-0002-0701-921X
+date: "2025-12-31"
+output:
+  distill::distill_article:
+    include-after-body: "highlighting.html"
+    toc: true
+    self_contained: false
+    css: "../../styles.css"
+editor_options: 
+  chunk_output_type: console
+preview: preview.png
+---
+
+```{r}
+#| echo: false
+#| fig.cap: Rockefeller Center Christmas tree, NYC
+#| fig.align: center
+#| out.width: 60%
+knitr::include_graphics("preview.png")
+```
+
+
+## #PhDone!
+
+I spent the first half of 2025 focused on writing my dissertation. I'm probably in the minority here, but I genuinely had a lot of fun writing the thing.
+
+In my field, dissertations are typically structured such that each individual chapter in the middle are a self-contained study, with the introduction and conclusion doing the bulk of the work to tie the studies together and present a unified account of some phenomenon (in my case: [how children learn hierarchical noun meanings](../../static/papers/Choe_2025_acquiring_words_beyond_the_basic_level.pdf)). People in my department joke that writing the dissertation is mostly "stapling your papers together".
+
+Heading into 2025, two of my chapters had already been published in journals, and I had nearly finished collecting the data for my other two chapters - this put me in a great position to simply sit down for hours at a time, wrestling with my own thoughts. For the first time ever since starting grad school, I found myself going many consecutive days without ever opening an IDE (gasp!).
+
+I submitted my dissertation in June, defended in July, and formally graduated in August. After exactly 5 years of grad school, I came out the other end as Dr. Choe :)
+
+
+## Job search
+
+```{r}
+#| echo: false
+#| fig.cap: 5th year job search mood.
+#| fig.align: center
+#| out.width: 100%
+knitr::include_graphics("https://cdn.fosstodon.org/media_attachments/files/113/833/613/307/830/046/original/fbc8f233de2958da.png", error = FALSE)
+```
+
+In contrast to my dissertation writing, which was rather straightforward and uneventful, my job search process was very memorable and I learned a lot going through this experience.
+
+From January to March, I applied to both academic (postdocs) and industry (tech) jobs. Despite hearing a lot of advice to the contrary, I applied extremely selectively to only about 5 postdocs and 10 industry jobs, and put a lot of time and effort into each application. I applied to so few jobs in part because I already had summer funding secured, so I didn't feel the need to rush yet. Also, job search prep was such a huge effort (ex: I had to prepare on-site job talks), and I really needed to reclaim some of that time to prepare for my defense.
+
+I'm saving this topic for another blog post, but I want to take a moment to highlight that the experiences from my open-source hobbies helped set me up for success in many of my job interviews - both for academia and industry. Without realizing it, I had accumulated a ton of stories about collaborating with others, navigating conflicts in viewpoints, and stepping up to solve problems in my community. Across the board, people really seemed to enjoy hearing about these things.
+
+Overall, the job search process was pretty anxiety inducing but I'm happy to report that it was short-lived and turned out alright in the end. I started hearing back in April and signed an offer before the month's end. I decided to leave academia (though "one never truly leaves," as I've been told) to join Amazon and work on conversational AI.
+
+
+## The transition period
+
+This meant that there was a brief period of time over the summer when I was simultaneously a measly grad student and also an adult with a job. While I could have put more effort into preparing for this transition, I instead chose to spend the summer having a bitter sweet time indulging myself with some hobby projects that I had to put on hold for my dissertation.
+
+One project that I'm really proud of is the [ggplot2 layer explorer app](https://github.com/yjunechoe/ggplot2-layer-explorer), which I released in May. It takes my package `{ggtrace}` and hooks it up to `{shinylive}`, to expose the internal data-wrangling steps of ggplot2 through a simple point-and-click interface. I've always wanted to make  this ever since first diving into the topic back in ~2021, and I'm really happy that I was able to finally make it a reality.
+
+```{r}
+#| echo: false
+#| fig.cap: "A screenshot of the ggplot2 layer explorer app: https://yjunechoe.github.io/ggplot2-layer-explorer/"
+#| fig.align: center
+#| out.width: 100%
+knitr::include_graphics("snapshot-layer-explorer.png", error = FALSE)
+```
+
+Anticipating that I would soon get busy with work (great foresight), it was also around this time when I decided to start a [microblog](https://yjunechoe.github.io/microblog/), to share cool reprex-length code snippets with lower pressure on myself. Unfortunately, I haven't written much there this year, but recently I've been abusing an opportunity to nerd out about `DuckDB` at work. I've started to [post on Mastodon about it](https://fosstodon.org/@yjunechoe/115740981687008665) which is a good sign that I'll eventually write a blog post about it at some point (once I figure out how I want to showcase SQL code in `{litedown}`).
+
+In addition to spending more time with my hobby projects, I also went conferencing over the summer! In August, I got to take a week off work to travel to Nashville for JSM and then to Durham for UseR immediately after that. At JSM, I gave a talk in the Statistical Graphics special session, titled "[Innovations in aesthetic evaluation semantics: Where ggplot2 users and developers meet](../../static/slides/JSM2025.pdf)". I also got to hang out with fellow [ggplot extenders](https://github.com/ggplot2-extenders/ggplot-extension-club) throughout the week. The R/stats community has been a huge part of my grad school life, so in an odd way, getting to attend to JSM and UseR helped give closure to finishing my PhD.
+
+```{r}
+#| echo: false
+#| fig.cap: A slide from my JSM talk. I called this "absolutely unhinged" and got a few laughs from the audience.
+#| fig.align: center
+#| out.width: 80%
+knitr::include_graphics("https://cdn.fosstodon.org/media_attachments/files/114/983/791/847/551/571/original/5efd89a8183a7f25.png", error = FALSE)
+```
+
+
+## The new job, and things I didn't expect
+
+I just hit 6 months at my new job. I'm still learning the ropes and have yet to figure out a proper "elevator pitch" for what I do, except that I'm somehow _still_ surrounded by many PhDs and that I get to work on some cool challenges. For better or for worse, I feel like I still get to carry on with a "grad student" ethos to solving problems. No complaints there!
+
+Again, too new to the job to start forming complete thoughts on anything, but here's a list of random surprises since starting work:
+
+- I don't really write R code much, but I still code a ton. And I still find it fun!
+- I write a lot of Javascript at work, actually. It's oddly a perfect tool for some types of work that land on my plate, given my particular setup.
+- I'm falling in love with DuckDB and I've been able to successfully shoehorn it into many unrelated projects at work. Also, I feel like optimizing SQL queries is kind of an art, and I love beating LLMs at it.
+- I thought I'd need to force myself to sit down and learn Python. But actually, immersion is turning out to be sufficient.
+- I'm often finding myself making trade-offs between learning and delivering work. A bit sad because in grad school I could always choose to have it both ways if I was motivated enough.
+- New York has been _warmer_ than Philly this winter and that still confuses me.
+
+## 2026 resolution
+
+I have a few, but the one that I want to publicly share is that I want to connect more with the world. I don't know if that means I need to start posting on [my LinkedIn](https://www.linkedin.com/in/yjunechoe/) or what (please add me though!) but I'll make more of a conscious effort to figure that out in 2026.
+
+As part of that, I also want to pay forward all the tips and life advice I received to help me get here. So if you are a linguist/psychologist thinking about doing a PhD or transitioning from PhD to industry, this is an open invitation to reach out for a chat :)
