@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>The life of residuals</title>
+    <meta name="description" content="A visual guide to model diagnostics" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" integrity="sha384-Um5gpz1odJg5Z4HAmzPtgZKdTBHZdw8S29IecapCSB31ligYPhHQZMIlWLYQGVoc" crossorigin="anonymous">
+    <!-- fonts from their official hosts: Open Sans (Google Fonts, OFL) and Chillax (Fontshare, ITF Free Font License) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" />
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=chillax@400&display=swap" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body>
+    <div id="progress"></div>
+
+    <main>
+      <section id="intro">
+        <p class="kicker">A visual guide to model diagnostics</p>
+        <h1 class="intro__hed">The life of residuals</h1>
+        <p class="intro__body">
+          Every regression model leaves something behind. The fitted line gets
+          all the attention, but the part of the data it <em>fails</em> to
+          explain (the <strong>residuals</strong>) quietly holds the best evidence
+          about whether the model can be trusted.
+        </p>
+        <p class="intro__body">
+          If you've ever run <code>plot()</code> on a regression in R and
+          squinted at the four panels it gives you, this is for you. It's the
+          story of those leftovers: where they come from, how we line them up,
+          and what they have to say.
+        </p>
+        <p class="intro__exit">Scroll to begin ↓</p>
+      </section>
+
+      <section id="scrolly">
+        <article>
+          <div class="step" data-step="0" data-alt="Illustration of a penguin's head, showing bill length and bill depth." data-label="The data">
+            <div class="card">
+              <p>
+                Meet our data: <strong>40 penguins</strong> from the Palmer
+                Archipelago, Antarctica. For each bird we know two things:
+                its <strong>body mass</strong> in grams, and the length of its
+                <strong>bill</strong> in millimeters.
+              </p>
+            </div>
+          </div>
+          <div class="step" data-step="1" data-alt="Scatterplot of bill length against body mass for 40 penguins, rising from lower left to upper right." data-label="Bill length vs. body mass">
+            <div class="card">
+              <p>
+                Plot one against the other and a pattern jumps out:
+                <strong>heavier penguins tend to have longer bills.</strong>
+              </p>
+              <p>
+                But the relationship isn't perfect. Penguins with the same weight
+                can still have quite different bills.
+              </p>
+            </div>
+          </div>
+          <div class="step" data-step="2" data-alt="The same scatterplot with a straight regression line through the points." data-label="A linear model">
+            <div class="card">
+              <p>
+                A <strong>linear regression</strong> sums up the trend with one
+                line, the line that fits the points best:
+              </p>
+              <p class="tex" data-tex="\widehat{\text{bill}} = 20.02 + 0.00526 \times \text{mass}"></p>
+              <p>
+                Each extra 100&nbsp;g of penguin comes with about half a
+                millimeter more bill. Mass explains about
+                <strong>78%</strong> of the variation in bill length
+                (<span class="tex" data-tex="R^2 = .775"></span>).
+              </p>
+            </div>
+          </div>
+          <div class="step" data-step="3" data-alt="Vertical lines connect each penguin to the regression line: green above it, red below." data-label="Residuals are born">
+            <div class="card">
+              <p>
+                But look closely: no penguin sits <em>exactly</em> on the line.
+                The vertical gap between what we observed and what the model
+                predicted is the <strong>residual</strong>:
+              </p>
+              <p class="tex" data-tex="e_i = y_i - \hat{y}_i"></p>
+              <p>
+                <span class="pos">Green</span> penguins have longer bills than the
+                model predicted; <span class="neg">red</span> ones have shorter
+                bills.
+              </p>
+            </div>
+          </div>
+          <div class="step" data-step="4" data-alt="Each residual line is labeled with its value in millimeters." data-label="Residuals are numbers">
+            <div class="card">
+              <p>
+                Each residual is just a number, measured in millimeters. The
+                biggest miss is a 3,725&nbsp;g penguin whose bill is
+                <span class="neg">4.61&nbsp;mm</span> shorter than predicted.
+              </p>
+              <p>
+                Least squares picks the line that makes the squared residuals
+                add up to as little as possible. One result:
+                <strong>the residuals always add up to zero.</strong>
+              </p>
+            </div>
+          </div>
+          <div class="step" data-step="5" data-alt="The residuals as dots on a single number line, balanced around zero." data-label="Residuals on their own">
+            <div class="card">
+              <p>
+                To study the residuals by themselves, we strip away everything
+                else. First we <strong>flatten the line</strong>, taking each
+                penguin's gap along with it.
+              </p>
+              <p>
+                Then we <strong>let go of body mass</strong>. Each residual
+                slides to its own value on a single number line. Negative on the left,
+                positive on the right, and the balance point is exactly zero.
+              </p>
+            </div>
+          </div>
+          <div class="step" data-step="6" data-alt="The number line relabeled in standard deviations; an arrow marks one SD, 2.10 mm." data-label="Standardizing">
+            <div class="card">
+              <p>
+                Millimeters only make sense for <em>this</em> model. To make
+                residuals comparable, we divide each one by their standard
+                deviation (<span class="tex" data-tex="s \approx 2.10\text{ mm}"></span>).<sup><a href="#note-1">1</a></sup>
+              </p>
+              <p>
+                Notice that <strong>the dots don't move.</strong> Only the ruler
+                changes. The residuals are now in units of "standard deviations
+                from zero."
+              </p>
+            </div>
+          </div>
+          <div class="step" data-step="7" data-alt="The dots stacked into a histogram of standardized residuals." data-label="A pile of residuals">
+            <div class="card">
+              <p>
+                Now let them fall. Stacking the residuals into bins half a
+                standard deviation wide turns the number line into a
+                <strong>histogram</strong>.
+              </p>
+              <p>Every block is still one penguin.</p>
+            </div>
+          </div>
+          <div class="step" data-step="8" data-alt="The histogram with two curves: a smoothed blue curve of the residuals and a black normal bell curve." data-label="The normal benchmark">
+            <div class="card">
+              <p>
+                This shape matters. The <em>p</em>-values and confidence
+                intervals from a regression assume the residuals are roughly
+                <strong>normally distributed</strong>.
+              </p>
+              <p>
+                The <span class="ours">blue curve</span> smooths our pile into a
+                shape. The <strong>black curve</strong> is the benchmark: what 40
+                draws from a perfect bell curve would look like.
+              </p>
+              <p>
+                They aren't identical, with a bump here and a gap there, but that's
+                normal for a small sample.
+              </p>
+            </div>
+          </div>
+          <div class="step" data-step="9" data-alt="The residual dots stacked sideways inside a vase-shaped density on the left, and a normal bell curve as a vase below." data-label="Two vases">
+            <div class="card">
+              <p>
+                Histograms change with the bin sizes you choose, so statisticians use a
+                sharper tool: the <strong>quantile–quantile (Q–Q) plot</strong>.
+              </p>
+              <p>
+                To see how it works, picture each distribution as a
+                <strong>vase</strong>. Our pile of residuals and its blue curve
+                tip onto their side to make one vase. The black bell curve drops
+                below to make the other. The shapes differ, but both vases hold
+                <em>exactly</em> the same amount of water.
+              </p>
+            </div>
+          </div>
+          <div class="step step--scrub" data-step="10" data-alt="Water fills both vases at the same rate; a marker traces the Q-Q curve as residuals move out to their Q-Q positions." data-label="Filling the vases">
+            <div class="card">
+              <p>
+                Keep scrolling to <strong>pour water into both vases at the same
+                rate</strong>, starting from the low end.
+              </p>
+              <p>
+                At every moment, each water line marks a <strong>quantile</strong>:
+                the value that this share of the distribution falls below. Plot one water line
+                against the other and you trace out the Q–Q plot.
+              </p>
+              <p>
+                Each time another 1/40 of the water goes in, the water line
+                reaches the next residual, and it leaves the vase for its spot
+                on the plot.<sup><a href="#note-2">2</a></sup>
+              </p>
+            </div>
+          </div>
+          <div class="step" data-step="11" data-alt="Normal Q-Q plot: the residual dots lie close to the diagonal line." data-label="Reading a Q–Q plot">
+            <div class="card">
+              <p>
+                If both vases had the same shape, every dot would land on the
+                <strong>diagonal</strong>. Where our vase is narrower, the dots
+                climb more steeply; where it's wider, they level off.
+              </p>
+              <p>
+                Ours hug the diagonal, so the residuals are
+                <strong>close enough to normal</strong>.
+              </p>
+            </div>
+          </div>
+          <div class="step" data-step="12" data-alt="Residuals plotted against fitted values, scattered evenly around zero inside a shaded band." data-label="Residuals vs. fitted">
+            <div class="card">
+              <p>
+                The Q–Q plot showed our residuals have the right overall
+                <strong>shape</strong>. Now we check they keep that shape
+                <strong>everywhere</strong>.
+              </p>
+              <p>
+                For that we use a <strong>residuals vs. fitted plot</strong>:
+                each residual lines up with its penguin's predicted bill length.
+                The shaded band is where most misses should land.
+              </p>
+              <p>
+                If the model works equally well everywhere, the dots stay in the
+                band from left to right. Ours do, with just one slightly outside.
+              </p>
+            </div>
+          </div>
+          <div class="step" data-step="13" data-label="The three diagnostic plots" data-alt="Three diagnostic plots side by side, each built from the same 40 residuals: a histogram, a Q-Q plot, and residuals vs. fitted values.">
+            <div class="card">
+              <p>That's the whole life of a residual, told in the three diagnostic plots:</p>
+              <ul class="closer-list">
+                <li>
+                  <strong>Histogram:</strong> the overall shape at a glance.
+                  Good for spotting skew or a second bump.
+                </li>
+                <li>
+                  <strong>Q–Q plot:</strong> a point-by-point check against the
+                  bell curve. Good for tails and outliers.
+                </li>
+                <li>
+                  <strong>Residuals vs. fitted:</strong> the misses across the
+                  model's predictions. Good for curves and funnels.
+                </li>
+              </ul>
+              <p>For our penguins, all three look healthy. The line can be trusted.</p>
+              <p>Now see what these plots look like when things go wrong ↓</p>
+            </div>
+          </div>
+        </article>
+
+        <figure>
+          <div class="fig-label"><span id="fig-label-text"></span></div>
+          <div class="figure__intro">
+            <img src="https://allisonhorst.github.io/palmerpenguins/reference/figures/culmen_depth.png" alt="Illustration of a penguin bill showing bill length and depth">
+            <p class="credit">Artwork by @allison_horst</p>
+          </div>
+          <svg class="canvas" id="canvas"></svg>
+        </figure>
+      </section>
+
+      <section id="sandbox">
+        <div class="sandbox__head">
+          <p class="kicker">Your turn</p>
+          <h2>Break the model</h2>
+          <p>
+            Our penguins behaved. Real data often doesn't. <strong>Drag any
+            penguin</strong> up or down, or load a problem dataset, and watch the
+            three diagnostic plots react as the line re-fits.
+          </p>
+        </div>
+
+        <div class="presets" role="group" aria-label="Datasets">
+          <button data-preset="original" class="active">Original</button>
+          <button data-preset="curved">Curved</button>
+          <button data-preset="funnel">Funnel</button>
+          <button data-preset="skewed">Skewed</button>
+          <button data-preset="outlier">Outlier</button>
+        </div>
+
+        <div class="panel panel--note">
+          <p id="sb-note"></p>
+        </div>
+
+        <div class="sandbox__grid">
+          <div class="panel panel--main">
+            <div class="panel__title">
+              <span>Bill length vs. body mass</span>
+              <span id="sb-stats"></span>
+            </div>
+            <svg id="sb-scatter"></svg>
+          </div>
+          <div class="panel">
+            <div class="panel__title">Histogram of residuals</div>
+            <svg id="sb-hist"></svg>
+          </div>
+          <div class="panel">
+            <div class="panel__title">
+              <span>Normal Q–Q</span>
+              <button id="sb-pour" class="mini-btn">Pour ▸</button>
+            </div>
+            <svg id="sb-qq"></svg>
+          </div>
+          <div class="panel">
+            <div class="panel__title">Residuals vs. fitted</div>
+            <svg id="sb-rvf"></svg>
+          </div>
+        </div>
+      </section>
+
+      <section id="notes">
+        <h3>Notes</h3>
+        <ol>
+          <li id="note-1">
+            To keep the dots still, this story standardizes by dividing every
+            residual by the same number, their standard deviation. R's
+            <code>plot()</code> uses <code>rstandard()</code> instead, which
+            also accounts for each point's leverage:
+            <span class="tex" data-tex="e_i / \big(\hat\sigma\sqrt{1 - h_i}\big)"></span>.
+            For these penguins the two versions never differ by more than
+            0.06&nbsp;SD.
+          </li>
+          <li id="note-2">
+            The residuals' vase is drawn as a smooth curve, but its water line
+            follows the actual sorted residuals, so the Q–Q trace passes
+            exactly through every dot. As a result, the water in that vase
+            only approximately matches the share poured.
+          </li>
+        </ol>
+      </section>
+
+      <footer id="outro">
+        <p>
+          Data: <a href="https://allisonhorst.github.io/palmerpenguins/">palmerpenguins</a>
+          (Horst, Hill &amp; Gorman), a sample of 40 Adélie and Gentoo penguins.
+          Artwork by Allison Horst. The Q–Q vases follow
+          <a href="http://www-stat.wharton.upenn.edu/~stine/shiny/quantile_plot.pdf">Stine (2016)</a>.
+          Built with <a href="https://d3js.org">d3</a>. Set in Open Sans and
+          <a href="https://www.fontshare.com/fonts/chillax">Chillax</a> by
+          Indian Type Foundry.
+        </p>
+      </footer>
+    </main>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js" integrity="sha384-YNHdsYkH6gMx9y3mRkmcJ2mFUjTd0qNQQvY9VYZgQd7DcN7env35GzlmFaZ23JGp" crossorigin="anonymous"></script>
+    <script src="./d3.min.js"></script>
+    <script src="./data.js"></script>
+    <script src="./story.js"></script>
+    <script src="./sandbox.js"></script>
+  </body>
+</html>
