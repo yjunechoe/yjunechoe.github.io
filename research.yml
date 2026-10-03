@@ -1,0 +1,297 @@
+# Publications and talks on research.qmd (template: research.ejs).
+# `section` picks which list an entry appears in. Entries show in file order.
+# `venue` may contain <em>...</em> for italics. "June Choe" is bolded automatically.
+# (In research.ejs, Quarto's lodash templates output HTML as-is with the
+# equals-sign tag and escape it with the dash tag, the reverse of EJS.)
+
+# ---- Academic research output ----
+
+- section: journal
+  authors: June Choe and Anna Papafragou
+  year: Submitted
+  title: "Children's sensitivity to informativeness: basic-level vs. superordinate nouns"
+
+- section: journal
+  authors: June Choe and Anna Papafragou
+  year: "2026"
+  title: Children use speaker knowledge to learn novel subordinate vs. basic-level nouns
+  url: "https://doi.org/10.1016/j.cogpsych.2026.101829"
+  venue: "<em>Cognitive Psychology, 166</em>, 101829. DOI: 10.1016/j.cogpsych.2026.101829"
+
+- section: journal
+  authors: June Choe and Anna Papafragou
+  year: "2025"
+  title: Distributional signatures of superordinate nouns
+  url: "https://doi.org/10.1080/10489223.2024.2440348"
+  venue: "<em>Language Acquisition, 33</em>(1), 83–103. DOI: 10.1080/10489223.2024.2440348"
+  links:
+    - {text: PDF, href: static/papers/Choe_Papafragou_2025_distributional_signatures_superordinates.pdf}
+    - {text: OSF, href: "https://osf.io/uhpr2/"}
+
+- section: journal
+  authors: June Choe and Anna Papafragou
+  year: "2023"
+  title: The acquisition of subordinate nouns as pragmatic inference
+  url: "https://doi.org/10.1016/j.jml.2023.104432"
+  venue: "<em>Journal of Memory and Language, 132</em>, 104432. DOI: 10.1016/j.jml.2023.104432"
+  links:
+    - {text: PDF, href: static/papers/Choe_Papafragou_2023_pragmatic_inference_subordinates.pdf}
+    - {text: OSF, href: "https://osf.io/x8cuf/?view_only=14a975d3618e4838b6cc7681b2ecf692"}
+
+- section: journal
+  authors: June Choe, Masaya Yoshida, and Jennifer Cole
+  year: "2022"
+  title: "The role of prosodic focus in the reanalysis of garden path sentences: Depth of semantic processing impedes the revision of an erroneous local analysis"
+  url: "https://escholarship.org/uc/item/5d84n2x7"
+  venue: "<em>Glossa Psycholinguistics, 1</em>(1). DOI: 10.5070/G601136"
+  links:
+    - {text: PDF, href: static/papers/Choe_Yoshida_Cole_2022_prosodic_focus_garden_path_reanalysis.pdf}
+    - {text: OSF, href: "https://osf.io/u6dq5/"}
+
+- section: journal
+  authors: Sean McWeeny, Jinnie S. Choi, June Choe, Alexander LaTourette, Megan Y. Roberts, and Elizabeth S. Norton
+  year: "2022"
+  title: "Rapid automatized naming (RAN) as a kindergarten predictor of future reading in English: A systematic review and meta-analysis"
+  url: "https://doi.org/10.1002/rrq.467"
+  venue: "<em>Reading Research Quarterly, 57</em>(4), 1187–1211. DOI: 10.1002/rrq.467"
+
+- section: proceedings
+  authors: June Choe, Yiran Chen, May Pik Yu Chan, Aini Li, Xin Gao, and Nicole Holliday
+  year: "2022"
+  title: Language-specific Effects on Automatic Speech Recognition Errors for World Englishes
+  url: "https://aclanthology.org/2022.coling-1.628/"
+  venue: "In <em>Proceedings of the 29th International Conference on Computational Linguistics</em>, 7177–7186"
+
+- section: proceedings
+  authors: May Pik Yu Chan, June Choe, Aini Li, Yiran Chen, Xin Gao, and Nicole Holliday
+  year: "2022"
+  title: Training and typological bias in ASR performance for world Englishes
+  url: "https://www.isca-speech.org/archive/interspeech_2022/chan22b_interspeech.html"
+  venue: "In <em>Proceedings of Interspeech 2022</em>, 1273-1277. DOI: 10.21437/Interspeech.2022-10869"
+
+- section: proceedings
+  authors: June Choe and Anna Papafragou
+  year: "2022"
+  title: "The acquisition of subordinate nouns as pragmatic inference: Semantic alternatives modulate subordinate meanings"
+  url: "https://escholarship.org/uc/item/2m87n4ht"
+  venue: "In <em>Proceedings of the Annual Meeting of the Cognitive Science Society</em>, 44, 2745-2752"
+
+- section: talks
+  authors: June Choe and Anna Papafragou
+  title: "Children's sensitivity to informativeness in naming: basic-level vs. superordinate nouns"
+  venue: Talk at the 101st Linguistic Society of America (LSA) conference. 9-12 January 2025. Philadelphia
+
+- section: talks
+  authors: June Choe
+  title: Distributional signatures of superordinate nouns
+  venue: Talk at the 10th MACSIM conference. 6 April 2024. University of Maryland, College Park, MD
+
+- section: talks
+  authors: June Choe
+  title: Sub-layer modularity in the Grammar of Graphics
+  venue: Talk at the 2023 Joint Statistical Meetings, 5-10 August 2023. Toronto, Canada
+  award: American Statistical Association (ASA) student paper award in Statistical Computing and Graphics
+  links:
+    - {text: Paper, href: static/papers/Choe_2022_SublayerGG.pdf}
+
+- section: talks
+  authors: June Choe
+  title: Persona-based social expectations in sentence processing and comprehension
+  venue: Talk at the Language, Stereotypes & Social Cognition workshop, 22-23 May, 2023. University of Pennsylvania, PA
+
+- section: talks
+  authors: June Choe and Anna Papafragou
+  title: Lexical alternatives and the acquisition of subordinate nouns
+  venue: Talk at the 47th Boston University Conference on Language Development (BUCLD), 3-6 November, 2022. Boston University, Boston, MA
+  links:
+    - {text: Slides, href: static/slides/BUCLD_2022_Choe_Papafragou.pdf}
+
+- section: talks
+  authors: June Choe, Yiran Chen, May Pik Yu Chan, Aini Li, Xin Gao and Nicole Holliday
+  year: "2022"
+  title: Language-specific Effects on Automatic Speech Recognition Errors in American English
+  venue: Talk at the 28th International Conference on Computational Linguistics (CoLing), 12-17 October, 2022. Gyeongju, South Korea
+  links:
+    - {text: Slides, href: static/slides/COLING_2022_Choe_et_al.pdf}
+
+- section: talks
+  authors: May Pik Yu Chan, June Choe, Aini Li, Yiran Chen, Xin Gao and Nicole Holliday
+  year: "2022"
+  title: Training and typological bias in ASR performance for world Englishes
+  venue: Talk at the 23rd Conference of the International Speech Communication Association (INTERSPEECH), 18-22 September, 2022. Incheon, South Korea
+
+- section: presentations
+  authors: June Choe and Anna Papafragou
+  title: Distributional signatures of superordinate nouns
+  venue: Poster presented at the 48th Boston University Conference on Language Development (BUCLD), 2-5 November, 2023. Boston University, Boston, MA
+  award: Paula Menyuk Travel Award
+  links:
+    - {text: Abstract, href: static/abstract/BUCLD2023a_Abstract.pdf}
+    - {text: Poster, href: static/poster/BUCLD2023_superordinates_corpus.png}
+
+- section: presentations
+  authors: June Choe and Anna Papafragou
+  title: Pragmatic underpinnings of the basic-level bias
+  venue: Poster presented at the 48th Boston University Conference on Language Development (BUCLD), 2-5 November, 2023. Boston University, Boston, MA
+  award: Paula Menyuk Travel Award
+  links:
+    - {text: Abstract, href: static/abstract/BUCLD2023b_Abstract.pdf}
+    - {text: Poster, href: static/poster/BUCLD2023_superordinates_judgments.png}
+
+- section: presentations
+  authors: June Choe and Anna Papafragou
+  title: Discourse effects on the acquisition of subordinate nouns
+  venue: Poster presented at the 9th Mid-Atlantic Colloquium of Studies in Meaning (MACSIM), 15 April 2023. University of Pennsylvania, PA
+
+- section: presentations
+  authors: June Choe and Anna Papafragou
+  title: Discourse effects on the acquisition of subordinate nouns
+  venue: Poster presented at the 36th Annual Conference on Human Sentence Processing, 9-11 March 2022. University of Pittsburg, PA
+  links:
+    - {text: Abstract, href: static/abstract/HSP_2023_Abstract.pdf}
+    - {text: Poster, href: static/poster/HSP2023.png}
+
+- section: presentations
+  authors: June Choe and Anna Papafragou
+  title: "Acquisition of subordinate nouns as pragmatic inference: Semantic alternatives modulate subordinate meanings"
+  venue: Poster at the 2nd Experiments in Linguistic Meaning (ELM) conference, 18-20 May 2022. University of Pennsylvania, Philadelphia, PA
+
+- section: presentations
+  authors: June Choe and Anna Papafragou
+  title: "Beyond the basic level: Levels of informativeness and the acquisition of subordinate nouns"
+  venue: Poster at the 35th Annual Conference on Human Sentence Processing (HSP), 24-26 March 2022. University of California, Santa Cruz, CA
+
+- section: presentations
+  authors: June Choe, Jennifer Cole, and Masaya Yoshida
+  title: Prosodic Focus Strengthens Semantic Persistence
+  venue: Poster at The 26th Architectures and Mechanisms for Language Processing (AMLaP), 3-5 September 2020. Potsdam, Germany
+  links:
+    - {text: Poster, href: static/poster/AMLAP2020.pdf}
+    - {text: Abstract, href: static/abstract/AMLAP_2020_Abstract.pdf}
+    - {text: Video, href: "https://osf.io/fjkp9/"}
+    - {text: Slides, href: static/slides/AMLAP_2020_Slides.pdf}
+
+- section: presentations
+  authors: June Choe
+  title: Computer-assisted snowball search for meta-analysis research
+  venue: Poster at The 2020 Undergraduate Research & Arts Exposition. 27-28 May 2020. Northwestern University, Evanston, IL
+  award: 2nd Place Poster Award
+  links:
+    - {text: Poster, href: static/poster/Snowballer_June_Choe.pdf}
+    - {text: Abstract, href: static/abstract/Expo_2020_Abstract.pdf}
+
+- section: presentations
+  authors: June Choe
+  title: Social Information in Sentence Processing
+  venue: Talk at The 2019 Undergraduate Research & Arts Exposition. 29 May 2019. Northwestern University, Evanston, IL
+  links:
+    - {text: Abstract, href: static/abstract/Expo_2019_Abstract.pdf}
+
+- section: presentations
+  authors: June Choe, Shayne Sloggett, Masaya Yoshida, and Annette D'Onofrio
+  title: "Personae in syntactic processing: Socially-specific agents bias expectations of verb transitivity"
+  venue: Poster at The 32nd CUNY Conference on Human Sentence Processing. 29-31 March 2019. University of Colorado, Boulder, CO
+
+- section: presentations
+  authors: Annette D’Onofrio, June Choe and Masaya Yoshida
+  title: "Personae in syntactic processing: Socially-specific agents bias expectations of verb transitivity"
+  venue: Poster at The 93rd Annual Meeting of the Linguistics Society of America. 3-6 January 2019. New York City, NY
+
+# ---- Research activities in FOSS ----
+
+- section: foss-journal
+  authors: Massimo Aria, Trang Le, Corrado Cuccurullo, Alessandra Belfiore, and June Choe
+  year: "2024"
+  title: "openalexR: An R-tool for collecting bibliometric data from OpenAlex"
+  venue: The R Journal, 15(4), 166-179
+  links:
+    - {text: Paper, href: "https://rjournal.github.io/articles/RJ-2023-089/"}
+    - {text: Github, href: "https://github.com/massimoaria/openalexR"}
+
+- section: foss-manuscripts
+  authors: June Choe
+  year: "2024"
+  title: "jlmerclusterperm: R (and Julia) package for cluster-based permutation tests on densely-sampled time series data"
+  links:
+    - {text: Paper, href: static/papers/Choe_2024_jlmerclusterperm.pdf}
+    - {text: Github, href: "https://github.com/yjunechoe/jlmerclusterperm/"}
+
+- section: foss-manuscripts
+  authors: June Choe
+  year: "2022"
+  title: Sub-layer modularity in the Grammar of Graphics
+  links:
+    - {text: Paper, href: static/papers/Choe_2022_SublayerGG.pdf}
+    - {text: Github, href: "https://github.com/yjunechoe/ggtrace/"}
+
+- section: foss-talks
+  authors: June Choe
+  title: Sub-layer modularity in the Grammar of Graphics
+  url: "https://ww2.aievolution.com/JSMAnnual/index.cfm?do=ev.viewEv&ev=2860"
+  venue: Talk at the 2023 Joint Statistical Meetings, 5-10 August 2023. Toronto, Canada
+
+- section: foss-talks
+  authors: June Choe
+  title: Fast cluster-based permutation test using mixed-effects models
+  url: "https://github.com/yjunechoe/jlmerclusterperm/"
+  venue: Talk at the Integrated Language Science and Technology (ILST) seminar, 21 April 2023. University of Pennsylvania, PA
+
+- section: foss-talks
+  authors: June Choe
+  title: Cracking open ggplot internals with {ggtrace}
+  url: "https://www.youtube.com/watch?v=dUBnitXf5mk&list=PL9HYL-VRX0oTOwqzVtL_q5T8MNrzn0mdH&index=38"
+  venue: Talk at the 2022 RStudio Conference, 25-28 July 2022. Washington D.C.
+  links:
+    - {text: Github, href: "https://github.com/yjunechoe/ggtrace-rstudioconf2022"}
+
+- section: foss-talks
+  authors: June Choe
+  title: Stepping into {ggplot2} internals with {ggtrace}
+  url: "https://www.youtube.com/watch?v=2JX8zu4QxMg&t=2959s"
+  venue: Talk at the 2022 useR! Conference, 20-23 June 2022. Vanderbilt University, TN
+  award: Diversity scholarship award
+  links:
+    - {text: Github, href: "https://github.com/yjunechoe/ggtrace-user2022"}
+
+- section: foss-software
+  authors: June Choe
+  year: "2024"
+  title: "jlmerclusterperm: Cluster-Based Permutation Analysis for Densely Sampled Time Data"
+  venue: R package version 1.1.3
+  links:
+    - {text: CRAN, href: "https://cran.r-project.org/package=jlmerclusterperm"}
+    - {text: Github, href: "https://github.com/yjunechoe/jlmerclusterperm/"}
+
+- section: foss-software
+  authors: Rich Iannone, June Choe, and Mauricio Vargas Sepulveda
+  year: "2024"
+  title: "pointblank: Data Validation and Organization of Metadata for Local and Remote Tables"
+  venue: R package version 0.12.1
+  links:
+    - {text: CRAN, href: "https://CRAN.R-project.org/package=pointblank"}
+    - {text: Github, href: "https://rstudio.github.io/pointblank/"}
+
+- section: foss-software
+  authors: Massimo Aria, Corrado Cuccurullo, Trang Le, and June Choe
+  year: "2024"
+  title: "openalexR: Getting Bibliographic Records from 'OpenAlex' Database Using 'DSL' API"
+  venue: R package version 1.4.0
+  links:
+    - {text: CRAN, href: "https://CRAN.R-project.org/package=openalexR"}
+    - {text: Github, href: "https://github.com/ropensci/openalexR"}
+
+- section: foss-software
+  authors: June Choe
+  year: "2024"
+  title: "jlme: Regression Modelling with 'GLM.jl' and 'MixedModels.jl' in 'Julia'"
+  venue: R package version 0.3.0
+  links:
+    - {text: CRAN, href: "https://cran.r-project.org/package=jlme"}
+    - {text: Github, href: "https://github.com/yjunechoe/jlme/"}
+
+- section: foss-software
+  authors: Sean McWeeny, June Choe, and Elizabeth S. Norton
+  year: "2021"
+  title: "SnowGlobe: An Iterative Search Tool for Systematic Reviews and Meta-Analyses [Computer Software]"
+  links:
+    - {text: OSF, href: "https://doi.org/10.17605/OSF.IO/U25RN"}

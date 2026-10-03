@@ -1,0 +1,103 @@
+# Packages shown as cards on software.qmd (template: software.ejs)
+- title: ggtrace
+  image: https://yjunechoe.github.io/ggtrace/logo.png
+  role: Maintainer, Author
+  languages: [R]
+  description: >-
+    Programmatically explore, debug, and manipulate ggplot internals. A low-level
+    interface that extends base R's trace, plus workflow functions that make
+    ggplot internals more accessible.
+  links:
+    - {text: GitHub, href: "https://github.com/yjunechoe/ggtrace"}
+    - {text: Website, href: "https://yjunechoe.github.io/ggtrace"}
+    - {text: "useR! 2022 talk", href: "https://www.youtube.com/watch?v=2JX8zu4QxMg&t=2959s"}
+    - {text: "rstudio::conf 2022 talk", href: "https://www.rstudio.com/conference/2022/talks/cracking-open-ggplot-internals-ggtrace/"}
+    - {text: Paper, href: "https://yjunechoe.github.io/static/papers/Choe_2022_SublayerGG.pdf"}
+
+- title: jlmerclusterperm
+  image: https://yjunechoe.github.io/jlmerclusterperm/logo.png
+  role: Maintainer, Author
+  languages: [R, Julia]
+  description: >-
+    Fast cluster-based permutation analysis for densely-sampled time data, with
+    (generalized, mixed-effects) regression models. Uses MixedModels.jl and GLM.jl
+    through JuliaConnectoR.
+  links:
+    - {text: CRAN, href: "https://cran.r-project.org/package=jlmerclusterperm"}
+    - {text: GitHub, href: "https://github.com/yjunechoe/jlmerclusterperm/"}
+    - {text: Website, href: "https://yjunechoe.github.io/jlmerclusterperm/"}
+
+- title: pointblank
+  image: https://raw.githubusercontent.com/rstudio/pointblank/main/pkgdown/favicon/apple-touch-icon.png
+  role: Author
+  languages: [R, HTML/CSS, JavaScript]
+  description: >-
+    Data quality assessment and metadata reporting for data frames and database tables.
+  links:
+    - {text: GitHub, href: "https://github.com/rstudio/pointblank"}
+    - {text: Website, href: "https://rstudio.github.io/pointblank/"}
+
+- title: openalexR
+  image: https://docs.ropensci.org/openalexR/logo.png
+  role: Author
+  languages: [R]
+  description: >-
+    Tools to extract bibliographic content from the OpenAlex database API.
+  links:
+    - {text: GitHub, href: "https://github.com/ropensci/openalexR"}
+    - {text: Website, href: "https://docs.ropensci.org/openalexR/"}
+
+- title: jlme
+  role: Author, Maintainer
+  languages: [R, Julia]
+  description: >-
+    Julia (mixed-effects) regression modelling from R, powered by JuliaConnectoR
+    and the Julia libraries GLM, StatsModels, and MixedModels.
+  links:
+    - {text: GitHub, href: "https://github.com/yjunechoe/jlme"}
+    - {text: Website, href: "https://yjunechoe.github.io/jlme/"}
+
+- title: ggcolormeter
+  role: Maintainer, Author
+  languages: [R]
+  description: >-
+    Adds guide_colormeter(), a ggplot2 color/fill legend in the style of a
+    dashboard meter.
+  links:
+    - {text: GitHub, href: "https://github.com/yjunechoe/ggcolormeter"}
+
+- title: LingWER
+  role: Author
+  languages: [R]
+  description: >-
+    Linguistic analysis of Word Error Rate for evaluating transcriptions and other
+    speech-to-text output, using a deterministic matrix-based search algorithm.
+  links:
+    - {text: GitHub, href: "https://github.com/yjunechoe/LingWER"}
+
+- title: gridAnnotate
+  role: Author
+  languages: [R]
+  description: >-
+    Interactively annotate figures from the plot pane, using {grid} graphical objects.
+  links:
+    - {text: GitHub, href: "https://github.com/yjunechoe/gridAnnotate"}
+
+- title: penngradlings
+  role: Author
+  languages: [R]
+  description: >-
+    R package for the University of Pennsylvania Graduate Linguistics Society.
+  links:
+    - {text: GitHub, href: "https://github.com/yjunechoe/penngradlings"}
+
+- title: Snowglobe (retired)
+  role: Maintainer, Author
+  languages: [R, SQL]
+  description: >-
+    An iterative search tool for systematic reviews and meta-analyses, built as a
+    Shiny app. Retired when the Microsoft Academic Graph was discontinued in 2021.
+  links:
+    - {text: GitHub, href: "https://github.com/yjunechoe/Snowglobe"}
+    - {text: OSF, href: "https://osf.io/u25rn/"}
+    - {text: Poster, href: "https://yjunechoe.github.io/static/poster/Snowballer_June_Choe.pdf"}

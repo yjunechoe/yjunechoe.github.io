@@ -1,0 +1,98 @@
+project:
+  type: website
+  # GitHub Pages serves the site from docs/
+  output-dir: docs
+  # Rebuild posts/<slug>/ for distill-era posts from the _distill/ snapshot
+  pre-render: uv run _distill/wrap.py
+  post-render:
+    # Keep RSS item IDs identical to the distill feed (no trailing slash)
+    - uv run _distill/feed.py
+    # Fail the render if any distill-era post is missing or its text drifted
+    - uv run _distill/check.py
+  render:
+    - index.qmd
+    - blog.qmd
+    - projects.qmd
+    - research.qmd
+    - software.qmd
+    - posts/*/index.qmd
+  # Leading slashes anchor these to the project root (so docs/static/ is not matched)
+  resources:
+    - /static/
+    - /distill_libs/
+    - /google28f36d9a2442efdb.html
+    - /robots.txt
+    - /.nojekyll
+
+website:
+  title: "June Choe"
+  description: "Personal Blog"
+  site-url: https://yjunechoe.github.io
+  favicon: static/img/icon.png
+  # Share-card image for pages without their own `image:` (posts set their own)
+  image: static/img/profile_rect.jpeg
+  image-alt: "Photo of June Choe"
+  google-analytics: "UA-178413324-1"
+  twitter-card:
+    site: "@yjunechoe"
+  open-graph: true
+  search: true
+  navbar:
+    # Always visible; Quarto picks a readable text color for this background
+    pinned: true
+    background: "#262c2f"
+    right:
+      - text: "Home"
+        href: index.qmd
+      - text: "Blog"
+        href: blog.qmd
+      - text: "Projects"
+        href: projects.qmd
+      - text: "Research"
+        href: research.qmd
+      - text: "CV"
+        href: static/CV.pdf
+      - text: "Software"
+        href: software.qmd
+      - icon: twitter
+        aria-label: Twitter
+        href: https://twitter.com/yjunechoe
+      - icon: mastodon
+        aria-label: Mastodon
+        href: https://fosstodon.org/@yjunechoe
+      - icon: github
+        aria-label: GitHub
+        href: https://github.com/yjunechoe
+      - text: "OSF"
+        href: https://osf.io/72vrb/
+      - icon: rss
+        aria-label: RSS feed
+        href: blog.xml
+  page-footer:
+    left: "June Choe · Made with [Quarto](https://quarto.org)"
+    right:
+      - icon: github
+        href: https://github.com/yjunechoe
+        aria-label: GitHub
+      - icon: mastodon
+        href: https://fosstodon.org/@yjunechoe
+        aria-label: Mastodon
+      - icon: rss
+        href: blog.xml
+        aria-label: RSS feed
+
+format:
+  html:
+    theme: [cosmo, theme.scss]
+    css: styles.css
+    toc: true
+    toc-location: right
+    syntax-highlighting: a11y
+    code-block-border-left: "#4D8DC9"
+    code-block-bg: true
+    code-link: true
+    link-external-newwindow: false
+    canonical-url: true
+
+execute:
+  freeze: auto

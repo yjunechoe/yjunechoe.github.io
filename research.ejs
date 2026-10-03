@@ -1,0 +1,17 @@
+```{=html}
+<ul class="pub-list">
+<% const italicTitles = ["talks", "presentations"]; %>
+<% for (const item of items) { %>
+  <li class="pub" <%= metadataAttrs(item) %>>
+    <%= item.authors.replace(/June Choe/g, "<strong>June Choe</strong>") %>.<% if (item.year) { %> (<%- item.year %>).<% } %>
+    <% const title = italicTitles.includes(item.section) ? `<em>${item.title}</em>` : item.title; %>
+    <% if (item.url) { %><a href="<%- item.url %>"><%= title %></a>.<% } else { %><%= title %>.<% } %>
+    <% if (item.venue) { %><%= item.venue %>.<% } %>
+    <% if (item.award) { %><strong><%- item.award %></strong>.<% } %>
+    <% for (const link of (item.links || [])) { %>
+      <a class="pub-link" href="<%- link.href %>"><%- link.text %></a>
+    <% } %>
+  </li>
+<% } %>
+</ul>
+```

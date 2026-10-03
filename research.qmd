@@ -1,0 +1,142 @@
+---
+title: Research and activities
+# Publications and talks come from research.yml; add new entries there.
+listing:
+  - id: journal
+    contents: research.yml
+    template: research.ejs
+    include: {section: journal}
+    sort: false
+  - id: proceedings
+    contents: research.yml
+    template: research.ejs
+    include: {section: proceedings}
+    sort: false
+  - id: talks
+    contents: research.yml
+    template: research.ejs
+    include: {section: talks}
+    sort: false
+  - id: presentations
+    contents: research.yml
+    template: research.ejs
+    include: {section: presentations}
+    sort: false
+  - id: foss-journal
+    contents: research.yml
+    template: research.ejs
+    include: {section: foss-journal}
+    sort: false
+  - id: foss-manuscripts
+    contents: research.yml
+    template: research.ejs
+    include: {section: foss-manuscripts}
+    sort: false
+  - id: foss-talks
+    contents: research.yml
+    template: research.ejs
+    include: {section: foss-talks}
+    sort: false
+  - id: foss-software
+    contents: research.yml
+    template: research.ejs
+    include: {section: foss-software}
+    sort: false
+---
+
+Links: [Google Scholar](https://scholar.google.com/citations?user=dFdQTmYAAAAJ), [Github](https://github.com/yjunechoe), [OSF](https://osf.io/72vrb/)
+
+## Academic research output
+
+### Journal Papers
+
+::: {#journal}
+:::
+
+### Peer-reviewed Proceedings
+
+::: {#proceedings}
+:::
+
+### Conference Talks
+
+::: {#talks}
+:::
+
+### Conference Presentations
+
+::: {#presentations}
+:::
+
+
+## Research activities in FOSS
+
+### Journal Papers
+
+::: {#foss-journal}
+:::
+
+### Manuscripts
+
+::: {#foss-manuscripts}
+:::
+
+### Conference Talks
+
+::: {#foss-talks}
+:::
+
+### Software
+
+::: {#foss-software}
+:::
+
+
+## Teaching
+
+### Positions held
+
+Teaching assistant for "Introduction to Linguistics". Instructor: Aletheia Cui. Spring 2024. University of Pennsylvania.
+
+Teaching assistant for "Data science for language and the mind". Instructor: Kathryn Schuler. Fall 2021, Spring, 2023, and Fall 2023. University of Pennsylvania.
+
+### Workshops led
+
+_Introduction to mixed-effects models in Julia_. Workshop at Penn MindCORE. 1 December 2023. Philadelphia, PA. [Github](https://github.com/yjunechoe/MindCORE-julia-mixedmodels) [Colab notebook](https://colab.research.google.com/drive/1eT-cb3_TAczLvs29_XpRH49oaySM4zW0?usp=sharing)
+
+_Experimental syntax using IBEX/PCIBEX_ with Dr. Nayoun Kim. Workshop at the 2022 Seoul International Conference on Linguistics. 11-12 August 2022. Seoul, South Korea. [PDF](https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2022-ibex-pcibex-workshop-slides.pdf)
+
+_Experimental syntax using IBEX: a walkthrough_ with Dr. Nayoun Kim. 2021 BK Winter School-Workshop on Experimental Linguistics/Syntax at Sungkyunkwan University, 19-22 January 2021. Seoul, South Korea. [PDF](https://github.com/yjunechoe/IBEX-Workshop-Materials/blob/master/2021-ibex-workshop-slides.pdf)
+
+### Guest lectures
+
+_Non-convergence and overparameterization in mixed-effects models: strategies in R and Julia_. LING 5620 “Quantitative Study of Linguistic Variation”. Instructor: Dr. Meredith Tamminga. Fall 2024. University of Pennsylvania. [GitHub](https://github.com/yjunechoe/ling5620-model-fitting)
+
+_Model extrapolation_. LING 0700 / PSYC 2314. “Data Science for studying language and the mind”. Instructor: Dr. Kathryn Schuler. Fall 2024. University of Pennsylvania. [Colab notebook](https://colab.research.google.com/drive/1muawzmVzjpCZgWaUlDE07cdHBhsLa1Fg)
+
+_Hard words and (syntactic) bootstrapping_. LING 5750 "The Acquisition of Meaning". Instructor: Dr. Anna Papafragou. Spring 2024. University of Pennsylvania.
+
+_Introduction to R for psychology research_. PSYC 4997 "Senior Honors Seminar in Psychology". Instructor: Dr. Coren Apicella. Spring 2024. University of Pennsylvania. [Colab notebook](https://colab.research.google.com/drive/1MJ23TMCYvo0jt2Lefyx60Mees6CzEFaY?usp=drive_link)
+
+_Model fitting and diagnosis with MixedModels.jl in Julia_. LING 5670 "Quantitative Study of Linguistic Variation". Instructor: Dr. Meredith Tamminga. Fall 2023. University of Pennsylvania. [GitHub](https://github.com/yjunechoe/ling5620-julia-demo)
+
+_Simulation-based power analysis for mixed-effects models_. LING 5670 "Quantitative Study of Linguistic Variation". Instructor: Dr. Meredith Tamminga. Spring 2023. University of Pennsylvania.
+
+
+## Professional activities
+
+### Editor
+
+- [Penn Working Papers in Linguistics (PWPL)](https://www.ling.upenn.edu/pwpl/), Volume 30, Issue 1.
+
+### Reviewer
+
+- Cognition
+- Language Learning and Development
+- Journal of Open Source Software
+- Proceedings of Cognitive Science
+
+### Membership
+
+- Linguistics Society of America
+- American Statistical Association

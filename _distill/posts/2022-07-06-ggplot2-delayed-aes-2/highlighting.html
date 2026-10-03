@@ -1,0 +1,13 @@
+<script>
+const statComputeLayer = $("#compute_layer\\(\\) > pre > code")
+statComputeLayer
+  .html(statComputeLayer.html().replace(/(dapply|self\$compute_panel)/ig, "<i class='code-hl'>$1</i>"))
+
+const statComputePanel = $("#compute_panel\\(\\) > pre > code")
+statComputePanel
+  .html(statComputePanel.html().replace(/(split|lapply|self\$compute_group)/ig, "<i class='code-hl'>$1</i>"))
+
+const statComputeGroup = $("#compute_group\\(\\) > pre > code")
+statComputeGroup
+  .html(statComputeGroup.html().replace(/(abort)/i, "<i class='code-hl'>$1</i>"))
+</script>

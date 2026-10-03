@@ -1,0 +1,25 @@
+```{=html}
+<div class="software-grid">
+<% for (const item of items) { %>
+  <section class="software-card" <%= metadataAttrs(item) %>>
+    <div class="software-logo">
+      <% if (item.image) { %>
+        <img src="<%- item.image %>" alt="<%= item.title %> logo" loading="lazy">
+      <% } else { %>
+        <span class="software-logo-text" aria-hidden="true"><%= item.title.slice(0, 2) %></span>
+      <% } %>
+    </div>
+    <div class="software-body">
+      <h3 class="software-title"><%= item.title %></h3>
+      <p class="software-meta"><%= item.role %> · <%= (item.languages || []).join(", ") %></p>
+      <p class="software-desc"><%= item.description %></p>
+      <p class="software-links">
+        <% for (const link of (item.links || [])) { %>
+          <a href="<%- link.href %>"><%= link.text %></a>
+        <% } %>
+      </p>
+    </div>
+  </section>
+<% } %>
+</div>
+```

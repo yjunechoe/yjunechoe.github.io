@@ -1,0 +1,27 @@
+# Site fonts and inline-code color. Everything else comes from the cosmo theme.
+color:
+  palette:
+    code-pink: "#fde2ff"
+
+typography:
+  fonts:
+    - family: Atkinson Hyperlegible
+      source: google
+      weight: [400, 700]
+      style: [normal, italic]
+    - family: Roboto Slab
+      source: google
+      weight: [400, 600, 700]
+    - family: Fira Mono
+      source: google
+      weight: [400, 500, 700]
+  base:
+    family: Atkinson Hyperlegible
+    line-height: 1.7
+  headings:
+    family: Roboto Slab
+    weight: 600
+  monospace: Fira Mono
+  monospace-inline:
+    color: "#000000"
+    background-color: code-pink

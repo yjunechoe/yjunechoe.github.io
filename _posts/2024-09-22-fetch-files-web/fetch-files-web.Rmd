@@ -149,7 +149,7 @@ gh::gh("/repos/yjunechoe/my-super-secret-repo/contents/README.md")$download_url 
 
 ## OSF
 
-[OSF](osf.io) (the Open Science Framework) is another data repository that I interact with a lot, and reading files off of OSF follows a similar strategy to fetching public files on GitHub.
+[OSF](https://osf.io) (the Open Science Framework) is another data repository that I interact with a lot, and reading files off of OSF follows a similar strategy to fetching public files on GitHub.
 
 Consider, for example, the `dyestuff.arrow` file in the [OSF repository for MixedModels.jl](https://osf.io/a94tr/). Browsing the repository through the point-and-click interface can get you to the page for the file at <https://osf.io/9vztj/>, where it shows:
 

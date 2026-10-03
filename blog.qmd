@@ -1,0 +1,43 @@
+---
+title: Blog Posts
+listing:
+  contents: posts
+  sort: "date desc"
+  type: default
+  categories: true
+  sort-ui: false
+  filter-ui: false
+  # Same-height thumbnails (fitted, not cropped, see styles.css), no author
+  # line (it's always June), show reading time
+  image-height: 150px
+  fields: [image, date, title, description, categories, reading-time]
+  feed:
+    type: full
+    items: 1000
+page-layout: full
+title-block-banner: false
+---
+
+<!--
+Scheduled blog posts:
+- rstudioconf reflections
+- across(scale()) vs. scale(across()) (NVM dplyr::pick())
+- principled aesthetic mappings
+- delayed aes eval part 3
+- slice() row-relational operations
+- constructing vectors with matrices
+- debugging with trace()
+- ggtrace: design and motivation
+- julia
+-->
+
+```{=html}
+<script>
+// Old distill category links look like blog.html#category:data_visualization.
+// Rewrite them to Quarto's form (#category=data%20visualization) before the listing reads the hash.
+if (location.hash.startsWith("#category:")) {
+  const cat = decodeURIComponent(location.hash.slice(10)).replace(/_/g, " ");
+  history.replaceState(null, "", "#category=" + encodeURIComponent(cat));
+}
+</script>
+```

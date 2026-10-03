@@ -1,0 +1,61 @@
+---
+title: Software and resources
+listing:
+  id: packages
+  contents: software.yml
+  template: software.ejs
+  sort: false
+---
+
+Main: [Github profile](https://github.com/yjunechoe), [R-universe profile](https://yjunechoe.r-universe.dev/builds)
+
+## Packages
+
+::: {#packages}
+:::
+
+## Slides and materials
+
+- {ggplot2} style guide and showcase: [most recent version (2/10/2021)](https://yjunechoe.netlify.app/flipbooks/ggplot2_master/feb_2020_ggplot2.html)
+- Cracking open the internals of ggplot, a {ggtrace} showcase: [slides](https://yjunechoe.github.io/ggtrace-talk)
+
+Workshop and talk materials are listed on the [Research](research.qmd) page.
+
+## Learning R and data visualization
+
+My tutorial posts (all of them are under the [tutorial](blog.qmd#category=tutorial) category):
+
+- {ggplot2} stat_*() functions ([post](posts/2020-09-26-demystifying-stat-layers-ggplot2/index.qmd))
+- Custom fonts in R ([post](posts/2021-06-24-setting-up-and-debugging-custom-fonts/index.qmd))
+- {purrr} reduce() family ([post 1](posts/2020-12-13-collapse-repetitive-piping-with-reduce/index.qmd), [post 2](posts/2021-01-17-random-sampling-a-table-animation/index.qmd))
+- The correlation parameter in {lme4} mixed effects models ([post](posts/2020-06-07-correlation-parameter-mem/index.qmd))
+- Shortcuts for common chain of {dplyr} functions ([post](posts/2020-08-07-saving-a-line-of-piping/index.qmd))
+- Plotting highly-customizable treemaps with {treemap} and {ggplot2} ([post](posts/2020-06-30-treemap-with-ggplot/index.qmd))
+
+Tutorials by others:
+
+- [A ggplot2 Tutorial for Beautiful Plotting in R](https://cedricscherer.netlify.app/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/) by Cédric Scherer
+- [ggplot2 Wizardry Hands-On](https://z3tt.github.io/OutlierConf2021/) by Cédric Scherer
+- [ggplot2 workshop](https://www.youtube.com/watch?v=h29g21z0a68) by Thomas Lin Pedersen
+
+Books:
+
+- [R for Data Science](https://r4ds.had.co.nz/) by Hadley Wickham and Garrett Grolemund
+- [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/) by Yihui Xie, J. J. Allaire, and Garrett Grolemund
+- [ggplot2: elegant graphics for data analysis](https://ggplot2-book.org/) by Hadley Wickham, Danielle Navarro, and Thomas Lin Pedersen
+- [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/) by Claus O. Wilke
+- [Efficient R Programming](https://csgillespie.github.io/efficientR/) by Colin Gillespie and Robin Lovelace
+- [Advanced R](https://adv-r.hadley.nz/) by Hadley Wickham
+
+## Other contributions
+
+I am listed as a contributor in:
+
+- [JuliaConnectoR](https://github.com/stefan-m-lenz/JuliaConnectoR)
+- [reactablefmtr](https://github.com/kcuilla/reactablefmtr/)
+- [ddplot](https://github.com/feddelegrand7/ddplot/)
+
+I have also contributed via PRs to:
+
+- [ggplot2](https://github.com/tidyverse/ggplot2/)
+- [fda](https://github.com/JamesRamsay5/fda)

@@ -1,0 +1,7 @@
+/*-- scss:defaults --*/
+
+// Quarto's muted greys are a bit too light for small text on white
+// (3.5:1 and 4.4:1; small text needs 4.5:1). Both used for captions,
+// blockquotes, listing dates and similar secondary text. This grey is 5.65:1.
+$text-muted: #61686f;
+$body-secondary: #61686f;

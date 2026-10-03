@@ -4,3 +4,15 @@
 .Ruserdata
 .ggsave_auto
 
+
+/.quarto/
+/drafts/*/index.html
+/drafts/*/index_files/
+/_environment.local
+# knitr chunk caches (#| cache: true) are a local speed-up only
+**/index_cache/
+
+/_*.local
+/.claude/
+
+**/*.quarto_ipynb

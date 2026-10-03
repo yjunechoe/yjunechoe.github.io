@@ -1,0 +1,17 @@
+# Defaults for every post in this folder. A post's own front matter overrides these.
+# Don't set `author` here: Quarto adds it to a post's own author list, which
+# shows up as a duplicated author in the citation.
+# No `comment` here: Quarto rewrites strings in _metadata.yml as relative paths,
+# so comment: " " became "../ " before every output line.
+knitr:
+  opts_chunk:
+    message: false
+    warning: false
+    R.options:
+      width: 80
+# Click a figure to zoom (inline images are left alone; add {.nolightbox} to opt out)
+lightbox: auto
+# Citation appendix with BibTeX on every post (distill had one too),
+# plus Google Scholar tags
+citation: true
+google-scholar: true
