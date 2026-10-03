@@ -1,383 +1,29 @@
-/* ---------- Global Styles ---------- */
+/* Site-wide look (fonts, colors, inline code) comes from _brand.yml and the
+   theme options in _quarto.yml. This file only has what posts need on top. */
 
-@import url('https://fonts.googleapis.com/css?family=Atkinson+Hyperlegible&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Fira+Mono&display=swap');
-
-html, body, p {
-  
-  font-family: 'Atkinson Hyperlegible';
-  font-weight: 400;
-  line-height: 1.7; 
-  font-size: 1em;
-  color: #333333;
-  font-style: normal;
-  
+/* Blog listing: fit thumbnails inside the fixed height instead of cropping,
+   so thumbnails that are mostly text stay readable */
+.quarto-post .thumbnail img {
+  object-fit: contain;
 }
 
-h2, h3 {
-  font-family: 'Roboto Slab'
-}
-
-d-article h4 {
-  font-size: 20px;
-  text-align: center;
-  margin-top: 0.5em;
-  padding: 5px 0px;
-  outline: 1px solid black;
-}
-
-d-article h5 {
-  font-size: 18px;
-  text-decoration: underline;
-  margin-bottom: 0.5em;
-}
-
-em {
-  margin-right: 3px;
-}
-
-div.opener {
-  text-align: justify;
-}
-
-/* Small caps */
+/* ---------- Helpers used inside posts ---------- */
 
 .sc {
   font-variant: small-caps;
   letter-spacing: 0.1em;
 }
 
-
-/* ---------- Index Page Styles ---------- */
-
-
-/* Name time */
-
-div.nav-left.title {
-  font-family: 'Roboto Slab';
+div.opener {
+  text-align: justify;
 }
 
-
-/* Search bar */
-
-.angolia-autocomplete {
-  width: 300px;
-}
-
-.nav-search {
-    font-size: inherit;
-}
-
-/* Publication Date */
-
-.publishedDate {
-  font-size: 1.1em;
-}
-
-
-/* Post Description */
-
-.posts-list .description h2 {
-  font-family: 'Roboto Slab';
-}
-
-.description p {
-  font-style: italic;
-  padding-top: 5px;
-}
-
-
-/* Tags */
-
-.posts-list .dt-tags {
-  margin-top: 10px;
-  margin-right: 10px;
-}
-
-
-.posts-list .dt-tags .dt-tag {
-  font-family: 'Roboto Slab';
-  font-weight: bold;
-  letter-spacing: 1px;
-  background-color: #565656;
-  color: white;
-}
-
-/* Top & Bot bars */
-
-.distill-site-nav {
-  background-color: #262c2f;
-}
-
-.distill-site-footer p {
-  color: white;
-}
-
-
-
-/* Post published date medatada */
-.posts-list .metadata .publishedDate{
-  font-family: 'Roboto Mono';
-}
-
-
-/* Post list caption */
-.posts-list .posts-list-caption{
-  font-family: 'Fira Mono';
-  border-bottom: 5px solid #f3f3f3;
-  padding-bottom: 2rem;
-}
-
-
-/* Sidebar Categories */
-.posts-sidebar {
-  font-family: 'Fira Mono';
-}
-
-.sidebar-section h3 {
-  font-size: 22px;
-  margin-bottom: 20px;
-}
-
-
-/* ---------- Article Styles ---------- */
-
-
-/* Title */
-
-d-title {
-  padding-bottom: 0;
-}
-
-d-title h1 {
-  font-family: 'Roboto Slab';
-  line-height: 1.3;
-}
-
-d-title p {
-  font-weight: 600;
-}
-
-
-/* General */
-
-d-article > h2 {
-  margin: 2.5rem 0 1.5rem 0;
-  border-bottom: 2px solid black;
-}
-
-div.l-body + h2 {
-  margin-top: 0px;
-}
-
-d-article > h3 {
-  margin-top: 1em;
-  font-size: 28px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid lightgrey;
-}
-
-d-article ol {
-  /* padding-bottom: 15px; */
-}
-
-/* Aside */
-
-aside {
-  margin-left: 20px;
-  width: 200px;
-  font-family: 'Roboto Slab';
-}
-
-div.sourceCode + aside {
-  margin-top: 1.5em;
-}
-
-aside code {
-  font-weight: 600;
-}
-
-/* Details */
-summary {
-  padding-left: 5px;
-}
-
-details {
-  background-color: #008bff0f;
-  outline: 2px solid #38566F;
-  padding: 1rem;
-}
-
-d-article details[open] summary {
-  margin-bottom: 1em;
-}
-
-/* Block Quotes */
-
-d-article blockquote {
-  border-left: 5px solid rgba(0, 0, 0, 0.2);
-  padding-left: 1em;
-}
-
-blockquote p {
-  margin-bottom: 0;
-}
-
-
-/* Footnote margins */
-d-footnote {
-  margin-left: -.2em;
-  margin-right: .1em;
-}
-
-/* Footnote Image */
-
-d-footnote-list ol li img {
-  width: 700px;
-}
-
-d-footnote img {
-  width: 660px;
-  padding: 10px;
-}
-
-
-/* -------- Layout Helpers -------- */
-
-/* 2-column Even */
-
-.pull-left {
-  float: left;
-  width: 47%;
-}
-
-.pull-right {
-  float: right;
-  width: 47%;
-}
-
-/* 2-column Left-skew */
-
-.pull-left-wide {
-  float: left;
-  width: 75%;
-}
-
-.pull-right-narrow {
-  float: right;
-  width: 20%;
-}
-
-/* 2-column Right-skew */
-
-.pull-left-narrow {
-  float: left;
-  width: 20%;
-}
-
-.pull-right-wide {
-  float: right;
-  width: 75%;
-}
-
-
-/* ---------- Code Styles ---------- */
-
-/* Inline Code */
-
-p > code, li > code, summary > code {
-  border-radius: 4px;
-  padding: 2px;
-  color: black;
-  background-color: #fbc4ff80;
-  font-family: 'Fira Mono';
-  font-weight: 600;
-  font-size: 0.8em;
-}
-
-a > code {
-    font-weight: bold;
-}
-
-
-/* Code Chunk */
-
-d-article div.sourceCode pre {
-  position: relative;
-  background-color: white;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
-  border-left: 5px solid #4D8DC9;
-}
-
-d-article pre.out-extended {
-  width: fit-content;
-  max-width: fit-content;
-  padding-right: 10px;
-}
-
-/* R chunk */
-d-article div.sourceCode pre.r {
-  background-color: #faffff;
-}
-
-/* Julia chunk */
-d-article div.sourceCode pre.julia {
-  background-color: #f8fffb;
-  border-left: 5px solid #4A916B;
-}
-
-d-article details div.sourceCode pre {
-  background-color: white;
-}
-
-/*
-d-article div.sourceCode pre.r:before {
-  position: absolute;
-  font-size: 1rem;
-  content: 'R';
-  font-family: 'Fira Mono';
-  font-weight: 600;
-  left: -20px;
-  top: -5px;
-  color: #59a2e6;
-}
-*/
-
-d-article div.sourceCode pre code {
-  font-family: 'Fira Mono';
-  font-weight: 600;
-}
-
-
-/* overrides some syntax highlighting */
-
-span.va {
-  color: black;
-}
-span.fu {
-  color: #3456cc;
-}
-span.cn {
-  color: #ef3e3a;
-}
-span.fl {
-  color: #c8531d;
-}
-span.kw {
-  color: #9f1eb1;
-}
-span.st {
-  color: #148a14;
-}
-span.co {
-  color: #999999;
-  font-weight: 500;
-}
+.pull-left { float: left; width: 47%; }
+.pull-right { float: right; width: 47%; }
+.pull-left-wide { float: left; width: 75%; }
+.pull-right-narrow { float: right; width: 20%; }
+.pull-left-narrow { float: left; width: 20%; }
+.pull-right-wide { float: right; width: 75%; }
 
 i.code-hl {
   font-style: normal;
@@ -388,83 +34,201 @@ i.code-hl {
   outline: 1px solid lightgrey;
 }
 
-/* underline auto-linked functions */
+details {
+  border: 1px solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius);
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+}
 
-span.va a {
+details[open] summary {
+  margin-bottom: 0.5em;
+}
+
+/* Category tags under a post title: Quarto fades them to 60% opacity,
+   which is 3.5:1 contrast at a very small size */
+.quarto-title .quarto-categories .quarto-category {
+  opacity: 0.85;
+}
+
+/* Quarto's `li code.sourceCode` rule (for inline code) also hits code blocks
+   inside list items and gives them the inline-code background */
+pre code.sourceCode {
+  background-color: transparent;
+}
+
+/* Inline code in headings: no highlight box */
+#quarto-document-content :is(h1, h2, h3, h4, h5) code {
+  background-color: transparent;
+  padding: 0;
+}
+
+/* Underline functions linked to their docs (code-link), so they look clickable */
+pre code a {
   text-decoration: underline;
-}
-span.fu a {
-  text-decoration: underline;
-}
-
-
-/* Output Chunk */
-
-d-article pre code {
-  font-family: 'Fira Mono';
-  font-weight: 500;
+  text-decoration-color: rgba(0, 0, 0, 0.35);
+  text-underline-offset: 2px;
 }
 
-d-article pre {
-  background-color: #f9f9f9;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin-bottom: 30px;
-  overflow-x: scroll;
+/* ---------- Distill-era posts (raw HTML from _distill/) ---------- */
+
+/* 2020-2021 distill code blocks are <div class="sourceCode"><pre><code> with no
+   classes, so Quarto's code-block-border-left misses them */
+#quarto-document-content div.sourceCode > pre:not(.sourceCode) {
+  border-left: 3px solid #4D8DC9;
+  padding: 0.5rem 1rem;
+  margin-bottom: 0;
 }
 
-
-/* Footnote inline code */
-
-d-footnote-list code {
-  color: rgb(0 0 0 / 0.70);
-  font-weight: 600;
+/* Keep images inside the text column */
+#quarto-document-content img {
+  max-width: 100%;
+  height: auto;
 }
 
-/* ---------- ADD-ONS ---------- */
-
-
-/* {rmarkdown} */
-
-.pagedtable-wrapper {
-  margin-bottom: 20px;
+section.footnotes ol li img {
+  width: 700px;
 }
 
+/* Let long bare URLs and inline code wrap instead of widening the page */
+#quarto-document-content :is(p, li, h2, h3, h4) {
+  overflow-wrap: break-word;
+}
 
-/* html widgets */
+#quarto-document-content :is(h2, h3, h4) code,
+.column-margin code {
+  white-space: pre-wrap;
+}
 
+/* On narrow screens, wide tables, widgets and equations scroll sideways */
+#quarto-document-content .layout-chunk:has(> table, > .html-widget) {
+  overflow-x: auto;
+}
+
+#quarto-document-content mjx-container[display="true"] {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* Output blocks from distill are plain <pre>, give them the code block look */
+#quarto-document-content .layout-chunk > pre:not(.sourceCode) {
+  background-color: var(--bs-tertiary-bg, #f8f9fa);
+  padding: 0.5rem 1rem;
+}
+
+#quarto-document-content pre.out-extended {
+  width: fit-content;
+  max-width: 100%;
+}
+
+#quarto-document-content .figure .caption {
+  font-size: 0.9rem;
+  color: var(--bs-secondary-color);
+}
+
+.pagedtable-wrapper,
 .html-widget {
-  margin-top: 1.0em;
-  margin-bottom: 1.0em;
+  margin-bottom: 1rem;
 }
 
-
-/* {reactable} */
-
-.ReactTable {
-  font-size: 14px;
-  font-family: 'Roboto Slab';
-  background-color: #fbfbfb;
-}
-
-
-/* {xaringanExtra} */
-
+/* xaringanExtra panelsets */
 .panelset {
-  margin-top: 10px;
-  --panel-tabs-border-bottom: black;
-  --panel-tab-font-family: 'Roboto Slab';
-  --panel-tab-hover-background: #ddd;
+  --panel-tab-hover-background: var(--bs-tertiary-bg);
   --panel-tab-text-decoration: none;
-  border-bottom: 2px solid black;
-  margin-bottom: 30px;
-}
-
-.panelset section {
-    margin-top: 30px;
-    margin-bottom: 20px;
+  margin-bottom: 1.5rem;
 }
 
 .panel > pre {
   overflow-x: auto !important;
+}
+
+/* ---------- Software page cards (software.yml + software.ejs) ---------- */
+
+.software-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+  gap: 1.25rem;
+  margin: 1rem 0 2rem;
+}
+
+.software-card {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius);
+}
+
+.software-logo {
+  flex: 0 0 72px;
+  height: 84px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.software-logo img {
+  max-width: 72px;
+  max-height: 84px;
+}
+
+.software-logo-text {
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  /* A faint tint of the text color */
+  background-color: rgba(var(--bs-body-color-rgb), 0.08);
+  color: var(--bs-body-color);
+  font-family: var(--bs-font-monospace);
+  font-size: 1.4rem;
+}
+
+.software-body {
+  min-width: 0;
+}
+
+#quarto-document-content .software-title {
+  margin: 0 0 0.15rem;
+  font-size: 1.15rem;
+  border: none;
+  padding: 0;
+}
+
+.software-meta {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  color: var(--bs-secondary-color);
+}
+
+.software-desc {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.software-links {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.9rem;
+  font-size: 0.9rem;
+}
+
+/* ---------- Research page lists (research.yml + research.ejs) ---------- */
+
+.pub-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0.5rem 0 1.5rem;
+}
+
+.pub-list .pub {
+  margin-bottom: 0.9rem;
+}
+
+.pub-link {
+  font-size: 0.9em;
+  margin-left: 0.4em;
 }

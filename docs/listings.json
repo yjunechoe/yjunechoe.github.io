@@ -1,0 +1,52 @@
+[
+  {
+    "listing": "/research.html",
+    "items": []
+  },
+  {
+    "listing": "/blog.html",
+    "items": [
+      "/posts/2025-12-31-2025-year-in-review/index.html",
+      "/posts/2024-09-22-fetch-files-web/index.html",
+      "/posts/2024-07-21-enumerate-possible-options/index.html",
+      "/posts/2024-06-09-ave-for-the-average/index.html",
+      "/posts/2024-03-04-args-args-args-args/index.html",
+      "/posts/2024-02-20-helloworld-print/index.html",
+      "/posts/2023-12-31-2023-year-in-review/index.html",
+      "/posts/2023-12-03-untidy-select/index.html",
+      "/posts/2023-07-09-x-y-problem/index.html",
+      "/posts/2023-06-11-row-relational-operations/index.html",
+      "/posts/2022-11-13-dataframes-jl-and-accessories/index.html",
+      "/posts/2022-07-30-user2022/index.html",
+      "/posts/2022-07-06-ggplot2-delayed-aes-2/index.html",
+      "/posts/2022-03-10-ggplot2-delayed-aes-1/index.html",
+      "/posts/2021-06-24-setting-up-and-debugging-custom-fonts/index.html",
+      "/posts/2021-01-17-random-sampling-a-table-animation/index.html",
+      "/posts/2020-12-13-collapse-repetitive-piping-with-reduce/index.html",
+      "/posts/2020-11-08-plot-makeover-2/index.html",
+      "/posts/2020-11-03-tidytuesday-2020-week-45/index.html",
+      "/posts/2020-10-28-tidytuesday-2020-week-44/index.html",
+      "/posts/2020-10-22-analysis-of-everycolorbots-tweets/index.html",
+      "/posts/2020-10-13-designing-guiding-aesthetics/index.html",
+      "/posts/2020-09-26-demystifying-stat-layers-ggplot2/index.html",
+      "/posts/2020-09-23-tidytuesday-2020-week-39/index.html",
+      "/posts/2020-09-20-plot-makeover-1/index.html",
+      "/posts/2020-09-14-tidytuesday-2020-week-38/index.html",
+      "/posts/2020-09-12-videos-in-reactable/index.html",
+      "/posts/2020-09-06-fonts-for-graphs/index.html",
+      "/posts/2020-08-17-tidytuesday-2020-week-33/index.html",
+      "/posts/2020-08-07-saving-a-line-of-piping/index.html",
+      "/posts/2020-08-04-tidytuesday-2020-week-32/index.html",
+      "/posts/2020-07-29-six-years-of-my-spotify-playlists/index.html",
+      "/posts/2020-07-20-shiny-tips-1/index.html",
+      "/posts/2020-07-13-geom-paired-raincloud/index.html",
+      "/posts/2020-06-30-treemap-with-ggplot/index.html",
+      "/posts/2020-06-25-indexing-tip-for-spacyr/index.html",
+      "/posts/2020-06-07-correlation-parameter-mem/index.html"
+    ]
+  },
+  {
+    "listing": "/software.html",
+    "items": []
+  }
+]
