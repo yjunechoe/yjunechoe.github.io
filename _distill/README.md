@@ -14,7 +14,7 @@ Treat the snapshot and `wrap.py` as frozen. Changing either one changes how ever
 
 ## Generated folders
 
-Each `posts/<slug>/` folder made by `wrap.py` contains a `.gitignore` with `*`, so git ignores the whole folder. `distill_libs/` works the same way. Delete them at any time; the next render rebuilds them.
+Each `posts/<slug>/` folder made by `wrap.py` contains a `.gitignore` with `*`, so git ignores the whole folder. `distill_libs/` (the widget libraries those posts load) is also rebuilt every render, but it has no marker: Quarto copies it into `docs/`, and a copied `.gitignore` would keep `docs/distill_libs/` out of git. The root `.gitignore` ignores it instead. Delete any of these at any time; the next render rebuilds them.
 
 A `posts/<slug>/` folder without that `.gitignore` is a live post. `wrap.py` never touches it.
 

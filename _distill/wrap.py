@@ -162,10 +162,11 @@ def heading_md(tag):
 # ---------------------------------------------------------------- sync
 
 
-def sync_dir(dst, files):
+def sync_dir(dst, files, marker=True):
     """Make dst hold exactly `files` ({relpath: bytes | Path}) plus the marker,
     rewriting only files whose content changed."""
-    files = {**files, MARKER: MARKER_TEXT.encode()}
+    if marker:
+        files = {**files, MARKER: MARKER_TEXT.encode()}
     dst.mkdir(parents=True, exist_ok=True)
     for rel, src in files.items():
         out = dst / rel
@@ -330,7 +331,10 @@ def main():
     libs = {}
     for lib in sorted(libs_needed):
         libs.update({f"{lib}/{k}": v for k, v in tree(SNAPSHOT_LIBS / lib).items()})
-    sync_dir(LIBS, libs)
+    # No marker here: Quarto copies distill_libs/ into docs/ as a resource, and
+    # a copied `.gitignore` with `*` would keep docs/distill_libs/ out of git.
+    # The root .gitignore ignores distill_libs/ instead.
+    sync_dir(LIBS, libs, marker=False)
 
     print(f"_distill/wrap.py: {len(wrapped)} legacy posts wrapped, {len(live)} live: {', '.join(live) or 'none'}")
 
